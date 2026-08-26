@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.12
+# Functional Analysis 中文结构化数据 v0.13
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -25,10 +25,12 @@
 - `chunk_009b`：PDF 171-180
 - `chunk_010a`：PDF 181-190
 - `chunk_010b`：PDF 191-200
-- `chunk_011a`：PDF 201-210 / 纸质 182-191，完成 Chapter 4 Exercises 1(b)-15 与 Problems 1-7；完成第 4 章首轮结构化收尾；进入 Chapter 5《概率论基础》，建立 Bernoulli 试验、有限概率空间、独立事件、Rademacher 坐标函数、S_N 二项分布，并开始 N=∞ 的无限乘积空间
-- 中文学习层已同步到 PDF 210
-- PDF 201-210 视觉抽查未发现新的独立教学图；Chapter 5 章节页版式正常
-- 搜索索引：新增 `search_index_delta_v0_12.jsonl`；导出包包含合并后的 `search_index_v0_12.jsonl`
+- `chunk_011a`：PDF 201-210
+- `chunk_011b`：PDF 211-220 / 纸质 192-201，完成 Chapter 5 §1.2 无限 Bernoulli 乘积空间与 Rademacher 函数、相互独立；完成 §1.3 的 `||S_N||_2=√N` 与依概率收敛；建立分布测度/期望/方差/Gaussian 分布；完成 De Moivre 中心极限定理；完成 Theorem 1.4(a) 与 Corollary 1.5，并开始 Lemma 1.6
+- 中文学习层已同步到 PDF 220
+- Figure 1 `The Rademacher functions r1 and r2` 已视觉核对并保存为 `figures/fig_ch5_01_rademacher_r1_r2.png`
+- Figure 2 `Approximating the integral of a Gaussian` 已视觉核对并保存为 `figures/fig_ch5_02_gaussian_integral_approx.png`
+- 搜索索引：新增 `search_index_delta_v0_13.jsonl`；导出包包含合并后的 `search_index_v0_13.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -46,8 +48,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 210
-- 对应纸质正文：191
-- 下一批：PDF 211-220
-- 当前章节：Chapter 5 / 1.2 The case N = ∞
-- 当前跨批次对象：无限 Bernoulli 乘积测度与 cylinder sets 的后续定义
+- 已结构化到：PDF 220
+- 对应纸质正文：201
+- 下一批：PDF 221-230
+- 当前章节：Chapter 5 / 1.6 Random series
+- 当前跨批次对象：Lemma 1.6 的后半证明与 Theorem 1.4(b)
