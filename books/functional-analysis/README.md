@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.7
+# Functional Analysis 中文结构化数据 v0.8
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -16,10 +16,12 @@
 - `chunk_005a`：PDF 81-90
 - `chunk_005b`：PDF 91-100
 - `chunk_006a`：PDF 101-110
-- `chunk_006b`：PDF 111-120 / 纸质 92-101，第 2 章 Exercises 10-24、Problems 1-10；进入第 3 章，完成分布定义、测试函数空间、Dirac δ、分布导数
-- `chunk_007a`：PDF 121-130 / 纸质 102-111，分布运算、卷积、支集、缓增分布、Fourier 变换、点支集分布，并进入 `pv(1/x)`
-- 中文学习层已同步到 PDF 130
-- 搜索索引：GitHub 使用上一版基线 + `search_index_delta_v0_7.jsonl`；Drive 导出包同时包含合并后的 `search_index_v0_7.jsonl`
+- `chunk_006b`：PDF 111-120
+- `chunk_007a`：PDF 121-130
+- `chunk_007b`：PDF 131-140 / 纸质 112-121，完成 `pv(1/x)`、Theorem 2.1、齐次分布、Proposition 2.2、Theorem 2.3/2.4，并进入 Theorem 2.5 的齐次延拓证明
+- `chunk_008a`：PDF 141-150 / 纸质 122-131，完成 Theorem 2.5、Lemma 2.6、Corollary 2.7、基本解、Laplacian/热算子基本解、一般常系数 PDE 基本解，并进入 parametrix
+- 中文学习层已同步到 PDF 150
+- 搜索索引：GitHub 在 `search_index_v0_7.jsonl` 基线上新增 `search_index_delta_v0_8.jsonl`；Drive 导出包同时包含合并后的 `search_index_v0_8.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -28,7 +30,7 @@
 - 原文与中文学习层分层保存，不覆盖原 PDF。
 - PDF 物理页与纸质印刷页分离；`page_map.csv` 是事实源。
 - 20 页是存储分卷；实际结构化约 10 页一批，优先保持节/定理/证明语义完整。
-- 图像保留原始锚点；PDF 111-130 未发现需要单独提取的教学图，章节版式已抽查。
+- 图像保留原始锚点；本轮 PDF 140 Figure 1 已做视觉核对。
 - “预习 / 学习 / 复习 / 刷题”由用户主动选择，不设置流程锁。
 - 搜索支持定理/题目编号、中英文术语、别名、公式关键词、页码与语义检索。
 - 提问默认依据当前教材，回答必须返回 `source_anchor` 与可跳转教材位置；尚未结构化内容只能明确标注后使用原 PDF 兜底。
@@ -36,8 +38,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 130
-- 对应纸质正文：111
-- 下一批：PDF 131-140
-- 当前章节：Chapter 3 / 2.1 The Hilbert transform and `pv(1/x)`
-- 当前跨批次对象：`pv(1/x)` 的定义与后续性质
+- 已结构化到：PDF 150
+- 对应纸质正文：131
+- 下一批：PDF 151-160
+- 当前章节：Chapter 3 / 2.5 Parametrices and regularity for elliptic equations
+- 当前跨批次对象：parametrix 定义及椭圆正则性证明
