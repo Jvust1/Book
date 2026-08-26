@@ -1,0 +1,71 @@
+{
+  "chunk_id": "chunk_001",
+  "pdf_pages": [1, 20],
+  "page_labels": ["Cover", "1"],
+  "content_units": [
+    {
+      "unit_id": "front_cover",
+      "type": "cover",
+      "pdf_page": 1,
+      "page_label": "Cover",
+      "title_en": "Functional Analysis",
+      "title_zh": "泛函分析",
+      "preserve_image": true
+    },
+    {
+      "unit_id": "series_page",
+      "type": "series_info",
+      "pdf_pages": [3, 4],
+      "title_zh": "Princeton 分析学讲义（第四卷）"
+    },
+    {
+      "unit_id": "copyright",
+      "type": "copyright",
+      "pdf_page": 5,
+      "translate_for_app": false,
+      "metadata_only": true
+    },
+    {
+      "unit_id": "foreword",
+      "type": "frontmatter",
+      "pdf_pages": [8, 10],
+      "page_labels": ["vii", "ix"],
+      "title_en": "Foreword",
+      "title_zh": "前言",
+      "translation_file": "chunk_001_translation_zh.md"
+    },
+    {
+      "unit_id": "toc",
+      "type": "table_of_contents",
+      "pdf_pages": [12, 16],
+      "page_labels": ["xi", "xv"],
+      "title_en": "Contents",
+      "title_zh": "目录",
+      "structured_file": "toc_bilingual.json"
+    },
+    {
+      "unit_id": "preface_iv",
+      "type": "frontmatter",
+      "pdf_page": 18,
+      "page_label": "xvii",
+      "title_en": "Preface to Book IV",
+      "title_zh": "第四卷序言",
+      "translation_file": "chunk_001_translation_zh.md"
+    },
+    {
+      "unit_id": "chapter_1_opening",
+      "type": "chapter_opening",
+      "pdf_page": 20,
+      "printed_page": 1,
+      "chapter_id": "chapter_01",
+      "title_en": "Lp Spaces and Banach Spaces",
+      "title_zh": "L^p 空间与巴拿赫空间",
+      "translation_file": "chunk_001_translation_zh.md",
+      "initial_concepts_zh": ["函数空间", "L^p 空间", "L^1 空间", "L^2 空间", "L^∞ 空间", "对偶性", "巴拿赫空间", "线性泛函", "有限可加测度"]
+    }
+  ],
+  "notes": [
+    "PDF 第 20 页对应纸质正文第 1 页。",
+    "本分卷主要是前置页与目录，真正的小节正文从下一分卷 PDF 第 21 页开始。"
+  ]
+}
