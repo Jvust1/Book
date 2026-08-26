@@ -1,0 +1,40 @@
+{
+  "chunk_id": "chunk_004b",
+  "parent_storage_chunk": "chunk_004",
+  "pdf_pages": [71, 80],
+  "printed_pages": [52, 61],
+  "status": "structured_v0.4_translation_learning_layer",
+  "chapter_id": "chapter_02",
+  "sections": [
+    {"id":"ch02_s01","number":"1","title_en":"Early Motivations","title_zh":"早期动机","pdf_pages":[67,71],"printed_pages":[48,52],"batch_coverage":[71,71],"continued_from":"chunk_004a"},
+    {"id":"ch02_s02","number":"2","title_en":"The Riesz interpolation theorem","title_zh":"Riesz 插值定理","pdf_pages":[71,79],"printed_pages":[52,60]},
+    {"id":"ch02_s02_01","number":"2.1","title_en":"Some examples","title_zh":"若干例子","pdf_pages":[76,79],"printed_pages":[57,60]},
+    {"id":"ch02_s03","number":"3","title_en":"The Lp theory of the Hilbert transform","title_zh":"Hilbert 变换的 L^p 理论","pdf_pages":[80,null],"printed_pages":[61,null],"batch_coverage":[80,80],"continues_in":"chunk_005a"},
+    {"id":"ch02_s03_01","number":"3.1","title_en":"The L2 formalism","title_zh":"L^2 形式体系","pdf_pages":[80,null],"printed_pages":[61,null],"batch_coverage":[80,80],"continues_in":"chunk_005a"}
+  ],
+  "key_objects": [
+    {"type":"identity","id":"id_ch2_7_cauchy_square","number":"(7)","name_en":"Vanishing integral of the square of the analytic projection","name_zh":"解析投影平方积分为零","anchor":{"pdf_page":71,"printed_page":52},"formula":"(1/2π)∫_0^{2π}(F(e^{iθ}))^2 dθ = 0","notes_zh":"取实部可恢复共轭函数的 L^2 恒等式；把 F^2 替换为 F^{2k} 是 Riesz 方法的早期动机。"},
+    {"type":"theorem","id":"thm_ch2_2_1_riesz_interpolation","number":"2.1","name_en":"Riesz interpolation theorem","name_zh":"Riesz 插值定理","anchor":{"pdf_page":71,"printed_page":52},"core_statement_zh":"若线性算子 T 在 (p0,q0) 与 (p1,q1) 两个端点分别有界，则对 0≤t≤1，令 1/p=(1-t)/p0+t/p1、1/q=(1-t)/q0+t/q1，有 ||T f||_q≤M||f||_p，且 M≤M0^{1-t}M1^t。","formula":"1/p=(1-t)/p0+t/p1; 1/q=(1-t)/q0+t/q1; M≤M0^{1-t}M1^t"},
+    {"type":"figure","id":"fig_ch2_2_strip_phi","number":"Figure 2","name_en":"The domain of the function Φ","name_zh":"函数 Φ 的条带区域","anchor":{"pdf_page":72,"printed_page":53},"asset_policy":"retain_original_pdf_figure","notes_zh":"展示复平面条带 Re(z)=0 与 Re(z)=1，以及内部插值位置 t。"},
+    {"type":"lemma","id":"lemma_ch2_2_2_three_lines","number":"2.2","name_en":"Three-lines lemma","name_zh":"三线引理","anchor":{"pdf_page":72,"printed_page":53},"core_statement_zh":"若 Φ 在 0<Re(z)<1 内全纯，并在闭条带上连续有界；边界线上的上界为 M0、M1，则内部线 Re(z)=t 上有 |Φ|≤M0^{1-t}M1^t。"},
+    {"type":"proof_device","id":"device_ch2_analytic_family_fz_gz","name_en":"Analytic families f_z and g_z","name_zh":"插值证明中的解析族 f_z、g_z","anchor":{"pdf_page":74,"printed_page":55},"notes_zh":"把简单函数 f、g 的幂指数做成 z 的线性函数，使 z=t 时回到目标指数，而两条边界线恰好落到两个已知端点。"},
+    {"type":"definition","id":"def_ch2_type_pq","name_en":"Operator of type (p,q)","name_zh":"(p,q) 型算子","anchor":{"pdf_page":75,"printed_page":56},"core_statement_zh":"若对所有简单函数 f 有 ||T(f)||_q≤M||f||_p，则称 T 为 (p,q) 型。"},
+    {"type":"definition","id":"def_ch2_riesz_diagram","name_en":"Riesz diagram","name_zh":"Riesz 图","anchor":{"pdf_page":76,"printed_page":57},"core_statement_zh":"把 T 为 (p,q) 型的指数对映为单位方形中的点 (1/p,1/q)，所有这类点组成 T 的 Riesz 图。"},
+    {"type":"corollary","id":"cor_ch2_2_3_riesz_diagram_convex","number":"2.3","name_en":"Convexity of the Riesz diagram","name_zh":"Riesz 图的凸性","anchor":{"pdf_page":76,"printed_page":57},"core_statement_zh":"Riesz 图是凸集；最佳常数 M_{x,y} 的对数 log M_{x,y} 在该图上为凸函数。"},
+    {"type":"corollary","id":"cor_ch2_2_4_hausdorff_young","number":"2.4","name_en":"Hausdorff-Young inequality for Fourier coefficients","name_zh":"Fourier 系数的 Hausdorff-Young 不等式","anchor":{"pdf_page":76,"printed_page":57},"formula":"||{a_n}||_{L^q(Z)}≤||f||_{L^p([0,2π])}, 1≤p≤2, 1/p+1/q=1"},
+    {"type":"corollary","id":"cor_ch2_2_5_dual_hausdorff_young","number":"2.5","name_en":"Dual Hausdorff-Young inequality","name_zh":"Hausdorff-Young 对偶不等式","anchor":{"pdf_page":77,"printed_page":58},"formula":"||Σ a_n e^{inθ}||_{L^q([0,2π])}≤||{a_n}||_{L^p(Z)}, 1≤p≤2"},
+    {"type":"corollary","id":"cor_ch2_2_6_fourier_transform_hy","number":"2.6","name_en":"Hausdorff-Young inequality for the Fourier transform","name_zh":"Fourier 变换的 Hausdorff-Young 不等式","anchor":{"pdf_page":78,"printed_page":59},"formula":"||T(f)||_{L^q(R^d)}≤||f||_{L^p(R^d)}, 1≤p≤2, 1/p+1/q=1"},
+    {"type":"figure","id":"fig_ch2_3_hausdorff_young_riesz","number":"Figure 3","name_en":"Riesz diagrams for the Hausdorff-Young theorem","name_zh":"Hausdorff-Young 定理的 Riesz 图","anchor":{"pdf_page":78,"printed_page":59},"asset_policy":"retain_original_pdf_figure"},
+    {"type":"inequality","id":"ineq_ch2_9_young_convolution","number":"(9)","name_en":"Young's inequality for convolutions","name_zh":"Young 卷积不等式","anchor":{"pdf_page":79,"printed_page":60},"formula":"||f*g||_q≤||f||_p||g||_r, 1/q=1/p+1/r-1","notes_zh":"教材说明可把 g 固定，将 T(f)=f*g 的两个端点估计用 Riesz 插值连接起来。"},
+    {"type":"figure","id":"fig_ch2_4_convolution_riesz","number":"Figure 4","name_en":"Riesz diagrams for T(f)=f*g, g∈L^r","name_zh":"卷积算子 T(f)=f*g 的 Riesz 图","anchor":{"pdf_page":80,"printed_page":61},"asset_policy":"retain_original_pdf_figure"},
+    {"type":"chapter_concept","id":"concept_ch2_hilbert_transform_lp_program","name_en":"Lp theory of the Hilbert transform","name_zh":"Hilbert 变换的 L^p 理论主线","anchor":{"pdf_page":80,"printed_page":61},"notes_zh":"教材从单位圆盘/圆周转到实线与上半平面，以更适合高维推广的形式发展共轭函数与 Hilbert 变换。"},
+    {"type":"definition","id":"def_ch2_cauchy_integral_upper_half_plane","number":"(10)","name_en":"Cauchy integral in the upper half-plane","name_zh":"上半平面的 Cauchy 积分","anchor":{"pdf_page":80,"printed_page":61},"formula":"F(z)=C(f)(z)=(1/2πi)∫_{-∞}^{∞} f(t)/(t-z) dt, Im(z)>0"}
+  ],
+  "translation_status": {"learning_layer_zh":"completed_for_pdf_71_80","theorem_and_definition_statements":"completed","proof_logic":"completed","proof_sentence_level_translation":"pending"},
+  "figures_verified": [
+    {"id":"fig_ch2_2_strip_phi","pdf_page":72,"verification":"rendered_and_visually_checked"},
+    {"id":"fig_ch2_3_hausdorff_young_riesz","pdf_page":78,"verification":"rendered_and_visually_checked"},
+    {"id":"fig_ch2_4_convolution_riesz","pdf_page":80,"verification":"rendered_and_visually_checked"}
+  ],
+  "next_action": "PDF 81-90：继续 3.1 L^2 formalism、3.2 L^p theorem 的证明，并进入极大函数与弱型估计。"
+}
