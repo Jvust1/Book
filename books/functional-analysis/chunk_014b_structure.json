@@ -1,0 +1,54 @@
+{
+  "chunk_id": "chunk_014b",
+  "parent_storage_chunk": "chunk_014",
+  "pdf_pages": [271, 280],
+  "printed_pages": [252, 261],
+  "status": "structured_v0.19_translation_learning_layer",
+  "chapter_ids": ["chapter_06"],
+  "sections": [
+    {"id":"ch06_s04","number":"4","title_en":"Some further properties of Brownian motion","title_zh":"Brownian motion 的进一步性质","pdf_pages":[270,272],"printed_pages":[251,253],"batch_coverage":[271,272],"continued_from":"chunk_014a","completed_in":"chunk_014b"},
+    {"id":"ch06_s05","number":"5","title_en":"Stopping times and the strong Markov property","title_zh":"停止时刻与强 Markov 性质","pdf_pages":[272,null],"printed_pages":[253,null],"batch_coverage":[272,280],"continues_in":"chunk_015a"}
+  ],
+  "subsections": [
+    {"id":"ch06_s05_01","number":"5.1","title_en":"Stopping times and the Blumenthal zero-one law","title_zh":"停止时刻与 Blumenthal 零一律","pdf_pages":[273,276],"printed_pages":[254,257],"completed_in":"chunk_014b"},
+    {"id":"ch06_s05_02","number":"5.2","title_en":"The strong Markov property","title_zh":"强 Markov 性质","pdf_pages":[277,279],"printed_pages":[258,260],"completed_in":"chunk_014b"},
+    {"id":"ch06_s05_03","number":"5.3","title_en":"Other forms of the strong Markov Property","title_zh":"强 Markov 性质的其他形式","pdf_pages":[279,null],"printed_pages":[260,null],"batch_coverage":[279,280],"continues_in":"chunk_015a"}
+  ],
+  "continuations": [
+    {"object_id":"thm_ch6_4_2_holder_nowhere_diff","continued_from":"chunk_014a","completed_in":"chunk_014b","anchor":{"pdf_page":271,"printed_page":252},"note":"Completes part (b) and the proof of Theorem 4.2."},
+    {"object_id":"def_ch6_stopped_process_hat_B","started_in":"chunk_014b","continues_in":"chunk_015a","anchor":{"pdf_page":280,"printed_page":261},"note":"Stopped process is defined at the end of PDF 280; the final strong-Markov/Dirichlet form continues next batch."}
+  ],
+  "figures": [
+    {"id":"fig_ch6_01_exit_path_at_tau","number":"Figure 1","title_en":"Path omega, exiting at time tau=tau(omega)","title_zh":"路径 ω 在停止时刻 τ=τ(ω) 离开区域 R","anchor":{"pdf_page":273,"printed_page":254},"asset_path":"figures/fig_ch6_01_exit_path_at_tau.png"}
+  ],
+  "key_objects": [
+    {"type":"theorem","id":"thm_ch6_4_2_holder_nowhere_diff","name_zh":"Brownian 路径的 Hölder 正则性与粗糙性","name_en":"Holder regularity and roughness of Brownian paths","anchor":{"pdf_page":271,"printed_page":252},"number":"4.2","statement":"For almost every Brownian path: every exponent a<1/2 gives local Hölder control on finite time intervals, while for every a>1/2 the quotient |p(t+h)-p(t)|/h^a has limsup infinity at every t.","proof_pages":[271,272]},
+    {"type":"formula","id":"formula_ch6_11_small_increment_event","name_zh":"小增量事件的离散化条件","name_en":"discretized small-increment condition","anchor":{"pdf_page":271,"printed_page":252},"number":"(11)","formula":"sup_{0<h≤(k+1)/n} |p(t0+h)-p(t0)|/h^a ≤ λ"},
+    {"type":"formula","id":"formula_ch6_12_random_walk_bundle_limit","name_zh":"随机游走路径束概率收敛","name_en":"random-walk path-bundle probability convergence","anchor":{"pdf_page":272,"printed_page":253},"number":"(12)","formula":"m({x:S_t^(N)(x)∈O_ε^(N)})→W(O_ε)"},
+    {"type":"concept","id":"concept_ch6_dirichlet_via_brownian_exit","name_zh":"Dirichlet 问题与 Brownian 首次退出的联系","name_en":"Dirichlet problem via Brownian first exit","anchor":{"pdf_page":273,"printed_page":254}},
+    {"type":"definition","id":"def_ch6_harmonic_measure_mu_x","name_zh":"harmonic measure μ^x","name_en":"harmonic measure from Brownian exit distribution","anchor":{"pdf_page":273,"printed_page":254},"formula":"μ^x(E)=P({ω:B^x_{τ_x(ω)}(ω)∈E})"},
+    {"type":"formula","id":"formula_ch6_dirichlet_harmonic_representation","name_zh":"Dirichlet 解的 harmonic-measure 表示","name_en":"harmonic-measure representation of the Dirichlet solution","anchor":{"pdf_page":273,"printed_page":254},"formula":"u(x)=∫_{∂R} f(y)dμ^x(y)"},
+    {"type":"figure","id":"fig_ch6_01_exit_path_at_tau","name_zh":"路径在 τ 时刻离开 R","name_en":"Path exiting R at time τ","anchor":{"pdf_page":273,"printed_page":254},"number":"Figure 1","asset_path":"figures/fig_ch6_01_exit_path_at_tau.png"},
+    {"type":"definition","id":"def_ch6_discrete_stopping_time","name_zh":"离散 stopping time","name_en":"discrete stopping time","anchor":{"pdf_page":273,"printed_page":254}},
+    {"type":"formula","id":"formula_ch6_13_optional_stopping_expectation","name_zh":"有界停止时刻的期望恒等式","name_en":"expectation identity at a bounded stopping time","anchor":{"pdf_page":274,"printed_page":255},"number":"(13)","formula":"∫ s_{τ(x)}(x)dm = ∫ s_N(x)dm when τ≤N"},
+    {"type":"concept","id":"concept_ch6_brownian_continuous_martingale","name_zh":"Brownian motion 作为连续时间 martingale","name_en":"Brownian motion as a continuous-time martingale","anchor":{"pdf_page":274,"printed_page":255}},
+    {"type":"formula","id":"formula_ch6_14_brownian_maximal_inequality","name_zh":"Brownian 最大值不等式","name_en":"Brownian maximal inequality","anchor":{"pdf_page":274,"printed_page":255},"number":"(14)","formula":"P{sup_{0≤t≤T}|B_t|>α}≤α^{-1}||B_T||_{L1}"},
+    {"type":"definition","id":"def_ch6_continuous_stopping_time","name_zh":"连续时间 stopping time","name_en":"continuous-time stopping time","anchor":{"pdf_page":274,"printed_page":255}},
+    {"type":"definition","id":"def_ch6_exit_times_tau_tau_star","name_zh":"首次退出时刻 τ_x 与严格退出时刻 τ_x*","name_en":"first exit time τ_x and strict exit time τ_x*","anchor":{"pdf_page":275,"printed_page":256},"formula":"τ_x=inf{t≥0:B_t^x∉R}, τ_x*=inf{t>0:B_t^x∉R}"},
+    {"type":"proposition","id":"prop_ch6_5_1_exit_times_stopping","name_zh":"首次退出时刻与严格退出时刻都是 stopping times","name_en":"exit times are stopping times","anchor":{"pdf_page":275,"printed_page":256},"number":"5.1","proof_pages":[275,276]},
+    {"type":"formula","id":"formula_ch6_15_exit_time_approx_open_sets","name_zh":"用邻域逼近退出事件","name_en":"exit event as intersection of neighborhood hitting events","anchor":{"pdf_page":275,"printed_page":256},"number":"(15)","formula":"{τ≤t}=∩_n {τ_{O_n}<t}"},
+    {"type":"definition","id":"def_ch6_A0_plus","name_zh":"A_{0+}","name_en":"right-limit sigma-algebra A_{0+}","anchor":{"pdf_page":275,"printed_page":256},"formula":"A_{0+}=∩_{t>0}A_t"},
+    {"type":"lemma","id":"lem_ch6_5_2_blumenthal_zero_one","name_zh":"Blumenthal 零一律","name_en":"Blumenthal zero-one law","anchor":{"pdf_page":276,"printed_page":257},"number":"5.2","proof_pages":[276,276]},
+    {"type":"definition","id":"def_ch6_regular_boundary_point","name_zh":"正则边界点","name_en":"regular boundary point","anchor":{"pdf_page":276,"printed_page":257}},
+    {"type":"concept","id":"concept_ch6_joint_measurability_exit_time","name_zh":"退出时刻 τ_x(ω) 对 (x,ω) 联合可测","name_en":"joint measurability of the exit time in x and omega","anchor":{"pdf_page":276,"printed_page":257}},
+    {"type":"definition","id":"def_ch6_A_sigma","name_zh":"停止时刻 σ 对应的 σ-代数 A_σ","name_en":"sigma-algebra A_sigma associated with a stopping time","anchor":{"pdf_page":277,"printed_page":258},"formula":"A∈A_σ iff A∩{σ≤t}∈A_t for every t≥0"},
+    {"type":"theorem","id":"thm_ch6_5_3_strong_markov","name_zh":"Brownian motion 的强 Markov 性质","name_en":"strong Markov property for Brownian motion","anchor":{"pdf_page":277,"printed_page":258},"number":"5.3","statement":"For a stopping time σ, B_t*=B_{t+σ}-B_σ is Brownian motion and is independent of A_σ.","proof_pages":[277,279]},
+    {"type":"formula","id":"formula_ch6_16_strong_markov_independence","name_zh":"强 Markov 独立性公式","name_en":"strong-Markov independence identity","anchor":{"pdf_page":278,"printed_page":259},"number":"(16)","formula":"P({B*∈E}∩A)=P(B∈E)P(A), A∈A_σ"},
+    {"type":"concept","id":"concept_ch6_discrete_approx_stopping_time","name_zh":"一般 stopping time 的 dyadic 离散逼近","name_en":"dyadic discrete approximation of a stopping time","anchor":{"pdf_page":278,"printed_page":259}},
+    {"type":"definition","id":"def_ch6_all_path_space_tilde_P","name_zh":"全路径空间 P~","name_en":"space of all continuous paths tilde P","anchor":{"pdf_page":279,"printed_page":260},"formula":"P~=P×R^d"},
+    {"type":"theorem","id":"thm_ch6_5_4_path_function_strong_markov","name_zh":"路径函数形式的强 Markov 性质","name_en":"path-functional form of the strong Markov property","anchor":{"pdf_page":279,"printed_page":260},"number":"5.4","proof_pages":[279,280]},
+    {"type":"formula","id":"formula_ch6_17_path_function_identity","name_zh":"路径函数强 Markov 积分恒等式","name_en":"integral identity for future path functionals","anchor":{"pdf_page":279,"printed_page":260},"number":"(17)"},
+    {"type":"formula","id":"formula_ch6_18_product_space_form","name_zh":"强 Markov 恒等式的 P×R^d 形式","name_en":"P times R^d form of the strong-Markov identity","anchor":{"pdf_page":279,"printed_page":260},"number":"(18)"},
+    {"type":"definition","id":"def_ch6_stopped_process_hat_B","name_zh":"在退出时刻 τ_y 停止的 Brownian process","name_en":"Brownian process stopped at the exit time τ_y","anchor":{"pdf_page":280,"printed_page":261},"formula":"B̂_t^y(ω)=y+B_{t∧τ_y(ω)}(ω)","continues_in":"chunk_015a"}
+  ]
+}
