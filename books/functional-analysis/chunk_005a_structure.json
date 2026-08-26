@@ -1,0 +1,49 @@
+{
+  "chunk_id": "chunk_005a",
+  "parent_storage_chunk": "chunk_005",
+  "pdf_pages": [81,90],
+  "printed_pages": [62,71],
+  "status": "structured_v0.5_translation_learning_layer",
+  "chapter_id": "chapter_02",
+  "sections": [
+    {"id":"ch02_s03_01","number":"3.1","title_en":"The L2 formalism","title_zh":"L^2 形式体系","pdf_pages":[80,83],"printed_pages":[61,64],"batch_coverage":[81,83],"continued_from":"chunk_004b"},
+    {"id":"ch02_s03_02","number":"3.2","title_en":"The Lp theorem","title_zh":"L^p 定理","pdf_pages":[83,84],"printed_pages":[64,65]},
+    {"id":"ch02_s03_03","number":"3.3","title_en":"Proof of Theorem 3.2","title_zh":"定理 3.2 的证明","pdf_pages":[85,89],"printed_pages":[66,70]},
+    {"id":"ch02_s04","number":"4","title_en":"The maximal function and weak-type estimates","title_zh":"极大函数与弱型估计","pdf_pages":[89,null],"printed_pages":[70,null],"batch_coverage":[89,90],"continues_in":"chunk_005b"},
+    {"id":"ch02_s04_01","number":"4.1","title_en":"The Lp inequality","title_zh":"L^p 不等式","pdf_pages":[90,null],"printed_pages":[71,null],"batch_coverage":[90,90],"continues_in":"chunk_005b"}
+  ],
+  "key_objects": [
+    {"type":"identity","id":"id_ch2_11_cauchy_fourier_rep","number":"(11)","name_en":"Fourier representation of the Cauchy integral","name_zh":"Cauchy 积分的 Fourier 表示","anchor":{"pdf_page":81,"printed_page":62},"formula":"F(z)=∫_0^∞ f^(ξ)e^{2πizξ}dξ, Im(z)>0"},
+    {"type":"identity","id":"id_ch2_12_exp_integral","number":"(12)","name_en":"Elementary exponential integral in the upper half-plane","name_zh":"上半平面的指数积分恒等式","anchor":{"pdf_page":81,"printed_page":62},"formula":"∫_0^∞e^{2πizξ}dξ=-1/(2πiz)"},
+    {"type":"definition","id":"def_ch2_projection_P","name_en":"Hardy/Cauchy projection P on L2(R)","name_zh":"L^2(R) 上的 Cauchy 投影 P","anchor":{"pdf_page":81,"printed_page":62},"notes_zh":"P 把 L^2(R) 正交投影到 Fourier 变换在 ξ<0 上几乎处处为零的子空间。"},
+    {"type":"definition","id":"def_ch2_hilbert_transform","number":"(13)","name_en":"Hilbert transform","name_zh":"Hilbert 变换","anchor":{"pdf_page":81,"printed_page":62},"formula":"H(f)(x)=∫ f^(ξ)[sign(ξ)/i]e^{2πixξ}dξ"},
+    {"type":"fact","id":"fact_ch2_P_H_relations","name_en":"Relations among P, I and H","name_zh":"P、恒等算子 I 与 Hilbert 变换 H 的关系","anchor":{"pdf_page":81,"printed_page":62},"formula":"P=(1/2)(I+iH); ||Hf||_2=||f||_2; H^2=-I; H^{-1}=-H"},
+    {"type":"proposition","id":"prop_ch2_3_1_singular_integral","number":"3.1","name_en":"Singular-integral representation of the Hilbert transform","name_zh":"Hilbert 变换的奇异积分表示","anchor":{"pdf_page":81,"printed_page":62},"formula":"H(f)(x)=lim_{ε→0}(1/π)∫_{|t|≥ε} f(x-t)dt/t","notes_zh":"极限在 L^2(R) 范数中成立。"},
+    {"type":"definition","id":"def_ch2_poisson_conjugate_kernels","number":"(15)","name_en":"Poisson kernel and conjugate Poisson kernel","name_zh":"Poisson 核与共轭 Poisson 核","anchor":{"pdf_page":82,"printed_page":63},"formula":"P_y(x)=y/[π(x²+y²)], Q_y(x)=x/[π(x²+y²)]"},
+    {"type":"identity","id":"id_ch2_16_cauchy_poisson","number":"(16)","name_en":"Cauchy integral via Poisson and conjugate Poisson convolutions","name_zh":"用 Poisson 卷积表示 Cauchy 积分","anchor":{"pdf_page":82,"printed_page":63},"formula":"F(x+iy)=(1/2)[(f*P_y)(x)+i(f*Q_y)(x)]"},
+    {"type":"identity","id":"id_ch2_18_fourier_poisson","number":"(18)","name_en":"Fourier transforms of P_y and Q_y","name_zh":"P_y、Q_y 的 Fourier 变换","anchor":{"pdf_page":82,"printed_page":63},"formula":"P_y^(ξ)=e^{-2πy|ξ|}; Q_y^(ξ)=e^{-2πy|ξ|}sign(ξ)/i"},
+    {"type":"identity","id":"id_ch2_19_delta_approx","number":"(19)","name_en":"Vanishing approximation kernel","name_zh":"零积分近似核的消失极限","anchor":{"pdf_page":83,"printed_page":64},"formula":"f*Δ_ε→0 in L² as ε→0"},
+    {"type":"theorem","id":"thm_ch2_3_2_hilbert_lp","number":"3.2","name_en":"M. Riesz theorem for the Hilbert transform","name_zh":"Hilbert 变换的 M. Riesz L^p 有界性定理","anchor":{"pdf_page":83,"printed_page":64},"core_statement_zh":"对 1<p<∞，Hilbert 变换满足 ||H(f)||_p≤A_p||f||_p，并由 L²∩L^p 唯一延拓到全部 L^p。","formula":"||H(f)||_{L^p}≤A_p||f||_{L^p}"},
+    {"type":"example","id":"ex_ch2_hilbert_endpoint_failures","name_en":"Endpoint failures for p=1 and p=∞","name_zh":"Hilbert 变换在 p=1 与 p=∞ 端点失败的例子","anchor":{"pdf_page":84,"printed_page":65},"notes_zh":"对区间特征函数 χ_{(-1,1)}，Hilbert 变换有对数奇点且尾部约为 1/x，不属于 L¹；另一个奇函数例子尾部约为 1/x²。"},
+    {"type":"figure","id":"fig_ch2_5_hilbert_examples","number":"Figure 5","name_en":"Two examples of Hilbert transforms","name_zh":"两个 Hilbert 变换例子","anchor":{"pdf_page":84,"printed_page":65},"asset_policy":"retain_original_pdf_figure"},
+    {"type":"concept","id":"concept_ch2_cancellation_l1_hilbert","name_en":"Cancellation criterion for integrability of H(f)","name_zh":"Hilbert 变换 L^1 可积性的消去条件","anchor":{"pdf_page":85,"printed_page":66},"core_statement_zh":"对有界且紧支撑的 f，教材指出 H(f)∈L¹(R) 当且仅当 ∫f=0。"},
+    {"type":"estimate","id":"est_ch2_21_cauchy_decay","number":"(21)","name_en":"Decay of the Cauchy integral for C0∞ data","name_zh":"C_0^∞ 数据的 Cauchy 积分衰减估计","anchor":{"pdf_page":85,"printed_page":66},"formula":"|F(z)|≤M/(1+|z|), y≥0"},
+    {"type":"identity","id":"id_ch2_22_boundary_cauchy_hilbert","number":"(22)","name_en":"Boundary relation between Cauchy integral and Hilbert transform","name_zh":"Cauchy 积分边界值与 Hilbert 变换关系","anchor":{"pdf_page":86,"printed_page":67},"formula":"2F(x)=f(x)+iH(f)(x)"},
+    {"type":"identity","id":"id_ch2_23_cauchy_power_zero","number":"(23)","name_en":"Vanishing integral of powers of F","name_zh":"F 的幂积分为零","anchor":{"pdf_page":86,"printed_page":67},"formula":"∫_{-∞}^{∞}(F(x))^k dx=0, k≥2"},
+    {"type":"figure","id":"fig_ch2_6_cauchy_rectangle","number":"Figure 6","name_en":"The rectangle of integration γ","name_zh":"Cauchy 定理使用的矩形积分路径 γ","anchor":{"pdf_page":86,"printed_page":67},"asset_policy":"retain_original_pdf_figure"},
+    {"type":"inequality","id":"ineq_ch2_24_hilbert_even_p","number":"(24)","name_en":"Hilbert-transform bound for even p","name_zh":"偶整数 p 上的 Hilbert 变换估计","anchor":{"pdf_page":87,"printed_page":68},"formula":"||H(f)||_p≤A_p||f||_p, p=2ℓ","notes_zh":"教材由 Re(f+iHf)^{2ℓ}、Hölder 不等式和归一化得到偶整数指数估计。"},
+    {"type":"proof_step","id":"step_ch2_hilbert_interpolation","name_en":"Interpolation step in the proof of Theorem 3.2","name_zh":"定理 3.2 证明的插值步骤","anchor":{"pdf_page":88,"printed_page":69},"notes_zh":"用 p=2 与任意偶整数 2ℓ 的端点估计，经 Riesz 插值得到全部 2≤p<∞。"},
+    {"type":"identity","id":"id_ch2_25_hilbert_skew_duality","number":"(25)","name_en":"Skew-duality identity for the Hilbert transform","name_zh":"Hilbert 变换的反对称对偶恒等式","anchor":{"pdf_page":88,"printed_page":69},"formula":"∫(Hf)g dx=-∫f(Hg)dx"},
+    {"type":"proof_step","id":"step_ch2_hilbert_duality","name_en":"Duality step for 1<p≤2","name_zh":"1<p≤2 的对偶步骤","anchor":{"pdf_page":89,"printed_page":70},"notes_zh":"利用 q 为 p 的共轭指数且 q≥2，把 q 上已知有界性通过恒等式 (25) 转回 p。"},
+    {"type":"definition","id":"def_ch2_maximal_function","name_en":"Hardy-Littlewood maximal function","name_zh":"极大函数 f*","anchor":{"pdf_page":89,"printed_page":70},"formula":"f*(x)=sup_{x∈B}[1/m(B)]∫_B|f(y)|dy"},
+    {"type":"inequality","id":"ineq_ch2_26_maximal_strong_lp","number":"(26)","name_en":"Strong Lp inequality for the maximal function","name_zh":"极大函数的强 L^p 不等式","anchor":{"pdf_page":89,"printed_page":70},"formula":"||f*||_p≤A_p||f||_p, 1<p≤∞"},
+    {"type":"inequality","id":"ineq_ch2_27_maximal_weak_11","number":"(27)","name_en":"Weak type (1,1) inequality for the maximal function","name_zh":"极大函数的弱 (1,1) 型估计","anchor":{"pdf_page":90,"printed_page":71},"formula":"m({x:f*(x)>α})≤(A/α)||f||_1"},
+    {"type":"theorem","id":"thm_ch2_4_1_maximal_lp","number":"4.1","name_en":"Lp inequality for the maximal function","name_zh":"极大函数的 L^p 有界性定理","anchor":{"pdf_page":90,"printed_page":71},"core_statement_zh":"若 f∈L^p(R^d)、1<p≤∞，则 f*∈L^p，并满足 ||f*||_p≤A_p||f||_p。","proof_status":"continues_in_chunk_005b"}
+  ],
+  "translation_status":{"learning_layer_zh":"completed_for_pdf_81_90","theorem_and_definition_statements":"completed","proof_logic":"completed","proof_sentence_level_translation":"pending"},
+  "figures_verified":[
+    {"id":"fig_ch2_5_hilbert_examples","pdf_page":84,"verification":"rendered_and_visually_checked"},
+    {"id":"fig_ch2_6_cauchy_rectangle","pdf_page":86,"verification":"rendered_and_visually_checked"}
+  ],
+  "next_action":"PDF 91-100：完成 Theorem 4.1 极大函数 L^p 估计，并进入 H^1_r 原子分解。"
+}
