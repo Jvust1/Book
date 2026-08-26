@@ -1,0 +1,27 @@
+{
+  "chunk_id": "chunk_007b",
+  "parent_storage_chunk": "chunk_007",
+  "pdf_pages": [131, 140],
+  "printed_pages": [112, 121],
+  "status": "structured_v0.8_translation_learning_layer",
+  "chapter_id": "chapter_03",
+  "sections": [
+    {"id":"ch03_s02_01","number":"2.1","title_en":"The Hilbert transform and pv(1/x)","title_zh":"Hilbert 变换与 pv(1/x)","pdf_pages":[130,134],"printed_pages":[111,115],"continued_from":"chunk_007a"},
+    {"id":"ch03_s02_02","number":"2.2","title_en":"Homogeneous distributions","title_zh":"齐次分布","pdf_pages":[134,144],"printed_pages":[115,125],"batch_coverage":[134,140],"continues_in":"chunk_008a"}
+  ],
+  "key_objects": [
+    {"type":"definition","id":"def_ch3_pv_1_over_x","name_zh":"主值分布 pv(1/x)","name_en":"principal value distribution pv(1/x)","anchor":{"pdf_page":131,"printed_page":112},"formula":"pv(1/x)(φ)=lim_{ε→0}∫_{|x|≥ε} φ(x) dx/x","continued_from":"def_ch3_pv_1_over_x_start"},
+    {"type":"identity","id":"id_ch3_hilbert_pv_convolution","name_zh":"Hilbert 变换的主值卷积表示","name_en":"Hilbert transform as convolution with pv(1/x)","anchor":{"pdf_page":131,"printed_page":112},"formula":"H(f)=(1/π) pv(1/x)*f"},
+    {"type":"theorem","id":"thm_ch3_2_1_pv_equivalences","number":"2.1","name_zh":"pv(1/x) 的等价表示与 Fourier 变换","name_en":"Equivalent formulations of pv(1/x)","anchor":{"pdf_page":132,"printed_page":113},"proof_end":{"pdf_page":134,"printed_page":115},"formulas":["pv(1/x)=d/dx(log|x|)","pv(1/x)=1/2(1/(x-i0)+1/(x+i0))","[pv(1/x)]^=(π/i) sign(ξ)"]},
+    {"type":"identity","id":"id_ch3_boundary_values_1_over_x","name_zh":"1/(x±i0) 的边界值分布公式","name_en":"boundary value distributions 1/(x±i0)","anchor":{"pdf_page":132,"printed_page":113},"formulas":["1/(x-i0)=pv(1/x)+iπδ","1/(x+i0)=pv(1/x)-iπδ"]},
+    {"type":"definition","id":"def_ch3_homogeneous_distribution","name_zh":"齐次分布","name_en":"homogeneous distribution","anchor":{"pdf_page":134,"printed_page":115},"formula":"F_a=a^λF"},
+    {"type":"proposition","id":"prop_ch3_2_2_fourier_homogeneous_degree","number":"2.2","name_zh":"齐次分布 Fourier 变换的次数变化","name_en":"Fourier transform of a homogeneous tempered distribution","anchor":{"pdf_page":135,"printed_page":116},"formula":"deg(F^)=-d-λ"},
+    {"type":"theorem","id":"thm_ch3_2_3_fourier_power_distribution","number":"2.3","name_zh":"幂函数齐次分布的 Fourier 变换","name_en":"Fourier transform of H_λ","anchor":{"pdf_page":135,"printed_page":116},"proof_end":{"pdf_page":136,"printed_page":117},"formula":"(H_λ)^=c_λ H_{-d-λ},  -d<λ<0"},
+    {"type":"definition","id":"def_ch3_regular_distribution","name_zh":"正则齐次分布/离原点光滑的分布","name_en":"regular distribution","anchor":{"pdf_page":136,"printed_page":117}},
+    {"type":"theorem","id":"thm_ch3_2_4_regular_homogeneous_fourier","number":"2.4","name_zh":"正则齐次分布与 Fourier 变换的互逆次数规律","name_en":"Fourier transform of regular homogeneous distributions","anchor":{"pdf_page":137,"printed_page":118},"proof_end":{"pdf_page":138,"printed_page":119},"formula":"λ ↔ -d-λ"},
+    {"type":"theorem","id":"thm_ch3_2_5_homogeneous_extension","number":"2.5","name_zh":"离原点齐次函数延拓为齐次分布的存在唯一性与临界次数条件","name_en":"Homogeneous extension theorem","anchor":{"pdf_page":138,"printed_page":119},"proof_status":"continues_in_chunk_008a","conditions":["λ≠-d-m 时存在唯一齐次延拓","λ=-d-m 时存在性等价于球面矩消失条件","临界次数下延拓的非唯一性由 δ 的 m 阶导数组成"]},
+    {"type":"figure","id":"fig_ch3_2_2_figure1_mellin_halfplane","number":"Figure 1","name_zh":"Mellin 型积分 I(A) 的半平面与伸缩示意","anchor":{"pdf_page":140,"printed_page":121},"visual_checked":true}
+  ],
+  "translation_status":{"learning_layer_zh":"completed_for_pdf_131_140","theorem_and_definition_statements":"completed","proof_logic":"completed","proof_sentence_level_translation":"pending"},
+  "next_action":"PDF 141-150：完成 Theorem 2.5，进入基本解、常系数 PDE 基本解与 parametrix。"
+}
