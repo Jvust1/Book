@@ -22,8 +22,19 @@ Book 是一个面向真实课程学习的 **Course OS**：把持续上传的多�
 - [开发路线图](docs/ROADMAP.md)
 - [Drive 目录约定](docs/DRIVE_LAYOUT.md)
 
+## 已导入教材
+
+### Functional Analysis: Introduction to Further Topics in Analysis
+
+- 中文工作名：《泛函分析：分析学进一步专题导论》
+- 作者：Elias M. Stein、Rami Shakarchi
+- PDF：442 页；正文纸质页 1-423
+- 已按 PDF 物理页每 20 页拆分为 23 个分卷
+- 已完成首轮页码映射、双语目录与 `chunk_001` 中文结构化
+- 项目目录：[books/functional-analysis](books/functional-analysis/README.md)
+
 ## 当前状态
 
-项目已完成产品与数据架构基线设计。下一阶段从第一批教材 PDF 开始做真实结构化样板。
+产品与数据架构基线已完成，第一本真实教材已开始结构化。下一步从 `chunk_002`（PDF 21-40 / 纸质页 2-21）继续处理第一章正式正文。
 
 原始讨论基线保留在 Issue #1：`Book Course OS 总体计划与架构基线`。
