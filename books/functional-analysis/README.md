@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.20
+# Functional Analysis 中文结构化数据 v0.21
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,12 +7,12 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- 已连续结构化 `chunk_001` 至 `chunk_014b`（PDF 1-280）
-- `chunk_015a`：PDF 281-290 / 纸质 262-271，完成 Chapter 6 §5.3 Theorem 5.5 与条件期望形式；完整完成 §6 Solution of the Dirichlet problem（Theorem 6.1、Proposition 6.2、Corollary 6.3、outside cone condition）；进入 §7 Exercises 并建立 Exercise 1-14 独立题目节点
-- 中文学习层已同步到 PDF 290
-- Figure 2 `Brownian motion stopping on S and then ∂R` 与 Figure 3 `Truncated cone at x disjoint from R` 已视觉核对并保存为图像资产
-- PDF 281-290 已逐页视觉抽查；除 Figure 2/3 外，其余页为正常文字/公式/习题版式
-- 搜索索引：新增 `search_index_delta_v0_20.jsonl`；导出包包含合并后的 `search_index_v0_20.jsonl`
+- 已连续结构化 `chunk_001` 至 `chunk_015a`（PDF 1-290）
+- `chunk_015b`：PDF 291-300 / 纸质 272-281，完成 Chapter 6 Exercises 15-21 与 Problems 1-7；正式进入 Chapter 7《A Glimpse into Several Complex Variables》，完成 §1 Elementary properties（Proposition 1.1、Proposition 1.2）并进入 §2 Hartogs’ phenomenon，完成 Theorem 2.1 的陈述与 Lemma 2.2，Theorem 2.1 证明跨批次继续
+- 中文学习层已同步到 PDF 300
+- Chapter 7 Figure 1 `Õ contains the shaded region` 已视觉核对并保存为 `figures/fig_ch7_01_hartogs_shaded_product.png`
+- PDF 291-300 已逐页视觉抽查；除 Chapter 7 Figure 1 外，其余页为正常文字/公式/习题版式
+- 搜索索引：新增 `search_index_delta_v0_21.jsonl`；导出包包含合并后的 `search_index_v0_21.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -30,8 +30,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 290
-- 对应纸质正文：271
-- 下一批：PDF 291-300
-- 当前章节：Chapter 6 / 7 Exercises
-- 当前跨批次对象：无；PDF 291 从 Exercise 15 开始
+- 已结构化到：PDF 300
+- 对应纸质正文：281
+- 下一批：PDF 301-310
+- 当前章节：Chapter 7 / 2 Hartogs’ phenomenon: an example
+- 当前跨批次对象：Theorem 2.1 的证明（PDF 300 已开始，PDF 301 继续）
