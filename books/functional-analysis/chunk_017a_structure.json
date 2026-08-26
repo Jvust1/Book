@@ -1,0 +1,51 @@
+{
+  "chunk_id": "chunk_017a",
+  "parent_storage_chunk": "chunk_017",
+  "pdf_pages": [321, 330],
+  "printed_pages": [302, 311],
+  "status": "structured_v0.24_translation_learning_layer",
+  "chapter_ids": ["chapter_07"],
+  "sections": [
+    {"id":"ch07_s07","number":"7","title_en":"Approximation and extension theorems","title_zh":"逼近与延拓定理","batch_coverage":[321,326],"continued_from":"chunk_016b","completed_in":"chunk_017a"},
+    {"id":"ch07_s08","number":"8","title_en":"Appendix: The upper half-space","title_zh":"附录：上半空间","batch_coverage":[326,330],"continues_in":"chunk_017b"}
+  ],
+  "continuations": [
+    {"object_id":"thm_ch7_7_1_baouendi_treves","continued_from":"chunk_016b","completed_in":"chunk_017a","pdf_page":321},
+    {"object_id":"sec_ch7_8_2_cauchy_integral_start","started_in":"chunk_017a","continues_in":"chunk_017b","pdf_page":330}
+  ],
+  "visual_check": {"pdf_pages":[321,330],"result":"checked","new_standalone_teaching_figures":0},
+  "key_objects": [
+    {"type":"formula","id":"formula_ch7_25_gaussian_approximation","number":"(25)","name_zh":"Baouendi-Treves 证明中的高斯逼近核","name_en":"Gaussian approximation kernel in the Baouendi-Treves proof","pdf_page":321},
+    {"type":"concept","id":"concept_ch7_three_properties_Fuepsilon","name_zh":"F^u_ε 的三个关键性质","name_en":"three key properties of F^u_epsilon","pdf_page":321},
+    {"type":"formula","id":"formula_ch7_26_positive_real_part","number":"(26)","name_zh":"切片坐标下的高斯衰减估计","name_en":"Gaussian decay estimate in slice coordinates","pdf_page":321},
+    {"type":"lemma","id":"lem_ch7_7_2_complex_gaussian_matrix","number":"7.2","name_zh":"复矩阵高斯积分恒等式","name_en":"complex-matrix Gaussian integral identity","pdf_page":322},
+    {"type":"formula","id":"formula_ch7_27_complex_gaussian_identity","number":"(27)","name_zh":"复矩阵高斯积分公式","name_en":"complex Gaussian identity","pdf_page":322},
+    {"type":"corollary","id":"cor_ch7_7_3_complex_approx_identity","number":"7.3","name_zh":"复矩阵高斯核构成逼近恒等","name_en":"complex Gaussian kernels form an approximation to the identity","pdf_page":322},
+    {"type":"lemma","id":"lem_ch7_7_4_slice_derivative_identity","number":"7.4","name_zh":"切片积分关于 u_j 的导数恒等式","name_en":"slice derivative identity","pdf_page":322},
+    {"type":"formula","id":"formula_ch7_28_slice_derivative","number":"(28)","name_zh":"切片导数公式","name_en":"slice derivative formula","pdf_page":322},
+    {"type":"formula","id":"formula_ch7_29_difference_slices","number":"(29)","name_zh":"两个切片积分的差","name_en":"difference between two slice integrals","pdf_page":324},
+    {"type":"formula","id":"formula_ch7_30_weak_slice_identity","number":"(30)","name_zh":"弱形式下的积分恒等式","name_en":"integrated weak slice identity","pdf_page":325},
+    {"type":"formula","id":"formula_ch7_31_distributional_slice_identity","number":"(31)","name_zh":"分布意义切向 CR 的切片恒等式","name_en":"slice identity with distributional L_j(f)","pdf_page":325},
+    {"type":"theorem","id":"thm_ch7_7_1_baouendi_treves_complete","number":"7.1","name_zh":"Baouendi-Treves 逼近定理证明完成","name_en":"completion of the Baouendi-Treves approximation theorem","pdf_page":325},
+    {"type":"theorem","id":"thm_ch7_7_5_lewy_extension","number":"7.5","name_zh":"Lewy 延拓定理","name_en":"Lewy extension theorem","pdf_page":326},
+    {"type":"section","id":"sec_ch7_8_upper_half_space","number":"8","name_zh":"附录：上半空间","name_en":"Appendix: The upper half-space","pdf_page":326},
+    {"type":"definition","id":"def_ch7_upper_half_space_U","name_zh":"复上半空间 U","name_en":"upper half-space U","pdf_page":326},
+    {"type":"formula","id":"formula_ch7_32_boundary_U","number":"(32)","name_zh":"上半空间边界","name_en":"boundary of the upper half-space","pdf_page":326},
+    {"type":"concept","id":"concept_ch7_cayley_ball_equivalence","name_zh":"上半空间与单位球的双全纯等价","name_en":"biholomorphic equivalence between U and the unit ball","pdf_page":326},
+    {"type":"definition","id":"def_ch7_boundary_measure_beta","name_zh":"边界自然测度 dβ","name_en":"natural boundary measure d beta","pdf_page":326},
+    {"type":"section","id":"sec_ch7_8_1_hardy_space","number":"8.1","name_zh":"上半空间 Hardy 空间","name_en":"Hardy space","pdf_page":327},
+    {"type":"definition","id":"def_ch7_H2_U","name_zh":"Hardy 空间 H^2(U)","name_en":"Hardy space H^2(U)","pdf_page":327},
+    {"type":"theorem","id":"thm_ch7_8_1_H2_boundary_values","number":"8.1","name_zh":"H^2(U) 的 L^2 边界值","name_en":"L2 boundary values for H^2(U)","pdf_page":327},
+    {"type":"lemma","id":"lem_ch7_8_2_holomorphic_L2_sup","number":"8.2","name_zh":"全纯函数的局部 L^2 控制","name_en":"local L2 control of holomorphic functions","pdf_page":327},
+    {"type":"definition","id":"def_ch7_weighted_H_space","name_zh":"Fourier 表示所用加权 Hilbert 空间 H","name_en":"weighted Hilbert space H for the Fourier representation","pdf_page":328},
+    {"type":"formula","id":"formula_ch7_33_H2_fourier_representation","number":"(33)","name_zh":"H^2(U) 的 Fourier-Laplace 表示","name_en":"Fourier-Laplace representation of H^2(U)","pdf_page":328},
+    {"type":"proposition","id":"prop_ch7_8_3_fourier_representation","number":"8.3","name_zh":"上半空间 Hardy 函数的 Fourier 表示定理","name_en":"Fourier representation theorem for H^2(U)","pdf_page":328},
+    {"type":"formula","id":"formula_ch7_34_norm_identity","number":"(34)","name_zh":"H、H^2(U) 与边界 L^2 的等距恒等式","name_en":"norm identity among H, H^2(U), and the boundary L2 space","pdf_page":328},
+    {"type":"definition","id":"def_ch7_upper_halfspace_CR_fields","name_zh":"上半空间边界的切向 Cauchy-Riemann 向量场","name_en":"tangential Cauchy-Riemann fields on the upper-half-space boundary","pdf_page":329},
+    {"type":"formula","id":"formula_ch7_35_weak_CR_upper_halfspace","number":"(35)","name_zh":"上半空间边界上的弱 CR 条件","name_en":"weak CR condition on the upper-half-space boundary","pdf_page":329},
+    {"type":"proposition","id":"prop_ch7_8_4_boundary_characterization","number":"8.4","name_zh":"H^2(U) 边界值的切向 CR 刻画","name_en":"tangential-CR characterization of H^2(U) boundary values","pdf_page":329},
+    {"type":"formula","id":"formula_ch7_36_partial_fourier_transform","number":"(36)","name_zh":"x_n 变量的部分 Fourier 变换","name_en":"partial Fourier transform in x_n","pdf_page":330},
+    {"type":"section","id":"sec_ch7_8_2_cauchy_integral_start","number":"8.2","name_zh":"Cauchy 积分","name_en":"Cauchy integral","pdf_page":330,"continues_in":"chunk_017b"},
+    {"type":"definition","id":"def_ch7_r_zw_cauchy_szego","name_zh":"Cauchy-Szegő 核的基本函数 r(z,w)","name_en":"basic function r(z,w) for the Cauchy-Szego kernel","pdf_page":330,"continues_in":"chunk_017b"}
+  ]
+}
