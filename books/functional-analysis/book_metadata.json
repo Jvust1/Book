@@ -1,0 +1,25 @@
+{
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "title_en": "Functional Analysis: Introduction to Further Topics in Analysis",
+  "title_zh": "泛函分析：分析学进一步专题导论",
+  "authors": ["Elias M. Stein", "Rami Shakarchi"],
+  "publisher": "Princeton University Press",
+  "year": 2011,
+  "isbn": "978-0-691-11387-6",
+  "series": "Princeton Lectures in Analysis IV",
+  "pdf_total_pages": 442,
+  "main_text_printed_pages": "1-423",
+  "main_text_pdf_pages": "20-442",
+  "page_mapping_rule_note": "本 PDF 内置 page labels；正文 printed_page=n 对应 pdf_page=n+19。仍保留 PageMap，不把偏移规则作为唯一事实源。",
+  "translation_language": "zh-CN",
+  "source_language": "en",
+  "translation_policy": {
+    "retain_formulas": true,
+    "retain_figures": true,
+    "retain_original_terms_on_first_use": true,
+    "store_source_and_translation_separately": true
+  },
+  "toc_file": "toc_bilingual.json",
+  "page_map_file": "page_map.csv",
+  "chunks_manifest_file": "chunks_manifest.json"
+}
