@@ -1,0 +1,43 @@
+{
+  "chunk_id": "chunk_003a",
+  "parent_storage_chunk": "chunk_003",
+  "pdf_pages": [41, 50],
+  "printed_pages": [22, 31],
+  "status": "structured_v0.2_translation_learning_layer",
+  "chapter_id": "chapter_01",
+  "sections": [
+    {"id":"ch01_s05_03","number":"5.3","title_en":"Some consequences","title_zh":"若干推论","pdf_pages":[40,42],"printed_pages":[21,23],"continued_from":"chunk_002"},
+    {"id":"ch01_s05_04","number":"5.4","title_en":"The problem of measure","title_zh":"测度问题","pdf_pages":[42,46],"printed_pages":[23,27]},
+    {"id":"ch01_s06","number":"6","title_en":"Complex Lp and Banach spaces","title_zh":"复数域上的 L^p 空间与巴拿赫空间","pdf_pages":[46,46],"printed_pages":[27,27]},
+    {"id":"ch01_s07","number":"7","title_en":"Appendix: The dual of C(X)","title_zh":"附录：C(X) 的对偶","pdf_pages":[47,null],"printed_pages":[28,null],"continues_in":"chunk_003b"},
+    {"id":"ch01_s07_01","number":"7.1","title_en":"The case of positive linear functionals","title_zh":"正线性泛函的情形","pdf_pages":[48,null],"printed_pages":[29,null],"continues_in":"chunk_003b"}
+  ],
+  "key_objects": [
+    {"type":"proposition","id":"prop_5_4_dense_extension","number":"5.4","name_zh":"稠密子空间上有界线性算子的唯一连续延拓","anchor":{"pdf_page":41,"printed_page":22}},
+    {"type":"definition","id":"def_dual_operator","name_zh":"对偶算子 T*","anchor":{"pdf_page":41,"printed_page":22},"formula":"T*(ℓ2)(f1)=ℓ2(T(f1))"},
+    {"type":"theorem","id":"thm_5_5_dual_operator_norm","number":"5.5","name_zh":"对偶算子的有界性与范数相等","anchor":{"pdf_page":41,"printed_page":22},"formula":"||T*||=||T||"},
+    {"type":"concept","id":"concept_l1_not_full_dual_linf","name_zh":"L^1 一般不是 L^∞ 的全部对偶","anchor":{"pdf_page":42,"printed_page":23}},
+    {"type":"theorem","id":"thm_5_6_finitely_additive_measure_R","number":"5.6","name_zh":"勒贝格测度到 R 所有子集上的平移不变有限可加延拓","anchor":{"pdf_page":42,"printed_page":23}},
+    {"type":"theorem","id":"thm_5_7_banach_integral","number":"5.7","name_zh":"圆周 R/Z 上有界函数的 Banach 积分","anchor":{"pdf_page":43,"printed_page":24}},
+    {"type":"definition","id":"def_banach_integral_sublinear_p","name_zh":"Banach 积分构造中的次线性泛函 p","anchor":{"pdf_page":43,"printed_page":24}},
+    {"type":"corollary","id":"cor_5_8_measure_circle","number":"5.8","name_zh":"R/Z 所有子集上的平移不变有限可加测度","anchor":{"pdf_page":45,"printed_page":26}},
+    {"type":"concept","id":"concept_complex_lp_adjustments","name_zh":"复数域 L^p / Banach 理论的修正","anchor":{"pdf_page":46,"printed_page":27}},
+    {"type":"definition","id":"def_complex_signum","name_zh":"复数符号函数","anchor":{"pdf_page":46,"printed_page":27},"formula":"sign(z)=z/|z| (z≠0), sign(0)=0"},
+    {"type":"concept","id":"concept_cx_dual_radon","name_zh":"C(X) 的对偶与 Radon 测度表示","anchor":{"pdf_page":47,"printed_page":28}},
+    {"type":"definition","id":"def_support_continuous","name_zh":"连续函数的支集","anchor":{"pdf_page":47,"printed_page":28}},
+    {"type":"fact","id":"fact_separation_closed_sets","name_zh":"用连续函数分离两个不交闭集","anchor":{"pdf_page":47,"printed_page":28}},
+    {"type":"fact","id":"fact_partition_of_unity","name_zh":"单位分解","anchor":{"pdf_page":47,"printed_page":28}},
+    {"type":"definition","id":"def_borel_measure","name_zh":"Borel σ-代数与 Borel 测度","anchor":{"pdf_page":48,"printed_page":29}},
+    {"type":"definition","id":"def_signed_borel_measure","name_zh":"有限符号 Borel 测度与全变差","anchor":{"pdf_page":48,"printed_page":29}},
+    {"type":"definition","id":"def_positive_linear_functional","name_zh":"正线性泛函","anchor":{"pdf_page":48,"printed_page":29}},
+    {"type":"theorem","id":"thm_7_1_riesz_positive","number":"7.1","name_zh":"C(X) 上正线性泛函的测度表示","anchor":{"pdf_page":48,"printed_page":29},"proof_status":"continues_in_chunk_003b"},
+    {"type":"definition","id":"def_outer_measure_from_positive_functional","name_zh":"由正线性泛函构造外测度","anchor":{"pdf_page":48,"printed_page":29}}
+  ],
+  "translation_status": {
+    "learning_layer_zh": "completed_for_pdf_41_50",
+    "theorem_and_definition_statements": "completed",
+    "proof_logic": "completed",
+    "proof_sentence_level_translation": "pending"
+  },
+  "next_action": "PDF 51-60：完成 Theorem 7.1 唯一性，进入 7.2 The main result 与 7.3 An extension。"
+}
