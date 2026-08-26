@@ -1,0 +1,39 @@
+{
+  "chunk_id": "chunk_008b",
+  "parent_storage_chunk": "chunk_008",
+  "pdf_pages": [151, 160],
+  "printed_pages": [132, 141],
+  "status": "structured_v0.9_translation_learning_layer",
+  "chapter_id": "chapter_03",
+  "sections": [
+    {"id":"ch03_s02_05","number":"2.5","title_en":"Parametrices and regularity for elliptic equations","title_zh":"椭圆方程的拟基本解与正则性","pdf_pages":[150,153],"printed_pages":[131,134],"batch_coverage":[151,153],"continued_from":"chunk_008a"},
+    {"id":"ch03_s03","number":"3","title_en":"Calderón-Zygmund distributions and Lp estimates","title_zh":"Calderón–Zygmund 分布与 L^p 估计","pdf_pages":[153,164],"printed_pages":[134,145],"batch_coverage":[153,160],"continues_in":"chunk_009a"},
+    {"id":"ch03_s03_01","number":"3.1","title_en":"Defining properties","title_zh":"定义性质","pdf_pages":[153,157],"printed_pages":[134,138]},
+    {"id":"ch03_s03_02","number":"3.2","title_en":"The Lp theory","title_zh":"L^p 理论","pdf_pages":[157,164],"printed_pages":[138,145],"batch_coverage":[157,160],"continues_in":"chunk_009a"}
+  ],
+  "key_objects": [
+    {"type":"definition","id":"def_ch3_regular_parametrix","name_zh":"正则拟基本解","name_en":"regular parametrix","anchor":{"pdf_page":151,"printed_page":132},"description":"拟基本解 Q 离原点与 C∞ 函数一致"},
+    {"type":"definition","id":"def_ch3_elliptic_operator","name_zh":"椭圆微分算子","name_en":"elliptic differential operator","anchor":{"pdf_page":151,"printed_page":132},"formula":"|P(ξ)|≥c|ξ|^m for sufficiently large |ξ|","equivalent_condition":"主部 P_m(ξ)=0 仅在 ξ=0"},
+    {"type":"theorem","id":"thm_ch3_2_12_elliptic_regular_parametrix","number":"2.12","name_zh":"每个椭圆算子都有正则拟基本解","name_en":"Every elliptic operator has a regular parametrix","anchor":{"pdf_page":151,"printed_page":132},"proof_end":{"pdf_page":152,"printed_page":133},"construction":"Q^=γ/P"},
+    {"type":"estimate","id":"eq_ch3_17_symbol_decay","number":"(17)","name_zh":"椭圆符号逆的导数衰减估计","name_en":"derivative decay estimate for γ/P","anchor":{"pdf_page":151,"printed_page":132},"formula":"|∂_ξ^α(γ(ξ)/P(ξ))|≤A_α|ξ|^{-m-|α|}"},
+    {"type":"corollary","id":"cor_ch3_2_13_compact_parametrix","number":"2.13","name_zh":"任意小球内支撑的正则拟基本解","name_en":"compactly supported regular parametrix","anchor":{"pdf_page":152,"printed_page":133},"formula":"supp(Q_ε)⊂{|x|≤ε}"},
+    {"type":"theorem","id":"thm_ch3_2_14_elliptic_regularity","number":"2.14","name_zh":"椭圆正则性：LU 光滑则 U 光滑","name_en":"elliptic regularity via a regular parametrix","anchor":{"pdf_page":152,"printed_page":133},"proof_end":{"pdf_page":153,"printed_page":134},"statement":"L(U)=f∈C∞(Ω) ⇒ U∈C∞(Ω)"},
+    {"type":"concept","id":"concept_ch3_hypoelliptic","name_zh":"亚椭圆/次椭圆性（hypo-elliptic）","name_en":"hypo-ellipticity","anchor":{"pdf_page":152,"printed_page":133},"description":"满足‘LU 光滑推出 U 光滑’的算子；热算子是非椭圆但 hypo-elliptic 的例子"},
+    {"type":"definition","id":"def_ch3_singular_integral_cz","name_zh":"Calderón–Zygmund 奇异积分算子","name_en":"Calderón-Zygmund singular integral operator","anchor":{"pdf_page":153,"printed_page":134},"formula":"T(f)=f*K, (Tf)^=m(ξ)f^(ξ), m=K^"},
+    {"type":"condition","id":"cond_ch3_cz_kernel_differential_20","number":"(20)","name_zh":"Calderón–Zygmund 核的微分衰减条件","name_en":"Calderón-Zygmund kernel differential estimates","anchor":{"pdf_page":153,"printed_page":134},"formula":"|∂_x^α k(x)|≤c_α|x|^{-d-|α|}"},
+    {"type":"definition","id":"def_ch3_cn_normalized_bump","name_zh":"C^(n)-归一化 bump 函数","name_en":"C^(n)-normalized bump function","anchor":{"pdf_page":154,"printed_page":135}},
+    {"type":"condition","id":"cond_ch3_cz_cancellation_21","number":"(21)","name_zh":"Calderón–Zygmund 消去条件","name_en":"Calderón-Zygmund cancellation condition","anchor":{"pdf_page":154,"printed_page":135},"formula":"sup_{r>0}|K(φ_r)|≤A"},
+    {"type":"proposition","id":"prop_ch3_3_1_cz_equivalent_characterizations","number":"3.1","name_zh":"Calderón–Zygmund 分布的三种等价刻画","name_en":"equivalent characterizations of Calderón-Zygmund distributions","anchor":{"pdf_page":154,"printed_page":135},"proof_end":{"pdf_page":156,"printed_page":137},"characterizations":["核微分估计+消去条件","Fourier 乘子离原点光滑且 |∂^αm(ξ)|≲|ξ|^{-|α|}","核微分估计+K^ 有界"]},
+    {"type":"condition","id":"cond_ch3_cz_multiplier_22","number":"(22)","name_zh":"Calderón–Zygmund Fourier 乘子导数条件","name_en":"Calderón-Zygmund multiplier derivative estimates","anchor":{"pdf_page":154,"printed_page":135},"formula":"|∂_ξ^α m(ξ)|≤c_α|ξ|^{-|α|}"},
+    {"type":"concept","id":"concept_ch3_cz_scaling_invariance","name_zh":"Calderón–Zygmund 条件的伸缩不变性","name_en":"dilation invariance of Calderón-Zygmund conditions","anchor":{"pdf_page":154,"printed_page":135}},
+    {"type":"criterion","id":"crit_ch3_cz_associated_kernel_annular_integral","name_zh":"给定 k 可延拓为 Calderón–Zygmund 分布的环域积分判据","name_en":"annular integral criterion for a Calderón-Zygmund extension","anchor":{"pdf_page":156,"printed_page":137},"formula":"sup_{0<a<b}|∫_{a<|x|<b}k(x)dx|<∞"},
+    {"type":"relation","id":"rel_ch3_parametrix_derivatives_cz","name_zh":"椭圆拟基本解的至多 m 阶导数是 Calderón–Zygmund 分布","name_en":"derivatives of elliptic parametrices are Calderón-Zygmund distributions","anchor":{"pdf_page":157,"printed_page":138},"condition":"|α|≤m"},
+    {"type":"theorem","id":"thm_ch3_3_2_cz_lp_boundedness","number":"3.2","name_zh":"Calderón–Zygmund 奇异积分的 L^p 有界性","name_en":"Lp boundedness of Calderón-Zygmund singular integrals","anchor":{"pdf_page":157,"printed_page":138},"formula":"||Tf||_p≤A_p||f||_p, 1<p<∞","proof_status":"continues_in_chunk_009a"},
+    {"type":"definition","id":"def_ch3_one_atom_cz","name_zh":"Calderón–Zygmund 证明中的 1-atom","name_en":"1-atom for the Calderón-Zygmund proof","anchor":{"pdf_page":158,"printed_page":139},"conditions":["supp(a)⊂B","∫|a|≤1","∫_B a=0"]},
+    {"type":"estimate","id":"eq_ch3_24_atom_tail","number":"(24)","name_zh":"1-atom 的奇异积分尾部 L^1 估计","name_en":"off-support L1 estimate for T(a)","anchor":{"pdf_page":158,"printed_page":139},"formula":"∫_{(B*)^c}|T(a)(x)|dx≤A"},
+    {"type":"estimate","id":"eq_ch3_25_kernel_smoothness_integral","number":"(25)","name_zh":"核平移差的积分光滑性估计","name_en":"integrated kernel smoothness estimate","anchor":{"pdf_page":158,"printed_page":139},"formula":"∫_{|x|≥2r}|k(x-y)-k(x)|dx≤A, |y|≤r"},
+    {"type":"lemma","id":"lem_ch3_3_3_good_bad_decomposition","number":"3.3","name_zh":"L^1 函数的 good/bad 分解","name_en":"good-bad decomposition","anchor":{"pdf_page":159,"printed_page":140},"proof_end":{"pdf_page":160,"printed_page":141},"description":"f=g+b，坏集由极大函数水平集的 Whitney 型立方体分解得到"}
+  ],
+  "translation_status":{"learning_layer_zh":"completed_for_pdf_151_160","theorem_and_definition_statements":"completed","proof_logic":"completed","proof_sentence_level_translation":"pending"},
+  "next_action":"PDF 161-170：完成 Theorem 3.2 的弱型估计、插值/对偶证明并进入 Chapter 3 Exercises。"
+}
