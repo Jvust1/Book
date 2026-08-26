@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.15
+# Functional Analysis 中文结构化数据 v0.16
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,12 +7,12 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- 已连续结构化 `chunk_001` 至 `chunk_012a`（PDF 1-230）
-- `chunk_012b`：PDF 231-240 / 纸质 212-221，完成 Chapter 5 §2.2 martingale 方法（Proposition 2.6、Theorem 2.8、Corollary 2.9、Theorem 2.10）；完成 §2.3 Kolmogorov zero-one law；完成 §2.4 一维 central limit theorem 的 characteristic-function 证明与 weak convergence 表述；进入 §2.5 R^d-valued random variables，并建立多维 CLT 的 Gaussian 极限测度设置
-- 中文学习层已同步到 PDF 240
-- Figure 3 `The functions φ_ε and ψ_ε in Lemma 2.15` 已视觉核对并保存为 `figures/fig_ch5_03_phi_psi_lemma_2_15.png`
-- PDF 231-240 已逐页视觉抽查；除 Figure 3 外，其余页为正常文字/公式版式
-- 搜索索引：新增 `search_index_delta_v0_15.jsonl`；导出包包含合并后的 `search_index_v0_15.jsonl`
+- 已连续结构化 `chunk_001` 至 `chunk_012b`（PDF 1-240）
+- `chunk_013a`：PDF 241-250 / 纸质 222-231，完成 Chapter 5 §2.5 Theorem 2.17 多维中心极限定理；完整完成 §2.6 Random walks 与 Theorem 2.18 的低维常返/高维暂留证明；进入 Chapter 5 Exercises 并建立 Exercise 1-21 独立题目节点，其中 Exercise 21(b) 跨到下一批继续
+- 中文学习层已同步到 PDF 250
+- Figure 4 `The random walk s_n in dimension two` 已视觉核对并保存为导出包图像资产 `figures/fig_ch5_04_random_walk_dimension_two.png`
+- PDF 241-250 已逐页视觉抽查；除 Figure 4 外，其余页为正常文字/公式/习题版式
+- 搜索索引：新增 `search_index_delta_v0_16.jsonl`；完整导出包包含合并后的 `search_index_v0_16.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -30,8 +30,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 240
-- 对应纸质正文：221
-- 下一批：PDF 241-250
-- 当前章节：Chapter 5 / 2.5 Random variables with values in R^d
-- 当前跨批次对象：Theorem 2.17 的正式陈述与证明（PDF 241 开始）
+- 已结构化到：PDF 250
+- 对应纸质正文：231
+- 下一批：PDF 251-260
+- 当前章节：Chapter 5 / 3 Exercises
+- 当前跨批次对象：Exercise 21(b) 的 q-adic normality 推广（PDF 251 继续）
