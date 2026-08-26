@@ -1,0 +1,41 @@
+{
+  "chunk_id": "chunk_023a",
+  "parent_storage_chunk": "chunk_023",
+  "pdf_pages": [441, 442],
+  "printed_pages": [422, 423],
+  "status": "structured_v0.36_translation_learning_layer",
+  "chapter_ids": ["backmatter_index"],
+  "sections": [
+    {
+      "id": "backmatter_index",
+      "title_en": "Index",
+      "title_zh": "索引",
+      "pdf_pages": [438, 442],
+      "printed_pages": [419, 423],
+      "batch_coverage": [441, 442],
+      "continued_from": "chunk_022b",
+      "completed_in": "chunk_023a"
+    }
+  ],
+  "continuations": [
+    {"object_id": "backmatter_index", "continued_from": "chunk_022b", "closed_in": "chunk_023a"}
+  ],
+  "figures": [],
+  "visual_check": {
+    "pdf_pages": [441, 442],
+    "result": "checked",
+    "dpi": 160,
+    "new_standalone_teaching_figures": 0,
+    "note": "Both final Index pages were rendered at 160 dpi and visually inspected; the Index ends on printed page 423."
+  },
+  "key_object_count": 97,
+  "index_entry_range": [135, 231],
+  "index_first_term": "measure",
+  "index_last_term": "zig-zag function",
+  "translation_status": {
+    "learning_layer_zh": "completed_for_pdf_441_442",
+    "index_navigation": "completed",
+    "sentence_level_literal_translation": "not_applicable_to_index"
+  },
+  "completion_state": "index_closed_book_source_complete"
+}
