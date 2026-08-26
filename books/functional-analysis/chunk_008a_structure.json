@@ -1,0 +1,30 @@
+{
+  "chunk_id": "chunk_008a",
+  "parent_storage_chunk": "chunk_008",
+  "pdf_pages": [141,150],
+  "printed_pages": [122,131],
+  "status": "structured_v0.8_translation_learning_layer",
+  "chapter_id": "chapter_03",
+  "sections": [
+    {"id":"ch03_s02_02","number":"2.2","title_en":"Homogeneous distributions","title_zh":"齐次分布","pdf_pages":[134,144],"printed_pages":[115,125],"batch_coverage":[141,144],"continued_from":"chunk_007b"},
+    {"id":"ch03_s02_03","number":"2.3","title_en":"Fundamental solutions","title_zh":"基本解","pdf_pages":[144,148],"printed_pages":[125,129]},
+    {"id":"ch03_s02_04","number":"2.4","title_en":"Fundamental solution to general partial differential equations with constant coefficients","title_zh":"一般常系数偏微分方程的基本解","pdf_pages":[148,150],"printed_pages":[129,131]},
+    {"id":"ch03_s02_05","number":"2.5","title_en":"Parametrices and regularity for elliptic equations","title_zh":"椭圆方程的拟基本解与正则性","pdf_pages":[150,null],"printed_pages":[131,null],"batch_coverage":[150,150],"continues_in":"chunk_008b"}
+  ],
+  "key_objects": [
+    {"type":"lemma","id":"lem_ch3_2_6_distinct_powers_logs","number":"2.6","name_zh":"不同幂次及对数幂项的线性独立性引理","name_en":"linear independence lemma for powers and logarithmic powers","anchor":{"pdf_page":141,"printed_page":122}},
+    {"type":"proof_continuation","id":"proof_ch3_2_5_homogeneous_extension_cont","number":"2.5","name_zh":"Theorem 2.5 齐次分布延拓定理的证明续段","name_en":"proof continuation of Theorem 2.5 homogeneous extension theorem","anchor":{"pdf_page":138,"printed_page":119},"proof_end":{"pdf_page":144,"printed_page":125},"continued_from":"chunk_007b"},
+    {"type":"corollary","id":"cor_ch3_2_7_no_degree_minus_d_extension","number":"2.7","name_zh":"不存在与 1/|x|^d 离原点一致的 -d 次齐次分布","name_en":"nonexistence of degree -d extension of 1/|x|^d","anchor":{"pdf_page":143,"printed_page":124}},
+    {"type":"definition","id":"def_ch3_principal_value_homogeneous_kernel","name_zh":"临界次数齐次核的主值分布 pv(k)","name_en":"principal value distribution pv(k)","anchor":{"pdf_page":144,"printed_page":125},"condition":"∫_{|x|=1} k(x)dσ(x)=0"},
+    {"type":"definition","id":"def_ch3_fundamental_solution","name_zh":"偏微分算子 L 的基本解","name_en":"fundamental solution","anchor":{"pdf_page":144,"printed_page":125},"formula":"L(F)=δ"},
+    {"type":"definition","id":"def_ch3_characteristic_polynomial","name_zh":"常系数微分算子的特征多项式","name_en":"characteristic polynomial","anchor":{"pdf_page":145,"printed_page":126},"formula":"P(ξ)=Σ_{|α|≤m} a_α(2πiξ)^α"},
+    {"type":"theorem","id":"thm_ch3_2_8_laplacian_fundamental_d_ge_3","number":"2.8","name_zh":"d≥3 时 Laplacian 的基本解","name_en":"fundamental solution of the Laplacian for d≥3","anchor":{"pdf_page":145,"printed_page":126},"formula":"F(x)=C_d|x|^{-d+2}, C_d=Γ(d/2-1)/(4π^{d/2})"},
+    {"type":"theorem","id":"thm_ch3_2_9_laplacian_fundamental_d_2","number":"2.9","name_zh":"二维 Laplacian 的对数基本解","name_en":"two-dimensional logarithmic fundamental solution","anchor":{"pdf_page":146,"printed_page":127},"formula":"F(x)=(1/(2π))log|x|"},
+    {"type":"definition","id":"def_ch3_heat_kernel_fundamental_distribution","name_zh":"热算子的因果基本解分布","name_en":"causal fundamental solution built from the heat kernel","anchor":{"pdf_page":147,"printed_page":128},"formula":"F(x,t)=H_t(x) for t>0; 0 for t≤0"},
+    {"type":"theorem","id":"thm_ch3_2_10_heat_operator_fundamental","number":"2.10","name_zh":"热算子 ∂t-Δx 的基本解","name_en":"fundamental solution of the heat operator","anchor":{"pdf_page":147,"printed_page":128},"proof_end":{"pdf_page":148,"printed_page":129},"formula":"(∂/∂t-Δ_x)F=δ"},
+    {"type":"theorem","id":"thm_ch3_2_11_constant_coefficient_pde_fundamental","number":"2.11","name_zh":"每个常系数线性偏微分算子都存在基本解","name_en":"existence of fundamental solutions for constant-coefficient PDEs","anchor":{"pdf_page":149,"printed_page":130},"proof_end":{"pdf_page":150,"printed_page":131}},
+    {"type":"definition","id":"def_ch3_parametrix","name_zh":"拟基本解（parametrix）","name_en":"parametrix","anchor":{"pdf_page":150,"printed_page":131},"formula":"LQ=δ+r,  r∈S","continues_in":"chunk_008b"}
+  ],
+  "translation_status":{"learning_layer_zh":"completed_for_pdf_141_150","theorem_and_definition_statements":"completed","proof_logic":"completed","proof_sentence_level_translation":"pending"},
+  "next_action":"PDF 151-160：继续 2.5 parametrix 与椭圆正则性，进入 Calderón-Zygmund 分布。"
+}
