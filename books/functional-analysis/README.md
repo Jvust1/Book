@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.3
+# Functional Analysis 中文结构化数据 v0.4
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -12,7 +12,8 @@
 - `chunk_003a`：PDF 41-50 / 纸质 22-31，算子延拓、对偶算子、Banach 积分、有限可加测度、C(X) 对偶、Theorem 7.1 前半
 - `chunk_003b`：PDF 51-60 / 纸质 32-41，Theorem 7.1 收尾、Proposition 7.2、Theorem 7.3、Theorem 7.4、Exercises 1-27
 - `chunk_004a`：PDF 61-70 / 纸质 42-51，Exercises 27-36、Problems 1-9，并进入第 2 章《调和分析中的 L^p 空间》
-- 中文学习层已同步到 PDF 70
+- `chunk_004b`：PDF 71-80 / 纸质 52-61，Riesz 插值定理、三线引理、Riesz 图、Hausdorff-Young、Young 卷积不等式，并进入 Hilbert 变换 L^p 理论
+- 中文学习层已同步到 PDF 80
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -21,7 +22,7 @@
 - 原文与中文学习层分层保存，不覆盖原 PDF。
 - PDF 物理页与纸质印刷页分离；`page_map.csv` 是事实源。
 - 20 页是存储分卷；实际结构化约 10 页一批，并优先保持节/定理/证明语义完整。
-- 图像保留原始锚点；PDF 70 的 Chapter 2 Figure 1 已建立图像锚点。
+- 图像保留原始锚点；本轮已视觉核对并建立 Figure 2、Figure 3、Figure 4 的原图锚点。
 - “预习 / 学习 / 复习 / 刷题”由用户主动选择，不设置流程锁。
 - 搜索支持定理/题目编号、中英文术语、别名、公式关键词、页码与语义检索。
 - 提问默认依据当前教材，回答必须返回 `source_anchor` 与可跳转教材位置；尚未结构化内容只能明确标注后使用原 PDF 兜底。
@@ -29,7 +30,7 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 70
-- 对应纸质正文：51
-- 下一批：PDF 71-80
-- 当前章节：Chapter 2 / 1 Early Motivations（跨批次继续）
+- 已结构化到：PDF 80
+- 对应纸质正文：61
+- 下一批：PDF 81-90
+- 当前章节：Chapter 2 / 3.1 The L^2 formalism（跨批次继续）
