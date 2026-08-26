@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.13
+# Functional Analysis 中文结构化数据 v0.14
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,30 +7,11 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- `chunk_001`：PDF 1-20
-- `chunk_002`：PDF 21-40
-- `chunk_003a`：PDF 41-50
-- `chunk_003b`：PDF 51-60
-- `chunk_004a`：PDF 61-70
-- `chunk_004b`：PDF 71-80
-- `chunk_005a`：PDF 81-90
-- `chunk_005b`：PDF 91-100
-- `chunk_006a`：PDF 101-110
-- `chunk_006b`：PDF 111-120
-- `chunk_007a`：PDF 121-130
-- `chunk_007b`：PDF 131-140
-- `chunk_008a`：PDF 141-150
-- `chunk_008b`：PDF 151-160
-- `chunk_009a`：PDF 161-170
-- `chunk_009b`：PDF 171-180
-- `chunk_010a`：PDF 181-190
-- `chunk_010b`：PDF 191-200
-- `chunk_011a`：PDF 201-210
-- `chunk_011b`：PDF 211-220 / 纸质 192-201，完成 Chapter 5 §1.2 无限 Bernoulli 乘积空间与 Rademacher 函数、相互独立；完成 §1.3 的 `||S_N||_2=√N` 与依概率收敛；建立分布测度/期望/方差/Gaussian 分布；完成 De Moivre 中心极限定理；完成 Theorem 1.4(a) 与 Corollary 1.5，并开始 Lemma 1.6
-- 中文学习层已同步到 PDF 220
-- Figure 1 `The Rademacher functions r1 and r2` 已视觉核对并保存为 `figures/fig_ch5_01_rademacher_r1_r2.png`
-- Figure 2 `Approximating the integral of a Gaussian` 已视觉核对并保存为 `figures/fig_ch5_02_gaussian_integral_approx.png`
-- 搜索索引：新增 `search_index_delta_v0_13.jsonl`；导出包包含合并后的 `search_index_v0_13.jsonl`
+- 已连续结构化 `chunk_001` 至 `chunk_011b`（PDF 1-220）
+- `chunk_012a`：PDF 221-230 / 纸质 202-211，完成 Chapter 5 Theorem 1.4(b)、§1.7 Random Fourier series / Theorem 1.7 / Khinchin Lemma 1.8、§1.8 一般 Bernoulli 试验；完成 §2.1 独立同分布大数强律的遍历论证明；进入 §2.2 条件期望与 martingale，完成 Proposition 2.4、Lemma 2.5，并开始 Proposition 2.6
+- 中文学习层已同步到 PDF 230
+- PDF 221-230 已逐页视觉抽查；本批无新的独立教学图
+- 搜索索引：新增 `search_index_delta_v0_14.jsonl`；导出包包含合并后的 `search_index_v0_14.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -48,8 +29,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 220
-- 对应纸质正文：201
-- 下一批：PDF 221-230
-- 当前章节：Chapter 5 / 1.6 Random series
-- 当前跨批次对象：Lemma 1.6 的后半证明与 Theorem 1.4(b)
+- 已结构化到：PDF 230
+- 对应纸质正文：211
+- 下一批：PDF 231-240
+- 当前章节：Chapter 5 / 2.2 The role of martingales
+- 当前跨批次对象：Proposition 2.6 的证明
