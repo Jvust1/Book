@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.19
+# Functional Analysis 中文结构化数据 v0.20
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,12 +7,12 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- 已连续结构化 `chunk_001` 至 `chunk_014a`（PDF 1-270）
-- `chunk_014b`：PDF 271-280 / 纸质 252-261，完成 Chapter 6 Theorem 4.2；进入并推进 §5 Stopping times and the strong Markov property，完成 Dirichlet/harmonic-measure 引入、§5.1 stopping times + Blumenthal zero-one law（Proposition 5.1 / Lemma 5.2）、§5.2 Theorem 5.3 strong Markov property、§5.3 Theorem 5.4；并开始 stopped process `B̂_t^y`
-- 中文学习层已同步到 PDF 280
-- Figure 1 `Path ω, exiting at time τ=τ(ω)` 已视觉核对并保存为 `figures/fig_ch6_01_exit_path_at_tau.png`
-- PDF 271-280 已逐页视觉抽查；除 Figure 1 外，其余页为正常文字/公式版式
-- 搜索索引：新增 `search_index_delta_v0_19.jsonl`；导出包包含合并后的 `search_index_v0_19.jsonl`
+- 已连续结构化 `chunk_001` 至 `chunk_014b`（PDF 1-280）
+- `chunk_015a`：PDF 281-290 / 纸质 262-271，完成 Chapter 6 §5.3 Theorem 5.5 与条件期望形式；完整完成 §6 Solution of the Dirichlet problem（Theorem 6.1、Proposition 6.2、Corollary 6.3、outside cone condition）；进入 §7 Exercises 并建立 Exercise 1-14 独立题目节点
+- 中文学习层已同步到 PDF 290
+- Figure 2 `Brownian motion stopping on S and then ∂R` 与 Figure 3 `Truncated cone at x disjoint from R` 已视觉核对并保存为图像资产
+- PDF 281-290 已逐页视觉抽查；除 Figure 2/3 外，其余页为正常文字/公式/习题版式
+- 搜索索引：新增 `search_index_delta_v0_20.jsonl`；导出包包含合并后的 `search_index_v0_20.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -30,8 +30,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 280
-- 对应纸质正文：261
-- 下一批：PDF 281-290
-- 当前章节：Chapter 6 / 5.3 Other forms of the strong Markov Property
-- 当前跨批次对象：stopped process `B̂_t^y` 及两个 stopping times `σ≤τ` 的最终 strong-Markov/Dirichlet 形式（PDF 281 继续）
+- 已结构化到：PDF 290
+- 对应纸质正文：271
+- 下一批：PDF 291-300
+- 当前章节：Chapter 6 / 7 Exercises
+- 当前跨批次对象：无；PDF 291 从 Exercise 15 开始
