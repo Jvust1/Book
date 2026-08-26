@@ -1,10 +1,12 @@
 {
-  "version": "0.2",
+  "version": "0.3",
   "book_id": "stein_shakarchi_functional_analysis",
   "default_scope": "this_book",
   "retrieval_order": [
     "exact_number_and_title_match",
     "bilingual_keyword_alias_match",
+    "formula_keyword_match",
+    "printed_or_pdf_page_match",
     "structured_object_semantic_match",
     "section_and_translation_match",
     "raw_pdf_fallback"
@@ -12,9 +14,24 @@
   "answer_policy": {
     "prefer_structured_sources": true,
     "must_return_source_anchors": true,
+    "must_return_jump_targets": true,
     "separate_raw_pdf_fallback": true,
     "do_not_invent_missing_structure": true,
     "if_not_yet_structured": "明确标注该页尚未完成结构化，可用原始 PDF 搜索作为临时依据"
+  },
+  "features": {
+    "search": {
+      "bilingual": true,
+      "number_lookup": true,
+      "formula_keyword_lookup": true,
+      "page_lookup": true,
+      "filter_by_object_type": true
+    },
+    "qa": {
+      "book_grounded": true,
+      "jump_back_to_source": true,
+      "raw_pdf_fallback_when_unstructured": true
+    }
   },
   "answer_output": [
     "direct_answer",
