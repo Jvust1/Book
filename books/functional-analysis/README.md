@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.22
+# Functional Analysis 中文结构化数据 v0.23
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,12 +7,11 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- 已连续结构化 `chunk_001` 至 `chunk_015b`（PDF 1-300）
-- `chunk_016a`：PDF 301-310 / 纸质 282-291，完成 Chapter 7 Theorem 2.1 的 Hartogs 延拓证明与直接推论；完整完成 §3 Inhomogeneous Cauchy-Riemann equations（Proposition 3.1、Proposition 3.2、Theorem 3.3）；进入 §4 boundary/tangential Cauchy-Riemann equations，做到 differential-form 的 `\bar∂w` 定义起点
-- 中文学习层已同步到 PDF 310
-- Chapter 7 Figures 2-5 已逐页视觉核对并保存为独立图像资产
-- PDF 301-310 已逐页视觉抽查；除 Figures 2-5 外，其余页为正常文字/公式版式
-- 搜索索引：新增 `search_index_delta_v0_22.jsonl`；导出包包含合并后的 `search_index_v0_22.jsonl`，共 714 条记录
+- 已连续结构化 `chunk_001` 至 `chunk_016a`（PDF 1-310）
+- `chunk_016b`：PDF 311-320 / 纸质 292-301，完成 Chapter 7 §4 tangential Cauchy-Riemann equations 与 Theorem 4.1（Bochner theorem）；完整完成 §5 Levi form（Proposition 5.1、Levi form/pseudoconvexity）；完整完成 §6 local maximum principle（Theorem 6.1、Corollary 6.2）；进入 §7 approximation and extension，完成 weak tangential-CR formulation并陈述 Theorem 7.1（Baouendi-Treves），证明跨批次继续
+- 中文学习层已同步到 PDF 320
+- PDF 311-320 已逐页视觉抽查；本批没有新的独立教学图
+- 搜索索引：新增 `search_index_delta_v0_23.jsonl`；导出包包含合并后的 `search_index_v0_23.jsonl`，共 746 条记录
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -30,8 +29,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 310
-- 对应纸质正文：291
-- 下一批：PDF 311-320
-- 当前章节：Chapter 7 / 4 A boundary version: the tangential Cauchy-Riemann equations
-- 当前跨批次对象：`\bar∂w` 的 differential-form 展开式（PDF 310 已开始，PDF 311 继续）
+- 已结构化到：PDF 320
+- 对应纸质正文：301
+- 下一批：PDF 321-330
+- 当前章节：Chapter 7 / 7 Approximation and extension theorems
+- 当前跨批次对象：Theorem 7.1（Baouendi-Treves approximation theorem）的证明（PDF 320 已开始，PDF 321 继续）
