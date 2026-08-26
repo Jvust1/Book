@@ -1,4 +1,4 @@
-# Functional Analysis 中文结构化数据 v0.17
+# Functional Analysis 中文结构化数据 v0.18
 
 本目录是 Book Course OS 对 Stein & Shakarchi《Functional Analysis》的持续结构化结果。
 
@@ -7,11 +7,11 @@
 - 442 页 PDF 的 page label / 纸质页码映射
 - 20 页一组的 23 个存储分卷
 - 全书目录英中双语结构化
-- 已连续结构化 `chunk_001` 至 `chunk_013a`（PDF 1-250）
-- `chunk_013b`：PDF 251-260 / 纸质 232-241，收尾 Chapter 5 Exercises 21(b)-35 与 Problems 1-5；正式进入 Chapter 6《An Introduction to Brownian Motion》，完成导论与 §1 The Framework，建立缩放随机游走 S_t^(N)、Brownian motion B-1/B-2/B-3、canonical path space P、Wiener measure、诱导路径测度 μ_N 与目标 μ_N⇒W；进入 §2 Technical Preliminaries 并定义路径度量 d_n,d
-- 中文学习层已同步到 PDF 260
-- PDF 251-260 已逐页视觉抽查；本批没有新的独立教学图，Chapter 6 opener 作为章节版式而非教学图处理
-- 搜索索引：新增 `search_index_delta_v0_17.jsonl`；导出包包含合并后的 `search_index_v0_17.jsonl`
+- 已连续结构化 `chunk_001` 至 `chunk_013b`（PDF 1-260）
+- `chunk_014a`：PDF 261-270 / 纸质 242-251，完成 Chapter 6 §2 Technical Preliminaries：路径度量基本性质、Borel/cylindrical sets、Lemma 2.1、有限维 sections、weak convergence、tightness、Prokhorov Lemma 2.2、Corollary 2.3、Lemma 2.4；完整完成 §3 Construction of Brownian motion，包括 Theorem 3.1、Lemma 3.2、tightness 与有限维 CLT 两步证明以及 Donsker invariance principle；进入 §4 并完成 Theorem 4.1，开始 Theorem 4.2
+- 中文学习层已同步到 PDF 270
+- PDF 261-270 已逐页视觉抽查；本批没有新的独立教学图
+- 搜索索引：新增 `search_index_delta_v0_18.jsonl`；导出包包含合并后的 `search_index_v0_18.jsonl`
 - 搜索/提问规则：`qa_retrieval_policy.json` + `../../docs/SEARCH_QA.md`
 - 全书完成后通篇检查规则：`../../docs/BOOK_COMPLETION_AUDIT.md`
 
@@ -29,8 +29,8 @@
 
 ## 当前进度
 
-- 已结构化到：PDF 260
-- 对应纸质正文：241
-- 下一批：PDF 261-270
-- 当前章节：Chapter 6 / 2 Technical Preliminaries
-- 当前跨批次对象：路径度量 d 的基本性质、Borel/cylindrical sets 与 Lemma 2.1（PDF 261 继续）
+- 已结构化到：PDF 270
+- 对应纸质正文：251
+- 下一批：PDF 271-280
+- 当前章节：Chapter 6 / 4 Some further properties of Brownian motion
+- 当前跨批次对象：Theorem 4.2 的 part (b) 与证明（PDF 271 继续）
