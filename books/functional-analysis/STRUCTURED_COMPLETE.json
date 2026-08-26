@@ -1,0 +1,10 @@
+{
+  "status": "STRUCTURED_COMPLETE",
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "pdf_pages": 442,
+  "printed_final_page": 423,
+  "version": "v0.36",
+  "audit_fail_count": 0,
+  "audit_report": "BOOK_AUDIT_REPORT.md",
+  "search_index": "search_index_v0_36.jsonl"
+}
