@@ -1,0 +1,41 @@
+{
+  "chunk_id": "chunk_005b",
+  "parent_storage_chunk": "chunk_005",
+  "pdf_pages": [91, 100],
+  "printed_pages": [72, 81],
+  "status": "structured_v0.6_translation_learning_layer",
+  "chapter_id": "chapter_02",
+  "sections": [
+    {"id":"ch02_s04_01","number":"4.1","title_en":"The Lp inequality","title_zh":"L^p 不等式","pdf_pages":[90,92],"printed_pages":[71,73],"batch_coverage":[91,92],"continued_from":"chunk_005a"},
+    {"id":"ch02_s05","number":"5","title_en":"The Hardy space H1_r","title_zh":"实 Hardy 空间 H^1_r","pdf_pages":[92,103],"printed_pages":[73,84],"batch_coverage":[92,100],"continues_in":"chunk_006a"},
+    {"id":"ch02_s05_01","number":"5.1","title_en":"Atomic decomposition of H1_r","title_zh":"H^1_r 的原子分解","pdf_pages":[93,100],"printed_pages":[74,81]},
+    {"id":"ch02_s05_02","number":"5.2","title_en":"An alternative definition of H1_r","title_zh":"H^1_r 的另一种定义","pdf_pages":[100,101],"printed_pages":[81,82],"batch_coverage":[100,100],"continues_in":"chunk_006a"}
+  ],
+  "key_objects": [
+    {"type":"inequality","id":"ineq_ch2_28_maximal_improved_weak","number":"(28)","name_en":"Improved weak-type inequality for the maximal function","name_zh":"极大函数的加强弱型估计","anchor":{"pdf_page":91,"printed_page":72},"formula":"m({x:f*(x)>α}) ≤ (A'/α)∫_{|f|>α/2}|f| dx"},
+    {"type":"definition","id":"def_ch2_distribution_function","name_en":"Distribution function","name_zh":"分布函数","anchor":{"pdf_page":91,"printed_page":72},"formula":"λ_F(α)=m({x:F(x)>α})"},
+    {"type":"identity","id":"id_ch2_29_layer_cake","number":"(29)","name_en":"Distribution-function identity","name_zh":"分布函数积分恒等式","anchor":{"pdf_page":91,"printed_page":72},"formula":"∫F(x)^p dx = ∫_0^∞ λ_F(α^{1/p}) dα"},
+    {"type":"inequality","id":"ineq_ch2_tchebychev","name_en":"Tchebychev inequality","name_zh":"切比雪夫不等式","anchor":{"pdf_page":92,"printed_page":73},"formula":"λ_F(α) ≤ α^{-p}∫F^p, p>0"},
+    {"type":"proof_result","id":"proof_ch2_4_1_completion","name_en":"Completion of the maximal Lp theorem","name_zh":"极大函数 L^p 定理证明完成","anchor":{"pdf_page":92,"printed_page":73},"notes_zh":"将分布函数恒等式用于 F=f*，结合 (28) 并交换积分次序，得到 ||f*||_p≤A_p||f||_p；且 p→1 时 A_p=O(1/(p-1))。"},
+    {"type":"concept","id":"concept_ch2_hardy_space_motivation","name_en":"Motivation for real Hardy space H1_r","name_zh":"实 Hardy 空间 H^1_r 的动机","anchor":{"pdf_page":92,"printed_page":73}},
+    {"type":"definition","id":"def_ch2_complex_hardy_hp","name_en":"Complex Hardy space H^p on the upper half-plane","name_zh":"上半平面的复 Hardy 空间 H^p","anchor":{"pdf_page":93,"printed_page":74},"formula":"sup_{y>0}∫|F(x+iy)|^p dx<∞"},
+    {"type":"definition","id":"def_ch2_h1r_atom","name_en":"H1_r atom","name_zh":"H^1_r 原子","anchor":{"pdf_page":93,"printed_page":74},"conditions_zh":["supp(a)⊂B 且 |a(x)|≤1/m(B)","∫a=0"]},
+    {"type":"definition","id":"def_ch2_h1r_atomic_decomposition","number":"(30)-(31)","name_en":"Atomic decomposition and H1_r norm","name_zh":"H^1_r 的原子分解与范数","anchor":{"pdf_page":94,"printed_page":75},"formula":"f=Σλ_k a_k, Σ|λ_k|<∞; ||f||_{H1_r}=inf Σ|λ_k|"},
+    {"type":"proposition","id":"prop_ch2_5_1_compact_lp_h1r","number":"5.1","name_en":"Compactly supported Lp functions in H1_r","name_zh":"紧支撑 L^p 函数属于 H^1_r 的判别","anchor":{"pdf_page":95,"printed_page":76},"core_statement_zh":"若 p>1 且 f∈L^p(R^d) 有界支撑，则 f∈H^1_r 当且仅当 ∫f=0。"},
+    {"type":"definition","id":"def_ch2_truncated_maximal_fdagger","name_en":"Truncated maximal function f†","name_zh":"截断极大函数 f†","anchor":{"pdf_page":95,"printed_page":76}},
+    {"type":"identity","id":"id_ch2_32_fdagger_integrable","number":"(32)","name_en":"Integrability of the truncated maximal function","name_zh":"截断极大函数的可积性","anchor":{"pdf_page":95,"printed_page":76},"formula":"∫f†<∞"},
+    {"type":"concept","id":"concept_ch2_cz_decomposition","name_en":"Calderon-Zygmund decomposition at height α","name_zh":"高度 α 的 Calderón-Zygmund 分解","anchor":{"pdf_page":95,"printed_page":76},"notes_zh":"f=g+b；g 有界，b 支撑在高值集合并分解成零平均局部坏块。"},
+    {"type":"identity","id":"id_ch2_33_good_bound","number":"(33)","name_en":"Good-part bound","name_zh":"好部分 g 的有界性","anchor":{"pdf_page":95,"printed_page":76},"formula":"|g|≤cα"},
+    {"type":"identity","id":"id_ch2_34_bad_cancellation","number":"(34)","name_en":"Cancellation of bad pieces","name_zh":"坏块的抵消条件","anchor":{"pdf_page":96,"printed_page":77},"formula":"∫b_j=0"},
+    {"type":"identity","id":"id_ch2_35_interval_average","number":"(35)","name_en":"Average bound on CZ intervals","name_zh":"Calderón-Zygmund 区间平均值控制","anchor":{"pdf_page":96,"printed_page":77},"formula":"m(I_j)^{-1}∫_{I_j}|f|≤α"},
+    {"type":"identity","id":"id_ch2_36_atomic_series","number":"(36)","name_en":"Atomic series from nested decompositions","name_zh":"由分层分解得到的原子级数","anchor":{"pdf_page":97,"printed_page":78},"formula":"f=g^0+Σ_{k,j}A_j^k"},
+    {"type":"definition","id":"def_ch2_dyadic_cubes","name_en":"Dyadic cubes","name_zh":"二进立方体","anchor":{"pdf_page":98,"printed_page":79}},
+    {"type":"lemma","id":"lemma_ch2_5_2_whitney_dyadic","number":"5.2","name_en":"Dyadic cube decomposition of an open set","name_zh":"开集的二进立方体分解引理","anchor":{"pdf_page":98,"printed_page":79},"formula":"diam(Q_j)≤d(Q_j,Ω^c)≤4 diam(Q_j)"},
+    {"type":"figure","id":"fig_ch2_7_cube_ball","number":"Figure 7","name_en":"The cube Q_j^k and the ball B_j^k","name_zh":"二进立方体 Q_j^k 与包围球 B_j^k","anchor":{"pdf_page":100,"printed_page":81},"asset_policy":"retain_original_pdf_figure","visual_verified":true},
+    {"type":"definition","id":"def_ch2_p_atom","name_en":"p-atom","name_zh":"p-原子","anchor":{"pdf_page":100,"printed_page":81},"conditions_zh":["supp(a)⊂B 且 ||a||_p≤m(B)^(-1+1/p)","∫a=0"]},
+    {"type":"corollary","id":"cor_ch2_5_3_p_atom_h1r","number":"5.3","name_en":"p-atoms belong to H1_r","name_zh":"p-原子属于 H^1_r","anchor":{"pdf_page":100,"printed_page":81},"proof_status":"continues_in_chunk_006a","core_statement_zh":"固定 p>1，每个 p-原子都属于 H^1_r，且 ||a||_{H1_r}≤c_p。"}
+  ],
+  "figures": [{"id":"fig_ch2_7_cube_ball","pdf_page":100,"printed_page":81,"status":"retained_and_visual_verified"}],
+  "translation_status": {"learning_layer_zh":"completed_for_pdf_91_100","theorem_and_definition_statements":"completed","proof_logic":"completed"},
+  "next_action": "PDF 101-110：完成 Corollary 5.3，处理 H^1_r、Hilbert 变换、极大函数、BMO 与对偶。"
+}
