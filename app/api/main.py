@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
+from runtime import QAHistoryMessage
+
 from .errors import (
     AppNotFoundError,
     AppUnavailableError,
@@ -18,6 +20,7 @@ from .errors import (
     InvalidQAQuestionError,
     InvalidSearchQueryError,
     QAProviderInvalidResponseError,
+    QAProviderUnconfiguredError,
 )
 from .models import (
     ChapterResponse,
@@ -40,7 +43,7 @@ LOCAL_WEB_ORIGINS = [
     "http://localhost:5173",
 ]
 
-app = FastAPI(title="Book App API", version="1f")
+app = FastAPI(title="Book App API", version="1f-v2")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=LOCAL_WEB_ORIGINS,
@@ -57,9 +60,9 @@ def default_service() -> BookAppService:
     try:
         provider = provider_from_environment()
     except QAProviderConfigurationError as exc:
-        raise AppUnavailableError(
-            code="qa_provider_unavailable",
-            user_message="教材问答模型暂不可用",
+        raise QAProviderUnconfiguredError(
+            code="qa_provider_unconfigured",
+            user_message="教材问答模型未配置",
             detail=str(exc),
         ) from exc
     return BookAppService(REPOSITORY_ROOT, qa_provider=provider)
@@ -181,7 +184,17 @@ async def qa(
             user_message="提问内容无效",
             detail="Invalid QA request body",
         ) from exc
-    return service.ask(course_id, payload.question)
+
+    history = tuple(
+        QAHistoryMessage(role=row.role, content=row.content)
+        for row in payload.history
+    )
+    return service.ask(
+        course_id,
+        payload.question,
+        section_id=payload.section_id,
+        history=history,
+    )
 
 
 def _mode_response(
