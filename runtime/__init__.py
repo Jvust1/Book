@@ -14,6 +14,20 @@ from .course_runtime import (
     CourseRuntimeBlockedError,
     CourseRuntimeError,
 )
+from .library_runtime import (
+    LibraryCourseResolutionError,
+    LibraryManifestError,
+    LibraryRuntime,
+    LibraryRuntimeBlockedError,
+    LibraryRuntimeError,
+)
+from .section_learning_runtime import (
+    SectionLearningModeError,
+    SectionLearningRuntime,
+    SectionLearningRuntimeError,
+    SectionLearningSource,
+    SectionLearningSourceError,
+)
 
 __all__ = [
     "BookRuntime",
@@ -26,4 +40,14 @@ __all__ = [
     "CourseRuntime",
     "CourseRuntimeBlockedError",
     "CourseRuntimeError",
+    "LibraryCourseResolutionError",
+    "LibraryManifestError",
+    "LibraryRuntime",
+    "LibraryRuntimeBlockedError",
+    "LibraryRuntimeError",
+    "SectionLearningModeError",
+    "SectionLearningRuntime",
+    "SectionLearningRuntimeError",
+    "SectionLearningSource",
+    "SectionLearningSourceError",
 ]
