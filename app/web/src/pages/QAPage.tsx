@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
@@ -15,7 +15,6 @@ const citationTitle = (citation: QACitationItem): string =>
 export function QAPage() {
   const { courseId } = useParams()
   const location = useLocation()
-  const restoredCourseRef = useRef<string | null>(null)
   const savedState = courseId ? loadQAViewState(courseId) : null
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
@@ -48,8 +47,7 @@ export function QAPage() {
   }, [courseId])
 
   useEffect(() => {
-    if (!courseId || restoredCourseRef.current === courseId) return
-    restoredCourseRef.current = courseId
+    if (!courseId) return
 
     const saved = loadQAViewState(courseId)
     const question = saved?.question.trim() ?? ''
@@ -60,17 +58,25 @@ export function QAPage() {
     setLoading(true)
     setResult(null)
     setError(null)
-    bookApi
-      .askCourse(courseId, question)
-      .then((value) => {
-        if (active) setResult(value)
-      })
-      .catch((reason: unknown) => {
-        if (active) setError(qaErrorMessage(reason))
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
+
+    // Defer the provider call until after the current effect cycle. React StrictMode
+    // replays effects as setup -> cleanup -> setup in development; this prevents the
+    // discarded first setup from issuing a duplicate provider request while allowing
+    // the second live setup to own the response.
+    queueMicrotask(() => {
+      if (!active) return
+      bookApi
+        .askCourse(courseId, question)
+        .then((value) => {
+          if (active) setResult(value)
+        })
+        .catch((reason: unknown) => {
+          if (active) setError(qaErrorMessage(reason))
+        })
+        .finally(() => {
+          if (active) setLoading(false)
+        })
+    })
 
     return () => {
       active = false
