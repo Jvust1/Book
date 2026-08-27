@@ -10,6 +10,7 @@ on:
       - "library/**"
       - "books/functional-analysis/**"
       - "tests/test_source_resolver.py"
+      - "tests/test_search_runtime.py"
       - ".github/workflows/app-ui-tests.yml"
   pull_request:
     paths:
@@ -20,6 +21,7 @@ on:
       - "library/**"
       - "books/functional-analysis/**"
       - "tests/test_source_resolver.py"
+      - "tests/test_search_runtime.py"
       - ".github/workflows/app-ui-tests.yml"
 
 permissions:
@@ -40,8 +42,8 @@ jobs:
       - name: Install App API dependencies
         run: python -m pip install -r app/api/requirements.txt
 
-      - name: Run App service and API tests
-        run: python -m unittest app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver -v
+      - name: Run App service, API, source and search tests
+        run: python -m unittest app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver tests.test_search_runtime -v
 
   web-client:
     runs-on: ubuntu-latest
