@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runtime.book_runtime import BookRuntime, BookRuntimeBlockedError
+from runtime.book_runtime import BookRuntime
 from tests.test_search_identity_replay import SearchIdentityReplayDiagnostics  # noqa: F401
 from tests.test_search_recovery_diagnostics import SearchRecoveryDiagnostics  # noqa: F401
 from tools import rebuild_runtime_artifacts as rebuild
@@ -13,13 +13,20 @@ from tools import recover_functional_analysis_search as fa_search_recovery
 
 
 class BookRuntimeTests(unittest.TestCase):
-    def test_current_functional_analysis_fixture_is_blocked_until_assets_are_restored(self) -> None:
+    def test_current_functional_analysis_fixture_is_runtime_ready(self) -> None:
         root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
         if not root.exists():
             self.skipTest("repository fixture not present")
 
-        with self.assertRaises(BookRuntimeBlockedError):
-            BookRuntime.open(root)
+        readiness = json.loads((root / "RUNTIME_READINESS.json").read_text(encoding="utf-8"))
+        self.assertEqual(readiness.get("status"), "READY")
+
+        runtime = BookRuntime.open(root)
+        self.assertTrue(runtime.is_ready)
+        self.assertEqual(runtime.book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(runtime.page_map_row(20)["printed_page"], "1")
+        self.assertEqual(runtime.page_map_row(442)["printed_page"], "423")
+        self.assertIsNotNone(runtime.search_index_path)
 
     def test_functional_analysis_search_rebuild_matches_final_audit(self) -> None:
         root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
