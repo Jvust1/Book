@@ -112,15 +112,11 @@ export const bookApi = {
     )
   },
 
-  askCourse(courseId: string, requestOrQuestion: QARequest | string): Promise<QAResponse> {
-    const payload: QARequest =
-      typeof requestOrQuestion === 'string'
-        ? { question: requestOrQuestion, section_id: null, history: [] }
-        : requestOrQuestion
+  askCourse(courseId: string, qaRequest: QARequest): Promise<QAResponse> {
     return request<QAResponse>(`/api/courses/${segment(courseId)}/qa`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(qaRequest),
     })
   },
 
