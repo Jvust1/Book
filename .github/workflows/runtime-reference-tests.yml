@@ -94,7 +94,9 @@ jobs:
           from runtime import (
               BookRuntime,
               CourseRuntime,
+              DeterministicFakeAnswerProvider,
               LibraryRuntime,
+              QARuntime,
               SearchRuntime,
               SectionLearningRuntime,
           )
@@ -111,6 +113,10 @@ jobs:
           selected = library.course("functional_analysis_course")
           learning = SectionLearningRuntime.from_course(selected, "ch01_s01")
           search = SearchRuntime.from_course(selected)
+          qa = QARuntime.from_course(
+              selected,
+              provider=DeterministicFakeAnswerProvider(),
+          )
 
           assert book.is_ready
           assert book.page_map_row(20).get("printed_page") == "1"
@@ -141,6 +147,17 @@ jobs:
           assert chinese_hits
           assert search.search("definitely-no-such-text-92831") == []
 
+          sufficient_qa = qa.answer("什么是巴拿赫空间？")
+          assert sufficient_qa.answer_kind == "generated"
+          assert sufficient_qa.evidence_status == "sufficient"
+          assert sufficient_qa.citations
+          assert all(citation.source_kind == "object" for citation in sufficient_qa.citations)
+
+          insufficient_qa = qa.answer("definitely-no-such-textbook-concept-92831")
+          assert insufficient_qa.answer_kind == "system_notice"
+          assert insufficient_qa.evidence_status == "insufficient_evidence"
+          assert insufficient_qa.citations == ()
+
           print(
               json.dumps(
                   {
@@ -150,6 +167,7 @@ jobs:
                       "library_runtime_open": True,
                       "section_learning_runtime_open": True,
                       "search_runtime_open": True,
+                      "qa_runtime_open": True,
                       "course_id": selected.course_id,
                       "book_id": selected.main_book().book_id,
                       "course_chapter_count": len(course.chapter_ids()),
@@ -160,6 +178,8 @@ jobs:
                       "search_record_count": search.index_record_count,
                       "holder_hit_count": len(holder_hits),
                       "chinese_hit_count": len(chinese_hits),
+                      "qa_sufficient_citation_count": len(sufficient_qa.citations),
+                      "qa_insufficient_status": insufficient_qa.evidence_status,
                       "figure_count": len(book.figures),
                       "missing_required_files": readiness.get("missing_required_files"),
                       "stale_files": readiness.get("stale_files"),
