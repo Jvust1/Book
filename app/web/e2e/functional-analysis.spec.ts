@@ -40,6 +40,19 @@ type SourceResponse = {
   source_anchor: string | null
 }
 
+type SearchResult = {
+  source_kind: string
+  source_id: string
+  object_type: string | null
+  title_zh: string | null
+}
+
+type SearchResponse = {
+  query: string
+  result_count: number
+  results: SearchResult[]
+}
+
 async function readJson<T>(response: {
   ok(): boolean
   status(): number
@@ -127,6 +140,77 @@ test('real Functional Analysis desktop source round trip', async ({ page, reques
   await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=practice`)
 })
 
+test('real Functional Analysis desktop textbook search round trip preserves canonical context', async ({
+  page,
+  request,
+}) => {
+  const query = 'Hölder'
+  const search = await readJson<SearchResponse>(
+    await request.get(
+      `${BASE_URL}/api/courses/${COURSE_ID}/search?q=${encodeURIComponent(query)}`,
+    ),
+  )
+  expect(search.query).toBe(query)
+  expect(search.result_count).toBeGreaterThan(0)
+  const hit = search.results[0]
+  expect(hit.source_kind).toBe('object')
+  expect(hit.object_type).toBe('theorem')
+
+  const sourceKey = `${hit.source_kind}:${hit.source_id}`
+  const sourcePath = `/courses/${COURSE_ID}/sources/${encodeURIComponent(hit.source_kind)}/${encodeURIComponent(hit.source_id)}`
+
+  await page.goto(`/courses/${COURSE_ID}`)
+  await page.getByRole('link', { name: '搜索教材' }).click()
+  await expect(page).toHaveURL(`${BASE_URL}/courses/${COURSE_ID}/search`)
+
+  await page.getByRole('searchbox', { name: '教材搜索词' }).fill(query)
+  await page.getByRole('button', { name: '搜索' }).click()
+  await expect(page).toHaveURL(new RegExp(`/courses/${COURSE_ID}/search\\?q=H%C3%B6lder$`))
+
+  const resultCard = page.locator(`[data-source-key="${sourceKey}"]`)
+  await expect(resultCard).toBeVisible()
+  if (hit.title_zh) {
+    await expect(resultCard.getByRole('heading', { name: hit.title_zh })).toBeVisible()
+  }
+  await resultCard.getByRole('link', { name: '查看教材来源' }).click()
+  await expect(page).toHaveURL(`${BASE_URL}${sourcePath}`)
+  await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
+  await expect(page.getByText(`结构化来源：${sourceKey}`)).toBeVisible()
+  await expect(page.getByRole('button', { name: '返回搜索' })).toBeVisible()
+
+  const persisted = await page.evaluate((courseId) => {
+    const raw = sessionStorage.getItem(`book:search-view:${courseId}`)
+    return raw ? JSON.parse(raw) as Record<string, unknown> : null
+  }, COURSE_ID)
+  expect(persisted?.query).toBe(query)
+  expect(persisted?.activeSourceKey).toBe(sourceKey)
+  expect(persisted).not.toHaveProperty('results')
+
+  await page.getByRole('button', { name: '返回搜索' }).click()
+  await expect(page).toHaveURL(new RegExp(`/courses/${COURSE_ID}/search\\?q=H%C3%B6lder$`))
+  await expect(page.locator(`[data-source-key="${sourceKey}"]`)).toHaveAttribute(
+    'aria-current',
+    'true',
+  )
+})
+
+test('real Functional Analysis search distinguishes Chinese hits from normal zero hits', async ({
+  page,
+}) => {
+  await page.goto(`/courses/${COURSE_ID}/search`)
+  const input = page.getByRole('searchbox', { name: '教材搜索词' })
+
+  await input.fill('巴拿赫空间')
+  await page.getByRole('button', { name: '搜索' }).click()
+  await expect(page.locator('[data-source-key]').first()).toBeVisible()
+  await expect(page.getByText('未找到匹配教材内容')).toHaveCount(0)
+
+  await input.fill('definitely-no-such-text-92831')
+  await page.getByRole('button', { name: '搜索' }).click()
+  await expect(page.getByText('未找到匹配教材内容')).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveCount(0)
+})
+
 test('real Functional Analysis narrow Section remains reachable without body overflow', async ({
   page,
 }) => {
@@ -147,4 +231,35 @@ test('real Functional Analysis narrow Section remains reachable without body ove
     () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
   )
   expect(fitsViewport).toBe(true)
+})
+
+test('real Functional Analysis narrow search and source round trip avoid body overflow', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(`/courses/${COURSE_ID}/search?q=H%C3%B6lder`)
+
+  const firstResult = page.locator('[data-source-key]').first()
+  await expect(firstResult).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
+
+  await firstResult.getByRole('link', { name: '查看教材来源' }).click()
+  await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
+
+  await page.getByRole('button', { name: '返回搜索' }).click()
+  await expect(page.getByRole('heading', { name: '搜索教材' })).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
 })
