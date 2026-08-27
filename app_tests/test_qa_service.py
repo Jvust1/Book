@@ -18,6 +18,7 @@ from app.api.service import BookAppService
 REPO_ROOT = Path(__file__).resolve().parents[1]
 COURSE_ID = "functional_analysis_course"
 BOOK_ID = "stein_shakarchi_functional_analysis_2011"
+SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 
 
 class InvalidCitationProvider:
@@ -36,11 +37,11 @@ class BookAppQAServiceTests(unittest.TestCase):
             qa_provider=DeterministicFakeAnswerProvider(),
         )
 
-        payload = service.ask(COURSE_ID, "什么是巴拿赫空间？")
+        payload = service.ask(COURSE_ID, SUFFICIENT_QA_QUESTION)
 
         self.assertEqual(payload.course_id, COURSE_ID)
         self.assertEqual(payload.book_id, BOOK_ID)
-        self.assertEqual(payload.question, "什么是巴拿赫空间？")
+        self.assertEqual(payload.question, SUFFICIENT_QA_QUESTION)
         self.assertEqual(payload.answer_kind, "generated")
         self.assertEqual(payload.evidence_status, "sufficient")
         self.assertTrue(payload.citations)
@@ -54,7 +55,7 @@ class BookAppQAServiceTests(unittest.TestCase):
         service = BookAppService(REPO_ROOT)
 
         with self.assertRaises(AppUnavailableError) as ctx:
-            service.ask(COURSE_ID, "什么是巴拿赫空间？")
+            service.ask(COURSE_ID, SUFFICIENT_QA_QUESTION)
 
         self.assertEqual(ctx.exception.code, "qa_provider_unavailable")
         self.assertEqual(ctx.exception.user_message, "教材问答模型暂不可用")
@@ -75,7 +76,7 @@ class BookAppQAServiceTests(unittest.TestCase):
         service = BookAppService(REPO_ROOT, qa_provider=InvalidCitationProvider())
 
         with self.assertRaises(QAProviderInvalidResponseError) as ctx:
-            service.ask(COURSE_ID, "什么是巴拿赫空间？")
+            service.ask(COURSE_ID, SUFFICIENT_QA_QUESTION)
 
         self.assertEqual(ctx.exception.code, "qa_provider_invalid_response")
         self.assertEqual(ctx.exception.user_message, "教材问答结果校验失败")
