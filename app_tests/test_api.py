@@ -28,6 +28,20 @@ class BookAppApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"status": "ok"})
 
+    def test_cors_allows_only_local_vite_origins(self) -> None:
+        for origin in ("http://127.0.0.1:5173", "http://localhost:5173"):
+            with self.subTest(origin=origin):
+                response = self.client.get("/api/health", headers={"Origin": origin})
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.headers.get("access-control-allow-origin"), origin)
+
+        response = self.client.get(
+            "/api/health",
+            headers={"Origin": "https://example.com"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn("access-control-allow-origin", response.headers)
+
     def test_library_and_course_return_real_audited_navigation(self) -> None:
         library_response = self.client.get("/api/library")
         self.assertEqual(library_response.status_code, 200)
