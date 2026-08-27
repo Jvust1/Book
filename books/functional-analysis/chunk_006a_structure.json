@@ -1,367 +1,43 @@
 {
   "chunk_id": "chunk_006a",
   "parent_storage_chunk": "chunk_006",
-  "pdf_pages": [
-    101,
-    110
-  ],
-  "printed_pages": [
-    82,
-    91
-  ],
+  "pdf_pages": [101, 110],
+  "printed_pages": [82, 91],
   "status": "structured_v0.6_translation_learning_layer",
   "chapter_id": "chapter_02",
   "sections": [
-    {
-      "id": "ch02_s05_02",
-      "number": "5.2",
-      "title_en": "An alternative definition of H1_r",
-      "title_zh": "H^1_r 的另一种定义",
-      "pdf_pages": [
-        100,
-        101
-      ],
-      "printed_pages": [
-        81,
-        82
-      ],
-      "batch_coverage": [
-        101,
-        101
-      ],
-      "continued_from": "chunk_005b"
-    },
-    {
-      "id": "ch02_s05_03",
-      "number": "5.3",
-      "title_en": "Application to the Hilbert transform",
-      "title_zh": "Hilbert 变换的应用",
-      "pdf_pages": [
-        101,
-        103
-      ],
-      "printed_pages": [
-        82,
-        84
-      ]
-    },
-    {
-      "id": "ch02_s06",
-      "number": "6",
-      "title_en": "The space H1_r and maximal functions",
-      "title_zh": "H^1_r 空间与极大函数",
-      "pdf_pages": [
-        103,
-        108
-      ],
-      "printed_pages": [
-        84,
-        89
-      ]
-    },
-    {
-      "id": "ch02_s06_01",
-      "number": "6.1",
-      "title_en": "The space BMO",
-      "title_zh": "BMO 空间",
-      "pdf_pages": [
-        105,
-        108
-      ],
-      "printed_pages": [
-        86,
-        89
-      ]
-    },
-    {
-      "id": "ch02_s07",
-      "number": "7",
-      "title_en": "Exercises",
-      "title_zh": "练习",
-      "pdf_pages": [
-        109,
-        null
-      ],
-      "printed_pages": [
-        90,
-        null
-      ],
-      "batch_coverage": [
-        109,
-        110
-      ],
-      "continues_in": "chunk_006b"
-    }
+    {"id":"ch02_s05_02","number":"5.2","title_en":"An alternative definition of H1_r","title_zh":"H^1_r 的另一种定义","pdf_pages":[100,101],"printed_pages":[81,82],"batch_coverage":[101,101],"continued_from":"chunk_005b"},
+    {"id":"ch02_s05_03","number":"5.3","title_en":"Application to the Hilbert transform","title_zh":"Hilbert 变换的应用","pdf_pages":[101,103],"printed_pages":[82,84]},
+    {"id":"ch02_s06","number":"6","title_en":"The space H1_r and maximal functions","title_zh":"H^1_r 空间与极大函数","pdf_pages":[103,108],"printed_pages":[84,89]},
+    {"id":"ch02_s06_01","number":"6.1","title_en":"The space BMO","title_zh":"BMO 空间","pdf_pages":[105,108],"printed_pages":[86,89]},
+    {"id":"ch02_s07","number":"7","title_en":"Exercises","title_zh":"练习","pdf_pages":[109,null],"printed_pages":[90,null],"batch_coverage":[109,110],"continues_in":"chunk_006b"}
   ],
   "key_objects": [
-    {
-      "type": "corollary",
-      "id": "cor_ch2_5_3_p_atom_h1r",
-      "number": "5.3",
-      "name_en": "p-atoms belong to H1_r",
-      "name_zh": "p-原子属于 H^1_r",
-      "anchor": {
-        "pdf_page": 101,
-        "printed_page": 82
-      },
-      "continued_from": "chunk_005b",
-      "notes_zh": "缩放到单位球并调用 Proposition 5.1；c_p=O(1/(p-1))。"
-    },
-    {
-      "type": "theorem",
-      "id": "thm_ch2_5_4_hilbert_h1r_l1",
-      "number": "5.4",
-      "name_en": "Hilbert transform maps H1_r to L1",
-      "name_zh": "Hilbert 变换从 H^1_r 到 L^1 的有界性",
-      "anchor": {
-        "pdf_page": 101,
-        "printed_page": 82
-      },
-      "core_statement_zh": "f∈H^1_r(R) 时 H_ε(f) 在 L^1 中收敛到 H(f)，且 ||H(f)||_1≤A||f||_{H1_r}。"
-    },
-    {
-      "type": "inequality",
-      "id": "ineq_ch2_39_atom_hilbert",
-      "number": "(39)",
-      "name_en": "Uniform L1 bound for Hε on atoms",
-      "name_zh": "H_ε 在原子上的一致 L^1 估计",
-      "anchor": {
-        "pdf_page": 101,
-        "printed_page": 82
-      },
-      "formula": "||H_ε(a)||_1≤A"
-    },
-    {
-      "type": "inequality",
-      "id": "ineq_ch2_40_hilbert_h1r",
-      "number": "(40)",
-      "name_en": "Uniform H1_r to L1 estimate",
-      "name_zh": "截断 Hilbert 变换的 H^1_r→L^1 一致估计",
-      "anchor": {
-        "pdf_page": 103,
-        "printed_page": 84
-      },
-      "formula": "||H_ε(f)||_1≤A||f||_{H1_r}"
-    },
-    {
-      "type": "definition",
-      "id": "def_ch2_hardy_maximal_M",
-      "number": "(41)",
-      "name_en": "Smooth maximal function M",
-      "name_zh": "光滑极大函数 M",
-      "anchor": {
-        "pdf_page": 104,
-        "printed_page": 85
-      },
-      "formula": "M(f)(x)=sup_{ε>0}|(f*Φ_ε)(x)|"
-    },
-    {
-      "type": "theorem",
-      "id": "thm_ch2_6_1_hardy_maximal",
-      "number": "6.1",
-      "name_en": "Maximal function maps H1_r to L1",
-      "name_zh": "H^1_r 上的极大函数 L^1 有界性",
-      "anchor": {
-        "pdf_page": 104,
-        "printed_page": 85
-      },
-      "core_statement_zh": "Φ∈C^1 且紧支撑时，||M(f)||_1≤A||f||_{H1_r}。"
-    },
-    {
-      "type": "inequality",
-      "id": "ineq_ch2_42_hardy_maximal",
-      "number": "(42)",
-      "name_en": "H1_r maximal estimate",
-      "name_zh": "H^1_r 极大函数估计",
-      "anchor": {
-        "pdf_page": 104,
-        "printed_page": 85
-      },
-      "formula": "||M(f)||_1≤A||f||_{H1_r}"
-    },
-    {
-      "type": "definition",
-      "id": "def_ch2_bmo",
-      "number": "(43)",
-      "name_en": "BMO (bounded mean oscillation)",
-      "name_zh": "BMO（有界平均振荡）",
-      "anchor": {
-        "pdf_page": 105,
-        "printed_page": 86
-      },
-      "formula": "||f||_{BMO}=sup_B m(B)^(-1)∫_B|f-f_B|dx"
-    },
-    {
-      "type": "example",
-      "id": "ex_ch2_bmo_log",
-      "name_en": "log|x| as a BMO function",
-      "name_zh": "BMO 的典型例子 log|x|",
-      "anchor": {
-        "pdf_page": 106,
-        "printed_page": 87
-      }
-    },
-    {
-      "type": "concept",
-      "id": "concept_ch2_bmo_mod_constants",
-      "name_en": "BMO modulo constants",
-      "name_zh": "BMO 按常数函数取商",
-      "anchor": {
-        "pdf_page": 105,
-        "printed_page": 86
-      }
-    },
-    {
-      "type": "pairing",
-      "id": "pair_ch2_44_h1r_bmo",
-      "number": "(44)",
-      "name_en": "H1_r-BMO pairing",
-      "name_zh": "H^1_r 与 BMO 的对偶配对",
-      "anchor": {
-        "pdf_page": 106,
-        "printed_page": 87
-      },
-      "formula": "ℓ(f)=∫f(x)g(x)dx"
-    },
-    {
-      "type": "definition",
-      "id": "def_ch2_H10_dense_subspace",
-      "name_en": "H^1_0 finite atomic sums",
-      "name_zh": "H^1_0：有限原子线性组合的稠密子空间",
-      "anchor": {
-        "pdf_page": 107,
-        "printed_page": 88
-      }
-    },
-    {
-      "type": "theorem",
-      "id": "thm_ch2_6_2_h1r_dual_bmo",
-      "number": "6.2",
-      "name_en": "BMO is the dual of H1_r",
-      "name_zh": "BMO 是 H^1_r 的对偶空间",
-      "anchor": {
-        "pdf_page": 107,
-        "printed_page": 88
-      },
-      "core_statement_zh": "g∈BMO 给出 H^1_r 上有界线性泛函；反之每个有界线性泛函都由某个 BMO 函数表示，范数互相控制。"
-    },
-    {
-      "type": "exercise_set",
-      "id": "exset_ch2_7_1_10",
-      "name_en": "Exercises 1-10 (start)",
-      "name_zh": "第 2 章练习 1–10（第 10 题跨批次）",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_1",
-      "number": "1",
-      "name_zh": "Fourier 系数 L^p→ℓ^q 估计的必要条件",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_2",
-      "number": "2",
-      "name_zh": "Hausdorff-Young 的正交系与高维环面推广",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_3",
-      "number": "3",
-      "name_zh": "Fourier 变换 L^p→L^q 估计的尺度必要条件",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_4",
-      "number": "4",
-      "name_zh": "Fourier 变换估计必须满足 p≤2",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_5",
-      "number": "5",
-      "name_zh": "三线引理中有界性假设的反例",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_6",
-      "number": "6",
-      "name_zh": "Riesz 插值定理推广到 L^{p,r}",
-      "anchor": {
-        "pdf_page": 109,
-        "printed_page": 90
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_7",
-      "number": "7",
-      "name_zh": "紧支撑有界函数的 Hilbert 变换可积判别",
-      "anchor": {
-        "pdf_page": 110,
-        "printed_page": 91
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_8",
-      "number": "8",
-      "name_zh": "实 L^p 算子的复化与向量值估计",
-      "anchor": {
-        "pdf_page": 110,
-        "printed_page": 91
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_9",
-      "number": "9",
-      "name_zh": "上半平面调和函数与 Poisson 表示等价",
-      "anchor": {
-        "pdf_page": 110,
-        "printed_page": 91
-      }
-    },
-    {
-      "type": "exercise",
-      "id": "ex_ch2_7_10",
-      "number": "10",
-      "name_zh": "Poisson 核卷积在 L^p 中的压缩性与近似恒等性",
-      "anchor": {
-        "pdf_page": 110,
-        "printed_page": 91
-      },
-      "status": "continues_in_chunk_006b"
-    }
+    {"type":"corollary","id":"cor_ch2_5_3_p_atom_h1r","number":"5.3","name_en":"p-atoms belong to H1_r","name_zh":"p-原子属于 H^1_r","anchor":{"pdf_page":101,"printed_page":82},"continued_from":"chunk_005b","notes_zh":"缩放到单位球并调用 Proposition 5.1；c_p=O(1/(p-1))。"},
+    {"type":"theorem","id":"thm_ch2_5_4_hilbert_h1r_l1","number":"5.4","name_en":"Hilbert transform maps H1_r to L1","name_zh":"Hilbert 变换从 H^1_r 到 L^1 的有界性","anchor":{"pdf_page":101,"printed_page":82},"core_statement_zh":"f∈H^1_r(R) 时 H_ε(f) 在 L^1 中收敛到 H(f)，且 ||H(f)||_1≤A||f||_{H1_r}。"},
+    {"type":"inequality","id":"ineq_ch2_39_atom_hilbert","number":"(39)","name_en":"Uniform L1 bound for Hε on atoms","name_zh":"H_ε 在原子上的一致 L^1 估计","anchor":{"pdf_page":101,"printed_page":82},"formula":"||H_ε(a)||_1≤A"},
+    {"type":"inequality","id":"ineq_ch2_40_hilbert_h1r","number":"(40)","name_en":"Uniform H1_r to L1 estimate","name_zh":"截断 Hilbert 变换的 H^1_r→L^1 一致估计","anchor":{"pdf_page":103,"printed_page":84},"formula":"||H_ε(f)||_1≤A||f||_{H1_r}"},
+    {"type":"definition","id":"def_ch2_hardy_maximal_M","number":"(41)","name_en":"Smooth maximal function M","name_zh":"光滑极大函数 M","anchor":{"pdf_page":104,"printed_page":85},"formula":"M(f)(x)=sup_{ε>0}|(f*Φ_ε)(x)|"},
+    {"type":"theorem","id":"thm_ch2_6_1_hardy_maximal","number":"6.1","name_en":"Maximal function maps H1_r to L1","name_zh":"H^1_r 上的极大函数 L^1 有界性","anchor":{"pdf_page":104,"printed_page":85},"core_statement_zh":"Φ∈C^1 且紧支撑时，||M(f)||_1≤A||f||_{H1_r}。"},
+    {"type":"inequality","id":"ineq_ch2_42_hardy_maximal","number":"(42)","name_en":"H1_r maximal estimate","name_zh":"H^1_r 极大函数估计","anchor":{"pdf_page":104,"printed_page":85},"formula":"||M(f)||_1≤A||f||_{H1_r}"},
+    {"type":"definition","id":"def_ch2_bmo","number":"(43)","name_en":"BMO (bounded mean oscillation)","name_zh":"BMO（有界平均振荡）","anchor":{"pdf_page":105,"printed_page":86},"formula":"||f||_{BMO}=sup_B m(B)^(-1)∫_B|f-f_B|dx"},
+    {"type":"example","id":"ex_ch2_bmo_log","name_en":"log|x| as a BMO function","name_zh":"BMO 的典型例子 log|x|","anchor":{"pdf_page":106,"printed_page":87}},
+    {"type":"concept","id":"concept_ch2_bmo_mod_constants","name_en":"BMO modulo constants","name_zh":"BMO 按常数函数取商","anchor":{"pdf_page":105,"printed_page":86}},
+    {"type":"pairing","id":"pair_ch2_44_h1r_bmo","number":"(44)","name_en":"H1_r-BMO pairing","name_zh":"H^1_r 与 BMO 的对偶配对","anchor":{"pdf_page":106,"printed_page":87},"formula":"ℓ(f)=∫f(x)g(x)dx"},
+    {"type":"definition","id":"def_ch2_H10_dense_subspace","name_en":"H^1_0 finite atomic sums","name_zh":"H^1_0：有限原子线性组合的稠密子空间","anchor":{"pdf_page":107,"printed_page":88}},
+    {"type":"theorem","id":"thm_ch2_6_2_h1r_dual_bmo","number":"6.2","name_en":"BMO is the dual of H1_r","name_zh":"BMO 是 H^1_r 的对偶空间","anchor":{"pdf_page":107,"printed_page":88},"core_statement_zh":"g∈BMO 给出 H^1_r 上有界线性泛函；反之每个有界线性泛函都由某个 BMO 函数表示，范数互相控制。"},
+    {"type":"exercise_set","id":"exset_ch2_7_1_10","name_en":"Exercises 1-10 (start)","name_zh":"第 2 章练习 1–10（第 10 题跨批次）","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_1","number":"1","name_zh":"Fourier 系数 L^p→ℓ^q 估计的必要条件","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_2","number":"2","name_zh":"Hausdorff-Young 的正交系与高维环面推广","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_3","number":"3","name_zh":"Fourier 变换 L^p→L^q 估计的尺度必要条件","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_4","number":"4","name_zh":"Fourier 变换估计必须满足 p≤2","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_5","number":"5","name_zh":"三线引理中有界性假设的反例","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_6","number":"6","name_zh":"Riesz 插值定理推广到 L^{p,r}","anchor":{"pdf_page":109,"printed_page":90}},
+    {"type":"exercise","id":"ex_ch2_7_7","number":"7","name_zh":"紧支撑有界函数的 Hilbert 变换可积判别","anchor":{"pdf_page":110,"printed_page":91}},
+    {"type":"exercise","id":"ex_ch2_7_8","number":"8","name_zh":"实 L^p 算子的复化与向量值估计","anchor":{"pdf_page":110,"printed_page":91}},
+    {"type":"exercise","id":"ex_ch2_7_9","number":"9","name_zh":"上半平面调和函数与 Poisson 表示等价","anchor":{"pdf_page":110,"printed_page":91}},
+    {"type":"exercise","id":"ex_ch2_7_10","number":"10","name_zh":"Poisson 核卷积在 L^p 中的压缩性与近似恒等性","anchor":{"pdf_page":110,"printed_page":91},"status":"continues_in_chunk_006b"}
   ],
-  "translation_status": {
-    "learning_layer_zh": "completed_for_pdf_101_110",
-    "theorem_and_definition_statements": "completed",
-    "proof_logic": "completed",
-    "exercise_topics": "indexed"
-  },
+  "translation_status": {"learning_layer_zh":"completed_for_pdf_101_110","theorem_and_definition_statements":"completed","proof_logic":"completed","exercise_topics":"indexed"},
   "next_action": "PDF 111-120：继续第 2 章练习，从 Exercise 10 接续，并按题号建立完整可搜索题目锚点。"
 }
