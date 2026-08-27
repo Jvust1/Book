@@ -261,6 +261,43 @@ button {
   margin: 0;
 }
 
+.source-heading h2 {
+  margin: 12px 0 0;
+}
+
+.source-facts,
+.source-context {
+  display: grid;
+  gap: 12px;
+}
+
+.source-facts {
+  padding: 22px;
+  border: 1px solid #e4e4e7;
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.source-facts p,
+.context-item p {
+  margin: 0;
+}
+
+.source-context {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.context-item {
+  padding: 18px;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.current-context {
+  border-width: 2px;
+}
+
 @media (max-width: 640px) {
   .app-header {
     padding: 0 20px;
@@ -287,5 +324,9 @@ button {
 
   .mode-tab {
     flex-basis: 92px;
+  }
+
+  .source-context {
+    grid-template-columns: 1fr;
   }
 }

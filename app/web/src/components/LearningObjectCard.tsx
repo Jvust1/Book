@@ -9,18 +9,34 @@ export interface LearningObjectCardProps {
   courseId: string
   item: ModeItem
   mode: LearningMode
+  expanded?: boolean
+  onExpandedChange?: (expanded: boolean) => void
+  onBeforeSourceNavigate?: () => void
 }
 
-export function LearningObjectCard({ courseId, item, mode }: LearningObjectCardProps) {
-  const [reviewExpanded, setReviewExpanded] = useState(false)
+export function LearningObjectCard({
+  courseId,
+  item,
+  mode,
+  expanded,
+  onExpandedChange,
+  onBeforeSourceNavigate,
+}: LearningObjectCardProps) {
+  const [internalExpanded, setInternalExpanded] = useState(false)
 
   useEffect(() => {
-    setReviewExpanded(false)
-  }, [item.source_id, mode])
+    if (expanded === undefined) setInternalExpanded(false)
+  }, [expanded, item.source_id, mode])
 
+  const reviewExpanded = expanded ?? internalExpanded
   const title = item.title_zh || item.number || item.type_zh || '教材对象'
   const content = item.content_zh || MISSING_CONTENT
   const showBody = mode === 'learn' || mode === 'practice' || (mode === 'review' && reviewExpanded)
+
+  const expandReview = () => {
+    if (expanded === undefined) setInternalExpanded(true)
+    onExpandedChange?.(true)
+  }
 
   return (
     <article className="learning-card">
@@ -33,13 +49,18 @@ export function LearningObjectCard({ courseId, item, mode }: LearningObjectCardP
           <h2>{title}</h2>
           {item.title_en ? <p className="secondary-text">{item.title_en}</p> : null}
         </div>
-        <SourceLink courseId={courseId} kind={item.kind} sourceId={item.source_id} />
+        <SourceLink
+          courseId={courseId}
+          kind={item.kind}
+          onNavigate={onBeforeSourceNavigate}
+          sourceId={item.source_id}
+        />
       </header>
 
       {item.formula ? <div className="formula-block">{item.formula}</div> : null}
 
       {mode === 'review' && !reviewExpanded ? (
-        <button className="secondary-button" type="button" onClick={() => setReviewExpanded(true)}>
+        <button className="secondary-button" type="button" onClick={expandReview}>
           显示内容
         </button>
       ) : null}

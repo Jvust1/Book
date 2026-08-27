@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { LearningMode, ModeResponse, SectionResponse } from '../api/types'
 import { EmptyState } from '../components/EmptyState'
 import { LearningObjectCard } from '../components/LearningObjectCard'
 import { ModeTabs } from '../components/ModeTabs'
+import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
 
@@ -23,6 +24,7 @@ const emptyMessage = (mode: LearningMode): string | null => {
 
 export function SectionPage() {
   const { courseId, sectionId } = useParams()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const rawMode = searchParams.get('mode')
   const mode: LearningMode = isLearningMode(rawMode) ? rawMode : 'learn'
@@ -31,6 +33,8 @@ export function SectionPage() {
   const [sectionError, setSectionError] = useState<string | null>(null)
   const [payload, setPayload] = useState<ModeResponse | null>(null)
   const [modeError, setModeError] = useState<string | null>(null)
+  const [expandedSourceIds, setExpandedSourceIds] = useState<string[]>([])
+  const restoredKeyRef = useRef<string | null>(null)
 
   useEffect(() => {
     if (isLearningMode(rawMode)) return
@@ -82,6 +86,24 @@ export function SectionPage() {
     }
   }, [courseId, mode, sectionId])
 
+  useEffect(() => {
+    setExpandedSourceIds([])
+    restoredKeyRef.current = null
+  }, [courseId, mode, sectionId])
+
+  useEffect(() => {
+    if (!courseId || !sectionId || !payload) return
+    const restoreKey = `${courseId}:${sectionId}:${mode}`
+    if (restoredKeyRef.current === restoreKey) return
+
+    const saved = loadSectionViewState(courseId, sectionId, mode)
+    if (saved) {
+      setExpandedSourceIds(saved.expandedSourceIds)
+      window.scrollTo({ top: saved.scrollY, behavior: 'auto' })
+    }
+    restoredKeyRef.current = restoreKey
+  }, [courseId, mode, payload, sectionId])
+
   const previewCounts = useMemo(() => {
     if (mode !== 'preview' || !payload) return []
     const counts = new Map<string, number>()
@@ -96,6 +118,27 @@ export function SectionPage() {
     const next = new URLSearchParams(searchParams)
     next.set('mode', nextMode)
     setSearchParams(next)
+  }
+
+  const setSourceExpanded = (sourceId: string, expanded: boolean) => {
+    setExpandedSourceIds((current) => {
+      if (expanded) {
+        return current.includes(sourceId) ? current : [...current, sourceId]
+      }
+      return current.filter((value) => value !== sourceId)
+    })
+  }
+
+  const saveBeforeSourceNavigation = (sourceId: string) => {
+    if (!courseId || !sectionId) return
+    const routeParams = new URLSearchParams(location.search)
+    routeParams.set('mode', mode)
+    saveSectionViewState(courseId, sectionId, mode, {
+      route: `${location.pathname}?${routeParams.toString()}`,
+      scrollY: window.scrollY,
+      expandedSourceIds,
+      activeSourceId: sourceId,
+    })
   }
 
   if (!courseId || !sectionId) {
@@ -177,9 +220,12 @@ export function SectionPage() {
           {payload.items.map((item) => (
             <LearningObjectCard
               courseId={courseId}
+              expanded={expandedSourceIds.includes(item.source_id)}
               item={item}
               key={`${item.kind}:${item.source_id}`}
               mode={mode}
+              onBeforeSourceNavigate={() => saveBeforeSourceNavigation(item.source_id)}
+              onExpandedChange={(expanded) => setSourceExpanded(item.source_id, expanded)}
             />
           ))}
         </div>

@@ -5,16 +5,7 @@ import { ChapterPage } from '../pages/ChapterPage'
 import { CoursePage } from '../pages/CoursePage'
 import { LibraryPage } from '../pages/LibraryPage'
 import { SectionPage } from '../pages/SectionPage'
-
-function RoutePlaceholder({ title }: { title: string }) {
-  return (
-    <section className="route-placeholder">
-      <p className="eyebrow">Book App · Phase 1D</p>
-      <h1>{title}</h1>
-      <p>页面数据接入将在后续任务完成。</p>
-    </section>
-  )
-}
+import { SourcePage } from '../pages/SourcePage'
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'courses/:courseId/sources/:kind/:sourceId',
-        element: <RoutePlaceholder title="教材来源" />,
+        element: <SourcePage />,
       },
     ],
   },
