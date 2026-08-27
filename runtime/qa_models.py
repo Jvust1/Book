@@ -171,6 +171,32 @@ class ModelResponse:
         )
 
 
+# Internal staged-compatibility DTOs. The active v2 ModelProvider never consumes or
+# returns these; they remain only until the remaining legacy verifier/runtime imports
+# are removed in the next boundary migration.
+@dataclass(frozen=True)
+class ProviderRequest:
+    question: str
+    course_id: str
+    book_id: str
+    evidence: tuple[EvidenceItem, ...]
+
+    @classmethod
+    def from_pack(cls, pack: EvidencePack) -> "ProviderRequest":
+        return cls(
+            question=pack.question,
+            course_id=pack.course_id,
+            book_id=pack.book_id,
+            evidence=pack.evidence,
+        )
+
+
+@dataclass(frozen=True)
+class ProviderAnswer:
+    answer_text: str
+    cited_evidence_ids: tuple[str, ...]
+
+
 @dataclass(frozen=True)
 class QACitation:
     """Verified citation projected exclusively from server-owned evidence."""
