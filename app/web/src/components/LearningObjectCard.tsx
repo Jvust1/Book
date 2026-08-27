@@ -27,8 +27,8 @@ export function LearningObjectCard({ courseId, item, mode }: LearningObjectCardP
       <header className="learning-card-header">
         <div>
           <p className="object-type">
-            {item.type_zh || '教材对象'}
-            {item.number ? ` · ${item.number}` : ''}
+            <span>{item.type_zh || '教材对象'}</span>
+            {item.number ? <span> · {item.number}</span> : null}
           </p>
           <h2>{title}</h2>
           {item.title_en ? <p className="secondary-text">{item.title_en}</p> : null}
