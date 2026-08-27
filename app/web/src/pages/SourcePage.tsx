@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
+import { loadQAViewState } from '../state/qaViewState'
 import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
 
@@ -43,6 +44,13 @@ export function SourcePage() {
     }
   }, [courseId, kind, sourceId])
 
+  const matchingQAState = (() => {
+    if (!courseId || !source) return null
+    const saved = loadQAViewState(courseId)
+    if (saved?.activeCitationKey === `${source.kind}:${source.source_id}`) return saved
+    return null
+  })()
+
   const matchingSearchState = (() => {
     if (!courseId || !source) return null
     const saved = loadSearchViewState(courseId)
@@ -52,9 +60,16 @@ export function SourcePage() {
 
   const returnToPrevious = () => {
     if (!courseId || !source) return
+    const sourceKey = `${source.kind}:${source.source_id}`
+
+    const savedQA = loadQAViewState(courseId)
+    if (savedQA?.activeCitationKey === sourceKey) {
+      navigate(savedQA.route)
+      return
+    }
 
     const savedSearch = loadSearchViewState(courseId)
-    if (savedSearch?.activeSourceKey === `${source.kind}:${source.source_id}`) {
+    if (savedSearch?.activeSourceKey === sourceKey) {
       navigate(savedSearch.route)
       return
     }
@@ -141,7 +156,7 @@ export function SourcePage() {
       </section>
 
       <button className="secondary-button" type="button" onClick={returnToPrevious}>
-        {matchingSearchState ? '返回搜索' : '返回学习'}
+        {matchingQAState ? '返回问答' : matchingSearchState ? '返回搜索' : '返回学习'}
       </button>
     </section>
   )
