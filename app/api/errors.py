@@ -27,3 +27,11 @@ class InvalidModeError(BookAppError):
 
 class InvalidSearchQueryError(BookAppError):
     """Course textbook search input is outside the stable query contract."""
+
+
+class InvalidQAQuestionError(BookAppError):
+    """Course textbook QA input is outside the stable question contract."""
+
+
+class QAProviderInvalidResponseError(BookAppError):
+    """Configured QA provider returned an answer that failed trust validation."""
