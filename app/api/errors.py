@@ -21,9 +21,21 @@ class AppUnavailableError(BookAppError):
     """Book App runtime cannot be initialized or trusted."""
 
 
+class QAProviderUnconfiguredError(AppUnavailableError):
+    """Server-side QA provider configuration is absent or incomplete."""
+
+
 class InvalidModeError(BookAppError):
     """Section learning mode is outside the fixed product contract."""
 
 
 class InvalidSearchQueryError(BookAppError):
     """Course textbook search input is outside the stable query contract."""
+
+
+class InvalidQAQuestionError(BookAppError):
+    """Course textbook QA input is outside the stable question contract."""
+
+
+class QAProviderInvalidResponseError(BookAppError):
+    """Configured QA provider returned an answer that failed trust validation."""

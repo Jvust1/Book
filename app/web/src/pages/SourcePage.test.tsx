@@ -4,7 +4,8 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { bookApi } from '../api/client'
-import type { SourceResponse } from '../api/types'
+import type { QAResponse, SourceResponse } from '../api/types'
+import { saveQASessionState } from '../state/qaSessionState'
 import { saveSearchViewState } from '../state/searchViewState'
 import { saveSectionViewState } from '../state/sectionViewState'
 import { SourcePage } from './SourcePage'
@@ -58,6 +59,36 @@ const SOURCE: SourceResponse = {
   ],
 }
 
+const QA_RESPONSE: QAResponse = {
+  course_id: 'functional_analysis_course',
+  book_id: 'stein_shakarchi_functional_analysis_2011',
+  question: '什么是 L^p 空间？',
+  answer: '这是已经验证过的回答。',
+  answer_kind: 'generated',
+  answer_style: 'brief',
+  scope_requested: 'section_then_book',
+  scope_used: 'section',
+  insufficient_evidence: false,
+  message: null,
+  citations: [
+    {
+      evidence_id: 'E1',
+      source_kind: 'object',
+      source_id: 'def_lp',
+      chapter_id: 'chapter_01',
+      section_id: 'ch01_s01',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: 'L^p 空间',
+      title_en: 'Lp spaces',
+      printed_page: 2,
+      pdf_page: 21,
+      source_anchor: null,
+    },
+  ],
+}
+
 function LocationProbe() {
   const location = useLocation()
   return <output data-testid="location">{location.pathname}{location.search}</output>
@@ -80,6 +111,7 @@ function renderSource() {
           element={<LocationProbe />}
         />
         <Route path="/courses/:courseId/search" element={<LocationProbe />} />
+        <Route path="/courses/:courseId/qa" element={<LocationProbe />} />
         <Route path="/courses/:courseId" element={<LocationProbe />} />
       </Routes>
     </MemoryRouter>,
@@ -117,7 +149,47 @@ describe('SourcePage', () => {
     expect(screen.queryByText('教材锚点暂未提供')).not.toBeInTheDocument()
   })
 
-  it('returns to a matching saved Search route before any Section route', async () => {
+  it('returns to the matching QA session route including section query before stale Search and Section state', async () => {
+    const user = userEvent.setup()
+    saveQASessionState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa?section=ch01_s01',
+      messages: [
+        { id: 'u1', role: 'user', content: QA_RESPONSE.question },
+        {
+          id: 'a1',
+          role: 'assistant',
+          content: QA_RESPONSE.answer!,
+          response: QA_RESPONSE,
+        },
+      ],
+      scrollY: 620,
+      activeCitationSourceId: 'def_lp',
+    })
+    saveSearchViewState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/search?q=L%5Ep',
+      query: 'L^p',
+      scrollY: 520,
+      activeSourceKey: 'object:def_lp',
+    })
+    saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
+      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      scrollY: 420,
+      expandedSourceIds: ['def_lp'],
+      activeSourceId: 'def_lp',
+    })
+
+    renderSource()
+    await screen.findByRole('heading', { name: '教材来源' })
+    await user.click(screen.getByRole('button', { name: '返回问答' }))
+
+    await waitFor(() => {
+      expect(screen.getByTestId('location')).toHaveTextContent(
+        '/courses/functional_analysis_course/qa?section=ch01_s01',
+      )
+    })
+  })
+
+  it('returns to a matching saved Search route before any Section route when QA does not match', async () => {
     const user = userEvent.setup()
     saveSearchViewState('functional_analysis_course', {
       route: '/courses/functional_analysis_course/search?q=L%5Ep',
@@ -143,7 +215,7 @@ describe('SourcePage', () => {
     })
   })
 
-  it('returns to the saved Section route for the active source when no Search state matches', async () => {
+  it('returns to the saved Section route for the active source when no QA or Search state matches', async () => {
     const user = userEvent.setup()
     saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
       route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',

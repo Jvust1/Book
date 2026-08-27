@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from .course_runtime import CourseRuntime
+from .source_resolver import SourceResolutionError, SourceResolver
 
 
 class SearchRuntimeError(RuntimeError):
@@ -48,6 +49,7 @@ class _SearchCandidate:
     source_kind: str
     source_id: str
     object_type: str | None
+    section_id: str | None
 
 
 class SearchRuntime:
@@ -79,6 +81,7 @@ class SearchRuntime:
 
         records: list[dict[str, Any]] = []
         candidates: list[_SearchCandidate] = []
+        resolver = SourceResolver(course)
         try:
             with path.open("r", encoding="utf-8") as handle:
                 for line_number, line in enumerate(handle, start=1):
@@ -107,16 +110,24 @@ class SearchRuntime:
                         continue
                     source_id = str(source_id_value)
                     if source_id in book.objects:
+                        obj = book.objects[source_id]
                         candidates.append(
                             _SearchCandidate(
                                 line_number=line_number,
                                 raw=parsed,
                                 source_kind="object",
                                 source_id=source_id,
-                                object_type=book.objects[source_id].type,
+                                object_type=obj.type,
+                                section_id=obj.section_id,
                             )
                         )
                     elif source_id in book.figures:
+                        try:
+                            figure_section_id = resolver.resolve("figure", source_id).section_id
+                        except SourceResolutionError as exc:
+                            raise SearchIndexUnavailableError(
+                                f"Search-index figure source cannot be resolved: {source_id!r}"
+                            ) from exc
                         candidates.append(
                             _SearchCandidate(
                                 line_number=line_number,
@@ -124,6 +135,7 @@ class SearchRuntime:
                                 source_kind="figure",
                                 source_id=source_id,
                                 object_type="figure",
+                                section_id=figure_section_id,
                             )
                         )
         except SearchIndexUnavailableError:
@@ -135,15 +147,32 @@ class SearchRuntime:
 
         return cls(course, records=records, candidates=candidates)
 
-    def search(self, query: str, *, limit: int = 30) -> list[SearchHit]:
+    def search(
+        self,
+        query: str,
+        *,
+        limit: int = 30,
+        section_id: str | None = None,
+    ) -> list[SearchHit]:
         normalized_query = str(query).strip().casefold()
         if not normalized_query:
             raise SearchQueryError("Search query must not be blank")
         if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= 100:
             raise SearchQueryError("Search limit must be an integer from 1 through 100")
 
+        normalized_section_id: str | None = None
+        if section_id is not None:
+            normalized_section_id = str(section_id).strip()
+            if not normalized_section_id:
+                raise SearchQueryError("Search section ID must not be blank")
+
         ranked: list[tuple[int, int, _SearchCandidate]] = []
         for candidate in self._candidates:
+            if (
+                normalized_section_id is not None
+                and candidate.section_id != normalized_section_id
+            ):
+                continue
             score = self._score(candidate.raw, normalized_query)
             if score > 0:
                 ranked.append((-score, candidate.line_number, candidate))

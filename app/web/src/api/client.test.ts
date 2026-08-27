@@ -56,6 +56,47 @@ describe('bookApi', () => {
     )
   })
 
+  it('posts a scoped conversational textbook QA request as JSON', async () => {
+    const responseBody = {
+      course_id: 'functional_analysis_course',
+      book_id: 'stein_shakarchi_functional_analysis_2011',
+      question: '那为什么必须要求完备？',
+      answer: '回答',
+      answer_kind: 'generated',
+      answer_style: 'explain',
+      scope_requested: 'section_then_book',
+      scope_used: 'section',
+      insufficient_evidence: false,
+      message: null,
+      citations: [],
+    }
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(responseBody))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const request = {
+      question: '那为什么必须要求完备？',
+      section_id: 'ch01_s01',
+      history: [
+        { role: 'user' as const, content: '巴拿赫空间是什么？' },
+        { role: 'assistant' as const, content: '完备赋范线性空间称为巴拿赫空间。' },
+      ],
+    }
+    const result = await bookApi.askCourse('functional_analysis_course', request)
+
+    expect(result).toEqual(responseBody)
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/courses/functional_analysis_course/qa',
+      expect.objectContaining({
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(request),
+      }),
+    )
+  })
+
   it('uses the server Chinese error message for non-2xx responses', async () => {
     vi.stubGlobal(
       'fetch',

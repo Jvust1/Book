@@ -60,6 +60,10 @@ jobs:
           python -m py_compile runtime/section_learning_runtime.py
           python -m py_compile runtime/source_resolver.py
           python -m py_compile runtime/search_runtime.py
+          python -m py_compile runtime/qa_models.py
+          python -m py_compile runtime/qa_provider.py
+          python -m py_compile runtime/qa_evidence.py
+          python -m py_compile runtime/qa_runtime.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
@@ -72,8 +76,14 @@ jobs:
           python tools/normalize_functional_analysis_runtime_identities.py books/functional-analysis --write
           python tools/normalize_functional_analysis_figure_ids.py books/functional-analysis --write
 
-      - name: Run unit tests
-        run: python -m unittest tests.test_search_runtime tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
+      - name: Run Phase 1F search and QA contract tests
+        run: python -m unittest tests.test_search_runtime tests.test_qa_evidence tests.test_qa_provider tests.test_qa_runtime -v
+
+      - name: Run remaining runtime regression tests
+        run: python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
+
+      - name: Run full runtime regression discovery
+        run: python -m unittest discover -s tests -p "test_*.py" -v
 
       - name: Rebuild and validate Functional Analysis runtime artifacts
         if: matrix.python-version == '3.13'
@@ -90,7 +100,10 @@ jobs:
           from runtime import (
               BookRuntime,
               CourseRuntime,
+              DeterministicFakeModelProvider,
+              INSUFFICIENT_EVIDENCE_MESSAGE,
               LibraryRuntime,
+              QARuntime,
               SearchRuntime,
               SectionLearningRuntime,
           )
@@ -107,6 +120,10 @@ jobs:
           selected = library.course("functional_analysis_course")
           learning = SectionLearningRuntime.from_course(selected, "ch01_s01")
           search = SearchRuntime.from_course(selected)
+          qa = QARuntime.from_course(
+              selected,
+              provider=DeterministicFakeModelProvider(),
+          )
 
           assert book.is_ready
           assert book.page_map_row(20).get("printed_page") == "1"
@@ -137,6 +154,30 @@ jobs:
           assert chinese_hits
           assert search.search("definitely-no-such-text-92831") == []
 
+          sufficient_qa = qa.answer("1/p + 1/q = 1")
+          assert sufficient_qa.answer_kind == "generated"
+          assert sufficient_qa.scope_requested == "book"
+          assert sufficient_qa.scope_used == "book"
+          assert sufficient_qa.insufficient_evidence is False
+          assert sufficient_qa.answer
+          assert sufficient_qa.citations
+          assert all(citation.source_kind == "object" for citation in sufficient_qa.citations)
+
+          scoped_qa = qa.answer("L^p 范数", section_id="ch01_s01")
+          assert scoped_qa.answer_kind == "generated"
+          assert scoped_qa.scope_requested == "section_then_book"
+          assert scoped_qa.scope_used == "section"
+          assert scoped_qa.insufficient_evidence is False
+          assert scoped_qa.citations
+          assert all(citation.section_id == "ch01_s01" for citation in scoped_qa.citations)
+
+          insufficient_qa = qa.answer("definitely-no-such-textbook-concept-92831")
+          assert insufficient_qa.answer_kind == "system_notice"
+          assert insufficient_qa.insufficient_evidence is True
+          assert insufficient_qa.answer is None
+          assert insufficient_qa.message == INSUFFICIENT_EVIDENCE_MESSAGE
+          assert insufficient_qa.citations == ()
+
           print(
               json.dumps(
                   {
@@ -146,6 +187,7 @@ jobs:
                       "library_runtime_open": True,
                       "section_learning_runtime_open": True,
                       "search_runtime_open": True,
+                      "qa_runtime_open": True,
                       "course_id": selected.course_id,
                       "book_id": selected.main_book().book_id,
                       "course_chapter_count": len(course.chapter_ids()),
@@ -156,6 +198,10 @@ jobs:
                       "search_record_count": search.index_record_count,
                       "holder_hit_count": len(holder_hits),
                       "chinese_hit_count": len(chinese_hits),
+                      "qa_book_scope": sufficient_qa.scope_used,
+                      "qa_section_scope": scoped_qa.scope_used,
+                      "qa_sufficient_citation_count": len(sufficient_qa.citations),
+                      "qa_insufficient": insufficient_qa.insufficient_evidence,
                       "figure_count": len(book.figures),
                       "missing_required_files": readiness.get("missing_required_files"),
                       "stale_files": readiness.get("stale_files"),

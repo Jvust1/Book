@@ -143,3 +143,48 @@ export interface SearchResponse {
   result_count: number
   results: SearchResultItem[]
 }
+
+export type QAAnswerStyle = 'brief' | 'explain' | 'compare' | 'proof'
+export type QAScopeRequested = 'book' | 'section_then_book'
+export type QAScopeUsed = 'section' | 'book'
+
+export interface QAHistoryMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+export interface QARequest {
+  question: string
+  section_id: string | null
+  history: QAHistoryMessage[]
+}
+
+export interface QACitationItem {
+  evidence_id: string
+  source_kind: string
+  source_id: string
+  chapter_id: string | null
+  section_id: string | null
+  object_type: string | null
+  type_zh: string | null
+  number: string | null
+  title_zh: string | null
+  title_en: string | null
+  printed_page: number | string | null
+  pdf_page: number | null
+  source_anchor: string | null
+}
+
+export interface QAResponse {
+  course_id: string
+  book_id: string
+  question: string
+  answer: string | null
+  answer_kind: 'generated' | 'system_notice'
+  answer_style: QAAnswerStyle | null
+  scope_requested: QAScopeRequested
+  scope_used: QAScopeUsed
+  insufficient_evidence: boolean
+  message: string | null
+  citations: QACitationItem[]
+}

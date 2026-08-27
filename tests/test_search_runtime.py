@@ -63,6 +63,24 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
                     "anchor": {"pdf_page": 2, "printed_page": 2},
                 }
             ],
+            sections=[
+                {
+                    "id": "sec_a",
+                    "number": "1",
+                    "title_en": "Section A",
+                    "title_zh": "A 节",
+                    "pdf_pages": [1, 1],
+                    "printed_pages": [1, 1],
+                },
+                {
+                    "id": "sec_b",
+                    "number": "2",
+                    "title_en": "Section B",
+                    "title_zh": "B 节",
+                    "pdf_pages": [2, 2],
+                    "printed_pages": [2, 2],
+                },
+            ],
             search_records=search_records
             if search_records is not None
             else [
@@ -169,6 +187,31 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
         hits = runtime.search("Banach", limit=1)
         self.assertEqual(len(hits), 1)
         self.assertEqual(hits[0].rank, 1)
+
+    def test_section_filter_is_applied_before_limit(self) -> None:
+        runtime = SearchRuntime.from_course(self._open_course())
+        try:
+            hits = runtime.search("Banach", limit=1, section_id="sec_b")
+        except TypeError as exc:
+            self.fail(f"section-scoped search is not implemented: {exc}")
+        self.assertEqual([hit.source_id for hit in hits], ["def_banach_algebra"])
+
+    def test_omitting_section_filter_preserves_existing_result_order(self) -> None:
+        runtime = SearchRuntime.from_course(self._open_course())
+        baseline = runtime.search("Banach", limit=20)
+        try:
+            explicit_none = runtime.search("Banach", limit=20, section_id=None)
+        except TypeError as exc:
+            self.fail(f"section-scoped search is not implemented: {exc}")
+        self.assertEqual(baseline, explicit_none)
+
+    def test_blank_supplied_section_filter_is_rejected(self) -> None:
+        runtime = SearchRuntime.from_course(self._open_course())
+        try:
+            with self.assertRaises(SearchQueryError):
+                runtime.search("Banach", section_id="   ")
+        except TypeError as exc:
+            self.fail(f"section-scoped search is not implemented: {exc}")
 
     def test_missing_index_file_is_unavailable(self) -> None:
         course = self._open_course()

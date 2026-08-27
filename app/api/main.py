@@ -8,23 +8,32 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from pydantic import ValidationError
+
+from runtime import QAHistoryMessage
 
 from .errors import (
     AppNotFoundError,
     AppUnavailableError,
     BookAppError,
     InvalidModeError,
+    InvalidQAQuestionError,
     InvalidSearchQueryError,
+    QAProviderInvalidResponseError,
+    QAProviderUnconfiguredError,
 )
 from .models import (
     ChapterResponse,
     CourseResponse,
     LibraryResponse,
     ModeResponse,
+    QARequest,
+    QAResponse,
     SearchResponse,
     SectionResponse,
     SourceResponse,
 )
+from .qa_provider_factory import QAProviderConfigurationError, provider_from_environment
 from .service import BookAppService
 
 
@@ -34,12 +43,12 @@ LOCAL_WEB_ORIGINS = [
     "http://localhost:5173",
 ]
 
-app = FastAPI(title="Book App API", version="1e")
+app = FastAPI(title="Book App API", version="1f-v2")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=LOCAL_WEB_ORIGINS,
     allow_credentials=False,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -48,7 +57,15 @@ app.add_middleware(
 def default_service() -> BookAppService:
     """Open the repository runtime lazily so module import cannot fail closed."""
 
-    return BookAppService(REPOSITORY_ROOT)
+    try:
+        provider = provider_from_environment()
+    except QAProviderConfigurationError as exc:
+        raise QAProviderUnconfiguredError(
+            code="qa_provider_unconfigured",
+            user_message="教材问答模型未配置",
+            detail=str(exc),
+        ) from exc
+    return BookAppService(REPOSITORY_ROOT, qa_provider=provider)
 
 
 def get_service() -> BookAppService:
@@ -77,6 +94,20 @@ async def handle_invalid_search_query(
     _request: Request, error: InvalidSearchQueryError
 ) -> JSONResponse:
     return _error_response(error, 400)
+
+
+@app.exception_handler(InvalidQAQuestionError)
+async def handle_invalid_qa_question(
+    _request: Request, error: InvalidQAQuestionError
+) -> JSONResponse:
+    return _error_response(error, 400)
+
+
+@app.exception_handler(QAProviderInvalidResponseError)
+async def handle_invalid_qa_provider_response(
+    _request: Request, error: QAProviderInvalidResponseError
+) -> JSONResponse:
+    return _error_response(error, 502)
 
 
 @app.exception_handler(AppUnavailableError)
@@ -134,6 +165,36 @@ def search(
     service: BookAppService = Depends(get_service),
 ) -> SearchResponse:
     return service.search(course_id, q, limit=limit)
+
+
+@app.post(
+    "/api/courses/{course_id}/qa",
+    response_model=QAResponse,
+)
+async def qa(
+    course_id: str,
+    request: Request,
+    service: BookAppService = Depends(get_service),
+) -> QAResponse:
+    try:
+        payload = QARequest.model_validate(await request.json())
+    except (ValueError, TypeError, ValidationError) as exc:
+        raise InvalidQAQuestionError(
+            code="invalid_qa_question",
+            user_message="提问内容无效",
+            detail="Invalid QA request body",
+        ) from exc
+
+    history = tuple(
+        QAHistoryMessage(role=row.role, content=row.content)
+        for row in payload.history
+    )
+    return service.ask(
+        course_id,
+        payload.question,
+        section_id=payload.section_id,
+        history=history,
+    )
 
 
 def _mode_response(

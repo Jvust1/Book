@@ -1,15 +1,20 @@
 from __future__ import annotations
 
 import json
+import os
 import threading
 import time
 import unittest
 import urllib.parse
 import urllib.request
+from unittest.mock import patch
 
 import uvicorn
 
 from app.api.main import app, default_service
+
+
+SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 
 
 class BookAppLiveApiTests(unittest.TestCase):
@@ -26,6 +31,7 @@ class BookAppLiveApiTests(unittest.TestCase):
         thread = threading.Thread(target=server.run, daemon=True)
         thread.start()
         self.addCleanup(self._stop_server, server, thread)
+        self.addCleanup(default_service.cache_clear)
 
         for _ in range(100):
             if server.started:
@@ -50,6 +56,65 @@ class BookAppLiveApiTests(unittest.TestCase):
         self.assertGreater(search["result_count"], 0)
         self.assertEqual(search["results"][0]["source_kind"], "object")
         self.assertEqual(search["results"][0]["object_type"], "theorem")
+
+    def test_uvicorn_serves_scoped_conversational_v2_qa_with_explicit_fake_provider(self) -> None:
+        default_service.cache_clear()
+        self.addCleanup(default_service.cache_clear)
+        with patch.dict(os.environ, {"BOOK_QA_PROVIDER": "fake"}, clear=False):
+            config = uvicorn.Config(
+                app,
+                host="127.0.0.1",
+                port=8766,
+                log_level="warning",
+                access_log=False,
+            )
+            server = uvicorn.Server(config)
+            thread = threading.Thread(target=server.run, daemon=True)
+            thread.start()
+            self.addCleanup(self._stop_server, server, thread)
+
+            for _ in range(100):
+                if server.started:
+                    break
+                time.sleep(0.05)
+            self.assertTrue(server.started, "Uvicorn did not start on 127.0.0.1")
+
+            request = urllib.request.Request(
+                "http://127.0.0.1:8766/api/courses/functional_analysis_course/qa",
+                data=json.dumps(
+                    {
+                        "question": SUFFICIENT_QA_QUESTION,
+                        "section_id": "ch01_s01",
+                        "history": [
+                            {"role": "user", "content": "什么是共轭指数？"},
+                            {"role": "assistant", "content": "上一轮回答只用于理解追问。"},
+                        ],
+                    },
+                    ensure_ascii=False,
+                ).encode("utf-8"),
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urllib.request.urlopen(request, timeout=5) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+
+            self.assertEqual(payload["course_id"], "functional_analysis_course")
+            self.assertEqual(payload["book_id"], "stein_shakarchi_functional_analysis_2011")
+            self.assertEqual(payload["answer_kind"], "generated")
+            self.assertEqual(payload["answer_style"], "brief")
+            self.assertEqual(payload["scope_requested"], "section_then_book")
+            self.assertIn(payload["scope_used"], ("section", "book"))
+            self.assertFalse(payload["insufficient_evidence"])
+            self.assertIsNone(payload["message"])
+            self.assertTrue(payload["citations"])
+            first = payload["citations"][0]
+            self.assertEqual(first["source_kind"], "object")
+            self.assertTrue(first["source_id"])
+            self.assertIsNotNone(first["chapter_id"])
+            self.assertIsNotNone(first["section_id"])
+            self.assertTrue(first["type_zh"])
+            self.assertNotIn("citation_id", first)
+            self.assertNotIn("evidence_status", payload)
 
     @staticmethod
     def _stop_server(server: uvicorn.Server, thread: threading.Thread) -> None:

@@ -4,10 +4,13 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 LearningMode = Literal["preview", "learn", "review", "practice"]
+AnswerStyle = Literal["brief", "explain", "compare", "proof"]
+QAScopeRequested = Literal["book", "section_then_book"]
+QAScopeUsed = Literal["section", "book"]
 
 
 class CourseCard(BaseModel):
@@ -152,3 +155,44 @@ class SearchResponse(BaseModel):
     query: str
     result_count: int
     results: list[SearchResultItem]
+
+
+class QAHistoryMessageDTO(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class QARequest(BaseModel):
+    question: str
+    section_id: str | None = None
+    history: list[QAHistoryMessageDTO] = Field(default_factory=list)
+
+
+class QACitationItem(BaseModel):
+    evidence_id: str
+    source_kind: str
+    source_id: str
+    chapter_id: str | None
+    section_id: str | None
+    object_type: str | None
+    type_zh: str | None
+    number: str | None
+    title_zh: str | None
+    title_en: str | None
+    printed_page: int | str | None
+    pdf_page: int | None
+    source_anchor: str | None
+
+
+class QAResponse(BaseModel):
+    course_id: str
+    book_id: str
+    question: str
+    answer: str | None
+    answer_kind: Literal["generated", "system_notice"]
+    answer_style: AnswerStyle | None
+    scope_requested: QAScopeRequested
+    scope_used: QAScopeUsed
+    insufficient_evidence: bool
+    message: str | None
+    citations: list[QACitationItem]

@@ -4,6 +4,8 @@ import type {
   LearningMode,
   LibraryResponse,
   ModeResponse,
+  QARequest,
+  QAResponse,
   SearchResponse,
   SectionResponse,
   SourceResponse,
@@ -30,9 +32,17 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string): Promise<T> {
+async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const headers: Record<string, string> = { Accept: 'application/json' }
+  if (init.headers) {
+    new Headers(init.headers).forEach((value, key) => {
+      headers[key] = value
+    })
+  }
+
   const response = await fetch(path, {
-    headers: { Accept: 'application/json' },
+    ...init,
+    headers,
   })
 
   if (!response.ok) {
@@ -100,6 +110,14 @@ export const bookApi = {
     return request<SearchResponse>(
       `/api/courses/${segment(courseId)}/search?${params.toString()}`,
     )
+  },
+
+  askCourse(courseId: string, qaRequest: QARequest): Promise<QAResponse> {
+    return request<QAResponse>(`/api/courses/${segment(courseId)}/qa`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(qaRequest),
+    })
   },
 
   getSource(courseId: string, kind: string, sourceId: string): Promise<SourceResponse> {

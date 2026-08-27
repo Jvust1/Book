@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-27
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化：`STRUCTURED_COMPLETE` / `RUNTIME_READY`，版本 `v0.36 FINAL`，442 / 442 PDF 页覆盖，最终纸质页 423，全书审计 PASS 20 / WARN 1 / FAIL 0。当前项目主线已从“继续分批结构化第一本书”切换为 Book App 软件能力建设。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化：`STRUCTURED_COMPLETE` / `RUNTIME_READY`，版本 `v0.36 FINAL`，442 / 442 PDF 页覆盖，最终纸质页 423，全书审计 PASS 20 / WARN 1 / FAIL 0。当前项目主线已从“继续分批结构化第一本书”切换为 Book App 软件能力建设；Phase 1F 教材内问答已完成，下一主线为 Phase 1G 长期学习记录。
 
 ## 产品基线
 
@@ -113,16 +113,28 @@
 - [x] 390×844 搜索与来源往返无 body 横向溢出
 - [x] Runtime CI 在 Python 3.11 / 3.12 / 3.13 运行 SearchRuntime gate
 - [x] canonical `search_index*.jsonl` 变更会触发 Runtime workflow
-- [x] 当前 Web gate：29 个 Vitest 单元测试、TypeScript、PWA build；Chromium acceptance 5 / 5 通过
+- [x] Phase 1E 完成基线：29 个 Vitest 单元测试、TypeScript、PWA build；Chromium acceptance 5 / 5 通过
 
-## Phase 1F：教材内问答
+## Phase 1F：教材内问答 — 已完成
 
-- [ ] 问答只使用课程允许的真实资料源
-- [ ] 回答必须携带真实来源引用
-- [ ] 点击来源进入教材来源页
-- [ ] 从来源返回问答上下文
-- [ ] 不把模型生成回答写回成“教材正文”
-- [ ] 无足够证据时明确说明资料不足
+- [x] 问答只使用当前课程允许的真实 canonical 教材资料源
+- [x] Course 入口支持整本教材问答
+- [x] Section 入口优先当前小节，并在本节证据不足时显式 fallback 到整本教材
+- [x] EvidencePack 数量/文本长度有界；最近对话 history 有界，且 history 不作为教材证据
+- [x] 服务端证据 gate 先判断是否具备真实可回答内容；模型可做第二次资料不足判断
+- [x] 回答必须携带服务端验证过的真实来源引用；未知/伪造 citation fail closed
+- [x] 点击 citation 进入现有教材来源页
+- [x] QA → Source → QA 返回时恢复同一份已验证会话，不重新调用模型生成原回答
+- [x] 连续追问向模型发送当前短期会话 history
+- [x] 模型生成回答与教材正文明确区分，不写回教材资产、搜索索引或 canonical source
+- [x] 无足够证据时返回稳定资料不足 system notice，不猜测答案
+- [x] 服务器侧支持 OpenAI-compatible provider；API Key 不进入浏览器 DTO/sessionStorage
+- [x] deterministic fake provider 支持 CI/浏览器验收，不要求外部模型 secret
+- [x] 390×844 下 Section QA、citation 来源往返无 body 横向溢出
+- [x] Runtime 3.11 / 3.12 / 3.13 Phase 1F contract gate 与全量 `tests` discovery 通过
+- [x] Python 3.13 Functional Analysis canonical rebuild/readiness/QA smoke 通过
+- [x] 全量 `app_tests` discovery、Web Vitest、TypeScript typecheck、Vite/PWA build 与 Chromium acceptance 通过
+- [x] Phase 1F 分支未修改 `books/functional-analysis/**` canonical 教材资产
 
 ## Phase 1G：长期学习记录
 
@@ -196,7 +208,7 @@
 - [ ] 恢复滚动 / 展开 / 筛选状态
 - [ ] 上一个 / 下一个考点
 
-> Phase 1D 已完成通用 Section ↔ Source 返回状态机制；Phase 1E 已增加 Search ↔ Source 短期返回状态。本阶段是在同一导航原则上增加 ExamPoint 业务对象，不重复实现另一套导航状态系统。
+> Phase 1D 已完成通用 Section ↔ Source 返回状态机制；Phase 1E 已增加 Search ↔ Source 短期返回状态；Phase 1F 已增加 QA ↔ Source 会话返回状态。本阶段是在同一导航原则上增加 ExamPoint 业务对象，不重复实现另一套导航状态系统。
 
 ## Phase 1K：本地 PDF Reader 接入
 
@@ -210,7 +222,7 @@
 
 ## Phase 1 首章完整产品验收
 
-Phase 1E 已完成 `ch01_s01` 基础学习闭环与教材搜索闭环；下列完整学习产品验收仍要等问答、长期记录等能力接入后完成。
+Phase 1F 已完成 `ch01_s01` 基础学习、教材搜索和教材问答来源闭环；长期学习记录、ExamPoint 与本地 PDF Reader 仍待后续阶段完成。
 
 - [x] Library → Course → Chapter → Section 导航
 - [x] 四学习入口可用
@@ -219,7 +231,7 @@ Phase 1E 已完成 `ch01_s01` 基础学习闭环与教材搜索闭环；下列�
 - [x] 窄屏基础可用性
 - [ ] 关键图 / 例题 / 习题完整交互验收
 - [x] 中英搜索
-- [ ] 教材内问答返回真实来源
+- [x] 教材内问答返回真实来源
 - [ ] 长期学习进度保存与恢复
 - [ ] ExamPoint → 教材来源 → 返回考点闭环
 - [ ] 本地原始 PDF 页级/锚点级查看
@@ -322,6 +334,6 @@ AI 回答的证据优先级和可用资料源必须显式配置；回答与教�
 
 ## 当前单一下一步
 
-**Phase 1F：在已经稳定的教材搜索 / Source 来源体系上接入教材内问答，并强制回答携带真实来源。**
+**Phase 1G：建立长期 `StudyRecord`，保存最近学习位置与四模式独立进度，并与现有 Section / Search / QA `sessionStorage` 短期返回状态严格分离。**
 
-Phase 1E 的搜索闭环已经稳定；下一阶段不重新实现搜索，也不把 AI 输出写成教材正文。教材问答稳定后，再进入长期 `StudyRecord`；当前仍不进入课堂录音，也不重复结构化已经完成的 Functional Analysis。
+Phase 1F 的教材问答闭环已经稳定；下一阶段不重新实现搜索/问答，也不把短期会话恢复状态冒充长期学习记录。当前仍不进入课堂录音，也不重复结构化已经完成的 Functional Analysis。

@@ -175,18 +175,26 @@ export function SectionPage() {
         <h1>{section?.section.title_zh || (section ? '中文标题暂未提供' : '正在读取小节…')}</h1>
         {section?.section.title_en ? <p className="secondary-text">{section.section.title_en}</p> : null}
         {section ? (
-          <p className="page-range">
-            教材页 {section.section.printed_page_start ?? '暂缺'}
-            {section.section.printed_page_end != null &&
-            section.section.printed_page_end !== section.section.printed_page_start
-              ? `–${section.section.printed_page_end}`
-              : ''}
-            {' · '}PDF {section.section.pdf_page_start ?? '暂缺'}
-            {section.section.pdf_page_end != null &&
-            section.section.pdf_page_end !== section.section.pdf_page_start
-              ? `–${section.section.pdf_page_end}`
-              : ''}
-          </p>
+          <>
+            <p className="page-range">
+              教材页 {section.section.printed_page_start ?? '暂缺'}
+              {section.section.printed_page_end != null &&
+              section.section.printed_page_end !== section.section.printed_page_start
+                ? `–${section.section.printed_page_end}`
+                : ''}
+              {' · '}PDF {section.section.pdf_page_start ?? '暂缺'}
+              {section.section.pdf_page_end != null &&
+              section.section.pdf_page_end !== section.section.pdf_page_start
+                ? `–${section.section.pdf_page_end}`
+                : ''}
+            </p>
+            <Link
+              className="source-link"
+              to={`/courses/${encodeURIComponent(courseId)}/qa?section=${encodeURIComponent(sectionId)}`}
+            >
+              问本节内容
+            </Link>
+          </>
         ) : null}
       </header>
 

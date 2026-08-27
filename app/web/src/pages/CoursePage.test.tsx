@@ -49,7 +49,7 @@ describe('CoursePage', () => {
     })
   })
 
-  it('preserves audited Chapter order and exposes the course-scoped search entry', async () => {
+  it('preserves audited Chapter order and exposes search plus textbook QA entries', async () => {
     render(
       <MemoryRouter initialEntries={['/courses/functional_analysis_course']}>
         <Routes>
@@ -62,6 +62,10 @@ describe('CoursePage', () => {
     expect(screen.getByRole('link', { name: '搜索教材' })).toHaveAttribute(
       'href',
       '/courses/functional_analysis_course/search',
+    )
+    expect(screen.getByRole('link', { name: '教材问答' })).toHaveAttribute(
+      'href',
+      '/courses/functional_analysis_course/qa',
     )
     const chapterTitles = screen.getAllByTestId('chapter-title')
     expect(chapterTitles.map((node) => node.textContent)).toEqual([

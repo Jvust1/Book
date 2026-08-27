@@ -11,6 +11,9 @@ on:
       - "books/functional-analysis/**"
       - "tests/test_source_resolver.py"
       - "tests/test_search_runtime.py"
+      - "tests/test_qa_provider.py"
+      - "tests/test_qa_evidence.py"
+      - "tests/test_qa_runtime.py"
       - ".github/workflows/app-ui-tests.yml"
   pull_request:
     paths:
@@ -22,6 +25,9 @@ on:
       - "books/functional-analysis/**"
       - "tests/test_source_resolver.py"
       - "tests/test_search_runtime.py"
+      - "tests/test_qa_provider.py"
+      - "tests/test_qa_evidence.py"
+      - "tests/test_qa_runtime.py"
       - ".github/workflows/app-ui-tests.yml"
 
 permissions:
@@ -42,8 +48,11 @@ jobs:
       - name: Install App API dependencies
         run: python -m pip install -r app/api/requirements.txt
 
-      - name: Run App service, API, source and search tests
-        run: python -m unittest app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver tests.test_search_runtime -v
+      - name: Run App service, API, source, search and QA tests
+        run: python -m unittest app_tests.test_openai_compatible_provider app_tests.test_qa_provider_factory app_tests.test_qa_service app_tests.test_qa_api app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver tests.test_search_runtime tests.test_qa_provider tests.test_qa_evidence tests.test_qa_runtime -v
+
+      - name: Run full App regression discovery
+        run: python -m unittest discover -s app_tests -p "test_*.py" -v
 
   web-client:
     runs-on: ubuntu-latest
@@ -103,7 +112,9 @@ jobs:
         working-directory: app/web
         run: npx playwright install --with-deps chromium
 
-      - name: Start local API
+      - name: Start local API with deterministic QA provider
+        env:
+          BOOK_QA_PROVIDER: fake
         run: |
           nohup python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000 > /tmp/book-api.log 2>&1 < /dev/null &
           echo $! > /tmp/book-api.pid
