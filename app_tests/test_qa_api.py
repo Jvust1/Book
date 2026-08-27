@@ -7,7 +7,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from runtime import DeterministicFakeAnswerProvider, ProviderAnswer
+from runtime import DeterministicFakeModelProvider, ModelResponse
 
 from app.api.main import app, get_service
 from app.api.service import BookAppService
@@ -21,14 +21,21 @@ SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 class InvalidCitationProvider:
     def answer(self, request):
         del request
-        return ProviderAnswer(answer_text="非法引用回答", cited_evidence_ids=("E999",))
+        return ModelResponse.from_mapping(
+            {
+                "answer": "非法引用回答",
+                "evidence_ids": ["E999"],
+                "insufficient_evidence": False,
+                "answer_style": "brief",
+            }
+        )
 
 
 class BookAppQAApiTests(unittest.TestCase):
     def setUp(self) -> None:
         self.fake_service = BookAppService(
             REPO_ROOT,
-            qa_provider=DeterministicFakeAnswerProvider(),
+            qa_provider=DeterministicFakeModelProvider(),
         )
         app.dependency_overrides[get_service] = lambda: self.fake_service
         self.client = TestClient(app)
