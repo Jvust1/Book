@@ -25,6 +25,21 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
 
         core_rows: dict[str, dict[str, Any]] = {}
         core_locations: dict[str, set[str]] = defaultdict(set)
+        core_source_keys: dict[str, set[str]] = defaultdict(set)
+        relation_fields = {
+            "continued_from",
+            "continues_in",
+            "continuation_of",
+            "completion_of",
+            "completed_from",
+            "same_as",
+            "alias_of",
+            "canonical_id",
+            "supersedes",
+            "replaces",
+        }
+        core_relations: dict[str, dict[str, Any]] = defaultdict(dict)
+
         for path in rebuild.structure_files(root):
             data = rebuild.load_json(path)
             if not isinstance(data, dict):
@@ -52,6 +67,10 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
                         continue
                     rid = str(row["id"])
                     core_locations[rid].add(chunk_id)
+                    core_source_keys[rid].add(key)
+                    for relation in relation_fields:
+                        if raw.get(relation) not in (None, "", [], {}):
+                            core_relations[rid][relation] = raw[relation]
                     previous = core_rows.get(rid, {})
                     merged = dict(previous)
                     merged.update({k: v for k, v in row.items() if v not in (None, "", [], {})})
@@ -64,19 +83,6 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
             for rid in new_core_ids
             for chunk in core_locations.get(rid, set())
         )
-        new_types_absent_from_base = {
-            row_type: count
-            for row_type, count in sorted(new_type_counts.items())
-            if base_type_counts.get(row_type, 0) == 0
-        }
-        new_ids_for_absent_types = {
-            row_type: [
-                rid
-                for rid in new_core_ids
-                if str(core_rows[rid].get("type") or "") == row_type
-            ]
-            for row_type in new_types_absent_from_base
-        }
 
         all_ids = base_ids | set(core_rows)
         complete_pairs = []
@@ -110,8 +116,48 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
             if base_exists:
                 literal_complete_base_pairs.append(rid)
 
-        # Compare newly introduced structure IDs against the pre-structure index.
-        # This is diagnostic only: matches are candidates for audit, not automatic merges.
+        # Empirical policy check: from PDF 91 onward the historical delta files
+        # are present. Any structure object there that never appears in the raw
+        # delta is direct evidence of a non-search object / alias / continuation.
+        post90_missing_from_delta = []
+        post90_present_type_counts: Counter[str] = Counter()
+        post90_missing_type_counts: Counter[str] = Counter()
+        for rid, row in sorted(core_rows.items()):
+            page = rebuild.first_page(row)
+            if page is None or page < 91:
+                continue
+            row_type = str(row.get("type") or "")
+            if rid in raw_delta_ids:
+                post90_present_type_counts[row_type] += 1
+                continue
+            post90_missing_type_counts[row_type] += 1
+            post90_missing_from_delta.append(
+                {
+                    "id": rid,
+                    "type": row_type,
+                    "pdf_page": page,
+                    "number": row.get("number"),
+                    "chunks": sorted(core_locations.get(rid, set())),
+                    "source_keys": sorted(core_source_keys.get(rid, set())),
+                    "relations": core_relations.get(rid, {}),
+                }
+            )
+
+        early_relation_candidates = [
+            {
+                "id": rid,
+                "type": str(core_rows[rid].get("type") or ""),
+                "pdf_page": rebuild.first_page(core_rows[rid]),
+                "chunks": sorted(core_locations.get(rid, set())),
+                "source_keys": sorted(core_source_keys.get(rid, set())),
+                "relations": core_relations[rid],
+            }
+            for rid in new_core_ids
+            if core_relations.get(rid)
+        ]
+
+        # Compare new baseline-recovery objects against existing delta objects by
+        # normalized title, allowing a one-page boundary shift and type variants.
         def text_key(row: dict[str, Any]) -> str:
             for key in (
                 "name_en",
@@ -126,70 +172,53 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
                     return rebuild.normalized_text(row.get(key))
             return ""
 
-        base_semantic: dict[tuple[str, int | None, str], list[str]] = defaultdict(list)
+        delta_by_text: dict[str, list[tuple[str, dict[str, Any]]]] = defaultdict(list)
         for rid, row in base_records.items():
-            key = (str(row.get("type") or ""), rebuild.first_page(row), text_key(row))
-            if key[2]:
-                base_semantic[key].append(rid)
+            key = text_key(row)
+            if key:
+                delta_by_text[key].append((rid, row))
 
-        semantic_alias_candidates = []
+        early_text_alias_candidates = []
         for rid in new_core_ids:
             row = core_rows[rid]
-            key = (str(row.get("type") or ""), rebuild.first_page(row), text_key(row))
-            matches = [candidate for candidate in base_semantic.get(key, []) if candidate != rid]
+            key = text_key(row)
+            if not key:
+                continue
+            page = rebuild.first_page(row)
+            matches = []
+            for candidate_id, candidate in delta_by_text.get(key, []):
+                candidate_page = rebuild.first_page(candidate)
+                if page is None or candidate_page is None or abs(page - candidate_page) <= 1:
+                    matches.append(candidate_id)
             if matches:
-                semantic_alias_candidates.append(
+                early_text_alias_candidates.append(
                     {
-                        "new_id": rid,
-                        "type": key[0],
-                        "pdf_page": key[1],
+                        "id": rid,
+                        "type": row.get("type"),
+                        "pdf_page": page,
                         "matches": sorted(matches),
-                        "chunks": sorted(core_locations.get(rid, set())),
                     }
                 )
-
-        # Also report same type + theorem/lemma/proposition number + page collisions,
-        # because some boundary objects use sparse titles but preserve numbering.
-        number_groups: dict[tuple[str, int | None, str], set[str]] = defaultdict(set)
-        combined = dict(base_records)
-        combined.update(core_rows)
-        for rid, row in combined.items():
-            row_type = str(row.get("type") or "").lower()
-            number = rebuild.normalized_text(row.get("number"))
-            if row_type not in {"theorem", "lemma", "proposition", "corollary"} or not number:
-                continue
-            number_groups[(row_type, rebuild.first_page(row), number)].add(rid)
-        numbered_collision_groups = [
-            {
-                "type": key[0],
-                "pdf_page": key[1],
-                "number": key[2],
-                "ids": sorted(ids),
-            }
-            for key, ids in sorted(number_groups.items(), key=lambda item: str(item[0]))
-            if len(ids) > 1
-        ]
 
         records_pre_tail, _ = rebuild.expand_v035_backmatter(delta_records, book_id=book_id)
         rebuild.merge_core_structure_records(records_pre_tail, root, book_id=book_id)
         pre_tail_count = len(records_pre_tail)
 
         diagnostic = {
-            "v035_historical_row_count": 1404,
             "final_pre_tail_unique_target": 1396,
             "recovered_pre_tail_count": pre_tail_count,
             "gap_to_final_pre_tail_target": pre_tail_count - 1396,
             "base_after_delta_expansion": len(base_records),
-            "base_type_counts": dict(sorted(base_type_counts.items())),
             "new_core_unique_count": len(new_core_ids),
             "new_core_type_counts": dict(sorted(new_type_counts.items())),
             "new_core_chunk_counts": dict(sorted(new_chunk_counts.items())),
-            "new_types_absent_from_base": new_types_absent_from_base,
-            "new_ids_for_absent_types": new_ids_for_absent_types,
             "complete_pairs": complete_pairs,
             "literal_complete_base_pairs": literal_complete_base_pairs,
-            "semantic_alias_candidates": semantic_alias_candidates,
-            "numbered_collision_groups": numbered_collision_groups,
+            "post90_present_type_counts": dict(sorted(post90_present_type_counts.items())),
+            "post90_missing_type_counts": dict(sorted(post90_missing_type_counts.items())),
+            "post90_missing_from_delta": post90_missing_from_delta,
+            "early_relation_candidates": early_relation_candidates,
+            "early_text_alias_candidates": early_text_alias_candidates,
         }
         print("SEARCH_IDENTITY_DIAGNOSTIC=" + json.dumps(diagnostic, ensure_ascii=False, sort_keys=True))
 
