@@ -56,5 +56,11 @@ jobs:
       - name: Install web dependencies
         run: npm install
 
-      - name: Run typed API client contract
-        run: npm test -- src/api/client.test.ts
+      - name: Run web tests
+        run: npm test
+
+      - name: Typecheck web app
+        run: npm run typecheck
+
+      - name: Build web app
+        run: npm run build
