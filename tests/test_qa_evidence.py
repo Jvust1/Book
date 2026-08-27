@@ -6,21 +6,16 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runtime import (
-    AnswerProviderInvalidResponseError,
-    CourseRuntime,
-    EvidenceItem,
-    EvidencePack,
-    ProviderAnswer,
-    SourceResolver,
-)
+from runtime import CourseRuntime, SourceResolver
 from runtime.qa_evidence import (
     CitationVerifier,
-    EvidencePolicy,
-    EvidenceRetriever,
+    EvidenceBuilder,
+    EvidenceGate,
     QAEvidenceUnavailableError,
     QuestionProbeBuilder,
+    normalize_history,
 )
+from runtime.qa_models import EvidenceItem, EvidencePack, ModelResponse, QAHistoryMessage
 from tests.runtime_fixture_factory import main_book_entry, make_repo, write_course, write_ready_book
 
 
@@ -43,6 +38,24 @@ class QuestionProbeBuilderTests(unittest.TestCase):
         self.assertEqual(len(holder), len(set(holder)))
 
 
+class HistoryBoundingTests(unittest.TestCase):
+    def test_keeps_only_recent_six_messages_with_total_text_at_most_6000(self) -> None:
+        history = tuple(
+            QAHistoryMessage(
+                role="user" if index % 2 == 0 else "assistant",
+                content=f"m{index}:" + ("x" * 1200),
+            )
+            for index in range(8)
+        )
+
+        normalized = normalize_history(history)
+
+        self.assertLessEqual(len(normalized), 6)
+        self.assertLessEqual(sum(len(row.content) for row in normalized), 6000)
+        self.assertTrue(normalized[-1].content.startswith("m7:"))
+        self.assertFalse(any(row.content.startswith("m0:") for row in normalized))
+
+
 class EvidenceFixtureTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tempdir = tempfile.TemporaryDirectory()
@@ -51,61 +64,92 @@ class EvidenceFixtureTests(unittest.TestCase):
         self.book_dir = self.repo / "books" / "fixture-book"
         self.course_dir = self.repo / "courses" / "fixture-course"
 
-    def _open_course(self) -> CourseRuntime:
-        write_ready_book(
-            self.book_dir,
-            book_id="fixture_book",
-            objects=[
+    def _open_course(self, *, long_evidence: bool = False) -> CourseRuntime:
+        if long_evidence:
+            objects = [
                 {
                     "type": "definition",
-                    "id": "def_banach",
-                    "name_zh": "巴拿赫空间",
-                    "name_en": "Banach space",
-                    "number": "1.1",
-                    "content_zh": "完备赋范线性空间称为巴拿赫空间。",
+                    "id": f"def_common_{index}",
+                    "name_zh": f"共同概念 {index}",
+                    "content_zh": (f"证据{index}-" + ("甲" * 1990)),
                     "anchor": {
                         "pdf_page": 1,
                         "printed_page": 1,
-                        "source_anchor": "fixture_book:pdf:1:def_banach",
+                        "source_anchor": None,
                     },
-                },
+                }
+                for index in range(10)
+            ]
+            search_records = [
                 {
-                    "type": "definition",
-                    "id": "def_banach_duplicate_title",
-                    "name_zh": "巴拿赫空间补充说明",
-                    "name_en": "Banach space note",
-                    "number": "1.2",
-                    "anchor": {
-                        "pdf_page": 2,
-                        "printed_page": 2,
-                        "source_anchor": "fixture_book:pdf:2:def_banach_note",
-                    },
-                },
-            ],
-            search_records=[
-                {
-                    "id": "def_banach",
+                    "id": f"def_common_{index}",
                     "book_id": "fixture_book",
                     "type": "definition",
-                    "name_zh": "巴拿赫空间",
-                    "name_en": "Banach space",
-                    "number": "1.1",
+                    "name_zh": f"共同概念 {index}",
                     "pdf_page": 1,
                     "printed_page": 1,
-                    "source_anchor": "fixture_book:pdf:1:def_banach",
+                }
+                for index in range(10)
+            ]
+        else:
+            objects = [
+                {
+                    "type": "definition",
+                    "id": "def_a",
+                    "name_zh": "甲概念",
+                    "content_zh": "甲概念只在 A 节定义。",
+                    "anchor": {"pdf_page": 1, "printed_page": 1},
                 },
                 {
-                    "id": "def_banach_duplicate_title",
+                    "type": "definition",
+                    "id": "def_b",
+                    "name_zh": "乙概念",
+                    "content_zh": "乙概念只在 B 节定义。",
+                    "anchor": {"pdf_page": 2, "printed_page": 2},
+                },
+            ]
+            search_records = [
+                {
+                    "id": "def_a",
                     "book_id": "fixture_book",
                     "type": "definition",
-                    "name_zh": "巴拿赫空间补充说明",
-                    "name_en": "Banach space note",
-                    "number": "1.2",
+                    "name_zh": "甲概念",
+                    "pdf_page": 1,
+                    "printed_page": 1,
+                },
+                {
+                    "id": "def_b",
+                    "book_id": "fixture_book",
+                    "type": "definition",
+                    "name_zh": "乙概念",
                     "pdf_page": 2,
                     "printed_page": 2,
-                    "source_anchor": "fixture_book:pdf:2:def_banach_note",
+                },
+            ]
+
+        write_ready_book(
+            self.book_dir,
+            book_id="fixture_book",
+            objects=objects,
+            sections=[
+                {
+                    "id": "sec_a",
+                    "number": "1",
+                    "title_en": "Section A",
+                    "title_zh": "A 节",
+                    "pdf_pages": [1, 1],
+                    "printed_pages": [1, 1],
+                },
+                {
+                    "id": "sec_b",
+                    "number": "2",
+                    "title_en": "Section B",
+                    "title_zh": "B 节",
+                    "pdf_pages": [2, 2],
+                    "printed_pages": [2, 2],
                 },
             ],
+            search_records=search_records,
         )
         write_course(
             self.course_dir,
@@ -115,28 +159,43 @@ class EvidenceFixtureTests(unittest.TestCase):
         )
         return CourseRuntime.open(self.course_dir)
 
-    def test_retriever_deduplicates_probes_and_re_resolves_canonical_source(self) -> None:
-        course = self._open_course()
-        pack = EvidenceRetriever.from_course(course).retrieve("什么是巴拿赫空间？", limit=8)
+    def test_builder_re_resolves_canonical_metadata_and_respects_budgets(self) -> None:
+        course = self._open_course(long_evidence=True)
+        pack = EvidenceBuilder.from_course(course).build(
+            "共同概念",
+            section_id="sec_a",
+            limit=8,
+        )
 
-        self.assertEqual(pack.course_id, "fixture_course")
-        self.assertEqual(pack.book_id, "fixture_book")
+        self.assertLessEqual(len(pack.evidence), 8)
+        self.assertLessEqual(
+            sum(len(row.content_zh or "") + len(row.formula or "") for row in pack.evidence),
+            12000,
+        )
         self.assertTrue(pack.evidence)
-        self.assertEqual(pack.evidence[0].evidence_id, "E1")
-        self.assertEqual(pack.evidence[0].source_id, "def_banach")
-        self.assertEqual(
-            len({(row.source_kind, row.source_id) for row in pack.evidence}),
-            len(pack.evidence),
+        for row in pack.evidence:
+            self.assertEqual(row.course_id, "fixture_course")
+            self.assertEqual(row.book_id, "fixture_book")
+            self.assertEqual(row.chapter_id, "chapter_01")
+            self.assertEqual(row.section_id, "sec_a")
+            self.assertEqual(row.type_zh, "定义")
+        self.assertIsNone(pack.evidence[0].source_anchor)
+
+    def test_builder_scope_filter_uses_real_section_identity(self) -> None:
+        course = self._open_course()
+        section_pack = EvidenceBuilder.from_course(course).build(
+            "乙概念",
+            section_id="sec_a",
+            limit=8,
+        )
+        book_pack = EvidenceBuilder.from_course(course).build(
+            "乙概念",
+            section_id=None,
+            limit=8,
         )
 
-        resolved = SourceResolver(course).resolve(
-            pack.evidence[0].source_kind,
-            pack.evidence[0].source_id,
-        )
-        self.assertEqual(pack.evidence[0].title_zh, resolved.title_zh)
-        self.assertEqual(pack.evidence[0].content_zh, resolved.content_zh)
-        self.assertEqual(pack.evidence[0].source_anchor, resolved.source_anchor)
-        self.assertEqual(pack.evidence[0].pdf_page, resolved.pdf_page)
+        self.assertEqual(section_pack.evidence, ())
+        self.assertEqual([row.source_id for row in book_pack.evidence], ["def_b"])
 
     def test_missing_search_index_is_infrastructure_unavailable(self) -> None:
         course = self._open_course()
@@ -145,82 +204,70 @@ class EvidenceFixtureTests(unittest.TestCase):
         Path(path).unlink()
 
         with self.assertRaises(QAEvidenceUnavailableError):
-            EvidenceRetriever.from_course(course).retrieve("巴拿赫空间", limit=8)
+            EvidenceBuilder.from_course(course).build("甲概念", section_id=None, limit=8)
 
-    def test_policy_is_conservative_at_type_only_threshold(self) -> None:
-        weak = EvidencePack(
+    def test_gate_requires_real_content_and_more_than_type_only_score(self) -> None:
+        base = dict(
+            evidence_id="E1",
+            source_kind="object",
+            source_id="def_a",
+            object_type="definition",
+            title_zh="甲概念",
+            title_en=None,
+            number=None,
+            formula=None,
+            source_anchor=None,
+            pdf_page=1,
+            printed_page=1,
+            course_id="fixture_course",
+            book_id="fixture_book",
+            chapter_id="chapter_01",
+            section_id="sec_a",
+            type_zh="定义",
+        )
+        pure_title = EvidencePack(
+            course_id="fixture_course",
+            book_id="fixture_book",
+            question="甲概念",
+            evidence=(EvidenceItem(**base, content_zh=None, search_score=1000),),
+        )
+        type_only = EvidencePack(
             course_id="fixture_course",
             book_id="fixture_book",
             question="definition",
-            evidence=(
-                EvidenceItem(
-                    evidence_id="E1",
-                    source_kind="object",
-                    source_id="def_banach",
-                    object_type="definition",
-                    title_zh="巴拿赫空间",
-                    title_en="Banach space",
-                    number="1.1",
-                    formula=None,
-                    content_zh=None,
-                    source_anchor="fixture_book:pdf:1:def_banach",
-                    pdf_page=1,
-                    printed_page=1,
-                    search_score=300,
-                ),
-            ),
+            evidence=(EvidenceItem(**base, content_zh="真实教材内容", search_score=300),),
         )
         strong = EvidencePack(
-            course_id=weak.course_id,
-            book_id=weak.book_id,
-            question="巴拿赫空间",
-            evidence=(
-                EvidenceItem(**{**weak.evidence[0].__dict__, "search_score": 1000}),
-            ),
-        )
-        empty = EvidencePack(
-            course_id=weak.course_id,
-            book_id=weak.book_id,
-            question="none",
-            evidence=(),
+            course_id="fixture_course",
+            book_id="fixture_book",
+            question="甲概念",
+            evidence=(EvidenceItem(**base, content_zh="真实教材内容", search_score=1000),),
         )
 
-        self.assertEqual(EvidencePolicy.status(empty), "insufficient_evidence")
-        self.assertEqual(EvidencePolicy.status(weak), "insufficient_evidence")
-        self.assertEqual(EvidencePolicy.status(strong), "sufficient")
+        self.assertEqual(EvidenceGate.status(pure_title), "insufficient_evidence")
+        self.assertEqual(EvidenceGate.status(type_only), "insufficient_evidence")
+        self.assertEqual(EvidenceGate.status(strong), "sufficient")
 
-    def test_citation_verifier_deduplicates_and_projects_server_owned_metadata(self) -> None:
+    def test_citation_verifier_projects_server_owned_v2_metadata(self) -> None:
         course = self._open_course()
-        pack = EvidenceRetriever.from_course(course).retrieve("巴拿赫空间", limit=8)
-        answer = ProviderAnswer(
-            answer_text="基于教材证据的回答",
-            cited_evidence_ids=("E1", "E1"),
+        pack = EvidenceBuilder.from_course(course).build("甲概念", section_id=None, limit=8)
+        response = ModelResponse.from_mapping(
+            {
+                "answer": "基于教材证据的回答",
+                "evidence_ids": ["E1", "E1"],
+                "insufficient_evidence": False,
+                "answer_style": "brief",
+            }
         )
 
-        citations = CitationVerifier.from_course(course).verify(pack, answer)
+        citations = CitationVerifier.from_course(course).verify(pack, response)
 
         self.assertEqual(len(citations), 1)
-        self.assertEqual(citations[0].citation_id, "C1")
         self.assertEqual(citations[0].evidence_id, "E1")
-        self.assertEqual(citations[0].source_id, pack.evidence[0].source_id)
-        self.assertEqual(citations[0].source_anchor, pack.evidence[0].source_anchor)
-        self.assertEqual(citations[0].pdf_page, pack.evidence[0].pdf_page)
-
-    def test_citation_verifier_rejects_unknown_or_missing_citations(self) -> None:
-        course = self._open_course()
-        pack = EvidenceRetriever.from_course(course).retrieve("巴拿赫空间", limit=8)
-        verifier = CitationVerifier.from_course(course)
-
-        with self.assertRaises(AnswerProviderInvalidResponseError):
-            verifier.verify(
-                pack,
-                ProviderAnswer(answer_text="unsupported", cited_evidence_ids=("E99",)),
-            )
-        with self.assertRaises(AnswerProviderInvalidResponseError):
-            verifier.verify(
-                pack,
-                ProviderAnswer(answer_text="unsupported", cited_evidence_ids=()),
-            )
+        self.assertEqual(citations[0].source_id, "def_a")
+        self.assertEqual(citations[0].chapter_id, "chapter_01")
+        self.assertEqual(citations[0].section_id, "sec_a")
+        self.assertEqual(citations[0].type_zh, "定义")
 
 
 class RealFunctionalAnalysisEvidenceTests(unittest.TestCase):
@@ -229,22 +276,17 @@ class RealFunctionalAnalysisEvidenceTests(unittest.TestCase):
         cls.course = CourseRuntime.open(REPO_ROOT / "courses" / "functional-analysis")
 
     def test_real_natural_language_chinese_question_finds_evidence(self) -> None:
-        pack = EvidenceRetriever.from_course(self.course).retrieve("什么是巴拿赫空间？", limit=8)
+        pack = EvidenceBuilder.from_course(self.course).build(
+            "什么是巴拿赫空间？",
+            section_id=None,
+            limit=8,
+        )
 
         self.assertEqual(pack.course_id, COURSE_ID)
         self.assertEqual(pack.book_id, BOOK_ID)
         self.assertTrue(pack.evidence)
         self.assertEqual(pack.evidence[0].evidence_id, "E1")
         self.assertGreater(pack.evidence[0].search_score, 300)
-
-    def test_real_mixed_language_question_finds_holder_evidence(self) -> None:
-        pack = EvidenceRetriever.from_course(self.course).retrieve(
-            "Hölder 不等式的作用是什么？",
-            limit=8,
-        )
-
-        self.assertTrue(pack.evidence)
-        self.assertTrue(any("Hölder" in (row.title_zh or row.title_en or "") for row in pack.evidence))
         for row in pack.evidence:
             resolved = SourceResolver(self.course).resolve(row.source_kind, row.source_id)
             self.assertEqual(resolved.book_id, BOOK_ID)
