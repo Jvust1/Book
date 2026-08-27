@@ -1,4 +1,4 @@
-"""Orchestration tests for the Phase 1F textbook QA runtime."""
+"""Orchestration tests for the Phase 1F v2 textbook QA runtime."""
 
 from __future__ import annotations
 
@@ -6,17 +6,37 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runtime import (
-    AnswerProviderInvalidResponseError,
-    AnswerProviderUnavailableError,
-    CourseRuntime,
-    DeterministicFakeAnswerProvider,
-    ProviderAnswer,
-    QARuntime,
-    QAQuestionError,
-    UnavailableAnswerProvider,
-)
+from runtime import CourseRuntime, QARuntime, QAQuestionError
+from runtime.qa_models import ModelResponse, QAHistoryMessage
+from runtime.qa_runtime import QASectionError
 from tests.runtime_fixture_factory import main_book_entry, make_repo, write_course, write_ready_book
+
+
+class RecordingModelProvider:
+    def __init__(self, *, mode: str = "answer") -> None:
+        self.mode = mode
+        self.requests = []
+
+    def answer(self, request):
+        self.requests.append(request)
+        if self.mode == "insufficient":
+            return ModelResponse.from_mapping(
+                {
+                    "answer": None,
+                    "evidence_ids": [],
+                    "insufficient_evidence": True,
+                    "answer_style": "explain",
+                }
+            )
+        first = request.evidence[0]
+        return ModelResponse.from_mapping(
+            {
+                "answer": f"根据教材：{first.content_zh or first.formula or first.title_zh}",
+                "evidence_ids": [first.evidence_id],
+                "insufficient_evidence": False,
+                "answer_style": "brief",
+            }
+        )
 
 
 class FailIfCalledProvider:
@@ -25,16 +45,7 @@ class FailIfCalledProvider:
 
     def answer(self, request):
         self.called = True
-        raise AssertionError("provider must not be called")
-
-
-class InvalidCitationProvider:
-    def answer(self, request):
-        del request
-        return ProviderAnswer(
-            answer_text="这是一个带有非法 citation 的回答",
-            cited_evidence_ids=("E99",),
-        )
+        raise AssertionError(f"provider must not be called: {request!r}")
 
 
 class QARuntimeTests(unittest.TestCase):
@@ -50,30 +61,54 @@ class QARuntimeTests(unittest.TestCase):
             objects=[
                 {
                     "type": "definition",
-                    "id": "def_banach",
-                    "name_zh": "巴拿赫空间",
-                    "name_en": "Banach space",
-                    "number": "1.1",
-                    "content_zh": "完备赋范线性空间称为巴拿赫空间。",
-                    "anchor": {
-                        "pdf_page": 1,
-                        "printed_page": 1,
-                        "source_anchor": "fixture_book:pdf:1:def_banach",
-                    },
-                }
+                    "id": "def_a",
+                    "name_zh": "甲概念",
+                    "content_zh": "甲概念只在 A 节定义。",
+                    "anchor": {"pdf_page": 1, "printed_page": 1},
+                },
+                {
+                    "type": "definition",
+                    "id": "def_b",
+                    "name_zh": "乙概念",
+                    "content_zh": "乙概念只在 B 节定义。",
+                    "anchor": {"pdf_page": 2, "printed_page": 2},
+                },
+            ],
+            sections=[
+                {
+                    "id": "sec_a",
+                    "number": "1",
+                    "title_en": "Section A",
+                    "title_zh": "A 节",
+                    "pdf_pages": [1, 1],
+                    "printed_pages": [1, 1],
+                },
+                {
+                    "id": "sec_b",
+                    "number": "2",
+                    "title_en": "Section B",
+                    "title_zh": "B 节",
+                    "pdf_pages": [2, 2],
+                    "printed_pages": [2, 2],
+                },
             ],
             search_records=[
                 {
-                    "id": "def_banach",
+                    "id": "def_a",
                     "book_id": "fixture_book",
                     "type": "definition",
-                    "name_zh": "巴拿赫空间",
-                    "name_en": "Banach space",
-                    "number": "1.1",
+                    "name_zh": "甲概念",
                     "pdf_page": 1,
                     "printed_page": 1,
-                    "source_anchor": "fixture_book:pdf:1:def_banach",
-                }
+                },
+                {
+                    "id": "def_b",
+                    "book_id": "fixture_book",
+                    "type": "definition",
+                    "name_zh": "乙概念",
+                    "pdf_page": 2,
+                    "printed_page": 2,
+                },
             ],
         )
         write_course(
@@ -84,11 +119,8 @@ class QARuntimeTests(unittest.TestCase):
         )
         self.course = CourseRuntime.open(course_dir)
 
-    def test_rejects_blank_overlong_and_invalid_evidence_limit(self) -> None:
-        runtime = QARuntime.from_course(
-            self.course,
-            provider=DeterministicFakeAnswerProvider(),
-        )
+    def test_rejects_blank_overlong_malformed_history_and_unknown_section(self) -> None:
+        runtime = QARuntime.from_course(self.course, provider=RecordingModelProvider())
 
         for question in ("", "   "):
             with self.subTest(question=question):
@@ -96,58 +128,105 @@ class QARuntimeTests(unittest.TestCase):
                     runtime.answer(question)
         with self.assertRaises(QAQuestionError):
             runtime.answer("x" * 1001)
-        for limit in (0, 13, True, 1.5):
-            with self.subTest(limit=limit):
-                with self.assertRaises(QAQuestionError):
-                    runtime.answer("巴拿赫空间是什么？", evidence_limit=limit)  # type: ignore[arg-type]
 
-    def test_insufficient_evidence_does_not_call_provider(self) -> None:
+        with self.assertRaises(QAQuestionError):
+            runtime.answer(
+                "甲概念是什么？",
+                history=(QAHistoryMessage(role="system", content="非法"),),  # type: ignore[arg-type]
+            )
+        with self.assertRaises(QAQuestionError):
+            runtime.answer(
+                "甲概念是什么？",
+                history=(QAHistoryMessage(role="user", content="   "),),
+            )
+        with self.assertRaises(QASectionError):
+            runtime.answer("甲概念是什么？", section_id="missing_section")
+
+    def test_section_evidence_stays_in_section_when_gate_is_sufficient(self) -> None:
+        provider = RecordingModelProvider()
+        runtime = QARuntime.from_course(self.course, provider=provider)
+
+        result = runtime.answer("甲概念是什么？", section_id="sec_a")
+
+        self.assertEqual(result.scope_requested, "section_then_book")
+        self.assertEqual(result.scope_used, "section")
+        self.assertFalse(result.insufficient_evidence)
+        self.assertEqual(len(provider.requests), 1)
+        self.assertTrue(provider.requests[0].evidence)
+        self.assertTrue(all(row.section_id == "sec_a" for row in provider.requests[0].evidence))
+
+    def test_section_gate_falls_back_to_whole_book(self) -> None:
+        provider = RecordingModelProvider()
+        runtime = QARuntime.from_course(self.course, provider=provider)
+
+        result = runtime.answer("乙概念是什么？", section_id="sec_a")
+
+        self.assertEqual(result.scope_requested, "section_then_book")
+        self.assertEqual(result.scope_used, "book")
+        self.assertEqual(result.citations[0].source_id, "def_b")
+        self.assertEqual(len(provider.requests), 1)
+
+    def test_course_mode_uses_book_scope_directly(self) -> None:
+        provider = RecordingModelProvider()
+        runtime = QARuntime.from_course(self.course, provider=provider)
+
+        result = runtime.answer("乙概念是什么？")
+
+        self.assertEqual(result.scope_requested, "book")
+        self.assertEqual(result.scope_used, "book")
+        self.assertEqual(result.citations[0].source_id, "def_b")
+
+    def test_insufficient_server_gate_does_not_call_provider(self) -> None:
         provider = FailIfCalledProvider()
         runtime = QARuntime.from_course(self.course, provider=provider)
 
-        result = runtime.answer("definitely-no-such-topic-92831")
+        result = runtime.answer("definitely-no-such-topic-92831", section_id="sec_a")
 
         self.assertFalse(provider.called)
+        self.assertTrue(result.insufficient_evidence)
         self.assertEqual(result.answer_kind, "system_notice")
-        self.assertEqual(result.evidence_status, "insufficient_evidence")
-        self.assertEqual(result.answer, "现有教材证据不足，暂不能给出可靠回答。")
+        self.assertIsNone(result.answer)
+        self.assertEqual(result.scope_requested, "section_then_book")
+        self.assertEqual(result.scope_used, "book")
+        self.assertEqual(
+            result.message,
+            "根据当前教材中检索到的内容，暂时无法可靠回答这个问题。",
+        )
         self.assertEqual(result.citations, ())
 
-    def test_sufficient_fake_provider_answer_has_verified_citation(self) -> None:
-        runtime = QARuntime.from_course(
-            self.course,
-            provider=DeterministicFakeAnswerProvider(),
+    def test_model_second_gate_can_decline_after_server_gate(self) -> None:
+        provider = RecordingModelProvider(mode="insufficient")
+        runtime = QARuntime.from_course(self.course, provider=provider)
+
+        result = runtime.answer("甲概念是什么？", section_id="sec_a")
+
+        self.assertEqual(len(provider.requests), 1)
+        self.assertTrue(result.insufficient_evidence)
+        self.assertIsNone(result.answer)
+        self.assertEqual(result.citations, ())
+        self.assertEqual(result.scope_used, "section")
+
+    def test_history_is_bounded_and_sent_as_context_not_evidence(self) -> None:
+        provider = RecordingModelProvider()
+        runtime = QARuntime.from_course(self.course, provider=provider)
+        history = tuple(
+            QAHistoryMessage(
+                role="user" if index % 2 == 0 else "assistant",
+                content=f"m{index}:" + ("x" * 1200),
+            )
+            for index in range(8)
         )
 
-        result = runtime.answer("什么是巴拿赫空间？")
+        result = runtime.answer("甲概念是什么？", history=history)
 
-        self.assertEqual(result.course_id, "fixture_course")
-        self.assertEqual(result.book_id, "fixture_book")
-        self.assertEqual(result.question, "什么是巴拿赫空间？")
-        self.assertEqual(result.answer_kind, "generated")
-        self.assertEqual(result.evidence_status, "sufficient")
-        self.assertTrue(result.citations)
-        self.assertEqual(result.citations[0].evidence_id, "E1")
-        self.assertEqual(result.citations[0].source_id, "def_banach")
-        self.assertIn("巴拿赫空间", result.answer)
-
-    def test_provider_unavailable_remains_distinct(self) -> None:
-        runtime = QARuntime.from_course(
-            self.course,
-            provider=UnavailableAnswerProvider(),
-        )
-
-        with self.assertRaises(AnswerProviderUnavailableError):
-            runtime.answer("什么是巴拿赫空间？")
-
-    def test_invalid_provider_citation_remains_distinct(self) -> None:
-        runtime = QARuntime.from_course(
-            self.course,
-            provider=InvalidCitationProvider(),
-        )
-
-        with self.assertRaises(AnswerProviderInvalidResponseError):
-            runtime.answer("什么是巴拿赫空间？")
+        self.assertFalse(result.insufficient_evidence)
+        request = provider.requests[0]
+        self.assertLessEqual(len(request.history), 6)
+        self.assertLessEqual(sum(len(row.content) for row in request.history), 6000)
+        self.assertTrue(request.history[-1].content.startswith("m7:"))
+        self.assertFalse(any(row.content.startswith("m0:") for row in request.history))
+        self.assertTrue(all(hasattr(row, "source_id") for row in request.evidence))
+        self.assertFalse(any(hasattr(row, "source_id") for row in request.history))
 
 
 if __name__ == "__main__":
