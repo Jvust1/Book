@@ -119,3 +119,27 @@ export interface SourceResponse {
   context_before: SourceContextItem[]
   context_after: SourceContextItem[]
 }
+
+export interface SearchResultItem {
+  rank: number
+  score: number
+  source_kind: string
+  source_id: string
+  object_type: string | null
+  number: string | null
+  title_zh: string | null
+  title_en: string | null
+  formula: string | null
+  pdf_page: number | null
+  printed_page: number | string | null
+  source_anchor: string | null
+  snippet: string | null
+}
+
+export interface SearchResponse {
+  course_id: string
+  book_id: string
+  query: string
+  result_count: number
+  results: SearchResultItem[]
+}
