@@ -109,6 +109,16 @@ describe('SectionPage', () => {
     )
   })
 
+  it('exposes a scoped textbook QA entry for the current section', async () => {
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByRole('heading', { name: 'L^p 空间' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '问本节内容' })).toHaveAttribute(
+      'href',
+      '/courses/functional_analysis_course/qa?section=ch01_s01',
+    )
+  })
+
   it('defaults to learn with replace-style URL normalization and keeps four modes free', async () => {
     const user = userEvent.setup()
     renderSection('/courses/functional_analysis_course/sections/ch01_s01')
