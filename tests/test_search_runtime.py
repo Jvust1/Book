@@ -36,7 +36,6 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
                 {
                     "type": "definition",
                     "id": "def_banach",
-                    "section_id": "sec_a",
                     "name_zh": "巴拿赫空间",
                     "name_en": "Banach space",
                     "number": "1.1",
@@ -50,7 +49,6 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
                 {
                     "type": "definition",
                     "id": "def_banach_algebra",
-                    "section_id": "sec_b",
                     "name_zh": "巴拿赫代数",
                     "name_en": "Banach algebra",
                     "number": "1.2",
@@ -64,6 +62,24 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
                     "title_en": "Fixture figure",
                     "anchor": {"pdf_page": 2, "printed_page": 2},
                 }
+            ],
+            sections=[
+                {
+                    "id": "sec_a",
+                    "number": "1",
+                    "title_en": "Section A",
+                    "title_zh": "A 节",
+                    "pdf_pages": [1, 1],
+                    "printed_pages": [1, 1],
+                },
+                {
+                    "id": "sec_b",
+                    "number": "2",
+                    "title_en": "Section B",
+                    "title_zh": "B 节",
+                    "pdf_pages": [2, 2],
+                    "printed_pages": [2, 2],
+                },
             ],
             search_records=search_records
             if search_records is not None
