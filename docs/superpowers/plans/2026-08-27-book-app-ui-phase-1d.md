@@ -4,31 +4,31 @@
 
 **Goal:** Build a local-first Chinese-first Book App MVP that exposes the existing runtime through FastAPI and a React/Vite PWA, supports Library → Course → Chapter → Section navigation, all four source-backed learning modes, structured source viewing, and lossless return-state restoration.
 
-**Architecture:** Keep textbook parsing and truth in the Python runtime. Add one focused runtime source-resolution layer, a thin FastAPI application/service layer that converts runtime objects to stable JSON DTOs, and a React/TypeScript client that only consumes those DTOs. The browser stores route identity in the URL and ephemeral view state in `sessionStorage`; no account, cloud sync, AI generation, or PDF reader is introduced.
+**Architecture:** Keep textbook parsing and truth in the Python runtime. Add one focused source-resolution layer, a thin FastAPI application/service layer that converts runtime objects to stable DTOs, and a React/TypeScript client that only consumes those DTOs. Route identity lives in the URL; ephemeral Section view state lives in `sessionStorage`. No account, cloud sync, AI generation, or PDF reader is introduced.
 
-**Tech Stack:** Python 3.11–3.13 runtime compatibility; FastAPI + Uvicorn + HTTPX TestClient; React + TypeScript + Vite; React Router; Vitest + Testing Library; Vite PWA plugin; Playwright Chromium for one real app smoke flow; GitHub Actions.
+**Tech Stack:** Python 3.11–3.13; FastAPI + Uvicorn + HTTPX TestClient; React + TypeScript + Vite; React Router; Vitest + Testing Library; Vite PWA plugin; Playwright Chromium; GitHub Actions.
 
 **Spec:** `docs/superpowers/specs/2026-08-27-book-app-ui-phase-1d-design.md`
 
 ## Global Constraints
 
-- First release is local-first: browser/PWA talks to a FastAPI process on the same machine.
-- FastAPI must bind to localhost by default; do not expose a public network listener in the documented default command.
+- First release is local-first; browser/PWA talks to FastAPI on the same machine.
+- Documented FastAPI startup binds exactly to `127.0.0.1` by default.
 - All user-visible navigation, labels, statuses, empty states, and errors are Chinese.
-- Chinese learning content is preferred; English is secondary source evidence only.
+- Chinese learning content is preferred; English is secondary evidence only.
 - First terminology occurrence may show `中文（English term）`; normal repeated UI uses Chinese.
-- Current product profile remains one enabled main textbook per course at the App/Library layer.
-- React must never read `books/`, `courses/`, `library/`, JSON, CSV, Markdown, or chunk files directly.
-- FastAPI routes must never scatter direct file reads; they consume a Python service that consumes runtime APIs.
-- Missing textbook content remains missing. Never invent anchors, answers, explanations, translations, or AI-generated textbook prose.
-- `source_anchor` remains nullable. A missing real anchor is rendered as `教材锚点暂未提供`; the stable source ref remains `kind + source_id`.
+- Current App/Library product profile remains one enabled main textbook per course.
+- React never reads `books/`, `courses/`, `library/`, JSON, CSV, Markdown, or chunk files directly.
+- FastAPI routes never read textbook files directly; they call a Python service, which calls runtime APIs.
+- Missing textbook content stays missing. Never invent anchors, translations, answers, explanations, or AI-generated textbook prose.
+- `source_anchor` is nullable. Missing anchor renders `教材锚点暂未提供`; stable source identity remains `kind + source_id`.
 - Section default mode is exactly `learn`.
 - Valid modes are exactly `preview`, `learn`, `review`, `practice`.
-- `review` and `practice` empty lists are valid HTTP 200 states.
-- Source route includes course identity: `/courses/:courseId/sources/:kind/:sourceId`.
-- `sessionStorage` restores state during the current browser session and across reloads; it is not a StudyRecord or permanent progress database.
-- Phase 1A–1C readiness gates and existing runtime tests must remain green.
-- Phase 1D does not implement AI Q&A, AI generation, accounts, cloud sync, PDF reading, lecture recording, Chapter Hub, mistake DB, full StudyRecord, Windows packaging, or native mobile apps.
+- Empty `review` and `practice` payloads are valid HTTP 200 states.
+- Source route is course-scoped: `/courses/:courseId/sources/:kind/:sourceId`.
+- `sessionStorage` restores current-session/reload UI state only; it is not permanent StudyRecord storage.
+- Phase 1A–1C runtime readiness gates remain green.
+- Phase 1D does not implement AI Q&A/generation, account/cloud sync, PDF reader, lecture recording, Chapter Hub, mistake DB, full StudyRecord, Windows packaging, or native mobile apps.
 
 ---
 
@@ -36,31 +36,26 @@
 
 ```text
 runtime/
-├── source_resolver.py                  # Stable source-ref → runtime evidence
-└── __init__.py                         # Export resolver types
+├── source_resolver.py
+└── __init__.py
 
 tests/
-├── runtime_fixture_factory.py          # Existing fixture helper; enrich only where required
-└── test_source_resolver.py             # Resolver TDD
+├── runtime_fixture_factory.py
+└── test_source_resolver.py
 
 app/
 ├── __init__.py
 ├── api/
 │   ├── __init__.py
-│   ├── main.py                         # FastAPI construction only
-│   ├── models.py                       # Pydantic response DTOs
-│   ├── service.py                      # Runtime → App DTO boundary
-│   ├── errors.py                       # Stable app/API errors
-│   └── requirements.txt                # FastAPI runtime/test deps
-│
+│   ├── main.py
+│   ├── models.py
+│   ├── service.py
+│   ├── errors.py
+│   └── requirements.txt
 └── web/
     ├── package.json
     ├── package-lock.json
-    ├── tsconfig.json
-    ├── tsconfig.app.json
-    ├── tsconfig.node.json
     ├── vite.config.ts
-    ├── index.html
     ├── playwright.config.ts
     ├── e2e/
     │   └── functional-analysis.spec.ts
@@ -70,9 +65,9 @@ app/
         ├── styles.css
         ├── api/
         │   ├── client.ts
+        │   ├── client.test.ts
         │   └── types.ts
-        ├── routes/
-        │   └── router.tsx
+        ├── routes/router.tsx
         ├── state/
         │   ├── sectionViewState.ts
         │   └── sectionViewState.test.ts
@@ -96,19 +91,19 @@ app/
 
 app_tests/
 ├── __init__.py
-├── test_app_service.py                 # Real + fixture service tests
-└── test_api.py                         # FastAPI contract tests
+├── test_app_service.py
+└── test_api.py
 
 .github/workflows/
-├── runtime-reference-tests.yml         # Existing workflow; only extend watch/test list when runtime changes
-└── app-ui-tests.yml                    # API + web + build + real smoke
+├── runtime-reference-tests.yml
+└── app-ui-tests.yml
 
 README.md
 app/README.md
 docs/ROADMAP.md
 ```
 
-The `app/api` package owns HTTP concerns, `runtime/source_resolver.py` owns source truth resolution, and `app/web` owns presentation/state. Do not collapse these into a single large file.
+`runtime/source_resolver.py` owns source truth resolution. `app/api/service.py` owns runtime→DTO projection. FastAPI owns HTTP only. React owns presentation and ephemeral browser state.
 
 ---
 
@@ -124,17 +119,22 @@ The `app/api` package owns HTTP concerns, `runtime/source_resolver.py` owns sour
 **Interfaces:**
 - Consumes: `CourseRuntime`, `BookRuntime.object()`, `BookRuntime.figures`, `BookRuntime.translation_text()`, `RuntimeObject.raw`, `RuntimeFigure.raw`.
 - Produces:
-  - `TYPE_LABELS_ZH: dict[str, str]`
-  - `ResolvedSource` dataclass
-  - `SourceResolver(course: CourseRuntime)`
-  - `SourceResolver.resolve(kind: str, source_id: str) -> ResolvedSource`
-  - `ResolvedSource.to_dict() -> dict[str, Any]`
-- Supported `kind`: `object`, `figure`, `translation`.
-- Unknown kind/source raises `SourceResolutionError`.
 
-- [ ] **Step 1: Enrich the fixture with one real-looking source anchor and Chinese structured content**
+```python
+TYPE_LABELS_ZH: dict[str, str]
+class SourceResolutionError(RuntimeError): ...
+@dataclass(frozen=True)
+class ResolvedSource: ...
+class SourceResolver:
+    def __init__(self, course: CourseRuntime): ...
+    def resolve(self, kind: str, source_id: str) -> ResolvedSource: ...
+```
 
-Change `write_ready_book()` in `tests/runtime_fixture_factory.py` only enough for resolver tests to pass arbitrary `objects` through. Use the existing helper with this object in the test:
+Supported kinds: `object`, `figure`, `translation`.
+
+- [ ] **Step 1: Write failing resolver tests**
+
+Use existing fixture helpers with this object:
 
 ```python
 {
@@ -152,11 +152,7 @@ Change `write_ready_book()` in `tests/runtime_fixture_factory.py` only enough fo
 }
 ```
 
-Do not change production Functional Analysis data to add anchors.
-
-- [ ] **Step 2: Write failing resolver tests**
-
-Create `tests/test_source_resolver.py` with fixture setup using `TemporaryDirectory`, `make_repo`, `write_ready_book`, `write_course`, `main_book_entry`, then assert:
+Assert:
 
 ```python
 resolver = SourceResolver(CourseRuntime.open(course_dir))
@@ -172,38 +168,21 @@ self.assertEqual(source.printed_page, 1)
 self.assertEqual(source.source_anchor, "fixture:p1:thm_fixture")
 ```
 
-Also test:
+Also assert unknown kind/source raises `SourceResolutionError`, and missing `content_zh`/`source_anchor` remain `None`.
 
-```python
-with self.assertRaises(SourceResolutionError):
-    resolver.resolve("object", "missing")
-with self.assertRaises(SourceResolutionError):
-    resolver.resolve("bogus", "thm_fixture")
-```
-
-Add a test proving missing `content_zh` and missing `source_anchor` remain `None`, not synthesized.
-
-- [ ] **Step 3: Run the resolver test to verify RED**
-
-Run:
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest tests.test_source_resolver -v
 ```
 
-Expected: FAIL because `runtime.source_resolver` does not exist.
+Expected: import failure for `runtime.source_resolver`.
 
-- [ ] **Step 4: Implement the minimal resolver**
+- [ ] **Step 3: Implement resolver contract**
 
-Create `runtime/source_resolver.py` around this contract:
+Use:
 
 ```python
-from dataclasses import asdict, dataclass
-from typing import Any
-
-from .book_runtime import BookRuntimeError
-from .course_runtime import CourseRuntime
-
 TYPE_LABELS_ZH = {
     "definition": "定义",
     "theorem": "定理",
@@ -216,63 +195,55 @@ TYPE_LABELS_ZH = {
     "problem": "习题",
     "figure": "图",
     "concept": "概念",
+    "translation": "中文学习层",
 }
-
-class SourceResolutionError(RuntimeError):
-    pass
-
-@dataclass(frozen=True)
-class ResolvedSource:
-    course_id: str
-    book_id: str
-    section_id: str | None
-    kind: str
-    source_id: str
-    type: str | None
-    type_zh: str
-    number: str | None
-    title_zh: str | None
-    title_en: str | None
-    content_zh: str | None
-    formula: str | None
-    printed_page: int | str | None
-    pdf_page: int | None
-    source_anchor: str | None
-    source_batch: str | None
-    translation_available: bool
-    context_before: tuple[dict[str, Any], ...]
-    context_after: tuple[dict[str, Any], ...]
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
 ```
 
-For object `content_zh`, read only explicit structured keys in this order:
+`ResolvedSource` fields:
+
+```python
+course_id: str
+book_id: str
+section_id: str | None
+kind: str
+source_id: str
+type: str | None
+type_zh: str
+number: str | None
+title_zh: str | None
+title_en: str | None
+content_zh: str | None
+formula: str | None
+printed_page: int | str | None
+pdf_page: int | None
+source_anchor: str | None
+source_batch: str | None
+translation_available: bool
+context_before: tuple[dict[str, Any], ...]
+context_after: tuple[dict[str, Any], ...]
+```
+
+For object `content_zh`, read only explicit raw keys in order:
 
 ```python
 ("content_zh", "statement_zh", "description_zh", "summary_zh", "text_zh")
 ```
 
-Do not heuristically slice batch Markdown into object prose in Phase 1D. If none exists, return `None` and `translation_available=True` when that object's source batch has a Chinese translation file.
+Do not heuristically slice batch Markdown into object prose. If object prose is absent but its batch has Chinese translation, set `translation_available=True` and keep `content_zh=None`.
 
-For context, use the resolved object's owning Section and return at most two preceding and two following structural items, each as stable identity metadata only:
+Context contains at most two preceding/two following structural items from the same owning Section, preserving runtime order:
 
 ```python
 {"kind": "object", "source_id": obj.id, "type": obj.type, "number": obj.number, "title_zh": obj.name_zh}
 ```
 
-For figures, use real figure metadata and no invented content. For translations, return the batch Markdown as `content_zh`, with `type="translation"`, and batch page ranges when available.
+For figure `section_id`, deterministically choose the narrowest RuntimeSection covering its real PDF page; if none, keep `None`.
 
-- [ ] **Step 5: Export resolver types and run GREEN**
+For translation kind, resolve exact `RuntimeBatch.id`, return its full translation Markdown as `content_zh`, and pass through real batch page ranges. Never use translation text as if it were exact prose for a different object.
 
-Update `runtime/__init__.py` to export:
+- [ ] **Step 4: Export resolver and run GREEN**
 
-```python
-ResolvedSource
-SourceResolutionError
-SourceResolver
-TYPE_LABELS_ZH
-```
+Export `ResolvedSource`, `SourceResolutionError`, `SourceResolver`, `TYPE_LABELS_ZH` from `runtime/__init__.py`.
 
 Run:
 
@@ -282,11 +253,9 @@ python -m unittest tests.test_source_resolver tests.test_section_learning_runtim
 
 Expected: PASS.
 
-- [ ] **Step 6: Extend runtime CI and commit**
+- [ ] **Step 5: Extend runtime CI and commit**
 
-Add `runtime/source_resolver.py` to compile checks and `tests.test_source_resolver` to the explicit unittest command in `.github/workflows/runtime-reference-tests.yml`.
-
-Commit:
+Compile `runtime/source_resolver.py` and add `tests.test_source_resolver` to the explicit unittest list.
 
 ```bash
 git add runtime/source_resolver.py runtime/__init__.py tests/runtime_fixture_factory.py tests/test_source_resolver.py .github/workflows/runtime-reference-tests.yml
@@ -295,7 +264,7 @@ git commit -m "feat: add source-backed textbook resolver"
 
 ---
 
-### Task 2: Add the App service boundary and stable DTOs
+### Task 2: Add stable App DTOs and `BookAppService`
 
 **Files:**
 - Create: `app/__init__.py`
@@ -309,72 +278,64 @@ git commit -m "feat: add source-backed textbook resolver"
 **Interfaces:**
 - Consumes: `LibraryRuntime.open()`, `CourseRuntime`, `SectionLearningRuntime`, `SourceResolver`.
 - Produces:
-  - `BookAppService(repository_root: Path)`
-  - `library() -> LibraryResponse`
-  - `course(course_id: str) -> CourseResponse`
-  - `chapter(course_id: str, chapter_id: str) -> ChapterResponse`
-  - `section(course_id: str, section_id: str) -> SectionResponse`
-  - `mode(course_id: str, section_id: str, mode: LearningMode) -> ModeResponse`
-  - `source(course_id: str, kind: str, source_id: str) -> SourceResponse`
-- App-specific exceptions: `AppNotFoundError`, `AppUnavailableError`, `InvalidModeError`.
 
-- [ ] **Step 1: Write failing service tests against the real library**
+```python
+LearningMode = Literal["preview", "learn", "review", "practice"]
+class BookAppService:
+    def __init__(self, repository_root: Path): ...
+    def library(self) -> LibraryResponse: ...
+    def course(self, course_id: str) -> CourseResponse: ...
+    def chapter(self, course_id: str, chapter_id: str) -> ChapterResponse: ...
+    def section(self, course_id: str, section_id: str) -> SectionResponse: ...
+    def mode(self, course_id: str, section_id: str, mode: LearningMode) -> ModeResponse: ...
+    def source(self, course_id: str, kind: str, source_id: str) -> SourceResponse: ...
+```
 
-Create `app_tests/test_app_service.py` and point `REPO_ROOT` to `Path(__file__).resolve().parents[1]`.
+- [ ] **Step 1: Write failing real-library service tests**
 
-Required real assertions:
+Use repository root `Path(__file__).resolve().parents[1]` and assert:
 
 ```python
 service = BookAppService(REPO_ROOT)
 library = service.library()
 self.assertEqual(len(library.courses), 1)
-course = library.courses[0]
-self.assertEqual(course.course_id, "functional_analysis_course")
-self.assertEqual(course.name_zh, "泛函分析：分析学进一步专题导论")
-self.assertEqual(course.chapter_count, 8)
-self.assertEqual(course.section_count, 132)
+card = library.courses[0]
+self.assertEqual(card.course_id, "functional_analysis_course")
+self.assertEqual(card.name_zh, "泛函分析：分析学进一步专题导论")
+self.assertEqual(card.chapter_count, 8)
+self.assertEqual(card.section_count, 132)
 ```
 
-Also assert:
-
-```python
-section = service.section("functional_analysis_course", "ch01_s01")
-self.assertEqual(section.section_id, "ch01_s01")
-self.assertIsNotNone(section.pdf_page_start)
-```
-
-For default product naming, derive `name_zh` from `course.main_book().metadata["title_zh"]`; do not translate `course.name` on the fly.
+Assert `ch01_s01` opens and its page bounds are real.
 
 - [ ] **Step 2: Run RED**
-
-Run:
 
 ```bash
 python -m unittest app_tests.test_app_service -v
 ```
 
-Expected: FAIL because `app.api.service` and DTOs do not exist.
+Expected: missing `app.api.service`/models.
 
-- [ ] **Step 3: Implement response models**
+- [ ] **Step 3: Implement Pydantic DTOs**
 
-Use Pydantic models in `app/api/models.py`. Define exact top-level DTO names:
+Define exact names:
 
 ```python
-class CourseCard(BaseModel): ...
-class LibraryResponse(BaseModel): ...
-class SectionCard(BaseModel): ...
-class ChapterCard(BaseModel): ...
-class CourseResponse(BaseModel): ...
-class ChapterResponse(BaseModel): ...
-class SectionResponse(BaseModel): ...
-class ModeItem(BaseModel): ...
-class SourceRef(BaseModel): ...
-class ModeResponse(BaseModel): ...
-class SourceContextItem(BaseModel): ...
-class SourceResponse(BaseModel): ...
+CourseCard
+LibraryResponse
+SectionCard
+ChapterCard
+CourseResponse
+ChapterResponse
+SectionResponse
+ModeItem
+SourceRef
+ModeResponse
+SourceContextItem
+SourceResponse
 ```
 
-`CourseCard` fields are exactly:
+`CourseCard` fields:
 
 ```python
 course_id: str
@@ -387,7 +348,7 @@ section_count: int
 runtime_status: str
 ```
 
-`SectionCard` fields are exactly:
+`SectionCard` fields:
 
 ```python
 section_id: str
@@ -400,69 +361,61 @@ pdf_page_start: int | None
 pdf_page_end: int | None
 ```
 
-- [ ] **Step 4: Implement `BookAppService`**
-
-`BookAppService.__init__` stores the repository root and eagerly opens exactly one `LibraryRuntime` from `<root>/library`; convert runtime load failures into `AppUnavailableError`.
-
-Use helpers:
+`ModeItem` is an enriched source summary, not only a raw ref:
 
 ```python
-def _course(self, course_id: str) -> CourseRuntime: ...
-def _course_card(self, course: CourseRuntime) -> CourseCard: ...
-def _section_card(self, section: RuntimeSection) -> SectionCard: ...
+kind: str
+source_id: str
+object_type: str | None
+type_zh: str | None
+number: str | None
+title_zh: str | None
+title_en: str | None
+formula: str | None
+printed_page: int | str | None
+pdf_page: int | None
+content_zh: str | None
+translation_available: bool
 ```
 
-For chapter identity, consume `CourseRuntime.chapters()` in audited source order. Unknown course/chapter/section/source must raise `AppNotFoundError` with a Chinese user-safe message plus an internal `code`, for example:
+`ModeResponse` preserves `source_refs` exactly as runtime emits them and keeps item order identical to `SectionLearningRuntime`.
+
+- [ ] **Step 4: Implement service projection**
+
+`BookAppService.__init__` opens `<root>/library` and converts runtime load failures into `AppUnavailableError`.
+
+Derive the Chinese product name from `course.main_book().metadata["title_zh"]`; never machine-translate `course.name`.
+
+For `mode()`, dispatch using an explicit map only:
 
 ```python
-AppNotFoundError(code="course_not_found", user_message="课程不存在")
+mode_fn = {
+    "preview": learning.preview,
+    "learn": learning.learn,
+    "review": learning.review,
+    "practice": learning.practice,
+}[mode]
 ```
 
-For `mode()`, dispatch only:
+Enrich each mode item with `SourceResolver.resolve(kind, source_id)` while preserving original order. If a source ref cannot resolve, treat it as an App/runtime integrity error; do not silently drop it.
 
-```python
-{"preview": learning.preview, "learn": learning.learn, "review": learning.review, "practice": learning.practice}
-```
+Unknown course/chapter/section/source raises `AppNotFoundError(code=..., user_message=...)`. Invalid mode raises `InvalidModeError`.
 
-No generic `getattr()` on user input.
+- [ ] **Step 5: Add empty/error tests**
 
-- [ ] **Step 5: Add service-level error/empty-state tests**
-
-Test:
-
-```python
-with self.assertRaises(AppNotFoundError):
-    service.course("missing")
-with self.assertRaises(AppNotFoundError):
-    service.chapter("functional_analysis_course", "missing")
-with self.assertRaises(AppNotFoundError):
-    service.section("functional_analysis_course", "missing")
-with self.assertRaises(InvalidModeError):
-    service.mode("functional_analysis_course", "ch01_s01", "bogus")
-```
-
-Also find or create a fixture Section with no review/practice objects and assert those modes return `items == []` rather than errors.
+Assert stable errors for missing course/chapter/section/source and valid empty `review`/`practice` payloads on a fixture Section with no matching objects.
 
 - [ ] **Step 6: Run GREEN and commit**
 
-Run:
-
 ```bash
 python -m unittest app_tests.test_app_service tests.test_source_resolver -v
-```
-
-Expected: PASS.
-
-Commit:
-
-```bash
 git add app app_tests
 git commit -m "feat: add Book App runtime service"
 ```
 
 ---
 
-### Task 3: Expose the service through FastAPI
+### Task 3: Expose `BookAppService` through FastAPI
 
 **Files:**
 - Create: `app/api/main.py`
@@ -470,22 +423,24 @@ git commit -m "feat: add Book App runtime service"
 - Create: `app_tests/test_api.py`
 
 **Interfaces:**
-- Consumes: every `BookAppService` method from Task 2.
-- Produces FastAPI app `app.api.main:app` and these exact routes:
-  - `GET /api/health`
-  - `GET /api/library`
-  - `GET /api/courses/{course_id}`
-  - `GET /api/courses/{course_id}/chapters/{chapter_id}`
-  - `GET /api/courses/{course_id}/sections/{section_id}`
-  - `GET /api/courses/{course_id}/sections/{section_id}/preview`
-  - `GET /api/courses/{course_id}/sections/{section_id}/learn`
-  - `GET /api/courses/{course_id}/sections/{section_id}/review`
-  - `GET /api/courses/{course_id}/sections/{section_id}/practice`
-  - `GET /api/courses/{course_id}/sources/{kind}/{source_id}`
+- Routes:
 
-- [ ] **Step 1: Add app dependencies**
+```text
+GET /api/health
+GET /api/library
+GET /api/courses/{course_id}
+GET /api/courses/{course_id}/chapters/{chapter_id}
+GET /api/courses/{course_id}/sections/{section_id}
+GET /api/courses/{course_id}/sections/{section_id}/preview
+GET /api/courses/{course_id}/sections/{section_id}/learn
+GET /api/courses/{course_id}/sections/{section_id}/review
+GET /api/courses/{course_id}/sections/{section_id}/practice
+GET /api/courses/{course_id}/sources/{kind}/{source_id}
+```
 
-Create `app/api/requirements.txt`:
+- [ ] **Step 1: Add minimal dependencies**
+
+`app/api/requirements.txt`:
 
 ```text
 fastapi>=0.115,<1
@@ -493,21 +448,11 @@ uvicorn>=0.30,<1
 httpx>=0.27,<1
 ```
 
-Do not add database, auth, ORM, AI SDK, or PDF packages.
+No database/auth/AI/PDF packages.
 
-- [ ] **Step 2: Write failing API contract tests**
+- [ ] **Step 2: Write failing API tests**
 
-Use `fastapi.testclient.TestClient` and set a test service before client creation. Assert:
-
-```python
-response = client.get("/api/library")
-self.assertEqual(response.status_code, 200)
-body = response.json()
-self.assertEqual(body["courses"][0]["course_id"], "functional_analysis_course")
-self.assertEqual(body["courses"][0]["name_zh"], "泛函分析：分析学进一步专题导论")
-```
-
-Assert Course counts 8/132, `ch01_s01` opens, and all four mode endpoints return matching:
+Use `TestClient` and FastAPI dependency override. Assert `/api/library` returns the real Chinese name; Course returns 8 Chapters/132 Sections; `ch01_s01` opens; four mode identities match:
 
 ```python
 course_id == "functional_analysis_course"
@@ -515,75 +460,80 @@ book_id == "stein_shakarchi_functional_analysis_2011"
 section_id == "ch01_s01"
 ```
 
-Assert stable 404 bodies:
+Assert stable error JSON:
 
 ```json
 {"error":{"code":"course_not_found","message":"课程不存在"}}
 ```
 
-Assert no traceback string appears in user JSON.
+No traceback text appears in client JSON.
 
 - [ ] **Step 3: Run RED**
-
-Run:
 
 ```bash
 python -m unittest app_tests.test_api -v
 ```
 
-Expected: FAIL because `app.api.main` does not exist.
+Expected: missing FastAPI app.
 
-- [ ] **Step 4: Implement FastAPI construction and exception mapping**
+- [ ] **Step 4: Implement lazy service dependency so import cannot crash**
 
-`app/api/main.py` must create the service from repository root, but expose an overridable dependency for tests:
+Do **not** instantiate `BookAppService` at module import. Use cached lazy construction:
 
 ```python
-_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-_service = BookAppService(_REPOSITORY_ROOT)
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+@lru_cache(maxsize=1)
+def default_service() -> BookAppService:
+    return BookAppService(REPOSITORY_ROOT)
 
 def get_service() -> BookAppService:
-    return _service
+    return default_service()
 ```
 
-Route handlers use `Depends(get_service)` and response models from Task 2.
+If runtime/library initialization fails, `AppUnavailableError` propagates through the dependency and is mapped to HTTP 503 JSON. The module itself remains importable so `/api/health` can report unavailable state rather than terminating Python import.
 
-Map exceptions with explicit handlers:
+For tests, override `get_service` with a fixture/real service as needed.
+
+- [ ] **Step 5: Add explicit exception handlers and local CORS**
+
+Map:
+
+```text
+AppNotFoundError → 404
+InvalidModeError → 400
+AppUnavailableError → 503
+```
+
+User body is always:
+
+```json
+{"error":{"code":"...","message":"中文消息"}}
+```
+
+Allow only:
 
 ```python
-@app.exception_handler(AppNotFoundError)
-async def app_not_found_handler(request, exc):
-    return JSONResponse(status_code=404, content={"error": {"code": exc.code, "message": exc.user_message}})
+["http://127.0.0.1:5173", "http://localhost:5173"]
 ```
 
-Use 400 for invalid mode and 503 for App initialization/unavailable errors. Internal technical exceptions may be logged server-side but never sent as tracebacks.
+Never use wildcard CORS.
 
-- [ ] **Step 5: Add CORS only for local dev origins**
-
-Allow only local Vite origins used by the documented dev setup:
-
-```python
-allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"]
-```
-
-Do not use `allow_origins=["*"]`.
-
-- [ ] **Step 6: Run API + runtime tests and manual localhost smoke**
-
-Run:
+- [ ] **Step 6: Run GREEN and localhost smoke**
 
 ```bash
 python -m unittest app_tests.test_api app_tests.test_app_service tests.test_source_resolver -v
 python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000
 ```
 
-From another shell:
+Then:
 
 ```bash
 curl http://127.0.0.1:8000/api/health
 curl http://127.0.0.1:8000/api/library
 ```
 
-Expected: JSON success; service binds only localhost.
+Expected: valid JSON.
 
 - [ ] **Step 7: Commit**
 
@@ -594,31 +544,32 @@ git commit -m "feat: expose Book App FastAPI"
 
 ---
 
-### Task 4: Scaffold the React/TypeScript/Vite PWA and API client
+### Task 4: Scaffold React/TypeScript/Vite PWA and typed API client
 
 **Files:**
-- Create: `app/web/**` Vite React TypeScript base files
+- Create: `app/web/**` base Vite React TypeScript files
 - Create: `app/web/src/api/types.ts`
 - Create: `app/web/src/api/client.ts`
+- Create: `app/web/src/api/client.test.ts`
 - Create: `app/web/src/routes/router.tsx`
 - Create: `app/web/src/app.tsx`
 - Create: `app/web/src/components/AppShell.tsx`
 - Create: `app/web/src/styles.css`
 
 **Interfaces:**
-- Consumes the exact API routes/DTO fields from Task 3.
-- Produces typed `bookApi` methods:
-  - `getLibrary()`
-  - `getCourse(courseId)`
-  - `getChapter(courseId, chapterId)`
-  - `getSection(courseId, sectionId)`
-  - `getMode(courseId, sectionId, mode)`
-  - `getSource(courseId, kind, sourceId)`
-- Produces route tree for `/`, course, chapter, section, and course-scoped source routes.
 
-- [ ] **Step 1: Create the Vite React TypeScript app and lock dependencies**
+```ts
+export type LearningMode = 'preview' | 'learn' | 'review' | 'practice'
 
-From repository root:
+bookApi.getLibrary()
+bookApi.getCourse(courseId)
+bookApi.getChapter(courseId, chapterId)
+bookApi.getSection(courseId, sectionId)
+bookApi.getMode(courseId, sectionId, mode)
+bookApi.getSource(courseId, kind, sourceId)
+```
+
+- [ ] **Step 1: Scaffold and lock dependencies**
 
 ```bash
 npm create vite@latest app/web -- --template react-ts
@@ -628,70 +579,60 @@ npm install react-router-dom
 npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event vite-plugin-pwa @playwright/test
 ```
 
-Commit `package-lock.json`. Do not use an uncommitted globally installed package.
+Commit `package-lock.json`.
 
 - [ ] **Step 2: Configure scripts and test environment**
 
-Ensure `package.json` includes:
+Ensure scripts:
 
 ```json
 {
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "typecheck": "tsc -b --pretty false",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "e2e": "playwright test"
-  }
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "typecheck": "tsc -b --pretty false",
+  "test": "vitest run",
+  "test:watch": "vitest",
+  "e2e": "playwright test"
 }
 ```
 
-Configure Vitest with `environment: "jsdom"` and a setup file importing `@testing-library/jest-dom/vitest`.
+Vitest uses jsdom and imports `@testing-library/jest-dom/vitest` in setup.
 
-- [ ] **Step 3: Configure local API proxy and PWA metadata**
+- [ ] **Step 3: Configure local API proxy and PWA**
 
-In `vite.config.ts`, proxy only `/api` to `http://127.0.0.1:8000` in dev. Configure `VitePWA` with a Chinese app name such as `Book 学习` and `registerType: "autoUpdate"`.
+Proxy `/api` to `http://127.0.0.1:8000`. Configure PWA metadata with Chinese app name `Book 学习` and `registerType: "autoUpdate"`.
 
-Do not cache `/api` responses as permanent textbook state in Phase 1D.
+Do not persistently cache `/api` responses in Phase 1D.
 
-- [ ] **Step 4: Define API types exactly once**
+- [ ] **Step 4: Define API types once**
 
-`src/api/types.ts` mirrors Task 2 DTOs. Define:
+Mirror Task 2 DTOs exactly. `SourceResponse.source_anchor` and `content_zh` are nullable.
 
-```ts
-export type LearningMode = 'preview' | 'learn' | 'review' | 'practice'
-```
+- [ ] **Step 5: Write failing API-client tests**
 
-`SourceResponse.source_anchor` and `content_zh` are nullable.
-
-- [ ] **Step 5: Write API client unit tests before implementation**
-
-Mock `global.fetch` and assert a call like:
+Example:
 
 ```ts
 await bookApi.getMode('functional_analysis_course', 'ch01_s01', 'learn')
-expect(fetch).toHaveBeenCalledWith('/api/courses/functional_analysis_course/sections/ch01_s01/learn', expect.anything())
+expect(fetch).toHaveBeenCalledWith(
+  '/api/courses/functional_analysis_course/sections/ch01_s01/learn',
+  expect.anything(),
+)
 ```
 
-Also verify a non-2xx response throws `ApiError` whose user message comes from `error.message`, falling back to `请求失败，请稍后重试`.
+Non-2xx throws `ApiError`; use server `error.message`, otherwise `请求失败，请稍后重试`.
 
 - [ ] **Step 6: Run RED, implement client, run GREEN**
 
-Run:
-
 ```bash
-cd app/web
 npm test -- src/api/client.test.ts
 ```
 
-Expected RED: client missing.
-
-Implement one generic `request<T>()` and the six typed `bookApi` methods; then rerun and expect PASS.
+Implement one generic `request<T>()` plus six typed methods; rerun to PASS.
 
 - [ ] **Step 7: Add route skeleton and build**
 
-Create routes exactly:
+Routes exactly:
 
 ```text
 /
@@ -701,16 +642,12 @@ Create routes exactly:
 /courses/:courseId/sources/:kind/:sourceId
 ```
 
-Section mode stays in query string, not path.
-
-Run:
+Section mode is query string.
 
 ```bash
 npm run typecheck
 npm run build
 ```
-
-Expected: PASS.
 
 - [ ] **Step 8: Commit**
 
@@ -721,7 +658,7 @@ git commit -m "feat: scaffold Book React PWA"
 
 ---
 
-### Task 5: Implement Library, Course, and Chapter navigation pages
+### Task 5: Implement Library → Course → Chapter navigation
 
 **Files:**
 - Create: `app/web/src/pages/LibraryPage.tsx`
@@ -733,13 +670,9 @@ git commit -m "feat: scaffold Book React PWA"
 - Modify: `app/web/src/routes/router.tsx`
 - Modify: `app/web/src/styles.css`
 
-**Interfaces:**
-- Consumes: `bookApi.getLibrary/getCourse/getChapter`.
-- Produces visible navigation links to exact route identities.
+- [ ] **Step 1: Write failing Library test**
 
-- [ ] **Step 1: Write failing Library page test**
-
-Mock API response with the real course identity and assert visible Chinese text:
+Assert:
 
 ```ts
 expect(await screen.findByText('泛函分析：分析学进一步专题导论')).toBeInTheDocument()
@@ -750,58 +683,34 @@ expect(screen.getByRole('link', { name: '进入课程' })).toHaveAttribute(
 )
 ```
 
-- [ ] **Step 2: Write failing Course and Chapter page tests**
+- [ ] **Step 2: Write failing Course/Chapter tests**
 
-Course page must render chapter list in API order and links to Sections. Chapter page must show Chinese title first, English second, Section count, page range, and `进入本节` links.
+Course renders audited Chapter order and direct Section links. Chapter renders Chinese title first, English secondary, Section count, page ranges, and `进入本节` links.
 
-No search box may pretend to work; if a visual placeholder is retained, mark it disabled with Chinese copy `搜索将在后续阶段开放`.
+If a search control is shown, it is disabled and labeled `搜索将在后续阶段开放`; no fake search behavior.
 
 - [ ] **Step 3: Run RED**
 
 ```bash
-cd app/web
 npm test -- src/pages/LibraryPage.test.tsx src/pages/CoursePage.test.tsx src/pages/ChapterPage.test.tsx
 ```
 
-Expected: FAIL because pages are placeholders/missing.
+- [ ] **Step 4: Implement loading/error/navigation UI**
 
-- [ ] **Step 4: Implement pages with loading/error states**
+All pages use Chinese loading/error states and never show raw stack traces. Keep main content wide; no permanent wide sidebar.
 
-Every page handles:
-
-```text
-正在加载…
-加载失败
-返回书架 / 返回课程
-```
-
-Do not render raw exception stacks.
-
-Course page may use collapsible Chapter groups, but Chapter title and direct Section links must remain keyboard-accessible buttons/links.
-
-- [ ] **Step 5: Add basic responsive CSS and run GREEN**
-
-Use a readable centered content column, course cards, and a drawer-ready shell. Do not keep a permanent wide sidebar.
-
-Run:
+- [ ] **Step 5: Run GREEN and commit**
 
 ```bash
 npm test -- src/pages/LibraryPage.test.tsx src/pages/CoursePage.test.tsx src/pages/ChapterPage.test.tsx
 npm run typecheck
-```
-
-Expected: PASS.
-
-- [ ] **Step 6: Commit**
-
-```bash
 git add app/web/src/pages app/web/src/routes/router.tsx app/web/src/styles.css
 git commit -m "feat: add textbook navigation pages"
 ```
 
 ---
 
-### Task 6: Implement the Chinese-first Section four-mode UI
+### Task 6: Implement Chinese-first Section four-mode UI
 
 **Files:**
 - Create: `app/web/src/components/ModeTabs.tsx`
@@ -812,86 +721,72 @@ git commit -m "feat: add textbook navigation pages"
 - Create: `app/web/src/pages/SectionPage.test.tsx`
 - Modify: `app/web/src/styles.css`
 
-**Interfaces:**
-- Consumes: `bookApi.getSection()`, `bookApi.getMode()`, `bookApi.getSource()` only when a rendered item needs detail.
-- Produces query-normalized Section route where missing/invalid `mode` becomes exactly `?mode=learn`.
+- [ ] **Step 1: Write failing default-mode/free-switching tests**
 
-- [ ] **Step 1: Write failing default-mode and free-switching tests**
-
-Starting route:
+Starting at:
 
 ```text
 /courses/functional_analysis_course/sections/ch01_s01
 ```
 
-must normalize to:
+must normalize with router replace to:
 
 ```text
 /courses/functional_analysis_course/sections/ch01_s01?mode=learn
 ```
 
-Test all four tabs remain enabled and clicking them changes only `mode`, never blocks on completion state.
+All four tabs stay enabled; switching changes only `mode`.
 
-- [ ] **Step 2: Write failing Chinese rendering tests**
+- [ ] **Step 2: Write failing Chinese/fallback tests**
 
-For a source-backed item, assert:
+Assert `定义`, Chinese title, and formula render from `ModeItem`.
 
-```ts
-expect(screen.getByText('定义')).toBeInTheDocument()
-expect(screen.getByText('L^p 空间')).toBeInTheDocument()
-```
-
-When `content_zh === null`, assert exact fallback:
+If `content_zh === null`, exact fallback is:
 
 ```text
 本段中文学习内容暂未提供
 ```
 
-If formula exists, it must still render. Do not replace missing content with English body.
+Do not render English prose as default body.
 
-- [ ] **Step 3: Write failing review/practice empty-state tests**
+- [ ] **Step 3: Write failing empty-state tests**
 
-Review empty state:
+Review:
 
 ```text
 本节暂无可复习的教材核心对象
 ```
 
-Practice empty state:
+Practice:
 
 ```text
 本节暂无教材练习或习题
 ```
 
-Both are normal successful states.
+Both are normal success states.
 
 - [ ] **Step 4: Run RED**
 
 ```bash
-cd app/web
 npm test -- src/pages/SectionPage.test.tsx
 ```
 
-Expected: FAIL.
+- [ ] **Step 5: Implement each mode from runtime payload only**
 
-- [ ] **Step 5: Implement mode rendering**
+- Preview: real object-type counts + source-backed compact items; no generated objectives.
+- Learn: render enriched `ModeItem`s in runtime order.
+- Review: runtime review items only; body hidden until `显示内容`.
+- Practice: runtime exercise/problem only; absent explanation shows `教材数据中暂未提供解析`.
 
-Rules:
-
-- Preview: show real object-type counts and source-backed compact entries; no generated objectives.
-- Learn: render source-backed objects/figures/translation availability in runtime order; resolve visible object detail through API.
-- Review: only runtime-provided review items; content initially hidden behind `显示内容`.
-- Practice: only runtime-provided exercise/problem items; when no explanation exists show `教材数据中暂未提供解析`.
-
-`SourceLink` builds exactly:
+`SourceLink` route:
 
 ```ts
 `/courses/${courseId}/sources/${kind}/${sourceId}`
 ```
 
-- [ ] **Step 6: Add responsive four-tab behavior**
+- [ ] **Step 6: Add responsive tab behavior**
 
-On narrow screens, keep all four tabs accessible in one horizontally scrollable/tab row. Ensure keyboard focus style is visible and text does not overlap.
+At narrow widths, four tabs remain keyboard-accessible in a horizontally scrollable row. Content stays single-column.
 
 - [ ] **Step 7: Run GREEN and commit**
 
@@ -899,20 +794,13 @@ On narrow screens, keep all four tabs accessible in one horizontally scrollable/
 npm test -- src/pages/SectionPage.test.tsx
 npm run typecheck
 npm run build
-```
-
-Expected: PASS.
-
-Commit:
-
-```bash
-git add app/web/src/components app/web/src/pages/SectionPage.tsx app/web/src/pages/SectionPage.test.tsx app/web/src/styles.css
+git add app/web/src/components app/web/src/pages/SectionPage* app/web/src/styles.css
 git commit -m "feat: add four-mode Section learning UI"
 ```
 
 ---
 
-### Task 7: Implement structured source page and return-state restoration
+### Task 7: Implement structured source page and session return-state restoration
 
 **Files:**
 - Create: `app/web/src/state/sectionViewState.ts`
@@ -924,7 +812,6 @@ git commit -m "feat: add four-mode Section learning UI"
 - Modify: `app/web/src/routes/router.tsx`
 
 **Interfaces:**
-- Produces:
 
 ```ts
 export interface SectionViewState {
@@ -935,139 +822,130 @@ export interface SectionViewState {
 }
 
 export function stateKey(courseId: string, sectionId: string, mode: LearningMode): string
-export function saveSectionViewState(...): void
-export function loadSectionViewState(...): SectionViewState | null
-export function clearSectionViewState(...): void
+export function saveSectionViewState(courseId: string, sectionId: string, mode: LearningMode, state: SectionViewState): void
+export function loadSectionViewState(courseId: string, sectionId: string, mode: LearningMode): SectionViewState | null
+export function clearSectionViewState(courseId: string, sectionId: string, mode: LearningMode): void
 ```
-
-- `SourceLink` saves current state before navigation.
-- `SourcePage` explicit `返回学习` uses saved `route` when present; otherwise falls back to the source's Section learn route.
 
 - [ ] **Step 1: Write failing storage tests**
 
-Use jsdom `sessionStorage` and assert round-trip:
+Round-trip exact state through `sessionStorage`; corrupt JSON returns `null` and removes corrupt entry.
 
-```ts
-saveSectionViewState('functional_analysis_course', 'ch01_s01', 'learn', {
-  route: '/courses/functional_analysis_course/sections/ch01_s01?mode=learn',
-  scrollY: 2460,
-  expandedSourceIds: ['def_lp'],
-  activeSourceId: 'def_lp',
-})
-expect(loadSectionViewState(...)).toEqual(...)
+Namespace:
+
+```text
+book:section-view:${courseId}:${sectionId}:${mode}
 ```
 
-Corrupt JSON must return `null` and remove the corrupt entry rather than crash the App.
+- [ ] **Step 2: Write failing SourcePage tests**
 
-- [ ] **Step 2: Write failing source-page tests**
-
-Assert page shows:
+Null anchor case must show:
 
 ```text
 教材来源
 教材页：2
 PDF 页：21
-教材锚点暂未提供   # when source_anchor is null
+教材锚点暂未提供
 结构化来源：object:def_lp
 返回学习
 ```
 
-For a fixture API response with a real non-null anchor, assert that exact anchor text is displayed unchanged.
+A fixture response with non-null `source_anchor` must display the exact anchor unchanged.
 
-Also render context-before/current/context-after and visually/semantically mark current target with `aria-current="true"` or an equivalent accessible current marker.
+Render `context_before`, current source, `context_after`; mark current target accessibly with `aria-current="true"` or equivalent.
 
 - [ ] **Step 3: Write failing return-state tests**
 
-Test that clicking source from Section saves mode/expanded state, and clicking explicit `返回学习` navigates back to the exact saved route.
+Clicking source from Section saves exact route, mode, scrollY, expanded IDs, and active source. Explicit `返回学习` navigates to saved route.
 
-Mock `window.scrollTo` and assert the Section page restores stored `scrollY` after content load.
+Mock `window.scrollTo` and assert saved scroll restores after Section content is loaded.
 
 - [ ] **Step 4: Run RED**
 
 ```bash
-cd app/web
 npm test -- src/state/sectionViewState.test.ts src/pages/SourcePage.test.tsx src/pages/SectionPage.test.tsx
 ```
 
-Expected: FAIL.
+- [ ] **Step 5: Implement state helpers and source page**
 
-- [ ] **Step 5: Implement storage helpers and source page**
+Do not use `localStorage`. Do not store textbook content blobs. Browser Back remains functional; explicit `返回学习` is primary path.
 
-Use a namespaced storage key:
+If no saved route exists, SourcePage falls back to:
 
-```ts
-book:section-view:${courseId}:${sectionId}:${mode}
+```text
+/courses/{course_id}/sections/{section_id}?mode=learn
 ```
 
-Do not use localStorage for Phase 1D progress. Do not store textbook content blobs in browser storage.
+If `section_id` is absent, fallback is course page, not a fabricated Section route.
 
-- [ ] **Step 6: Restore scroll/expanded state only after Section data renders**
+- [ ] **Step 6: Restore state after data render**
 
-Implement a single restore effect keyed by `courseId`, `sectionId`, `mode`, and successful content load. Call `window.scrollTo({ top: saved.scrollY, behavior: 'auto' })` once per restoration.
+Use one restore effect keyed by `courseId`, `sectionId`, `mode`, and successful mode load. Restore scroll once with:
 
-Browser Back remains functional through React Router history; explicit `返回学习` is the primary tested path.
+```ts
+window.scrollTo({ top: saved.scrollY, behavior: 'auto' })
+```
 
 - [ ] **Step 7: Run GREEN and commit**
 
 ```bash
 npm test -- src/state/sectionViewState.test.ts src/pages/SourcePage.test.tsx src/pages/SectionPage.test.tsx
 npm run typecheck
-```
-
-Expected: PASS.
-
-Commit:
-
-```bash
 git add app/web/src/state app/web/src/pages/SourcePage* app/web/src/pages/SectionPage* app/web/src/components/SourceLink.tsx app/web/src/routes/router.tsx
-git commit -m "feat: add source navigation state restoration"
+git commit -m "feat: restore Section state across source navigation"
 ```
 
 ---
 
-### Task 8: Add real Functional Analysis app acceptance and CI
+### Task 8: Add real Functional Analysis browser acceptance and CI
 
 **Files:**
 - Create: `app/web/playwright.config.ts`
 - Create: `app/web/e2e/functional-analysis.spec.ts`
 - Create: `.github/workflows/app-ui-tests.yml`
-- Modify: `.github/workflows/runtime-reference-tests.yml` only if path filters need app-runtime coupling coverage
 
-**Interfaces:**
-- Consumes the real repository `library/library.json`, real Functional Analysis runtime, FastAPI, and built React UI.
-- Produces a repeatable CI smoke proving the user-visible path.
+- [ ] **Step 1: Write failing real desktop smoke**
 
-- [ ] **Step 1: Write the failing Playwright smoke before CI wiring**
+Use real API/runtime, not mocks:
 
-The test must use the real application, not mocked API responses. Required flow:
-
-```ts
-await page.goto('/')
-await page.getByText('泛函分析：分析学进一步专题导论').click()
-// enter Chapter 1
-// enter ch01_s01
-await expect(page).toHaveURL(/ch01_s01\?mode=learn/)
-// open a real source-backed object, e.g. def_lp if exposed by the API
-// verify source URL contains /courses/functional_analysis_course/sources/object/
-// verify real printed/PDF page values are shown
-// click 返回学习 and verify learn route restored
-// switch 复习 and 刷题 without lock errors
+```text
+书架
+→ 泛函分析
+→ Chapter 1
+→ ch01_s01
+→ 默认学习
+→ 打开真实 source-backed object（优先 def_lp，如 API identity 不同则按真实 payload 选择第一个 object）
+→ source URL 包含 /courses/functional_analysis_course/sources/object/
+→ 显示真实教材页/PDF页
+→ source_anchor 缺失则明确显示“教材锚点暂未提供”，不得改教材数据
+→ 返回学习
+→ mode=learn 恢复
+→ 切换复习
+→ 切换刷题
 ```
 
-If `ch01_s01` has no non-null `source_anchor`, assert `教材锚点暂未提供` rather than modifying textbook data. This smoke proves source truth, not anchor fabrication.
+The test must assert the source ID in the URL equals the mode payload's real source ref.
 
-- [ ] **Step 2: Configure Playwright**
+- [ ] **Step 2: Add a real narrow-screen smoke**
 
-Use Chromium only. Base URL is `http://127.0.0.1:5173`. Capture screenshot/trace only on failure.
+Use Playwright viewport:
 
-Install browser locally for test:
+```ts
+{ width: 390, height: 844 }
+```
+
+Open real `ch01_s01?mode=learn` and assert all four mode tabs are visible/reachable and the page has no horizontal body overflow caused by content cards. This is the required responsive browser check; do not rely on jsdom layout assertions.
+
+- [ ] **Step 3: Configure Playwright**
+
+Chromium only, base URL `http://127.0.0.1:5173`, screenshot/trace on failure.
 
 ```bash
 cd app/web
 npx playwright install chromium
 ```
 
-- [ ] **Step 3: Run local real smoke**
+- [ ] **Step 4: Run local real smoke**
 
 Shell A:
 
@@ -1089,58 +967,28 @@ cd app/web
 npm run e2e
 ```
 
-Expected: PASS using real `functional_analysis_course` and `ch01_s01`.
+Expected: desktop + narrow-screen tests PASS.
 
-- [ ] **Step 4: Add `app-ui-tests.yml`**
+- [ ] **Step 5: Add `app-ui-tests.yml`**
 
-Workflow triggers on:
+Trigger on `app/**`, `runtime/source_resolver.py`, `runtime/__init__.py`, `library/**`, `courses/**`, Functional Analysis assets, `app_tests/**`, resolver tests, and workflow file.
 
-```text
-app/**
-runtime/source_resolver.py
-runtime/__init__.py
-library/**
-courses/**
-books/functional-analysis/**
-app_tests/**
-tests/test_source_resolver.py
-.github/workflows/app-ui-tests.yml
-```
-
-Use Python 3.13 + Node 22. Steps:
+Use Python 3.13 + Node 22. Run:
 
 ```bash
 python -m pip install -r app/api/requirements.txt
 python -m unittest app_tests.test_app_service app_tests.test_api tests.test_source_resolver -v
-cd app/web && npm ci
+cd app/web
+npm ci
 npm run typecheck
 npm test
 npm run build
 npx playwright install --with-deps chromium
 ```
 
-Then start API and Vite on localhost, wait for `/api/health` and `/`, and run `npm run e2e`.
+Start localhost API + Vite, wait for `/api/health` and `/`, then `npm run e2e`.
 
-Do not replace the existing runtime-reference workflow; both gates must pass.
-
-- [ ] **Step 5: Verify both workflows locally as far as possible**
-
-Run Python suites:
-
-```bash
-python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver app_tests.test_app_service app_tests.test_api -v
-```
-
-Run web suites:
-
-```bash
-cd app/web
-npm run typecheck
-npm test
-npm run build
-```
-
-Then run the Playwright smoke with real local servers.
+Do not replace `runtime-reference-tests.yml`; both workflows are required.
 
 - [ ] **Step 6: Commit**
 
@@ -1151,19 +999,14 @@ git commit -m "ci: gate Book App Phase 1D"
 
 ---
 
-### Task 9: Update product docs and developer startup instructions
+### Task 9: Update docs and exact local startup instructions
 
 **Files:**
 - Create: `app/README.md`
 - Modify: `README.md`
 - Modify: `docs/ROADMAP.md`
 
-**Interfaces:**
-- Documents the final supported startup/verification path only; no new runtime behavior.
-
-- [ ] **Step 1: Write `app/README.md` with exact local commands**
-
-Document Python environment setup:
+- [ ] **Step 1: Document exact local API startup**
 
 ```bash
 python -m venv .venv
@@ -1173,7 +1016,7 @@ python -m pip install -r app/api/requirements.txt
 python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000
 ```
 
-Document web setup:
+- [ ] **Step 2: Document web startup**
 
 ```bash
 cd app/web
@@ -1181,11 +1024,9 @@ npm ci
 npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
-State clearly that the first release is personal/local, has no login/cloud sync, and the structured textbook view is primary; PDF is not required.
+State: personal/local first release; no login/cloud sync; structured textbook view is primary; original PDF is not required.
 
-- [ ] **Step 2: Update root README current-state diagram**
-
-Extend current architecture to:
+- [ ] **Step 3: Update root README architecture**
 
 ```text
 React / PWA
@@ -1195,22 +1036,20 @@ FastAPI BookAppService
 LibraryRuntime → CourseRuntime → BookRuntime → SectionLearningRuntime / SourceResolver
 ```
 
-Mark Phase 1D as UI foundation only; do not claim AI Q&A, full StudyRecord, Chapter Hub, or PDF viewer are complete.
+Do not claim AI Q&A, full StudyRecord, Chapter Hub, or PDF viewer are complete.
 
-- [ ] **Step 3: Clarify ROADMAP naming**
+- [ ] **Step 4: Clarify ROADMAP naming**
 
-Add a current-status note near Phase 1 explaining that the implementation branch's “Phase 1D UI foundation” is the software-shell milestone described by the new spec, while older 1D–1K feature labels remain future functional work. Mark only capabilities actually passing acceptance as done.
+Add current-status note explaining that this Phase 1D is the UI-foundation milestone and does not mean all older 1D–1K feature rows are complete. Mark only passing capabilities as done.
 
-- [ ] **Step 4: Run final doc/startup sanity commands**
+- [ ] **Step 5: Run startup/build sanity and commit**
 
 ```bash
 python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000
 cd app/web && npm run build
 ```
 
-Open the documented URLs and verify commands are copy-paste correct.
-
-- [ ] **Step 5: Commit**
+Then:
 
 ```bash
 git add README.md app/README.md docs/ROADMAP.md
@@ -1219,22 +1058,18 @@ git commit -m "docs: document local Book App MVP"
 
 ---
 
-### Task 10: Final Phase 1D verification and integration readiness
+### Task 10: Final verification and PR readiness
 
 **Files:**
-- No feature code unless verification exposes a defect.
-- Potentially modify tests/code only to fix failures found here; each fix gets its own focused commit.
+- No planned feature files. Any defect found here gets its own focused fix + test commit.
 
-**Interfaces:**
-- Produces final evidence for PR review.
+- [ ] **Step 1: Run complete runtime gates**
 
-- [ ] **Step 1: Run the complete existing runtime reference suite**
+Run the explicit runtime modules currently in `.github/workflows/runtime-reference-tests.yml`, including new `tests.test_source_resolver`.
 
-Run the exact explicit modules currently gated by CI, plus `tests.test_source_resolver`.
+Expected: PASS; no Phase 1A–1C regression.
 
-Expected: PASS on supported Python versions in GitHub Actions; no Phase 1A–1C regression.
-
-- [ ] **Step 2: Run all Phase 1D API tests**
+- [ ] **Step 2: Run Phase 1D API tests**
 
 ```bash
 python -m unittest app_tests.test_app_service app_tests.test_api tests.test_source_resolver -v
@@ -1242,7 +1077,7 @@ python -m unittest app_tests.test_app_service app_tests.test_api tests.test_sour
 
 Expected: PASS.
 
-- [ ] **Step 3: Run all frontend checks**
+- [ ] **Step 3: Run frontend checks**
 
 ```bash
 cd app/web
@@ -1254,9 +1089,9 @@ npm run build
 
 Expected: PASS.
 
-- [ ] **Step 4: Run the real Functional Analysis Playwright smoke**
+- [ ] **Step 4: Run desktop + narrow real Playwright smoke**
 
-Use the real API and UI servers. Expected user path:
+Expected real path:
 
 ```text
 书架
@@ -1266,39 +1101,27 @@ Use the real API and UI servers. Expected user path:
 → 学习
 → 真实教材对象
 → 结构化来源
-→ 返回并恢复学习模式/位置
+→ 返回并恢复
 → 复习
 → 刷题
 ```
 
-Confirm the source ref returned by API matches the runtime source ID displayed/opened by the UI.
+Confirm URL source ID matches runtime source ref.
 
-- [ ] **Step 5: Verify no out-of-scope behavior slipped in**
+- [ ] **Step 5: Check scope/authenticity**
 
-Review changed files and confirm there is no:
+Confirm diff contains no AI-generated textbook prose, fake anchor, fake answer/explanation, auth, cloud persistence, PDF reader, lecture recording, Chapter Hub, or permanent StudyRecord DB.
 
-```text
-AI-generated textbook prose
-fake source anchors
-fake answer/explanation generation
-account/auth layer
-cloud persistence
-PDF reader
-lecture recording
-Chapter Hub implementation
-permanent StudyRecord DB
-```
+- [ ] **Step 6: Check branch diff and GitHub CI**
 
-- [ ] **Step 6: Verify branch diff and CI**
-
-Compare `feature/book-app-ui-phase-1d` against `main` and verify only expected runtime resolver, App/API/web/tests/docs/CI files changed. Confirm both:
+Compare feature branch against `main`. Required:
 
 ```text
 Runtime reference tests = success
 App UI tests = success
 ```
 
-- [ ] **Step 7: Prepare PR but do not merge without explicit approval**
+- [ ] **Step 7: Prepare PR, do not merge automatically**
 
 Suggested title:
 
@@ -1306,14 +1129,16 @@ Suggested title:
 Add local Chinese-first Book App UI foundation
 ```
 
-Suggested PR summary must report:
+PR summary reports local React/Vite PWA + FastAPI, Chinese-first textbook navigation, source-backed four modes, structured source navigation + session restoration, real `ch01_s01` smoke, and unchanged runtime readiness guarantees.
 
-- local React/Vite PWA + FastAPI shell;
-- Chinese-first Library/Course/Chapter/Section navigation;
-- source-backed Preview/Learn/Review/Practice;
-- structured source navigation + session return restoration;
-- real Functional Analysis `ch01_s01` smoke;
-- existing runtime readiness remains green;
-- no PDF reader/AI/cloud/account functionality added.
+Do not merge until explicit user approval.
 
-Do not merge the PR until the user explicitly approves integration.
+---
+
+## Self-Review Result
+
+- Spec coverage: Library/Course/Chapter/Section, Chinese-first four modes, source page, null-anchor truthfulness, return-state restoration, local FastAPI, PWA, API/UI tests, responsive check, real `ch01_s01` smoke, docs, and CI all map to explicit tasks.
+- Placeholder scan: no `TBD`, no `TODO`, no “add appropriate handling”, and every test/implementation task has concrete commands and expected behavior.
+- Type consistency: Python `LearningMode` and TypeScript `LearningMode` use the same four exact strings; course-scoped source route is identical in API/client/router/tests; nullable `source_anchor`/`content_zh` remain nullable through runtime→DTO→TypeScript.
+- Initialization correction: FastAPI service construction is lazy, so runtime failure becomes HTTP 503 instead of import-time process failure.
+- Responsive correction: real 390×844 Playwright coverage is required in addition to component tests.
