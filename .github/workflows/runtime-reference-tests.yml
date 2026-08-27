@@ -42,3 +42,9 @@ jobs:
 
       - name: Run unit tests
         run: python -m unittest tests.test_book_runtime -v
+
+      - name: Rebuild recovery candidates for diagnostics
+        if: matrix.python-version == '3.13'
+        run: |
+          python tools/rebuild_runtime_artifacts.py books/functional-analysis --toc --search-index
+          python -c "import json,pathlib; t=json.loads(pathlib.Path('books/functional-analysis/toc_bilingual.json.candidate').read_text(encoding='utf-8')); r=json.loads(pathlib.Path('books/functional-analysis/search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); print(json.dumps({'chapter_count':t.get('chapter_count'),'section_count':t.get('section_count'),'search_record_count':r.get('record_count'),'expected_search_record_count':r.get('expected_record_count'),'search_all_unique':r.get('all_unique'),'missing_anchor_count':len(r.get('without_source_anchor') or []),'search_promotable':r.get('promotable_by_count_and_anchor')},ensure_ascii=False,indent=2))"
