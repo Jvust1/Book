@@ -56,6 +56,14 @@ jobs:
       - name: Install web dependencies
         run: npm install
 
+      - name: Capture generated package lock
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-package-lock
+          path: app/web/package-lock.json
+          if-no-files-found: error
+          retention-days: 1
+
       - name: Run web tests
         run: npm test
 
