@@ -21,6 +21,7 @@ TYPE_LABELS_ZH: dict[str, str] = {
     "problem": "习题",
     "figure": "图",
     "concept": "概念",
+    "translation": "中文学习层",
 }
 
 CONTENT_ZH_KEYS = (
@@ -75,6 +76,8 @@ class SourceResolver:
             return self._resolve_object(source_id)
         if normalized_kind == "figure":
             return self._resolve_figure(source_id)
+        if normalized_kind == "translation":
+            return self._resolve_translation(source_id)
         raise SourceResolutionError(f"Unsupported source kind: {kind!r}")
 
     def _resolve_object(self, source_id: str) -> ResolvedSource:
@@ -134,6 +137,37 @@ class SourceResolver:
             source_anchor=figure.anchor.source_anchor,
             source_batch=figure.source_batch,
             translation_available=self._translation_available(figure.source_batch),
+            context_before=(),
+            context_after=(),
+        )
+
+    def _resolve_translation(self, source_id: str) -> ResolvedSource:
+        batch = next((row for row in self.book.batches if row.id == source_id), None)
+        if batch is None:
+            raise SourceResolutionError(f"Unknown translation source: {source_id!r}")
+        try:
+            content = self.book.translation_text(source_id)
+        except BookRuntimeError as exc:
+            raise SourceResolutionError(f"Unknown translation source: {source_id!r}") from exc
+
+        return ResolvedSource(
+            course_id=self.course.course_id,
+            book_id=self.book.book_id,
+            section_id=None,
+            kind="translation",
+            source_id=batch.id,
+            type="translation",
+            type_zh=TYPE_LABELS_ZH["translation"],
+            number=None,
+            title_zh=TYPE_LABELS_ZH["translation"],
+            title_en=None,
+            content_zh=content,
+            formula=None,
+            printed_page=batch.printed_page_start,
+            pdf_page=batch.pdf_page_start,
+            source_anchor=None,
+            source_batch=batch.id,
+            translation_available=content is not None,
             context_before=(),
             context_after=(),
         )
