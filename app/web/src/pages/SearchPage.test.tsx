@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ApiError, bookApi } from '../api/client'
 import type { CourseResponse, SearchResponse } from '../api/types'
+import { loadSearchViewState, saveSearchViewState } from '../state/searchViewState'
 import { SearchPage } from './SearchPage'
 
 vi.mock('../api/client', async () => {
@@ -79,6 +80,7 @@ function renderSearch(initial = '/courses/functional_analysis_course/search') {
 
 describe('SearchPage', () => {
   beforeEach(() => {
+    sessionStorage.clear()
     vi.clearAllMocks()
     vi.mocked(bookApi.getCourse).mockResolvedValue(COURSE)
     vi.mocked(bookApi.searchCourse).mockResolvedValue(RESULTS)
@@ -108,6 +110,39 @@ describe('SearchPage', () => {
       'href',
       '/courses/functional_analysis_course/sources/object/thm_1_1_holder',
     )
+  })
+
+  it('saves route, query, scroll and active source before opening a source', async () => {
+    const user = userEvent.setup()
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 735 })
+    renderSearch('/courses/functional_analysis_course/search?q=H%C3%B6lder')
+    await screen.findByRole('heading', { name: 'Hölder 不等式' })
+
+    await user.click(screen.getByRole('link', { name: '查看教材来源' }))
+
+    expect(loadSearchViewState('functional_analysis_course')).toEqual({
+      route: '/courses/functional_analysis_course/search?q=H%C3%B6lder',
+      query: 'Hölder',
+      scrollY: 735,
+      activeSourceKey: 'object:thm_1_1_holder',
+    })
+  })
+
+  it('restores matching search scroll and marks the previously opened result', async () => {
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+    saveSearchViewState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/search?q=H%C3%B6lder',
+      query: 'Hölder',
+      scrollY: 420,
+      activeSourceKey: 'object:thm_1_1_holder',
+    })
+
+    renderSearch('/courses/functional_analysis_course/search?q=H%C3%B6lder')
+    const heading = await screen.findByRole('heading', { name: 'Hölder 不等式' })
+    const card = heading.closest('article')
+
+    await waitFor(() => expect(scrollTo).toHaveBeenCalledWith(0, 420))
+    expect(card).toHaveAttribute('aria-current', 'true')
   })
 
   it('distinguishes normal no-results from search unavailable', async () => {
