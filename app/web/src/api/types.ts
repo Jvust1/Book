@@ -143,3 +143,27 @@ export interface SearchResponse {
   result_count: number
   results: SearchResultItem[]
 }
+
+export interface QACitationItem {
+  citation_id: string
+  evidence_id: string
+  source_kind: string
+  source_id: string
+  object_type: string | null
+  number: string | null
+  title_zh: string | null
+  title_en: string | null
+  source_anchor: string | null
+  pdf_page: number | null
+  printed_page: number | string | null
+}
+
+export interface QAResponse {
+  course_id: string
+  book_id: string
+  question: string
+  answer_kind: 'generated' | 'system_notice'
+  evidence_status: 'sufficient' | 'insufficient_evidence'
+  answer: string
+  citations: QACitationItem[]
+}
