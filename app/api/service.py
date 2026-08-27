@@ -13,7 +13,7 @@ from runtime import (
     SourceResolutionError,
     SourceResolver,
 )
-from runtime.book_runtime import BookRuntimeError, RuntimeSection
+from runtime.book_runtime import RuntimeSection
 from runtime.course_runtime import CourseRuntime
 
 from .errors import AppNotFoundError, AppUnavailableError, InvalidModeError
@@ -67,7 +67,7 @@ class BookAppService:
         return CourseResponse(
             course=self._course_card(course),
             chapters=chapters,
-            section_count=len(course.main_book().sections),
+            section_count=self._navigation_section_count(course),
         )
 
     def chapter(self, course_id: str, chapter_id: str) -> ChapterResponse:
@@ -198,8 +198,8 @@ class BookAppService:
                 detail=str(exc),
             ) from exc
 
-    @staticmethod
-    def _course_card(course: CourseRuntime) -> CourseCard:
+    @classmethod
+    def _course_card(cls, course: CourseRuntime) -> CourseCard:
         book = course.main_book()
         metadata = book.metadata
         authors_raw = metadata.get("authors")
@@ -215,7 +215,7 @@ class BookAppService:
             authors=authors,
             book_id=book.book_id,
             chapter_count=len(course.chapter_ids()),
-            section_count=len(book.sections),
+            section_count=cls._navigation_section_count(course),
             runtime_status=str(book.readiness.get("status") or "UNKNOWN"),
         )
 
@@ -256,6 +256,13 @@ class BookAppService:
             printed_page_end=section.printed_page_end,
             pdf_page_start=section.pdf_page_start,
             pdf_page_end=section.pdf_page_end,
+        )
+
+    @staticmethod
+    def _navigation_section_count(course: CourseRuntime) -> int:
+        return sum(
+            len(course.sections_for_chapter(chapter_id))
+            for chapter_id in course.chapter_ids()
         )
 
     @staticmethod
