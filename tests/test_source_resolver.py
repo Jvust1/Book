@@ -15,12 +15,21 @@ from tests.runtime_fixture_factory import (
 
 
 class SourceResolverTests(unittest.TestCase):
-    def _open_course(self, objects: list[dict[str, object]]) -> CourseRuntime:
+    def _open_course(
+        self,
+        objects: list[dict[str, object]] | None = None,
+        figures: list[dict[str, object]] | None = None,
+    ) -> CourseRuntime:
         self.tempdir = tempfile.TemporaryDirectory()
         self.addCleanup(self.tempdir.cleanup)
         repo = make_repo(Path(self.tempdir.name))
         book_dir = repo / "books" / "fixture-book"
-        write_ready_book(book_dir, book_id="fixture_book", objects=objects)
+        write_ready_book(
+            book_dir,
+            book_id="fixture_book",
+            objects=objects,
+            figures=figures,
+        )
         course_dir = repo / "courses" / "fixture-course"
         write_course(
             course_dir,
@@ -32,7 +41,7 @@ class SourceResolverTests(unittest.TestCase):
 
     def test_resolves_real_object_fields_without_synthesis(self) -> None:
         course = self._open_course(
-            [
+            objects=[
                 {
                     "type": "theorem",
                     "id": "thm_fixture",
@@ -63,9 +72,37 @@ class SourceResolverTests(unittest.TestCase):
         self.assertEqual(source.source_anchor, "fixture:p1:thm_fixture")
         self.assertTrue(source.translation_available)
 
+    def test_resolves_figure_metadata_without_inventing_content(self) -> None:
+        course = self._open_course(
+            figures=[
+                {
+                    "id": "figure_fixture",
+                    "title_en": "Fixture figure",
+                    "title_zh": "测试图片",
+                    "pdf_page": 2,
+                    "printed_page": 2,
+                    "source_anchor": "fixture:p2:figure_fixture",
+                }
+            ]
+        )
+
+        source = SourceResolver(course).resolve("figure", "figure_fixture")
+
+        self.assertEqual(source.kind, "figure")
+        self.assertEqual(source.source_id, "figure_fixture")
+        self.assertEqual(source.type, "figure")
+        self.assertEqual(source.type_zh, "图")
+        self.assertEqual(source.title_zh, "测试图片")
+        self.assertEqual(source.title_en, "Fixture figure")
+        self.assertIsNone(source.content_zh)
+        self.assertEqual(source.pdf_page, 2)
+        self.assertEqual(source.printed_page, 2)
+        self.assertEqual(source.source_anchor, "fixture:p2:figure_fixture")
+        self.assertTrue(source.translation_available)
+
     def test_missing_optional_content_and_anchor_remain_none(self) -> None:
         course = self._open_course(
-            [
+            objects=[
                 {
                     "type": "definition",
                     "id": "def_missing_optional",
@@ -83,7 +120,7 @@ class SourceResolverTests(unittest.TestCase):
 
     def test_unknown_source_and_kind_fail_closed(self) -> None:
         course = self._open_course(
-            [
+            objects=[
                 {
                     "type": "theorem",
                     "id": "thm_fixture",
