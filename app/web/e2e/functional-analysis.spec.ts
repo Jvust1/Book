@@ -62,6 +62,13 @@ async function readJson<T>(response: {
   return (await response.json()) as T
 }
 
+async function openQA(page: Parameters<typeof test>[0] extends never ? never : any) {
+  await page.goto(`/courses/${COURSE_ID}`)
+  await page.getByRole('link', { name: '教材问答' }).click()
+  await expect(page).toHaveURL(`${BASE_URL}/courses/${COURSE_ID}/qa`)
+  await expect(page.getByRole('heading', { name: '教材问答' })).toBeVisible()
+}
+
 test('real Functional Analysis desktop source round trip', async ({ page, request }) => {
   const course = await readJson<CourseResponse>(
     await request.get(`${BASE_URL}/api/courses/${COURSE_ID}`),
@@ -211,6 +218,62 @@ test('real Functional Analysis search distinguishes Chinese hits from normal zer
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
+test('real Functional Analysis textbook QA answers English theorem questions from verified evidence', async ({
+  page,
+}) => {
+  await openQA(page)
+  await page.getByRole('textbox', { name: '教材问题' }).fill('What does Hölder inequality say?')
+  await page.getByRole('button', { name: '提问' }).click()
+
+  await expect(page.getByText('AI 生成回答，依据下方教材来源')).toBeVisible()
+  await expect(page.locator('.qa-citation-card').first()).toBeVisible()
+  await expect(page.getByRole('alert')).toHaveCount(0)
+})
+
+test('real Functional Analysis Chinese QA citation source round trip restores question without caching answer payload', async ({
+  page,
+}) => {
+  const question = '什么是巴拿赫空间？'
+  await openQA(page)
+  await page.getByRole('textbox', { name: '教材问题' }).fill(question)
+  await page.getByRole('button', { name: '提问' }).click()
+
+  await expect(page.getByText('AI 生成回答，依据下方教材来源')).toBeVisible()
+  const citation = page.locator('.qa-citation-card').first()
+  await expect(citation).toBeVisible()
+  await citation.getByRole('link', { name: '查看教材来源' }).click()
+  await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
+  await expect(page.getByRole('button', { name: '返回问答' })).toBeVisible()
+
+  const persisted = await page.evaluate((courseId) => {
+    const raw = sessionStorage.getItem(`book:qa-view:${courseId}`)
+    return raw ? JSON.parse(raw) as Record<string, unknown> : null
+  }, COURSE_ID)
+  expect(persisted?.question).toBe(question)
+  expect(persisted).not.toHaveProperty('answer')
+  expect(persisted).not.toHaveProperty('citations')
+
+  await page.getByRole('button', { name: '返回问答' }).click()
+  await expect(page).toHaveURL(`${BASE_URL}/courses/${COURSE_ID}/qa`)
+  await expect(page.getByRole('textbox', { name: '教材问题' })).toHaveValue(question)
+  await expect(page.getByText('AI 生成回答，依据下方教材来源')).toBeVisible()
+  await expect(page.locator('.qa-citation-card[aria-current="true"]')).toHaveCount(1)
+})
+
+test('real Functional Analysis textbook QA treats nonexistent questions as normal insufficient evidence', async ({
+  page,
+}) => {
+  await openQA(page)
+  await page
+    .getByRole('textbox', { name: '教材问题' })
+    .fill('definitely-no-such-textbook-concept-92831')
+  await page.getByRole('button', { name: '提问' }).click()
+
+  await expect(page.locator('.qa-result')).toBeVisible()
+  await expect(page.getByText('AI 生成回答，依据下方教材来源')).toHaveCount(0)
+  await expect(page.getByRole('alert')).toHaveCount(0)
+})
+
 test('real Functional Analysis narrow Section remains reachable without body overflow', async ({
   page,
 }) => {
@@ -257,6 +320,37 @@ test('real Functional Analysis narrow search and source round trip avoid body ov
 
   await page.getByRole('button', { name: '返回搜索' }).click()
   await expect(page.getByRole('heading', { name: '搜索教材' })).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
+})
+
+test('real Functional Analysis narrow QA/source round trip avoids body overflow', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await openQA(page)
+  await page.getByRole('textbox', { name: '教材问题' }).fill('什么是巴拿赫空间？')
+  await page.getByRole('button', { name: '提问' }).click()
+  await expect(page.locator('.qa-citation-card').first()).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
+
+  await page.locator('.qa-citation-card').first().getByRole('link', { name: '查看教材来源' }).click()
+  await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+    ),
+  ).toBe(true)
+
+  await page.getByRole('button', { name: '返回问答' }).click()
+  await expect(page.getByRole('heading', { name: '教材问答' })).toBeVisible()
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
