@@ -160,7 +160,7 @@ jobs:
           assert sufficient_qa.citations
           assert all(citation.source_kind == "object" for citation in sufficient_qa.citations)
 
-          scoped_qa = qa.answer("1/p + 1/q = 1", section_id="ch01_s01")
+          scoped_qa = qa.answer("L^p 范数", section_id="ch01_s01")
           assert scoped_qa.answer_kind == "generated"
           assert scoped_qa.scope_requested == "section_then_book"
           assert scoped_qa.scope_used == "section"
