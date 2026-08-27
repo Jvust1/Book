@@ -60,6 +60,12 @@ export function CoursePage() {
         >
           搜索教材
         </Link>
+        <Link
+          className="secondary-button course-search-link"
+          to={`/courses/${course.course.course_id}/qa`}
+        >
+          教材问答
+        </Link>
       </div>
 
       <div className="list-stack">
