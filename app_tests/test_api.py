@@ -93,6 +93,86 @@ class BookAppApiTests(unittest.TestCase):
                 )
                 self.assertEqual(payload["section_id"], "ch01_s01")
 
+    def test_search_route_returns_real_canonical_results(self) -> None:
+        response = self.client.get(
+            "/api/courses/functional_analysis_course/search",
+            params={"q": "Hölder", "limit": 10},
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["course_id"], "functional_analysis_course")
+        self.assertEqual(payload["book_id"], "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(payload["query"], "Hölder")
+        self.assertGreater(payload["result_count"], 0)
+        self.assertEqual(payload["result_count"], len(payload["results"]))
+        self.assertEqual(payload["results"][0]["source_kind"], "object")
+        self.assertEqual(payload["results"][0]["object_type"], "theorem")
+
+    def test_search_route_supports_chinese_and_normal_empty_results(self) -> None:
+        chinese = self.client.get(
+            "/api/courses/functional_analysis_course/search",
+            params={"q": "巴拿赫空间"},
+        )
+        self.assertEqual(chinese.status_code, 200)
+        self.assertGreater(chinese.json()["result_count"], 0)
+
+        empty = self.client.get(
+            "/api/courses/functional_analysis_course/search",
+            params={"q": "definitely-no-such-text-92831"},
+        )
+        self.assertEqual(empty.status_code, 200)
+        self.assertEqual(empty.json()["result_count"], 0)
+        self.assertEqual(empty.json()["results"], [])
+
+    def test_search_invalid_query_is_stable_400(self) -> None:
+        for query in ("", "   "):
+            with self.subTest(query=query):
+                response = self.client.get(
+                    "/api/courses/functional_analysis_course/search",
+                    params={"q": query},
+                )
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(
+                    response.json(),
+                    {"error": {"code": "invalid_search_query", "message": "搜索条件无效"}},
+                )
+
+        out_of_range = self.client.get(
+            "/api/courses/functional_analysis_course/search",
+            params={"q": "Banach", "limit": 101},
+        )
+        self.assertEqual(out_of_range.status_code, 400)
+        self.assertEqual(out_of_range.json()["error"]["code"], "invalid_search_query")
+
+    def test_search_unknown_course_is_stable_404(self) -> None:
+        response = self.client.get("/api/courses/missing/search", params={"q": "Banach"})
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            response.json(),
+            {"error": {"code": "course_not_found", "message": "课程不存在"}},
+        )
+
+    def test_search_unavailable_is_stable_503_without_detail_leak(self) -> None:
+        def unavailable_service() -> BookAppService:
+            raise AppUnavailableError(
+                code="search_unavailable",
+                user_message="教材搜索暂不可用",
+                detail="search internals must not leak",
+            )
+
+        app.dependency_overrides[get_service] = unavailable_service
+        response = self.client.get(
+            "/api/courses/functional_analysis_course/search",
+            params={"q": "Banach"},
+        )
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(
+            response.json(),
+            {"error": {"code": "search_unavailable", "message": "教材搜索暂不可用"}},
+        )
+        self.assertNotIn("search internals", response.text)
+        self.assertNotIn("Traceback", response.text)
+
     def test_not_found_errors_have_stable_chinese_json_without_tracebacks(self) -> None:
         response = self.client.get("/api/courses/missing")
         self.assertEqual(response.status_code, 404)

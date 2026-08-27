@@ -20,7 +20,8 @@ a {
   color: inherit;
 }
 
-button {
+button,
+input {
   font: inherit;
 }
 
@@ -182,7 +183,8 @@ button {
 .mode-tab:focus-visible,
 .secondary-button:focus-visible,
 .primary-link:focus-visible,
-.source-link:focus-visible {
+.source-link:focus-visible,
+.search-input:focus-visible {
   outline: 3px solid currentColor;
   outline-offset: 2px;
 }
@@ -253,12 +255,49 @@ button {
   cursor: pointer;
 }
 
+.course-search-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .empty-state {
   color: #52525b;
 }
 
 .empty-state p {
   margin: 0;
+}
+
+.search-form {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.search-input {
+  width: min(720px, 100%);
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #d4d4d8;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.search-results {
+  display: grid;
+  gap: 16px;
+}
+
+.search-result-card {
+  min-width: 0;
+}
+
+.search-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  color: #52525b;
+  font-size: 14px;
 }
 
 .source-heading h2 {
@@ -317,9 +356,15 @@ button {
   }
 
   .card-footer,
-  .learning-card-header {
+  .learning-card-header,
+  .search-form {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .search-input,
+  .search-form .secondary-button {
+    width: 100%;
   }
 
   .mode-tab {

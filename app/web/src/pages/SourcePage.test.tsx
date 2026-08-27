@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { bookApi } from '../api/client'
 import type { SourceResponse } from '../api/types'
+import { saveSearchViewState } from '../state/searchViewState'
 import { saveSectionViewState } from '../state/sectionViewState'
 import { SourcePage } from './SourcePage'
 
@@ -78,6 +79,7 @@ function renderSource() {
           path="/courses/:courseId/sections/:sectionId"
           element={<LocationProbe />}
         />
+        <Route path="/courses/:courseId/search" element={<LocationProbe />} />
         <Route path="/courses/:courseId" element={<LocationProbe />} />
       </Routes>
     </MemoryRouter>,
@@ -115,7 +117,33 @@ describe('SourcePage', () => {
     expect(screen.queryByText('教材锚点暂未提供')).not.toBeInTheDocument()
   })
 
-  it('returns to the saved Section route for the active source', async () => {
+  it('returns to a matching saved Search route before any Section route', async () => {
+    const user = userEvent.setup()
+    saveSearchViewState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/search?q=L%5Ep',
+      query: 'L^p',
+      scrollY: 520,
+      activeSourceKey: 'object:def_lp',
+    })
+    saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
+      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      scrollY: 420,
+      expandedSourceIds: ['def_lp'],
+      activeSourceId: 'def_lp',
+    })
+
+    renderSource()
+    await screen.findByRole('heading', { name: '教材来源' })
+    await user.click(screen.getByRole('button', { name: '返回搜索' }))
+
+    await waitFor(() => {
+      expect(screen.getByTestId('location')).toHaveTextContent(
+        '/courses/functional_analysis_course/search?q=L%5Ep',
+      )
+    })
+  })
+
+  it('returns to the saved Section route for the active source when no Search state matches', async () => {
     const user = userEvent.setup()
     saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
       route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',

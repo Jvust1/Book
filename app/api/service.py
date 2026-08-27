@@ -8,6 +8,9 @@ from typing import cast
 from runtime import (
     LibraryRuntime,
     LibraryRuntimeError,
+    SearchQueryError,
+    SearchRuntime,
+    SearchRuntimeError,
     SectionLearningRuntime,
     SectionLearningRuntimeError,
     SourceResolutionError,
@@ -16,7 +19,12 @@ from runtime import (
 from runtime.book_runtime import RuntimeSection
 from runtime.course_runtime import CourseRuntime
 
-from .errors import AppNotFoundError, AppUnavailableError, InvalidModeError
+from .errors import (
+    AppNotFoundError,
+    AppUnavailableError,
+    InvalidModeError,
+    InvalidSearchQueryError,
+)
 from .models import (
     ChapterCard,
     ChapterResponse,
@@ -26,6 +34,8 @@ from .models import (
     LibraryResponse,
     ModeItem,
     ModeResponse,
+    SearchResponse,
+    SearchResultItem,
     SectionCard,
     SectionResponse,
     SourceContextItem,
@@ -171,6 +181,50 @@ class BookAppService:
             source_status=str(payload["source_status"]),
             items=items,
             source_refs=[SourceRef(**row) for row in payload["source_refs"]],
+        )
+
+    def search(self, course_id: str, query: str, *, limit: int = 30) -> SearchResponse:
+        course = self._course(course_id)
+        try:
+            runtime = SearchRuntime.from_course(course)
+            hits = runtime.search(query, limit=limit)
+        except SearchQueryError as exc:
+            raise InvalidSearchQueryError(
+                code="invalid_search_query",
+                user_message="搜索条件无效",
+                detail=str(exc),
+            ) from exc
+        except SearchRuntimeError as exc:
+            raise AppUnavailableError(
+                code="search_unavailable",
+                user_message="教材搜索暂不可用",
+                detail=str(exc),
+            ) from exc
+
+        results = [
+            SearchResultItem(
+                rank=hit.rank,
+                score=hit.score,
+                source_kind=hit.source_kind,
+                source_id=hit.source_id,
+                object_type=hit.object_type,
+                number=hit.number,
+                title_zh=hit.title_zh,
+                title_en=hit.title_en,
+                formula=hit.formula,
+                pdf_page=hit.pdf_page,
+                printed_page=hit.printed_page,
+                source_anchor=hit.source_anchor,
+                snippet=hit.snippet,
+            )
+            for hit in hits
+        ]
+        return SearchResponse(
+            course_id=course.course_id,
+            book_id=course.main_book().book_id,
+            query=str(query).strip(),
+            result_count=len(results),
+            results=results,
         )
 
     def source(self, course_id: str, kind: str, source_id: str) -> SourceResponse:

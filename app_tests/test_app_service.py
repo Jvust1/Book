@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from app.api.errors import AppNotFoundError, InvalidModeError
+from app.api.errors import (
+    AppNotFoundError,
+    AppUnavailableError,
+    InvalidModeError,
+    InvalidSearchQueryError,
+)
 from app.api.service import BookAppService
 from tests.runtime_fixture_factory import (
     dump_json,
@@ -66,6 +71,26 @@ class BookAppServiceRealLibraryTests(unittest.TestCase):
                 [(ref.kind, ref.source_id) for ref in payload.source_refs],
                 [(item.kind, item.source_id) for item in payload.items],
             )
+
+    def test_search_projects_real_runtime_hits_without_kind_type_confusion(self) -> None:
+        payload = self.service.search("functional_analysis_course", "Hölder")
+
+        self.assertEqual(payload.course_id, "functional_analysis_course")
+        self.assertEqual(payload.book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(payload.query, "Hölder")
+        self.assertGreater(payload.result_count, 0)
+        self.assertEqual(payload.result_count, len(payload.results))
+        first = payload.results[0]
+        self.assertEqual(first.source_kind, "object")
+        self.assertEqual(first.object_type, "theorem")
+        self.assertNotEqual(first.source_kind, first.object_type)
+
+    def test_search_blank_query_maps_to_stable_app_error(self) -> None:
+        with self.assertRaises(InvalidSearchQueryError) as ctx:
+            self.service.search("functional_analysis_course", "   ")
+
+        self.assertEqual(ctx.exception.code, "invalid_search_query")
+        self.assertEqual(ctx.exception.user_message, "搜索条件无效")
 
     def test_missing_entities_and_invalid_mode_raise_stable_app_errors(self) -> None:
         cases = (
@@ -154,6 +179,66 @@ class BookAppServiceEmptyModeTests(unittest.TestCase):
         self.assertEqual(review.source_refs, [])
         self.assertEqual(practice.items, [])
         self.assertEqual(practice.source_refs, [])
+
+
+class BookAppServiceSearchUnavailableTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.tempdir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tempdir.cleanup)
+        repo = make_repo(Path(self.tempdir.name))
+        book_dir = repo / "books" / "fixture-book"
+        write_ready_book(
+            book_dir,
+            book_id="fixture_book",
+            objects=[
+                {
+                    "type": "definition",
+                    "id": "def_fixture",
+                    "name_zh": "测试定义",
+                    "anchor": {"pdf_page": 1, "printed_page": 1},
+                }
+            ],
+            search_records=[
+                {
+                    "id": "def_fixture",
+                    "book_id": "fixture_book",
+                    "type": "definition",
+                    "name_zh": "测试定义",
+                }
+            ],
+        )
+        write_course(
+            repo / "courses" / "fixture-course",
+            course_id="fixture_course",
+            main_book_id="fixture_book",
+            book_entries=[main_book_entry("fixture_book", "../../books/fixture-book")],
+        )
+        dump_json(
+            repo / "library" / "library.json",
+            {
+                "schema_version": "library_manifest_v1",
+                "library_id": "fixture_library",
+                "name": "测试书架",
+                "courses": [
+                    {
+                        "course_id": "fixture_course",
+                        "name": "测试课程",
+                        "path": "../courses/fixture-course",
+                        "enabled": True,
+                        "order": 10,
+                    }
+                ],
+            },
+        )
+        self.service = BookAppService(repo)
+        (book_dir / "search_index_v1.jsonl").write_text("{broken\n", encoding="utf-8")
+
+    def test_broken_index_maps_to_search_unavailable(self) -> None:
+        with self.assertRaises(AppUnavailableError) as ctx:
+            self.service.search("fixture_course", "测试")
+
+        self.assertEqual(ctx.exception.code, "search_unavailable")
+        self.assertEqual(ctx.exception.user_message, "教材搜索暂不可用")
 
 
 if __name__ == "__main__":

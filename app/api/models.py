@@ -128,3 +128,27 @@ class SourceResponse(BaseModel):
     translation_available: bool
     context_before: list[SourceContextItem]
     context_after: list[SourceContextItem]
+
+
+class SearchResultItem(BaseModel):
+    rank: int
+    score: int
+    source_kind: str
+    source_id: str
+    object_type: str | None
+    number: str | None
+    title_zh: str | None
+    title_en: str | None
+    formula: str | None
+    pdf_page: int | None
+    printed_page: int | str | None
+    source_anchor: str | None
+    snippet: str | None
+
+
+class SearchResponse(BaseModel):
+    course_id: str
+    book_id: str
+    query: str
+    result_count: int
+    results: list[SearchResultItem]

@@ -14,6 +14,7 @@ on:
       - "tools/normalize_functional_analysis_figure_ids.py"
       - "books/functional-analysis/chunk_*_structure.json"
       - "books/functional-analysis/chunks/chunk_*_structure.json"
+      - "books/functional-analysis/search_index*.jsonl"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
   pull_request:
@@ -29,6 +30,7 @@ on:
       - "tools/normalize_functional_analysis_figure_ids.py"
       - "books/functional-analysis/chunk_*_structure.json"
       - "books/functional-analysis/chunks/chunk_*_structure.json"
+      - "books/functional-analysis/search_index*.jsonl"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
 
@@ -57,6 +59,7 @@ jobs:
           python -m py_compile runtime/library_runtime.py
           python -m py_compile runtime/section_learning_runtime.py
           python -m py_compile runtime/source_resolver.py
+          python -m py_compile runtime/search_runtime.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
@@ -70,7 +73,7 @@ jobs:
           python tools/normalize_functional_analysis_figure_ids.py books/functional-analysis --write
 
       - name: Run unit tests
-        run: python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
+        run: python -m unittest tests.test_search_runtime tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
 
       - name: Rebuild and validate Functional Analysis runtime artifacts
         if: matrix.python-version == '3.13'
@@ -88,6 +91,7 @@ jobs:
               BookRuntime,
               CourseRuntime,
               LibraryRuntime,
+              SearchRuntime,
               SectionLearningRuntime,
           )
 
@@ -102,6 +106,7 @@ jobs:
           library = LibraryRuntime.open("library")
           selected = library.course("functional_analysis_course")
           learning = SectionLearningRuntime.from_course(selected, "ch01_s01")
+          search = SearchRuntime.from_course(selected)
 
           assert book.is_ready
           assert book.page_map_row(20).get("printed_page") == "1"
@@ -123,6 +128,15 @@ jobs:
           ]
           assert modes == ["preview", "learn", "review", "practice"]
 
+          assert search.index_record_count == 1493
+          holder_hits = search.search("Hölder")
+          assert holder_hits
+          assert holder_hits[0].source_kind == "object"
+          assert holder_hits[0].object_type == "theorem"
+          chinese_hits = search.search("巴拿赫空间")
+          assert chinese_hits
+          assert search.search("definitely-no-such-text-92831") == []
+
           print(
               json.dumps(
                   {
@@ -131,6 +145,7 @@ jobs:
                       "course_runtime_open": True,
                       "library_runtime_open": True,
                       "section_learning_runtime_open": True,
+                      "search_runtime_open": True,
                       "course_id": selected.course_id,
                       "book_id": selected.main_book().book_id,
                       "course_chapter_count": len(course.chapter_ids()),
@@ -138,7 +153,9 @@ jobs:
                       "section_id": learning.source().section_id,
                       "modes": modes,
                       "page_map_rows": len(book.page_map),
-                      "search_record_count": sum(1 for _ in book.iter_search_records()),
+                      "search_record_count": search.index_record_count,
+                      "holder_hit_count": len(holder_hits),
+                      "chinese_hit_count": len(chinese_hits),
                       "figure_count": len(book.figures),
                       "missing_required_files": readiness.get("missing_required_files"),
                       "stale_files": readiness.get("stale_files"),

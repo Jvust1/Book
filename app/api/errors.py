@@ -23,3 +23,7 @@ class AppUnavailableError(BookAppError):
 
 class InvalidModeError(BookAppError):
     """Section learning mode is outside the fixed product contract."""
+
+
+class InvalidSearchQueryError(BookAppError):
+    """Course textbook search input is outside the stable query contract."""
