@@ -198,5 +198,118 @@ class LibraryRuntimeContractTests(unittest.TestCase):
             self.assertEqual(library.course_ids(), ["fixture_course"])
 
 
+class LibraryRuntimeCatalogTests(LibraryRuntimeContractTests):
+    def test_courses_are_ordered_by_order_then_manifest_position(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo, library_dir = self._ready_repo(Path(temp))
+            write_ready_book(repo / "books" / "second", book_id="second_book")
+            write_course(
+                repo / "courses" / "second-course",
+                course_id="second_course",
+                book_entries=[main_book_entry("second_book", "../../books/second")],
+                main_book_id="second_book",
+            )
+            manifest = self._manifest()
+            manifest["courses"] = [
+                self._entry(course_id="fixture_course", order=20),
+                self._entry(
+                    course_id="second_course",
+                    path="../courses/second-course",
+                    order=10,
+                ),
+            ]
+            dump_json(library_dir / "library.json", manifest)
+            library = LibraryRuntime.open(library_dir)
+            self.assertEqual(library.course_ids(), ["second_course", "fixture_course"])
+            self.assertEqual(
+                [course.course_id for course in library.courses()],
+                ["second_course", "fixture_course"],
+            )
+
+    def test_equal_order_preserves_manifest_position(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo, library_dir = self._ready_repo(Path(temp))
+            write_ready_book(repo / "books" / "second", book_id="second_book")
+            write_course(
+                repo / "courses" / "second-course",
+                course_id="second_course",
+                book_entries=[main_book_entry("second_book", "../../books/second")],
+                main_book_id="second_book",
+            )
+            manifest = self._manifest()
+            manifest["courses"] = [
+                self._entry(course_id="fixture_course", order=10),
+                self._entry(
+                    course_id="second_course",
+                    path="../courses/second-course",
+                    order=10,
+                ),
+            ]
+            dump_json(library_dir / "library.json", manifest)
+            self.assertEqual(
+                LibraryRuntime.open(library_dir).course_ids(),
+                ["fixture_course", "second_course"],
+            )
+
+    def test_course_returns_already_mounted_course(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            library = LibraryRuntime.open(library_dir)
+            self.assertIs(library.course("fixture_course"), library.courses()[0])
+
+    def test_unknown_or_disabled_course_id_raises_library_error(self) -> None:
+        from runtime.library_runtime import LibraryRuntimeError
+
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            library = LibraryRuntime.open(library_dir)
+            with self.assertRaises(LibraryRuntimeError):
+                library.course("missing")
+
+    def test_multi_book_course_is_rejected_by_product_profile(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo, library_dir = self._ready_repo(Path(temp))
+            write_ready_book(repo / "books" / "supplementary", book_id="supp_book")
+            course_path = repo / "courses" / "fixture-course" / "course.json"
+            course = __import__("json").loads(course_path.read_text(encoding="utf-8"))
+            course["books"].append(
+                {
+                    "book_id": "supp_book",
+                    "role": "supplementary",
+                    "path": "../../books/supplementary",
+                    "required": True,
+                    "enabled": True,
+                }
+            )
+            dump_json(course_path, course)
+            with self.assertRaises(LibraryManifestError):
+                LibraryRuntime.open(library_dir)
+
+    def test_exactly_one_main_book_course_is_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            course = LibraryRuntime.open(library_dir).course("fixture_course")
+            self.assertEqual(course.book_ids(), ["fixture_book"])
+            self.assertEqual(course.main_book().book_id, "fixture_book")
+
+    def test_summary_reports_independent_courses(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            summary = LibraryRuntime.open(library_dir).summary()
+            self.assertEqual(summary["library_id"], "fixture_library")
+            self.assertEqual(summary["course_count"], 1)
+            self.assertEqual(
+                summary["courses"],
+                [
+                    {
+                        "course_id": "fixture_course",
+                        "name": "fixture_course",
+                        "book_count": 1,
+                        "main_book_id": "fixture_book",
+                    }
+                ],
+            )
+
+
 if __name__ == "__main__":
     unittest.main()
