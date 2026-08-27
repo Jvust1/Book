@@ -4,8 +4,8 @@ import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { bookApi } from '../api/client'
-import type { SourceResponse } from '../api/types'
-import { saveQAViewState } from '../state/qaViewState'
+import type { QAResponse, SourceResponse } from '../api/types'
+import { saveQASessionState } from '../state/qaSessionState'
 import { saveSearchViewState } from '../state/searchViewState'
 import { saveSectionViewState } from '../state/sectionViewState'
 import { SourcePage } from './SourcePage'
@@ -55,6 +55,36 @@ const SOURCE: SourceResponse = {
       type: 'theorem',
       number: '1.2',
       title_zh: '后一条定理',
+    },
+  ],
+}
+
+const QA_RESPONSE: QAResponse = {
+  course_id: 'functional_analysis_course',
+  book_id: 'stein_shakarchi_functional_analysis_2011',
+  question: '什么是 L^p 空间？',
+  answer: '这是已经验证过的回答。',
+  answer_kind: 'generated',
+  answer_style: 'brief',
+  scope_requested: 'section_then_book',
+  scope_used: 'section',
+  insufficient_evidence: false,
+  message: null,
+  citations: [
+    {
+      evidence_id: 'E1',
+      source_kind: 'object',
+      source_id: 'def_lp',
+      chapter_id: 'chapter_01',
+      section_id: 'ch01_s01',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: 'L^p 空间',
+      title_en: 'Lp spaces',
+      printed_page: 2,
+      pdf_page: 21,
+      source_anchor: null,
     },
   ],
 }
@@ -119,13 +149,21 @@ describe('SourcePage', () => {
     expect(screen.queryByText('教材锚点暂未提供')).not.toBeInTheDocument()
   })
 
-  it('returns to matching QA before stale Search and Section routes', async () => {
+  it('returns to the matching QA session route including section query before stale Search and Section state', async () => {
     const user = userEvent.setup()
-    saveQAViewState('functional_analysis_course', {
-      route: '/courses/functional_analysis_course/qa',
-      question: '什么是 L^p 空间？',
+    saveQASessionState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa?section=ch01_s01',
+      messages: [
+        { id: 'u1', role: 'user', content: QA_RESPONSE.question },
+        {
+          id: 'a1',
+          role: 'assistant',
+          content: QA_RESPONSE.answer!,
+          response: QA_RESPONSE,
+        },
+      ],
       scrollY: 620,
-      activeCitationKey: 'object:def_lp',
+      activeCitationSourceId: 'def_lp',
     })
     saveSearchViewState('functional_analysis_course', {
       route: '/courses/functional_analysis_course/search?q=L%5Ep',
@@ -146,7 +184,7 @@ describe('SourcePage', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('location')).toHaveTextContent(
-        '/courses/functional_analysis_course/qa',
+        '/courses/functional_analysis_course/qa?section=ch01_s01',
       )
     })
   })
