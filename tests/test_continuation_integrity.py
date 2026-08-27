@@ -9,7 +9,7 @@ from tools import check_runtime_readiness as readiness_checker
 
 
 class ContinuationIntegrityTests(unittest.TestCase):
-    def test_functional_analysis_continuation_targets_resolve(self) -> None:
+    def test_functional_analysis_continuation_targets_and_repeated_identities_are_consistent(self) -> None:
         root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
         if not root.exists():
             self.skipTest("repository fixture not present")
@@ -18,10 +18,9 @@ class ContinuationIntegrityTests(unittest.TestCase):
         _, repeated_ids, bad_continuations = readiness_checker.collect_structure_state(files)
         repeated_names = {item.split(":", 1)[0] for item in repeated_ids}
 
-        details: dict[str, list[dict[str, object]]] = defaultdict(list)
+        identities: dict[str, list[tuple[object, object, object, object]]] = defaultdict(list)
         for path in files:
             data = json.loads(path.read_text(encoding="utf-8"))
-            chunk_id = str(data.get("chunk_id") or path.stem.removesuffix("_structure"))
             for key in ("key_objects", "objects", "exercises", "problems"):
                 values = data.get(key, [])
                 if not isinstance(values, list):
@@ -30,28 +29,26 @@ class ContinuationIntegrityTests(unittest.TestCase):
                     if not isinstance(row, dict):
                         continue
                     object_id = row.get("id") or row.get("object_id") or row.get("exercise_id") or row.get("problem_id")
-                    if str(object_id) not in repeated_names:
+                    object_id = str(object_id) if object_id else ""
+                    if object_id not in repeated_names:
                         continue
-                    anchor = row.get("anchor") if isinstance(row.get("anchor"), dict) else {}
-                    details[str(object_id)].append(
-                        {
-                            "chunk_id": chunk_id,
-                            "source_key": key,
-                            "type": row.get("type") or ("exercise" if key == "exercises" else "problem" if key == "problems" else None),
-                            "number": row.get("number"),
-                            "name_en": row.get("name_en") or row.get("title_en"),
-                            "name_zh": row.get("name_zh") or row.get("title_zh"),
-                            "pdf_page": anchor.get("pdf_page") or row.get("pdf_page"),
-                            "printed_page": anchor.get("printed_page") or row.get("printed_page"),
-                            "continued_from": row.get("continued_from"),
-                            "continues_in": row.get("continues_in"),
-                            "completed_in": row.get("completed_in"),
-                            "summary_zh": row.get("summary_zh"),
-                        }
+                    identities[object_id].append(
+                        (
+                            row.get("type") or ("exercise" if key == "exercises" else "problem" if key == "problems" else None),
+                            str(row.get("number")) if row.get("number") is not None else None,
+                            row.get("name_en") or row.get("title_en"),
+                            row.get("name_zh") or row.get("title_zh"),
+                        )
                     )
 
-        print("STRUCTURE_REPEATED_DETAILS=" + json.dumps(details, ensure_ascii=False, sort_keys=True))
+        identity_conflicts = {
+            object_id: rows
+            for object_id, rows in identities.items()
+            if len(set(rows)) > 1
+        }
+
         self.assertEqual(bad_continuations, [])
+        self.assertEqual(identity_conflicts, {})
 
 
 if __name__ == "__main__":
