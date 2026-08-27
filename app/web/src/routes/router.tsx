@@ -4,6 +4,7 @@ import { AppShell } from '../components/AppShell'
 import { ChapterPage } from '../pages/ChapterPage'
 import { CoursePage } from '../pages/CoursePage'
 import { LibraryPage } from '../pages/LibraryPage'
+import { SectionPage } from '../pages/SectionPage'
 
 function RoutePlaceholder({ title }: { title: string }) {
   return (
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'courses/:courseId/sections/:sectionId',
-        element: <RoutePlaceholder title="小节学习" />,
+        element: <SectionPage />,
       },
       {
         path: 'courses/:courseId/sources/:kind/:sourceId',
