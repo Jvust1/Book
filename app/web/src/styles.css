@@ -21,7 +21,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -184,7 +185,8 @@ input {
 .secondary-button:focus-visible,
 .primary-link:focus-visible,
 .source-link:focus-visible,
-.search-input:focus-visible {
+.search-input:focus-visible,
+.qa-input:focus-visible {
   outline: 3px solid currentColor;
   outline-offset: 2px;
 }
@@ -255,6 +257,17 @@ input {
   cursor: pointer;
 }
 
+.secondary-button:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.course-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .course-search-link {
   display: inline-block;
   text-decoration: none;
@@ -268,13 +281,15 @@ input {
   margin: 0;
 }
 
-.search-form {
+.search-form,
+.qa-form {
   display: flex;
   align-items: stretch;
   gap: 12px;
 }
 
-.search-input {
+.search-input,
+.qa-input {
   width: min(720px, 100%);
   min-width: 0;
   padding: 12px 14px;
@@ -283,11 +298,37 @@ input {
   background: #ffffff;
 }
 
+.qa-input {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.qa-guidance {
+  padding-block: 18px;
+}
+
+.qa-answer-card {
+  min-width: 0;
+}
+
+.qa-generated-label {
+  margin: 0;
+  color: #52525b;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.qa-citations,
 .search-results {
   display: grid;
   gap: 16px;
 }
 
+.qa-citations > h2 {
+  margin: 0;
+}
+
+.qa-citation-card,
 .search-result-card {
   min-width: 0;
 }
@@ -357,13 +398,16 @@ input {
 
   .card-footer,
   .learning-card-header,
-  .search-form {
+  .search-form,
+  .qa-form {
     align-items: flex-start;
     flex-direction: column;
   }
 
   .search-input,
-  .search-form .secondary-button {
+  .search-form .secondary-button,
+  .qa-input,
+  .qa-form .secondary-button {
     width: 100%;
   }
 
