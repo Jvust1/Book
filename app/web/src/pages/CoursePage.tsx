@@ -53,6 +53,15 @@ export function CoursePage() {
         {course.course.name_en ? <p className="secondary-text">{course.course.name_en}</p> : null}
       </header>
 
+      <div className="course-actions">
+        <Link
+          className="secondary-button course-search-link"
+          to={`/courses/${course.course.course_id}/search`}
+        >
+          搜索教材
+        </Link>
+      </div>
+
       <div className="list-stack">
         {course.chapters.map((chapter) => (
           <article className="content-card compact-card" key={chapter.chapter_id}>
