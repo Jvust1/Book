@@ -2,10 +2,11 @@
   "chunk_id": "chunk_002",
   "pdf_pages": [21, 40],
   "printed_pages": [2, 21],
-  "status": "structured_v0.1_translation_partial",
+  "status": "structured_v0.36_translation_learning_layer",
   "chapter_id": "chapter_01",
   "chapter_title_en": "Lp Spaces and Banach Spaces",
   "chapter_title_zh": "L^p 空间与巴拿赫空间",
+  "translation_file": "chunk_002_translation_zh.md",
   "sections": [
     {"id":"ch01_s01","number":"1","title_en":"Lp spaces","title_zh":"L^p 空间","pdf_pages":[21,26],"printed_pages":[2,7]},
     {"id":"ch01_s01_01","number":"1.1","title_en":"The Hölder and Minkowski inequalities","title_zh":"Hölder 不等式与 Minkowski 不等式","pdf_pages":[22,23],"printed_pages":[3,4]},
@@ -19,7 +20,7 @@
     {"id":"ch01_s05","number":"5","title_en":"More about linear functionals","title_zh":"关于线性泛函的进一步讨论","pdf_pages":[35,40],"printed_pages":[16,21]},
     {"id":"ch01_s05_01","number":"5.1","title_en":"Separation of convex sets","title_zh":"凸集的分离","pdf_pages":[35,38],"printed_pages":[16,19]},
     {"id":"ch01_s05_02","number":"5.2","title_en":"The Hahn-Banach Theorem","title_zh":"Hahn-Banach 定理","pdf_pages":[39,40],"printed_pages":[20,21]},
-    {"id":"ch01_s05_03","number":"5.3","title_en":"Some consequences","title_zh":"若干推论","pdf_pages":[40,null],"printed_pages":[21,null],"continues_in":"chunk_003"}
+    {"id":"ch01_s05_03","number":"5.3","title_en":"Some consequences","title_zh":"若干推论","pdf_pages":[40,null],"printed_pages":[21,null],"continues_in":"chunk_003a"}
   ],
   "key_objects": [
     {"type":"definition","id":"def_lp","name_zh":"L^p 空间","anchor":{"pdf_page":21,"printed_page":2},"formula":"∫_X |f(x)|^p dμ(x) < ∞"},
@@ -51,6 +52,10 @@
     {"figure":"Figure 1","title_zh":"用超平面分离凸集与外点","pdf_page":36,"printed_page":17,"preserve_original":true},
     {"figure":"Figure 2","title_zh":"区间 (a,b) 的 Minkowski 规范函数","pdf_page":37,"printed_page":18,"preserve_original":true}
   ],
-  "translation_status": {"full_prose":false,"definitions_and_theorem_statements":"started","proofs":"pending"},
-  "next_action": "逐页生成中文学习层，同时将 theorem/definition/formula/figure 建立稳定 content_anchor_id。"
+  "translation_status": {
+    "learning_layer_zh": "completed_for_pdf_21_40",
+    "theorem_and_definition_statements": "completed",
+    "proof_logic": "completed",
+    "proof_sentence_level_translation": "not_required"
+  }
 }
