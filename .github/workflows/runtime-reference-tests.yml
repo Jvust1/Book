@@ -49,6 +49,10 @@ jobs:
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
           python -m py_compile tools/recover_functional_analysis_page_map.py
+          python -m py_compile tools/normalize_functional_analysis_runtime_identities.py
+
+      - name: Normalize known cross-batch stable identities
+        run: python tools/normalize_functional_analysis_runtime_identities.py books/functional-analysis --write
 
       - name: Run unit tests
         run: python -m unittest tests.test_book_runtime tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer -v
@@ -61,7 +65,7 @@ jobs:
           python tools/recover_functional_analysis_page_map.py books/functional-analysis --promote-safe
           python -c "import json,pathlib,shutil; root=pathlib.Path('books/functional-analysis'); t=json.loads((root/'toc_bilingual.json.candidate').read_text(encoding='utf-8')); s=json.loads((root/'search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); p=json.loads((root/'page_map.rebuild_report.json').read_text(encoding='utf-8')); assert t.get('chapter_count') == 8 and t.get('section_count') == 132; assert s.get('record_count') == 1493 and s.get('promotable_by_count_and_anchor') is True; assert p.get('row_count') == 442 and p.get('anchor_checks_pass') is True; shutil.copyfile(root/'toc_bilingual.json.candidate', root/'toc_bilingual.json')"
           python tools/check_runtime_readiness.py books/functional-analysis --write
-          python -c "import json,pathlib; root=pathlib.Path('books/functional-analysis'); r=json.loads((root/'RUNTIME_READINESS.json').read_text(encoding='utf-8')); assert r.get('status') == 'READY', r; print(json.dumps({'runtime_status':r.get('status'),'missing_required_files':r.get('missing_required_files'),'stale_files':r.get('stale_files'),'identity_mismatches':r.get('identity_mismatches')},ensure_ascii=False,indent=2))"
+          python -c "import json,pathlib; from runtime.book_runtime import BookRuntime; root=pathlib.Path('books/functional-analysis'); r=json.loads((root/'RUNTIME_READINESS.json').read_text(encoding='utf-8')); assert r.get('status') == 'READY', r; runtime=BookRuntime.open(root); assert runtime.is_ready; assert runtime.page_map_row(20).get('printed_page') == '1'; assert runtime.page_map_row(442).get('printed_page') == '423'; print(json.dumps({'runtime_status':r.get('status'),'book_runtime_open':True,'missing_required_files':r.get('missing_required_files'),'stale_files':r.get('stale_files'),'identity_mismatches':r.get('identity_mismatches')},ensure_ascii=False,indent=2))"
 
       - name: Upload audited recovery candidates
         if: matrix.python-version == '3.13'
@@ -83,6 +87,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
+            books/functional-analysis/chunk_*_structure.json \
             books/functional-analysis/search_index_v0_36.jsonl \
             books/functional-analysis/toc_bilingual.json \
             books/functional-analysis/page_map.csv \
@@ -92,6 +97,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Validated runtime artifacts already match branch."
           else
-            git commit -m "Book: restore Functional Analysis runtime final artifacts"
+            git commit -m "Book: normalize runtime identities and verify final artifacts"
             git push origin HEAD:fix/runtime-final-index-recovery
           fi
