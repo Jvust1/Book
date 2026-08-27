@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { CourseResponse, QACitationItem, QAResponse } from '../api/types'
+import { loadQAViewState, saveQAViewState } from '../state/qaViewState'
 
 const qaErrorMessage = (error: unknown): string =>
   error instanceof ApiError ? error.message : '教材问答失败，请稍后重试'
@@ -13,9 +14,12 @@ const citationTitle = (citation: QACitationItem): string =>
 
 export function QAPage() {
   const { courseId } = useParams()
+  const location = useLocation()
+  const restoredCourseRef = useRef<string | null>(null)
+  const savedState = courseId ? loadQAViewState(courseId) : null
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(savedState?.question ?? '')
   const [result, setResult] = useState<QAResponse | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -43,6 +47,43 @@ export function QAPage() {
     }
   }, [courseId])
 
+  useEffect(() => {
+    if (!courseId || restoredCourseRef.current === courseId) return
+    restoredCourseRef.current = courseId
+
+    const saved = loadQAViewState(courseId)
+    const question = saved?.question.trim() ?? ''
+    if (!question) return
+
+    let active = true
+    setInput(saved!.question)
+    setLoading(true)
+    setResult(null)
+    setError(null)
+    bookApi
+      .askCourse(courseId, question)
+      .then((value) => {
+        if (active) setResult(value)
+      })
+      .catch((reason: unknown) => {
+        if (active) setError(qaErrorMessage(reason))
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [courseId])
+
+  useEffect(() => {
+    if (!courseId || !result) return
+    const saved = loadQAViewState(courseId)
+    if (!saved || saved.question !== result.question) return
+    window.scrollTo(0, saved.scrollY)
+  }, [courseId, result])
+
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!courseId || loading) return
@@ -67,6 +108,16 @@ export function QAPage() {
     }
   }
 
+  const rememberCitation = (citation: QACitationItem) => {
+    if (!courseId || !result) return
+    saveQAViewState(courseId, {
+      route: `${location.pathname}${location.search}`,
+      question: result.question,
+      scrollY: window.scrollY,
+      activeCitationKey: `${citation.source_kind}:${citation.source_id}`,
+    })
+  }
+
   if (!courseId) {
     return (
       <section className="status-panel" role="alert">
@@ -74,6 +125,11 @@ export function QAPage() {
       </section>
     )
   }
+
+  const activeCitationKey =
+    savedState && result && savedState.question === result.question
+      ? savedState.activeCitationKey
+      : null
 
   return (
     <section className="qa-page page-stack">
@@ -129,12 +185,17 @@ export function QAPage() {
             <div className="qa-citations" aria-label="教材来源">
               <h2>教材来源</h2>
               {result.citations.map((citation) => {
+                const sourceKey = `${citation.source_kind}:${citation.source_id}`
                 const sourcePath = `/courses/${encodeURIComponent(courseId)}/sources/${encodeURIComponent(citation.source_kind)}/${encodeURIComponent(citation.source_id)}`
                 const typeAndNumber = [citation.object_type, citation.number]
                   .filter(Boolean)
                   .join(' · ')
                 return (
-                  <article className="learning-card qa-citation-card" key={citation.citation_id}>
+                  <article
+                    className="learning-card qa-citation-card"
+                    key={citation.citation_id}
+                    aria-current={activeCitationKey === sourceKey ? 'true' : undefined}
+                  >
                     <div>
                       {typeAndNumber ? <p className="object-type">{typeAndNumber}</p> : null}
                       <h2>{citationTitle(citation)}</h2>
@@ -146,7 +207,11 @@ export function QAPage() {
                       <span>教材页：{citation.printed_page ?? '暂缺'}</span>
                       <span>PDF 页：{citation.pdf_page ?? '暂缺'}</span>
                     </div>
-                    <Link className="source-link" to={sourcePath}>
+                    <Link
+                      className="source-link"
+                      to={sourcePath}
+                      onClick={() => rememberCitation(citation)}
+                    >
                       查看教材来源
                     </Link>
                   </article>
