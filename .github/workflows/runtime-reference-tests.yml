@@ -44,16 +44,20 @@ jobs:
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
+          python -m py_compile tools/recover_functional_analysis_page_map.py
 
       - name: Run unit tests
         run: python -m unittest tests.test_book_runtime tests.test_functional_analysis_page_map -v
 
-      - name: Rebuild audited Functional Analysis candidates
+      - name: Rebuild and validate Functional Analysis runtime artifacts
         if: matrix.python-version == '3.13'
         run: |
           python tools/rebuild_runtime_artifacts.py books/functional-analysis --toc
           python tools/recover_functional_analysis_search.py books/functional-analysis --promote-safe
-          python -c "import json,pathlib,shutil; root=pathlib.Path('books/functional-analysis'); t=json.loads((root/'toc_bilingual.json.candidate').read_text(encoding='utf-8')); r=json.loads((root/'search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); assert t.get('chapter_count') == 8 and t.get('section_count') == 132; assert r.get('record_count') == 1493 and r.get('promotable_by_count_and_anchor') is True; shutil.copyfile(root/'toc_bilingual.json.candidate', root/'toc_bilingual.json'); print(json.dumps({'chapter_count':t.get('chapter_count'),'section_count':t.get('section_count'),'search_record_count':r.get('record_count'),'expected_search_record_count':r.get('expected_record_count'),'search_all_unique':r.get('all_unique'),'missing_anchor_count':len(r.get('without_source_anchor') or []),'search_promotable':r.get('promotable_by_count_and_anchor')},ensure_ascii=False,indent=2))"
+          python tools/recover_functional_analysis_page_map.py books/functional-analysis --promote-safe
+          python -c "import json,pathlib,shutil; root=pathlib.Path('books/functional-analysis'); t=json.loads((root/'toc_bilingual.json.candidate').read_text(encoding='utf-8')); s=json.loads((root/'search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); p=json.loads((root/'page_map.rebuild_report.json').read_text(encoding='utf-8')); assert t.get('chapter_count') == 8 and t.get('section_count') == 132; assert s.get('record_count') == 1493 and s.get('promotable_by_count_and_anchor') is True; assert p.get('row_count') == 442 and p.get('anchor_checks_pass') is True; shutil.copyfile(root/'toc_bilingual.json.candidate', root/'toc_bilingual.json')"
+          python tools/check_runtime_readiness.py books/functional-analysis --write
+          python -c "import json,pathlib; root=pathlib.Path('books/functional-analysis'); r=json.loads((root/'RUNTIME_READINESS.json').read_text(encoding='utf-8')); assert r.get('status') == 'READY', r; print(json.dumps({'runtime_status':r.get('status'),'missing_required_files':r.get('missing_required_files'),'stale_files':r.get('stale_files'),'identity_mismatches':r.get('identity_mismatches')},ensure_ascii=False,indent=2))"
 
       - name: Upload audited recovery candidates
         if: matrix.python-version == '3.13'
@@ -64,9 +68,12 @@ jobs:
             books/functional-analysis/toc_bilingual.json.candidate
             books/functional-analysis/search_index_v0_36.jsonl.candidate
             books/functional-analysis/search_index_v0_36.rebuild_report.json
+            books/functional-analysis/page_map.csv.candidate
+            books/functional-analysis/page_map.rebuild_report.json
+            books/functional-analysis/RUNTIME_READINESS.json
           if-no-files-found: error
 
-      - name: Commit validated Search and TOC artifacts
+      - name: Commit validated runtime artifacts
         if: github.event_name == 'push' && github.ref == 'refs/heads/fix/runtime-final-index-recovery' && matrix.python-version == '3.13'
         run: |
           git config user.name "github-actions[bot]"
@@ -74,10 +81,13 @@ jobs:
           git add \
             books/functional-analysis/search_index_v0_36.jsonl \
             books/functional-analysis/toc_bilingual.json \
-            books/functional-analysis/search_index_v0_36.rebuild_report.json
+            books/functional-analysis/page_map.csv \
+            books/functional-analysis/search_index_v0_36.rebuild_report.json \
+            books/functional-analysis/page_map.rebuild_report.json \
+            books/functional-analysis/RUNTIME_READINESS.json
           if git diff --cached --quiet; then
-            echo "Validated artifacts already match branch."
+            echo "Validated runtime artifacts already match branch."
           else
-            git commit -m "Book: restore audited Functional Analysis search and TOC"
+            git commit -m "Book: restore Functional Analysis runtime final artifacts"
             git push origin HEAD:fix/runtime-final-index-recovery
           fi
