@@ -279,7 +279,11 @@ class BookAppService:
             question=result.question,
             answer_kind=result.answer_kind,
             evidence_status=result.evidence_status,
-            answer=result.answer,
+            answer=(
+                result.answer
+                if result.answer is not None
+                else "现有教材证据不足，暂不能给出可靠回答。"
+            ),
             citations=[
                 QACitationItem(
                     citation_id=row.citation_id,
