@@ -110,8 +110,10 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start local API with deterministic QA provider
+        env:
+          BOOK_QA_PROVIDER: fake
         run: |
-          BOOK_QA_PROVIDER=fake nohup python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000 > /tmp/book-api.log 2>&1 < /dev/null &
+          nohup python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000 > /tmp/book-api.log 2>&1 < /dev/null &
           echo $! > /tmp/book-api.pid
 
       - name: Start Vite web app
