@@ -1,13 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import { AppShell } from '../components/AppShell'
+import { ChapterPage } from '../pages/ChapterPage'
+import { CoursePage } from '../pages/CoursePage'
+import { LibraryPage } from '../pages/LibraryPage'
 
 function RoutePlaceholder({ title }: { title: string }) {
   return (
     <section className="route-placeholder">
       <p className="eyebrow">Book App · Phase 1D</p>
       <h1>{title}</h1>
-      <p>页面数据接入将在下一任务完成。</p>
+      <p>页面数据接入将在后续任务完成。</p>
     </section>
   )
 }
@@ -17,14 +20,14 @@ export const router = createBrowserRouter([
     path: '/',
     element: <AppShell />,
     children: [
-      { index: true, element: <RoutePlaceholder title="教材库" /> },
+      { index: true, element: <LibraryPage /> },
       {
         path: 'courses/:courseId',
-        element: <RoutePlaceholder title="课程" />,
+        element: <CoursePage />,
       },
       {
         path: 'courses/:courseId/chapters/:chapterId',
-        element: <RoutePlaceholder title="章节" />,
+        element: <ChapterPage />,
       },
       {
         path: 'courses/:courseId/sections/:sectionId',
