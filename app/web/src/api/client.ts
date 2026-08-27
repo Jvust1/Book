@@ -4,6 +4,7 @@ import type {
   LearningMode,
   LibraryResponse,
   ModeResponse,
+  QARequest,
   QAResponse,
   SearchResponse,
   SectionResponse,
@@ -111,11 +112,15 @@ export const bookApi = {
     )
   },
 
-  askCourse(courseId: string, question: string): Promise<QAResponse> {
+  askCourse(courseId: string, requestOrQuestion: QARequest | string): Promise<QAResponse> {
+    const payload: QARequest =
+      typeof requestOrQuestion === 'string'
+        ? { question: requestOrQuestion, section_id: null, history: [] }
+        : requestOrQuestion
     return request<QAResponse>(`/api/courses/${segment(courseId)}/qa`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify(payload),
     })
   },
 
