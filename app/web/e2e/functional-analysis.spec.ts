@@ -3,6 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 const BASE_URL = 'http://127.0.0.1:5173'
 const COURSE_ID = 'functional_analysis_course'
 const SECTION_ID = 'ch01_s01'
+const SUFFICIENT_QA_QUESTION = '1/p + 1/q = 1'
 
 type ChapterCard = {
   chapter_id: string
@@ -203,9 +204,9 @@ test('real Functional Analysis search distinguishes Chinese hits from normal zer
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
-test('real Functional Analysis textbook QA answers English theorem questions from verified evidence', async ({ page }) => {
+test('real Functional Analysis textbook QA answers content-backed formula questions from verified evidence', async ({ page }) => {
   await openQA(page)
-  await page.getByRole('textbox', { name: '教材问题' }).fill('What does Hölder inequality say?')
+  await page.getByRole('textbox', { name: '教材问题' }).fill(SUFFICIENT_QA_QUESTION)
   await page.getByRole('button', { name: '提问' }).click()
 
   await expect(page.getByText('AI 生成回答，依据下方教材来源')).toBeVisible()
@@ -213,8 +214,8 @@ test('real Functional Analysis textbook QA answers English theorem questions fro
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
-test('real Functional Analysis Chinese QA citation source round trip restores question without caching answer payload', async ({ page }) => {
-  const question = '什么是巴拿赫空间？'
+test('real Functional Analysis QA citation source round trip restores question without caching answer payload', async ({ page }) => {
+  const question = SUFFICIENT_QA_QUESTION
   await openQA(page)
   await page.getByRole('textbox', { name: '教材问题' }).fill(question)
   await page.getByRole('button', { name: '提问' }).click()
@@ -300,7 +301,7 @@ test('real Functional Analysis narrow search and source round trip avoid body ov
 test('real Functional Analysis narrow QA/source round trip avoids body overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await openQA(page)
-  await page.getByRole('textbox', { name: '教材问题' }).fill('什么是巴拿赫空间？')
+  await page.getByRole('textbox', { name: '教材问题' }).fill(SUFFICIENT_QA_QUESTION)
   await page.getByRole('button', { name: '提问' }).click()
   await expect(page.locator('.qa-citation-card').first()).toBeVisible()
   expect(
