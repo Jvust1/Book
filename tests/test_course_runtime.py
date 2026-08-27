@@ -10,6 +10,7 @@ from runtime.course_runtime import (
     CourseManifestError,
     CourseRuntime,
     CourseRuntimeBlockedError,
+    CourseRuntimeError,
 )
 
 
@@ -107,6 +108,57 @@ class CourseRuntimeTests(unittest.TestCase):
         with self.assertRaises(CourseRuntimeBlockedError):
             self._open_course_with_blocked_book()
 
+    def test_book_ids_preserve_enabled_manifest_order(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(course.book_ids(), ["fixture_main", "fixture_supplementary"])
+
+    def test_main_book_returns_configured_main_runtime(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(course.main_book().book_id, "fixture_main")
+
+    def test_books_by_role_filters_enabled_books(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(
+            [book.book_id for book in course.books_by_role("supplementary")],
+            ["fixture_supplementary"],
+        )
+
+    def test_unknown_book_raises_course_runtime_error(self) -> None:
+        course = self._open_two_book_course()
+        with self.assertRaises(CourseRuntimeError):
+            course.book("missing")
+
+    def test_chapter_ids_delegate_to_main_book(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(course.chapter_ids(), ["chapter_01"])
+
+    def test_sections_for_chapter_delegate_to_main_book(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(
+            [section.id for section in course.sections_for_chapter("chapter_01")],
+            ["ch01_s01"],
+        )
+
+    def test_section_resolves_only_against_main_book(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual(course.section("ch01_s01").id, "ch01_s01")
+
+    def test_chapters_preserve_main_toc_order(self) -> None:
+        course = self._open_two_book_course()
+        self.assertEqual([row["id"] for row in course.chapters()], ["chapter_01"])
+
+    def test_summary_reports_mounted_books_and_main_tree_counts(self) -> None:
+        course = self._open_two_book_course()
+        summary = course.summary()
+        self.assertEqual(summary["course_id"], "fixture_course")
+        self.assertEqual(summary["book_count"], 2)
+        self.assertEqual(summary["main_chapter_count"], 1)
+        self.assertEqual(summary["main_section_count"], 1)
+        self.assertEqual(
+            [(row["book_id"], row["role"]) for row in summary["books"]],
+            [("fixture_main", "main"), ("fixture_supplementary", "supplementary")],
+        )
+
     @staticmethod
     def _make_repo(root: Path) -> Path:
         (root / "runtime").mkdir(parents=True, exist_ok=True)
@@ -202,6 +254,25 @@ class CourseRuntimeTests(unittest.TestCase):
                 main_book_id="fixture_book_2026",
             )
             return CourseRuntime.open(course_dir)
+
+    def _open_two_book_course(self) -> CourseRuntime:
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        repo = self._make_repo(Path(temp.name))
+        main_book = repo / "books" / "main"
+        supplementary = repo / "books" / "supplementary"
+        course_dir = repo / "courses" / "fixture-course"
+        self._write_ready_book(main_book, book_id="fixture_main")
+        self._write_ready_book(supplementary, book_id="fixture_supplementary")
+        self._write_course_manifest(
+            course_dir,
+            book_entries=[
+                self._entry("fixture_main", "main", "../../books/main"),
+                self._entry("fixture_supplementary", "supplementary", "../../books/supplementary"),
+            ],
+            main_book_id="fixture_main",
+        )
+        return CourseRuntime.open(course_dir)
 
     def _write_course_manifest(
         self,
