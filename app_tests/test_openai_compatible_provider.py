@@ -24,6 +24,7 @@ BOOK_ID = "stein_shakarchi_functional_analysis_2011"
 API_KEY = "super-secret-test-key"
 BASE_URL = "https://model.example.test/v1/"
 MODEL = "example-model"
+_REAL_HTTPX_CLIENT = httpx.Client
 
 
 def model_request() -> ModelRequest:
@@ -93,7 +94,7 @@ def upstream_response(content: str, *, status_code: int = 200) -> httpx.Response
 class OpenAICompatibleModelProviderTests(unittest.TestCase):
     def make_provider(self, handler, *, timeout_seconds: float = 12.5):
         transport = httpx.MockTransport(handler)
-        client = httpx.Client(transport=transport)
+        client = _REAL_HTTPX_CLIENT(transport=transport)
         patcher = patch(
             "app.api.openai_compatible_provider.httpx.Client",
             return_value=client,
