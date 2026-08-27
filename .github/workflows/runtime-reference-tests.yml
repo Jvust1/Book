@@ -75,7 +75,7 @@ jobs:
               ],
               "books/functional-analysis/chunk_011a_structure.json": [
                   (
-                      '"name_en":"infinite Bernoulli space Z_2^∞"',
+                      '"name_en":"infinite Bernoulli space X=Z_2^infinity"',
                       '"name_en":"infinite Bernoulli space X=Z_2^∞"',
                   ),
               ],
