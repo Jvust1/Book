@@ -56,6 +56,7 @@ jobs:
           python -m py_compile runtime/course_runtime.py
           python -m py_compile runtime/library_runtime.py
           python -m py_compile runtime/section_learning_runtime.py
+          python -m py_compile runtime/source_resolver.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
