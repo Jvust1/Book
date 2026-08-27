@@ -2,7 +2,7 @@
 
 这里是 Course OS 的平台无关参考数据层。
 
-当前目标不是绑定最终前端技术栈，而是先固定：
+当前运行时链路：
 
 ```text
 结构化教材资产
@@ -10,6 +10,8 @@
 Runtime readiness gate
         ↓
 BookRuntime
+        ↓
+CourseRuntime
         ↓
 Course / Book / Chapter / Section / Search / Anchor
 ```
@@ -36,7 +38,7 @@ status = READY
 
 时，正式学习软件才允许打开该书。
 
-当前 Functional Analysis v0.36 因最终运行时产物没有完整同步，预期为 `BLOCKED`。这与教材已经 `STRUCTURED_COMPLETE` 不矛盾。
+Functional Analysis v0.36 的最终运行时资产已经恢复并在 `main` 上通过校验，当前状态为 `READY`。`STRUCTURED_COMPLETE` 与 `RUNTIME_READY` 仍是两个独立门槛。
 
 ## 使用 BookRuntime
 
@@ -58,51 +60,71 @@ for hit in book.search("Hahn-Banach"):
     print(hit)
 ```
 
-如果 readiness 不是 `READY`，默认会抛出 `BookRuntimeBlockedError`，不会静默使用旧索引、partial 中文层或猜测的 PageMap。
+如果 readiness 不是 `READY`，默认会抛出 `BookRuntimeBlockedError`。仅恢复/诊断工具可以显式使用 `allow_blocked=True`；产品学习入口禁止绕过 gate。
 
-仅恢复/诊断工具可以显式：
+## 使用 CourseRuntime
 
 ```python
-book = BookRuntime.open("books/functional-analysis", allow_blocked=True)
+from runtime import CourseRuntime
+
+course = CourseRuntime.open("courses/functional-analysis")
+print(course.summary())
+
+book = course.main_book()
+for chapter_id in course.chapter_ids():
+    for section in course.sections_for_chapter(chapter_id):
+        print(book.book_id, chapter_id, section.id, section.title_zh)
 ```
 
-产品页面禁止使用这个参数绕过 gate。
+Phase 1B 规则：
 
-## 已实现的归一化
+- 一门课程可挂载多本 enabled 教材。
+- 必须且只能有一本 enabled 主教材。
+- 所有 enabled 教材都必须通过各自的 BookRuntime readiness gate；任一本失败时课程整体 fail-closed。
+- Course 层 Chapter / Section 导航使用主教材已经加载的审计 TOC 顺序，并返回主教材 RuntimeSection 对象。
+- 非主教材通过 `course.book(book_id)` 获取独立 BookRuntime。
+- Phase 1B 不合并不同教材的章节命名空间。
+
+## 已实现能力
+
+BookRuntime：
 
 - canonical `book_id` 一致性检查
 - `STRUCTURED_COMPLETE` / metadata 页数一致性检查
-- 双语 TOC 读取
-- PageMap CSV 读取
-- 递归发现历史 `*_structure.json`
-- 兼容 early frontmatter `content_units[]` schema
-- 兼容 main-text `sections[] + key_objects[]` schema
+- 双语 TOC 与 PageMap 读取
+- 历史 structure schema 归一化
 - Section 跨 batch 合并
 - stable object ID 合并与冲突拒绝
-- 按 anchor page 将对象归入最具体 Section
 - figure 归一化
-- 中文学习层定位（拒绝 partial 文件）
+- 中文学习层定位
 - 最终 JSONL search index 流式读取
-- 简单确定性中英关键词搜索接口
+- 确定性中英关键词搜索
 - PDF 页 → PageMap row 查询
+
+CourseRuntime：
+
+- course manifest 校验
+- 多教材角色挂载
+- enabled-book fail-closed readiness
+- 主教材 Chapter / Section 导航
+- 真实 Functional Analysis course fixture
 
 ## 测试
 
 ```bash
-python -m unittest tests.test_book_runtime -v
+python -m unittest tests.test_book_runtime tests.test_course_runtime -v
 ```
 
-测试包含：
-
-1. 当前 Functional Analysis fixture 在缺最终产物时必须被 gate 阻止。
-2. 完整最小 fixture 可以成功加载 Section、对象、PageMap 和 search index。
+真实 Functional Analysis fixture 的 CourseRuntime 验收覆盖：8 个 Chapter、132 个 Section、442 行 PageMap、1493 条最终搜索记录。
 
 ## 下一步
 
-Issue #2 完成后：
+Phase 1B 合并后，下一独立里程碑是 Section 学习壳：
 
-1. `RUNTIME_READINESS` 变为 `READY`。
-2. 用真实 Functional Analysis v0.36 跑 BookRuntime 全量加载。
-3. 核对 8 个 Chapter、全部 Section、stable objects 和 1493 条最终搜索记录。
-4. 在此接口之上实现 `CourseRuntime`。
-5. 再接正式 UI 的 `Course → Book → Chapter → Section`。
+```text
+Section
+├── Preview
+├── Learn
+├── Review
+└── Practice
+```
