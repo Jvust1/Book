@@ -159,6 +159,30 @@ class CourseRuntimeTests(unittest.TestCase):
             [("fixture_main", "main"), ("fixture_supplementary", "supplementary")],
         )
 
+    def test_real_functional_analysis_course_fixture(self) -> None:
+        repo = Path(__file__).resolve().parents[1]
+        course_dir = repo / "courses" / "functional-analysis"
+        if not (repo / "books" / "functional-analysis").exists():
+            self.skipTest("repository Functional Analysis fixture not present")
+
+        course = CourseRuntime.open(course_dir)
+        book = course.main_book()
+
+        self.assertEqual(course.course_id, "functional_analysis_course")
+        self.assertEqual(course.main_book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(book.book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertTrue(book.is_ready)
+        self.assertEqual(len(course.chapter_ids()), 8)
+        self.assertEqual(sum(len(course.sections_for_chapter(cid)) for cid in course.chapter_ids()), 132)
+        self.assertEqual(len(book.page_map), 442)
+        self.assertEqual(sum(1 for _ in book.iter_search_records()), 1493)
+        self.assertEqual(course.section("ch01_s01").id, "ch01_s01")
+
+    def test_runtime_package_exports_course_runtime(self) -> None:
+        from runtime import CourseRuntime as ExportedCourseRuntime
+
+        self.assertIs(ExportedCourseRuntime, CourseRuntime)
+
     @staticmethod
     def _make_repo(root: Path) -> Path:
         (root / "runtime").mkdir(parents=True, exist_ok=True)
