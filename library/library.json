@@ -1,0 +1,14 @@
+{
+  "schema_version": "library_manifest_v1",
+  "library_id": "book_app_library",
+  "name": "Book",
+  "courses": [
+    {
+      "course_id": "functional_analysis_course",
+      "name": "Functional Analysis",
+      "path": "../courses/functional-analysis",
+      "enabled": true,
+      "order": 10
+    }
+  ]
+}
