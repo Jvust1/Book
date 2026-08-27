@@ -20,6 +20,7 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
         delta_records = rebuild.load_delta_records(root)
         base_records, _ = rebuild.expand_v035_backmatter(delta_records, book_id=book_id)
         base_ids = set(base_records)
+        base_type_counts = Counter(str(row.get("type") or "") for row in base_records.values())
 
         core_rows: dict[str, dict[str, Any]] = {}
         core_locations: dict[str, set[str]] = defaultdict(set)
@@ -57,22 +58,44 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
 
         new_core_ids = sorted(set(core_rows) - base_ids)
         new_type_counts = Counter(str(core_rows[rid].get("type") or "") for rid in new_core_ids)
+        new_chunk_counts = Counter(
+            chunk
+            for rid in new_core_ids
+            for chunk in core_locations.get(rid, set())
+        )
+        new_types_absent_from_base = {
+            row_type: count
+            for row_type, count in sorted(new_type_counts.items())
+            if base_type_counts.get(row_type, 0) == 0
+        }
+        new_ids_for_absent_types = {
+            row_type: [
+                rid
+                for rid in new_core_ids
+                if str(core_rows[rid].get("type") or "") == row_type
+            ]
+            for row_type in new_types_absent_from_base
+        }
 
         all_ids = base_ids | set(core_rows)
         complete_pairs = []
+        known_seven_complete_aliases: list[str] = []
         for rid in sorted(all_ids):
             if not rid.endswith("_complete"):
                 continue
             base = rid[: -len("_complete")]
+            base_exists = base in all_ids
             complete_pairs.append(
                 {
                     "complete_id": rid,
                     "base_id": base,
-                    "base_exists": base in all_ids,
+                    "base_exists": base_exists,
                     "complete_chunks": sorted(core_locations.get(rid, set())),
                     "base_chunks": sorted(core_locations.get(base, set())),
                 }
             )
+            if base_exists:
+                known_seven_complete_aliases.append(rid)
 
         # Compare newly introduced structure IDs against the pre-structure index.
         # This is diagnostic only: matches are candidates for audit, not automatic merges.
@@ -139,20 +162,27 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
         pre_tail_count = len(records_pre_tail)
 
         diagnostic = {
-            "v035_historical_target": 1404,
+            "v035_historical_row_count": 1404,
+            "final_pre_tail_unique_target": 1396,
             "recovered_pre_tail_count": pre_tail_count,
-            "pre_tail_excess": pre_tail_count - 1404,
+            "gap_to_final_pre_tail_target": pre_tail_count - 1396,
             "base_after_delta_expansion": len(base_records),
+            "base_type_counts": dict(sorted(base_type_counts.items())),
             "new_core_unique_count": len(new_core_ids),
             "new_core_type_counts": dict(sorted(new_type_counts.items())),
+            "new_core_chunk_counts": dict(sorted(new_chunk_counts.items())),
+            "new_types_absent_from_base": new_types_absent_from_base,
+            "new_ids_for_absent_types": new_ids_for_absent_types,
             "complete_pairs": complete_pairs,
+            "known_seven_complete_aliases": known_seven_complete_aliases,
             "semantic_alias_candidates": semantic_alias_candidates,
             "numbered_collision_groups": numbered_collision_groups,
         }
         print("SEARCH_IDENTITY_DIAGNOSTIC=" + json.dumps(diagnostic, ensure_ascii=False, sort_keys=True))
 
         self.assertEqual(pre_tail_count, 1415)
-        self.assertEqual(pre_tail_count - 1404, 11)
+        self.assertEqual(pre_tail_count - 1396, 19)
+        self.assertEqual(len(known_seven_complete_aliases), 7)
 
 
 if __name__ == "__main__":
