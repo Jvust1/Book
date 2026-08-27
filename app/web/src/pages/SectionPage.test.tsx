@@ -10,6 +10,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { bookApi } from '../api/client'
 import type { LearningMode, ModeItem, ModeResponse } from '../api/types'
+import {
+  loadSectionViewState,
+  saveSectionViewState,
+} from '../state/sectionViewState'
 import { SectionPage } from './SectionPage'
 
 vi.mock('../api/client', async () => {
@@ -43,6 +47,21 @@ const sectionResponse = {
   translation_available: true,
 }
 
+const reviewItem: ModeItem = {
+  kind: 'object',
+  source_id: 'thm_review',
+  object_type: 'theorem',
+  type_zh: '定理',
+  number: '1.3',
+  title_zh: '复习定理',
+  title_en: null,
+  formula: null,
+  printed_page: 3,
+  pdf_page: 22,
+  content_zh: '这段内容必须在用户点击后才显示。',
+  translation_available: true,
+}
+
 const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse => ({
   mode,
   course_id: 'functional_analysis_course',
@@ -72,6 +91,10 @@ function renderSection(initialEntry: string) {
             </>
           }
         />
+        <Route
+          path="/courses/:courseId/sources/:kind/:sourceId"
+          element={<div>来源页</div>}
+        />
       </Routes>
     </MemoryRouter>,
   )
@@ -79,6 +102,7 @@ function renderSection(initialEntry: string) {
 
 describe('SectionPage', () => {
   beforeEach(() => {
+    sessionStorage.clear()
     vi.mocked(bookApi.getSection).mockResolvedValue(sectionResponse)
     vi.mocked(bookApi.getMode).mockImplementation(
       async (_courseId, _sectionId, mode) => modePayload(mode),
@@ -157,24 +181,7 @@ describe('SectionPage', () => {
 
   it('keeps review body hidden until explicitly requested', async () => {
     const user = userEvent.setup()
-    vi.mocked(bookApi.getMode).mockResolvedValue(
-      modePayload('review', [
-        {
-          kind: 'object',
-          source_id: 'thm_review',
-          object_type: 'theorem',
-          type_zh: '定理',
-          number: '1.3',
-          title_zh: '复习定理',
-          title_en: null,
-          formula: null,
-          printed_page: 3,
-          pdf_page: 22,
-          content_zh: '这段内容必须在用户点击后才显示。',
-          translation_available: true,
-        },
-      ]),
-    )
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('review', [reviewItem]))
 
     renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=review')
 
@@ -199,5 +206,46 @@ describe('SectionPage', () => {
 
     renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=practice')
     expect(await screen.findByText('本节暂无教材练习或习题')).toBeInTheDocument()
+  })
+
+  it('saves route, scroll, expanded items, and active source before source navigation', async () => {
+    const user = userEvent.setup()
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('review', [reviewItem]))
+    Object.defineProperty(window, 'scrollY', { value: 420, configurable: true })
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=review')
+    await screen.findByText('复习定理')
+    await user.click(screen.getByRole('button', { name: '显示内容' }))
+    await user.click(screen.getByRole('link', { name: '查看教材来源' }))
+
+    expect(
+      loadSectionViewState('functional_analysis_course', 'ch01_s01', 'review'),
+    ).toEqual({
+      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      scrollY: 420,
+      expandedSourceIds: ['thm_review'],
+      activeSourceId: 'thm_review',
+    })
+  })
+
+  it('restores expanded items and scroll after mode data loads', async () => {
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('review', [reviewItem]))
+    const scrollTo = vi.fn()
+    Object.defineProperty(window, 'scrollTo', { value: scrollTo, configurable: true })
+    saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
+      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      scrollY: 420,
+      expandedSourceIds: ['thm_review'],
+      activeSourceId: 'thm_review',
+    })
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=review')
+
+    expect(
+      await screen.findByText('这段内容必须在用户点击后才显示。'),
+    ).toBeInTheDocument()
+    await waitFor(() => {
+      expect(scrollTo).toHaveBeenCalledWith({ top: 420, behavior: 'auto' })
+    })
   })
 })
