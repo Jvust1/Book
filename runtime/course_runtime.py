@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .book_runtime import BookRuntime, BookRuntimeBlockedError, BookRuntimeError
+from .book_runtime import BookRuntime, BookRuntimeBlockedError, BookRuntimeError, RuntimeSection
 
 
 ALLOWED_BOOK_ROLES = frozenset({"main", "supplementary", "english", "reference"})
@@ -193,4 +193,57 @@ class CourseRuntime:
     def book_ids(self) -> list[str]:
         """Return enabled mounted book IDs in manifest order."""
 
-        return list(self.books)
+        return [entry.book_id for entry in self.entries if entry.enabled]
+
+    def book(self, book_id: str) -> BookRuntime:
+        try:
+            return self.books[book_id]
+        except KeyError as exc:
+            raise CourseRuntimeError(f"Unknown or disabled course book: {book_id}") from exc
+
+    def books_by_role(self, role: str) -> list[BookRuntime]:
+        if role not in ALLOWED_BOOK_ROLES:
+            raise CourseManifestError(f"Unsupported book role: {role}")
+        return [
+            self.books[entry.book_id]
+            for entry in self.entries
+            if entry.enabled and entry.role == role
+        ]
+
+    def main_book(self) -> BookRuntime:
+        return self.book(self.main_book_id)
+
+    def chapter_ids(self) -> list[str]:
+        return self.main_book().chapter_ids()
+
+    def chapters(self) -> list[dict[str, Any]]:
+        toc = self.main_book().toc
+        if isinstance(toc, dict) and isinstance(toc.get("chapters"), list):
+            return [dict(row) for row in toc["chapters"] if isinstance(row, dict)]
+        return [{"id": chapter_id} for chapter_id in self.chapter_ids()]
+
+    def sections_for_chapter(self, chapter_id: str) -> list[RuntimeSection]:
+        return self.main_book().sections_for_chapter(chapter_id)
+
+    def section(self, section_id: str) -> RuntimeSection:
+        return self.main_book().section(section_id)
+
+    def summary(self) -> dict[str, Any]:
+        main = self.main_book()
+        return {
+            "course_id": self.course_id,
+            "name": self.name,
+            "main_book_id": self.main_book_id,
+            "book_count": len(self.books),
+            "books": [
+                {
+                    "book_id": entry.book_id,
+                    "role": entry.role,
+                    "runtime_status": self.books[entry.book_id].readiness.get("status"),
+                }
+                for entry in self.entries
+                if entry.enabled
+            ],
+            "main_chapter_count": len(main.chapter_ids()),
+            "main_section_count": len(main.sections),
+        }
