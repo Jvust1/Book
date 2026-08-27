@@ -152,3 +152,31 @@ class SearchResponse(BaseModel):
     query: str
     result_count: int
     results: list[SearchResultItem]
+
+
+class QARequest(BaseModel):
+    question: str
+
+
+class QACitationItem(BaseModel):
+    citation_id: str
+    evidence_id: str
+    source_kind: str
+    source_id: str
+    object_type: str | None
+    number: str | None
+    title_zh: str | None
+    title_en: str | None
+    source_anchor: str | None
+    pdf_page: int | None
+    printed_page: int | str | None
+
+
+class QAResponse(BaseModel):
+    course_id: str
+    book_id: str
+    question: str
+    answer_kind: Literal["generated", "system_notice"]
+    evidence_status: Literal["sufficient", "insufficient_evidence"]
+    answer: str
+    citations: list[QACitationItem]
