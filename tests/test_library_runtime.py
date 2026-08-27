@@ -311,5 +311,35 @@ class LibraryRuntimeCatalogTests(LibraryRuntimeContractTests):
             )
 
 
+class RealLibraryFixtureTests(unittest.TestCase):
+    def test_real_functional_analysis_library_fixture(self) -> None:
+        repo = Path(__file__).resolve().parents[1]
+        if not (repo / "books" / "functional-analysis").exists():
+            self.skipTest("repository Functional Analysis fixture not present")
+        library = LibraryRuntime.open(repo / "library")
+        self.assertEqual(library.course_ids(), ["functional_analysis_course"])
+        course = library.course("functional_analysis_course")
+        self.assertEqual(
+            course.book_ids(),
+            ["stein_shakarchi_functional_analysis_2011"],
+        )
+        self.assertEqual(
+            course.main_book().book_id,
+            "stein_shakarchi_functional_analysis_2011",
+        )
+        self.assertEqual(len(course.chapter_ids()), 8)
+        self.assertEqual(
+            sum(len(course.sections_for_chapter(cid)) for cid in course.chapter_ids()),
+            132,
+        )
+        self.assertEqual(len(course.main_book().page_map), 442)
+        self.assertEqual(sum(1 for _ in course.main_book().iter_search_records()), 1493)
+
+    def test_runtime_package_exports_library_runtime(self) -> None:
+        from runtime import LibraryRuntime as ExportedLibraryRuntime
+
+        self.assertIs(ExportedLibraryRuntime, LibraryRuntime)
+
+
 if __name__ == "__main__":
     unittest.main()
