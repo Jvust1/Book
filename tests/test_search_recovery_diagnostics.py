@@ -20,6 +20,7 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
         delta_records = rebuild.load_delta_records(root)
         base_records, _ = rebuild.expand_v035_backmatter(delta_records, book_id=book_id)
         base_ids = set(base_records)
+        raw_delta_ids = set(delta_records)
         base_type_counts = Counter(str(row.get("type") or "") for row in base_records.values())
 
         core_rows: dict[str, dict[str, Any]] = {}
@@ -79,23 +80,35 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
 
         all_ids = base_ids | set(core_rows)
         complete_pairs = []
-        known_seven_complete_aliases: list[str] = []
+        literal_complete_base_pairs: list[str] = []
         for rid in sorted(all_ids):
             if not rid.endswith("_complete"):
                 continue
             base = rid[: -len("_complete")]
             base_exists = base in all_ids
+            complete_row = core_rows.get(rid) or base_records.get(rid) or {}
+            base_row = core_rows.get(base) or base_records.get(base) or {}
             complete_pairs.append(
                 {
                     "complete_id": rid,
                     "base_id": base,
                     "base_exists": base_exists,
+                    "complete_in_raw_delta": rid in raw_delta_ids,
+                    "base_in_raw_delta": base in raw_delta_ids,
+                    "complete_in_expanded_delta": rid in base_ids,
+                    "base_in_expanded_delta": base in base_ids,
+                    "complete_type": complete_row.get("type"),
+                    "base_type": base_row.get("type"),
+                    "complete_pdf_page": rebuild.first_page(complete_row),
+                    "base_pdf_page": rebuild.first_page(base_row),
+                    "complete_number": complete_row.get("number"),
+                    "base_number": base_row.get("number"),
                     "complete_chunks": sorted(core_locations.get(rid, set())),
                     "base_chunks": sorted(core_locations.get(base, set())),
                 }
             )
             if base_exists:
-                known_seven_complete_aliases.append(rid)
+                literal_complete_base_pairs.append(rid)
 
         # Compare newly introduced structure IDs against the pre-structure index.
         # This is diagnostic only: matches are candidates for audit, not automatic merges.
@@ -174,7 +187,7 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
             "new_types_absent_from_base": new_types_absent_from_base,
             "new_ids_for_absent_types": new_ids_for_absent_types,
             "complete_pairs": complete_pairs,
-            "known_seven_complete_aliases": known_seven_complete_aliases,
+            "literal_complete_base_pairs": literal_complete_base_pairs,
             "semantic_alias_candidates": semantic_alias_candidates,
             "numbered_collision_groups": numbered_collision_groups,
         }
@@ -182,7 +195,7 @@ class SearchRecoveryDiagnostics(unittest.TestCase):
 
         self.assertEqual(pre_tail_count, 1415)
         self.assertEqual(pre_tail_count - 1396, 19)
-        self.assertEqual(len(known_seven_complete_aliases), 7)
+        self.assertEqual(len(complete_pairs), 11)
 
 
 if __name__ == "__main__":
