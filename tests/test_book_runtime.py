@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from runtime.book_runtime import BookRuntime, BookRuntimeBlockedError
+from tools import rebuild_runtime_artifacts as rebuild
 
 
 class BookRuntimeTests(unittest.TestCase):
@@ -16,6 +17,45 @@ class BookRuntimeTests(unittest.TestCase):
 
         with self.assertRaises(BookRuntimeBlockedError):
             BookRuntime.open(root)
+
+    def test_v036_index_tail_falls_back_to_completed_learning_layer(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self._dump(
+                root / "chunk_023a_structure.json",
+                {
+                    "chunk_id": "chunk_023a",
+                    "index_entry_range": [135, 137],
+                    "key_object_count": 3,
+                },
+            )
+            (root / "chunk_023a_translation_zh.md").write_text(
+                "# final index learning layer\n\n"
+                "## PDF 441 / printed 422\n\n"
+                "- **measure** — `measure, 29`\n"
+                "- **Minkowski inequality** — `Minkowski inequality, 4`\n\n"
+                "## PDF 442 / printed 423\n\n"
+                "- **zig-zag function** — `zig-zag function, 165`\n",
+                encoding="utf-8",
+            )
+
+            records: dict[str, dict[str, object]] = {}
+            stats = {"expanded_index_v036_tail_count": 0}
+            rebuild.append_v036_index_tail(
+                records,
+                root,
+                book_id="fixture_book_2026",
+                stats=stats,
+            )
+
+            self.assertEqual(
+                list(records),
+                ["index_entry_135", "index_entry_136", "index_entry_137"],
+            )
+            self.assertEqual(records["index_entry_135"]["term"], "measure")
+            self.assertEqual(records["index_entry_135"]["pdf_page"], 441)
+            self.assertEqual(records["index_entry_137"]["pdf_page"], 442)
+            self.assertEqual(stats["expanded_index_v036_tail_count"], 3)
 
     def test_minimal_ready_fixture_normalizes_sections_objects_and_search(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
