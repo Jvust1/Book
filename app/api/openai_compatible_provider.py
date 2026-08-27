@@ -83,8 +83,7 @@ class OpenAICompatibleModelProvider:
             "Model provider returned an invalid structured response"
         )
 
-    @staticmethod
-    def _request_body(request: ModelRequest) -> dict[str, object]:
+    def _request_body(self, request: ModelRequest) -> dict[str, object]:
         user_payload = {
             "question": request.question,
             "course_id": request.course_id,
@@ -95,7 +94,7 @@ class OpenAICompatibleModelProvider:
             "allowed_answer_styles": list(request.allowed_answer_styles),
         }
         return {
-            "model": None,
+            "model": self.model,
             "messages": [
                 {"role": "system", "content": _SYSTEM_MESSAGE},
                 {
@@ -106,7 +105,8 @@ class OpenAICompatibleModelProvider:
             "response_format": {"type": "json_object"},
         }
 
-    def _parse_response(self, response: httpx.Response) -> ModelResponse:
+    @staticmethod
+    def _parse_response(response: httpx.Response) -> ModelResponse:
         envelope = response.json()
         if not isinstance(envelope, Mapping):
             raise ValueError("Invalid upstream response envelope")
@@ -124,8 +124,3 @@ class OpenAICompatibleModelProvider:
             raise ValueError("Invalid upstream content")
         parsed = json.loads(content)
         return ModelResponse.from_mapping(parsed)
-
-    def _request_body(self, request: ModelRequest) -> dict[str, object]:
-        body = self.__class__._request_body.__func__(request)  # type: ignore[attr-defined]
-        body["model"] = self.model
-        return body
