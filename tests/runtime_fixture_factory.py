@@ -24,6 +24,7 @@ def write_ready_book(
     readiness: str = "READY",
     objects: list[dict[str, object]] | None = None,
     figures: list[dict[str, object]] | None = None,
+    search_records: list[dict[str, object]] | None = None,
 ) -> None:
     root.mkdir(parents=True, exist_ok=True)
     dump_json(
@@ -107,12 +108,11 @@ def write_ready_book(
         "pdf_page,printed_page,page_label\n1,1,1\n2,2,2\n",
         encoding="utf-8",
     )
+    records = search_records if search_records is not None else [
+        {"id": "section_ch01_s01", "book_id": book_id, "type": "section"}
+    ]
     (root / "search_index_v1.jsonl").write_text(
-        json.dumps(
-            {"id": "section_ch01_s01", "book_id": book_id, "type": "section"},
-            ensure_ascii=False,
-        )
-        + "\n",
+        "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in records),
         encoding="utf-8",
     )
 

@@ -23,12 +23,12 @@ React / TypeScript / Vite PWA
               ↓
 LibraryRuntime → CourseRuntime → BookRuntime
               ↓
- SectionLearningRuntime / SourceResolver
+SectionLearningRuntime / SourceResolver / SearchRuntime
               ↓
-     预习 / 学习 / 复习 / 刷题
+预习 / 学习 / 复习 / 刷题 / 教材搜索 → 来源
 ```
 
-前端只消费稳定 API DTO，不直接读取 `books/`、`courses/`、`library/` 或 chunk 文件。教材事实与解析规则继续由 Python Runtime 持有。
+前端只消费稳定 API DTO，不直接读取 `books/`、`courses/`、`library/` 或 chunk 文件。教材事实、来源解析与确定性搜索规则继续由 Python Runtime 持有。
 
 ## 文档
 
@@ -87,18 +87,26 @@ Phase 1D 已完成第一个 **local-first Book App MVP**：
 - 结构化教材来源页，展示真实教材页 / PDF 页 / anchor 状态 / 上下文。
 - `sessionStorage` 支持来源往返时恢复 mode、展开项与滚动位置。
 - `package-lock.json` 已固化，CI 使用 `npm ci`。
-- GitHub Actions 同时运行 App API、17 个 Web 单元测试、TypeScript、PWA build 与 Chromium 真实浏览器验收。
-- Functional Analysis 当前浏览器 acceptance 覆盖桌面真实来源往返和 390×844 窄屏。
 
-Phase 1D 仍然是本地 Web/PWA，不是已封装的 Windows 桌面程序。PWA 可缓存前端静态资源，但教材动态数据仍需要本机 FastAPI 运行；仓库当前也不包含完整原始 PDF Reader。
+Phase 1E 已完成 **教材内搜索与来源跳转**：
+
+- 直接复用 Functional Analysis 的 1493 条 canonical 搜索记录，不建立第二套索引。
+- `SearchRuntime` 提供确定性 course-scoped 中英文搜索，并保留 canonical course / book / source identity。
+- 支持术语、定理、公式、例题、习题等结构化对象命中；不可映射为真实来源的记录不会生成伪跳转结果。
+- FastAPI 明确区分正常 0 hit、无效查询、课程不存在与搜索索引不可用。
+- Course 页面提供“搜索教材”入口，SearchPage 通过 URL `q` 驱动查询并跳转到真实 Source 页面。
+- Search → Source → Search 使用独立短期 `sessionStorage` 状态恢复 query、scroll 与 active source；不保存结果数组，也不冒充长期 `StudyRecord`。
+- 当前 Web gate 包含 **29 个 Vitest 单元测试**、TypeScript typecheck、Vite/PWA build；Chromium 真实浏览器 acceptance 当前为 **5 / 5 通过**，覆盖英文 `Hölder`、中文 `巴拿赫空间`、正常 0 hit、来源往返和 390×844 窄屏。
+- Runtime CI 在 Python 3.11 / 3.12 / 3.13 上执行 SearchRuntime 单测，并在 3.13 对 1493 条真实索引执行 canonical 搜索 smoke。
+
+当前仍然是本地 Web/PWA，不是已封装的 Windows 桌面程序。PWA 可缓存前端静态资源，但教材动态数据仍需要本机 FastAPI 运行；仓库当前也不包含完整原始 PDF Reader。
 
 ## 后续顺序
 
-1. 基于现有 1493 条真实索引接入教材内中文/英文搜索与来源跳转。
-2. 接入教材内问答，强制答案携带真实来源；不把 AI 输出冒充教材正文。
-3. 增加长期 `StudyRecord` / 最近学习位置 / 四模式独立进度；与当前 session 恢复机制分离。
-4. 在现有四模式来源投影之上增加更丰富的预习、复习和刷题学习产品能力。
-5. 保持一课程一本主教材的 App 入口规则，按同一导入契约逐本加入《实分析》等独立课程。
-6. Web/PWA 稳定后再评估 Tauri Windows 打包与移动端复用。
+1. 接入教材内问答，强制答案携带真实来源；不把 AI 输出冒充教材正文。
+2. 增加长期 `StudyRecord` / 最近学习位置 / 四模式独立进度；与当前 session 恢复机制分离。
+3. 在现有四模式来源投影之上增加更丰富的预习、复习和刷题学习产品能力。
+4. 保持一课程一本主教材的 App 入口规则，按同一导入契约逐本加入《实分析》等独立课程。
+5. Web/PWA 稳定后再评估 Tauri Windows 打包与移动端复用。
 
 原始产品/架构基线保留在 Issue #1；较早文档中的“单课程多教材”描述应视为底层兼容/未来架构，而非当前 Book App 的产品入口规则。

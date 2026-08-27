@@ -9,12 +9,19 @@ from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .errors import AppNotFoundError, AppUnavailableError, BookAppError, InvalidModeError
+from .errors import (
+    AppNotFoundError,
+    AppUnavailableError,
+    BookAppError,
+    InvalidModeError,
+    InvalidSearchQueryError,
+)
 from .models import (
     ChapterResponse,
     CourseResponse,
     LibraryResponse,
     ModeResponse,
+    SearchResponse,
     SectionResponse,
     SourceResponse,
 )
@@ -27,7 +34,7 @@ LOCAL_WEB_ORIGINS = [
     "http://localhost:5173",
 ]
 
-app = FastAPI(title="Book App API", version="1d")
+app = FastAPI(title="Book App API", version="1e")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=LOCAL_WEB_ORIGINS,
@@ -62,6 +69,13 @@ async def handle_not_found(_request: Request, error: AppNotFoundError) -> JSONRe
 
 @app.exception_handler(InvalidModeError)
 async def handle_invalid_mode(_request: Request, error: InvalidModeError) -> JSONResponse:
+    return _error_response(error, 400)
+
+
+@app.exception_handler(InvalidSearchQueryError)
+async def handle_invalid_search_query(
+    _request: Request, error: InvalidSearchQueryError
+) -> JSONResponse:
     return _error_response(error, 400)
 
 
@@ -107,6 +121,19 @@ def section(
     service: BookAppService = Depends(get_service),
 ) -> SectionResponse:
     return service.section(course_id, section_id)
+
+
+@app.get(
+    "/api/courses/{course_id}/search",
+    response_model=SearchResponse,
+)
+def search(
+    course_id: str,
+    q: str = "",
+    limit: int = 30,
+    service: BookAppService = Depends(get_service),
+) -> SearchResponse:
+    return service.search(course_id, q, limit=limit)
 
 
 def _mode_response(
