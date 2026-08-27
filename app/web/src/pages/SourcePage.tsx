@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
+import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
 
 const RETURN_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
@@ -42,8 +43,21 @@ export function SourcePage() {
     }
   }, [courseId, kind, sourceId])
 
-  const returnToLearning = () => {
+  const matchingSearchState = (() => {
+    if (!courseId || !source) return null
+    const saved = loadSearchViewState(courseId)
+    if (saved?.activeSourceKey === `${source.kind}:${source.source_id}`) return saved
+    return null
+  })()
+
+  const returnToPrevious = () => {
     if (!courseId || !source) return
+
+    const savedSearch = loadSearchViewState(courseId)
+    if (savedSearch?.activeSourceKey === `${source.kind}:${source.source_id}`) {
+      navigate(savedSearch.route)
+      return
+    }
 
     if (source.section_id) {
       for (const mode of RETURN_MODES) {
@@ -126,8 +140,8 @@ export function SourcePage() {
         ))}
       </section>
 
-      <button className="secondary-button" type="button" onClick={returnToLearning}>
-        返回学习
+      <button className="secondary-button" type="button" onClick={returnToPrevious}>
+        {matchingSearchState ? '返回搜索' : '返回学习'}
       </button>
     </section>
   )
