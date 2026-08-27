@@ -28,6 +28,12 @@ from .section_learning_runtime import (
     SectionLearningSource,
     SectionLearningSourceError,
 )
+from .source_resolver import (
+    ResolvedSource,
+    SourceResolutionError,
+    SourceResolver,
+    TYPE_LABELS_ZH,
+)
 
 __all__ = [
     "BookRuntime",
@@ -50,4 +56,8 @@ __all__ = [
     "SectionLearningRuntimeError",
     "SectionLearningSource",
     "SectionLearningSourceError",
+    "ResolvedSource",
+    "SourceResolutionError",
+    "SourceResolver",
+    "TYPE_LABELS_ZH",
 ]
