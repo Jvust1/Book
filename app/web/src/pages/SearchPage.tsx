@@ -1,8 +1,10 @@
-import { FormEvent, useEffect, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import type { FormEvent } from 'react'
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { CourseResponse, SearchResponse, SearchResultItem } from '../api/types'
+import { loadSearchViewState, saveSearchViewState } from '../state/searchViewState'
 
 const searchErrorMessage = (error: unknown): { message: string; unavailable: boolean } => {
   if (error instanceof ApiError) {
@@ -19,6 +21,7 @@ const resultTitle = (item: SearchResultItem): string =>
 
 export function SearchPage() {
   const { courseId } = useParams()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const query = (searchParams.get('q') || '').trim()
   const [input, setInput] = useState(query)
@@ -28,6 +31,9 @@ export function SearchPage() {
   const [loading, setLoading] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
   const [unavailable, setUnavailable] = useState(false)
+
+  const savedState = courseId ? loadSearchViewState(courseId) : null
+  const activeSourceKey = savedState?.query === query ? savedState.activeSourceKey : null
 
   useEffect(() => {
     setInput(query)
@@ -88,10 +94,27 @@ export function SearchPage() {
     }
   }, [courseId, query])
 
+  useEffect(() => {
+    if (!courseId || !results) return
+    const state = loadSearchViewState(courseId)
+    if (!state || state.query !== query) return
+    window.scrollTo(0, state.scrollY)
+  }, [courseId, query, results])
+
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const nextQuery = input.trim()
     setSearchParams(nextQuery ? { q: nextQuery } : {})
+  }
+
+  const rememberSource = (item: SearchResultItem) => {
+    if (!courseId) return
+    saveSearchViewState(courseId, {
+      route: `${location.pathname}${location.search}`,
+      query,
+      scrollY: window.scrollY,
+      activeSourceKey: `${item.source_kind}:${item.source_id}`,
+    })
   }
 
   if (!courseId) {
@@ -152,13 +175,15 @@ export function SearchPage() {
         <div className="search-results" aria-label="教材搜索结果">
           <p className="secondary-text">共 {results.result_count} 条结果</p>
           {results.results.map((item) => {
+            const sourceKey = `${item.source_kind}:${item.source_id}`
             const sourcePath = `/courses/${encodeURIComponent(courseId)}/sources/${encodeURIComponent(item.source_kind)}/${encodeURIComponent(item.source_id)}`
             const typeAndNumber = [item.object_type, item.number].filter(Boolean).join(' · ')
             return (
               <article
                 className="learning-card search-result-card"
-                key={`${item.source_kind}:${item.source_id}`}
-                data-source-key={`${item.source_kind}:${item.source_id}`}
+                key={sourceKey}
+                data-source-key={sourceKey}
+                aria-current={activeSourceKey === sourceKey ? 'true' : undefined}
               >
                 <div>
                   {typeAndNumber ? <p className="object-type">{typeAndNumber}</p> : null}
@@ -173,7 +198,9 @@ export function SearchPage() {
                   <span>教材页：{item.printed_page ?? '暂缺'}</span>
                   <span>PDF 页：{item.pdf_page ?? '暂缺'}</span>
                 </div>
-                <Link className="source-link" to={sourcePath}>查看教材来源</Link>
+                <Link className="source-link" to={sourcePath} onClick={() => rememberSource(item)}>
+                  查看教材来源
+                </Link>
               </article>
             )
           })}
