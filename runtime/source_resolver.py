@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from typing import Any
 
-from .book_runtime import BookRuntimeError, RuntimeObject
+from .book_runtime import BookRuntimeError, RuntimeObject, RuntimeSection
 from .course_runtime import CourseRuntime
 
 
@@ -71,9 +71,11 @@ class SourceResolver:
 
     def resolve(self, kind: str, source_id: str) -> ResolvedSource:
         normalized_kind = str(kind).strip().casefold()
-        if normalized_kind != "object":
-            raise SourceResolutionError(f"Unsupported source kind: {kind!r}")
-        return self._resolve_object(source_id)
+        if normalized_kind == "object":
+            return self._resolve_object(source_id)
+        if normalized_kind == "figure":
+            return self._resolve_figure(source_id)
+        raise SourceResolutionError(f"Unsupported source kind: {kind!r}")
 
     def _resolve_object(self, source_id: str) -> ResolvedSource:
         try:
@@ -105,6 +107,37 @@ class SourceResolver:
             context_after=context_after,
         )
 
+    def _resolve_figure(self, source_id: str) -> ResolvedSource:
+        try:
+            figure = self.book.figures[source_id]
+        except KeyError as exc:
+            raise SourceResolutionError(f"Unknown figure source: {source_id!r}") from exc
+
+        section_id = self._section_for_pdf_page(figure.anchor.pdf_page)
+        raw_number = figure.raw.get("number") or figure.raw.get("figure")
+        number = str(raw_number) if raw_number is not None else None
+        return ResolvedSource(
+            course_id=self.course.course_id,
+            book_id=self.book.book_id,
+            section_id=section_id,
+            kind="figure",
+            source_id=figure.id,
+            type="figure",
+            type_zh=TYPE_LABELS_ZH["figure"],
+            number=number,
+            title_zh=figure.title_zh,
+            title_en=figure.title_en,
+            content_zh=None,
+            formula=None,
+            printed_page=figure.anchor.printed_page,
+            pdf_page=figure.anchor.pdf_page,
+            source_anchor=figure.anchor.source_anchor,
+            source_batch=figure.source_batch,
+            translation_available=self._translation_available(figure.source_batch),
+            context_before=(),
+            context_after=(),
+        )
+
     @staticmethod
     def _content_zh(raw: dict[str, Any]) -> str | None:
         for key in CONTENT_ZH_KEYS:
@@ -120,6 +153,26 @@ class SourceResolver:
             return self.book.translation_text(batch_id) is not None
         except BookRuntimeError:
             return False
+
+    def _section_for_pdf_page(self, pdf_page: int | None) -> str | None:
+        if pdf_page is None:
+            return None
+        candidates = [
+            section
+            for section in self.book.sections.values()
+            if section.covers_pdf_page(pdf_page)
+        ]
+        if not candidates:
+            return None
+
+        def width(section: RuntimeSection) -> int:
+            if section.pdf_page_start is None:
+                return 10**9
+            end = section.pdf_page_end or section.pdf_page_start
+            return max(0, end - section.pdf_page_start)
+
+        candidates.sort(key=lambda row: (width(row), -(len(row.number or "")), row.id))
+        return candidates[0].id
 
     def _object_context(
         self, obj: RuntimeObject
