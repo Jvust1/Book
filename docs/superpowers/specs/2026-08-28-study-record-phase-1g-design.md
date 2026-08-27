@@ -104,7 +104,7 @@ book_id                TEXT
 section_id             TEXT
 mode                    TEXT
 status                  TEXT      // in_progress | completed
-progress                INTEGER   // 0..100; Phase 1G uses in-progress vs complete semantics
+progress                INTEGER   // Phase 1G uses exactly 0 or 100
 started_at              TEXT      // ISO-8601 UTC timestamp
 last_studied_at         TEXT      // ISO-8601 UTC timestamp
 completed_at            TEXT NULL // set only when completed
@@ -112,7 +112,7 @@ created_at              TEXT
 updated_at              TEXT
 revision                INTEGER   // monotonic per record, starts at 1
 deleted_at              TEXT NULL // reserved for future tombstone sync
-sync_status              TEXT      // local | pending | synced; Phase 1G writes local/pending semantics only as defined below
+sync_status              TEXT      // Phase 1G writes exactly "local"
 ```
 
 Database constraints:
@@ -121,8 +121,11 @@ Database constraints:
 - unique: `(profile_id, course_id, section_id, mode)`
 - `mode` must be one of the four supported values
 - `status` must be `in_progress` or `completed`
-- `progress` must be between 0 and 100
+- `progress` must be exactly `0` or `100`
 - `revision >= 1`
+- `sync_status` is `local` in Phase 1G
+
+A missing record means that mode has never been started. `status`, not a fabricated intermediate percentage, distinguishes an existing in-progress record from a completed record.
 
 ## 6. Progress rules
 
@@ -134,14 +137,15 @@ When the user enters a valid Course / Section / mode for the first time:
 
 ```text
 status = in_progress
-progress = 1
+progress = 0
 started_at = now
 last_studied_at = now
 completed_at = null
 revision = 1
+sync_status = local
 ```
 
-`progress = 1` distinguishes a genuinely started mode from a non-existent/never-started record while avoiding a fake fine-grained percentage.
+The presence of the record means the mode has started; `progress=0` is not interpreted as "never started".
 
 ### 6.2 Re-entry
 
@@ -152,6 +156,7 @@ On later entry to the same logical record:
 - increment `revision`
 - preserve `started_at`
 - preserve completed state if already completed
+- keep `sync_status = local` in Phase 1G
 
 A completed record remains completed when reopened.
 
@@ -166,6 +171,7 @@ completed_at = now
 last_studied_at = now
 updated_at = now
 revision += 1
+sync_status = local
 ```
 
 Completion is idempotent: repeated completion calls must not create duplicate rows.
@@ -256,7 +262,7 @@ GET  /api/study/recent
 
 The browser sends no `profile_id` and no `book_id`; both are server-owned.
 
-A StudyRecord response should expose useful product fields but may keep sync-internal fields such as `sync_status` private until sync is implemented.
+A StudyRecord response should expose useful product fields but keep sync-internal fields such as `sync_status` private until sync is implemented.
 
 ## 11. Web behavior
 
@@ -299,7 +305,9 @@ deleted_at
 sync_status
 ```
 
-However, Phase 1G does **not** implement:
+In Phase 1G, `sync_status` is always `local`; there is no uploader and no remote acknowledgement. Future sync work may extend the allowed states and semantics.
+
+Phase 1G does **not** implement:
 
 - Google Drive authentication
 - upload/download manifests
