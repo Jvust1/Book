@@ -20,6 +20,18 @@ class BookRuntimeTests(unittest.TestCase):
         with self.assertRaises(BookRuntimeBlockedError):
             BookRuntime.open(root)
 
+    def test_functional_analysis_search_rebuild_matches_final_audit(self) -> None:
+        root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
+        if not root.exists():
+            self.skipTest("repository fixture not present")
+
+        _, report = rebuild.rebuild_search_index(root)
+
+        self.assertEqual(report["record_count"], 1493)
+        self.assertTrue(report["all_unique"])
+        self.assertEqual(report["without_source_anchor"], [])
+        self.assertTrue(report["promotable_by_count_and_anchor"])
+
     def test_v036_index_tail_falls_back_to_completed_learning_layer(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
