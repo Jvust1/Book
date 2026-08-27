@@ -6,6 +6,7 @@ on:
       - "runtime/**"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
+      - "tools/recover_functional_analysis_search.py"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
   pull_request:
@@ -13,6 +14,7 @@ on:
       - "runtime/**"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
+      - "tools/recover_functional_analysis_search.py"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
 
@@ -39,12 +41,25 @@ jobs:
           python -m py_compile runtime/book_runtime.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
+          python -m py_compile tools/recover_functional_analysis_search.py
 
       - name: Run unit tests
         run: python -m unittest tests.test_book_runtime -v
 
-      - name: Rebuild recovery candidates for diagnostics
+      - name: Rebuild audited Functional Analysis candidates
         if: matrix.python-version == '3.13'
         run: |
-          python tools/rebuild_runtime_artifacts.py books/functional-analysis --toc --search-index
+          python tools/rebuild_runtime_artifacts.py books/functional-analysis --toc
+          python tools/recover_functional_analysis_search.py books/functional-analysis
           python -c "import json,pathlib; t=json.loads(pathlib.Path('books/functional-analysis/toc_bilingual.json.candidate').read_text(encoding='utf-8')); r=json.loads(pathlib.Path('books/functional-analysis/search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); print(json.dumps({'chapter_count':t.get('chapter_count'),'section_count':t.get('section_count'),'search_record_count':r.get('record_count'),'expected_search_record_count':r.get('expected_record_count'),'search_all_unique':r.get('all_unique'),'missing_anchor_count':len(r.get('without_source_anchor') or []),'search_promotable':r.get('promotable_by_count_and_anchor')},ensure_ascii=False,indent=2))"
+
+      - name: Upload audited recovery candidates
+        if: matrix.python-version == '3.13'
+        uses: actions/upload-artifact@v4
+        with:
+          name: functional-analysis-runtime-candidates
+          path: |
+            books/functional-analysis/toc_bilingual.json.candidate
+            books/functional-analysis/search_index_v0_36.jsonl.candidate
+            books/functional-analysis/search_index_v0_36.rebuild_report.json
+          if-no-files-found: error
