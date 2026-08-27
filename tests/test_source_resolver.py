@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import runtime
 from runtime.course_runtime import CourseRuntime
 from runtime.source_resolver import SourceResolutionError, SourceResolver
 from tests.runtime_fixture_factory import (
@@ -38,6 +39,12 @@ class SourceResolverTests(unittest.TestCase):
             book_entries=[main_book_entry("fixture_book", "../../books/fixture-book")],
         )
         return CourseRuntime.open(course_dir)
+
+    def test_runtime_package_exports_source_resolver_contract(self) -> None:
+        self.assertIs(runtime.SourceResolver, SourceResolver)
+        self.assertIs(runtime.SourceResolutionError, SourceResolutionError)
+        self.assertIs(runtime.ResolvedSource, SourceResolver(self._open_course()).resolve("translation", "chunk_001a").__class__)
+        self.assertEqual(runtime.TYPE_LABELS_ZH["theorem"], "定理")
 
     def test_resolves_real_object_fields_without_synthesis(self) -> None:
         course = self._open_course(
