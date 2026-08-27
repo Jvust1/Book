@@ -1,20 +1,14 @@
-"""Contract tests for the Phase 1F textbook QA provider boundary."""
+"""Contract tests for the Phase 1F v2 textbook QA provider boundary."""
 
 from __future__ import annotations
 
 from dataclasses import FrozenInstanceError, fields
 import unittest
 
-from runtime import (
-    AnswerProviderUnavailableError,
-    DeterministicFakeAnswerProvider,
-    EvidenceItem,
-    EvidencePack,
-    ProviderRequest,
-    QAResult,
-    UnavailableAnswerProvider,
-)
+import runtime.qa_provider as qa_provider
+from runtime import EvidenceItem, EvidencePack, QAResult
 from runtime.qa_models import (
+    ModelRequest,
     ModelResponse,
     ModelResponseValidationError,
     QAHistoryMessage,
@@ -56,6 +50,13 @@ def pack() -> EvidencePack:
         evidence=(evidence(),),
         scope_requested="book",
         scope_used="book",
+    )
+
+
+def request() -> ModelRequest:
+    return ModelRequest.from_pack(
+        pack(),
+        history=(QAHistoryMessage(role="user", content="前一个问题"),),
     )
 
 
@@ -154,49 +155,111 @@ class QAProviderContractTests(unittest.TestCase):
                 with self.assertRaises(ModelResponseValidationError):
                     ModelResponse.from_mapping(row)
 
-    def test_provider_request_is_built_only_from_evidence_pack(self) -> None:
-        request = ProviderRequest.from_pack(pack())
+    def test_model_request_is_built_only_from_bounded_runtime_context(self) -> None:
+        model_request = request()
 
-        self.assertEqual(request.question, "Hölder 不等式是什么？")
-        self.assertEqual(request.course_id, COURSE_ID)
-        self.assertEqual(request.book_id, BOOK_ID)
-        self.assertEqual(request.evidence, (evidence(),))
+        self.assertEqual(model_request.question, "Hölder 不等式是什么？")
+        self.assertEqual(model_request.course_id, COURSE_ID)
+        self.assertEqual(model_request.book_id, BOOK_ID)
+        self.assertEqual(model_request.evidence, (evidence(),))
+        self.assertEqual(model_request.history[0].content, "前一个问题")
         self.assertEqual(
-            {field.name for field in fields(request)},
-            {"question", "course_id", "book_id", "evidence"},
+            {field.name for field in fields(model_request)},
+            {
+                "question",
+                "course_id",
+                "book_id",
+                "section_id",
+                "history",
+                "evidence",
+                "allowed_answer_styles",
+            },
         )
-        self.assertFalse(hasattr(request, "repository_root"))
-        self.assertFalse(hasattr(request, "browser_state"))
-        self.assertFalse(hasattr(request, "api_key"))
+        self.assertFalse(hasattr(model_request, "repository_root"))
+        self.assertFalse(hasattr(model_request, "browser_state"))
+        self.assertFalse(hasattr(model_request, "api_key"))
 
     def test_contract_dataclasses_are_frozen(self) -> None:
         item = evidence()
-        request = ProviderRequest.from_pack(pack())
+        model_request = request()
         history = QAHistoryMessage(role="assistant", content="历史回答")
 
         with self.assertRaises(FrozenInstanceError):
             item.source_id = "mutated"  # type: ignore[misc]
         with self.assertRaises(FrozenInstanceError):
-            request.question = "mutated"  # type: ignore[misc]
+            model_request.question = "mutated"  # type: ignore[misc]
         with self.assertRaises(FrozenInstanceError):
             history.content = "mutated"  # type: ignore[misc]
 
-    def test_fake_provider_cites_only_supplied_ids(self) -> None:
-        result = DeterministicFakeAnswerProvider().answer(ProviderRequest.from_pack(pack()))
+    def test_model_provider_protocol_and_fake_modes_exist(self) -> None:
+        self.assertTrue(hasattr(qa_provider, "ModelProvider"))
+        self.assertTrue(hasattr(qa_provider, "ModelProviderError"))
+        self.assertTrue(hasattr(qa_provider, "ModelProviderUnavailableError"))
+        self.assertTrue(hasattr(qa_provider, "ModelProviderInvalidResponseError"))
+        self.assertTrue(hasattr(qa_provider, "DeterministicFakeModelProvider"))
+        self.assertTrue(hasattr(qa_provider, "UnavailableModelProvider"))
 
-        self.assertEqual(result.cited_evidence_ids, ("E1",))
-        self.assertIn("Hölder", result.answer_text)
-        self.assertNotIn("obj_holder", result.answer_text)
+    def test_fake_answer_mode_uses_only_first_supplied_evidence(self) -> None:
+        provider_cls = getattr(qa_provider, "DeterministicFakeModelProvider", None)
+        self.assertIsNotNone(provider_cls)
+        provider = provider_cls(mode="answer")
 
-    def test_fake_provider_is_deterministic(self) -> None:
-        request = ProviderRequest.from_pack(pack())
-        provider = DeterministicFakeAnswerProvider()
+        result = provider.answer(request())
 
-        self.assertEqual(provider.answer(request), provider.answer(request))
+        self.assertIsInstance(result, ModelResponse)
+        self.assertEqual(result.evidence_ids, ("E1",))
+        self.assertFalse(result.insufficient_evidence)
+        self.assertEqual(result.answer_style, "brief")
+        self.assertIn("Hölder", result.answer or "")
+        self.assertNotIn("obj_holder", result.answer or "")
+        self.assertEqual(result, provider.answer(request()))
+
+    def test_fake_insufficient_mode_returns_second_gate_decline(self) -> None:
+        provider_cls = getattr(qa_provider, "DeterministicFakeModelProvider", None)
+        self.assertIsNotNone(provider_cls)
+
+        result = provider_cls(mode="insufficient").answer(request())
+
+        self.assertIsNone(result.answer)
+        self.assertEqual(result.evidence_ids, ())
+        self.assertTrue(result.insufficient_evidence)
+        self.assertEqual(result.answer_style, "explain")
+
+    def test_fake_invalid_citation_mode_returns_unknown_evidence_id(self) -> None:
+        provider_cls = getattr(qa_provider, "DeterministicFakeModelProvider", None)
+        self.assertIsNotNone(provider_cls)
+
+        result = provider_cls(mode="invalid_citation").answer(request())
+
+        self.assertFalse(result.insufficient_evidence)
+        self.assertEqual(result.evidence_ids, ("E999",))
+
+    def test_fake_empty_answer_mode_fails_closed(self) -> None:
+        provider_cls = getattr(qa_provider, "DeterministicFakeModelProvider", None)
+        error_cls = getattr(qa_provider, "ModelProviderInvalidResponseError", None)
+        self.assertIsNotNone(provider_cls)
+        self.assertIsNotNone(error_cls)
+
+        with self.assertRaises(error_cls):
+            provider_cls(mode="empty_answer").answer(request())
+
+    def test_fake_unavailable_mode_raises_stable_unavailable_error(self) -> None:
+        provider_cls = getattr(qa_provider, "DeterministicFakeModelProvider", None)
+        error_cls = getattr(qa_provider, "ModelProviderUnavailableError", None)
+        self.assertIsNotNone(provider_cls)
+        self.assertIsNotNone(error_cls)
+
+        with self.assertRaises(error_cls):
+            provider_cls(mode="unavailable").answer(request())
 
     def test_unavailable_provider_fails_explicitly(self) -> None:
-        with self.assertRaises(AnswerProviderUnavailableError):
-            UnavailableAnswerProvider().answer(ProviderRequest.from_pack(pack()))
+        provider_cls = getattr(qa_provider, "UnavailableModelProvider", None)
+        error_cls = getattr(qa_provider, "ModelProviderUnavailableError", None)
+        self.assertIsNotNone(provider_cls)
+        self.assertIsNotNone(error_cls)
+
+        with self.assertRaises(error_cls):
+            provider_cls().answer(request())
 
     def test_qa_result_constructors_expose_v2_scope_and_insufficiency(self) -> None:
         generated = QAResult.generated(
