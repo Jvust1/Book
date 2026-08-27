@@ -21,6 +21,10 @@ class AppUnavailableError(BookAppError):
     """Book App runtime cannot be initialized or trusted."""
 
 
+class QAProviderUnconfiguredError(AppUnavailableError):
+    """Server-side QA provider configuration is absent or incomplete."""
+
+
 class InvalidModeError(BookAppError):
     """Section learning mode is outside the fixed product contract."""
 
