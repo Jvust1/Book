@@ -9,7 +9,7 @@ import {
 const BASE_URL = 'http://127.0.0.1:5173'
 const COURSE_ID = 'functional_analysis_course'
 const SECTION_ID = 'ch01_s01'
-const COURSE_QA_QUESTION = '什么是巴拿赫空间？'
+const COURSE_QA_QUESTION = '1/p + 1/q = 1'
 const INSUFFICIENT_QA_QUESTION = 'definitely-no-such-textbook-concept-92831'
 const INSUFFICIENT_MESSAGE = '根据当前教材中检索到的内容，暂时无法可靠回答这个问题。'
 
@@ -424,7 +424,7 @@ test('Section QA source round trip restores verified conversation without provid
     { role: 'user', content: question },
     { role: 'assistant', content: first.answer },
   ])
-  await expect(page.getAllByText('AI 生成回答，依据下方教材来源')).toHaveCount(2)
+  await expect(page.getByText('AI 生成回答，依据下方教材来源')).toHaveCount(2)
   recorder.stop()
 })
 
