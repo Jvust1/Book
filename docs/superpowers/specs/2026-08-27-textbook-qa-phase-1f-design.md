@@ -9,12 +9,12 @@ Base: `main@7e191693cd84174b2229337e411bcd44dde68612`
 
 Phase 1F adds course-scoped textbook question answering on top of the completed Phase 1E search/source identity stack.
 
-The core product guarantee is not merely that the app can generate prose. The guarantee is that every answer is generated from an explicit, course-approved evidence pack, every citation resolves back to a real textbook source, and insufficient evidence is reported explicitly instead of being filled with unsupported model claims.
+The core product guarantee is not merely that the app can generate prose. The guarantee is that every generated answer is produced from an explicit, course-approved evidence pack, every citation resolves back to a real textbook source, and insufficient evidence is reported explicitly instead of being filled with unsupported model claims.
 
 Phase 1F must preserve the existing separation between textbook facts and generated learning material:
 
 - textbook facts remain owned by Runtime / structured textbook assets;
-- generated answers are always marked as generated;
+- model-generated answers are always marked as generated;
 - generated answers are never persisted as textbook content;
 - a model cannot invent source identities, pages or anchors;
 - citations must round-trip through the existing `SourceResolver`.
@@ -119,7 +119,7 @@ Unknown or duplicated citation IDs are rejected or normalized according to the r
 
 ### 4.4 Generated content is visibly generated
 
-Every successful QA response includes:
+Every provider-generated QA response includes:
 
 ```text
 answer_kind = generated
@@ -131,22 +131,22 @@ No field or component may call generated text “教材原文”.
 
 ### 4.5 Fail closed on insufficient evidence
 
-If deterministic retrieval cannot produce enough validated evidence, `QARuntime` must not ask the provider to fabricate a complete answer.
+If deterministic retrieval cannot produce enough validated evidence, `QARuntime` must not call the answer provider.
 
-It returns:
+It returns a normal product result:
 
 ```text
 evidence_status = insufficient_evidence
-answer_kind = generated
+answer_kind = system_notice
 answer = a stable non-assertive user-facing explanation
 citations = [] or the limited relevant evidence that was actually found
 ```
 
-The message must distinguish “evidence insufficient” from “QA subsystem unavailable”.
+The message must distinguish “evidence insufficient” from “QA subsystem unavailable”. A system notice is not labeled as an AI-generated answer.
 
 ## 5. Components
 
-## 5.1 `QARuntime`
+### 5.1 `QARuntime`
 
 Recommended file:
 
@@ -179,7 +179,7 @@ Question constraints for Phase 1F:
 - `evidence_limit` integer 1..12;
 - current course only.
 
-## 5.2 `EvidenceRetriever`
+### 5.2 `EvidenceRetriever`
 
 Evidence retrieval should reuse Phase 1E rather than introducing a second index.
 
@@ -196,7 +196,7 @@ The resolver step is mandatory even though SearchRuntime already emits source id
 
 No embeddings are required in Phase 1F. The architecture leaves room for an alternate retriever later, but the initial production path is deterministic lexical search over the audited 1493-record index.
 
-## 5.3 `EvidencePack`
+### 5.3 `EvidencePack`
 
 `EvidencePack` is immutable and contains server-selected evidence only.
 
@@ -231,15 +231,12 @@ Optional source context may be included only if it was resolved by `SourceResolv
 
 The provider does not receive full raw objects or arbitrary chunk content.
 
-## 5.4 `EvidencePolicy`
+### 5.4 `EvidencePolicy`
 
 Phase 1F needs an explicit deterministic sufficiency decision before generation.
 
-Initial policy:
-
 `insufficient_evidence` if any of the following is true:
 
-- search index is unavailable;
 - no validated evidence items remain after SourceResolver verification;
 - the highest search score is only a type-only match (`<= 300` in the current SearchRuntime scoring model);
 - the only matches are generic object-type matches that do not contain the question text in title, identity, formula or known concepts.
@@ -248,9 +245,9 @@ Otherwise status is `sufficient`.
 
 This is intentionally conservative. Phase 1F should prefer declining to answer over producing an unsupported answer.
 
-Search subsystem unavailability is not converted into ordinary insufficiency. It maps to a QA unavailable error because the trusted retrieval path is unavailable.
+Search/index/source trust-path unavailability is never converted into ordinary insufficiency. It is an infrastructure failure and maps to `qa_unavailable`.
 
-## 5.5 `AnswerProvider`
+### 5.5 `AnswerProvider`
 
 Provider interface is protocol-based and contains no textbook retrieval logic.
 
@@ -287,17 +284,17 @@ provider_metadata?     # non-product-critical diagnostics only
 
 No provider metadata is treated as textbook evidence.
 
-## 5.6 Provider implementations
+### 5.6 Provider implementations
 
-Phase 1F requires two implementations at minimum:
+Phase 1F requires a deterministic CI implementation and leaves external providers replaceable.
 
-### `DeterministicFakeAnswerProvider`
+#### `DeterministicFakeAnswerProvider`
 
 Used by unit, API, CI and Playwright tests.
 
 It produces a stable answer entirely from the `EvidencePack` and cites deterministic evidence IDs. This ensures CI has no network, API-key, quota or model-version dependency.
 
-### External model adapter
+#### External model adapter
 
 A separate optional adapter may be implemented after the trusted QA core works.
 
@@ -311,7 +308,7 @@ It must:
 
 The first spec does not commit the architecture to OpenAI or any other vendor.
 
-## 5.7 `CitationVerifier`
+### 5.7 `CitationVerifier`
 
 After provider generation, all citations are validated against the exact `EvidencePack` used for that answer.
 
@@ -332,9 +329,9 @@ Suggested internal `QAResult`:
 course_id
 book_id
 question
-answer_kind                 # generated
+answer_kind                 # generated | system_notice
 answer
- evidence_status             # sufficient | insufficient_evidence
+evidence_status             # sufficient | insufficient_evidence
 citations[]
 ```
 
@@ -380,7 +377,7 @@ Request:
 }
 ```
 
-Successful response example shape:
+Successful generated-response example shape:
 
 ```json
 {
@@ -440,9 +437,9 @@ The page contains:
 - question input;
 - submit action;
 - loading state;
-- generated-answer label;
+- generated-answer label when `answer_kind=generated`;
 - evidence status;
-- answer body;
+- answer/system notice body;
 - citation cards;
 - source links;
 - explicit insufficient-evidence state;
@@ -486,7 +483,7 @@ When returning from Source:
 
 This mirrors the Phase 1E search round trip and avoids stale cached answer objects pretending to be authoritative records.
 
-If rerunning an external provider would introduce undesirable nondeterminism, that optimization is deferred to Phase 1G or a later explicit QA-history design. Phase 1F prioritizes trust-boundary correctness over answer-history persistence.
+If rerunning an external provider introduces undesirable wording variation or cost, exact answer-history restoration is deferred to a later explicit QA-history design. Phase 1F prioritizes trust-boundary correctness and source round-trip identity over persistent answer history.
 
 ## 11. Security and privacy boundary
 
@@ -519,7 +516,7 @@ The following must remain deterministic and testable without a model:
 - API DTO projection;
 - navigation state behavior.
 
-Only answer wording is provider-dependent.
+Only generated answer wording is provider-dependent.
 
 ## 13. Tests and acceptance
 
@@ -535,7 +532,7 @@ Cover:
 - deduplication;
 - sufficient evidence;
 - insufficient evidence;
-- unavailable index;
+- unavailable index/trust path;
 - provider not called when evidence is insufficient;
 - provider invalid citation rejected;
 - provider duplicate citations normalized;
@@ -562,7 +559,7 @@ Cover:
 - loading;
 - generated-answer label;
 - sufficient answer and citations;
-- insufficient evidence;
+- insufficient evidence system notice without generated-answer label;
 - provider/infrastructure errors;
 - citation source links use `source_kind + source_id`;
 - QA state save/restore.
@@ -653,7 +650,8 @@ Phase 1F is complete only when all of the following are true:
 - all evidence is revalidated by SourceResolver before generation;
 - provider can cite only server-issued evidence IDs;
 - invalid provider citations fail closed;
-- insufficient evidence returns a normal explicit product state;
+- insufficient evidence returns a normal explicit `system_notice` product state without calling the provider;
+- search/index/source trust-path failures remain infrastructure errors, not insufficiency;
 - App API exposes stable QA DTOs/errors;
 - QA page visibly distinguishes generated answers from textbook content;
 - citation click reaches existing structured Source page;
