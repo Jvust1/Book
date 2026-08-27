@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ApiError, bookApi } from '../api/client'
 import type { CourseResponse, QAResponse } from '../api/types'
+import { loadQAViewState, saveQAViewState } from '../state/qaViewState'
 import { QAPage } from './QAPage'
 
 vi.mock('../api/client', async () => {
@@ -86,6 +87,7 @@ function renderQA() {
 
 describe('QAPage', () => {
   beforeEach(() => {
+    sessionStorage.clear()
     vi.clearAllMocks()
     vi.mocked(bookApi.getCourse).mockResolvedValue(COURSE)
     vi.mocked(bookApi.askCourse).mockResolvedValue(GENERATED)
@@ -152,6 +154,48 @@ describe('QAPage', () => {
       'href',
       '/courses/functional_analysis_course/sources/object/def_banach_space',
     )
+  })
+
+  it('saves only QA return context before opening a citation source', async () => {
+    const user = userEvent.setup()
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 735 })
+    renderQA()
+    await screen.findByRole('heading', { name: '教材问答' })
+
+    await user.type(screen.getByRole('textbox', { name: '教材问题' }), GENERATED.question)
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    await screen.findByRole('heading', { name: '巴拿赫空间' })
+    await user.click(screen.getByRole('link', { name: '查看教材来源' }))
+
+    expect(loadQAViewState('functional_analysis_course')).toEqual({
+      route: '/courses/functional_analysis_course/qa',
+      question: GENERATED.question,
+      scrollY: 735,
+      activeCitationKey: 'object:def_banach_space',
+    })
+  })
+
+  it('restores saved question, re-runs QA, restores scroll, and marks the originating citation', async () => {
+    const scrollTo = vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+    saveQAViewState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa',
+      question: GENERATED.question,
+      scrollY: 420,
+      activeCitationKey: 'object:def_banach_space',
+    })
+
+    renderQA()
+
+    expect(await screen.findByDisplayValue(GENERATED.question)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(bookApi.askCourse).toHaveBeenCalledWith(
+        'functional_analysis_course',
+        GENERATED.question,
+      )
+    })
+    const citationHeading = await screen.findByRole('heading', { name: '巴拿赫空间' })
+    await waitFor(() => expect(scrollTo).toHaveBeenCalledWith(0, 420))
+    expect(citationHeading.closest('article')).toHaveAttribute('aria-current', 'true')
   })
 
   it.each([
