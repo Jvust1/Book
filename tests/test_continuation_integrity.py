@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 
@@ -13,7 +14,8 @@ class ContinuationIntegrityTests(unittest.TestCase):
             self.skipTest("repository fixture not present")
 
         files = readiness_checker.find_structure_files(root)
-        _, _, bad_continuations = readiness_checker.collect_structure_state(files)
+        _, repeated_ids, bad_continuations = readiness_checker.collect_structure_state(files)
+        print("STRUCTURE_REPEATED_IDS=" + json.dumps(repeated_ids, ensure_ascii=False))
 
         self.assertEqual(bad_continuations, [])
 
