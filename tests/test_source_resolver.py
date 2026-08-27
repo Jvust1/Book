@@ -100,6 +100,23 @@ class SourceResolverTests(unittest.TestCase):
         self.assertEqual(source.source_anchor, "fixture:p2:figure_fixture")
         self.assertTrue(source.translation_available)
 
+    def test_resolves_translation_batch_as_exact_chinese_learning_layer(self) -> None:
+        course = self._open_course()
+
+        source = SourceResolver(course).resolve("translation", "chunk_001a")
+
+        self.assertEqual(source.kind, "translation")
+        self.assertEqual(source.source_id, "chunk_001a")
+        self.assertEqual(source.type, "translation")
+        self.assertEqual(source.type_zh, "中文学习层")
+        self.assertEqual(source.title_zh, "中文学习层")
+        self.assertEqual(source.content_zh, "# 测试学习层\n")
+        self.assertEqual(source.pdf_page, 1)
+        self.assertEqual(source.printed_page, 1)
+        self.assertIsNone(source.source_anchor)
+        self.assertEqual(source.source_batch, "chunk_001a")
+        self.assertTrue(source.translation_available)
+
     def test_missing_optional_content_and_anchor_remain_none(self) -> None:
         course = self._open_course(
             objects=[
