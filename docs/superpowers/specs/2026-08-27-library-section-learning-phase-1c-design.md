@@ -8,8 +8,6 @@ Target branch: `feature/library-section-learning-phase-1c`
 
 Book is **one application containing multiple independent textbook courses**.
 
-The product model for the current app is:
-
 ```text
 Book App
 ├── Functional Analysis course
@@ -23,24 +21,24 @@ Book App
 
 A new textbook such as Real Analysis is added as a **new independent course inside the same app**, not as a supplementary/reference book under Functional Analysis.
 
-Phase 1B `CourseRuntime` retains its generic multi-book capability for backward compatibility and possible future use, but the Book App product profile introduced in Phase 1C admits only courses with exactly one enabled main book.
+Phase 1B `CourseRuntime` keeps its generic multi-book capability for compatibility and possible future use, but the Book App product profile introduced here admits only courses with exactly one enabled main book.
 
-This product rule is authoritative for the current MVP:
+Current MVP product rules:
 
 - one App → many independent courses;
 - one admitted course → exactly one enabled textbook;
 - books/courses do not merge chapter trees;
-- books/courses do not share learning records;
+- books/courses do not share Section-level user state;
 - no cross-course search or knowledge-tree merge in Phase 1C.
 
 ## 2. Goals
 
-Phase 1C introduces the two runtime layers required before UI work:
+Phase 1C introduces two runtime layers before UI work:
 
 1. `LibraryRuntime`: the Book App course catalog.
 2. `SectionLearningRuntime`: a deterministic, source-backed learning view for one Section.
 
-The first real end-to-end fixture remains:
+First real end-to-end fixture:
 
 ```text
 Book App
@@ -50,7 +48,7 @@ Book App
 → Preview / Learn / Review / Practice
 ```
 
-The implementation must preserve all existing Phase 1A/1B runtime gates and must not duplicate parsing already owned by `BookRuntime` or `CourseRuntime`.
+The implementation must preserve all Phase 1A/1B runtime gates and must not duplicate parsing already owned by `BookRuntime` or `CourseRuntime`.
 
 ## 3. Non-goals
 
@@ -63,13 +61,10 @@ Phase 1C does **not** implement:
 - notes, mistakes, lectures, exams, mastery, or study history;
 - AI-generated explanations, summaries, objectives, questions, or answers;
 - semantic CourseKnowledgeTree construction;
-- cross-course search;
-- cross-course question answering;
+- cross-course search or QA;
 - cross-course concept alignment;
 - textbook replacement/migration workflows;
 - generated static learning JSON for all 132 sections.
-
-These remain later milestones.
 
 ## 4. Architecture
 
@@ -89,15 +84,15 @@ SectionLearningRuntime
 Preview / Learn / Review / Practice
 ```
 
-Responsibilities stay isolated:
+Responsibilities:
 
-- `LibraryRuntime` knows which independent courses belong to the App.
-- `CourseRuntime` continues to validate/open a course and its book runtime(s).
+- `LibraryRuntime` owns which independent courses appear in the App.
+- `CourseRuntime` validates/opens one course.
 - `BookRuntime` remains the sole parser/normalizer for structured textbook assets.
 - `SectionLearningSource` is a deterministic projection of one real Section and its source-backed objects.
 - `SectionLearningRuntime` exposes four learning-mode views over that source without inventing content.
 
-No layer may re-read raw structure JSON merely to recreate information that an existing lower runtime already exposes.
+No new layer may re-read raw structure JSON merely to recreate information already exposed by a lower runtime.
 
 ## 5. Library manifest
 
@@ -155,16 +150,17 @@ Required course-entry fields:
 - missing/empty `library_id`;
 - missing/empty `name`;
 - non-list or empty `courses`;
+- zero enabled courses;
 - malformed course entries;
 - duplicate enabled `course_id` values;
-- unsupported/non-integer `order` values;
+- non-integer `order` values (`bool` is not accepted as an integer order);
 - enabled course paths that are missing;
 - enabled course paths escaping the repository root;
 - enabled course manifest `course_id` that does not match the library entry;
 - enabled courses that cannot open through normal `CourseRuntime.open()`;
 - enabled courses that violate the Phase 1C single-book product profile.
 
-Disabled entries are catalog metadata only and are not opened, so an incomplete future course may be registered with `enabled=false` while its textbook is being prepared.
+Disabled entries are catalog metadata only and are not opened, so an incomplete future course may be registered with `enabled=false` while its textbook is being prepared. At least one other course must remain enabled.
 
 ### 5.2 Single-book product profile
 
@@ -172,14 +168,14 @@ An enabled course admitted by `LibraryRuntime` must satisfy all of the following
 
 1. `CourseRuntime.open()` succeeds normally.
 2. `len(course.book_ids()) == 1`.
-3. that one book is `course.main_book()`.
+3. that single mounted book is `course.main_book()`.
 4. the mounted book is already `RUNTIME_READY` because CourseRuntime/BookRuntime enforce that gate.
 
-`CourseRuntime` itself is **not** narrowed or rewritten in Phase 1C. Its generic multi-book capability remains available below the product layer; `LibraryRuntime` is where the Book App profile is enforced.
+`CourseRuntime` itself is **not** narrowed or rewritten in Phase 1C. The Book App profile is enforced only by `LibraryRuntime`.
 
 ## 6. LibraryRuntime public API
 
-Suggested API:
+Required Phase 1C API:
 
 ```python
 from runtime import LibraryRuntime
@@ -194,13 +190,19 @@ library.course("functional_analysis_course")
 library.summary()
 ```
 
+For isolated tests, the API also accepts an explicit root:
+
+```python
+library = LibraryRuntime.open(library_dir, repository_root=repo_root)
+```
+
 Rules:
 
-- enabled courses are returned in deterministic `(order, manifest position)` order;
+- enabled courses are returned in deterministic `(order, manifest_position)` order;
 - `course(course_id)` returns an already-mounted `CourseRuntime`;
 - unknown/disabled course IDs raise a library runtime error;
-- no implicit filesystem discovery is used;
-- adding a future textbook means adding a new `courses/<slug>/course.json` and a new catalog entry.
+- no implicit filesystem discovery of courses is used;
+- adding a future textbook means adding a new `courses/<slug>/course.json` and a new enabled catalog entry once that course is ready.
 
 Suggested errors:
 
@@ -218,12 +220,16 @@ LibraryRuntimeError
 Resolution rules:
 
 1. canonicalize the supplied library directory;
-2. infer repository root only from the standard `<repo_root>/library` layout, or accept an explicit repository root if the API later requires isolated test fixtures;
-3. resolve course paths relative to the library directory;
-4. canonicalize resolved course paths;
-5. require each enabled course path to remain below the repository root;
-6. open it through `CourseRuntime.open()`;
-7. verify canonical `course_id` equality.
+2. if `repository_root` is supplied, canonicalize and use it;
+3. otherwise require the standard `<repo_root>/library` layout and infer the root as the parent of `library`;
+4. require the resolved library directory itself to lie under the repository root;
+5. resolve course paths relative to the library directory;
+6. canonicalize each enabled course path;
+7. require each enabled course path to remain below the repository root;
+8. open it through `CourseRuntime.open()`;
+9. verify canonical `course_id` equality.
+
+If the library is in a nonstandard layout and no explicit `repository_root` is supplied, loading fails rather than guessing.
 
 The manifest cannot inject imports, URLs, shell commands, or external filesystem paths.
 
@@ -231,7 +237,7 @@ The manifest cannot inject imports, URLs, shell commands, or external filesystem
 
 `SectionLearningSource` is the stable evidence layer used by all four learning modes.
 
-It is generated at runtime from already-loaded `CourseRuntime` / `BookRuntime` objects and is not stored as one static JSON file per section.
+It is generated at runtime from already-loaded `CourseRuntime` / `BookRuntime` objects and is not stored as one static JSON file per Section.
 
 Suggested fields:
 
@@ -255,9 +261,10 @@ figures[]
 translation_sources[]
 ```
 
-Each object projection preserves source identity and provenance where available:
+Object projection:
 
 ```text
+kind = "object"
 id
 type
 number
@@ -270,9 +277,10 @@ source_anchor
 source_batch
 ```
 
-Each figure projection preserves:
+Figure projection:
 
 ```text
+kind = "figure"
 id
 title_en
 title_zh
@@ -282,7 +290,14 @@ source_anchor
 source_batch
 ```
 
-`translation_sources[]` contains references to relevant source batches and whether a non-partial translation layer is available. Phase 1C does not attempt fragile free-text slicing of a batch-level translation Markdown file into invented section paragraphs.
+Translation-source projection:
+
+```text
+batch_id
+available
+```
+
+Phase 1C does not slice batch-level translation Markdown into invented Section paragraphs.
 
 ### 8.1 Source selection
 
@@ -292,13 +307,19 @@ For one Section:
 - Objects come from `BookRuntime.objects_for_section(section_id)`.
 - Figures are included only when their anchored PDF page lies inside the Section PDF page range.
 - PageMap boundary rows come from `BookRuntime.page_map_row()`.
-- Translation availability comes from the Section's `source_batches` and `BookRuntime.translation_text(batch_id)` availability, but source text is not rewritten or summarized in Phase 1C.
+- Translation availability comes from the Section's `source_batches` and whether `BookRuntime.translation_text(batch_id)` returns text.
+
+Source ordering is deterministic:
+
+- objects preserve the order returned by `BookRuntime.objects_for_section()`;
+- figures sort by `(pdf_page, id)`, with missing pages ordered last;
+- source batches sort by their order in `RuntimeSection.source_batches` after stable de-duplication.
 
 The source layer never fabricates missing anchors or fills missing textbook facts from model knowledge.
 
 ## 9. SectionLearningRuntime
 
-Suggested API:
+Required Phase 1C API:
 
 ```python
 from runtime import LibraryRuntime, SectionLearningRuntime
@@ -314,7 +335,9 @@ review = learning.review()
 practice = learning.practice()
 ```
 
-`SectionLearningRuntime` only accepts a Section belonging to the course's single admitted main book.
+`SectionLearningRuntime` accepts a selected `CourseRuntime`; therefore an app-level Section ID is never used without a course namespace.
+
+Unknown Sections fail explicitly. There is no fallback to another course or book.
 
 Suggested errors:
 
@@ -324,11 +347,9 @@ SectionLearningRuntimeError
 └── SectionLearningModeError
 ```
 
-Unknown Sections fail explicitly; there is no fallback to a different course or book.
-
 ## 10. Four learning modes
 
-The four modes are parallel and independent. None unlocks another.
+The four modes are parallel and independently callable. None unlocks another.
 
 Phase 1C modes are deterministic projections, not AI-authored lessons.
 
@@ -341,47 +362,63 @@ Contains only source-supported information:
 - Section number/title;
 - chapter/section IDs;
 - textbook page range;
-- compact index of source object types and identifiers;
-- available figure identifiers;
-- available translation-source batch identifiers.
+- compact index of object types and source IDs;
+- figure source IDs;
+- translation-source batch IDs and availability.
 
 It does not invent learning objectives or prerequisites.
 
 ### 10.2 Learn
 
-Purpose: expose the complete source-backed learning material available to the runtime.
+Purpose: expose the complete source-backed material available to the runtime.
 
-Contains:
+Contains references to:
 
 - all Section objects in deterministic textbook order;
-- formulas embedded in those objects;
-- in-range figure references;
-- source anchors/page provenance;
+- all in-range figures in deterministic order;
+- formulas already embedded in source objects;
+- source anchor/page provenance;
 - translation-source references.
 
-Phase 1C does not generate explanatory prose beyond what is already present in structured assets.
+Phase 1C does not generate explanatory prose beyond structured source data.
 
 ### 10.3 Review
 
-Purpose: provide a compact source-backed review view.
+Purpose: provide a compact source-backed review subset.
 
-The runtime selects review-worthy structured objects by deterministic type policy, including known mathematical statement/formula categories such as definitions, theorems, propositions, lemmas, corollaries, and formulas when those categories exist in the source.
+Object `type` is normalized with `strip().casefold()` only for policy comparison. The exact Phase 1C review type set is:
 
-Unknown object types are not silently reclassified. The source payload remains accessible even if the review subset is empty.
+```text
+definition
+theorem
+proposition
+lemma
+corollary
+formula
+```
 
-No AI summary is generated in Phase 1C.
+The original source `type` value is preserved in output. Unknown object types are not reclassified.
+
+If none of these types exists in the Section, Review returns a valid empty `items[]` while the full source remains available.
+
+No AI summary is generated.
 
 ### 10.4 Practice
 
-Purpose: expose textbook practice material already present in the Section.
+Purpose: expose textbook practice material already assigned to the Section.
 
-Includes only existing structured practice objects such as `exercise` / `problem` categories that are already assigned to the Section by BookRuntime.
+Object `type` is normalized with `strip().casefold()` for policy comparison. The exact Phase 1C practice type set is:
 
-If the Section has no such object, `practice()` returns a valid empty practice payload. Phase 1C does not invent questions to avoid presenting fabricated textbook content as source material.
+```text
+exercise
+problem
+```
 
-AI-generated variants can be a later layer with explicit provenance distinct from textbook questions.
+The original source `type` value is preserved in output.
 
-## 11. Mode payload contract
+If the Section has no such object, Practice returns a valid empty `items[]`. Phase 1C never invents questions.
+
+## 11. Mode payload contract and traceability
 
 All four modes return a common envelope:
 
@@ -398,27 +435,42 @@ source_refs[]
 
 `source_status` reports source availability, not learner progress.
 
-Every `items[]` entry must be traceable to an ID from `SectionLearningSource`.
+Every mode item is a reference, not a copied independent fact record:
 
-The same `section_id` and canonical `book_id` must be preserved across all four mode payloads.
+```text
+kind       // object | figure | translation
+source_id  // object/figure id, or batch_id for translation
+```
+
+Traceability key is therefore:
+
+```text
+(kind, source_id)
+```
+
+not `source_id` alone. This prevents an object ID and figure ID from becoming ambiguous if they happen to use the same string.
+
+Rules:
+
+- every `(kind, source_id)` in a mode payload must exist in its `SectionLearningSource`;
+- mode payloads may add presentation metadata such as labels/counts, but may not alter source identity or source facts;
+- the same canonical `course_id`, `book_id`, `chapter_id`, and `section_id` are preserved across source and all four modes.
 
 ## 12. Course isolation
 
-Phase 1C establishes the isolation rule that later persistent features must follow:
+Phase 1C establishes the isolation key later persistent features must follow:
 
 ```text
 course_id + section_id
 ```
 
-is the minimum namespace for Section-level user state.
+A future Real Analysis course may contain a Section ID resembling one in Functional Analysis. Records remain independent because the course namespace differs.
 
-A future Real Analysis course may contain a Section ID that resembles one in Functional Analysis; records must still remain independent because the course namespace differs.
-
-No Phase 1C API accepts an unqualified Section ID at the app/library level. A Section is always reached through a selected `CourseRuntime`.
+No Phase 1C library-level API accepts an unqualified Section ID. A Section is always reached through a selected `CourseRuntime`.
 
 ## 13. Minimum repository layout
 
-Phase 1C implementation is expected to add or modify only focused files such as:
+Expected focused implementation files:
 
 ```text
 library/library.json
@@ -432,9 +484,9 @@ README.md
 .github/workflows/runtime-reference-tests.yml
 ```
 
-The exact test fixture helpers may add files under `tests/fixtures/` if needed.
+Test helpers may add files under `tests/fixtures/` if needed.
 
-No textbook structure files are expected to change for Phase 1C.
+No Functional Analysis structured textbook source file is expected to change in Phase 1C.
 
 ## 14. TDD test design
 
@@ -446,60 +498,65 @@ At minimum:
 2. unsupported schema version fails;
 3. missing library ID fails;
 4. empty courses fails;
-5. duplicate enabled course ID fails;
-6. malformed course entry fails;
-7. missing enabled course path fails;
-8. course path escape fails;
-9. canonical course ID mismatch fails;
-10. blocked enabled course fails;
-11. disabled incomplete course is ignored;
-12. deterministic course ordering works;
-13. multi-book CourseRuntime is rejected by the Book App single-book profile;
-14. exactly-one-main-book real course is accepted.
+5. zero enabled courses fails;
+6. duplicate enabled course ID fails;
+7. malformed course entry fails;
+8. missing enabled course path fails;
+9. course path escape fails;
+10. nonstandard layout without explicit repository root fails;
+11. explicit repository root supports isolated fixture layout;
+12. canonical course ID mismatch fails;
+13. blocked enabled course fails;
+14. disabled incomplete course is ignored when another enabled course exists;
+15. deterministic course ordering works;
+16. multi-book CourseRuntime is rejected by the Book App single-book profile;
+17. exactly-one-main-book course is accepted.
 
 ### 14.2 Section source tests
 
 At minimum:
 
-15. known Section builds a source;
-16. unknown Section fails;
-17. source identity matches course/book/section;
-18. source objects come from `objects_for_section()`;
-19. source object order is deterministic;
-20. figure inclusion respects Section page range;
-21. PageMap boundaries are preserved when available;
-22. missing optional anchor remains missing rather than fabricated;
-23. translation-source availability is represented without slicing invented text.
+18. known Section builds a source;
+19. unknown Section fails;
+20. source identity matches course/book/section;
+21. source objects come from `objects_for_section()`;
+22. source object order is deterministic;
+23. figure inclusion respects Section page range;
+24. figure order is deterministic;
+25. PageMap boundaries are preserved when available;
+26. missing optional anchor remains missing rather than fabricated;
+27. translation-source availability is represented without slicing invented text.
 
 ### 14.3 Four-mode tests
 
 At minimum:
 
-24. Preview returns the same canonical Section identity;
-25. Learn exposes all source objects;
-26. Review returns only deterministic review-policy object types;
-27. Practice returns only existing practice object types;
-28. empty practice material returns a valid empty payload;
-29. every mode item maps back to a source item;
-30. four modes are independently callable with no ordering lock.
+28. Preview preserves canonical Section identity;
+29. Learn references all source objects and in-range figures;
+30. Review returns only the exact review-policy types;
+31. Practice returns only the exact practice-policy types;
+32. empty Review subset is valid;
+33. empty Practice subset is valid;
+34. every mode `(kind, source_id)` maps back to the source;
+35. four modes are independently callable with no ordering lock.
 
 ### 14.4 Real Functional Analysis fixture
 
 At minimum:
 
-31. `LibraryRuntime.open("library")` succeeds on a clean checkout;
-32. library exposes exactly `functional_analysis_course` in Phase 1C;
-33. the course exposes exactly one book;
-34. canonical book ID is `stein_shakarchi_functional_analysis_2011`;
-35. the existing 8-Chapter / 132-Section course navigation remains intact;
-36. `ch01_s01` resolves through the library-selected course;
-37. `SectionLearningSource` builds for `ch01_s01`;
-38. Preview/Learn/Review/Practice all build for `ch01_s01`;
-39. existing 442-row PageMap and 1493-record search-index readiness checks remain unchanged.
+36. `LibraryRuntime.open("library")` succeeds on a clean checkout;
+37. library exposes exactly `functional_analysis_course` in Phase 1C;
+38. the course exposes exactly one book;
+39. canonical book ID is `stein_shakarchi_functional_analysis_2011`;
+40. existing 8-Chapter / 132-Section navigation remains intact;
+41. `ch01_s01` resolves through the selected course;
+42. `SectionLearningSource` builds for `ch01_s01`;
+43. Preview/Learn/Review/Practice all build for `ch01_s01`;
+44. existing 442-row PageMap and 1493-record search-index readiness checks remain unchanged.
 
 ## 15. CI
 
-Extend the existing `Runtime reference tests` workflow rather than creating a second overlapping workflow.
+Extend the existing `Runtime reference tests` workflow rather than creating another overlapping workflow.
 
 CI must:
 
@@ -515,7 +572,7 @@ No CI step may automatically commit generated runtime files to `main`.
 
 ## 16. Documentation changes during implementation
 
-The current root README still presents "one course supports multiple textbooks" as a product principle. Phase 1C implementation must update that wording to the newly confirmed product rule:
+The current root README still presents "one course supports multiple textbooks" as a product principle. Phase 1C implementation must update it to the confirmed product rule:
 
 ```text
 one App → multiple independent textbook courses
@@ -526,21 +583,21 @@ The generic multi-book capability of `CourseRuntime` may be documented separatel
 
 `runtime/README.md` must document LibraryRuntime and SectionLearningRuntime usage and retain the distinction between `STRUCTURED_COMPLETE` and `RUNTIME_READY`.
 
-The broader future data model (`CourseKnowledgeTree`, cross-book concepts, lectures, etc.) may remain documented as future architecture; Phase 1C does not implement or delete it.
+The broader future data model (`CourseKnowledgeTree`, cross-book concepts, lectures, etc.) may remain documented as future architecture. Phase 1C does not implement or delete it.
 
 ## 17. Acceptance criteria
 
 Phase 1C is complete only when all are true:
 
 1. `LibraryRuntime.open("library")` succeeds on a clean checkout.
-2. The library contains the Functional Analysis course as an enabled independent course.
+2. The library contains Functional Analysis as an enabled independent course.
 3. The admitted course has exactly one enabled main textbook.
-4. The canonical book ID remains `stein_shakarchi_functional_analysis_2011`.
+4. Canonical book ID remains `stein_shakarchi_functional_analysis_2011`.
 5. Functional Analysis still exposes 8 Chapters and 132 Sections.
 6. `SectionLearningRuntime.from_course(course, "ch01_s01")` succeeds.
-7. Preview, Learn, Review, and Practice payloads all preserve canonical course/book/section identity.
-8. Every mode item is source-traceable; Phase 1C invents no textbook facts, questions, or anchors.
-9. Disabled/incomplete future courses do not block the library; invalid enabled courses do block it.
+7. Preview, Learn, Review, and Practice preserve canonical course/book/chapter/section identity.
+8. Every mode item maps to its source by `(kind, source_id)`; Phase 1C invents no textbook facts, questions, or anchors.
+9. Disabled/incomplete future courses do not block the library if at least one valid course is enabled; invalid enabled courses do block it.
 10. Repository path containment is enforced for catalog course paths.
 11. Existing BookRuntime and CourseRuntime tests remain green.
 12. New LibraryRuntime and SectionLearningRuntime tests are green on Python 3.11 / 3.12 / 3.13.
@@ -550,7 +607,7 @@ Phase 1C is complete only when all are true:
 
 ## 18. Follow-on milestone
 
-After this runtime contract is merged, the next milestone can build the actual App UI shell:
+After this runtime contract is merged, the next milestone can build the App UI shell:
 
 ```text
 Library screen
@@ -563,4 +620,4 @@ Library screen
    └── Practice
 ```
 
-Progress persistence, notes/mistakes, AI explanations, question generation, and additional textbooks should be layered only after this first real Section path is stable and accepted.
+Progress persistence, notes/mistakes, AI explanations, AI question generation, and additional textbooks should be layered only after this first real Section path is stable and accepted.
