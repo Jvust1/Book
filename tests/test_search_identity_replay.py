@@ -17,10 +17,39 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
 
         metadata = rebuild.load_json(root / "book_metadata.json")
         book_id = str(metadata.get("book_id") or "")
+
+        # Preserve line-level evidence before load_delta_records() collapses rows
+        # with the same stable ID.
+        raw_occurrences: dict[str, list[str]] = defaultdict(list)
+        raw_line_count = 0
+        for path in sorted(root.glob("search_index_delta_v*.jsonl"), key=rebuild.delta_version):
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if not isinstance(row, dict):
+                    continue
+                rid = row.get("id") or row.get("object_id")
+                if not rid:
+                    continue
+                raw_line_count += 1
+                raw_occurrences[str(rid)].append(path.name)
+
+        duplicate_delta_ids = {
+            rid: files
+            for rid, files in sorted(raw_occurrences.items())
+            if len(files) > 1
+        }
+
         delta_records = rebuild.load_delta_records(root)
         records, _ = rebuild.expand_v035_backmatter(delta_records, book_id=book_id)
         raw_delta_ids = set(delta_records)
 
+        # v0.5 was the full-search baseline through PDF 90. Later delta files
+        # therefore must not be backfilled with structure-only objects after 90.
         early_core_added: list[str] = []
         for path in rebuild.structure_files(root):
             data = rebuild.load_json(path)
@@ -58,6 +87,7 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
                     merged.update({k: v for k, v in row.items() if v not in (None, "", [], {})})
                     records[rid] = rebuild.anchor_record(merged, book_id=book_id, rid=rid)
 
+        # The seven early frontmatter/search units are part of the v0.5 baseline.
         chunk001 = rebuild.load_json(root / "chunks" / "chunk_001_structure.json")
         content_unit_ids: list[str] = []
         for raw in chunk001.get("content_units", []):
@@ -74,8 +104,6 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
         self.assertEqual(len(content_unit_ids), 7)
         self.assertEqual(len(records), 1404)
 
-        # Reproduce the audit's explicit rule: all seven legacy *_complete IDs
-        # came from historical deltas and are normalized by removing the suffix.
         legacy_complete_ids = sorted(
             rid for rid in raw_delta_ids if rid.endswith("_complete")
         )
@@ -95,58 +123,18 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
             if len(sources) > 1
         }
 
-        def title_key(row: dict[str, Any]) -> str:
-            return rebuild.normalized_text(
-                row.get("title_en")
-                or row.get("name_en")
-                or row.get("title_zh")
-                or row.get("name_zh")
-                or ""
-            )
-
-        by_title: dict[tuple[str, str], list[str]] = defaultdict(list)
-        by_number: dict[tuple[str, str], list[str]] = defaultdict(list)
-        for rid, row in canonical.items():
-            row_type = str(row.get("type") or "")
-            key = title_key(row)
-            if key:
-                by_title[(row_type, key)].append(rid)
-            number = str(row.get("number") or "").strip()
-            if number:
-                by_number[(row_type, number)].append(rid)
-
-        title_candidates = []
-        for (row_type, key), ids in sorted(by_title.items()):
-            if len(ids) < 2:
-                continue
-            pages = [rebuild.first_page(canonical[rid]) for rid in ids]
-            numeric_pages = [page for page in pages if page is not None]
-            if numeric_pages and max(numeric_pages) - min(numeric_pages) <= 8:
-                title_candidates.append(
-                    {"type": row_type, "title_key": key, "ids": ids, "pages": pages}
-                )
-
-        number_candidates = []
-        for (row_type, number), ids in sorted(by_number.items()):
-            if len(ids) < 2:
-                continue
-            pages = [rebuild.first_page(canonical[rid]) for rid in ids]
-            numeric_pages = [page for page in pages if page is not None]
-            if numeric_pages and max(numeric_pages) - min(numeric_pages) <= 8:
-                number_candidates.append(
-                    {"type": row_type, "number": number, "ids": ids, "pages": pages}
-                )
-
         diagnostic = {
             "v035_replay_count": len(records),
             "early_core_added": len(early_core_added),
             "content_unit_ids": content_unit_ids,
+            "raw_delta_line_count": raw_line_count,
+            "raw_delta_unique_count": len(raw_delta_ids),
+            "duplicate_delta_id_count": len(duplicate_delta_ids),
+            "duplicate_delta_ids": duplicate_delta_ids,
             "legacy_complete_ids": legacy_complete_ids,
             "legacy_complete_count": len(legacy_complete_ids),
             "count_after_suffix_normalization": len(canonical),
             "suffix_collisions": suffix_collisions,
-            "nearby_exact_title_candidates": title_candidates,
-            "nearby_same_type_number_candidates": number_candidates,
             "remaining_gap_to_pre_tail_target_1396": len(canonical) - 1396,
         }
         print("SEARCH_V035_REPLAY_DIAGNOSTIC=" + json.dumps(diagnostic, ensure_ascii=False, sort_keys=True))
