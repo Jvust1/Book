@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from runtime import DeterministicFakeAnswerProvider, ProviderAnswer
+from runtime import DeterministicFakeModelProvider, ModelResponse
 
 from app.api.errors import (
     AppUnavailableError,
@@ -24,9 +24,13 @@ SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 class InvalidCitationProvider:
     def answer(self, request):
         del request
-        return ProviderAnswer(
-            answer_text="非法来源回答",
-            cited_evidence_ids=("E999",),
+        return ModelResponse.from_mapping(
+            {
+                "answer": "非法来源回答",
+                "evidence_ids": ["E999"],
+                "insufficient_evidence": False,
+                "answer_style": "brief",
+            }
         )
 
 
@@ -34,7 +38,7 @@ class BookAppQAServiceTests(unittest.TestCase):
     def test_fake_provider_projects_generated_answer_and_canonical_citations(self) -> None:
         service = BookAppService(
             REPO_ROOT,
-            qa_provider=DeterministicFakeAnswerProvider(),
+            qa_provider=DeterministicFakeModelProvider(),
         )
 
         payload = service.ask(COURSE_ID, SUFFICIENT_QA_QUESTION)
@@ -63,7 +67,7 @@ class BookAppQAServiceTests(unittest.TestCase):
     def test_invalid_question_maps_to_stable_input_error(self) -> None:
         service = BookAppService(
             REPO_ROOT,
-            qa_provider=DeterministicFakeAnswerProvider(),
+            qa_provider=DeterministicFakeModelProvider(),
         )
 
         with self.assertRaises(InvalidQAQuestionError) as ctx:
@@ -84,7 +88,7 @@ class BookAppQAServiceTests(unittest.TestCase):
     def test_insufficient_evidence_is_normal_system_notice(self) -> None:
         service = BookAppService(
             REPO_ROOT,
-            qa_provider=DeterministicFakeAnswerProvider(),
+            qa_provider=DeterministicFakeModelProvider(),
         )
 
         payload = service.ask(COURSE_ID, "definitely-no-such-topic-92831")
