@@ -406,7 +406,7 @@ def expand_v035_backmatter(
 ) -> tuple[OrderedDict[str, dict[str, Any]], dict[str, int]]:
     """Expand v0.35 group rows into the stable objects used by the final index.
 
-    The book's Index has an explicit ordinal range.  Do not deduplicate equal term
+    The book's Index has an explicit ordinal range. Do not deduplicate equal term
     strings: `index_entry_001` ... `index_entry_231` are distinct source objects.
     """
 
@@ -499,14 +499,42 @@ def append_v036_index_tail(
     if not path.exists():
         return
     data = load_json(path)
-    if not isinstance(data, dict) or not isinstance(data.get("index_entries"), list):
+    if not isinstance(data, dict):
         return
-    start = 135
-    value = data.get("index_entry_range")
-    if isinstance(value, list) and value and as_int(value[0]) is not None:
-        start = int(value[0])
 
-    for offset, raw in enumerate(data["index_entries"]):
+    start = 135
+    end: int | None = None
+    value = data.get("index_entry_range")
+    if isinstance(value, list) and value:
+        if as_int(value[0]) is not None:
+            start = int(value[0])
+        if len(value) > 1 and as_int(value[1]) is not None:
+            end = int(value[1])
+
+    entries = data.get("index_entries")
+    if not isinstance(entries, list):
+        learning_path = root / "chunk_023a_translation_zh.md"
+        if not learning_path.exists():
+            return
+        entries = []
+        current_pdf_page: int | None = None
+        for line in learning_path.read_text(encoding="utf-8").splitlines():
+            heading = re.match(r"^##\s+PDF\s+(\d+)\b", line)
+            if heading:
+                current_pdf_page = int(heading.group(1))
+                continue
+            bullet = re.match(r"^-\s+\*\*(.+?)\*\*\s+—\s+`", line)
+            if bullet and current_pdf_page is not None:
+                entries.append({"term": bullet.group(1).strip(), "pdf_page": current_pdf_page})
+
+    if end is not None:
+        expected_count = end - start + 1
+        if len(entries) != expected_count:
+            raise RuntimeError(
+                f"chunk_023a index tail count mismatch: expected {expected_count}, recovered {len(entries)}"
+            )
+
+    for offset, raw in enumerate(entries):
         ordinal = start + offset
         term: Any = None
         page: Any = None
