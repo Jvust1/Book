@@ -1,6 +1,6 @@
 # Book Runtime Reference Layer
 
-这里是 Course OS 的平台无关参考数据层。
+这里是 Book App / Course OS 的平台无关参考数据层。
 
 当前运行时链路：
 
@@ -13,12 +13,36 @@ BookRuntime
         ↓
 CourseRuntime
         ↓
-Course / Book / Chapter / Section / Search / Anchor
+LibraryRuntime
+        ↓
+SectionLearningRuntime
+        ↓
+Preview / Learn / Review / Practice
 ```
+
+## 产品层规则
+
+当前 Book App 的产品模型是：
+
+```text
+一个 App
+├── 泛函分析课程 → 一本泛函分析教材
+├── 实分析课程   → 一本实分析教材
+├── 复分析课程   → 一本复分析教材
+└── ...
+```
+
+也就是：
+
+- App 可以包含多门彼此独立的教材课程；
+- 当前产品入口要求每门课程恰好挂载一本 enabled 主教材；
+- 新教材通过新增独立 course 并注册到 `library/library.json` 加入 App；
+- 不在产品层合并不同教材的 Chapter / Section；
+- `CourseRuntime` 仍保留通用多书挂载能力，但它只是底层兼容能力，`LibraryRuntime` 会拒绝多书 course 进入当前 App 产品入口。
 
 ## 运行时门
 
-先运行：
+教材先运行：
 
 ```bash
 python tools/check_runtime_readiness.py books/functional-analysis
@@ -36,9 +60,11 @@ python tools/check_runtime_readiness.py books/functional-analysis --write
 status = READY
 ```
 
-时，正式学习软件才允许打开该书。
+时，正式学习入口才允许打开该教材。
 
-Functional Analysis v0.36 的最终运行时资产已经恢复并在 `main` 上通过校验，当前状态为 `READY`。`STRUCTURED_COMPLETE` 与 `RUNTIME_READY` 仍是两个独立门槛。
+`STRUCTURED_COMPLETE` 与 `RUNTIME_READY` 是两个独立门槛：结构化完成不等于已经具备正式运行时资产。
+
+Functional Analysis v0.36 当前为 `STRUCTURED_COMPLETE / RUNTIME_READY`。
 
 ## 使用 BookRuntime
 
@@ -49,9 +75,6 @@ book = BookRuntime.open("books/functional-analysis")
 
 print(book.summary())
 print(book.chapter_ids())
-
-for section in book.sections_for_chapter("chapter_01"):
-    print(section.number, section.title_zh)
 
 for obj in book.objects_for_section("ch01_s01"):
     print(obj.type, obj.number, obj.name_zh, obj.anchor.pdf_page)
@@ -70,61 +93,129 @@ from runtime import CourseRuntime
 course = CourseRuntime.open("courses/functional-analysis")
 print(course.summary())
 
-book = course.main_book()
 for chapter_id in course.chapter_ids():
     for section in course.sections_for_chapter(chapter_id):
-        print(book.book_id, chapter_id, section.id, section.title_zh)
+        print(chapter_id, section.id, section.title_zh)
 ```
 
-Phase 1B 规则：
+CourseRuntime 负责：
 
-- 一门课程可挂载多本 enabled 教材。
-- 必须且只能有一本 enabled 主教材。
-- 所有 enabled 教材都必须通过各自的 BookRuntime readiness gate；任一本失败时课程整体 fail-closed。
-- Course 层 Chapter / Section 导航使用主教材已经加载的审计 TOC 顺序，并返回主教材 RuntimeSection 对象。
-- 非主教材通过 `course.book(book_id)` 获取独立 BookRuntime。
-- Phase 1B 不合并不同教材的章节命名空间。
+- course manifest 校验；
+- enabled book 的 fail-closed readiness；
+- 主教材 Chapter / Section 导航；
+- 通用多书角色挂载兼容能力。
+
+## 使用 LibraryRuntime
+
+```python
+from runtime import LibraryRuntime
+
+library = LibraryRuntime.open("library")
+print(library.summary())
+
+for course_id in library.course_ids():
+    course = library.course(course_id)
+    print(course.course_id, course.main_book().book_id)
+```
+
+`LibraryRuntime` 是当前 Book App 的产品入口层：
+
+- 使用显式 `library/library.json`，不做隐式文件夹发现；
+- enabled course 按 `(order, manifest position)` 确定性排序；
+- enabled course 必须能通过正常 `CourseRuntime.open()`；
+- 当前产品 profile 要求 `len(course.book_ids()) == 1`；
+- disabled 的未来课程不会被打开，也不会阻塞已有有效课程；
+- catalog course path 必须保持在 repository root 内。
+
+## 使用 SectionLearningRuntime
+
+```python
+from runtime import LibraryRuntime, SectionLearningRuntime
+
+library = LibraryRuntime.open("library")
+course = library.course("functional_analysis_course")
+learning = SectionLearningRuntime.from_course(course, "ch01_s01")
+
+source = learning.source()
+preview = learning.preview()
+learn = learning.learn()
+review = learning.review()
+practice = learning.practice()
+```
+
+### SectionLearningSource
+
+`SectionLearningSource` 是四种模式共同依赖的教材证据层。它只投影已经由 `BookRuntime` 加载的内容，包括：
+
+- canonical course / book / chapter / section identity；
+- Section 页码范围；
+- PageMap 边界；
+- Section objects；
+- 范围内 figures；
+- translation batch 是否可用。
+
+它不会重新解析 raw `*_structure.json`，也不会把 batch-level translation Markdown 猜测切成 Section 文本。
+
+### 四种模式
+
+Phase 1C 的四种模式是并列、独立、确定性的 source reference payload：
+
+- **Preview**：Section 身份、对象类型索引、figure 和 translation 可用性；
+- **Learn**：引用该 Section 当前全部 source objects / figures / translations；
+- **Review**：仅引用 `definition / theorem / proposition / lemma / corollary / formula`；
+- **Practice**：仅引用已有 `exercise / problem`。
+
+如果 Review 或 Practice 没有匹配内容，会返回合法空列表，不会为了“看起来完整”而生成教材中不存在的内容。
+
+所有 mode item 都通过：
+
+```text
+(kind, source_id)
+```
+
+回指 `SectionLearningSource`。Phase 1C 不生成 AI 总结、AI 解释、AI 题目或虚构教材锚点。
 
 ## 已实现能力
 
-BookRuntime：
+BookRuntime：教材身份/readiness、TOC、PageMap、历史结构归一化、objects/figures、translation、最终 search index。
 
-- canonical `book_id` 一致性检查
-- `STRUCTURED_COMPLETE` / metadata 页数一致性检查
-- 双语 TOC 与 PageMap 读取
-- 历史 structure schema 归一化
-- Section 跨 batch 合并
-- stable object ID 合并与冲突拒绝
-- figure 归一化
-- 中文学习层定位
-- 最终 JSONL search index 流式读取
-- 确定性中英关键词搜索
-- PDF 页 → PageMap row 查询
+CourseRuntime：Course → Book → Chapter → Section 运行时导航。
 
-CourseRuntime：
+LibraryRuntime：一个 App 中多个独立教材课程的 catalog 与单书产品 profile gate。
 
-- course manifest 校验
-- 多教材角色挂载
-- enabled-book fail-closed readiness
-- 主教材 Chapter / Section 导航
-- 真实 Functional Analysis course fixture
+SectionLearningRuntime：真实 Section 的来源证据投影，以及 Preview / Learn / Review / Practice 四个确定性入口。
 
 ## 测试
 
 ```bash
-python -m unittest tests.test_book_runtime tests.test_course_runtime -v
+python -m unittest \
+  tests.test_book_runtime \
+  tests.test_course_runtime \
+  tests.test_library_runtime \
+  tests.test_section_learning_runtime -v
 ```
 
-真实 Functional Analysis fixture 的 CourseRuntime 验收覆盖：8 个 Chapter、132 个 Section、442 行 PageMap、1493 条最终搜索记录。
+真实 Functional Analysis 验收保持：
+
+- 8 Chapters；
+- 132 Sections；
+- 442 PageMap rows；
+- 1493 unique final search records；
+- `LibraryRuntime.open("library")` 成功；
+- `SectionLearningRuntime.from_course(course, "ch01_s01")` 成功；
+- Preview / Learn / Review / Practice 均可独立构建。
 
 ## 下一步
 
-Phase 1B 合并后，下一独立里程碑是 Section 学习壳：
+运行时合同稳定后，下一独立里程碑是 App UI shell：
 
 ```text
-Section
-├── Preview
-├── Learn
-├── Review
-└── Practice
+Library screen
+→ Course screen
+→ Chapter screen
+→ Section screen
+   ├── 预习
+   ├── 学习
+   ├── 复习
+   └── 刷题
 ```
