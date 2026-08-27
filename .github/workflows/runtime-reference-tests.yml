@@ -8,6 +8,7 @@ on:
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
       - "tools/recover_functional_analysis_page_map.py"
+      - "tools/normalize_functional_analysis_runtime_identities.py"
       - "books/functional-analysis/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
@@ -18,6 +19,7 @@ on:
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
       - "tools/recover_functional_analysis_page_map.py"
+      - "tools/normalize_functional_analysis_runtime_identities.py"
       - "books/functional-analysis/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
@@ -49,7 +51,7 @@ jobs:
           python -m py_compile tools/recover_functional_analysis_page_map.py
 
       - name: Run unit tests
-        run: python -m unittest tests.test_book_runtime tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge -v
+        run: python -m unittest tests.test_book_runtime tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer -v
 
       - name: Rebuild and validate Functional Analysis runtime artifacts
         if: matrix.python-version == '3.13'
