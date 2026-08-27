@@ -32,7 +32,7 @@ Phase 1B will introduce a small course aggregation layer that:
 3. Opens each enabled book through `BookRuntime.open()`.
 4. Exposes deterministic Course -> Book -> Chapter -> Section navigation.
 5. Preserves book roles so the model supports main, supplementary, English, and reference books from the beginning.
-6. Rejects a course when a required book is not runtime-ready.
+6. Fails closed when any enabled book cannot be opened as runtime-ready; Phase 1B never silently drops an enabled book.
 7. Uses the current Functional Analysis v0.36 book as the first real course fixture.
 
 ## 3. Non-goals
@@ -153,6 +153,7 @@ Allowed initial roles:
 
 `CourseRuntime.open()` must reject the manifest when:
 
+- `schema_version != "course_manifest_v1"`
 - `course_id` is missing or empty
 - `books` is empty
 - there is not exactly one enabled `main` role
@@ -160,10 +161,10 @@ Allowed initial roles:
 - enabled book IDs are duplicated
 - a role is outside the allowed role set
 - a configured path escapes the repository root after normalization
-- a required enabled book cannot be opened
+- any enabled book cannot be opened through the normal `BookRuntime` readiness gate
 - the manifest `book_id` differs from the canonical `BookRuntime.book_id`
 
-A disabled book is configuration only and is not opened.
+A disabled book is configuration only and is not opened. The `required` flag is retained now because it belongs to the long-term course manifest model, but in Phase 1B it does not permit degraded loading: every enabled book must open successfully. Future admission policies may distinguish required and optional books explicitly in a later spec.
 
 ## 7. Runtime model
 
@@ -188,6 +189,12 @@ course.chapters()
 course.sections_for_chapter("chapter_01")
 course.section("ch01_s01")
 course.summary()
+```
+
+`CourseRuntime.open()` may also accept an explicit `repository_root` for tests or nonstandard embedding:
+
+```python
+course = CourseRuntime.open(course_dir, repository_root=repo_root)
 ```
 
 ### Delegation rules
@@ -218,12 +225,12 @@ CourseRuntimeError
 
 Rules:
 
-- malformed manifest -> `CourseManifestError`
+- malformed or unsupported manifest -> `CourseManifestError`
 - invalid/missing repository-relative path -> `CourseBookResolutionError`
-- required book fails the BookRuntime readiness gate -> `CourseRuntimeBlockedError`
-- optional enabled book failure may be treated as blocking in Phase 1B as well, to keep runtime state deterministic
+- any enabled book fails the BookRuntime readiness gate -> `CourseRuntimeBlockedError`
+- disabled books are never opened and cannot block the course
 
-Phase 1B should prefer fail-closed semantics. A course must not silently present a partial set of enabled books.
+Phase 1B is strictly fail-closed. A course must not silently present a partial set of enabled books.
 
 ## 9. Path and trust boundary
 
@@ -231,11 +238,16 @@ The manifest path is data, not trusted code.
 
 Resolution algorithm:
 
-1. Resolve the course directory.
-2. Resolve the configured book path relative to that directory.
-3. Canonicalize the resulting filesystem path.
-4. Verify that the path remains under the repository root.
-5. Pass the canonical book directory to `BookRuntime.open()`.
+1. Resolve the course directory to an absolute canonical path.
+2. Determine the repository root:
+   - if `repository_root` was explicitly supplied, canonicalize and use it;
+   - otherwise require the normal layout `<repository_root>/courses/<course-directory>` and infer the root as the parent of `courses`.
+3. Resolve each configured book path relative to the course directory.
+4. Canonicalize the resulting filesystem path.
+5. Verify that the path remains under the repository root.
+6. Pass the canonical book directory to `BookRuntime.open()`.
+
+If the course directory is not in the normal `courses/<name>` layout and no explicit `repository_root` is supplied, opening fails with `CourseBookResolutionError` rather than guessing.
 
 No manifest-controlled Python import, URL, shell execution, or arbitrary external path is allowed.
 
@@ -247,6 +259,7 @@ Normal open path:
 course directory
     -> course.json
     -> manifest validation
+    -> repository-root resolution
     -> book-entry validation
     -> canonical book paths
     -> BookRuntime.open() for every enabled book
@@ -317,38 +330,42 @@ Minimum tests:
 ### Manifest validation
 
 1. valid one-book course opens
-2. missing `course_id` fails
-3. empty `books` fails
-4. duplicate enabled `book_id` fails
-5. no enabled main book fails
-6. multiple enabled main books fail
-7. unsupported role fails
-8. mismatched `main_book_id` fails
+2. unsupported `schema_version` fails
+3. missing `course_id` fails
+4. empty `books` fails
+5. duplicate enabled `book_id` fails
+6. no enabled main book fails
+7. multiple enabled main books fail
+8. unsupported role fails
+9. mismatched `main_book_id` fails
 
 ### Book resolution and readiness
 
-9. missing book path fails
-10. path escaping repository root fails
-11. manifest ID mismatching canonical BookRuntime ID fails
-12. blocked required book fails closed
+10. missing book path fails
+11. path escaping repository root fails
+12. nonstandard course layout without explicit repository root fails
+13. explicit repository root supports an isolated fixture
+14. manifest ID mismatching canonical BookRuntime ID fails
+15. blocked enabled book fails closed regardless of `required`
+16. disabled blocked book is ignored
 
 ### Navigation
 
-13. `main_book()` returns the configured main BookRuntime
-14. `book_ids()` is deterministic
-15. `books_by_role()` filters correctly
-16. `chapter_ids()` delegates to the main book
-17. `sections_for_chapter()` delegates to the main book
-18. `section()` resolves a main-book section
+17. `main_book()` returns the configured main BookRuntime
+18. `book_ids()` is deterministic
+19. `books_by_role()` filters correctly
+20. `chapter_ids()` delegates to the main book
+21. `sections_for_chapter()` delegates to the main book
+22. `section()` resolves a main-book section
 
 ### Real fixture
 
-19. Functional Analysis course opens from the repository fixture
-20. main book canonical ID matches
-21. chapter count is 8
-22. total section count is 132
-23. representative section `ch01_s01` resolves
-24. course summary reports the mounted book and main role
+23. Functional Analysis course opens from the repository fixture
+24. main book canonical ID matches
+25. chapter count is 8
+26. total section count is 132
+27. representative section `ch01_s01` resolves
+28. course summary reports the mounted book and main role
 
 ## 14. Public API stability
 
@@ -398,7 +415,7 @@ Phase 1B is complete when all of the following are true:
 1. `CourseRuntime.open("courses/functional-analysis")` succeeds on a clean checkout.
 2. The mounted main book ID is `stein_shakarchi_functional_analysis_2011`.
 3. Course navigation exposes the real 8-chapter / 132-section tree through the existing BookRuntime data.
-4. Required or enabled non-ready books fail closed; no silent degraded course is produced.
+4. Every enabled book must be runtime-ready; no silent degraded course is produced.
 5. Course manifest paths cannot escape the repository root.
 6. Existing `BookRuntime` tests remain green.
 7. New CourseRuntime tests pass on Python 3.11, 3.12, and 3.13.
