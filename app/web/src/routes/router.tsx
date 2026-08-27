@@ -4,6 +4,7 @@ import { AppShell } from '../components/AppShell'
 import { ChapterPage } from '../pages/ChapterPage'
 import { CoursePage } from '../pages/CoursePage'
 import { LibraryPage } from '../pages/LibraryPage'
+import { QAPage } from '../pages/QAPage'
 import { SearchPage } from '../pages/SearchPage'
 import { SectionPage } from '../pages/SectionPage'
 import { SourcePage } from '../pages/SourcePage'
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: 'courses/:courseId/search',
         element: <SearchPage />,
+      },
+      {
+        path: 'courses/:courseId/qa',
+        element: <QAPage />,
       },
       {
         path: 'courses/:courseId/chapters/:chapterId',
