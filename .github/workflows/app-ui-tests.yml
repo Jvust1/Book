@@ -49,7 +49,7 @@ jobs:
         run: python -m pip install -r app/api/requirements.txt
 
       - name: Run App service, API, source, search and QA tests
-        run: python -m unittest app_tests.test_qa_provider_factory app_tests.test_qa_service app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver tests.test_search_runtime tests.test_qa_provider tests.test_qa_evidence tests.test_qa_runtime -v
+        run: python -m unittest app_tests.test_qa_provider_factory app_tests.test_qa_service app_tests.test_qa_api app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver tests.test_search_runtime tests.test_qa_provider tests.test_qa_evidence tests.test_qa_runtime -v
 
   web-client:
     runs-on: ubuntu-latest
