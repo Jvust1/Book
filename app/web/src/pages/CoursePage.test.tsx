@@ -49,7 +49,7 @@ describe('CoursePage', () => {
     })
   })
 
-  it('preserves audited Chapter order and chapter links', async () => {
+  it('preserves audited Chapter order and exposes the course-scoped search entry', async () => {
     render(
       <MemoryRouter initialEntries={['/courses/functional_analysis_course']}>
         <Routes>
@@ -59,6 +59,10 @@ describe('CoursePage', () => {
     )
 
     expect(await screen.findByRole('heading', { name: '泛函分析：分析学进一步专题导论' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '搜索教材' })).toHaveAttribute(
+      'href',
+      '/courses/functional_analysis_course/search',
+    )
     const chapterTitles = screen.getAllByTestId('chapter-title')
     expect(chapterTitles.map((node) => node.textContent)).toEqual([
       'L^p 空间与插值',
