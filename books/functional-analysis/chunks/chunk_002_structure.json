@@ -49,8 +49,8 @@
     {"type":"proposition","id":"prop_5_3_norming_functional","number":"5.3","name_zh":"给定向量存在取到其范数的单位范数泛函","anchor":{"pdf_page":40,"printed_page":21}}
   ],
   "figure_anchors": [
-    {"figure":"Figure 1","title_zh":"用超平面分离凸集与外点","pdf_page":36,"printed_page":17,"preserve_original":true},
-    {"figure":"Figure 2","title_zh":"区间 (a,b) 的 Minkowski 规范函数","pdf_page":37,"printed_page":18,"preserve_original":true}
+    {"id":"Figure 1@pdf:36","figure":"Figure 1","title_zh":"用超平面分离凸集与外点","pdf_page":36,"printed_page":17,"preserve_original":true},
+    {"id":"Figure 2@pdf:37","figure":"Figure 2","title_zh":"区间 (a,b) 的 Minkowski 规范函数","pdf_page":37,"printed_page":18,"preserve_original":true}
   ],
   "translation_status": {
     "learning_layer_zh": "completed_for_pdf_21_40",
