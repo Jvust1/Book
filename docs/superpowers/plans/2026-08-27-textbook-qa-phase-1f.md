@@ -4,7 +4,7 @@
 
 **Goal:** Add course-scoped textbook QA whose generated answers are constrained to server-selected textbook evidence, carry verified canonical citations, fail closed on insufficient evidence, and round-trip from answer citations to the existing source page and back.
 
-**Architecture:** Add a provider-agnostic QA trust layer above the completed Phase 1E `SearchRuntime`/`SourceResolver` stack. Deterministic Runtime code retrieves and validates evidence, applies sufficiency policy, passes only an immutable `EvidencePack` to an `AnswerProvider`, verifies cited evidence IDs after generation, and projects a stable `QAResult`; `BookAppService` and FastAPI expose that result to a Chinese-first React QA page. CI and browser acceptance use only `DeterministicFakeAnswerProvider`, so repository verification never depends on an external model, API key, quota, or network call.
+**Architecture:** Add a provider-agnostic QA trust layer above the completed Phase 1E `SearchRuntime`/`SourceResolver` stack. Deterministic Runtime code converts a natural-language question into a bounded set of lexical probes, retrieves and re-validates evidence, applies a sufficiency policy, passes only an immutable `EvidencePack` to an `AnswerProvider`, verifies cited evidence IDs after generation, and projects a stable `QAResult`. `BookAppService` and FastAPI expose that result to a Chinese-first React QA page. CI and browser acceptance use only `DeterministicFakeAnswerProvider`; the normal local app does not silently use the fake provider as if it were a real model.
 
 **Tech Stack:** Python 3.11/3.12/3.13, dataclasses + typing `Protocol`, existing Book Runtime, FastAPI + Pydantic, React 19 + TypeScript 5.9 + React Router, Vitest, Playwright Chromium, GitHub Actions.
 
@@ -13,7 +13,8 @@
 ## Global Constraints
 
 - Phase 1F QA is scoped to exactly one `course_id` and that course's enabled main textbook.
-- The initial evidence retriever must reuse the audited Phase 1E `SearchRuntime`; do not add embeddings, vector databases, or a second search index.
+- The evidence retriever must reuse the audited Phase 1E `SearchRuntime`; do not add embeddings, a vector database, or a second search index.
+- Natural-language questions are converted only into bounded deterministic lexical probes; the provider never participates in retrieval.
 - Every search hit used as QA evidence must be re-resolved through `SourceResolver` before model exposure.
 - The provider receives only normalized `ProviderRequest` / `EvidencePack` content; never repository paths, raw files, browser state, credentials, unrelated courses, or arbitrary tool access.
 - Provider citations are opaque server-issued evidence IDs (`E1`, `E2`, ...); the provider never owns canonical source identities, pages, anchors, or citation metadata.
@@ -23,7 +24,8 @@
 - Search/index/source trust-path failures are infrastructure errors (`qa_unavailable`), not evidence insufficiency.
 - Provider unavailable is HTTP 503 `qa_provider_unavailable`; malformed/invalid provider output is HTTP 502 `qa_provider_invalid_response`.
 - Generated prose must always be identified as generated and must never be written into textbook assets.
-- CI and Playwright must use `DeterministicFakeAnswerProvider`; no external provider is required for Phase 1F acceptance.
+- CI and Playwright use `DeterministicFakeAnswerProvider`; no external provider/API key is required for repository acceptance.
+- The normal local app defaults to an unavailable provider unless a real provider is explicitly configured; it must never present fake-provider text as production AI output.
 - QA navigation state is short-lived `sessionStorage` only: `route`, `question`, `scrollY`, `activeCitationKey`; do not persist answer/citation payloads as StudyRecord/history.
 - Existing Search → Source → Return and Section → Source → Return behavior must remain green.
 
@@ -33,49 +35,38 @@
 
 ### Runtime
 
-- Create `runtime/qa_models.py` — immutable internal QA/evidence/provider dataclasses.
-- Create `runtime/qa_provider.py` — `AnswerProvider` protocol, provider exceptions, deterministic fake provider.
-- Create `runtime/qa_evidence.py` — `EvidenceRetriever`, `EvidencePolicy`, `CitationVerifier`.
-- Create `runtime/qa_runtime.py` — question validation and orchestration only.
+- Create `runtime/qa_models.py` — immutable evidence/provider/result dataclasses and explicit constructors.
+- Create `runtime/qa_provider.py` — `AnswerProvider` protocol, deterministic fake provider, unavailable provider, provider exceptions.
+- Create `runtime/qa_evidence.py` — `QuestionProbeBuilder`, `EvidenceRetriever`, `EvidencePolicy`, `CitationVerifier`.
+- Create `runtime/qa_runtime.py` — input validation and orchestration only.
 - Modify `runtime/__init__.py` — export stable QA Runtime interfaces/errors.
-- Create `tests/test_qa_provider.py` — provider contract/fake-provider tests.
-- Create `tests/test_qa_evidence.py` — real and fixture evidence/policy/verifier tests.
-- Create `tests/test_qa_runtime.py` — QARuntime contract and orchestration tests.
-- Modify `tests/runtime_fixture_factory.py` only when a QA-specific source/index fixture is required; preserve existing fixture behavior.
+- Create `tests/test_qa_provider.py`, `tests/test_qa_evidence.py`, `tests/test_qa_runtime.py`.
+- Modify `tests/runtime_fixture_factory.py` only if a focused QA source/index fixture is required.
 
 ### App/API
 
-- Modify `app/api/errors.py` — stable QA input/provider errors.
-- Modify `app/api/models.py` — `QARequest`, `QACitationItem`, `QAResponse`.
-- Modify `app/api/service.py` — inject/create QA provider and add `ask(course_id, question)` projection.
-- Modify `app/api/main.py` — POST QA route, POST CORS allowance, 400/502/503 handlers.
-- Modify `app_tests/test_app_service.py` — service QA projection/error mapping.
-- Modify `app_tests/test_api.py` — POST contract/status semantics.
-- Modify `app_tests/test_api_live.py` — real loopback deterministic QA smoke.
+- Create `app/api/qa_provider_factory.py` — server-side provider selection; `fake` is opt-in for tests/CI only.
+- Modify `app/api/errors.py`, `models.py`, `service.py`, `main.py`.
+- Create `app_tests/test_qa_provider_factory.py`.
+- Modify `app_tests/test_app_service.py`, `test_api.py`, `test_api_live.py`.
 
 ### Web
 
-- Modify `app/web/src/api/types.ts` — typed QA DTOs.
-- Modify `app/web/src/api/client.ts` — request method/body support + `askCourse`.
-- Modify `app/web/src/api/client.test.ts` — POST request contract.
-- Create `app/web/src/pages/QAPage.tsx` — Chinese-first QA UI.
-- Create `app/web/src/pages/QAPage.test.tsx` — QA UI states/citations.
-- Modify `app/web/src/pages/CoursePage.tsx` and `CoursePage.test.tsx` — add “教材问答” entry.
-- Modify `app/web/src/routes/router.tsx` — `/courses/:courseId/qa`.
-- Create `app/web/src/state/qaViewState.ts` and `.test.ts` — short-term return state.
-- Modify `app/web/src/pages/SourcePage.tsx` and `.test.tsx` — QA citation return path without breaking Search/Section return paths.
-- Modify `app/web/src/styles.css` — QA layout and narrow-screen rules only.
+- Modify `app/web/src/api/types.ts`, `client.ts`, `client.test.ts`.
+- Create `app/web/src/pages/QAPage.tsx`, `QAPage.test.tsx`.
+- Modify `CoursePage.tsx`, `CoursePage.test.tsx`, `routes/router.tsx`, `styles.css`.
+- Create `app/web/src/state/qaViewState.ts`, `qaViewState.test.ts`.
+- Modify `SourcePage.tsx`, `SourcePage.test.tsx`.
 
 ### Browser / CI / docs
 
-- Modify `app/web/e2e/functional-analysis.spec.ts` — real textbook QA browser flows using deterministic provider.
-- Modify `.github/workflows/runtime-reference-tests.yml` — compile/run QA Runtime tests and canonical QA smoke.
-- Modify `.github/workflows/app-ui-tests.yml` — include QA service/API tests; browser job remains local-only.
-- Modify `README.md`, `docs/ROADMAP.md`, and `docs/SEARCH_QA.md` after implementation gates are green.
+- Modify `app/web/e2e/functional-analysis.spec.ts`.
+- Modify `.github/workflows/runtime-reference-tests.yml`, `.github/workflows/app-ui-tests.yml`.
+- Modify `README.md`, `docs/ROADMAP.md`, `docs/SEARCH_QA.md` only after implementation gates are green.
 
 ---
 
-### Task 1: Immutable QA Contracts and Deterministic Provider
+### Task 1: Immutable QA Contracts and Provider Boundary
 
 **Files:**
 - Create: `runtime/qa_models.py`
@@ -84,18 +75,22 @@
 - Modify: `runtime/__init__.py`
 
 **Interfaces:**
-- Produces `EvidenceItem`, `EvidencePack`, `ProviderRequest`, `ProviderAnswer`, `QACitation`, `QAResult` dataclasses.
-- Produces `AnswerProvider.answer(request: ProviderRequest) -> ProviderAnswer`.
-- Produces `DeterministicFakeAnswerProvider` for all repository tests/CI/browser acceptance.
-- Produces provider errors `AnswerProviderError`, `AnswerProviderUnavailableError`, `AnswerProviderInvalidResponseError`.
+- `EvidenceItem`, `EvidencePack`, `ProviderRequest`, `ProviderAnswer`, `QACitation`, `QAResult` are frozen dataclasses.
+- `ProviderRequest.from_pack(pack: EvidencePack) -> ProviderRequest` is defined here and used later.
+- `QAResult.generated(...)` and `QAResult.system_notice(...)` constructors are defined here and used by `QARuntime`.
+- `AnswerProvider.answer(request: ProviderRequest) -> ProviderAnswer` is the only provider protocol method.
+- `DeterministicFakeAnswerProvider` is test/CI-only.
+- `UnavailableAnswerProvider` deterministically raises `AnswerProviderUnavailableError` and is the safe default when no real provider exists.
 
 - [ ] **Step 1: Write RED provider-contract tests**
 
-Add tests equivalent to:
-
 ```python
 from runtime.qa_models import EvidenceItem, EvidencePack, ProviderRequest
-from runtime.qa_provider import DeterministicFakeAnswerProvider
+from runtime.qa_provider import (
+    DeterministicFakeAnswerProvider,
+    UnavailableAnswerProvider,
+    AnswerProviderUnavailableError,
+)
 
 
 def evidence(evidence_id: str = "E1") -> EvidenceItem:
@@ -116,7 +111,21 @@ def evidence(evidence_id: str = "E1") -> EvidenceItem:
     )
 
 
-def test_fake_provider_uses_only_supplied_evidence_ids():
+def test_provider_request_is_built_only_from_evidence_pack():
+    pack = EvidencePack(
+        course_id="functional_analysis_course",
+        book_id="stein_shakarchi_functional_analysis_2011",
+        question="Hölder 不等式是什么？",
+        evidence=(evidence(),),
+    )
+    request = ProviderRequest.from_pack(pack)
+    assert request.question == pack.question
+    assert request.evidence == pack.evidence
+    assert not hasattr(request, "repository_root")
+    assert not hasattr(request, "browser_state")
+
+
+def test_fake_provider_cites_only_supplied_ids():
     pack = EvidencePack(
         course_id="functional_analysis_course",
         book_id="stein_shakarchi_functional_analysis_2011",
@@ -126,23 +135,26 @@ def test_fake_provider_uses_only_supplied_evidence_ids():
     result = DeterministicFakeAnswerProvider().answer(ProviderRequest.from_pack(pack))
     assert result.cited_evidence_ids == ("E1",)
     assert "Hölder" in result.answer_text
+
+
+def test_unavailable_provider_fails_explicitly():
+    with pytest.raises(AnswerProviderUnavailableError):
+        UnavailableAnswerProvider().answer(ProviderRequest.from_pack(pack))
 ```
 
-Also assert all dataclasses are frozen and provider request exposes no path/repository/browser fields.
+Use the repository's current unittest style if tests do not use pytest assertions; the behavioral contract above is authoritative.
 
 - [ ] **Step 2: Run RED test**
-
-Run:
 
 ```bash
 python -m unittest tests.test_qa_provider -v
 ```
 
-Expected: import failure because QA contract/provider modules do not exist.
+Expected: import failure because QA modules do not exist.
 
-- [ ] **Step 3: Implement minimal immutable contracts and fake provider**
+- [ ] **Step 3: Implement minimal frozen contracts**
 
-Use frozen dataclasses. Required shapes:
+Required core shapes:
 
 ```python
 @dataclass(frozen=True)
@@ -175,24 +187,30 @@ class ProviderRequest:
     book_id: str
     evidence: tuple[EvidenceItem, ...]
 
+    @classmethod
+    def from_pack(cls, pack: EvidencePack) -> "ProviderRequest":
+        return cls(pack.question, pack.course_id, pack.book_id, pack.evidence)
+
 @dataclass(frozen=True)
 class ProviderAnswer:
     answer_text: str
     cited_evidence_ids: tuple[str, ...]
 ```
 
-`DeterministicFakeAnswerProvider.answer()` must synthesize only from supplied evidence fields and cite deterministic IDs. It must not inspect Runtime, filesystem, environment, or global state.
+`QACitation` contains presentation ID plus canonical source/page/anchor fields. `QAResult` contains `course_id`, `book_id`, `question`, `answer_kind`, `evidence_status`, `answer`, `citations`, with explicit `generated()` and `system_notice()` classmethods.
 
-- [ ] **Step 4: Run GREEN tests and compile**
+- [ ] **Step 4: Implement provider protocol/fake/unavailable provider**
+
+`DeterministicFakeAnswerProvider` may compose a stable answer from the first evidence item's title/content/formula and cite its evidence ID. It must not inspect Runtime/filesystem/environment. `UnavailableAnswerProvider` always raises `AnswerProviderUnavailableError`.
+
+- [ ] **Step 5: Run GREEN tests and compile**
 
 ```bash
 python -m unittest tests.test_qa_provider -v
 python -m compileall -q runtime/qa_models.py runtime/qa_provider.py
 ```
 
-Expected: all provider tests pass; compile exits 0.
-
-- [ ] **Step 5: Commit Task 1**
+- [ ] **Step 6: Commit Task 1**
 
 ```bash
 git add runtime/qa_models.py runtime/qa_provider.py runtime/__init__.py tests/test_qa_provider.py
@@ -201,46 +219,40 @@ git commit -m "feat: add textbook QA provider contracts"
 
 ---
 
-### Task 2: Evidence Retrieval, Sufficiency Policy, Citation Verification, QARuntime
+### Task 2: Deterministic Question Probes and Source-Verified Evidence
 
 **Files:**
 - Create: `runtime/qa_evidence.py`
-- Create: `runtime/qa_runtime.py`
 - Create: `tests/test_qa_evidence.py`
-- Create: `tests/test_qa_runtime.py`
-- Modify: `runtime/__init__.py`
-- Modify: `tests/runtime_fixture_factory.py` only if a focused fixture is needed
+- Modify: `tests/runtime_fixture_factory.py` only if necessary
 
 **Interfaces:**
-- Consumes `CourseRuntime`, `SearchRuntime.from_course(course).search(question, limit=N)`, `SourceResolver(course).resolve(kind, source_id)`.
-- Produces `EvidenceRetriever.retrieve(question, *, limit) -> EvidencePack`.
-- Produces `EvidencePolicy.status(pack) -> Literal["sufficient", "insufficient_evidence"]`.
-- Produces `CitationVerifier.verify(pack, provider_answer) -> tuple[QACitation, ...]`.
-- Produces `QARuntime.from_course(course, provider=...)` and `.answer(question, *, evidence_limit=8) -> QAResult`.
+- `QuestionProbeBuilder.build(question: str) -> tuple[str, ...]`.
+- `EvidenceRetriever.from_course(course)` and `.retrieve(question, *, limit: int) -> EvidencePack`.
+- `EvidencePolicy.status(pack) -> Literal["sufficient", "insufficient_evidence"]`.
+- `CitationVerifier.verify(pack, provider_answer) -> tuple[QACitation, ...]`.
 
-- [ ] **Step 1: Write RED evidence tests**
+- [ ] **Step 1: Write RED probe-builder tests**
 
-Test fixture and real Functional Analysis paths:
+Required deterministic behavior:
 
 ```python
-runtime = EvidenceRetriever.from_course(course)
-pack = runtime.retrieve("Hölder", limit=8)
-assert pack.course_id == "functional_analysis_course"
-assert pack.book_id == "stein_shakarchi_functional_analysis_2011"
-assert pack.evidence
-assert pack.evidence[0].evidence_id == "E1"
-assert pack.evidence[0].source_kind == "object"
+assert QuestionProbeBuilder.build("Hölder 不等式的作用是什么？")[0] == "Hölder 不等式的作用是什么？"
+assert "Hölder" in QuestionProbeBuilder.build("Hölder 不等式的作用是什么？")
+assert "巴拿赫空间" in QuestionProbeBuilder.build("什么是巴拿赫空间？")
+assert len(QuestionProbeBuilder.build("什么是巴拿赫空间？")) <= 24
 ```
 
-Add tests proving:
-- duplicate `(source_kind, source_id)` rows collapse deterministically;
-- each evidence identity resolves through `SourceResolver`;
-- evidence IDs follow final deterministic rank (`E1`, `E2`, ...);
-- unavailable/corrupt search index raises a QA retrieval/unavailable error, not an empty pack;
-- no validated hits or top score `<= 300` yields `insufficient_evidence`;
-- sufficient lexical/title/formula evidence yields `sufficient`.
+Exact algorithm:
+1. preserve the trimmed original question as probe 1;
+2. add unique Latin/alphanumeric tokens of length >= 3 in appearance order;
+3. for each contiguous CJK run, add unique n-grams length 8 down to 2, appearance order within each length;
+4. stop after 24 unique probes;
+5. no model, dictionary, external NLP library, or network call.
 
-- [ ] **Step 2: Run RED evidence tests**
+This bounded probe set is the only Phase 1F refinement over Phase 1E lexical search.
+
+- [ ] **Step 2: Run RED probe test**
 
 ```bash
 python -m unittest tests.test_qa_evidence -v
@@ -248,55 +260,91 @@ python -m unittest tests.test_qa_evidence -v
 
 Expected: import failure for `runtime.qa_evidence`.
 
-- [ ] **Step 3: Implement `EvidenceRetriever` and `EvidencePolicy`**
+- [ ] **Step 3: Implement `QuestionProbeBuilder`**
 
-Implementation rules:
+Use Python stdlib only (`re`, Unicode string handling). Preserve deterministic ordering exactly as tested.
 
-```python
-hits = SearchRuntime.from_course(course).search(question, limit=limit)
-resolver = SourceResolver(course)
-```
+- [ ] **Step 4: Add RED real-evidence tests**
 
-For each hit in order:
-1. skip duplicates by `(hit.source_kind, hit.source_id)`;
-2. resolve again with `resolver.resolve(...)`;
-3. build `EvidenceItem` from resolved server-owned fields plus `hit.score`;
-4. issue evidence IDs after validation/deduplication.
-
-Map `SearchRuntimeError` and source integrity failures to a QA runtime unavailable exception; never convert them to insufficiency.
-
-- [ ] **Step 4: Write RED citation-verifier tests**
-
-Required cases:
+Use the real Functional Analysis course:
 
 ```python
-answer = ProviderAnswer(answer_text="supported", cited_evidence_ids=("E1", "E1"))
-citations = verifier.verify(pack, answer)
-assert [c.evidence_id for c in citations] == ["E1"]
+pack = EvidenceRetriever.from_course(course).retrieve("什么是巴拿赫空间？", limit=8)
+assert pack.course_id == "functional_analysis_course"
+assert pack.book_id == "stein_shakarchi_functional_analysis_2011"
+assert pack.evidence
+assert pack.evidence[0].evidence_id == "E1"
 ```
 
-Also assert:
-- unknown `E99` => `AnswerProviderInvalidResponseError`;
-- non-empty provider answer with zero citations => invalid response;
-- final citation source metadata exactly equals server-owned evidence metadata;
-- final citation is re-resolvable via `SourceResolver`.
+Also verify `Hölder 不等式的作用是什么？` produces source-verified evidence.
 
-- [ ] **Step 5: Implement `CitationVerifier` minimally**
+- [ ] **Step 5: Implement evidence merge/revalidation**
 
-Provider output contributes only `answer_text` and evidence IDs. All `QACitation` fields are copied from the matching `EvidenceItem`; dedupe by evidence ID preserving first occurrence.
+For each probe in order:
 
-- [ ] **Step 6: Write RED QARuntime orchestration tests**
+```python
+hits = SearchRuntime.from_course(course).search(probe, limit=limit)
+```
 
-Required cases:
+Merge candidates by `(source_kind, source_id)`. For duplicates retain the candidate with highest `hit.score`; ties prefer earlier probe index then earlier hit rank. Final sort is `score desc`, `probe_index asc`, `hit_rank asc`, then canonical source key. Re-resolve every retained candidate through `SourceResolver` before creating evidence. Issue `E1`, `E2`, ... only after final validation/sort.
+
+Search/index/source trust-path exceptions must raise a QA unavailable/runtime exception, never an empty evidence pack.
+
+- [ ] **Step 6: Add RED sufficiency and citation tests**
+
+Cover:
+- no validated evidence -> `insufficient_evidence`;
+- highest retained score `<= 300` -> `insufficient_evidence`;
+- title/formula/concept match above that threshold -> `sufficient`;
+- duplicate cited IDs dedupe preserving first occurrence;
+- unknown `E99` -> `AnswerProviderInvalidResponseError`;
+- non-empty generated answer with zero citations -> invalid response;
+- every final citation is copied from server-owned evidence and remains resolvable through `SourceResolver`.
+
+- [ ] **Step 7: Implement `EvidencePolicy` and `CitationVerifier`**
+
+Provider output supplies only answer text and evidence IDs. Never accept provider-supplied pages/anchors/source IDs.
+
+- [ ] **Step 8: Run Task 2 GREEN gates**
+
+```bash
+python -m unittest tests.test_qa_evidence tests.test_search_runtime tests.test_source_resolver -v
+python -m compileall -q runtime/qa_evidence.py
+```
+
+- [ ] **Step 9: Commit Task 2**
+
+```bash
+git add runtime/qa_evidence.py tests/test_qa_evidence.py tests/runtime_fixture_factory.py
+git commit -m "feat: add deterministic textbook QA evidence retrieval"
+```
+
+---
+
+### Task 3: QARuntime Orchestration
+
+**Files:**
+- Create: `runtime/qa_runtime.py`
+- Create: `tests/test_qa_runtime.py`
+- Modify: `runtime/__init__.py`
+
+**Interfaces:**
+- Consumes `EvidenceRetriever`, `EvidencePolicy`, `CitationVerifier`, `AnswerProvider`.
+- Produces `QARuntime.from_course(course, provider=provider)`.
+- Produces `QARuntime.answer(question, *, evidence_limit=8) -> QAResult`.
+
+- [ ] **Step 1: Write RED orchestration tests**
+
+Cover:
 - blank question rejected;
 - >1000 Unicode code points rejected;
-- `evidence_limit` outside 1..12 rejected;
-- insufficient evidence does **not** call provider;
-- insufficient result has `answer_kind="system_notice"` and stable Chinese non-assertive message;
-- sufficient fake-provider result has `answer_kind="generated"`, verified citations, canonical course/book identity;
-- provider unavailable and invalid provider response stay distinguishable.
+- `evidence_limit` outside integer 1..12 rejected;
+- insufficient evidence does not call provider;
+- insufficient result is `answer_kind="system_notice"`, `evidence_status="insufficient_evidence"`, stable Chinese non-assertive message;
+- sufficient fake-provider answer is `answer_kind="generated"`, has verified citation(s), canonical course/book identity;
+- provider unavailable and provider invalid response remain distinct exceptions.
 
-Use a spy provider to assert no call on insufficient evidence:
+Spy provider:
 
 ```python
 class FailIfCalledProvider:
@@ -304,43 +352,54 @@ class FailIfCalledProvider:
         raise AssertionError("provider must not be called")
 ```
 
-- [ ] **Step 7: Implement `QARuntime` orchestration**
+- [ ] **Step 2: Run RED runtime test**
 
-Keep orchestration small:
+```bash
+python -m unittest tests.test_qa_runtime -v
+```
+
+- [ ] **Step 3: Implement minimal orchestration**
 
 ```python
-question = validate_question(...)
+question = validate_question(question)
 pack = self._retriever.retrieve(question, limit=evidence_limit)
 status = self._policy.status(pack)
 if status == "insufficient_evidence":
-    return QAResult.system_notice(...)
+    return QAResult.system_notice(
+        course_id=pack.course_id,
+        book_id=pack.book_id,
+        question=pack.question,
+        answer="现有教材证据不足，暂不能给出可靠回答。",
+        citations=(),
+    )
 provider_answer = self._provider.answer(ProviderRequest.from_pack(pack))
 citations = self._verifier.verify(pack, provider_answer)
 return QAResult.generated(...)
 ```
 
-- [ ] **Step 8: Run Task 2 GREEN gates**
+Do not catch and collapse provider/retrieval exceptions here unless mapping to a more specific QA Runtime exception.
+
+- [ ] **Step 4: Run Task 3 GREEN gates**
 
 ```bash
-python -m unittest tests.test_qa_evidence tests.test_qa_runtime tests.test_qa_provider -v
-python -m unittest tests.test_search_runtime tests.test_source_resolver -v
+python -m unittest tests.test_qa_provider tests.test_qa_evidence tests.test_qa_runtime -v
 python -m compileall -q runtime/qa_models.py runtime/qa_provider.py runtime/qa_evidence.py runtime/qa_runtime.py
 ```
 
-Expected: zero failures.
-
-- [ ] **Step 9: Commit Task 2**
+- [ ] **Step 5: Commit Task 3**
 
 ```bash
-git add runtime/qa_evidence.py runtime/qa_runtime.py runtime/__init__.py tests/test_qa_evidence.py tests/test_qa_runtime.py tests/runtime_fixture_factory.py
+git add runtime/qa_runtime.py runtime/__init__.py tests/test_qa_runtime.py
 git commit -m "feat: add source-verified textbook QA runtime"
 ```
 
 ---
 
-### Task 3: Stable App Service and POST QA API
+### Task 4: Safe Provider Selection, Stable App Service, and POST API
 
 **Files:**
+- Create: `app/api/qa_provider_factory.py`
+- Create: `app_tests/test_qa_provider_factory.py`
 - Modify: `app/api/errors.py`
 - Modify: `app/api/models.py`
 - Modify: `app/api/service.py`
@@ -350,36 +409,45 @@ git commit -m "feat: add source-verified textbook QA runtime"
 - Modify: `app_tests/test_api_live.py`
 
 **Interfaces:**
-- Consumes `QARuntime` and a configured `AnswerProvider`.
-- Produces `BookAppService.ask(course_id: str, question: str) -> QAResponse`.
-- Produces `POST /api/courses/{course_id}/qa` with JSON `{"question": "..."}`.
+- `provider_from_environment() -> AnswerProvider`.
+- `BookAppService(repository_root, *, qa_provider: AnswerProvider | None = None)`; if omitted, service uses `UnavailableAnswerProvider` rather than fake.
+- `BookAppService.ask(course_id: str, question: str) -> QAResponse`.
+- `POST /api/courses/{course_id}/qa` body `{"question":"..."}`.
 
-- [ ] **Step 1: Write RED service tests**
+- [ ] **Step 1: Write RED provider-factory tests**
 
-Add stable DTO assertions:
+Contract:
 
 ```python
-response = service.ask("functional_analysis_course", "Hölder")
+monkeypatch.delenv("BOOK_QA_PROVIDER", raising=False)
+assert isinstance(provider_from_environment(), UnavailableAnswerProvider)
+
+monkeypatch.setenv("BOOK_QA_PROVIDER", "fake")
+assert isinstance(provider_from_environment(), DeterministicFakeAnswerProvider)
+```
+
+Unknown values must resolve to unavailable or raise a stable startup/config error; never silently choose fake. If unittest style is used, patch `os.environ` with `unittest.mock.patch.dict`.
+
+- [ ] **Step 2: Implement provider factory**
+
+Only `BOOK_QA_PROVIDER=fake` activates fake. No external vendor adapter is added in Phase 1F. `default_service()` in `main.py` obtains its provider from this server-side factory.
+
+- [ ] **Step 3: Write RED service tests**
+
+With injected fake provider:
+
+```python
+response = service.ask("functional_analysis_course", "什么是巴拿赫空间？")
 assert response.answer_kind == "generated"
 assert response.evidence_status == "sufficient"
-assert response.citations[0].source_kind == "object"
+assert response.citations
 ```
 
-Inject `DeterministicFakeAnswerProvider` through `BookAppService` constructor or a narrow provider factory. Do not make service tests rely on environment/API keys.
+With default/unavailable provider and sufficient evidence, assert stable provider-unavailable App error. With insufficient evidence, assert HTTP/product path remains 200 and does not touch provider.
 
-Add mapping tests for invalid question, QA retrieval unavailable, provider unavailable, invalid provider output.
+- [ ] **Step 4: Implement DTOs and service projection**
 
-- [ ] **Step 2: Run RED service tests**
-
-```bash
-python -m unittest app_tests.test_app_service -v
-```
-
-Expected: new QA tests fail because `ask`/DTO/errors are absent; existing tests remain green.
-
-- [ ] **Step 3: Implement API DTOs and service projection**
-
-Add Pydantic types:
+Pydantic DTOs:
 
 ```python
 class QARequest(BaseModel):
@@ -408,29 +476,27 @@ class QAResponse(BaseModel):
     citations: list[QACitationItem]
 ```
 
-Use stable App errors rather than exposing Runtime/provider exception text.
+Map Runtime/provider exceptions to stable App errors without leaking detail to the client.
 
-- [ ] **Step 4: Write RED HTTP tests**
+- [ ] **Step 5: Write RED HTTP tests**
 
-Required HTTP behavior:
+Required semantics:
 
 ```text
-POST valid question                    -> 200 QAResponse
-POST insufficient question             -> 200, insufficient_evidence
-POST blank/overlong                     -> 400 invalid_qa_question
-POST unknown course                     -> 404 course_not_found
-retrieval/source trust failure          -> 503 qa_unavailable
-provider unavailable                    -> 503 qa_provider_unavailable
-provider invalid response/citation      -> 502 qa_provider_invalid_response
+valid + fake provider                    -> 200 sufficient/generated
+insufficient question                    -> 200 insufficient_evidence/system_notice
+blank or >1000 chars                     -> 400 invalid_qa_question
+unknown course                            -> 404 course_not_found
+search/index/source trust failure         -> 503 qa_unavailable
+provider unavailable                      -> 503 qa_provider_unavailable
+invalid provider response/citation        -> 502 qa_provider_invalid_response
 ```
 
-Also verify request body validation is projected into the chosen stable 400 contract rather than leaking FastAPI/Pydantic internals.
+Malformed/missing request bodies must follow a stable user-facing 400 contract rather than exposing raw Pydantic details.
 
-- [ ] **Step 5: Implement POST route and CORS**
+- [ ] **Step 6: Implement POST route and CORS**
 
-Update `allow_methods` from GET-only to exactly the local methods now required, e.g. `['GET', 'POST']`.
-
-Route:
+Change local CORS from GET-only to exactly `['GET', 'POST']`; keep localhost/127.0.0.1 origins unchanged.
 
 ```python
 @app.post("/api/courses/{course_id}/qa", response_model=QAResponse)
@@ -438,31 +504,27 @@ def qa(course_id: str, payload: QARequest, service: BookAppService = Depends(get
     return service.ask(course_id, payload.question)
 ```
 
-Keep `127.0.0.1` / localhost origin restriction unchanged.
+- [ ] **Step 7: Add real loopback deterministic QA smoke**
 
-- [ ] **Step 6: Add real loopback deterministic QA smoke**
+Launch with `BOOK_QA_PROVIDER=fake` and assert a real Functional Analysis natural-language question returns canonical citation data.
 
-Use Uvicorn/live test path and assert a real Functional Analysis query returns at least one verified citation. The test provider remains deterministic and local.
-
-- [ ] **Step 7: Run Task 3 GREEN gates**
+- [ ] **Step 8: Run Task 4 GREEN gates**
 
 ```bash
-python -m unittest app_tests.test_app_service app_tests.test_api app_tests.test_api_live -v
+python -m unittest app_tests.test_qa_provider_factory app_tests.test_app_service app_tests.test_api app_tests.test_api_live -v
 python -m unittest tests.test_qa_provider tests.test_qa_evidence tests.test_qa_runtime -v
 ```
 
-Expected: zero failures.
-
-- [ ] **Step 8: Commit Task 3**
+- [ ] **Step 9: Commit Task 4**
 
 ```bash
-git add app/api/errors.py app/api/models.py app/api/service.py app/api/main.py app_tests/test_app_service.py app_tests/test_api.py app_tests/test_api_live.py
-git commit -m "feat: expose source-verified textbook QA api"
+git add app/api app_tests/test_qa_provider_factory.py app_tests/test_app_service.py app_tests/test_api.py app_tests/test_api_live.py
+git commit -m "feat: expose trusted textbook QA api"
 ```
 
 ---
 
-### Task 4: Typed Web Client and Chinese-first QA Page
+### Task 5: Typed Web Client and Chinese-first QA Page
 
 **Files:**
 - Modify: `app/web/src/api/types.ts`
@@ -476,69 +538,51 @@ git commit -m "feat: expose source-verified textbook QA api"
 - Modify: `app/web/src/styles.css`
 
 **Interfaces:**
-- Produces `bookApi.askCourse(courseId, question) -> Promise<QAResponse>`.
-- Produces route `/courses/:courseId/qa`.
+- `bookApi.askCourse(courseId: string, question: string): Promise<QAResponse>`.
+- Route `/courses/:courseId/qa`.
 - Citation links reuse `/courses/:courseId/sources/:sourceKind/:sourceId`.
 
-- [ ] **Step 1: Write RED typed-client test**
-
-Assert exact request method/body:
+- [ ] **Step 1: Write RED client test**
 
 ```ts
-await bookApi.askCourse('functional_analysis_course', 'Hölder 是什么？')
+await bookApi.askCourse('functional_analysis_course', '什么是巴拿赫空间？')
 expect(fetch).toHaveBeenCalledWith(
   '/api/courses/functional_analysis_course/qa',
   expect.objectContaining({
     method: 'POST',
     headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
-    body: JSON.stringify({ question: 'Hölder 是什么？' }),
+    body: JSON.stringify({ question: '什么是巴拿赫空间？' }),
   }),
 )
 ```
 
-- [ ] **Step 2: Run RED client test**
+- [ ] **Step 2: Extend request helper without regressing GET**
 
-```bash
-cd app/web && npm test -- --run src/api/client.test.ts
-```
+Change `request<T>(path)` to accept a narrow optional `RequestInit`; merge `Accept: application/json` with POST content-type. Existing GET calls keep identical URLs/error parsing.
 
-Expected: failure because request helper/`askCourse` supports GET only.
-
-- [ ] **Step 3: Extend request helper without regressing GET calls**
-
-Use a narrow optional `RequestInit` path. GET callers continue to send only `Accept`; POST sends `Accept`, `Content-Type: application/json`, method, and JSON body. Preserve stable `ApiError` parsing.
-
-- [ ] **Step 4: Write RED QAPage tests**
+- [ ] **Step 3: Write RED QAPage tests**
 
 Cover:
-- initial empty question state does not issue API request;
-- submit -> loading status;
-- generated result shows persistent label `AI 生成回答，依据下方教材来源`;
-- `system_notice` insufficient result does not show generated label;
-- citations render title/page metadata and source link from `source_kind + source_id`;
-- `qa_unavailable`, `qa_provider_unavailable`, and `qa_provider_invalid_response` show stable user-facing error state;
-- course page has `教材问答` link;
-- route resolves QAPage.
+- empty initial state does not request;
+- submit -> loading;
+- generated result shows persistent `AI 生成回答，依据下方教材来源`;
+- `system_notice`/insufficient result does not show generated label;
+- citations show source/page metadata and use `source_kind + source_id` link;
+- `qa_unavailable`, `qa_provider_unavailable`, `qa_provider_invalid_response` render stable error state;
+- Course page has `教材问答` link;
+- router resolves QAPage.
 
-- [ ] **Step 5: Run RED page tests**
+- [ ] **Step 4: Implement typed QA DTOs and page**
 
-```bash
-cd app/web && npm test -- --run src/pages/QAPage.test.tsx src/pages/CoursePage.test.tsx
-```
-
-Expected: QAPage/module/entry tests fail only for missing Phase 1F UI.
-
-- [ ] **Step 6: Implement QAPage and typed DTOs**
-
-Keep page state explicit:
+State machine:
 
 ```text
 empty -> loading -> sufficient | insufficient_evidence | error
 ```
 
-Do not call QA on every keystroke. Submit only on form submit. Disable duplicate submission while loading. Do not call generated answer “教材原文”.
+Submit only on form submit, not on keystroke. Disable duplicate submit while loading. Never label generated prose as textbook original text.
 
-- [ ] **Step 7: Run Web GREEN gates**
+- [ ] **Step 5: Run Web GREEN gates**
 
 ```bash
 cd app/web
@@ -547,9 +591,7 @@ npm run typecheck
 npm run build
 ```
 
-Expected: all unit tests, TypeScript, and Vite/PWA build pass.
-
-- [ ] **Step 8: Commit Task 4**
+- [ ] **Step 6: Commit Task 5**
 
 ```bash
 git add app/web/src/api app/web/src/pages/QAPage.tsx app/web/src/pages/QAPage.test.tsx app/web/src/pages/CoursePage.tsx app/web/src/pages/CoursePage.test.tsx app/web/src/routes/router.tsx app/web/src/styles.css
@@ -558,7 +600,7 @@ git commit -m "feat: add textbook QA page"
 
 ---
 
-### Task 5: QA → Source → Return Context
+### Task 6: QA → Source → Return Context
 
 **Files:**
 - Create: `app/web/src/state/qaViewState.ts`
@@ -569,56 +611,40 @@ git commit -m "feat: add textbook QA page"
 - Modify: `app/web/src/pages/SourcePage.test.tsx`
 
 **Interfaces:**
-- Produces `saveQAViewState(courseId, state)`, `loadQAViewState(courseId)`, `clearQAViewState(courseId)`.
-- State shape: `{ route, question, scrollY, activeCitationKey }` only.
-- `activeCitationKey` is canonical `${source_kind}:${source_id}` so SourcePage can match without cached answer payloads.
+- `saveQAViewState`, `loadQAViewState`, `clearQAViewState`.
+- Stored shape only `{ route, question, scrollY, activeCitationKey }`.
+- `activeCitationKey = `${source_kind}:${source_id}``.
 
 - [ ] **Step 1: Write RED state-helper tests**
 
-Assert:
-- namespaced key `book:qa-view:${courseId}`;
-- JSON corruption returns `null` and does not crash;
-- invalid shape returns `null`;
-- helper stores only `route/question/scrollY/activeCitationKey`.
+Assert key `book:qa-view:${courseId}`, corrupt/invalid JSON -> `null`, and no full answer/citation arrays are accepted or persisted.
 
-- [ ] **Step 2: Run RED helper test**
+- [ ] **Step 2: Implement helper matching `searchViewState` validation style**
 
-```bash
-cd app/web && npm test -- --run src/state/qaViewState.test.ts
-```
+Do not refactor unrelated state modules.
 
-Expected: module missing.
-
-- [ ] **Step 3: Implement minimal QA state helper**
-
-Match existing `searchViewState` validation style; do not generalize unrelated state helpers.
-
-- [ ] **Step 4: Write RED QAPage/SourcePage return tests**
+- [ ] **Step 3: Write RED return-flow tests**
 
 Required behavior:
-1. clicking citation first saves current QA route, question, `window.scrollY`, canonical source key;
-2. SourcePage detects matching QA state and renders button `返回问答`;
-3. matching QA state has priority over stale matching Search state because the current source was entered from QA;
-4. clicking `返回问答` navigates to saved QA route;
-5. QAPage re-runs `askCourse` from saved question, then restores scroll and marks matching citation `aria-current="true"`;
-6. full QA result is not stored in sessionStorage;
-7. if no QA match exists, existing Search return behavior remains unchanged;
-8. if neither QA nor Search matches, existing Section return behavior remains unchanged.
+1. citation click saves QA route/question/scroll/source key before navigation;
+2. matching SourcePage shows `返回问答`;
+3. matching QA state takes precedence over stale matching Search state;
+4. click returns to saved QA route;
+5. QAPage re-runs `askCourse` from saved question, restores scroll, and marks the originating citation `aria-current="true"`;
+6. answer/citation payloads are not stored in sessionStorage;
+7. without QA match, existing Search return still works;
+8. without QA/Search match, existing Section return still works.
 
-- [ ] **Step 5: Implement return flow**
-
-SourcePage matching priority:
+- [ ] **Step 4: Implement SourcePage priority**
 
 ```text
-matching QA state -> 返回问答
-matching Search state -> 返回搜索
-matching Section state -> 返回学习
-fallback -> Course/Section behavior already defined
+matching QA -> 返回问答
+matching Search -> 返回搜索
+matching Section -> 返回学习
+existing fallback otherwise
 ```
 
-Do not create a second source page.
-
-- [ ] **Step 6: Run Task 5 GREEN gates**
+- [ ] **Step 5: Run Task 6 GREEN gates**
 
 ```bash
 cd app/web
@@ -627,9 +653,7 @@ npm run typecheck
 npm run build
 ```
 
-Expected: all QA/Search/Source/Section unit tests remain green.
-
-- [ ] **Step 7: Commit Task 5**
+- [ ] **Step 6: Commit Task 6**
 
 ```bash
 git add app/web/src/state/qaViewState.ts app/web/src/state/qaViewState.test.ts app/web/src/pages/QAPage.tsx app/web/src/pages/QAPage.test.tsx app/web/src/pages/SourcePage.tsx app/web/src/pages/SourcePage.test.tsx
@@ -638,7 +662,7 @@ git commit -m "feat: restore textbook QA source context"
 
 ---
 
-### Task 6: Real Browser Acceptance and CI Hardening
+### Task 7: Real Browser Acceptance and CI Hardening
 
 **Files:**
 - Modify: `app/web/e2e/functional-analysis.spec.ts`
@@ -646,45 +670,43 @@ git commit -m "feat: restore textbook QA source context"
 - Modify: `.github/workflows/app-ui-tests.yml`
 
 **Interfaces:**
-- Browser tests use real Functional Analysis assets and the deterministic local provider.
-- CI must verify QA trust logic without external network/model dependencies.
+- Browser/API acceptance explicitly sets `BOOK_QA_PROVIDER=fake` for the local test API process.
+- Normal runtime without that opt-in remains provider-unavailable.
 
-- [ ] **Step 1: Add Playwright acceptance cases**
+- [ ] **Step 1: Add Playwright cases**
 
-Add cases for:
-- English question with real theorem evidence (`Hölder`-based query);
-- Chinese question with real textbook evidence;
-- clearly nonexistent question returns normal `insufficient_evidence`, not alert/error;
-- QA citation -> existing source page -> `返回问答` -> question/citation context restored;
+Use real Functional Analysis assets:
+- English natural-language theorem question containing `Hölder`;
+- Chinese natural-language question containing `巴拿赫空间`;
+- clearly nonexistent question -> normal `insufficient_evidence`, not alert/error;
+- QA citation -> existing SourcePage -> `返回问答` -> context restored;
 - 390×844 QA/source round trip has `scrollWidth <= clientWidth`.
 
-For generated results, assert the UI label and canonical source route, not exact natural-language wording beyond the deterministic fake-provider contract.
+Assert the generated-label/canonical route, not free-form wording beyond deterministic fake-provider guarantees.
 
-- [ ] **Step 2: Run local E2E gate**
+- [ ] **Step 2: Run local E2E with fake provider explicitly enabled**
 
-Start API and Vite exactly as current workflow does, then:
+API process:
+
+```bash
+BOOK_QA_PROVIDER=fake python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000
+```
+
+Then:
 
 ```bash
 cd app/web && npm run e2e
 ```
 
-Expected: existing 5 Phase 1D/1E tests plus new QA cases all pass.
-
 - [ ] **Step 3: Harden Runtime workflow**
 
-Extend compile/test commands to include `qa_models.py`, `qa_provider.py`, `qa_evidence.py`, `qa_runtime.py`, and QA unit modules. Add a canonical Functional Analysis smoke that:
-- opens real course;
-- answers a known query through deterministic provider;
-- obtains `sufficient` and at least one citation;
-- asks a nonexistent query and obtains `insufficient_evidence` without provider call.
-
-Ensure QA workflow paths trigger when QA files and canonical search/source assets change.
+Compile QA modules and run QA unit tests on Python 3.11/3.12/3.13. Add canonical smoke for one sufficient natural-language question and one insufficient question. Trigger on QA files plus canonical search/source assets.
 
 - [ ] **Step 4: Harden App UI workflow**
 
-App API job must run QA service/API tests. Browser job keeps localhost API + Vite + Chromium only. No provider secrets/environment variables are required.
+App/API job includes provider-factory/service/API QA tests. Browser job sets `BOOK_QA_PROVIDER=fake` only for the local API process; no secrets are required.
 
-- [ ] **Step 5: Commit Task 6**
+- [ ] **Step 5: Commit Task 7**
 
 ```bash
 git add app/web/e2e/functional-analysis.spec.ts .github/workflows/runtime-reference-tests.yml .github/workflows/app-ui-tests.yml
@@ -693,31 +715,18 @@ git commit -m "ci: gate source-verified textbook QA"
 
 ---
 
-### Task 7: Documentation, Full Regression, and PR Readiness
+### Task 8: Documentation, Full Regression, and PR Readiness
 
 **Files:**
 - Modify: `README.md`
 - Modify: `docs/ROADMAP.md`
 - Modify: `docs/SEARCH_QA.md`
 
-**Interfaces:**
-- No new runtime interfaces. This task documents only behavior proven by Tasks 1-6.
+- [ ] **Step 1: Update docs only for verified behavior**
 
-- [ ] **Step 1: Update documentation after code gates are green**
+Document trusted evidence flow, deterministic lexical probes, generated/system-notice distinction, provider-agnostic boundary, fake-provider CI behavior, default provider-unavailable behavior, QA → Source → Return, and explicit non-goals. Do not claim a real external model adapter exists.
 
-Document:
-- Phase 1F trusted QA architecture;
-- deterministic evidence retrieval and citation verification;
-- explicit generated vs system-notice distinction;
-- provider-agnostic design and deterministic CI provider;
-- QA → Source → Return;
-- explicit non-goals: no cross-course QA, no embeddings/vector DB, no StudyRecord/history, no generated textbook writes.
-
-Update ROADMAP Phase 1F checklist only for behavior actually verified. Set the next mainline to Phase 1G long-term StudyRecord only after all final verification gates pass.
-
-- [ ] **Step 2: Run full Python verification**
-
-Run the exact Runtime/App suites used by workflows, including:
+- [ ] **Step 2: Run full Python QA/App verification**
 
 ```bash
 python -m unittest \
@@ -726,12 +735,13 @@ python -m unittest \
   tests.test_qa_runtime \
   tests.test_search_runtime \
   tests.test_source_resolver \
+  app_tests.test_qa_provider_factory \
   app_tests.test_app_service \
   app_tests.test_api \
   app_tests.test_api_live -v
 ```
 
-Then run the repository's existing broader Runtime reference test command from `.github/workflows/runtime-reference-tests.yml` on Python 3.11, 3.12 and 3.13 through GitHub Actions.
+Then require the repository Runtime workflow green on Python 3.11/3.12/3.13.
 
 - [ ] **Step 3: Run full Web verification**
 
@@ -744,11 +754,9 @@ npm run build
 npm run e2e
 ```
 
-Expected: zero failures and browser acceptance includes all existing Search/Section cases plus new QA cases.
-
 - [ ] **Step 4: Verify canonical Functional Analysis invariants**
 
-Confirm existing completion/runtime checks still report:
+Require:
 
 ```text
 STRUCTURED_COMPLETE / RUNTIME_READY
@@ -757,28 +765,19 @@ STRUCTURED_COMPLETE / RUNTIME_READY
 1493 unique search records
 ```
 
-Phase 1F must not modify `books/functional-analysis/**` structured textbook assets.
+`books/functional-analysis/**` must have zero changes.
 
-- [ ] **Step 5: Compare branch to main and inspect scope**
+- [ ] **Step 5: Compare branch to `main` and inspect scope**
 
-Expected differences are QA Runtime/API/Web/tests/CI/docs only. Reject unrelated changes or modifications to canonical textbook assets.
+Allowed scope: QA Runtime/API/Web/tests/CI/docs only. Reject unrelated refactors or canonical textbook-asset modifications.
 
-- [ ] **Step 6: Commit documentation**
+- [ ] **Step 6: Commit docs**
 
 ```bash
 git add README.md docs/ROADMAP.md docs/SEARCH_QA.md
 git commit -m "docs: document Phase 1F textbook QA"
 ```
 
-- [ ] **Step 7: Fresh PR-readiness verification**
+- [ ] **Step 7: Fresh final verification before PR**
 
-Before claiming completion or opening the PR:
-- re-run/fetch fresh GitHub Actions on the final head;
-- require Runtime reference tests success;
-- require App API success;
-- require Web unit/typecheck/build success;
-- require Chromium acceptance success;
-- verify branch head did not move after the validated SHA;
-- verify no textbook structured asset changed.
-
-Only after that evidence, create a PR from `feature/textbook-qa-phase-1f` to `main`.
+On the final head, require fresh Runtime reference success, App API success, Web unit/typecheck/build success, Chromium acceptance success, unchanged validated head SHA, and zero textbook asset changes. Only then open a PR from `feature/textbook-qa-phase-1f` to `main`.
