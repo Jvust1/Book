@@ -6,8 +6,14 @@ from pathlib import Path
 from typing import cast
 
 from runtime import (
+    AnswerProvider,
+    AnswerProviderInvalidResponseError,
+    AnswerProviderUnavailableError,
     LibraryRuntime,
     LibraryRuntimeError,
+    QAEvidenceUnavailableError,
+    QARuntime,
+    QAQuestionError,
     SearchQueryError,
     SearchRuntime,
     SearchRuntimeError,
@@ -15,6 +21,7 @@ from runtime import (
     SectionLearningRuntimeError,
     SourceResolutionError,
     SourceResolver,
+    UnavailableAnswerProvider,
 )
 from runtime.book_runtime import RuntimeSection
 from runtime.course_runtime import CourseRuntime
@@ -23,7 +30,9 @@ from .errors import (
     AppNotFoundError,
     AppUnavailableError,
     InvalidModeError,
+    InvalidQAQuestionError,
     InvalidSearchQueryError,
+    QAProviderInvalidResponseError,
 )
 from .models import (
     ChapterCard,
@@ -34,6 +43,8 @@ from .models import (
     LibraryResponse,
     ModeItem,
     ModeResponse,
+    QACitationItem,
+    QAResponse,
     SearchResponse,
     SearchResultItem,
     SectionCard,
@@ -50,8 +61,14 @@ VALID_MODES = frozenset({"preview", "learn", "review", "practice"})
 class BookAppService:
     """Stable App-facing DTO boundary around Library/Course/Book runtimes."""
 
-    def __init__(self, repository_root: Path):
+    def __init__(
+        self,
+        repository_root: Path,
+        *,
+        qa_provider: AnswerProvider | None = None,
+    ):
         self.repository_root = Path(repository_root).resolve()
+        self._qa_provider: AnswerProvider = qa_provider or UnavailableAnswerProvider()
         try:
             self._library = LibraryRuntime.open(
                 self.repository_root / "library",
@@ -225,6 +242,60 @@ class BookAppService:
             query=str(query).strip(),
             result_count=len(results),
             results=results,
+        )
+
+    def ask(self, course_id: str, question: str) -> QAResponse:
+        course = self._course(course_id)
+        try:
+            result = QARuntime.from_course(course, provider=self._qa_provider).answer(question)
+        except QAQuestionError as exc:
+            raise InvalidQAQuestionError(
+                code="invalid_qa_question",
+                user_message="提问内容无效",
+                detail=str(exc),
+            ) from exc
+        except QAEvidenceUnavailableError as exc:
+            raise AppUnavailableError(
+                code="qa_unavailable",
+                user_message="教材问答暂不可用",
+                detail=str(exc),
+            ) from exc
+        except AnswerProviderUnavailableError as exc:
+            raise AppUnavailableError(
+                code="qa_provider_unavailable",
+                user_message="教材问答模型暂不可用",
+                detail=str(exc),
+            ) from exc
+        except AnswerProviderInvalidResponseError as exc:
+            raise QAProviderInvalidResponseError(
+                code="qa_provider_invalid_response",
+                user_message="教材问答结果校验失败",
+                detail=str(exc),
+            ) from exc
+
+        return QAResponse(
+            course_id=result.course_id,
+            book_id=result.book_id,
+            question=result.question,
+            answer_kind=result.answer_kind,
+            evidence_status=result.evidence_status,
+            answer=result.answer,
+            citations=[
+                QACitationItem(
+                    citation_id=row.citation_id,
+                    evidence_id=row.evidence_id,
+                    source_kind=row.source_kind,
+                    source_id=row.source_id,
+                    object_type=row.object_type,
+                    number=row.number,
+                    title_zh=row.title_zh,
+                    title_en=row.title_en,
+                    source_anchor=row.source_anchor,
+                    pdf_page=row.pdf_page,
+                    printed_page=row.printed_page,
+                )
+                for row in result.citations
+            ],
         )
 
     def source(self, course_id: str, kind: str, source_id: str) -> SourceResponse:
