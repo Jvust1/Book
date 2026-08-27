@@ -9,6 +9,7 @@ from runtime.book_runtime import BookRuntime, BookRuntimeBlockedError
 from tests.test_search_identity_replay import SearchIdentityReplayDiagnostics  # noqa: F401
 from tests.test_search_recovery_diagnostics import SearchRecoveryDiagnostics  # noqa: F401
 from tools import rebuild_runtime_artifacts as rebuild
+from tools import recover_functional_analysis_search as fa_search_recovery
 
 
 class BookRuntimeTests(unittest.TestCase):
@@ -25,9 +26,14 @@ class BookRuntimeTests(unittest.TestCase):
         if not root.exists():
             self.skipTest("repository fixture not present")
 
-        _, report = rebuild.rebuild_search_index(root)
+        _, report = fa_search_recovery.recover_search_index(root)
 
+        self.assertEqual(report["pre_tail_unique_count"], 1396)
         self.assertEqual(report["record_count"], 1493)
+        self.assertEqual(report["legacy_complete_normalized_count"], 7)
+        self.assertEqual(report["legacy_complete_collision_count"], 6)
+        self.assertEqual(report["v05_frontmatter_added"], 5)
+        self.assertEqual(set(report["v05_frontmatter_excluded"]), {"series_page", "copyright"})
         self.assertTrue(report["all_unique"])
         self.assertEqual(report["without_source_anchor"], [])
         self.assertTrue(report["promotable_by_count_and_anchor"])
