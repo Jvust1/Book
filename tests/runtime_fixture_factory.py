@@ -23,6 +23,7 @@ def write_ready_book(
     book_id: str,
     readiness: str = "READY",
     objects: list[dict[str, object]] | None = None,
+    figures: list[dict[str, object]] | None = None,
 ) -> None:
     root.mkdir(parents=True, exist_ok=True)
     dump_json(
@@ -98,6 +99,7 @@ def write_ready_book(
                 }
             ],
             "key_objects": objects or [],
+            "figure_anchors": figures or [],
         },
     )
     (root / "chunk_001a_translation_zh.md").write_text("# 测试学习层\n", encoding="utf-8")
