@@ -21,6 +21,14 @@ from .library_runtime import (
     LibraryRuntimeBlockedError,
     LibraryRuntimeError,
 )
+from .qa_evidence import (
+    CitationVerifier,
+    EvidencePolicy,
+    EvidenceRetriever,
+    QAEvidenceError,
+    QAEvidenceUnavailableError,
+    QuestionProbeBuilder,
+)
 from .qa_models import (
     AnswerKind,
     EvidenceItem,
@@ -39,6 +47,7 @@ from .qa_provider import (
     DeterministicFakeAnswerProvider,
     UnavailableAnswerProvider,
 )
+from .qa_runtime import QARuntime, QARuntimeError, QAQuestionError
 from .section_learning_runtime import (
     SectionLearningModeError,
     SectionLearningRuntime,
@@ -76,6 +85,12 @@ __all__ = [
     "LibraryRuntime",
     "LibraryRuntimeBlockedError",
     "LibraryRuntimeError",
+    "CitationVerifier",
+    "EvidencePolicy",
+    "EvidenceRetriever",
+    "QAEvidenceError",
+    "QAEvidenceUnavailableError",
+    "QuestionProbeBuilder",
     "AnswerKind",
     "EvidenceItem",
     "EvidencePack",
@@ -90,6 +105,9 @@ __all__ = [
     "AnswerProviderUnavailableError",
     "DeterministicFakeAnswerProvider",
     "UnavailableAnswerProvider",
+    "QARuntime",
+    "QARuntimeError",
+    "QAQuestionError",
     "SectionLearningModeError",
     "SectionLearningRuntime",
     "SectionLearningRuntimeError",
