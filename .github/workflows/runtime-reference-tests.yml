@@ -8,6 +8,7 @@ on:
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
       - "tools/recover_functional_analysis_page_map.py"
+      - "books/functional-analysis/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
   pull_request:
@@ -17,6 +18,7 @@ on:
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
       - "tools/recover_functional_analysis_page_map.py"
+      - "books/functional-analysis/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
 
