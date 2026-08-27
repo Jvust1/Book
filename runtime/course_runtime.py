@@ -213,17 +213,45 @@ class CourseRuntime:
     def main_book(self) -> BookRuntime:
         return self.book(self.main_book_id)
 
-    def chapter_ids(self) -> list[str]:
-        return self.main_book().chapter_ids()
-
     def chapters(self) -> list[dict[str, Any]]:
-        toc = self.main_book().toc
+        """Return the main book's audited TOC chapters in source order when available."""
+
+        main = self.main_book()
+        toc = main.toc
         if isinstance(toc, dict) and isinstance(toc.get("chapters"), list):
             return [dict(row) for row in toc["chapters"] if isinstance(row, dict)]
-        return [{"id": chapter_id} for chapter_id in self.chapter_ids()]
+        return [{"id": chapter_id} for chapter_id in main.chapter_ids()]
+
+    def chapter_ids(self) -> list[str]:
+        """Return the complete main-book navigation chapter IDs in TOC order."""
+
+        return [str(row["id"]) for row in self.chapters() if row.get("id")]
 
     def sections_for_chapter(self, chapter_id: str) -> list[RuntimeSection]:
-        return self.main_book().sections_for_chapter(chapter_id)
+        """Return main-book RuntimeSection objects in audited TOC order."""
+
+        main = self.main_book()
+        for chapter in self.chapters():
+            if str(chapter.get("id") or "") != chapter_id:
+                continue
+            toc_sections = chapter.get("sections")
+            if not isinstance(toc_sections, list):
+                break
+
+            sections: list[RuntimeSection] = []
+            for row in toc_sections:
+                if not isinstance(row, dict) or not row.get("id"):
+                    continue
+                section_id = str(row["id"])
+                try:
+                    sections.append(main.section(section_id))
+                except BookRuntimeError as exc:
+                    raise CourseRuntimeError(
+                        f"Audited TOC section {section_id!r} is missing from BookRuntime"
+                    ) from exc
+            return sections
+
+        return main.sections_for_chapter(chapter_id)
 
     def section(self, section_id: str) -> RuntimeSection:
         return self.main_book().section(section_id)
@@ -244,6 +272,6 @@ class CourseRuntime:
                 for entry in self.entries
                 if entry.enabled
             ],
-            "main_chapter_count": len(main.chapter_ids()),
+            "main_chapter_count": len(self.chapter_ids()),
             "main_section_count": len(main.sections),
         }
