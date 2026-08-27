@@ -11,6 +11,7 @@ on:
       - "tools/normalize_functional_analysis_runtime_identities.py"
       - "tools/normalize_functional_analysis_figure_ids.py"
       - "books/functional-analysis/chunk_*_structure.json"
+      - "books/functional-analysis/chunks/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
   pull_request:
@@ -23,6 +24,7 @@ on:
       - "tools/normalize_functional_analysis_runtime_identities.py"
       - "tools/normalize_functional_analysis_figure_ids.py"
       - "books/functional-analysis/chunk_*_structure.json"
+      - "books/functional-analysis/chunks/chunk_*_structure.json"
       - "tests/**"
       - ".github/workflows/runtime-reference-tests.yml"
 
@@ -53,59 +55,6 @@ jobs:
           python -m py_compile tools/recover_functional_analysis_page_map.py
           python -m py_compile tools/normalize_functional_analysis_runtime_identities.py
           python -m py_compile tools/normalize_functional_analysis_figure_ids.py
-
-      - name: Reduce structure diff noise against main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/fix/runtime-final-index-recovery' && matrix.python-version == '3.13'
-        run: |
-          git fetch origin main --depth=1
-          git checkout FETCH_HEAD -- \
-            books/functional-analysis/chunk_006a_structure.json \
-            books/functional-analysis/chunk_011a_structure.json \
-            books/functional-analysis/chunk_011b_structure.json \
-            books/functional-analysis/chunk_014a_structure.json
-          python - <<'PY'
-          from pathlib import Path
-
-          replacements = {
-              "books/functional-analysis/chunk_006a_structure.json": [
-                  (
-                      '"name_zh":"L^p(R) 上的后续练习（跨批次继续）"',
-                      '"name_zh":"Poisson 核卷积在 L^p 中的压缩性与近似恒等性"',
-                  ),
-              ],
-              "books/functional-analysis/chunk_011a_structure.json": [
-                  (
-                      '"name_en":"infinite Bernoulli space X=Z_2^infinity"',
-                      '"name_en":"infinite Bernoulli space X=Z_2^∞"',
-                  ),
-              ],
-              "books/functional-analysis/chunk_011b_structure.json": [
-                  (
-                      '{"figure":"Figure 1","title_zh":"Rademacher 函数 r_1 与 r_2","pdf_page":212',
-                      '{"id":"Figure 1@pdf:212","figure":"Figure 1","title_zh":"Rademacher 函数 r_1 与 r_2","pdf_page":212',
-                  ),
-                  (
-                      '{"figure":"Figure 2","title_zh":"Gaussian 积分的矩形和近似","pdf_page":217',
-                      '{"id":"Figure 2@pdf:217","figure":"Figure 2","title_zh":"Gaussian 积分的矩形和近似","pdf_page":217',
-                  ),
-              ],
-              "books/functional-analysis/chunk_014a_structure.json": [
-                  (
-                      '"name_zh":"Brownian 路径的 Hölder 正则性与非光滑性"',
-                      '"name_zh":"Brownian 路径的 Hölder 正则性与粗糙性"',
-                  ),
-              ],
-          }
-
-          for name, pairs in replacements.items():
-              path = Path(name)
-              text = path.read_text(encoding="utf-8")
-              for old, new in pairs:
-                  if old not in text:
-                      raise SystemExit(f"expected patch source missing in {name}: {old}")
-                  text = text.replace(old, new, 1)
-              path.write_text(text, encoding="utf-8")
-          PY
 
       - name: Normalize known cross-batch stable identities
         run: |
@@ -146,6 +95,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             books/functional-analysis/chunk_*_structure.json \
+            books/functional-analysis/chunks/chunk_*_structure.json \
             books/functional-analysis/search_index_v0_36.jsonl \
             books/functional-analysis/toc_bilingual.json \
             books/functional-analysis/page_map.csv \
@@ -155,6 +105,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "Validated runtime artifacts already match branch."
           else
-            git commit -m "Book: minimize runtime structure diff and preserve READY"
+            git commit -m "Book: verify finalized runtime artifacts"
             git push origin HEAD:fix/runtime-final-index-recovery
           fi
