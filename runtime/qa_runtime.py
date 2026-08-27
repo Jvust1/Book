@@ -14,15 +14,8 @@ from .qa_evidence import (
     QAHistoryValidationError,
     normalize_history,
 )
-from .qa_models import (
-    ModelRequest,
-    ModelResponse,
-    ModelResponseValidationError,
-    ProviderAnswer,
-    QAHistoryMessage,
-    QAResult,
-)
-from .qa_provider import AnswerProvider, AnswerProviderInvalidResponseError
+from .qa_models import ModelRequest, ModelResponse, QAHistoryMessage, QAResult
+from .qa_provider import ModelProvider, ModelProviderInvalidResponseError
 
 
 class QARuntimeError(RuntimeError):
@@ -40,14 +33,14 @@ class QASectionError(QARuntimeError):
 class QARuntime:
     """Coordinate trusted retrieval, model generation and citation verification."""
 
-    def __init__(self, course: CourseRuntime, *, provider: AnswerProvider):
+    def __init__(self, course: CourseRuntime, *, provider: ModelProvider):
         self.course = course
         self._provider = provider
         self._builder = EvidenceBuilder.from_course(course)
         self._verifier = CitationVerifier.from_course(course)
 
     @classmethod
-    def from_course(cls, course: CourseRuntime, *, provider: AnswerProvider) -> "QARuntime":
+    def from_course(cls, course: CourseRuntime, *, provider: ModelProvider) -> "QARuntime":
         return cls(course, provider=provider)
 
     def answer(
@@ -99,14 +92,17 @@ class QARuntime:
                 scope_used=pack.scope_used,
             )
 
-        raw_response = self._provider.answer(
+        model_response = self._provider.answer(
             ModelRequest.from_pack(
                 pack,
                 section_id=normalized_section_id,
                 history=normalized_history,
             )
         )
-        model_response = self._normalize_provider_response(raw_response)
+        if not isinstance(model_response, ModelResponse):
+            raise ModelProviderInvalidResponseError(
+                f"Unsupported model-provider response type: {type(model_response).__name__}"
+            )
 
         if model_response.insufficient_evidence:
             return QAResult.system_notice(
@@ -119,7 +115,7 @@ class QARuntime:
 
         citations = self._verifier.verify(pack, model_response)
         if model_response.answer is None:
-            raise AnswerProviderInvalidResponseError("Model answer must not be null when sufficient")
+            raise ModelProviderInvalidResponseError("Model answer must not be null when sufficient")
         return QAResult.generated(
             course_id=pack.course_id,
             book_id=pack.book_id,
@@ -129,26 +125,6 @@ class QARuntime:
             answer_style=model_response.answer_style,
             scope_requested=pack.scope_requested,
             scope_used=pack.scope_used,
-        )
-
-    @staticmethod
-    def _normalize_provider_response(value: object) -> ModelResponse:
-        if isinstance(value, ModelResponse):
-            return value
-        if isinstance(value, ProviderAnswer):
-            try:
-                return ModelResponse.from_mapping(
-                    {
-                        "answer": value.answer_text,
-                        "evidence_ids": list(value.cited_evidence_ids),
-                        "insufficient_evidence": False,
-                        "answer_style": "brief",
-                    }
-                )
-            except ModelResponseValidationError as exc:
-                raise AnswerProviderInvalidResponseError(str(exc)) from exc
-        raise AnswerProviderInvalidResponseError(
-            f"Unsupported model-provider response type: {type(value).__name__}"
         )
 
     @staticmethod
