@@ -2,67 +2,211 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the Book App runtime path `Library → independent single-book Course → SectionLearningSource → Preview/Learn/Review/Practice` using the existing Functional Analysis course as the first real fixture.
+**Goal:** Build the App-level path `Library → independent single-book Course → SectionLearningSource → Preview/Learn/Review/Practice`, with Functional Analysis as the first real course.
 
-**Architecture:** Add a thin `LibraryRuntime` above `CourseRuntime` to enforce the current product profile of one App containing many independent one-book courses. Add a separate `SectionLearningRuntime` below the selected course that projects source-backed Section data already exposed by `CourseRuntime`/`BookRuntime`; the four learning modes are deterministic references to that source and do not invent textbook content.
+**Architecture:** `LibraryRuntime` sits above the existing `CourseRuntime` and enforces the current product profile: one Book App may contain many independent courses, but each admitted product course has exactly one enabled main textbook. `SectionLearningRuntime` sits below a selected course and projects one Section from data already exposed by `CourseRuntime`/`BookRuntime`; all four learning modes reference this deterministic source and never invent textbook content.
 
-**Tech Stack:** Python 3.11/3.12/3.13 standard library only, `unittest`, JSON manifests, existing `BookRuntime`/`CourseRuntime`, GitHub Actions.
+**Tech Stack:** Python 3.11/3.12/3.13, standard library only, `unittest`, JSON manifests, existing `BookRuntime`/`CourseRuntime`, GitHub Actions.
 
 **Spec:** `docs/superpowers/specs/2026-08-27-library-section-learning-phase-1c-design.md`
 
 ## Global Constraints
 
-- Product model: one Book App → many independent textbook courses; one admitted product course → exactly one enabled textbook.
-- Keep generic Phase 1B multi-book `CourseRuntime` capability unchanged; enforce single-book product policy only in `LibraryRuntime`.
-- Preserve existing `STRUCTURED_COMPLETE` and `RUNTIME_READY` fail-closed behavior.
-- `BookRuntime` remains the only parser/normalizer for structured textbook assets; Phase 1C must not re-read raw `*_structure.json` to duplicate BookRuntime logic.
-- `SectionLearningRuntime` may use only source data already exposed through `CourseRuntime` and `BookRuntime`.
-- No AI-authored explanations, summaries, objectives, questions, answers, textbook facts, or anchors in Phase 1C.
-- No UI, database, progress persistence, notes, mistakes, lectures, exams, mastery, cross-course search, cross-course QA, or CourseKnowledgeTree implementation.
-- No Functional Analysis structured textbook source files may change.
-- Runtime code remains standard-library-only.
-- Existing `tests.test_book_runtime` and `tests.test_course_runtime` must remain green.
-- New tests must run on Python 3.11, 3.12, and 3.13.
+- One Book App → many independent textbook courses.
+- One admitted product course → exactly one enabled textbook, and it is that course's main book.
+- Keep generic Phase 1B multi-book `CourseRuntime` behavior unchanged; the single-book rule belongs only to `LibraryRuntime`.
+- Preserve the existing `STRUCTURED_COMPLETE` and `RUNTIME_READY` fail-closed gates.
+- `BookRuntime` remains the only parser/normalizer for structured textbook assets.
+- Phase 1C must not re-read raw `*_structure.json` files to duplicate `BookRuntime` logic.
+- No AI-generated explanations, summaries, objectives, questions, answers, textbook facts, or source anchors.
+- No UI, database, progress persistence, notes, mistakes, lectures, exams, mastery, cross-course search/QA, or CourseKnowledgeTree implementation.
+- No Functional Analysis structured source asset may change.
+- Existing BookRuntime/CourseRuntime tests must remain green.
+- New tests must pass on Python 3.11, 3.12, and 3.13.
 - Real Functional Analysis acceptance must retain 8 Chapters, 132 Sections, 442 PageMap rows, and 1493 final search records.
-- No CI step may commit generated files back to `main`.
+- No CI step may automatically commit generated files to `main`.
 
 ## File Map
 
-- Create `library/library.json` — declarative App-level catalog of independent courses.
-- Create `runtime/library_runtime.py` — library manifest validation, trusted path resolution, enabled course mounting, single-book product-profile enforcement, deterministic catalog API.
-- Create `runtime/section_learning_runtime.py` — Section source projection and deterministic Preview/Learn/Review/Practice payloads.
-- Modify `runtime/__init__.py` — export new public runtime types/errors.
-- Create `tests/test_library_runtime.py` — manifest/path/readiness/catalog/product-profile tests plus real library fixture checks.
-- Create `tests/test_section_learning_runtime.py` — source projection, mode traceability, policy filtering, and real `ch01_s01` tests.
-- Modify `.github/workflows/runtime-reference-tests.yml` — watch `library/**`, compile new modules, run new tests, add real Library → Course → SectionLearning acceptance.
-- Modify `runtime/README.md` — document LibraryRuntime and SectionLearningRuntime contracts.
-- Modify `README.md` — replace outdated product statement “one course supports multiple textbooks” with “one App contains multiple independent one-book courses”, while documenting generic CourseRuntime multi-book capability as lower-level compatibility only.
+- Create `library/library.json` — App-level catalog of independent courses.
+- Create `runtime/library_runtime.py` — library manifest validation, root/path containment, fail-closed course mounting, single-book product-profile enforcement, catalog API.
+- Create `runtime/section_learning_runtime.py` — deterministic Section evidence projection plus Preview/Learn/Review/Practice payloads.
+- Modify `runtime/__init__.py` — public exports.
+- Create `tests/runtime_fixture_factory.py` — reusable minimal ready Book/Course fixture writer used by the new tests only.
+- Create `tests/test_library_runtime.py` — library contract, ordering, path, readiness, profile, and real fixture tests.
+- Create `tests/test_section_learning_runtime.py` — source projection, mode policy, traceability, and real `ch01_s01` tests.
+- Modify `.github/workflows/runtime-reference-tests.yml` — watch/compile/test the new runtime path and real fixture.
+- Modify `runtime/README.md` — new runtime usage and evidence rules.
+- Modify `README.md` — correct the App product model.
 
 ---
 
-### Task 1: Library Manifest Contract, Trusted Paths, and Fail-Closed Course Opening
+### Task 1: Shared Test Fixture + Fail-Closed Library Manifest Contract
 
 **Files:**
-- Create: `runtime/library_runtime.py`
+- Create: `tests/runtime_fixture_factory.py`
 - Create: `tests/test_library_runtime.py`
+- Create: `runtime/library_runtime.py`
 
 **Interfaces:**
-- Consumes: `CourseRuntime.open(course_dir: str | Path) -> CourseRuntime`, `CourseRuntimeError` subclasses.
+- Consumes: `CourseRuntime.open(course_dir: str | Path) -> CourseRuntime` and `CourseRuntimeError`.
 - Produces:
   - `LibraryRuntime.open(library_dir: str | Path, *, repository_root: str | Path | None = None) -> LibraryRuntime`
-  - `LibraryManifestError(LibraryRuntimeError)`
-  - `LibraryCourseResolutionError(LibraryRuntimeError)`
-  - `LibraryRuntimeBlockedError(LibraryRuntimeError)`
-  - `LibraryCourseEntry` dataclass with `course_id`, `name`, `path`, `enabled`, `order`, `position`.
+  - `LibraryRuntimeError`
+  - `LibraryManifestError`
+  - `LibraryCourseResolutionError`
+  - `LibraryRuntimeBlockedError`
+  - `LibraryCourseEntry(course_id, name, path, enabled, order, position)`.
 
-- [ ] **Step 1: Write failing manifest/path/readiness tests**
+- [ ] **Step 1: Add an exact reusable runtime fixture writer**
 
-Create `tests/test_library_runtime.py` with a self-contained minimal ready-course fixture and these RED cases:
+Create `tests/runtime_fixture_factory.py`:
 
 ```python
 from __future__ import annotations
 
 import json
+from pathlib import Path
+
+
+def dump_json(path: Path, data: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def make_repo(root: Path) -> Path:
+    repo = root.resolve()
+    (repo / "runtime").mkdir(parents=True, exist_ok=True)
+    (repo / "books").mkdir(parents=True, exist_ok=True)
+    (repo / "courses").mkdir(parents=True, exist_ok=True)
+    return repo
+
+
+def write_ready_book(
+    root: Path,
+    *,
+    book_id: str,
+    readiness: str = "READY",
+    objects: list[dict[str, object]] | None = None,
+) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    dump_json(
+        root / "RUNTIME_READINESS.json",
+        {
+            "status": readiness,
+            "book_id": book_id,
+            "structured_version": "v1",
+            "missing_required_files": [],
+            "stale_files": [] if readiness == "READY" else ["search_index_v1.jsonl"],
+        },
+    )
+    dump_json(
+        root / "STRUCTURED_COMPLETE.json",
+        {
+            "status": "STRUCTURED_COMPLETE",
+            "book_id": book_id,
+            "pdf_pages": 2,
+            "printed_final_page": 2,
+            "version": "v1",
+            "audit_fail_count": 0,
+            "search_index": "search_index_v1.jsonl",
+        },
+    )
+    dump_json(
+        root / "book_metadata.json",
+        {
+            "book_id": book_id,
+            "title_en": "Fixture",
+            "title_zh": "测试教材",
+            "pdf_total_pages": 2,
+            "toc_file": "toc_bilingual.json",
+            "page_map_file": "page_map.csv",
+        },
+    )
+    dump_json(root / "qa_retrieval_policy.json", {"version": "1", "book_id": book_id})
+    dump_json(
+        root / "toc_bilingual.json",
+        {
+            "chapters": [
+                {
+                    "id": "chapter_01",
+                    "number": "1",
+                    "title_en": "Test chapter",
+                    "title_zh": "测试章",
+                    "sections": [{"id": "ch01_s01", "number": "1", "title_en": "Section", "title_zh": "小节"}],
+                }
+            ]
+        },
+    )
+    dump_json(
+        root / "chunk_001a_structure.json",
+        {
+            "chunk_id": "chunk_001a",
+            "pdf_pages": [1, 2],
+            "printed_pages": [1, 2],
+            "chapter_id": "chapter_01",
+            "sections": [
+                {
+                    "id": "ch01_s01",
+                    "number": "1",
+                    "title_en": "Section",
+                    "title_zh": "小节",
+                    "pdf_pages": [1, 2],
+                    "printed_pages": [1, 2],
+                }
+            ],
+            "key_objects": objects or [],
+        },
+    )
+    (root / "chunk_001a_translation_zh.md").write_text("# 测试学习层\n", encoding="utf-8")
+    (root / "page_map.csv").write_text(
+        "pdf_page,printed_page,page_label\n1,1,1\n2,2,2\n",
+        encoding="utf-8",
+    )
+    (root / "search_index_v1.jsonl").write_text(
+        json.dumps({"id": "section_ch01_s01", "book_id": book_id, "type": "section"}, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def write_course(
+    course_dir: Path,
+    *,
+    course_id: str,
+    book_entries: list[dict[str, object]],
+    main_book_id: str,
+) -> None:
+    dump_json(
+        course_dir / "course.json",
+        {
+            "schema_version": "course_manifest_v1",
+            "course_id": course_id,
+            "name": course_id,
+            "language": "bilingual",
+            "status": "active",
+            "main_book_id": main_book_id,
+            "books": book_entries,
+        },
+    )
+
+
+def main_book_entry(book_id: str, path: str) -> dict[str, object]:
+    return {
+        "book_id": book_id,
+        "role": "main",
+        "path": path,
+        "required": True,
+        "enabled": True,
+    }
+```
+
+- [ ] **Step 2: Write the failing library contract tests**
+
+Create `tests/test_library_runtime.py`:
+
+```python
+from __future__ import annotations
+
 import tempfile
 import unittest
 from pathlib import Path
@@ -73,229 +217,178 @@ from runtime.library_runtime import (
     LibraryRuntime,
     LibraryRuntimeBlockedError,
 )
+from tests.runtime_fixture_factory import (
+    dump_json,
+    main_book_entry,
+    make_repo,
+    write_course,
+    write_ready_book,
+)
 
 
-class LibraryRuntimeTests(unittest.TestCase):
+class LibraryRuntimeContractTests(unittest.TestCase):
+    def _entry(
+        self,
+        *,
+        course_id: str = "fixture_course",
+        name: str = "Fixture Course",
+        path: str = "../courses/fixture-course",
+        enabled: bool = True,
+        order: int = 10,
+    ) -> dict[str, object]:
+        return {"course_id": course_id, "name": name, "path": path, "enabled": enabled, "order": order}
+
+    def _manifest(self) -> dict[str, object]:
+        return {
+            "schema_version": "library_manifest_v1",
+            "library_id": "fixture_library",
+            "name": "Fixture Library",
+            "courses": [self._entry()],
+        }
+
+    def _ready_repo(self, root: Path, *, readiness: str = "READY") -> tuple[Path, Path]:
+        repo = make_repo(root)
+        write_ready_book(repo / "books" / "fixture", book_id="fixture_book", readiness=readiness)
+        write_course(
+            repo / "courses" / "fixture-course",
+            course_id="fixture_course",
+            book_entries=[main_book_entry("fixture_book", "../../books/fixture")],
+            main_book_id="fixture_book",
+        )
+        library_dir = repo / "library"
+        dump_json(library_dir / "library.json", self._manifest())
+        return repo, library_dir
+
+    def _open_override(self, override: dict[str, object]) -> LibraryRuntime:
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        _, library_dir = self._ready_repo(Path(temp.name))
+        manifest = self._manifest()
+        manifest.update(override)
+        dump_json(library_dir / "library.json", manifest)
+        return LibraryRuntime.open(library_dir)
+
     def test_valid_library_opens(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            repo, library_dir = self._ready_repo(Path(temp))
+            _, library_dir = self._ready_repo(Path(temp))
             library = LibraryRuntime.open(library_dir)
-            self.assertEqual(library.library_id, "fixture_library")
-            self.assertEqual(library.name, "Fixture Library")
+            self.assertEqual((library.library_id, library.name), ("fixture_library", "Fixture Library"))
 
     def test_unsupported_schema_version_fails(self) -> None:
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override({"schema_version": "library_manifest_v2"})
+            self._open_override({"schema_version": "library_manifest_v2"})
 
     def test_missing_library_id_fails(self) -> None:
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override({"library_id": ""})
+            self._open_override({"library_id": ""})
+
+    def test_missing_library_name_fails(self) -> None:
+        with self.assertRaises(LibraryManifestError):
+            self._open_override({"name": ""})
 
     def test_empty_courses_fails(self) -> None:
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override({"courses": []})
+            self._open_override({"courses": []})
 
     def test_zero_enabled_courses_fails(self) -> None:
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override(
-                {"courses": [self._course_entry(enabled=False)]}
-            )
+            self._open_override({"courses": [self._entry(enabled=False)]})
 
-    def test_duplicate_enabled_course_id_fails(self) -> None:
+    def test_malformed_course_entry_fails(self) -> None:
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override(
-                {
-                    "courses": [
-                        self._course_entry(path="../courses/fixture-course"),
-                        self._course_entry(path="../courses/fixture-course-2"),
-                    ]
-                }
-            )
+            self._open_override({"courses": [{"course_id": "fixture_course"}]})
 
-    def test_bool_order_is_rejected(self) -> None:
-        entry = self._course_entry()
+    def test_bool_order_is_not_accepted_as_integer(self) -> None:
+        entry = self._entry()
         entry["order"] = True
         with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override({"courses": [entry]})
+            self._open_override({"courses": [entry]})
+
+    def test_duplicate_enabled_course_id_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo, library_dir = self._ready_repo(Path(temp))
+            write_course(
+                repo / "courses" / "second-course",
+                course_id="fixture_course",
+                book_entries=[main_book_entry("fixture_book", "../../books/fixture")],
+                main_book_id="fixture_book",
+            )
+            manifest = self._manifest()
+            manifest["courses"] = [self._entry(), self._entry(path="../courses/second-course", order=20)]
+            dump_json(library_dir / "library.json", manifest)
+            with self.assertRaises(LibraryManifestError):
+                LibraryRuntime.open(library_dir)
 
     def test_missing_enabled_course_path_fails(self) -> None:
-        entry = self._course_entry(path="../courses/missing")
-        with self.assertRaises(LibraryCourseResolutionError):
-            self._open_with_library_override({"courses": [entry]})
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            manifest = self._manifest()
+            manifest["courses"] = [self._entry(path="../courses/missing")]
+            dump_json(library_dir / "library.json", manifest)
+            with self.assertRaises(LibraryCourseResolutionError):
+                LibraryRuntime.open(library_dir)
 
-    def test_course_path_cannot_escape_repository_root(self) -> None:
+    def test_course_path_escape_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temp, tempfile.TemporaryDirectory() as outside:
-            repo, library_dir = self._ready_repo(Path(temp))
-            manifest = self._library_manifest()
-            manifest["courses"][0]["path"] = str(Path(outside))
-            self._dump(library_dir / "library.json", manifest)
+            _, library_dir = self._ready_repo(Path(temp))
+            manifest = self._manifest()
+            manifest["courses"] = [self._entry(path=str(Path(outside).resolve()))]
+            dump_json(library_dir / "library.json", manifest)
             with self.assertRaises(LibraryCourseResolutionError):
                 LibraryRuntime.open(library_dir)
 
     def test_nonstandard_layout_without_explicit_root_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            root = Path(temp)
-            repo, _ = self._ready_repo(root / "repo")
-            custom_library = repo / "catalog"
-            custom_library.mkdir(parents=True)
-            self._dump(custom_library / "library.json", self._library_manifest(path="../courses/fixture-course"))
+            repo, _ = self._ready_repo(Path(temp))
+            custom = repo / "catalog"
+            dump_json(custom / "library.json", self._manifest())
             with self.assertRaises(LibraryCourseResolutionError):
-                LibraryRuntime.open(custom_library)
+                LibraryRuntime.open(custom)
 
-    def test_explicit_repository_root_supports_nonstandard_library_layout(self) -> None:
+    def test_explicit_root_supports_nonstandard_library_layout(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             repo, _ = self._ready_repo(Path(temp))
-            custom_library = repo / "catalog"
-            custom_library.mkdir(parents=True)
-            self._dump(custom_library / "library.json", self._library_manifest(path="../courses/fixture-course"))
-            library = LibraryRuntime.open(custom_library, repository_root=repo)
+            custom = repo / "catalog"
+            manifest = self._manifest()
+            manifest["courses"] = [self._entry(path="../courses/fixture-course")]
+            dump_json(custom / "library.json", manifest)
+            library = LibraryRuntime.open(custom, repository_root=repo)
             self.assertEqual(library.library_id, "fixture_library")
 
     def test_canonical_course_id_mismatch_fails(self) -> None:
-        entry = self._course_entry(course_id="wrong_course")
-        with self.assertRaises(LibraryManifestError):
-            self._open_with_library_override({"courses": [entry]})
-
-    def test_blocked_enabled_course_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            repo, library_dir = self._ready_repo(Path(temp), readiness="BLOCKED")
+            _, library_dir = self._ready_repo(Path(temp))
+            manifest = self._manifest()
+            manifest["courses"] = [self._entry(course_id="wrong_course")]
+            dump_json(library_dir / "library.json", manifest)
+            with self.assertRaises(LibraryManifestError):
+                LibraryRuntime.open(library_dir)
+
+    def test_blocked_enabled_course_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp), readiness="BLOCKED")
             with self.assertRaises(LibraryRuntimeBlockedError):
                 LibraryRuntime.open(library_dir)
 
-    def test_disabled_incomplete_course_is_not_opened(self) -> None:
+    def test_disabled_incomplete_course_is_ignored_when_one_valid_course_remains(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
-            repo, library_dir = self._ready_repo(Path(temp))
-            manifest = self._library_manifest()
-            manifest["courses"].append(
-                {
-                    "course_id": "future_course",
-                    "name": "Future Course",
-                    "path": "../courses/not-yet-created",
-                    "enabled": False,
-                    "order": 20,
-                }
-            )
-            self._dump(library_dir / "library.json", manifest)
+            _, library_dir = self._ready_repo(Path(temp))
+            manifest = self._manifest()
+            manifest["courses"].append(self._entry(course_id="future_course", path="../courses/not-created", enabled=False, order=20))
+            dump_json(library_dir / "library.json", manifest)
             library = LibraryRuntime.open(library_dir)
             self.assertEqual(library.course_ids(), ["fixture_course"])
 ```
 
-Add exact fixture helpers in the same test file so the test does not depend on private methods from another test class:
-
-```python
-    @staticmethod
-    def _dump(path: Path, data: object) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-    @staticmethod
-    def _course_entry(
-        *,
-        course_id: str = "fixture_course",
-        path: str = "../courses/fixture-course",
-        enabled: bool = True,
-        order: int = 10,
-    ) -> dict[str, object]:
-        return {
-            "course_id": course_id,
-            "name": "Fixture Course",
-            "path": path,
-            "enabled": enabled,
-            "order": order,
-        }
-
-    def _library_manifest(self, *, path: str = "../courses/fixture-course") -> dict[str, object]:
-        return {
-            "schema_version": "library_manifest_v1",
-            "library_id": "fixture_library",
-            "name": "Fixture Library",
-            "courses": [self._course_entry(path=path)],
-        }
-
-    def _ready_repo(self, root: Path, *, readiness: str = "READY") -> tuple[Path, Path]:
-        repo = root.resolve()
-        (repo / "runtime").mkdir(parents=True, exist_ok=True)
-        (repo / "books").mkdir(parents=True, exist_ok=True)
-        (repo / "courses").mkdir(parents=True, exist_ok=True)
-        library_dir = repo / "library"
-        library_dir.mkdir(parents=True, exist_ok=True)
-        book = repo / "books" / "fixture"
-        course = repo / "courses" / "fixture-course"
-        self._write_book(book, readiness=readiness)
-        self._write_course(course)
-        self._dump(library_dir / "library.json", self._library_manifest())
-        return repo, library_dir
-
-    def _write_course(self, course_dir: Path) -> None:
-        self._dump(
-            course_dir / "course.json",
-            {
-                "schema_version": "course_manifest_v1",
-                "course_id": "fixture_course",
-                "name": "Fixture Course",
-                "main_book_id": "fixture_book",
-                "books": [
-                    {
-                        "book_id": "fixture_book",
-                        "role": "main",
-                        "path": "../../books/fixture",
-                        "required": True,
-                        "enabled": True,
-                    }
-                ],
-            },
-        )
-
-    def _write_book(self, root: Path, *, readiness: str) -> None:
-        root.mkdir(parents=True, exist_ok=True)
-        self._dump(root / "RUNTIME_READINESS.json", {"status": readiness, "book_id": "fixture_book", "missing_required_files": [], "stale_files": []})
-        self._dump(root / "STRUCTURED_COMPLETE.json", {"status": "STRUCTURED_COMPLETE", "book_id": "fixture_book", "pdf_pages": 2, "version": "v1", "search_index": "search_index_v1.jsonl"})
-        self._dump(root / "book_metadata.json", {"book_id": "fixture_book", "pdf_total_pages": 2, "toc_file": "toc_bilingual.json", "page_map_file": "page_map.csv"})
-        self._dump(root / "qa_retrieval_policy.json", {"book_id": "fixture_book"})
-        self._dump(root / "toc_bilingual.json", {"chapters": [{"id": "chapter_01", "sections": [{"id": "ch01_s01"}]}]})
-        self._dump(root / "chunk_001a_structure.json", {"chunk_id": "chunk_001a", "pdf_pages": [1, 2], "chapter_id": "chapter_01", "sections": [{"id": "ch01_s01", "number": "1", "title_en": "Section", "title_zh": "小节", "pdf_pages": [1, 2]}], "key_objects": []})
-        (root / "chunk_001a_translation_zh.md").write_text("# 测试学习层\n", encoding="utf-8")
-        (root / "page_map.csv").write_text("pdf_page,printed_page\n1,1\n2,2\n", encoding="utf-8")
-        (root / "search_index_v1.jsonl").write_text(json.dumps({"id": "ch01_s01", "type": "section"}) + "\n", encoding="utf-8")
-
-    def _open_with_library_override(self, override: dict[str, object]) -> LibraryRuntime:
-        temp = tempfile.TemporaryDirectory()
-        self.addCleanup(temp.cleanup)
-        repo, library_dir = self._ready_repo(Path(temp.name))
-        manifest = self._library_manifest()
-        manifest.update(override)
-        courses = manifest.get("courses")
-        if isinstance(courses, list):
-            for index, row in enumerate(courses):
-                if not isinstance(row, dict) or row.get("enabled") is not True:
-                    continue
-                path = row.get("path")
-                course_id = row.get("course_id")
-                if not isinstance(path, str) or not isinstance(course_id, str):
-                    continue
-                target = (library_dir / path).resolve()
-                try:
-                    target.relative_to(repo)
-                except ValueError:
-                    continue
-                if not target.exists() and path != "../courses/missing":
-                    self._write_course(target)
-                    data = json.loads((target / "course.json").read_text(encoding="utf-8"))
-                    data["course_id"] = "fixture_course" if course_id == "wrong_course" else course_id
-                    self._dump(target / "course.json", data)
-        self._dump(library_dir / "library.json", manifest)
-        return LibraryRuntime.open(library_dir)
-```
-
-- [ ] **Step 2: Run Task 1 tests and confirm RED**
-
-Run:
+- [ ] **Step 3: Run RED**
 
 ```bash
 python -m unittest tests.test_library_runtime -v
 ```
 
-Expected: import failure such as `ModuleNotFoundError: No module named 'runtime.library_runtime'`. Existing runtime tests must still be independently runnable:
+Expected: `ModuleNotFoundError` for `runtime.library_runtime`.
+
+Regression baseline:
 
 ```bash
 python -m unittest tests.test_book_runtime tests.test_course_runtime -v
@@ -303,9 +396,9 @@ python -m unittest tests.test_book_runtime tests.test_course_runtime -v
 
 Expected: PASS.
 
-- [ ] **Step 3: Implement the minimal LibraryRuntime loading contract**
+- [ ] **Step 4: Implement the minimum LibraryRuntime loader**
 
-Create `runtime/library_runtime.py` with these exact public shapes and validation flow:
+Create `runtime/library_runtime.py` with these public types:
 
 ```python
 from __future__ import annotations
@@ -319,15 +412,15 @@ from .course_runtime import CourseRuntime, CourseRuntimeError
 
 
 class LibraryRuntimeError(RuntimeError):
-    pass
+    """Base error for App-level course catalog loading."""
 
 
 class LibraryManifestError(LibraryRuntimeError):
-    pass
+    """library.json violates the Phase 1C contract."""
 
 
 class LibraryCourseResolutionError(LibraryRuntimeError):
-    pass
+    """Configured library/course paths are missing or untrusted."""
 
 
 class LibraryRuntimeBlockedError(LibraryRuntimeError):
@@ -346,8 +439,11 @@ class LibraryCourseEntry:
     enabled: bool
     order: int
     position: int
+```
 
+Implement this exact opening/root contract:
 
+```python
 class LibraryRuntime:
     def __init__(self, library_dir: Path, manifest: dict[str, Any], repository_root: Path):
         self.library_dir = library_dir
@@ -368,7 +464,7 @@ class LibraryRuntime:
         root = Path(library_dir).resolve()
         if not root.is_dir():
             raise LibraryManifestError(f"Library directory does not exist: {root}")
-        repo = cls._resolve_repository_root(root, repository_root)
+        repo = cls._repository_root(root, repository_root)
         manifest_path = root / "library.json"
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -383,105 +479,110 @@ class LibraryRuntime:
         return runtime
 
     @staticmethod
-    def _resolve_repository_root(library_dir: Path, explicit: str | Path | None) -> Path:
+    def _repository_root(library_dir: Path, explicit: str | Path | None) -> Path:
         if explicit is not None:
             repo = Path(explicit).resolve()
         else:
             if library_dir.name != "library":
-                raise LibraryCourseResolutionError(
-                    "Nonstandard library layout requires repository_root"
-                )
+                raise LibraryCourseResolutionError("Nonstandard library layout requires repository_root")
             repo = library_dir.parent.resolve()
         try:
             library_dir.relative_to(repo)
         except ValueError as exc:
-            raise LibraryCourseResolutionError(
-                f"Library directory is outside repository root: {library_dir}"
-            ) from exc
+            raise LibraryCourseResolutionError(f"Library directory escapes repository root: {library_dir}") from exc
         return repo
 ```
 
-Implement `_validate_manifest()` so it requires exact schema `library_manifest_v1`, non-empty `library_id`/`name`, a non-empty list of courses, at least one enabled entry, non-empty strings for `course_id`/`name`/`path`, boolean `enabled`, integer `order` with `isinstance(order, int) and not isinstance(order, bool)`, and no duplicate enabled course IDs.
+`_validate_manifest()` must enforce all RED cases above, including exact schema `library_manifest_v1`, required non-empty strings, boolean `enabled`, integer-but-not-bool `order`, non-empty courses, at least one enabled course, and unique enabled course IDs. Store every valid entry with its original manifest `position`.
 
-Implement `_resolve_course_path()` by resolving relative to `library_dir`, requiring `candidate.relative_to(repository_root)` to succeed, and requiring an existing directory for enabled entries.
+`_resolve_course_path()` must resolve relative paths from `library_dir`, reject any resolved path outside `repository_root`, and require an enabled course path to be a directory.
 
-Implement `_open_courses()` only for enabled entries. Wrap any `CourseRuntimeError` as `LibraryRuntimeBlockedError`. After open, reject canonical `course.course_id != entry.course_id` as `LibraryManifestError`.
+`_open_courses()` must skip disabled entries, call `CourseRuntime.open(resolved_path)` for enabled entries, wrap `CourseRuntimeError` as `LibraryRuntimeBlockedError`, and reject `course.course_id != entry.course_id` as `LibraryManifestError`.
 
-- [ ] **Step 4: Run Task 1 tests and confirm GREEN**
-
-Run:
+- [ ] **Step 5: Run GREEN + regressions**
 
 ```bash
 python -m unittest tests.test_library_runtime -v
-```
-
-Expected: all Task 1 tests PASS.
-
-Then run regression tests:
-
-```bash
 python -m unittest tests.test_book_runtime tests.test_course_runtime -v
 ```
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 1**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add runtime/library_runtime.py tests/test_library_runtime.py
-git commit -m "feat: add fail-closed library runtime"
+git add tests/runtime_fixture_factory.py tests/test_library_runtime.py runtime/library_runtime.py
+git commit -m "feat: add fail-closed app library runtime"
 ```
 
 ---
 
-### Task 2: Library Catalog API, Ordering, and Single-Book Product Profile
+### Task 2: Library Ordering, Catalog API, and Single-Book Product Profile
 
 **Files:**
 - Modify: `runtime/library_runtime.py`
 - Modify: `tests/test_library_runtime.py`
 
 **Interfaces:**
-- Consumes: `LibraryRuntime.entries`, mounted `CourseRuntime` objects from Task 1.
 - Produces:
-  - `LibraryRuntime.course_ids() -> list[str]`
-  - `LibraryRuntime.courses() -> list[CourseRuntime]`
-  - `LibraryRuntime.course(course_id: str) -> CourseRuntime`
-  - `LibraryRuntime.summary() -> dict[str, Any]`
-  - Book App profile check: each enabled course must have exactly one mounted book and that book must be its main book.
+  - `course_ids() -> list[str]`
+  - `courses() -> list[CourseRuntime]`
+  - `course(course_id: str) -> CourseRuntime`
+  - `summary() -> dict[str, Any]`
+- Enforces `len(course.book_ids()) == 1` and `course.main_book().book_id == course.book_ids()[0]`.
 
-- [ ] **Step 1: Add failing catalog/profile tests**
+- [ ] **Step 1: Add RED tests for deterministic catalog behavior and product profile**
 
 Append:
 
 ```python
-    def test_course_ids_are_sorted_by_order_then_manifest_position(self) -> None:
+class LibraryRuntimeCatalogTests(LibraryRuntimeContractTests):
+    def test_courses_are_ordered_by_order_then_manifest_position(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             repo, library_dir = self._ready_repo(Path(temp))
-            second_course = repo / "courses" / "second-course"
-            second_book = repo / "books" / "second"
-            self._write_book(second_book, readiness="READY")
-            course_data = json.loads((repo / "courses" / "fixture-course" / "course.json").read_text(encoding="utf-8"))
-            course_data["course_id"] = "second_course"
-            course_data["main_book_id"] = "fixture_book"
-            course_data["books"][0]["path"] = "../../books/second"
-            self._dump(second_course / "course.json", course_data)
-            manifest = self._library_manifest()
+            write_ready_book(repo / "books" / "second", book_id="second_book")
+            write_course(
+                repo / "courses" / "second-course",
+                course_id="second_course",
+                book_entries=[main_book_entry("second_book", "../../books/second")],
+                main_book_id="second_book",
+            )
+            manifest = self._manifest()
             manifest["courses"] = [
-                self._course_entry(course_id="fixture_course", order=20),
-                self._course_entry(course_id="second_course", path="../courses/second-course", order=10),
+                self._entry(course_id="fixture_course", order=20),
+                self._entry(course_id="second_course", path="../courses/second-course", order=10),
             ]
-            self._dump(library_dir / "library.json", manifest)
+            dump_json(library_dir / "library.json", manifest)
             library = LibraryRuntime.open(library_dir)
             self.assertEqual(library.course_ids(), ["second_course", "fixture_course"])
-            self.assertEqual([c.course_id for c in library.courses()], ["second_course", "fixture_course"])
+            self.assertEqual([course.course_id for course in library.courses()], ["second_course", "fixture_course"])
 
-    def test_course_returns_mounted_runtime(self) -> None:
+    def test_equal_order_preserves_manifest_position(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo, library_dir = self._ready_repo(Path(temp))
+            write_ready_book(repo / "books" / "second", book_id="second_book")
+            write_course(
+                repo / "courses" / "second-course",
+                course_id="second_course",
+                book_entries=[main_book_entry("second_book", "../../books/second")],
+                main_book_id="second_book",
+            )
+            manifest = self._manifest()
+            manifest["courses"] = [
+                self._entry(course_id="fixture_course", order=10),
+                self._entry(course_id="second_course", path="../courses/second-course", order=10),
+            ]
+            dump_json(library_dir / "library.json", manifest)
+            self.assertEqual(LibraryRuntime.open(library_dir).course_ids(), ["fixture_course", "second_course"])
+
+    def test_course_returns_already_mounted_course(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             _, library_dir = self._ready_repo(Path(temp))
             library = LibraryRuntime.open(library_dir)
-            self.assertEqual(library.course("fixture_course").course_id, "fixture_course")
+            self.assertIs(library.course("fixture_course"), library.courses()[0])
 
-    def test_unknown_or_disabled_course_raises(self) -> None:
+    def test_unknown_or_disabled_course_id_raises_library_error(self) -> None:
+        from runtime.library_runtime import LibraryRuntimeError
         with tempfile.TemporaryDirectory() as temp:
             _, library_dir = self._ready_repo(Path(temp))
             library = LibraryRuntime.open(library_dir)
@@ -491,53 +592,49 @@ Append:
     def test_multi_book_course_is_rejected_by_product_profile(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             repo, library_dir = self._ready_repo(Path(temp))
-            second_book = repo / "books" / "second"
-            self._write_book(second_book, readiness="READY")
+            write_ready_book(repo / "books" / "supplementary", book_id="supp_book")
             course_path = repo / "courses" / "fixture-course" / "course.json"
-            course_data = json.loads(course_path.read_text(encoding="utf-8"))
-            course_data["books"].append(
+            course = __import__("json").loads(course_path.read_text(encoding="utf-8"))
+            course["books"].append(
                 {
-                    "book_id": "second_book",
+                    "book_id": "supp_book",
                     "role": "supplementary",
-                    "path": "../../books/second",
+                    "path": "../../books/supplementary",
                     "required": True,
                     "enabled": True,
                 }
             )
-            second_meta = json.loads((second_book / "book_metadata.json").read_text(encoding="utf-8"))
-            second_meta["book_id"] = "second_book"
-            self._dump(second_book / "book_metadata.json", second_meta)
-            for filename in ("RUNTIME_READINESS.json", "STRUCTURED_COMPLETE.json", "qa_retrieval_policy.json"):
-                data = json.loads((second_book / filename).read_text(encoding="utf-8"))
-                data["book_id"] = "second_book"
-                self._dump(second_book / filename, data)
-            self._dump(course_path, course_data)
+            dump_json(course_path, course)
             with self.assertRaises(LibraryManifestError):
                 LibraryRuntime.open(library_dir)
 
-    def test_summary_reports_enabled_independent_courses(self) -> None:
+    def test_exactly_one_main_book_course_is_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            _, library_dir = self._ready_repo(Path(temp))
+            course = LibraryRuntime.open(library_dir).course("fixture_course")
+            self.assertEqual(course.book_ids(), ["fixture_book"])
+            self.assertEqual(course.main_book().book_id, "fixture_book")
+
+    def test_summary_reports_independent_courses(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             _, library_dir = self._ready_repo(Path(temp))
             summary = LibraryRuntime.open(library_dir).summary()
             self.assertEqual(summary["library_id"], "fixture_library")
             self.assertEqual(summary["course_count"], 1)
-            self.assertEqual(summary["courses"][0]["course_id"], "fixture_course")
-            self.assertEqual(summary["courses"][0]["book_count"], 1)
+            self.assertEqual(summary["courses"], [{"course_id": "fixture_course", "name": "fixture_course", "book_count": 1, "main_book_id": "fixture_book"}])
 ```
 
-Also import `LibraryRuntimeError` in the test import list.
-
-- [ ] **Step 2: Run Task 2 tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
-python -m unittest tests.test_library_runtime -v
+python -m unittest tests.test_library_runtime.LibraryRuntimeCatalogTests -v
 ```
 
-Expected: failures for missing catalog methods and missing single-book profile rejection.
+Expected: failures for missing catalog APIs/profile enforcement.
 
-- [ ] **Step 3: Implement deterministic catalog API and profile enforcement**
+- [ ] **Step 3: Implement catalog API and profile gate**
 
-Use this ordering helper and API shape:
+Add:
 
 ```python
     def _enabled_entries(self) -> list[LibraryCourseEntry]:
@@ -558,12 +655,12 @@ Use this ordering helper and API shape:
         except KeyError as exc:
             raise LibraryRuntimeError(f"Unknown or disabled course: {course_id}") from exc
 
-    def _validate_product_profile(self, entry: LibraryCourseEntry, course: CourseRuntime) -> None:
+    @staticmethod
+    def _validate_product_profile(entry: LibraryCourseEntry, course: CourseRuntime) -> None:
         book_ids = course.book_ids()
         if len(book_ids) != 1:
             raise LibraryManifestError(
-                f"Book App course {entry.course_id!r} must expose exactly one enabled book; "
-                f"found {len(book_ids)}"
+                f"Book App course {entry.course_id!r} must expose exactly one enabled book; found {len(book_ids)}"
             )
         if course.main_book().book_id != book_ids[0]:
             raise LibraryManifestError(
@@ -587,9 +684,9 @@ Use this ordering helper and API shape:
         }
 ```
 
-Call `_validate_product_profile(entry, course)` immediately after canonical `course_id` verification and before storing the mounted course.
+Call `_validate_product_profile(entry, course)` after canonical course-ID validation and before adding the course to `_courses`.
 
-- [ ] **Step 4: Run Task 2 tests and regression tests**
+- [ ] **Step 4: Run GREEN + regressions**
 
 ```bash
 python -m unittest tests.test_library_runtime -v
@@ -598,7 +695,7 @@ python -m unittest tests.test_book_runtime tests.test_course_runtime -v
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 2**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add runtime/library_runtime.py tests/test_library_runtime.py
@@ -614,33 +711,24 @@ git commit -m "feat: enforce independent single-book course catalog"
 - Create: `tests/test_section_learning_runtime.py`
 
 **Interfaces:**
-- Consumes:
-  - `CourseRuntime.section(section_id: str) -> RuntimeSection`
-  - `CourseRuntime.main_book() -> BookRuntime`
-  - `BookRuntime.objects_for_section(section_id)`
-  - `BookRuntime.page_map_row(pdf_page)`
-  - `BookRuntime.translation_text(batch_id)`
-  - `BookRuntime.figures`
+- Consumes `CourseRuntime.section()`, `CourseRuntime.main_book()`, `BookRuntime.objects_for_section()`, `BookRuntime.figures`, `BookRuntime.page_map_row()`, and `BookRuntime.translation_text()`.
 - Produces:
-  - `SectionLearningSource` dataclass
-  - `SectionLearningRuntime.from_course(course: CourseRuntime, section_id: str) -> SectionLearningRuntime`
-  - `SectionLearningRuntime.source() -> SectionLearningSource`
+  - `SectionLearningSource`
+  - `SectionLearningRuntime.from_course(course: CourseRuntime, section_id: str)`
+  - `source() -> SectionLearningSource`
   - `SectionLearningRuntimeError`, `SectionLearningSourceError`, `SectionLearningModeError`.
 
-- [ ] **Step 1: Write failing source-projection tests**
+- [ ] **Step 1: Write RED source-projection tests with isolated fake runtime objects**
 
-Create `tests/test_section_learning_runtime.py` using a `FakeBook`/`FakeCourse` so source tests isolate this layer and do not re-test JSON parsing:
+Create `tests/test_section_learning_runtime.py`:
 
 ```python
 from __future__ import annotations
 
 import unittest
 
-from runtime.book_runtime import RuntimeAnchor, RuntimeFigure, RuntimeObject, RuntimeSection
-from runtime.section_learning_runtime import (
-    SectionLearningRuntime,
-    SectionLearningSourceError,
-)
+from runtime.book_runtime import BookRuntimeError, RuntimeAnchor, RuntimeFigure, RuntimeObject, RuntimeSection
+from runtime.section_learning_runtime import SectionLearningRuntime, SectionLearningSourceError
 
 
 class FakeBook:
@@ -648,13 +736,16 @@ class FakeBook:
 
     def __init__(self) -> None:
         self.figures = {
-            "fig_in_2": RuntimeFigure(id="fig_in_2", anchor=RuntimeAnchor(pdf_page=2, source_anchor="a2"), source_batch="b1"),
+            "fig_2": RuntimeFigure(id="fig_2", anchor=RuntimeAnchor(pdf_page=2, source_anchor="fig-a2"), source_batch="b2"),
             "fig_out": RuntimeFigure(id="fig_out", anchor=RuntimeAnchor(pdf_page=9), source_batch="b9"),
-            "fig_in_1": RuntimeFigure(id="fig_in_1", anchor=RuntimeAnchor(pdf_page=1, source_anchor="a1"), source_batch="b1"),
+            "fig_1": RuntimeFigure(id="fig_1", anchor=RuntimeAnchor(pdf_page=1, source_anchor="fig-a1"), source_batch="b1"),
         }
         self._objects = [
-            RuntimeObject(id="def_1", type="definition", section_id="s1", name_en="Definition", anchor=RuntimeAnchor(pdf_page=1, printed_page=11, source_anchor="obj-a"), source_batch="b1"),
+            RuntimeObject(id="def_1", type="definition", section_id="s1", name_en="Definition", anchor=RuntimeAnchor(pdf_page=1, printed_page=11, source_anchor="obj-a1"), source_batch="b1"),
+            RuntimeObject(id="thm_1", type=" Theorem ", section_id="s1", name_en="Theorem", anchor=RuntimeAnchor(pdf_page=1, printed_page=11), source_batch="b1"),
             RuntimeObject(id="ex_1", type="exercise", section_id="s1", name_en="Exercise", anchor=RuntimeAnchor(pdf_page=2), source_batch="b2"),
+            RuntimeObject(id="prob_1", type="PROBLEM", section_id="s1", name_en="Problem", anchor=RuntimeAnchor(pdf_page=2), source_batch="b2"),
+            RuntimeObject(id="remark_1", type="remark", section_id="s1", name_en="Remark", anchor=RuntimeAnchor(pdf_page=2), source_batch="b2"),
         ]
 
     def objects_for_section(self, section_id: str):
@@ -692,7 +783,6 @@ class FakeCourse:
 
     def section(self, section_id: str):
         if section_id != "s1":
-            from runtime.book_runtime import BookRuntimeError
             raise BookRuntimeError(f"Unknown section: {section_id}")
         return self._section
 
@@ -702,45 +792,45 @@ class SectionLearningSourceTests(unittest.TestCase):
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
         self.assertEqual((source.course_id, source.book_id, source.chapter_id, source.section_id), ("fixture_course", "fixture_book", "chapter_01", "s1"))
 
-    def test_unknown_section_fails(self) -> None:
+    def test_unknown_section_fails_explicitly(self) -> None:
         with self.assertRaises(SectionLearningSourceError):
             SectionLearningRuntime.from_course(FakeCourse(), "missing")
 
-    def test_objects_preserve_book_runtime_order(self) -> None:
+    def test_source_objects_preserve_book_runtime_order(self) -> None:
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
-        self.assertEqual([row["id"] for row in source.objects], ["def_1", "ex_1"])
+        self.assertEqual([row["id"] for row in source.objects], ["def_1", "thm_1", "ex_1", "prob_1", "remark_1"])
 
-    def test_figures_are_in_range_and_sorted_by_page_then_id(self) -> None:
+    def test_figures_include_only_in_range_and_sort_by_page_then_id(self) -> None:
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
-        self.assertEqual([row["id"] for row in source.figures], ["fig_in_1", "fig_in_2"])
+        self.assertEqual([row["id"] for row in source.figures], ["fig_1", "fig_2"])
 
     def test_page_map_boundaries_are_preserved(self) -> None:
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
         self.assertEqual(source.page_map_start["printed_page"], "11")
         self.assertEqual(source.page_map_end["printed_page"], "12")
 
-    def test_missing_optional_anchor_stays_none(self) -> None:
+    def test_missing_optional_anchor_is_not_fabricated(self) -> None:
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
-        exercise = next(row for row in source.objects if row["id"] == "ex_1")
-        self.assertIsNone(exercise["source_anchor"])
+        theorem = next(row for row in source.objects if row["id"] == "thm_1")
+        self.assertIsNone(theorem["source_anchor"])
 
-    def test_translation_sources_are_stably_deduplicated_without_text_slicing(self) -> None:
+    def test_translation_availability_is_stable_deduplicated_and_contains_no_sliced_text(self) -> None:
         source = SectionLearningRuntime.from_course(FakeCourse(), "s1").source()
         self.assertEqual(source.translation_sources, [{"batch_id": "b1", "available": True}, {"batch_id": "b2", "available": False}])
-        self.assertFalse(any("text" in row for row in source.translation_sources))
+        self.assertTrue(all(set(row) == {"batch_id", "available"} for row in source.translation_sources))
 ```
 
-- [ ] **Step 2: Run source tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest tests.test_section_learning_runtime.SectionLearningSourceTests -v
 ```
 
-Expected: import failure because `runtime.section_learning_runtime` does not exist.
+Expected: module import failure.
 
-- [ ] **Step 3: Implement SectionLearningSource and source builder**
+- [ ] **Step 3: Implement source types and projection**
 
-Create these public types:
+Create `runtime/section_learning_runtime.py`:
 
 ```python
 from __future__ import annotations
@@ -785,9 +875,9 @@ class SectionLearningSource:
     translation_sources: list[dict[str, Any]]
 ```
 
-Implement `SectionLearningRuntime.from_course()` so it resolves the Section only through the selected course and wraps `BookRuntimeError` as `SectionLearningSourceError`.
+`SectionLearningRuntime.from_course()` must resolve only `course.section(section_id)`, wrap `BookRuntimeError` as `SectionLearningSourceError`, then use `course.main_book()` for evidence.
 
-Project objects with exact keys:
+Object projection keys are exactly:
 
 ```python
 {
@@ -805,9 +895,7 @@ Project objects with exact keys:
 }
 ```
 
-Project figures only when `pdf_page_start <= figure.anchor.pdf_page <= pdf_page_end`; if either Section boundary is missing, do not guess and return no figures. Sort included figures by `(pdf_page if not None else 10**9, id)`.
-
-Project figures with exact keys:
+Figure projection keys are exactly:
 
 ```python
 {
@@ -822,15 +910,17 @@ Project figures with exact keys:
 }
 ```
 
-Stable-deduplicate `RuntimeSection.source_batches` in original order and map each to:
+Include a figure only when its anchored PDF page lies inside both non-null Section PDF boundaries. Missing boundaries or missing figure PDF page must not be guessed. Sort included figures by `(pdf_page, id)`.
+
+Stable-deduplicate `section.source_batches` in original order and expose only:
 
 ```python
 {"batch_id": batch_id, "available": book.translation_text(batch_id) is not None}
 ```
 
-Do not store the returned translation text in `SectionLearningSource`.
+Never copy translation Markdown text into `SectionLearningSource`.
 
-- [ ] **Step 4: Run source tests and regressions**
+- [ ] **Step 4: Run GREEN + regressions**
 
 ```bash
 python -m unittest tests.test_section_learning_runtime.SectionLearningSourceTests -v
@@ -839,7 +929,7 @@ python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 3**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add runtime/section_learning_runtime.py tests/test_section_learning_runtime.py
@@ -848,37 +938,41 @@ git commit -m "feat: project source-backed section learning data"
 
 ---
 
-### Task 4: Deterministic Preview, Learn, Review, and Practice Modes
+### Task 4: Deterministic Preview, Learn, Review, and Practice Payloads
 
 **Files:**
 - Modify: `runtime/section_learning_runtime.py`
 - Modify: `tests/test_section_learning_runtime.py`
 
 **Interfaces:**
-- Consumes: `SectionLearningSource` from Task 3.
 - Produces:
-  - `SectionLearningRuntime.preview() -> dict[str, Any]`
-  - `SectionLearningRuntime.learn() -> dict[str, Any]`
-  - `SectionLearningRuntime.review() -> dict[str, Any]`
-  - `SectionLearningRuntime.practice() -> dict[str, Any]`
-- Exact review type set: `definition`, `theorem`, `proposition`, `lemma`, `corollary`, `formula` after `strip().casefold()`.
-- Exact practice type set: `exercise`, `problem` after `strip().casefold()`.
+  - `preview() -> dict[str, Any]`
+  - `learn() -> dict[str, Any]`
+  - `review() -> dict[str, Any]`
+  - `practice() -> dict[str, Any]`
+- Review policy after `strip().casefold()`: `definition`, `theorem`, `proposition`, `lemma`, `corollary`, `formula`.
+- Practice policy after `strip().casefold()`: `exercise`, `problem`.
+- Every item traces back by `(kind, source_id)`.
 
-- [ ] **Step 1: Add failing mode tests**
+- [ ] **Step 1: Add RED mode tests**
 
-Extend the fake objects with theorem/problem coverage and append:
+Append:
 
 ```python
 class SectionLearningModeTests(unittest.TestCase):
     def setUp(self) -> None:
         self.learning = SectionLearningRuntime.from_course(FakeCourse(), "s1")
 
-    def test_preview_preserves_identity(self) -> None:
+    def test_preview_preserves_identity_and_compact_source_metadata(self) -> None:
         payload = self.learning.preview()
         self.assertEqual(payload["mode"], "preview")
         self.assertEqual((payload["course_id"], payload["book_id"], payload["chapter_id"], payload["section_id"]), ("fixture_course", "fixture_book", "chapter_01", "s1"))
+        object_item = next(row for row in payload["items"] if row["kind"] == "object" and row["source_id"] == "def_1")
+        translation_item = next(row for row in payload["items"] if row["kind"] == "translation" and row["source_id"] == "b1")
+        self.assertEqual(object_item["object_type"], "definition")
+        self.assertIs(translation_item["available"], True)
 
-    def test_learn_references_all_objects_figures_and_translations(self) -> None:
+    def test_learn_references_all_source_objects_figures_and_translations_in_order(self) -> None:
         source = self.learning.source()
         payload = self.learning.learn()
         expected = (
@@ -888,23 +982,20 @@ class SectionLearningModeTests(unittest.TestCase):
         )
         self.assertEqual([(row["kind"], row["source_id"]) for row in payload["items"]], expected)
 
-    def test_review_uses_exact_normalized_policy_types(self) -> None:
+    def test_review_uses_exact_normalized_policy_and_preserves_source_type(self) -> None:
         payload = self.learning.review()
         source = self.learning.source()
         by_id = {row["id"]: row for row in source.objects}
-        for item in payload["items"]:
-            self.assertIn(by_id[item["source_id"]]["type"].strip().casefold(), {"definition", "theorem", "proposition", "lemma", "corollary", "formula"})
+        self.assertEqual([row["source_id"] for row in payload["items"]], ["def_1", "thm_1"])
+        self.assertEqual(by_id["thm_1"]["type"], " Theorem ")
 
-    def test_practice_uses_only_exercise_and_problem(self) -> None:
+    def test_practice_uses_only_exact_exercise_problem_policy(self) -> None:
         payload = self.learning.practice()
-        source = self.learning.source()
-        by_id = {row["id"]: row for row in source.objects}
-        for item in payload["items"]:
-            self.assertIn(by_id[item["source_id"]]["type"].strip().casefold(), {"exercise", "problem"})
+        self.assertEqual([row["source_id"] for row in payload["items"]], ["ex_1", "prob_1"])
 
-    def test_empty_review_and_practice_are_valid(self) -> None:
+    def test_empty_review_and_practice_subsets_are_valid(self) -> None:
         course = FakeCourse()
-        course._book._objects = [RuntimeObject(id="remark_1", type="remark", section_id="s1")]
+        course._book._objects = [RuntimeObject(id="remark_only", type="remark", section_id="s1")]
         learning = SectionLearningRuntime.from_course(course, "s1")
         self.assertEqual(learning.review()["items"], [])
         self.assertEqual(learning.practice()["items"], [])
@@ -921,75 +1012,91 @@ class SectionLearningModeTests(unittest.TestCase):
                 self.assertIn((item["kind"], item["source_id"]), source_keys)
             self.assertEqual(
                 payload["source_refs"],
-                [{"kind": row["kind"], "source_id": row["source_id"]} for row in payload["items"]],
+                [{"kind": item["kind"], "source_id": item["source_id"]} for item in payload["items"]],
             )
 
-    def test_modes_are_independently_callable(self) -> None:
-        first = SectionLearningRuntime.from_course(FakeCourse(), "s1").practice()
-        second = SectionLearningRuntime.from_course(FakeCourse(), "s1").preview()
-        third = SectionLearningRuntime.from_course(FakeCourse(), "s1").review()
-        fourth = SectionLearningRuntime.from_course(FakeCourse(), "s1").learn()
-        self.assertEqual([first["mode"], second["mode"], third["mode"], fourth["mode"]], ["practice", "preview", "review", "learn"])
+    def test_modes_have_no_ordering_lock(self) -> None:
+        fresh = SectionLearningRuntime.from_course(FakeCourse(), "s1")
+        self.assertEqual(
+            [fresh.practice()["mode"], fresh.preview()["mode"], fresh.review()["mode"], fresh.learn()["mode"]],
+            ["practice", "preview", "review", "learn"],
+        )
 ```
 
-- [ ] **Step 2: Run mode tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest tests.test_section_learning_runtime.SectionLearningModeTests -v
 ```
 
-Expected: failures because mode methods do not exist.
+Expected: missing-mode-method failures.
 
-- [ ] **Step 3: Implement common mode envelope and exact policies**
+- [ ] **Step 3: Implement exact mode contracts**
 
-Add constants:
+Add:
 
 ```python
 REVIEW_TYPES = frozenset({"definition", "theorem", "proposition", "lemma", "corollary", "formula"})
 PRACTICE_TYPES = frozenset({"exercise", "problem"})
 ```
 
-Use references only:
+Common envelope:
 
 ```python
-    @staticmethod
-    def _ref(kind: str, source_id: str) -> dict[str, str]:
-        return {"kind": kind, "source_id": source_id}
-
     def _envelope(self, mode: str, items: list[dict[str, Any]]) -> dict[str, Any]:
-        source = self._source
-        refs = [{"kind": str(item["kind"]), "source_id": str(item["source_id"])} for item in items]
         return {
             "mode": mode,
-            "course_id": source.course_id,
-            "book_id": source.book_id,
-            "chapter_id": source.chapter_id,
-            "section_id": source.section_id,
+            "course_id": self._source.course_id,
+            "book_id": self._source.book_id,
+            "chapter_id": self._source.chapter_id,
+            "section_id": self._source.section_id,
             "source_status": "available",
             "items": items,
-            "source_refs": refs,
+            "source_refs": [
+                {"kind": str(item["kind"]), "source_id": str(item["source_id"])}
+                for item in items
+            ],
         }
 ```
 
-Implement deterministic reference sequences:
+Preview must be a compact index, not a duplicate of Learn:
 
 ```python
-    def _all_refs(self) -> list[dict[str, str]]:
-        return (
-            [self._ref("object", row["id"]) for row in self._source.objects]
-            + [self._ref("figure", row["id"]) for row in self._source.figures]
-            + [self._ref("translation", row["batch_id"]) for row in self._source.translation_sources]
-        )
-
     def preview(self) -> dict[str, Any]:
-        return self._envelope("preview", self._all_refs())
+        items: list[dict[str, Any]] = []
+        items.extend(
+            {"kind": "object", "source_id": row["id"], "object_type": row["type"]}
+            for row in self._source.objects
+        )
+        items.extend(
+            {"kind": "figure", "source_id": row["id"]}
+            for row in self._source.figures
+        )
+        items.extend(
+            {"kind": "translation", "source_id": row["batch_id"], "available": row["available"]}
+            for row in self._source.translation_sources
+        )
+        return self._envelope("preview", items)
+```
 
+Learn contains source references only and preserves source order:
+
+```python
     def learn(self) -> dict[str, Any]:
-        return self._envelope("learn", self._all_refs())
+        items = (
+            [{"kind": "object", "source_id": row["id"]} for row in self._source.objects]
+            + [{"kind": "figure", "source_id": row["id"]} for row in self._source.figures]
+            + [{"kind": "translation", "source_id": row["batch_id"]} for row in self._source.translation_sources]
+        )
+        return self._envelope("learn", items)
+```
 
+Review/Practice:
+
+```python
     def review(self) -> dict[str, Any]:
         items = [
-            self._ref("object", row["id"])
+            {"kind": "object", "source_id": row["id"]}
             for row in self._source.objects
             if str(row.get("type") or "").strip().casefold() in REVIEW_TYPES
         ]
@@ -997,16 +1104,16 @@ Implement deterministic reference sequences:
 
     def practice(self) -> dict[str, Any]:
         items = [
-            self._ref("object", row["id"])
+            {"kind": "object", "source_id": row["id"]}
             for row in self._source.objects
             if str(row.get("type") or "").strip().casefold() in PRACTICE_TYPES
         ]
         return self._envelope("practice", items)
 ```
 
-Do not copy formula/text/anchor fields into mode items; consumers dereference `(kind, source_id)` against `source()`.
+Do not copy formula/text/anchor facts into mode items. Consumers dereference `(kind, source_id)` against `source()`.
 
-- [ ] **Step 4: Run mode/source/regression tests**
+- [ ] **Step 4: Run GREEN + regressions**
 
 ```bash
 python -m unittest tests.test_section_learning_runtime -v
@@ -1015,7 +1122,7 @@ python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit Task 4**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add runtime/section_learning_runtime.py tests/test_section_learning_runtime.py
@@ -1024,7 +1131,7 @@ git commit -m "feat: add deterministic section learning modes"
 
 ---
 
-### Task 5: Real Functional Analysis Library Fixture and Public Runtime Exports
+### Task 5: Real Functional Analysis Library Fixture + Package Exports
 
 **Files:**
 - Create: `library/library.json`
@@ -1033,14 +1140,14 @@ git commit -m "feat: add deterministic section learning modes"
 - Modify: `tests/test_section_learning_runtime.py`
 
 **Interfaces:**
-- Consumes: Tasks 1–4 public APIs.
-- Produces: clean-checkout real path `LibraryRuntime.open("library") → functional_analysis_course → ch01_s01 → four modes` and package-level exports from `runtime`.
+- Produces clean-checkout path: `LibraryRuntime.open("library") → functional_analysis_course → ch01_s01 → four modes`.
 
-- [ ] **Step 1: Add failing real-fixture and package-export tests**
+- [ ] **Step 1: Add RED real-fixture tests**
 
 Append to `tests/test_library_runtime.py`:
 
 ```python
+class RealLibraryFixtureTests(unittest.TestCase):
     def test_real_functional_analysis_library_fixture(self) -> None:
         repo = Path(__file__).resolve().parents[1]
         if not (repo / "books" / "functional-analysis").exists():
@@ -1063,7 +1170,8 @@ Append to `tests/test_library_runtime.py`:
 Append to `tests/test_section_learning_runtime.py`:
 
 ```python
-    def test_real_ch01_s01_builds_all_learning_modes(self) -> None:
+class RealSectionLearningFixtureTests(unittest.TestCase):
+    def test_real_ch01_s01_builds_all_modes(self) -> None:
         from pathlib import Path
         from runtime import LibraryRuntime
 
@@ -1076,27 +1184,28 @@ Append to `tests/test_section_learning_runtime.py`:
         self.assertEqual(source.course_id, "functional_analysis_course")
         self.assertEqual(source.book_id, "stein_shakarchi_functional_analysis_2011")
         self.assertEqual(source.section_id, "ch01_s01")
-        for mode in (learning.preview(), learning.learn(), learning.review(), learning.practice()):
-            self.assertEqual(mode["course_id"], source.course_id)
-            self.assertEqual(mode["book_id"], source.book_id)
-            self.assertEqual(mode["section_id"], source.section_id)
+        for payload in (learning.preview(), learning.learn(), learning.review(), learning.practice()):
+            self.assertEqual(payload["course_id"], source.course_id)
+            self.assertEqual(payload["book_id"], source.book_id)
+            self.assertEqual(payload["chapter_id"], source.chapter_id)
+            self.assertEqual(payload["section_id"], source.section_id)
 
     def test_runtime_package_exports_section_learning_runtime(self) -> None:
         from runtime import SectionLearningRuntime as ExportedSectionLearningRuntime
         self.assertIs(ExportedSectionLearningRuntime, SectionLearningRuntime)
 ```
 
-- [ ] **Step 2: Run integration tests and confirm RED**
+- [ ] **Step 2: Run RED**
 
 ```bash
 python -m unittest tests.test_library_runtime tests.test_section_learning_runtime -v
 ```
 
-Expected: failures because `library/library.json` and package exports do not yet exist.
+Expected: failures for missing `library/library.json` and package exports.
 
-- [ ] **Step 3: Create the real library manifest**
+- [ ] **Step 3: Create exact real library manifest**
 
-Create `library/library.json` exactly as:
+Create `library/library.json`:
 
 ```json
 {
@@ -1115,9 +1224,9 @@ Create `library/library.json` exactly as:
 }
 ```
 
-- [ ] **Step 4: Export new runtime APIs**
+- [ ] **Step 4: Export all new public runtime symbols**
 
-Extend `runtime/__init__.py` imports and `__all__` with:
+Extend `runtime/__init__.py` without removing existing exports:
 
 ```python
 from .library_runtime import (
@@ -1136,18 +1245,18 @@ from .section_learning_runtime import (
 )
 ```
 
-Add the same names to `__all__` without removing existing BookRuntime/CourseRuntime exports.
+Add those names to `__all__`.
 
-- [ ] **Step 5: Run real integration and full runtime tests**
+- [ ] **Step 5: Run GREEN + real acceptance**
 
 ```bash
 python -m unittest tests.test_library_runtime tests.test_section_learning_runtime -v
 python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime -v
 ```
 
-Expected: PASS, with real fixture asserting one library course, one canonical book, 8 Chapters, 132 Sections, 442 PageMap rows, and 1493 search records.
+Expected: PASS, including 8 Chapters, 132 Sections, 442 PageMap rows, 1493 search records, and real `ch01_s01` learning source/modes.
 
-- [ ] **Step 6: Commit Task 5**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add library/library.json runtime/__init__.py tests/test_library_runtime.py tests/test_section_learning_runtime.py
@@ -1156,7 +1265,7 @@ git commit -m "feat: wire Functional Analysis into the app library"
 
 ---
 
-### Task 6: CI, Documentation, and Final Phase 1C Verification
+### Task 6: CI + Documentation + Final Integration Gate
 
 **Files:**
 - Modify: `.github/workflows/runtime-reference-tests.yml`
@@ -1164,34 +1273,36 @@ git commit -m "feat: wire Functional Analysis into the app library"
 - Modify: `README.md`
 
 **Interfaces:**
-- Consumes: all runtime APIs and tests from Tasks 1–5.
-- Produces: CI coverage for the new runtime path, corrected product documentation, and final integration evidence suitable for a PR.
+- Consumes all Phase 1C runtime APIs.
+- Produces CI evidence and product/runtime documentation suitable for a PR.
 
-- [ ] **Step 1: Extend CI path filters, compilation, and unit test command**
+- [ ] **Step 1: Extend CI path filters**
 
-In both `push.paths` and `pull_request.paths`, add:
+Add to both `push.paths` and `pull_request.paths`:
 
 ```yaml
       - "library/**"
 ```
 
-In `Compile reference runtime`, add:
+- [ ] **Step 2: Compile and test the new runtime modules in the existing workflow**
+
+Add to `Compile reference runtime`:
 
 ```yaml
           python -m py_compile runtime/library_runtime.py
           python -m py_compile runtime/section_learning_runtime.py
 ```
 
-Replace the unit-test command with the existing modules plus the two new modules:
+Use this exact unit-test command:
 
 ```yaml
       - name: Run unit tests
         run: python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
 ```
 
-- [ ] **Step 2: Extend the Python 3.13 real acceptance command**
+- [ ] **Step 3: Extend Python 3.13 real acceptance without weakening recovery checks**
 
-Keep the existing rebuild/readiness checks intact and extend the final Python command to import and assert the App-level chain:
+Keep all existing rebuild/readiness commands and PageMap assertions. Extend the final acceptance Python code with:
 
 ```python
 from runtime import BookRuntime, CourseRuntime, LibraryRuntime, SectionLearningRuntime
@@ -1211,11 +1322,11 @@ assert learning.source().section_id == "ch01_s01"
 assert [learning.preview()["mode"], learning.learn()["mode"], learning.review()["mode"], learning.practice()["mode"]] == ["preview", "learn", "review", "practice"]
 ```
 
-Retain the existing PageMap assertions for PDF 20 → printed 1 and PDF 442 → printed 423 and the existing readiness diagnostics printout; add `library_runtime_open: true` and `section_learning_runtime_open: true` to printed evidence.
+Add `library_runtime_open: true` and `section_learning_runtime_open: true` to printed CI evidence.
 
-- [ ] **Step 3: Update runtime documentation**
+- [ ] **Step 4: Update `runtime/README.md`**
 
-In `runtime/README.md`, update the runtime chain to:
+Document this chain:
 
 ```text
 结构化教材资产
@@ -1233,7 +1344,7 @@ SectionLearningRuntime
 Preview / Learn / Review / Practice
 ```
 
-Add a runnable example:
+Add this exact usage pattern:
 
 ```python
 from runtime import LibraryRuntime, SectionLearningRuntime
@@ -1249,19 +1360,11 @@ print(learning.review())
 print(learning.practice())
 ```
 
-Document explicitly:
+State explicitly that Product-level LibraryRuntime admits one textbook per course, generic CourseRuntime keeps multi-book compatibility below it, and Phase 1C modes only reference source-backed data. Keep the `STRUCTURED_COMPLETE` vs `RUNTIME_READY` distinction intact.
 
-```text
-Book App 产品层：一个 App 包含多个独立课程；当前每个课程只接入一本教材。
-CourseRuntime 底层仍保留多书能力，但 LibraryRuntime 不接纳多书课程进入当前产品入口。
-四种学习模式只引用 SectionLearningSource 中可追溯的教材来源；Phase 1C 不生成 AI 教学内容或题目。
-```
+- [ ] **Step 5: Correct root `README.md` product model**
 
-Keep the `STRUCTURED_COMPLETE` vs `RUNTIME_READY` distinction unchanged.
-
-- [ ] **Step 4: Correct root product documentation**
-
-In root `README.md`, replace the outdated principle:
+Replace the outdated product principle:
 
 ```text
 一门课程支持多本教材：主教材、辅助教材、英文教材、参考教材。
@@ -1273,51 +1376,33 @@ with:
 一个 Book App 支持多门彼此独立的教材课程；当前产品形态下每门课程对应一本教材，例如泛函分析、实分析分别作为独立课程加入同一个 App。
 ```
 
-Update “当前状态” so Phase 1B is described as merged/completed and Phase 1C is the current milestone. Do not delete the broader future architecture documentation; identify generic CourseRuntime multi-book support as lower-level compatibility rather than the current App product model.
+Mark Phase 1B as completed/integrated and Phase 1C as current. Preserve broader future architecture documents; describe generic CourseRuntime multi-book support only as lower-level compatibility.
 
-- [ ] **Step 5: Run full local-equivalent verification**
-
-Run syntax compilation:
+- [ ] **Step 6: Run full verification**
 
 ```bash
 python -m py_compile runtime/book_runtime.py runtime/course_runtime.py runtime/library_runtime.py runtime/section_learning_runtime.py
-```
-
-Run the complete runtime suite:
-
-```bash
 python -m unittest tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v
-```
-
-Run real runtime readiness without changing textbook source files:
-
-```bash
 python tools/check_runtime_readiness.py books/functional-analysis
-```
-
-Run direct real acceptance:
-
-```bash
 python -c "from runtime import LibraryRuntime,SectionLearningRuntime; l=LibraryRuntime.open('library'); c=l.course('functional_analysis_course'); s=SectionLearningRuntime.from_course(c,'ch01_s01'); assert l.course_ids()==['functional_analysis_course']; assert c.book_ids()==['stein_shakarchi_functional_analysis_2011']; assert len(c.chapter_ids())==8; assert sum(len(c.sections_for_chapter(x)) for x in c.chapter_ids())==132; assert len(c.main_book().page_map)==442; assert sum(1 for _ in c.main_book().iter_search_records())==1493; assert [s.preview()['mode'],s.learn()['mode'],s.review()['mode'],s.practice()['mode']]==['preview','learn','review','practice']; print('Phase 1C acceptance PASS')"
 ```
 
-Expected: all commands succeed and readiness remains `READY`.
+Expected: all commands succeed and runtime readiness remains `READY`.
 
-- [ ] **Step 6: Verify no textbook source assets changed**
-
-Run:
+- [ ] **Step 7: Verify scope/no textbook source mutation**
 
 ```bash
 git diff --name-only main...HEAD
 ```
 
-Expected changed paths are limited to the Phase 1C spec/plan plus:
+Implementation diff may contain only the Phase 1C spec/plan and:
 
 ```text
 library/library.json
 runtime/library_runtime.py
 runtime/section_learning_runtime.py
 runtime/__init__.py
+tests/runtime_fixture_factory.py
 tests/test_library_runtime.py
 tests/test_section_learning_runtime.py
 .github/workflows/runtime-reference-tests.yml
@@ -1325,22 +1410,22 @@ runtime/README.md
 README.md
 ```
 
-No `books/functional-analysis/*_structure.json`, `books/functional-analysis/chunks/*`, PageMap, TOC, or search-index source asset should appear in the implementation diff.
+No `books/functional-analysis/*_structure.json`, `books/functional-analysis/chunks/*`, PageMap, TOC, search index, or other textbook source asset may appear.
 
-- [ ] **Step 7: Commit CI/docs changes**
+- [ ] **Step 8: Commit CI/docs**
 
 ```bash
 git add .github/workflows/runtime-reference-tests.yml runtime/README.md README.md
 git commit -m "docs: integrate Phase 1C runtime path"
 ```
 
-- [ ] **Step 8: Push branch and require GitHub Actions evidence before PR completion claims**
+- [ ] **Step 9: Require GitHub Actions evidence**
 
-Require `Runtime reference tests` to complete successfully on Python 3.11, 3.12, and 3.13. On 3.13, verify the real Functional Analysis rebuild/readiness step and the Library → Course → SectionLearning acceptance both succeed. Do not claim Phase 1C complete from local-equivalent reasoning alone.
+Push the feature branch and require the existing `Runtime reference tests` workflow to finish successfully on Python 3.11, 3.12, and 3.13. The 3.13 job must retain the real Functional Analysis rebuild/readiness checks and pass the new Library → Course → `ch01_s01` SectionLearning acceptance.
 
-- [ ] **Step 9: Open a PR without merging**
+- [ ] **Step 10: Open PR, do not merge**
 
-Use a PR title equivalent to:
+PR title:
 
 ```text
 Add App library and Section learning runtime
@@ -1351,19 +1436,21 @@ PR body must report:
 ```text
 - one App / many independent courses product model
 - one enabled textbook per admitted product course
-- Functional Analysis as the first real library fixture
-- ch01_s01 source-backed Preview/Learn/Review/Practice path
+- Functional Analysis as first real library fixture
+- ch01_s01 source-backed Preview/Learn/Review/Practice
 - no AI-generated textbook content in Phase 1C
 - Python 3.11/3.12/3.13 CI result
 - 8 Chapters / 132 Sections / 442 PageMap rows / 1493 search records retained
 - no Functional Analysis structured source assets changed
 ```
 
-Do not merge the PR without explicit user approval.
+Do not merge without explicit user approval.
 
 ## Plan Self-Review
 
-- **Spec coverage:** Library schema/root/path trust, disabled-course behavior, canonical ID verification, single-book product profile, Section evidence projection, deterministic ordering, PageMap/translation/figure handling, exact Review/Practice policies, `(kind, source_id)` traceability, real Functional Analysis fixture, CI, docs, and no-textbook-source-change acceptance are all mapped to Tasks 1–6.
-- **Placeholder scan:** No `TBD`, `TODO`, “implement later”, or unspecified error/testing steps remain.
-- **Type consistency:** `LibraryRuntime.open(..., repository_root=...)`, `course_ids()`, `courses()`, `course()`, `summary()`, `SectionLearningRuntime.from_course()`, `source()`, `preview()`, `learn()`, `review()`, and `practice()` use the same names throughout the plan.
-- **Scope check:** LibraryRuntime and SectionLearningRuntime are separate files/tasks but intentionally remain one Phase 1C plan because the acceptance deliverable is the single end-to-end App path `Library → Course → ch01_s01 → four modes`; neither introduces UI or persistence.
+- **Spec coverage:** All 44 minimum test intentions are represented: library schema/name/entries/enabled/path/root/ID/readiness/disabled/order/profile; Section identity/object order/figures/PageMap/missing anchors/translations; Preview/Learn/Review/Practice policy/empty subsets/traceability/no lock; real library/course/book/chapter/section/PageMap/search acceptance.
+- **Placeholder scan:** No `TBD`, `TODO`, “implement later”, “similar to Task N”, or unspecified validation/test steps remain.
+- **Type consistency:** `LibraryRuntime.open(..., repository_root=...)`, `course_ids()`, `courses()`, `course()`, `summary()`, `SectionLearningRuntime.from_course()`, `source()`, `preview()`, `learn()`, `review()`, and `practice()` use one consistent spelling/signature throughout.
+- **Preview/Learn distinction:** Preview explicitly carries compact object-type and translation-availability metadata; Learn is the ordered complete source-reference view.
+- **Traceability:** All mode items preserve `(kind, source_id)` and `source_refs` strips any presentation metadata back to that canonical pair.
+- **Scope:** LibraryRuntime and SectionLearningRuntime remain separate focused modules/tasks, but one implementation plan is appropriate because the acceptance deliverable is the single end-to-end App path `Library → Course → ch01_s01 → four modes`.
