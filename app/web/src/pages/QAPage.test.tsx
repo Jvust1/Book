@@ -1,3 +1,4 @@
+import { StrictMode } from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
@@ -74,14 +75,30 @@ function LocationProbe() {
   return <output data-testid="location">{location.pathname}</output>
 }
 
+function qaRoutes() {
+  return (
+    <Routes>
+      <Route path="/courses/:courseId/qa" element={<QAPage />} />
+      <Route path="/courses/:courseId/sources/:kind/:sourceId" element={<LocationProbe />} />
+    </Routes>
+  )
+}
+
 function renderQA() {
   return render(
     <MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
-      <Routes>
-        <Route path="/courses/:courseId/qa" element={<QAPage />} />
-        <Route path="/courses/:courseId/sources/:kind/:sourceId" element={<LocationProbe />} />
-      </Routes>
+      {qaRoutes()}
     </MemoryRouter>,
+  )
+}
+
+function renderQAStrict() {
+  return render(
+    <StrictMode>
+      <MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
+        {qaRoutes()}
+      </MemoryRouter>
+    </StrictMode>,
   )
 }
 
@@ -196,6 +213,22 @@ describe('QAPage', () => {
     const citationHeading = await screen.findByRole('heading', { name: '巴拿赫空间' })
     await waitFor(() => expect(scrollTo).toHaveBeenCalledWith(0, 420))
     expect(citationHeading.closest('article')).toHaveAttribute('aria-current', 'true')
+  })
+
+  it('restores saved QA under React StrictMode without getting stuck in loading', async () => {
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => undefined)
+    saveQAViewState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa',
+      question: GENERATED.question,
+      scrollY: 420,
+      activeCitationKey: 'object:def_banach_space',
+    })
+
+    renderQAStrict()
+
+    expect(await screen.findByDisplayValue(GENERATED.question)).toBeInTheDocument()
+    expect(await screen.findByText('AI 生成回答，依据下方教材来源')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '提问' })).toBeEnabled()
   })
 
   it.each([
