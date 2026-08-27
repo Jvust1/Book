@@ -6,14 +6,16 @@ from pathlib import Path
 from typing import cast
 
 from runtime import (
-    AnswerProvider,
-    AnswerProviderInvalidResponseError,
-    AnswerProviderUnavailableError,
     LibraryRuntime,
     LibraryRuntimeError,
+    ModelProvider,
+    ModelProviderInvalidResponseError,
+    ModelProviderUnavailableError,
     QAEvidenceUnavailableError,
+    QAHistoryMessage,
     QARuntime,
     QAQuestionError,
+    QASectionError,
     SearchQueryError,
     SearchRuntime,
     SearchRuntimeError,
@@ -21,7 +23,7 @@ from runtime import (
     SectionLearningRuntimeError,
     SourceResolutionError,
     SourceResolver,
-    UnavailableAnswerProvider,
+    UnavailableModelProvider,
 )
 from runtime.book_runtime import RuntimeSection
 from runtime.course_runtime import CourseRuntime
@@ -33,6 +35,7 @@ from .errors import (
     InvalidQAQuestionError,
     InvalidSearchQueryError,
     QAProviderInvalidResponseError,
+    QAProviderUnconfiguredError,
 )
 from .models import (
     ChapterCard,
@@ -65,10 +68,12 @@ class BookAppService:
         self,
         repository_root: Path,
         *,
-        qa_provider: AnswerProvider | None = None,
+        qa_provider: ModelProvider | None = None,
     ):
         self.repository_root = Path(repository_root).resolve()
-        self._qa_provider: AnswerProvider = qa_provider or UnavailableAnswerProvider()
+        self._qa_provider: ModelProvider = (
+            qa_provider if qa_provider is not None else UnavailableModelProvider()
+        )
         try:
             self._library = LibraryRuntime.open(
                 self.repository_root / "library",
@@ -244,14 +249,31 @@ class BookAppService:
             results=results,
         )
 
-    def ask(self, course_id: str, question: str) -> QAResponse:
+    def ask(
+        self,
+        course_id: str,
+        question: str,
+        *,
+        section_id: str | None = None,
+        history: tuple[QAHistoryMessage, ...] = (),
+    ) -> QAResponse:
         course = self._course(course_id)
         try:
-            result = QARuntime.from_course(course, provider=self._qa_provider).answer(question)
+            result = QARuntime.from_course(course, provider=self._qa_provider).answer(
+                question,
+                section_id=section_id,
+                history=history,
+            )
         except QAQuestionError as exc:
             raise InvalidQAQuestionError(
                 code="invalid_qa_question",
                 user_message="提问内容无效",
+                detail=str(exc),
+            ) from exc
+        except QASectionError as exc:
+            raise AppNotFoundError(
+                code="section_not_found",
+                user_message="小节不存在",
                 detail=str(exc),
             ) from exc
         except QAEvidenceUnavailableError as exc:
@@ -260,13 +282,19 @@ class BookAppService:
                 user_message="教材问答暂不可用",
                 detail=str(exc),
             ) from exc
-        except AnswerProviderUnavailableError as exc:
+        except ModelProviderUnavailableError as exc:
+            if isinstance(self._qa_provider, UnavailableModelProvider):
+                raise QAProviderUnconfiguredError(
+                    code="qa_provider_unconfigured",
+                    user_message="教材问答模型未配置",
+                    detail=str(exc),
+                ) from exc
             raise AppUnavailableError(
                 code="qa_provider_unavailable",
                 user_message="教材问答模型暂不可用",
                 detail=str(exc),
             ) from exc
-        except AnswerProviderInvalidResponseError as exc:
+        except ModelProviderInvalidResponseError as exc:
             raise QAProviderInvalidResponseError(
                 code="qa_provider_invalid_response",
                 user_message="教材问答结果校验失败",
@@ -277,26 +305,28 @@ class BookAppService:
             course_id=result.course_id,
             book_id=result.book_id,
             question=result.question,
+            answer=result.answer,
             answer_kind=result.answer_kind,
-            evidence_status=result.evidence_status,
-            answer=(
-                result.answer
-                if result.answer is not None
-                else "现有教材证据不足，暂不能给出可靠回答。"
-            ),
+            answer_style=result.answer_style,
+            scope_requested=result.scope_requested,
+            scope_used=result.scope_used,
+            insufficient_evidence=result.insufficient_evidence,
+            message=result.message,
             citations=[
                 QACitationItem(
-                    citation_id=row.citation_id,
                     evidence_id=row.evidence_id,
                     source_kind=row.source_kind,
                     source_id=row.source_id,
+                    chapter_id=row.chapter_id,
+                    section_id=row.section_id,
                     object_type=row.object_type,
+                    type_zh=row.type_zh,
                     number=row.number,
                     title_zh=row.title_zh,
                     title_en=row.title_en,
-                    source_anchor=row.source_anchor,
-                    pdf_page=row.pdf_page,
                     printed_page=row.printed_page,
+                    pdf_page=row.pdf_page,
+                    source_anchor=row.source_anchor,
                 )
                 for row in result.citations
             ],
