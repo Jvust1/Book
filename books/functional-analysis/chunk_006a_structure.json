@@ -36,7 +36,7 @@
     {"type":"exercise","id":"ex_ch2_7_7","number":"7","name_zh":"紧支撑有界函数的 Hilbert 变换可积判别","anchor":{"pdf_page":110,"printed_page":91}},
     {"type":"exercise","id":"ex_ch2_7_8","number":"8","name_zh":"实 L^p 算子的复化与向量值估计","anchor":{"pdf_page":110,"printed_page":91}},
     {"type":"exercise","id":"ex_ch2_7_9","number":"9","name_zh":"上半平面调和函数与 Poisson 表示等价","anchor":{"pdf_page":110,"printed_page":91}},
-    {"type":"exercise","id":"ex_ch2_7_10","number":"10","name_zh":"L^p(R) 上的后续练习（跨批次继续）","anchor":{"pdf_page":110,"printed_page":91},"status":"continues_in_chunk_006b"}
+    {"type":"exercise","id":"ex_ch2_7_10","number":"10","name_zh":"Poisson 核卷积在 L^p 中的压缩性与近似恒等性","anchor":{"pdf_page":110,"printed_page":91},"status":"continues_in_chunk_006b"}
   ],
   "translation_status": {"learning_layer_zh":"completed_for_pdf_101_110","theorem_and_definition_statements":"completed","proof_logic":"completed","exercise_topics":"indexed"},
   "next_action": "PDF 111-120：继续第 2 章练习，从 Exercise 10 接续，并按题号建立完整可搜索题目锚点。"

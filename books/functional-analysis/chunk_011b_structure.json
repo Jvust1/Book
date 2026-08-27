@@ -39,8 +39,8 @@
     {"type":"lemma","id":"lem_ch5_1_6_positive_set_lower_bound","number":"1.6","name_zh":"正测度集合上的 Rademacher 尾和 L² 下界","name_en":"L2 lower bound on a positive-measure set for Rademacher tail sums","anchor":{"pdf_page":220,"printed_page":201},"formula":"∫_E|F|²dt ≥ c Σ_{n≥N_0}a_n²","proof_status":"started_continues_in_chunk_012a","continues_in":"chunk_012a","description":"证明已建立 φ_{n,m}=r_nr_m 的正交性与 Bessel 控制，下一批继续 Schwarz 估计并用于 Theorem 1.4(b)。"}
   ],
   "figure_anchors": [
-    {"figure":"Figure 1","title_zh":"Rademacher 函数 r_1 与 r_2","pdf_page":212,"printed_page":193,"asset":"figures/fig_ch5_01_rademacher_r1_r2.png","preserve_original":true,"visual_check":"completed"},
-    {"figure":"Figure 2","title_zh":"Gaussian 积分的矩形和近似","pdf_page":217,"printed_page":198,"asset":"figures/fig_ch5_02_gaussian_integral_approx.png","preserve_original":true,"visual_check":"completed"}
+    {"id":"Figure 1@pdf:212","figure":"Figure 1","title_zh":"Rademacher 函数 r_1 与 r_2","pdf_page":212,"printed_page":193,"asset":"figures/fig_ch5_01_rademacher_r1_r2.png","preserve_original":true,"visual_check":"completed"},
+    {"id":"Figure 2@pdf:217","figure":"Figure 2","title_zh":"Gaussian 积分的矩形和近似","pdf_page":217,"printed_page":198,"asset":"figures/fig_ch5_02_gaussian_integral_approx.png","preserve_original":true,"visual_check":"completed"}
   ],
   "translation_status": {"learning_layer_zh":"completed_for_pdf_211_220","definitions_and_theorem_statements":"completed_for_covered_pages","proof_logic":"completed_for_covered_pages_except_cross_batch_continuation","theorem_1_4_part_b":"continues_in_chunk_012a","lemma_1_6":"started_continues_in_chunk_012a","figures":"2_instructional_figures_visual_checked_and_preserved","sentence_level_full_translation":"pending"},
   "next_action": "PDF 221-230：完成 Lemma 1.6 与 Theorem 1.4(b)，处理 §1.7 随机 Fourier 级数、§1.8 一般 Bernoulli 试验，并进入 §2 独立随机变量之和。"

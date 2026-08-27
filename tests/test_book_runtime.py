@@ -5,17 +5,84 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from runtime.book_runtime import BookRuntime, BookRuntimeBlockedError
+from runtime.book_runtime import BookRuntime
+from tests.test_search_identity_replay import SearchIdentityReplayDiagnostics  # noqa: F401
+from tests.test_search_recovery_diagnostics import SearchRecoveryDiagnostics  # noqa: F401
+from tools import rebuild_runtime_artifacts as rebuild
+from tools import recover_functional_analysis_search as fa_search_recovery
 
 
 class BookRuntimeTests(unittest.TestCase):
-    def test_current_functional_analysis_fixture_is_blocked_until_assets_are_restored(self) -> None:
+    def test_current_functional_analysis_fixture_is_runtime_ready(self) -> None:
         root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
         if not root.exists():
             self.skipTest("repository fixture not present")
 
-        with self.assertRaises(BookRuntimeBlockedError):
-            BookRuntime.open(root)
+        readiness = json.loads((root / "RUNTIME_READINESS.json").read_text(encoding="utf-8"))
+        self.assertEqual(readiness.get("status"), "READY")
+
+        runtime = BookRuntime.open(root)
+        self.assertTrue(runtime.is_ready)
+        self.assertEqual(runtime.book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(runtime.page_map_row(20)["printed_page"], "1")
+        self.assertEqual(runtime.page_map_row(442)["printed_page"], "423")
+        self.assertIsNotNone(runtime.search_index_path)
+
+    def test_functional_analysis_search_rebuild_matches_final_audit(self) -> None:
+        root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
+        if not root.exists():
+            self.skipTest("repository fixture not present")
+
+        _, report = fa_search_recovery.recover_search_index(root)
+
+        self.assertEqual(report["pre_tail_unique_count"], 1396)
+        self.assertEqual(report["record_count"], 1493)
+        self.assertEqual(report["legacy_complete_normalized_count"], 7)
+        self.assertEqual(report["legacy_complete_collision_count"], 6)
+        self.assertEqual(report["v05_frontmatter_added"], 5)
+        self.assertEqual(set(report["v05_frontmatter_excluded"]), {"series_page", "copyright"})
+        self.assertTrue(report["all_unique"])
+        self.assertEqual(report["without_source_anchor"], [])
+        self.assertTrue(report["promotable_by_count_and_anchor"])
+
+    def test_v036_index_tail_falls_back_to_completed_learning_layer(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self._dump(
+                root / "chunk_023a_structure.json",
+                {
+                    "chunk_id": "chunk_023a",
+                    "index_entry_range": [135, 137],
+                    "key_object_count": 3,
+                },
+            )
+            (root / "chunk_023a_translation_zh.md").write_text(
+                "# final index learning layer\n\n"
+                "## PDF 441 / printed 422\n\n"
+                "- **measure** — `measure, 29`\n"
+                "- **Minkowski inequality** — `Minkowski inequality, 4`\n\n"
+                "## PDF 442 / printed 423\n\n"
+                "- **zig-zag function** — `zig-zag function, 165`\n",
+                encoding="utf-8",
+            )
+
+            records: dict[str, dict[str, object]] = {}
+            stats = {"expanded_index_v036_tail_count": 0}
+            rebuild.append_v036_index_tail(
+                records,
+                root,
+                book_id="fixture_book_2026",
+                stats=stats,
+            )
+
+            self.assertEqual(
+                list(records),
+                ["index_entry_135", "index_entry_136", "index_entry_137"],
+            )
+            self.assertEqual(records["index_entry_135"]["term"], "measure")
+            self.assertEqual(records["index_entry_135"]["pdf_page"], 441)
+            self.assertEqual(records["index_entry_137"]["pdf_page"], 442)
+            self.assertEqual(stats["expanded_index_v036_tail_count"], 3)
 
     def test_minimal_ready_fixture_normalizes_sections_objects_and_search(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

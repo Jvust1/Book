@@ -1,0 +1,67 @@
+{
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "recovery_model": "v0.5 baseline through PDF 90 + v0.6-v0.35 deltas + v0.36 index tail",
+  "raw_delta_unique_count": 989,
+  "group_rows_removed": 3,
+  "expanded_bibliography_count": 61,
+  "expanded_symbol_count": 59,
+  "expanded_index_v035_count": 134,
+  "expanded_index_v036_tail_count": 97,
+  "core_rows_seen": 1168,
+  "core_existing_ids_merged": 993,
+  "v05_core_new_unique_ids": 157,
+  "post_v05_structure_only_skipped": 18,
+  "v05_frontmatter_added": 5,
+  "v05_frontmatter_excluded": [
+    "series_page",
+    "copyright"
+  ],
+  "legacy_complete_normalized_count": 7,
+  "legacy_complete_collision_count": 6,
+  "legacy_complete_normalizations": [
+    {
+      "from": "lem_ch5_1_6_positive_set_lower_bound_complete",
+      "to": "lem_ch5_1_6_positive_set_lower_bound",
+      "collided_with_existing": true
+    },
+    {
+      "from": "proof_ch4_hausdorff_compact_complete",
+      "to": "proof_ch4_hausdorff_compact",
+      "collided_with_existing": false
+    },
+    {
+      "from": "prop_ch5_2_6_independent_sums_martingale_complete",
+      "to": "prop_ch5_2_6_independent_sums_martingale",
+      "collided_with_existing": true
+    },
+    {
+      "from": "thm_ch3_3_2_cz_lp_boundedness_complete",
+      "to": "thm_ch3_3_2_cz_lp_boundedness",
+      "collided_with_existing": true
+    },
+    {
+      "from": "thm_ch4_3_1_open_mapping_complete",
+      "to": "thm_ch4_3_1_open_mapping",
+      "collided_with_existing": true
+    },
+    {
+      "from": "thm_ch5_1_4_random_series_complete",
+      "to": "thm_ch5_1_4_random_series",
+      "collided_with_existing": true
+    },
+    {
+      "from": "thm_ch7_7_1_baouendi_treves_complete",
+      "to": "thm_ch7_7_1_baouendi_treves",
+      "collided_with_existing": true
+    }
+  ],
+  "pre_tail_unique_count": 1396,
+  "record_count": 1493,
+  "expected_record_count": 1493,
+  "all_unique": true,
+  "duplicate_ids": [],
+  "without_source_anchor": [],
+  "candidate": "search_index_v0_36.jsonl.candidate",
+  "promotable_by_count_and_anchor": true,
+  "promoted": true
+}

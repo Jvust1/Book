@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED",
+  "status": "READY",
   "book_id": "stein_shakarchi_functional_analysis_2011",
   "structured_status": "STRUCTURED_COMPLETE",
   "structured_version": "v0.36",
@@ -8,83 +8,71 @@
     {
       "name": "structured_complete_marker",
       "status": "PASS",
-      "detail": "STRUCTURED_COMPLETE.json exists and reports v0.36 / 442 pages / FAIL=0"
+      "detail": "status=STRUCTURED_COMPLETE; audit_fail_count=0"
     },
     {
       "name": "book_metadata",
       "status": "PASS",
-      "detail": "book_metadata.json exists and canonical book_id matches STRUCTURED_COMPLETE"
+      "detail": "book_metadata.json parsed"
+    },
+    {
+      "name": "completion_metadata_identity",
+      "status": "PASS",
+      "detail": "completion and metadata identities agree"
     },
     {
       "name": "audit_report",
       "status": "PASS",
-      "detail": "BOOK_AUDIT_REPORT.md exists and reports PASS 20 / WARN 1 / FAIL 0"
+      "detail": "BOOK_AUDIT_REPORT.md exists; zero-failure marker=present"
+    },
+    {
+      "name": "bilingual_toc",
+      "status": "PASS",
+      "detail": "toc_bilingual.json parsed"
+    },
+    {
+      "name": "page_map",
+      "status": "PASS",
+      "detail": "442 page-map rows; PDF page sequence is continuous"
     },
     {
       "name": "qa_policy_identity",
       "status": "PASS",
-      "detail": "qa_retrieval_policy.json book_id normalized to canonical book_id"
-    },
-    {
-      "name": "chunk_002_final_learning_layer",
-      "status": "PASS",
-      "detail": "chunk_002_translation_zh.md restored; proof logic completed; partial file removed; continuation corrected to chunk_003a"
-    },
-    {
-      "name": "toc_recovery_candidate",
-      "status": "PASS_CANDIDATE",
-      "detail": "GitHub Actions run #4 rebuilds a TOC candidate with 8 chapters / 132 sections; candidate has not yet been promoted to toc_bilingual.json"
-    },
-    {
-      "name": "search_recovery_candidate",
-      "status": "INCOMPLETE",
-      "detail": "GitHub Actions run #4 rebuilds 1415 unique search records with zero missing source anchors; target is 1493, so 78 records remain unresolved"
-    },
-    {
-      "name": "page_map",
-      "status": "FAIL",
-      "detail": "page_map.csv is still absent and must be rebuilt from the original 442-page PDF's real embedded page labels; fixed-offset guessing is not allowed"
-    },
-    {
-      "name": "bilingual_toc",
-      "status": "FAIL",
-      "detail": "toc_bilingual.json final file is absent; validated candidate exists but is not yet promoted"
+      "detail": "book_id=stein_shakarchi_functional_analysis_2011"
     },
     {
       "name": "final_search_index",
-      "status": "FAIL",
-      "detail": "search_index_v0_36.jsonl final file is absent; current candidate is 1415 / 1493 and is not promotable"
+      "status": "PASS",
+      "detail": "1493 unique indexed objects with source anchors"
+    },
+    {
+      "name": "structure_files",
+      "status": "PASS",
+      "detail": "found 43 structure JSON files"
+    },
+    {
+      "name": "continuation_targets",
+      "status": "PASS",
+      "detail": "all observed continuation targets resolve"
+    },
+    {
+      "name": "stable_id_scan",
+      "status": "PASS",
+      "detail": "cross-file repeated IDs for review=8"
+    },
+    {
+      "name": "no_partial_deliverables",
+      "status": "PASS",
+      "detail": "no partial-named deliverables found"
     }
   ],
-  "missing_required_files": [
-    "page_map.csv",
-    "toc_bilingual.json",
-    "search_index_v0_36.jsonl"
-  ],
+  "missing_required_files": [],
   "stale_files": [],
   "identity_mismatches": [],
-  "drive_probe": {
-    "book_folder_found": true,
-    "exports_folder_found": true,
-    "final_v0_36_export_found": false
+  "diagnostics": {
+    "structure_file_count": 43,
+    "cross_file_repeated_ids_for_review": 8,
+    "bad_continuation_targets": []
   },
-  "recovery_progress": {
-    "full_source_pdf_found_in_file_library": true,
-    "chunk_002_restored": true,
-    "runtime_checker_added": true,
-    "runtime_reference_loader_added": true,
-    "rebuild_tool_added": true,
-    "ci_added": true,
-    "latest_ci_commit": "3769e553612c8bd6f5c5a48c8e3d5e32d14b9e1a",
-    "latest_ci_run": 4,
-    "latest_ci_result": "SUCCESS",
-    "toc_candidate_chapters": 8,
-    "toc_candidate_sections": 132,
-    "search_candidate_records": 1415,
-    "search_target_records": 1493,
-    "search_missing_records": 78,
-    "search_missing_anchor_count": 0,
-    "search_all_unique": true
-  },
-  "next_action": "Resolve the remaining 78 search records, promote only after 1493 unique IDs with zero missing anchors, rebuild page_map.csv from the source PDF labels, promote the validated 8-chapter TOC, then rerun readiness to READY."
+  "next_action": "Runtime assets satisfy the import gate; proceed with the Course -> Book -> Chapter -> Section loader."
 }

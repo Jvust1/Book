@@ -1,0 +1,2038 @@
+{
+  "schema": "book.toc_bilingual.v1",
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "generated_from": "*_structure.json",
+  "chapter_count": 8,
+  "section_count": 132,
+  "chapter_marker_rows_folded": 7,
+  "chapters": [
+    {
+      "id": "chapter_01",
+      "number": "1",
+      "title_en": "Lp Spaces and Banach Spaces",
+      "title_zh": "L^p 空间与巴拿赫空间",
+      "pdf_page_start": 20,
+      "printed_page_start": 1,
+      "source_batches": [
+        "chunk_001",
+        "chunk_002",
+        "chunk_003a",
+        "chunk_003b",
+        "chunk_004a"
+      ],
+      "sections": [
+        {
+          "id": "ch01_s01",
+          "chapter_id": "chapter_01",
+          "number": "1",
+          "title_en": "Lp spaces",
+          "title_zh": "L^p 空间",
+          "pdf_page_start": 21,
+          "pdf_page_end": 26,
+          "printed_page_start": 2,
+          "printed_page_end": 7,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s01_01",
+          "chapter_id": "chapter_01",
+          "number": "1.1",
+          "title_en": "The Hölder and Minkowski inequalities",
+          "title_zh": "Hölder 不等式与 Minkowski 不等式",
+          "pdf_page_start": 22,
+          "pdf_page_end": 23,
+          "printed_page_start": 3,
+          "printed_page_end": 4,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s01_02",
+          "chapter_id": "chapter_01",
+          "number": "1.2",
+          "title_en": "Completeness of Lp",
+          "title_zh": "L^p 的完备性",
+          "pdf_page_start": 24,
+          "pdf_page_end": 25,
+          "printed_page_start": 5,
+          "printed_page_end": 6,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s01_03",
+          "chapter_id": "chapter_01",
+          "number": "1.3",
+          "title_en": "Further remarks",
+          "title_zh": "进一步说明",
+          "pdf_page_start": 26,
+          "pdf_page_end": 26,
+          "printed_page_start": 7,
+          "printed_page_end": 7,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s02",
+          "chapter_id": "chapter_01",
+          "number": "2",
+          "title_en": "The case p = ∞",
+          "title_zh": "p = ∞ 的情形",
+          "pdf_page_start": 26,
+          "pdf_page_end": 27,
+          "printed_page_start": 7,
+          "printed_page_end": 8,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s03",
+          "chapter_id": "chapter_01",
+          "number": "3",
+          "title_en": "Banach spaces",
+          "title_zh": "巴拿赫空间",
+          "pdf_page_start": 28,
+          "pdf_page_end": 31,
+          "printed_page_start": 9,
+          "printed_page_end": 12,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s03_01",
+          "chapter_id": "chapter_01",
+          "number": "3.1",
+          "title_en": "Examples",
+          "title_zh": "例子",
+          "pdf_page_start": 28,
+          "pdf_page_end": 30,
+          "printed_page_start": 9,
+          "printed_page_end": 11,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s03_02",
+          "chapter_id": "chapter_01",
+          "number": "3.2",
+          "title_en": "Linear functionals and the dual of a Banach space",
+          "title_zh": "线性泛函与巴拿赫空间的对偶",
+          "pdf_page_start": 30,
+          "pdf_page_end": 31,
+          "printed_page_start": 11,
+          "printed_page_end": 12,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s04",
+          "chapter_id": "chapter_01",
+          "number": "4",
+          "title_en": "The dual space of Lp when 1 ≤ p < ∞",
+          "title_zh": "1 ≤ p < ∞ 时 L^p 的对偶空间",
+          "pdf_page_start": 32,
+          "pdf_page_end": 35,
+          "printed_page_start": 13,
+          "printed_page_end": 16,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s05",
+          "chapter_id": "chapter_01",
+          "number": "5",
+          "title_en": "More about linear functionals",
+          "title_zh": "关于线性泛函的进一步讨论",
+          "pdf_page_start": 35,
+          "pdf_page_end": 40,
+          "printed_page_start": 16,
+          "printed_page_end": 21,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s05_01",
+          "chapter_id": "chapter_01",
+          "number": "5.1",
+          "title_en": "Separation of convex sets",
+          "title_zh": "凸集的分离",
+          "pdf_page_start": 35,
+          "pdf_page_end": 38,
+          "printed_page_start": 16,
+          "printed_page_end": 19,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s05_02",
+          "chapter_id": "chapter_01",
+          "number": "5.2",
+          "title_en": "The Hahn-Banach Theorem",
+          "title_zh": "Hahn-Banach 定理",
+          "pdf_page_start": 39,
+          "pdf_page_end": 40,
+          "printed_page_start": 20,
+          "printed_page_end": 21,
+          "source_batches": [
+            "chunk_002"
+          ]
+        },
+        {
+          "id": "ch01_s05_03",
+          "chapter_id": "chapter_01",
+          "number": "5.3",
+          "title_en": "Some consequences",
+          "title_zh": "若干推论",
+          "pdf_page_start": 40,
+          "pdf_page_end": 42,
+          "printed_page_start": 21,
+          "printed_page_end": 23,
+          "source_batches": [
+            "chunk_002",
+            "chunk_003a"
+          ]
+        },
+        {
+          "id": "ch01_s05_04",
+          "chapter_id": "chapter_01",
+          "number": "5.4",
+          "title_en": "The problem of measure",
+          "title_zh": "测度问题",
+          "pdf_page_start": 42,
+          "pdf_page_end": 46,
+          "printed_page_start": 23,
+          "printed_page_end": 27,
+          "source_batches": [
+            "chunk_003a"
+          ]
+        },
+        {
+          "id": "ch01_s06",
+          "chapter_id": "chapter_01",
+          "number": "6",
+          "title_en": "Complex Lp and Banach spaces",
+          "title_zh": "复数域上的 L^p 空间与巴拿赫空间",
+          "pdf_page_start": 46,
+          "pdf_page_end": 46,
+          "printed_page_start": 27,
+          "printed_page_end": 27,
+          "source_batches": [
+            "chunk_003a"
+          ]
+        },
+        {
+          "id": "ch01_s07",
+          "chapter_id": "chapter_01",
+          "number": "7",
+          "title_en": "Appendix: The dual of C(X)",
+          "title_zh": "附录：C(X) 的对偶",
+          "pdf_page_start": 47,
+          "pdf_page_end": null,
+          "printed_page_start": 28,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_003a"
+          ]
+        },
+        {
+          "id": "ch01_s07_01",
+          "chapter_id": "chapter_01",
+          "number": "7.1",
+          "title_en": "The case of positive linear functionals",
+          "title_zh": "正线性泛函的情形",
+          "pdf_page_start": 48,
+          "pdf_page_end": 51,
+          "printed_page_start": 29,
+          "printed_page_end": 32,
+          "source_batches": [
+            "chunk_003a",
+            "chunk_003b"
+          ]
+        },
+        {
+          "id": "ch01_s07_02",
+          "chapter_id": "chapter_01",
+          "number": "7.2",
+          "title_en": "The main result",
+          "title_zh": "主要结果",
+          "pdf_page_start": 51,
+          "pdf_page_end": 52,
+          "printed_page_start": 32,
+          "printed_page_end": 33,
+          "source_batches": [
+            "chunk_003b"
+          ]
+        },
+        {
+          "id": "ch01_s07_03",
+          "chapter_id": "chapter_01",
+          "number": "7.3",
+          "title_en": "An extension",
+          "title_zh": "一个推广",
+          "pdf_page_start": 52,
+          "pdf_page_end": 53,
+          "printed_page_start": 33,
+          "printed_page_end": 34,
+          "source_batches": [
+            "chunk_003b"
+          ]
+        },
+        {
+          "id": "ch01_s08",
+          "chapter_id": "chapter_01",
+          "number": "8",
+          "title_en": "Exercises",
+          "title_zh": "练习",
+          "pdf_page_start": 53,
+          "pdf_page_end": 62,
+          "printed_page_start": 34,
+          "printed_page_end": 43,
+          "source_batches": [
+            "chunk_003b",
+            "chunk_004a"
+          ]
+        },
+        {
+          "id": "ch01_s09",
+          "chapter_id": "chapter_01",
+          "number": "9",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 62,
+          "pdf_page_end": 65,
+          "printed_page_start": 43,
+          "printed_page_end": 46,
+          "source_batches": [
+            "chunk_004a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_02",
+      "number": "2",
+      "title_en": "Lp Spaces in Harmonic Analysis",
+      "title_zh": "调和分析中的 L^p 空间",
+      "pdf_page_start": 66,
+      "printed_page_start": 47,
+      "source_batches": [
+        "chunk_004a",
+        "chunk_004b",
+        "chunk_005a",
+        "chunk_005b",
+        "chunk_006a",
+        "chunk_006b"
+      ],
+      "sections": [
+        {
+          "id": "ch02_s01",
+          "chapter_id": "chapter_02",
+          "number": "1",
+          "title_en": "Early Motivations",
+          "title_zh": "早期动机",
+          "pdf_page_start": 67,
+          "pdf_page_end": 71,
+          "printed_page_start": 48,
+          "printed_page_end": 52,
+          "source_batches": [
+            "chunk_004a",
+            "chunk_004b"
+          ]
+        },
+        {
+          "id": "ch02_s02",
+          "chapter_id": "chapter_02",
+          "number": "2",
+          "title_en": "The Riesz interpolation theorem",
+          "title_zh": "Riesz 插值定理",
+          "pdf_page_start": 71,
+          "pdf_page_end": 79,
+          "printed_page_start": 52,
+          "printed_page_end": 60,
+          "source_batches": [
+            "chunk_004b"
+          ]
+        },
+        {
+          "id": "ch02_s02_01",
+          "chapter_id": "chapter_02",
+          "number": "2.1",
+          "title_en": "Some examples",
+          "title_zh": "若干例子",
+          "pdf_page_start": 76,
+          "pdf_page_end": 79,
+          "printed_page_start": 57,
+          "printed_page_end": 60,
+          "source_batches": [
+            "chunk_004b"
+          ]
+        },
+        {
+          "id": "ch02_s03",
+          "chapter_id": "chapter_02",
+          "number": "3",
+          "title_en": "The Lp theory of the Hilbert transform",
+          "title_zh": "Hilbert 变换的 L^p 理论",
+          "pdf_page_start": 80,
+          "pdf_page_end": 80,
+          "printed_page_start": 61,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_004b"
+          ]
+        },
+        {
+          "id": "ch02_s03_01",
+          "chapter_id": "chapter_02",
+          "number": "3.1",
+          "title_en": "The L2 formalism",
+          "title_zh": "L^2 形式体系",
+          "pdf_page_start": 80,
+          "pdf_page_end": 83,
+          "printed_page_start": 61,
+          "printed_page_end": 64,
+          "source_batches": [
+            "chunk_004b",
+            "chunk_005a"
+          ]
+        },
+        {
+          "id": "ch02_s03_02",
+          "chapter_id": "chapter_02",
+          "number": "3.2",
+          "title_en": "The Lp theorem",
+          "title_zh": "L^p 定理",
+          "pdf_page_start": 83,
+          "pdf_page_end": 84,
+          "printed_page_start": 64,
+          "printed_page_end": 65,
+          "source_batches": [
+            "chunk_005a"
+          ]
+        },
+        {
+          "id": "ch02_s03_03",
+          "chapter_id": "chapter_02",
+          "number": "3.3",
+          "title_en": "Proof of Theorem 3.2",
+          "title_zh": "定理 3.2 的证明",
+          "pdf_page_start": 85,
+          "pdf_page_end": 89,
+          "printed_page_start": 66,
+          "printed_page_end": 70,
+          "source_batches": [
+            "chunk_005a"
+          ]
+        },
+        {
+          "id": "ch02_s04",
+          "chapter_id": "chapter_02",
+          "number": "4",
+          "title_en": "The maximal function and weak-type estimates",
+          "title_zh": "极大函数与弱型估计",
+          "pdf_page_start": 89,
+          "pdf_page_end": 90,
+          "printed_page_start": 70,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_005a"
+          ]
+        },
+        {
+          "id": "ch02_s04_01",
+          "chapter_id": "chapter_02",
+          "number": "4.1",
+          "title_en": "The Lp inequality",
+          "title_zh": "L^p 不等式",
+          "pdf_page_start": 90,
+          "pdf_page_end": 92,
+          "printed_page_start": 71,
+          "printed_page_end": 73,
+          "source_batches": [
+            "chunk_005a",
+            "chunk_005b"
+          ]
+        },
+        {
+          "id": "ch02_s05",
+          "chapter_id": "chapter_02",
+          "number": "5",
+          "title_en": "The Hardy space H1_r",
+          "title_zh": "实 Hardy 空间 H^1_r",
+          "pdf_page_start": 92,
+          "pdf_page_end": 100,
+          "printed_page_start": 73,
+          "printed_page_end": 84,
+          "source_batches": [
+            "chunk_005b"
+          ]
+        },
+        {
+          "id": "ch02_s05_01",
+          "chapter_id": "chapter_02",
+          "number": "5.1",
+          "title_en": "Atomic decomposition of H1_r",
+          "title_zh": "H^1_r 的原子分解",
+          "pdf_page_start": 93,
+          "pdf_page_end": 100,
+          "printed_page_start": 74,
+          "printed_page_end": 81,
+          "source_batches": [
+            "chunk_005b"
+          ]
+        },
+        {
+          "id": "ch02_s05_02",
+          "chapter_id": "chapter_02",
+          "number": "5.2",
+          "title_en": "An alternative definition of H1_r",
+          "title_zh": "H^1_r 的另一种定义",
+          "pdf_page_start": 100,
+          "pdf_page_end": 101,
+          "printed_page_start": 81,
+          "printed_page_end": 82,
+          "source_batches": [
+            "chunk_005b",
+            "chunk_006a"
+          ]
+        },
+        {
+          "id": "ch02_s05_03",
+          "chapter_id": "chapter_02",
+          "number": "5.3",
+          "title_en": "Application to the Hilbert transform",
+          "title_zh": "Hilbert 变换的应用",
+          "pdf_page_start": 101,
+          "pdf_page_end": 103,
+          "printed_page_start": 82,
+          "printed_page_end": 84,
+          "source_batches": [
+            "chunk_006a"
+          ]
+        },
+        {
+          "id": "ch02_s06",
+          "chapter_id": "chapter_02",
+          "number": "6",
+          "title_en": "The space H1_r and maximal functions",
+          "title_zh": "H^1_r 空间与极大函数",
+          "pdf_page_start": 103,
+          "pdf_page_end": 108,
+          "printed_page_start": 84,
+          "printed_page_end": 89,
+          "source_batches": [
+            "chunk_006a"
+          ]
+        },
+        {
+          "id": "ch02_s06_01",
+          "chapter_id": "chapter_02",
+          "number": "6.1",
+          "title_en": "The space BMO",
+          "title_zh": "BMO 空间",
+          "pdf_page_start": 105,
+          "pdf_page_end": 108,
+          "printed_page_start": 86,
+          "printed_page_end": 89,
+          "source_batches": [
+            "chunk_006a"
+          ]
+        },
+        {
+          "id": "ch02_s07",
+          "chapter_id": "chapter_02",
+          "number": "7",
+          "title_en": "Exercises",
+          "title_zh": "练习",
+          "pdf_page_start": 109,
+          "pdf_page_end": 113,
+          "printed_page_start": 90,
+          "printed_page_end": 94,
+          "source_batches": [
+            "chunk_006a",
+            "chunk_006b"
+          ]
+        },
+        {
+          "id": "ch02_s08",
+          "chapter_id": "chapter_02",
+          "number": "8",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 113,
+          "pdf_page_end": 116,
+          "printed_page_start": 94,
+          "printed_page_end": 97,
+          "source_batches": [
+            "chunk_006b"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_03",
+      "number": "3",
+      "title_en": "Distributions: Generalized Functions",
+      "title_zh": "分布：广义函数",
+      "pdf_page_start": 117,
+      "printed_page_start": 98,
+      "source_batches": [
+        "chunk_006b",
+        "chunk_007a",
+        "chunk_007b",
+        "chunk_008a",
+        "chunk_008b",
+        "chunk_009a",
+        "chunk_009b"
+      ],
+      "sections": [
+        {
+          "id": "ch03_s01",
+          "chapter_id": "chapter_03",
+          "number": "1",
+          "title_en": "Elementary properties",
+          "title_zh": "基本性质",
+          "pdf_page_start": 118,
+          "pdf_page_end": 120,
+          "printed_page_start": 99,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_006b"
+          ]
+        },
+        {
+          "id": "ch03_s01_01",
+          "chapter_id": "chapter_03",
+          "number": "1.1",
+          "title_en": "Definitions",
+          "title_zh": "定义",
+          "pdf_page_start": 119,
+          "pdf_page_end": 120,
+          "printed_page_start": 100,
+          "printed_page_end": 101,
+          "source_batches": [
+            "chunk_006b"
+          ]
+        },
+        {
+          "id": "ch03_s01_02",
+          "chapter_id": "chapter_03",
+          "number": "1.2",
+          "title_en": "Operations on distributions",
+          "title_zh": "分布上的运算",
+          "pdf_page_start": 121,
+          "pdf_page_end": 122,
+          "printed_page_start": 102,
+          "printed_page_end": 103,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s01_03",
+          "chapter_id": "chapter_03",
+          "number": "1.3",
+          "title_en": "Supports of distributions",
+          "title_zh": "分布的支集",
+          "pdf_page_start": 123,
+          "pdf_page_end": 124,
+          "printed_page_start": 104,
+          "printed_page_end": 105,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s01_04",
+          "chapter_id": "chapter_03",
+          "number": "1.4",
+          "title_en": "Tempered distributions",
+          "title_zh": "缓增分布",
+          "pdf_page_start": 124,
+          "pdf_page_end": 126,
+          "printed_page_start": 105,
+          "printed_page_end": 107,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s01_05",
+          "chapter_id": "chapter_03",
+          "number": "1.5",
+          "title_en": "Fourier transform",
+          "title_zh": "Fourier 变换",
+          "pdf_page_start": 126,
+          "pdf_page_end": 129,
+          "printed_page_start": 107,
+          "printed_page_end": 110,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s01_06",
+          "chapter_id": "chapter_03",
+          "number": "1.6",
+          "title_en": "Distributions with point supports",
+          "title_zh": "点支集分布",
+          "pdf_page_start": 129,
+          "pdf_page_end": 130,
+          "printed_page_start": 110,
+          "printed_page_end": 111,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s02",
+          "chapter_id": "chapter_03",
+          "number": "2",
+          "title_en": "Important examples of distributions",
+          "title_zh": "分布的重要例子",
+          "pdf_page_start": 130,
+          "pdf_page_end": 130,
+          "printed_page_start": 111,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_007a"
+          ]
+        },
+        {
+          "id": "ch03_s02_01",
+          "chapter_id": "chapter_03",
+          "number": "2.1",
+          "title_en": "The Hilbert transform and pv(1/x)",
+          "title_zh": "Hilbert 变换与 pv(1/x)",
+          "pdf_page_start": 130,
+          "pdf_page_end": 134,
+          "printed_page_start": 111,
+          "printed_page_end": 115,
+          "source_batches": [
+            "chunk_007a",
+            "chunk_007b"
+          ]
+        },
+        {
+          "id": "ch03_s02_02",
+          "chapter_id": "chapter_03",
+          "number": "2.2",
+          "title_en": "Homogeneous distributions",
+          "title_zh": "齐次分布",
+          "pdf_page_start": 134,
+          "pdf_page_end": 144,
+          "printed_page_start": 115,
+          "printed_page_end": 125,
+          "source_batches": [
+            "chunk_007b",
+            "chunk_008a"
+          ]
+        },
+        {
+          "id": "ch03_s02_03",
+          "chapter_id": "chapter_03",
+          "number": "2.3",
+          "title_en": "Fundamental solutions",
+          "title_zh": "基本解",
+          "pdf_page_start": 144,
+          "pdf_page_end": 148,
+          "printed_page_start": 125,
+          "printed_page_end": 129,
+          "source_batches": [
+            "chunk_008a"
+          ]
+        },
+        {
+          "id": "ch03_s02_04",
+          "chapter_id": "chapter_03",
+          "number": "2.4",
+          "title_en": "Fundamental solution to general partial differential equations with constant coefficients",
+          "title_zh": "一般常系数偏微分方程的基本解",
+          "pdf_page_start": 148,
+          "pdf_page_end": 150,
+          "printed_page_start": 129,
+          "printed_page_end": 131,
+          "source_batches": [
+            "chunk_008a"
+          ]
+        },
+        {
+          "id": "ch03_s02_05",
+          "chapter_id": "chapter_03",
+          "number": "2.5",
+          "title_en": "Parametrices and regularity for elliptic equations",
+          "title_zh": "椭圆方程的拟基本解与正则性",
+          "pdf_page_start": 150,
+          "pdf_page_end": 153,
+          "printed_page_start": 131,
+          "printed_page_end": 134,
+          "source_batches": [
+            "chunk_008a",
+            "chunk_008b"
+          ]
+        },
+        {
+          "id": "ch03_s03",
+          "chapter_id": "chapter_03",
+          "number": "3",
+          "title_en": "Calderón-Zygmund distributions and Lp estimates",
+          "title_zh": "Calderón–Zygmund 分布与 L^p 估计",
+          "pdf_page_start": 153,
+          "pdf_page_end": 160,
+          "printed_page_start": 134,
+          "printed_page_end": 145,
+          "source_batches": [
+            "chunk_008b"
+          ]
+        },
+        {
+          "id": "ch03_s03_01",
+          "chapter_id": "chapter_03",
+          "number": "3.1",
+          "title_en": "Defining properties",
+          "title_zh": "定义性质",
+          "pdf_page_start": 153,
+          "pdf_page_end": 157,
+          "printed_page_start": 134,
+          "printed_page_end": 138,
+          "source_batches": [
+            "chunk_008b"
+          ]
+        },
+        {
+          "id": "ch03_s03_02",
+          "chapter_id": "chapter_03",
+          "number": "3.2",
+          "title_en": "The Lp theory",
+          "title_zh": "L^p 理论",
+          "pdf_page_start": 157,
+          "pdf_page_end": 164,
+          "printed_page_start": 138,
+          "printed_page_end": 145,
+          "source_batches": [
+            "chunk_008b",
+            "chunk_009a"
+          ]
+        },
+        {
+          "id": "ch03_s04",
+          "chapter_id": "chapter_03",
+          "number": "4",
+          "title_en": "Exercises",
+          "title_zh": "练习",
+          "pdf_page_start": 164,
+          "pdf_page_end": 172,
+          "printed_page_start": 145,
+          "printed_page_end": 153,
+          "source_batches": [
+            "chunk_009a",
+            "chunk_009b"
+          ]
+        },
+        {
+          "id": "ch03_s05",
+          "chapter_id": "chapter_03",
+          "number": "5",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 172,
+          "pdf_page_end": 175,
+          "printed_page_start": 153,
+          "printed_page_end": 156,
+          "source_batches": [
+            "chunk_009b"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_04",
+      "number": "4",
+      "title_en": "Applications of the Baire Category Theorem",
+      "title_zh": "Baire 纲定理的应用",
+      "pdf_page_start": 176,
+      "printed_page_start": 157,
+      "source_batches": [
+        "chunk_009b",
+        "chunk_010a",
+        "chunk_010b",
+        "chunk_011a"
+      ],
+      "sections": [
+        {
+          "id": "ch04_s01",
+          "chapter_id": "chapter_04",
+          "number": "1",
+          "title_en": "The Baire category theorem",
+          "title_zh": "Baire 纲定理",
+          "pdf_page_start": 177,
+          "pdf_page_end": 180,
+          "printed_page_start": 158,
+          "printed_page_end": 166,
+          "source_batches": [
+            "chunk_009b"
+          ]
+        },
+        {
+          "id": "ch04_s01_01",
+          "chapter_id": "chapter_04",
+          "number": "1.1",
+          "title_en": "Continuity of the limit of a sequence of continuous functions",
+          "title_zh": "连续函数列极限的连续性",
+          "pdf_page_start": 179,
+          "pdf_page_end": 182,
+          "printed_page_start": 160,
+          "printed_page_end": 163,
+          "source_batches": [
+            "chunk_009b",
+            "chunk_010a"
+          ]
+        },
+        {
+          "id": "ch04_s01_02",
+          "chapter_id": "chapter_04",
+          "number": "1.2",
+          "title_en": "Continuous functions that are nowhere differentiable",
+          "title_zh": "处处不可微的连续函数",
+          "pdf_page_start": 182,
+          "pdf_page_end": 185,
+          "printed_page_start": 163,
+          "printed_page_end": 166,
+          "source_batches": [
+            "chunk_010a"
+          ]
+        },
+        {
+          "id": "ch04_s02",
+          "chapter_id": "chapter_04",
+          "number": "2",
+          "title_en": "The uniform boundedness principle",
+          "title_zh": "一致有界原理",
+          "pdf_page_start": 185,
+          "pdf_page_end": 186,
+          "printed_page_start": 166,
+          "printed_page_end": 167,
+          "source_batches": [
+            "chunk_010a"
+          ]
+        },
+        {
+          "id": "ch04_s02_01",
+          "chapter_id": "chapter_04",
+          "number": "2.1",
+          "title_en": "Divergence of Fourier series",
+          "title_zh": "Fourier 级数的发散",
+          "pdf_page_start": 186,
+          "pdf_page_end": 189,
+          "printed_page_start": 167,
+          "printed_page_end": 170,
+          "source_batches": [
+            "chunk_010a"
+          ]
+        },
+        {
+          "id": "ch04_s03",
+          "chapter_id": "chapter_04",
+          "number": "3",
+          "title_en": "The open mapping theorem",
+          "title_zh": "开映射定理",
+          "pdf_page_start": 189,
+          "pdf_page_end": 192,
+          "printed_page_start": 170,
+          "printed_page_end": 173,
+          "source_batches": [
+            "chunk_010a",
+            "chunk_010b"
+          ]
+        },
+        {
+          "id": "ch04_s03_01",
+          "chapter_id": "chapter_04",
+          "number": "3.1",
+          "title_en": "Decay of Fourier coefficients of L1-functions",
+          "title_zh": "L¹ 函数 Fourier 系数的衰减",
+          "pdf_page_start": 192,
+          "pdf_page_end": 192,
+          "printed_page_start": 173,
+          "printed_page_end": 173,
+          "source_batches": [
+            "chunk_010b"
+          ]
+        },
+        {
+          "id": "ch04_s04",
+          "chapter_id": "chapter_04",
+          "number": "4",
+          "title_en": "The closed graph theorem",
+          "title_zh": "闭图定理",
+          "pdf_page_start": 193,
+          "pdf_page_end": 195,
+          "printed_page_start": 174,
+          "printed_page_end": 176,
+          "source_batches": [
+            "chunk_010b"
+          ]
+        },
+        {
+          "id": "ch04_s04_01",
+          "chapter_id": "chapter_04",
+          "number": "4.1",
+          "title_en": "Grothendieck's theorem on closed subspaces of Lp",
+          "title_zh": "Grothendieck 关于 L^p 闭子空间的定理",
+          "pdf_page_start": 193,
+          "pdf_page_end": 195,
+          "printed_page_start": 174,
+          "printed_page_end": 176,
+          "source_batches": [
+            "chunk_010b"
+          ]
+        },
+        {
+          "id": "ch04_s05",
+          "chapter_id": "chapter_04",
+          "number": "5",
+          "title_en": "Besicovitch sets",
+          "title_zh": "Besicovitch 集",
+          "pdf_page_start": 195,
+          "pdf_page_end": 200,
+          "printed_page_start": 176,
+          "printed_page_end": 181,
+          "source_batches": [
+            "chunk_010b"
+          ]
+        },
+        {
+          "id": "ch04_s06",
+          "chapter_id": "chapter_04",
+          "number": "6",
+          "title_en": "Exercises",
+          "title_zh": "练习",
+          "pdf_page_start": 200,
+          "pdf_page_end": 204,
+          "printed_page_start": 181,
+          "printed_page_end": 185,
+          "source_batches": [
+            "chunk_010b",
+            "chunk_011a"
+          ]
+        },
+        {
+          "id": "ch04_s07",
+          "chapter_id": "chapter_04",
+          "number": "7",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 204,
+          "pdf_page_end": 206,
+          "printed_page_start": 185,
+          "printed_page_end": 187,
+          "source_batches": [
+            "chunk_011a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_05",
+      "number": "5",
+      "title_en": "Chapter 5: Rudiments of Probability Theory",
+      "title_zh": "第 5 章：概率论基础",
+      "pdf_page_start": 207,
+      "printed_page_start": 188,
+      "source_batches": [
+        "chunk_011a",
+        "chunk_011b",
+        "chunk_012a",
+        "chunk_012b",
+        "chunk_013a",
+        "chunk_013b"
+      ],
+      "sections": [
+        {
+          "id": "ch05_s01",
+          "chapter_id": "chapter_05",
+          "number": "1",
+          "title_en": "Bernoulli trials",
+          "title_zh": "Bernoulli 试验",
+          "pdf_page_start": 208,
+          "pdf_page_end": 220,
+          "printed_page_start": 189,
+          "printed_page_end": 208,
+          "source_batches": [
+            "chunk_011a",
+            "chunk_011b"
+          ]
+        },
+        {
+          "id": "ch05_s01_01",
+          "chapter_id": "chapter_05",
+          "number": "1.1",
+          "title_en": "Coin flips",
+          "title_zh": "抛硬币",
+          "pdf_page_start": 208,
+          "pdf_page_end": 210,
+          "printed_page_start": 189,
+          "printed_page_end": 191,
+          "source_batches": [
+            "chunk_011a"
+          ]
+        },
+        {
+          "id": "ch05_s01_02",
+          "chapter_id": "chapter_05",
+          "number": "1.2",
+          "title_en": "The case N = ∞",
+          "title_zh": "N = ∞ 的情形",
+          "pdf_page_start": 210,
+          "pdf_page_end": 213,
+          "printed_page_start": 191,
+          "printed_page_end": 194,
+          "source_batches": [
+            "chunk_011a",
+            "chunk_011b"
+          ]
+        },
+        {
+          "id": "ch05_s01_03",
+          "chapter_id": "chapter_05",
+          "number": "1.3",
+          "title_en": "Behavior of S_N as N → ∞, first results",
+          "title_zh": "N→∞ 时 S_N 的行为：初步结果",
+          "pdf_page_start": 213,
+          "pdf_page_end": 214,
+          "printed_page_start": 194,
+          "printed_page_end": 195,
+          "source_batches": [
+            "chunk_011b"
+          ]
+        },
+        {
+          "id": "ch05_s01_04",
+          "chapter_id": "chapter_05",
+          "number": "1.4",
+          "title_en": "Central limit theorem",
+          "title_zh": "中心极限定理",
+          "pdf_page_start": 214,
+          "pdf_page_end": 215,
+          "printed_page_start": 195,
+          "printed_page_end": 196,
+          "source_batches": [
+            "chunk_011b"
+          ]
+        },
+        {
+          "id": "ch05_s01_05",
+          "chapter_id": "chapter_05",
+          "number": "1.5",
+          "title_en": "Statement and proof of the theorem",
+          "title_zh": "定理的陈述与证明",
+          "pdf_page_start": 216,
+          "pdf_page_end": 217,
+          "printed_page_start": 197,
+          "printed_page_end": 198,
+          "source_batches": [
+            "chunk_011b"
+          ]
+        },
+        {
+          "id": "ch05_s01_06",
+          "chapter_id": "chapter_05",
+          "number": "1.6",
+          "title_en": "Random series",
+          "title_zh": "随机级数",
+          "pdf_page_start": 218,
+          "pdf_page_end": 221,
+          "printed_page_start": 199,
+          "printed_page_end": 203,
+          "source_batches": [
+            "chunk_011b",
+            "chunk_012a"
+          ]
+        },
+        {
+          "id": "ch05_s01_07",
+          "chapter_id": "chapter_05",
+          "number": "1.7",
+          "title_en": "Random Fourier series",
+          "title_zh": "随机 Fourier 级数",
+          "pdf_page_start": 221,
+          "pdf_page_end": 223,
+          "printed_page_start": 202,
+          "printed_page_end": 204,
+          "source_batches": [
+            "chunk_012a"
+          ]
+        },
+        {
+          "id": "ch05_s01_08",
+          "chapter_id": "chapter_05",
+          "number": "1.8",
+          "title_en": "Bernoulli trials",
+          "title_zh": "一般 Bernoulli 试验",
+          "pdf_page_start": 223,
+          "pdf_page_end": 224,
+          "printed_page_start": 204,
+          "printed_page_end": 205,
+          "source_batches": [
+            "chunk_012a"
+          ]
+        },
+        {
+          "id": "ch05_s02",
+          "chapter_id": "chapter_05",
+          "number": "2",
+          "title_en": "Sums of independent random variables",
+          "title_zh": "独立随机变量之和",
+          "pdf_page_start": 224,
+          "pdf_page_end": 230,
+          "printed_page_start": 205,
+          "printed_page_end": 227,
+          "source_batches": [
+            "chunk_012a"
+          ]
+        },
+        {
+          "id": "ch05_s02_01",
+          "chapter_id": "chapter_05",
+          "number": "2.1",
+          "title_en": "Law of large numbers and ergodic theorem",
+          "title_zh": "大数定律与遍历定理",
+          "pdf_page_start": 224,
+          "pdf_page_end": 227,
+          "printed_page_start": 205,
+          "printed_page_end": 208,
+          "source_batches": [
+            "chunk_012a"
+          ]
+        },
+        {
+          "id": "ch05_s02_02",
+          "chapter_id": "chapter_05",
+          "number": "2.2",
+          "title_en": "The role of martingales",
+          "title_zh": "鞅的作用",
+          "pdf_page_start": 227,
+          "pdf_page_end": 233,
+          "printed_page_start": 208,
+          "printed_page_end": 215,
+          "source_batches": [
+            "chunk_012a",
+            "chunk_012b"
+          ]
+        },
+        {
+          "id": "ch05_s02_03",
+          "chapter_id": "chapter_05",
+          "number": "2.3",
+          "title_en": "The zero-one law",
+          "title_zh": "零一律",
+          "pdf_page_start": 234,
+          "pdf_page_end": 234,
+          "printed_page_start": 215,
+          "printed_page_end": 215,
+          "source_batches": [
+            "chunk_012b"
+          ]
+        },
+        {
+          "id": "ch05_s02_04",
+          "chapter_id": "chapter_05",
+          "number": "2.4",
+          "title_en": "The central limit theorem",
+          "title_zh": "中心极限定理",
+          "pdf_page_start": 234,
+          "pdf_page_end": 239,
+          "printed_page_start": 215,
+          "printed_page_end": 220,
+          "source_batches": [
+            "chunk_012b"
+          ]
+        },
+        {
+          "id": "ch05_s02_05",
+          "chapter_id": "chapter_05",
+          "number": "2.5",
+          "title_en": "Random variables with values in R^d",
+          "title_zh": "取值于 R^d 的随机变量",
+          "pdf_page_start": 239,
+          "pdf_page_end": 241,
+          "printed_page_start": 220,
+          "printed_page_end": 224,
+          "source_batches": [
+            "chunk_012b",
+            "chunk_013a"
+          ]
+        },
+        {
+          "id": "ch05_s02_06",
+          "chapter_id": "chapter_05",
+          "number": "2.6",
+          "title_en": "Random walks",
+          "title_zh": "随机游走",
+          "pdf_page_start": 241,
+          "pdf_page_end": 246,
+          "printed_page_start": 222,
+          "printed_page_end": 227,
+          "source_batches": [
+            "chunk_013a"
+          ]
+        },
+        {
+          "id": "ch05_s03",
+          "chapter_id": "chapter_05",
+          "number": "3",
+          "title_en": "Exercises",
+          "title_zh": "习题",
+          "pdf_page_start": 246,
+          "pdf_page_end": 254,
+          "printed_page_start": 227,
+          "printed_page_end": 235,
+          "source_batches": [
+            "chunk_013a",
+            "chunk_013b"
+          ]
+        },
+        {
+          "id": "ch05_s04",
+          "chapter_id": "chapter_05",
+          "number": "4",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 254,
+          "pdf_page_end": 256,
+          "printed_page_start": 235,
+          "printed_page_end": 237,
+          "source_batches": [
+            "chunk_013b"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_06",
+      "number": "6",
+      "title_en": "An Introduction to Brownian Motion",
+      "title_zh": "Brownian 运动导论",
+      "pdf_page_start": 257,
+      "printed_page_start": 238,
+      "source_batches": [
+        "chunk_013b",
+        "chunk_014a",
+        "chunk_014b",
+        "chunk_015a",
+        "chunk_015b"
+      ],
+      "sections": [
+        {
+          "id": "ch06_s01",
+          "chapter_id": "chapter_06",
+          "number": "1",
+          "title_en": "The Framework",
+          "title_zh": "框架",
+          "pdf_page_start": 258,
+          "pdf_page_end": 260,
+          "printed_page_start": 239,
+          "printed_page_end": 241,
+          "source_batches": [
+            "chunk_013b"
+          ]
+        },
+        {
+          "id": "ch06_s02",
+          "chapter_id": "chapter_06",
+          "number": "2",
+          "title_en": "Technical Preliminaries",
+          "title_zh": "技术预备",
+          "pdf_page_start": 260,
+          "pdf_page_end": 265,
+          "printed_page_start": 241,
+          "printed_page_end": 246,
+          "source_batches": [
+            "chunk_013b",
+            "chunk_014a"
+          ]
+        },
+        {
+          "id": "ch06_s03",
+          "chapter_id": "chapter_06",
+          "number": "3",
+          "title_en": "Construction of Brownian motion",
+          "title_zh": "Brownian motion 的构造",
+          "pdf_page_start": 265,
+          "pdf_page_end": 269,
+          "printed_page_start": 246,
+          "printed_page_end": 250,
+          "source_batches": [
+            "chunk_014a"
+          ]
+        },
+        {
+          "id": "ch06_s04",
+          "chapter_id": "chapter_06",
+          "number": "4",
+          "title_en": "Some further properties of Brownian motion",
+          "title_zh": "Brownian motion 的进一步性质",
+          "pdf_page_start": 270,
+          "pdf_page_end": 272,
+          "printed_page_start": 251,
+          "printed_page_end": 253,
+          "source_batches": [
+            "chunk_014a",
+            "chunk_014b"
+          ]
+        },
+        {
+          "id": "ch06_s05",
+          "chapter_id": "chapter_06",
+          "number": "5",
+          "title_en": "Stopping times and the strong Markov property",
+          "title_zh": "停止时刻与强 Markov 性质",
+          "pdf_page_start": 272,
+          "pdf_page_end": 283,
+          "printed_page_start": 253,
+          "printed_page_end": 264,
+          "source_batches": [
+            "chunk_014b",
+            "chunk_015a"
+          ]
+        },
+        {
+          "id": "ch06_s06",
+          "chapter_id": "chapter_06",
+          "number": "6",
+          "title_en": "Solution of the Dirichlet problem",
+          "title_zh": "Dirichlet 问题的解",
+          "pdf_page_start": 283,
+          "pdf_page_end": 287,
+          "printed_page_start": 264,
+          "printed_page_end": 268,
+          "source_batches": [
+            "chunk_015a"
+          ]
+        },
+        {
+          "id": "ch06_s07",
+          "chapter_id": "chapter_06",
+          "number": "7",
+          "title_en": "Exercises",
+          "title_zh": "习题",
+          "pdf_page_start": 287,
+          "pdf_page_end": 292,
+          "printed_page_start": 268,
+          "printed_page_end": 273,
+          "source_batches": [
+            "chunk_015a",
+            "chunk_015b"
+          ]
+        },
+        {
+          "id": "ch06_s08",
+          "chapter_id": "chapter_06",
+          "number": "8",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 292,
+          "pdf_page_end": 294,
+          "printed_page_start": 273,
+          "printed_page_end": 275,
+          "source_batches": [
+            "chunk_015b"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_07",
+      "number": "7",
+      "title_en": "Chapter 7: A Glimpse into Several Complex Variables",
+      "title_zh": "第 7 章：多复变函数初窥",
+      "pdf_page_start": 295,
+      "printed_page_start": 276,
+      "source_batches": [
+        "chunk_015b",
+        "chunk_016a",
+        "chunk_016b",
+        "chunk_017a",
+        "chunk_017b"
+      ],
+      "sections": [
+        {
+          "id": "ch07_s01",
+          "chapter_id": "chapter_07",
+          "number": "1",
+          "title_en": "Elementary properties",
+          "title_zh": "基本性质",
+          "pdf_page_start": 295,
+          "pdf_page_end": 299,
+          "printed_page_start": 276,
+          "printed_page_end": 280,
+          "source_batches": [
+            "chunk_015b"
+          ]
+        },
+        {
+          "id": "ch07_s02",
+          "chapter_id": "chapter_07",
+          "number": "2",
+          "title_en": "Hartogs’ phenomenon: an example",
+          "title_zh": "Hartogs 现象：一个例子",
+          "pdf_page_start": 299,
+          "pdf_page_end": 302,
+          "printed_page_start": 280,
+          "printed_page_end": 283,
+          "source_batches": [
+            "chunk_015b",
+            "chunk_016a"
+          ]
+        },
+        {
+          "id": "ch07_s03",
+          "chapter_id": "chapter_07",
+          "number": "3",
+          "title_en": "Hartogs’ theorem: the inhomogeneous Cauchy-Riemann equations",
+          "title_zh": "Hartogs 定理：非齐次 Cauchy-Riemann 方程",
+          "pdf_page_start": 302,
+          "pdf_page_end": 307,
+          "printed_page_start": 283,
+          "printed_page_end": 288,
+          "source_batches": [
+            "chunk_016a"
+          ]
+        },
+        {
+          "id": "ch07_s04",
+          "chapter_id": "chapter_07",
+          "number": "4",
+          "title_en": "A boundary version: the tangential Cauchy-Riemann equations",
+          "title_zh": "边界版本：切向 Cauchy-Riemann 方程",
+          "pdf_page_start": 307,
+          "pdf_page_end": 312,
+          "printed_page_start": 288,
+          "printed_page_end": 293,
+          "source_batches": [
+            "chunk_016a",
+            "chunk_016b"
+          ]
+        },
+        {
+          "id": "ch07_s05",
+          "chapter_id": "chapter_07",
+          "number": "5",
+          "title_en": "The Levi form",
+          "title_zh": "Levi 形式",
+          "pdf_page_start": 312,
+          "pdf_page_end": 315,
+          "printed_page_start": 293,
+          "printed_page_end": 296,
+          "source_batches": [
+            "chunk_016b"
+          ]
+        },
+        {
+          "id": "ch07_s06",
+          "chapter_id": "chapter_07",
+          "number": "6",
+          "title_en": "A maximum principle",
+          "title_zh": "极大值原理",
+          "pdf_page_start": 315,
+          "pdf_page_end": 318,
+          "printed_page_start": 296,
+          "printed_page_end": 299,
+          "source_batches": [
+            "chunk_016b"
+          ]
+        },
+        {
+          "id": "ch07_s07",
+          "chapter_id": "chapter_07",
+          "number": "7",
+          "title_en": "Approximation and extension theorems",
+          "title_zh": "逼近与延拓定理",
+          "pdf_page_start": 318,
+          "pdf_page_end": 326,
+          "printed_page_start": 299,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_016b",
+            "chunk_017a"
+          ]
+        },
+        {
+          "id": "ch07_s08",
+          "chapter_id": "chapter_07",
+          "number": "8",
+          "title_en": "Appendix: The upper half-space",
+          "title_zh": "附录：上半空间",
+          "pdf_page_start": 326,
+          "pdf_page_end": 330,
+          "printed_page_start": null,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_017a"
+          ]
+        },
+        {
+          "id": "ch07_s08_2",
+          "chapter_id": "chapter_07",
+          "number": "8.2",
+          "title_en": "Cauchy integral",
+          "title_zh": "Cauchy 积分",
+          "pdf_page_start": 331,
+          "pdf_page_end": 332,
+          "printed_page_start": 311,
+          "printed_page_end": 313,
+          "source_batches": [
+            "chunk_017b"
+          ]
+        },
+        {
+          "id": "ch07_s08_3",
+          "chapter_id": "chapter_07",
+          "number": "8.3",
+          "title_en": "Non-solvability",
+          "title_zh": "不可解性",
+          "pdf_page_start": 332,
+          "pdf_page_end": 333,
+          "printed_page_start": 313,
+          "printed_page_end": 314,
+          "source_batches": [
+            "chunk_017b"
+          ]
+        },
+        {
+          "id": "ch07_s09",
+          "chapter_id": "chapter_07",
+          "number": "9",
+          "title_en": "Exercises",
+          "title_zh": "练习",
+          "pdf_page_start": 333,
+          "pdf_page_end": 337,
+          "printed_page_start": 314,
+          "printed_page_end": 318,
+          "source_batches": [
+            "chunk_017b"
+          ]
+        },
+        {
+          "id": "ch07_s10",
+          "chapter_id": "chapter_07",
+          "number": "10",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 338,
+          "pdf_page_end": 339,
+          "printed_page_start": 319,
+          "printed_page_end": 320,
+          "source_batches": [
+            "chunk_017b"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter_08",
+      "number": "8",
+      "title_en": "Chapter 8 Oscillatory Integrals in Fourier Analysis",
+      "title_zh": "第 8 章 Fourier 分析中的振荡积分",
+      "pdf_page_start": 340,
+      "printed_page_start": 321,
+      "source_batches": [
+        "chunk_017b",
+        "chunk_018a",
+        "chunk_018b",
+        "chunk_019a",
+        "chunk_019b",
+        "chunk_020a",
+        "chunk_020b",
+        "chunk_021a",
+        "chunk_021b",
+        "chunk_022a"
+      ],
+      "sections": [
+        {
+          "id": "ch08_s01",
+          "chapter_id": "chapter_08",
+          "number": "1",
+          "title_en": "An illustration",
+          "title_zh": "一个说明性例子",
+          "pdf_page_start": 341,
+          "pdf_page_end": 344,
+          "printed_page_start": 322,
+          "printed_page_end": 325,
+          "source_batches": [
+            "chunk_018a"
+          ]
+        },
+        {
+          "id": "ch08_s02",
+          "chapter_id": "chapter_08",
+          "number": "2",
+          "title_en": "Oscillatory integrals",
+          "title_zh": "振荡积分",
+          "pdf_page_start": 344,
+          "pdf_page_end": 351,
+          "printed_page_start": 325,
+          "printed_page_end": 332,
+          "source_batches": [
+            "chunk_018a",
+            "chunk_018b"
+          ]
+        },
+        {
+          "id": "ch08_s03",
+          "chapter_id": "chapter_08",
+          "number": "3",
+          "title_en": "Fourier transform of surface-carried measures",
+          "title_zh": "曲面承载测度的 Fourier 变换",
+          "pdf_page_start": 351,
+          "pdf_page_end": 356,
+          "printed_page_start": 332,
+          "printed_page_end": 337,
+          "source_batches": [
+            "chunk_018b"
+          ]
+        },
+        {
+          "id": "ch08_s04",
+          "chapter_id": "chapter_08",
+          "number": "4",
+          "title_en": "Return to the averaging operator",
+          "title_zh": "回到平均算子",
+          "pdf_page_start": 356,
+          "pdf_page_end": 362,
+          "printed_page_start": 337,
+          "printed_page_end": 343,
+          "source_batches": [
+            "chunk_018b",
+            "chunk_019a"
+          ]
+        },
+        {
+          "id": "ch08_s05",
+          "chapter_id": "chapter_08",
+          "number": "5",
+          "title_en": "Restriction theorems",
+          "title_zh": "限制定理",
+          "pdf_page_start": 362,
+          "pdf_page_end": 367,
+          "printed_page_start": 343,
+          "printed_page_end": 348,
+          "source_batches": [
+            "chunk_019a"
+          ]
+        },
+        {
+          "id": "ch08_s06",
+          "chapter_id": "chapter_08",
+          "number": "6",
+          "title_en": "Application to some dispersion equations",
+          "title_zh": "若干色散方程的应用",
+          "pdf_page_start": 367,
+          "pdf_page_end": 370,
+          "printed_page_start": 348,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_019a"
+          ]
+        },
+        {
+          "id": "ch08_s06_1",
+          "chapter_id": "chapter_08",
+          "number": "6.1",
+          "title_en": "The Schrödinger equation",
+          "title_zh": "Schrödinger 方程",
+          "pdf_page_start": 371,
+          "pdf_page_end": 371,
+          "printed_page_start": 348,
+          "printed_page_end": 352,
+          "source_batches": [
+            "chunk_019b"
+          ]
+        },
+        {
+          "id": "ch08_s06_2",
+          "chapter_id": "chapter_08",
+          "number": "6.2",
+          "title_en": "Another dispersion equation",
+          "title_zh": "另一类色散方程",
+          "pdf_page_start": 371,
+          "pdf_page_end": 373,
+          "printed_page_start": 352,
+          "printed_page_end": 354,
+          "source_batches": [
+            "chunk_019b"
+          ]
+        },
+        {
+          "id": "ch08_s06_3",
+          "chapter_id": "chapter_08",
+          "number": "6.3",
+          "title_en": "The non-homogeneous Schrödinger equation",
+          "title_zh": "非齐次 Schrödinger 方程",
+          "pdf_page_start": 374,
+          "pdf_page_end": 378,
+          "printed_page_start": 355,
+          "printed_page_end": 359,
+          "source_batches": [
+            "chunk_019b"
+          ]
+        },
+        {
+          "id": "ch08_s06_4",
+          "chapter_id": "chapter_08",
+          "number": "6.4",
+          "title_en": "A critical non-linear dispersion equation",
+          "title_zh": "临界非线性色散方程",
+          "pdf_page_start": 378,
+          "pdf_page_end": 381,
+          "printed_page_start": 359,
+          "printed_page_end": 362,
+          "source_batches": [
+            "chunk_019b",
+            "chunk_020a"
+          ]
+        },
+        {
+          "id": "ch08_s07",
+          "chapter_id": "chapter_08",
+          "number": "7",
+          "title_en": "A look back at the Radon transform",
+          "title_zh": "回看 Radon 变换",
+          "pdf_page_start": 382,
+          "pdf_page_end": 390,
+          "printed_page_start": 363,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_020a"
+          ]
+        },
+        {
+          "id": "ch08_s07_1",
+          "chapter_id": "chapter_08",
+          "number": "7.1",
+          "title_en": "A variant of the Radon transform",
+          "title_zh": "Radon 变换的一个变体",
+          "pdf_page_start": 382,
+          "pdf_page_end": 384,
+          "printed_page_start": 363,
+          "printed_page_end": 365,
+          "source_batches": [
+            "chunk_020a"
+          ]
+        },
+        {
+          "id": "ch08_s07_2",
+          "chapter_id": "chapter_08",
+          "number": "7.2",
+          "title_en": "Rotational curvature",
+          "title_zh": "旋转曲率",
+          "pdf_page_start": 384,
+          "pdf_page_end": 386,
+          "printed_page_start": 365,
+          "printed_page_end": 367,
+          "source_batches": [
+            "chunk_020a"
+          ]
+        },
+        {
+          "id": "ch08_s07_3",
+          "chapter_id": "chapter_08",
+          "number": "7.3",
+          "title_en": "Oscillatory integrals",
+          "title_zh": "振荡积分",
+          "pdf_page_start": 386,
+          "pdf_page_end": 389,
+          "printed_page_start": 367,
+          "printed_page_end": 370,
+          "source_batches": [
+            "chunk_020a"
+          ]
+        },
+        {
+          "id": "ch08_s07_4",
+          "chapter_id": "chapter_08",
+          "number": "7.4",
+          "title_en": "Dyadic decomposition",
+          "title_zh": "二进分解",
+          "pdf_page_start": 389,
+          "pdf_page_end": 392,
+          "printed_page_start": 370,
+          "printed_page_end": 373,
+          "source_batches": [
+            "chunk_020a",
+            "chunk_020b"
+          ]
+        },
+        {
+          "id": "ch08_s07_5",
+          "chapter_id": "chapter_08",
+          "number": "7.5",
+          "title_en": "Almost-orthogonal sums",
+          "title_zh": "几乎正交和",
+          "pdf_page_start": 392,
+          "pdf_page_end": 393,
+          "printed_page_start": 373,
+          "printed_page_end": 374,
+          "source_batches": [
+            "chunk_020b"
+          ]
+        },
+        {
+          "id": "ch08_s07_6",
+          "chapter_id": "chapter_08",
+          "number": "7.6",
+          "title_en": "Proof of Theorem 7.1",
+          "title_zh": "Theorem 7.1 的证明",
+          "pdf_page_start": 393,
+          "pdf_page_end": 395,
+          "printed_page_start": 374,
+          "printed_page_end": 376,
+          "source_batches": [
+            "chunk_020b"
+          ]
+        },
+        {
+          "id": "ch08_s08",
+          "chapter_id": "chapter_08",
+          "number": "8",
+          "title_en": "Counting lattice points",
+          "title_zh": "计数格点",
+          "pdf_page_start": 395,
+          "pdf_page_end": 400,
+          "printed_page_start": 376,
+          "printed_page_end": null,
+          "source_batches": [
+            "chunk_020b"
+          ]
+        },
+        {
+          "id": "ch08_s08_1",
+          "chapter_id": "chapter_08",
+          "number": "8.1",
+          "title_en": "Averages of arithmetic functions",
+          "title_zh": "算术函数的平均",
+          "pdf_page_start": 396,
+          "pdf_page_end": 398,
+          "printed_page_start": 377,
+          "printed_page_end": 379,
+          "source_batches": [
+            "chunk_020b"
+          ]
+        },
+        {
+          "id": "ch08_s08_2",
+          "chapter_id": "chapter_08",
+          "number": "8.2",
+          "title_en": "Poisson summation formula",
+          "title_zh": "Poisson 求和公式",
+          "pdf_page_start": 398,
+          "pdf_page_end": 403,
+          "printed_page_start": 379,
+          "printed_page_end": 384,
+          "source_batches": [
+            "chunk_020b",
+            "chunk_021a"
+          ]
+        },
+        {
+          "id": "ch08_s08_3",
+          "chapter_id": "chapter_08",
+          "number": "8.3",
+          "title_en": "Hyperbolic measure",
+          "title_zh": "双曲测度",
+          "pdf_page_start": 403,
+          "pdf_page_end": 408,
+          "printed_page_start": 384,
+          "printed_page_end": 389,
+          "source_batches": [
+            "chunk_021a"
+          ]
+        },
+        {
+          "id": "ch08_s08_4",
+          "chapter_id": "chapter_08",
+          "number": "8.4",
+          "title_en": "Fourier transforms",
+          "title_zh": "Fourier 变换",
+          "pdf_page_start": 408,
+          "pdf_page_end": 411,
+          "printed_page_start": 389,
+          "printed_page_end": 392,
+          "source_batches": [
+            "chunk_021a",
+            "chunk_021b"
+          ]
+        },
+        {
+          "id": "ch08_s08_5",
+          "chapter_id": "chapter_08",
+          "number": "8.5",
+          "title_en": "A summation formula",
+          "title_zh": "求和公式",
+          "pdf_page_start": 411,
+          "pdf_page_end": 417,
+          "printed_page_start": 392,
+          "printed_page_end": 398,
+          "source_batches": [
+            "chunk_021b"
+          ]
+        },
+        {
+          "id": "ch08_s09",
+          "chapter_id": "chapter_08",
+          "number": "9",
+          "title_en": "Exercises",
+          "title_zh": "习题",
+          "pdf_page_start": 417,
+          "pdf_page_end": 424,
+          "printed_page_start": 398,
+          "printed_page_end": 405,
+          "source_batches": [
+            "chunk_021b",
+            "chunk_022a"
+          ]
+        },
+        {
+          "id": "ch08_s10",
+          "chapter_id": "chapter_08",
+          "number": "10",
+          "title_en": "Problems",
+          "title_zh": "问题",
+          "pdf_page_start": 424,
+          "pdf_page_end": 427,
+          "printed_page_start": 405,
+          "printed_page_end": 408,
+          "source_batches": [
+            "chunk_022a"
+          ]
+        },
+        {
+          "id": "backmatter_notes_references",
+          "chapter_id": "chapter_08",
+          "number": null,
+          "title_en": "Notes and References",
+          "title_zh": "注释与参考文献说明",
+          "pdf_page_start": 428,
+          "pdf_page_end": 430,
+          "printed_page_start": 409,
+          "printed_page_end": 411,
+          "source_batches": [
+            "chunk_022a"
+          ]
+        }
+      ]
+    }
+  ]
+}
