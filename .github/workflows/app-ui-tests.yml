@@ -38,3 +38,23 @@ jobs:
 
       - name: Run App service and API tests
         run: python -m unittest app_tests.test_api app_tests.test_api_live app_tests.test_app_service tests.test_source_resolver -v
+
+  web-client:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install web dependencies
+        run: npm install
+
+      - name: Run typed API client contract
+        run: npm test -- src/api/client.test.ts
