@@ -57,7 +57,7 @@ class BookAppLiveApiTests(unittest.TestCase):
         self.assertEqual(search["results"][0]["source_kind"], "object")
         self.assertEqual(search["results"][0]["object_type"], "theorem")
 
-    def test_uvicorn_serves_real_textbook_qa_with_explicit_fake_provider(self) -> None:
+    def test_uvicorn_serves_scoped_conversational_v2_qa_with_explicit_fake_provider(self) -> None:
         default_service.cache_clear()
         self.addCleanup(default_service.cache_clear)
         with patch.dict(os.environ, {"BOOK_QA_PROVIDER": "fake"}, clear=False):
@@ -82,7 +82,14 @@ class BookAppLiveApiTests(unittest.TestCase):
             request = urllib.request.Request(
                 "http://127.0.0.1:8766/api/courses/functional_analysis_course/qa",
                 data=json.dumps(
-                    {"question": SUFFICIENT_QA_QUESTION},
+                    {
+                        "question": SUFFICIENT_QA_QUESTION,
+                        "section_id": "ch01_s01",
+                        "history": [
+                            {"role": "user", "content": "什么是共轭指数？"},
+                            {"role": "assistant", "content": "上一轮回答只用于理解追问。"},
+                        ],
+                    },
                     ensure_ascii=False,
                 ).encode("utf-8"),
                 headers={"Content-Type": "application/json"},
@@ -94,10 +101,20 @@ class BookAppLiveApiTests(unittest.TestCase):
             self.assertEqual(payload["course_id"], "functional_analysis_course")
             self.assertEqual(payload["book_id"], "stein_shakarchi_functional_analysis_2011")
             self.assertEqual(payload["answer_kind"], "generated")
-            self.assertEqual(payload["evidence_status"], "sufficient")
+            self.assertEqual(payload["answer_style"], "brief")
+            self.assertEqual(payload["scope_requested"], "section_then_book")
+            self.assertIn(payload["scope_used"], ("section", "book"))
+            self.assertFalse(payload["insufficient_evidence"])
+            self.assertIsNone(payload["message"])
             self.assertTrue(payload["citations"])
-            self.assertEqual(payload["citations"][0]["source_kind"], "object")
-            self.assertTrue(payload["citations"][0]["source_id"])
+            first = payload["citations"][0]
+            self.assertEqual(first["source_kind"], "object")
+            self.assertTrue(first["source_id"])
+            self.assertIsNotNone(first["chapter_id"])
+            self.assertIsNotNone(first["section_id"])
+            self.assertTrue(first["type_zh"])
+            self.assertNotIn("citation_id", first)
+            self.assertNotIn("evidence_status", payload)
 
     @staticmethod
     def _stop_server(server: uvicorn.Server, thread: threading.Thread) -> None:
