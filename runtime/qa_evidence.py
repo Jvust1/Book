@@ -44,6 +44,7 @@ class QuestionProbeBuilder:
     MAX_PROBES = 24
     _LATIN_TOKEN = re.compile(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9][A-Za-zÀ-ÖØ-öø-ÿ0-9_\-]*")
     _CJK_RUN = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]+")
+    _GENERIC_CJK_PROBES = frozenset({"概念"})
 
     @classmethod
     def build(cls, question: str) -> tuple[str, ...]:
@@ -74,7 +75,10 @@ class QuestionProbeBuilder:
             run = match.group(0)
             for width in range(min(8, len(run)), 1, -1):
                 for start in range(0, len(run) - width + 1):
-                    if add(run[start : start + width]):
+                    probe = run[start : start + width]
+                    if probe in cls._GENERIC_CJK_PROBES:
+                        continue
+                    if add(probe):
                         return tuple(probes)
 
         return tuple(probes)
