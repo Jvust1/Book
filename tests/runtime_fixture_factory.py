@@ -25,8 +25,29 @@ def write_ready_book(
     objects: list[dict[str, object]] | None = None,
     figures: list[dict[str, object]] | None = None,
     search_records: list[dict[str, object]] | None = None,
+    sections: list[dict[str, object]] | None = None,
 ) -> None:
     root.mkdir(parents=True, exist_ok=True)
+    section_rows = sections or [
+        {
+            "id": "ch01_s01",
+            "number": "1",
+            "title_en": "Section",
+            "title_zh": "小节",
+            "pdf_pages": [1, 2],
+            "printed_pages": [1, 2],
+        }
+    ]
+    toc_sections = [
+        {
+            "id": str(row["id"]),
+            "number": row.get("number"),
+            "title_en": row.get("title_en"),
+            "title_zh": row.get("title_zh"),
+        }
+        for row in section_rows
+    ]
+
     dump_json(
         root / "RUNTIME_READINESS.json",
         {
@@ -70,14 +91,7 @@ def write_ready_book(
                     "number": "1",
                     "title_en": "Test chapter",
                     "title_zh": "测试章",
-                    "sections": [
-                        {
-                            "id": "ch01_s01",
-                            "number": "1",
-                            "title_en": "Section",
-                            "title_zh": "小节",
-                        }
-                    ],
+                    "sections": toc_sections,
                 }
             ]
         },
@@ -89,16 +103,7 @@ def write_ready_book(
             "pdf_pages": [1, 2],
             "printed_pages": [1, 2],
             "chapter_id": "chapter_01",
-            "sections": [
-                {
-                    "id": "ch01_s01",
-                    "number": "1",
-                    "title_en": "Section",
-                    "title_zh": "小节",
-                    "pdf_pages": [1, 2],
-                    "printed_pages": [1, 2],
-                }
-            ],
+            "sections": section_rows,
             "key_objects": objects or [],
             "figure_anchors": figures or [],
         },
