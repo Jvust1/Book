@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
-import { loadQAViewState } from '../state/qaViewState'
+import { loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
 
@@ -46,8 +46,8 @@ export function SourcePage() {
 
   const matchingQAState = (() => {
     if (!courseId || !source) return null
-    const saved = loadQAViewState(courseId)
-    if (saved?.activeCitationKey === `${source.kind}:${source.source_id}`) return saved
+    const saved = loadQASessionState(courseId)
+    if (saved?.activeCitationSourceId === source.source_id) return saved
     return null
   })()
 
@@ -62,8 +62,8 @@ export function SourcePage() {
     if (!courseId || !source) return
     const sourceKey = `${source.kind}:${source.source_id}`
 
-    const savedQA = loadQAViewState(courseId)
-    if (savedQA?.activeCitationKey === sourceKey) {
+    const savedQA = loadQASessionState(courseId)
+    if (savedQA?.activeCitationSourceId === source.source_id) {
       navigate(savedQA.route)
       return
     }
