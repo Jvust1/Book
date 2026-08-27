@@ -32,15 +32,28 @@ Book 是一个面向真实课程学习的 **Course OS**：把持续上传的多�
 
 - 中文工作名：《泛函分析：分析学进一步专题导论》
 - 作者：Elias M. Stein、Rami Shakarchi
-- PDF：442 页；正文纸质页 1-423
-- 已按 PDF 物理页每 20 页拆分为 23 个分卷
-- 已建立页码映射、双语目录、结构化知识节点与中文学习层
-- 当前已结构化到 PDF 50 / 纸质正文 31
-- 已加入教材内搜索/提问策略
+- 状态：**STRUCTURED_COMPLETE**
+- 最终版本：**v0.36 FINAL**
+- 源 PDF：**442 / 442 页全部完成结构化覆盖**
+- 最终纸质页：**423**
+- 全书审计：**PASS 20 / WARN 1 / FAIL 0**
+- 最终搜索索引：`search_index_v0_36.jsonl`，1493 条唯一记录
 - 项目目录：[books/functional-analysis](books/functional-analysis/README.md)
+- 完成标记：[STRUCTURED_COMPLETE.json](books/functional-analysis/STRUCTURED_COMPLETE.json)
+- 审计报告：[BOOK_AUDIT_REPORT.md](books/functional-analysis/BOOK_AUDIT_REPORT.md)
 
 ## 当前状态
 
-产品与数据架构基线已完成，第一本真实教材正在按约 10 页一个结构化批次推进。下一批为 PDF 51-60。
+第一本真实教材的全书结构化阶段已经完成，**不再继续执行 PDF 51–60 等旧批次任务**。
 
-原始讨论基线保留在 Issue #1：`Book Course OS 总体计划与架构基线`。
+当前主线已经切换到 **Course OS 软件 MVP**：
+
+1. 建立结构化教材运行时导入/读取契约。
+2. 用 Functional Analysis v0.36 作为第一本真实 fixture。
+3. 打通 `Course → Book → Chapter → Section`。
+4. 打通每节 `预习｜学习｜复习｜刷题` 四个独立入口。
+5. 打通教材内容锚点定位、考点往返与页面状态恢复。
+6. 接入教材搜索/问答与学习进度记录。
+7. 选择一章完成端到端真实验收。
+
+原始产品/架构基线保留在 Issue #1：`Book Course OS 总体计划与架构基线`，已同步更新到上述里程碑。
