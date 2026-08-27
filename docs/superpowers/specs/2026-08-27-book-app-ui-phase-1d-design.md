@@ -53,6 +53,10 @@ SectionLearningRuntime
 
 后续可以在同一前端基础上继续包装 PWA、Windows 桌面端和移动端。
 
+Phase 1D 的 PWA 目标是“可安装的 Web App 外壳”，不要求教材离线缓存。FastAPI 与教材 runtime 仍在本机运行。
+
+FastAPI 默认只绑定本机回环地址（`127.0.0.1`）；Phase 1D 不设计局域网或公网暴露。
+
 ### 2.2 中文优先
 
 用户正常学习流程必须完全可用中文完成。
@@ -66,6 +70,8 @@ SectionLearningRuntime
 - 英文原教材保留为来源证据，但不是主学习入口；
 - 若某段中文内容缺失，明确显示“本段中文学习内容暂未提供”，不得把英文原文直接作为默认正文；
 - 可提供次级“查看英文原文”按钮，但不能阻塞主要学习流程。
+
+中文课程/教材名称不能由 UI 或运行时临时生成。Functional Analysis 第一版的中文名称直接使用现有 `books/functional-analysis/book_metadata.json` 中的 `title_zh`：`泛函分析：分析学进一步专题导论`。后续如果 course 需要与书名不同的独立中文产品名，应通过明确的产品元数据字段加入，而不是运行时猜测或 AI 翻译。
 
 ### 2.3 当前课程产品规则
 
@@ -109,7 +115,9 @@ SectionLearningRuntime
 - 完整 StudyRecord；
 - Chapter Hub；
 - Windows 安装包；
-- 原生手机 App。
+- 原生手机 App；
+- 教材数据离线缓存；
+- 跨设备状态恢复。
 
 这些能力必须保持未来可扩展，但不能扩大 Phase 1D 实现范围。
 
@@ -138,13 +146,15 @@ Phase 1D 不要求原始 PDF 二进制存在，也不要求用户打开 PDF。
 
 每张课程卡至少包括：
 
-- 中文课程名；
+- 中文课程/教材名；
 - 英文书名或课程英文名（次级）；
 - 作者；
 - Chapter 数量；
 - Section 数量；
 - Runtime readiness；
-- 进入 / 继续学习按钮。
+- 进入课程按钮。
+
+如果本次浏览器会话中存在该课程的 Section return snapshot，可以额外显示“继续学习”；否则不得伪造历史学习位置。
 
 第一版不在首页中心放 AI 聊天框，不做复杂统计仪表盘。
 
@@ -154,7 +164,7 @@ Phase 1D 不要求原始 PDF 二进制存在，也不要求用户打开 PDF。
 
 显示：
 
-- 中文课程名；
+- 中文课程/教材名；
 - 英文名（次级）；
 - 作者；
 - Chapter 列表；
@@ -197,7 +207,7 @@ Chapter Hub（章节总结、公式、测试等）不在本阶段实现。
 - `review`
 - `practice`
 
-默认 mode 为 `learn` 或由实现计划明确指定一个稳定默认值；必须在测试中固定，不允许依赖隐式 UI 状态。
+默认 mode 固定为 `learn`。未提供 mode 或 mode 非法时，前端必须规范化到 `learn`；API 不根据隐式 UI 状态决定默认模式。
 
 四个模式：
 
@@ -206,9 +216,11 @@ Chapter Hub（章节总结、公式、测试等）不在本阶段实现。
 - 不互相锁定；
 - 切换后应保持各自页面位置状态。
 
-### 5.5 来源页 `/source/:kind/:sourceId`
+### 5.5 来源页 `/courses/:courseId/sources/:kind/:sourceId`
 
 来源页用于查看结构化教材证据，不是 PDF 阅读器。
+
+来源 URL 必须包含 `courseId`，避免未来多个课程存在相同 source ID 时深链接歧义。
 
 显示：
 
@@ -328,6 +340,8 @@ books/ courses/ library/
 
 这保证未来教材目录、chunk 格式或 runtime 内部实现变化时，不需要同步重写前端。
 
+FastAPI route 层不得为了方便直接散落读取 `books/**` 文件；教材文件解析必须集中在 runtime/service 边界。
+
 ## 8. FastAPI 接口契约
 
 ### 8.1 Library
@@ -342,10 +356,12 @@ books/ courses/ library/
 - `name_zh`
 - `name_en`
 - `book_id`
-- `author`
+- `authors`
 - `chapter_count`
 - `section_count`
 - `runtime_status`
+
+对于当前 Functional Analysis，`name_zh` 必须由 main book 的 `book_metadata.title_zh` 提供；`authors` 必须由 `book_metadata.authors` 提供。
 
 ### 8.2 Course
 
@@ -426,6 +442,8 @@ mode payload 必须保持与 `SectionLearningRuntime` identity 一致，并保�
 - `context_before`
 - `context_after`
 
+不同 `kind` 可以让不适用字段为 `null`，但 identity、source ref 与页码/anchor 真实性约束不变。
+
 如果当前 runtime 还没有足够信息直接返回 `content_zh`，实现计划必须新增一个明确、可测试的 Python source resolver；禁止 FastAPI 直接散落读取底层 chunk 文件来绕过 runtime 边界。
 
 ## 9. 状态恢复设计
@@ -445,13 +463,15 @@ URL 至少保存：
 /courses/functional_analysis_course/sections/ch01_s01?mode=learn
 ```
 
-刷新页面和 PWA 重启后必须能够回到同一个 Section + mode。
+浏览器刷新或直接打开该深链接时，必须回到同一个 Section + mode。
+
+Phase 1D 不承诺关闭浏览器/PWA 后自动恢复“上一次打开页面”；这属于后续 StudyRecord / 持久化能力。
 
 ### 9.2 sessionStorage 保存“页面里具体在哪里”
 
 Phase 1D 不引入数据库。
 
-客户端用 `sessionStorage` 保存本次会话的局部 UI 状态：
+客户端用 `sessionStorage` 保存本次浏览器会话的局部 UI 状态：
 
 - 每个 mode 的 scrollY；
 - 当前高亮对象；
@@ -461,6 +481,8 @@ Phase 1D 不引入数据库。
 - 目录抽屉状态。
 
 建议按 `course_id + section_id + mode` 分 key，避免不同 Section 状态串扰。
+
+这些状态必须支持同一标签页内的路由往返与页面刷新；不要求跨浏览器会话永久保留。
 
 ### 9.3 来源往返
 
@@ -537,6 +559,7 @@ Phase 1D 必须继续遵守现有 runtime 的来源真实性约束：
 至少测试：
 
 - Library API 返回 Functional Analysis；
+- Functional Analysis 中文名称来自现有 `book_metadata.title_zh`；
 - Course API 返回 8 Chapters / 132 Sections；
 - Chapter API 可解析真实 Chapter；
 - Section `ch01_s01` 可打开；
@@ -552,10 +575,12 @@ Phase 1D 必须继续遵守现有 runtime 的来源真实性约束：
 - 书架渲染；
 - 课程目录渲染；
 - Chapter → Section 导航；
+- Section 缺省 mode 规范化为 `learn`；
 - 四 mode 可自由切换；
 - 中文对象类型映射；
 - 中文优先缺失 fallback；
 - 查看来源；
+- 来源 route 包含 course ID；
 - 返回后恢复 mode；
 - 返回后恢复 scroll/展开状态；
 - 手机宽度基础响应式不破版。
@@ -639,18 +664,20 @@ app/
 
 Phase 1D 只有同时满足以下条件才算完成：
 
-1. 本机能启动 FastAPI；
+1. 本机能启动 FastAPI，默认只绑定本机；
 2. 本机能启动/构建 React PWA；
-3. 书架真实显示 Functional Analysis；
+3. 书架真实显示 Functional Analysis 的中文教材名；
 4. 真实显示 8 Chapters / 132 Sections；
 5. `ch01_s01` 可进入；
-6. 四模式均可打开且可自由切换；
-7. 学习页中文优先；
-8. 至少一个真实教材对象可打开结构化来源；
-9. 来源页显示真实 printed/PDF page 和 source anchor；
-10. 返回后恢复原 Section mode 与页面位置；
-11. 无中文内容时明确显示缺失状态，不伪造内容；
-12. 原有 runtime CI 不回退；
-13. 新 API、前端测试和 production build 全部通过。
+6. Section 缺省 mode 固定进入学习模式；
+7. 四模式均可打开且可自由切换；
+8. 学习页中文优先；
+9. 至少一个真实教材对象可打开结构化来源；
+10. 来源 URL 包含 course ID；
+11. 来源页显示真实 printed/PDF page 和 source anchor；
+12. 返回后恢复原 Section mode 与页面位置；
+13. 无中文内容时明确显示缺失状态，不伪造内容；
+14. 原有 runtime CI 不回退；
+15. 新 API、前端测试和 production build 全部通过。
 
 达到以上条件后，才能进入后续搜索/问答、持久化 StudyRecord、Chapter Hub 或原始 PDF 辅助查看器等阶段。
