@@ -147,7 +147,7 @@ jobs:
           assert chinese_hits
           assert search.search("definitely-no-such-text-92831") == []
 
-          sufficient_qa = qa.answer("什么是巴拿赫空间？")
+          sufficient_qa = qa.answer("1/p + 1/q = 1")
           assert sufficient_qa.answer_kind == "generated"
           assert sufficient_qa.evidence_status == "sufficient"
           assert sufficient_qa.citations
