@@ -1,0 +1,67 @@
+{
+  "status": "BLOCKED",
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "structured_status": "STRUCTURED_COMPLETE",
+  "structured_version": "v0.36",
+  "audit_fail_count": 0,
+  "checks": [
+    {
+      "name": "structured_complete_marker",
+      "status": "PASS",
+      "detail": "STRUCTURED_COMPLETE.json exists and reports v0.36 / 442 pages / FAIL=0"
+    },
+    {
+      "name": "book_metadata",
+      "status": "PASS",
+      "detail": "book_metadata.json exists and canonical book_id matches STRUCTURED_COMPLETE"
+    },
+    {
+      "name": "audit_report",
+      "status": "PASS",
+      "detail": "BOOK_AUDIT_REPORT.md exists and reports PASS 20 / WARN 1 / FAIL 0"
+    },
+    {
+      "name": "qa_policy_identity",
+      "status": "PASS",
+      "detail": "qa_retrieval_policy.json book_id normalized to canonical book_id"
+    },
+    {
+      "name": "page_map",
+      "status": "FAIL",
+      "detail": "book_metadata.json references page_map.csv but the file is absent from the current GitHub tree"
+    },
+    {
+      "name": "bilingual_toc",
+      "status": "FAIL",
+      "detail": "book_metadata.json references toc_bilingual.json but the file is absent from the current GitHub tree"
+    },
+    {
+      "name": "final_search_index",
+      "status": "FAIL",
+      "detail": "STRUCTURED_COMPLETE.json references search_index_v0_36.jsonl but the file is absent from the current GitHub tree"
+    },
+    {
+      "name": "chunk_002_final_learning_layer",
+      "status": "FAIL",
+      "detail": "current tree still contains chunks/chunk_002_translation_zh_partial.md and stale partial status in chunk_002_structure.json; final-audit replacement is not synced"
+    }
+  ],
+  "missing_required_files": [
+    "page_map.csv",
+    "toc_bilingual.json",
+    "search_index_v0_36.jsonl",
+    "chunks/chunk_002_translation_zh.md"
+  ],
+  "stale_files": [
+    "chunks/chunk_002_translation_zh_partial.md",
+    "chunks/chunk_002_structure.json"
+  ],
+  "identity_mismatches": [],
+  "drive_probe": {
+    "book_folder_found": true,
+    "exports_folder_found": true,
+    "exports_folder_currently_empty": true,
+    "final_v0_36_export_found": false
+  },
+  "next_action": "Recover or regenerate the v0.36 FINAL export artifacts, sync them to GitHub/Drive, then rerun runtime readiness before implementing the production loader."
+}
