@@ -14,6 +14,9 @@ import uvicorn
 from app.api.main import app, default_service
 
 
+SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
+
+
 class BookAppLiveApiTests(unittest.TestCase):
     def test_uvicorn_serves_real_library_and_search_on_loopback(self) -> None:
         default_service.cache_clear()
@@ -79,7 +82,7 @@ class BookAppLiveApiTests(unittest.TestCase):
             request = urllib.request.Request(
                 "http://127.0.0.1:8766/api/courses/functional_analysis_course/qa",
                 data=json.dumps(
-                    {"question": "什么是巴拿赫空间？"},
+                    {"question": SUFFICIENT_QA_QUESTION},
                     ensure_ascii=False,
                 ).encode("utf-8"),
                 headers={"Content-Type": "application/json"},
