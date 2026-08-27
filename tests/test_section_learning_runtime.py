@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from runtime.book_runtime import (
     BookRuntimeError,
@@ -274,6 +275,38 @@ class SectionLearningModeTests(unittest.TestCase):
             ],
             ["practice", "preview", "review", "learn"],
         )
+
+
+class RealSectionLearningFixtureTests(unittest.TestCase):
+    def test_real_ch01_s01_builds_all_modes(self) -> None:
+        from runtime import LibraryRuntime
+
+        repo = Path(__file__).resolve().parents[1]
+        if not (repo / "books" / "functional-analysis").exists():
+            self.skipTest("repository Functional Analysis fixture not present")
+        course = LibraryRuntime.open(repo / "library").course(
+            "functional_analysis_course"
+        )
+        learning = SectionLearningRuntime.from_course(course, "ch01_s01")
+        source = learning.source()
+        self.assertEqual(source.course_id, "functional_analysis_course")
+        self.assertEqual(source.book_id, "stein_shakarchi_functional_analysis_2011")
+        self.assertEqual(source.section_id, "ch01_s01")
+        for payload in (
+            learning.preview(),
+            learning.learn(),
+            learning.review(),
+            learning.practice(),
+        ):
+            self.assertEqual(payload["course_id"], source.course_id)
+            self.assertEqual(payload["book_id"], source.book_id)
+            self.assertEqual(payload["chapter_id"], source.chapter_id)
+            self.assertEqual(payload["section_id"], source.section_id)
+
+    def test_runtime_package_exports_section_learning_runtime(self) -> None:
+        from runtime import SectionLearningRuntime as ExportedSectionLearningRuntime
+
+        self.assertIs(ExportedSectionLearningRuntime, SectionLearningRuntime)
 
 
 if __name__ == "__main__":
