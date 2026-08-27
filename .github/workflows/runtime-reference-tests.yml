@@ -5,6 +5,7 @@ on:
     paths:
       - "runtime/**"
       - "courses/**"
+      - "library/**"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
@@ -19,6 +20,7 @@ on:
     paths:
       - "runtime/**"
       - "courses/**"
+      - "library/**"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
@@ -52,6 +54,8 @@ jobs:
         run: |
           python -m py_compile runtime/book_runtime.py
           python -m py_compile runtime/course_runtime.py
+          python -m py_compile runtime/library_runtime.py
+          python -m py_compile runtime/section_learning_runtime.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
@@ -75,7 +79,75 @@ jobs:
           python tools/recover_functional_analysis_page_map.py books/functional-analysis --promote-safe
           python -c "import json,pathlib,shutil; root=pathlib.Path('books/functional-analysis'); t=json.loads((root/'toc_bilingual.json.candidate').read_text(encoding='utf-8')); s=json.loads((root/'search_index_v0_36.rebuild_report.json').read_text(encoding='utf-8')); p=json.loads((root/'page_map.rebuild_report.json').read_text(encoding='utf-8')); assert t.get('chapter_count') == 8 and t.get('section_count') == 132; assert s.get('record_count') == 1493 and s.get('promotable_by_count_and_anchor') is True; assert p.get('row_count') == 442 and p.get('anchor_checks_pass') is True; shutil.copyfile(root/'toc_bilingual.json.candidate', root/'toc_bilingual.json')"
           python tools/check_runtime_readiness.py books/functional-analysis --write
-          python -c "import json,pathlib; from runtime import BookRuntime, CourseRuntime; root=pathlib.Path('books/functional-analysis'); r=json.loads((root/'RUNTIME_READINESS.json').read_text(encoding='utf-8')); assert r.get('status') == 'READY', r; runtime=BookRuntime.open(root); course=CourseRuntime.open('courses/functional-analysis'); assert runtime.is_ready; assert runtime.page_map_row(20).get('printed_page') == '1'; assert runtime.page_map_row(442).get('printed_page') == '423'; assert len(course.chapter_ids()) == 8; assert sum(len(course.sections_for_chapter(cid)) for cid in course.chapter_ids()) == 132; print(json.dumps({'runtime_status':r.get('status'),'book_runtime_open':True,'course_runtime_open':True,'course_id':course.course_id,'course_chapter_count':len(course.chapter_ids()),'course_section_count':sum(len(course.sections_for_chapter(cid)) for cid in course.chapter_ids()),'figure_count':len(runtime.figures),'missing_required_files':r.get('missing_required_files'),'stale_files':r.get('stale_files'),'identity_mismatches':r.get('identity_mismatches')},ensure_ascii=False,indent=2))"
+          python - <<'PY'
+          import json
+          import pathlib
+
+          from runtime import (
+              BookRuntime,
+              CourseRuntime,
+              LibraryRuntime,
+              SectionLearningRuntime,
+          )
+
+          root = pathlib.Path("books/functional-analysis")
+          readiness = json.loads(
+              (root / "RUNTIME_READINESS.json").read_text(encoding="utf-8")
+          )
+          assert readiness.get("status") == "READY", readiness
+
+          book = BookRuntime.open(root)
+          course = CourseRuntime.open("courses/functional-analysis")
+          library = LibraryRuntime.open("library")
+          selected = library.course("functional_analysis_course")
+          learning = SectionLearningRuntime.from_course(selected, "ch01_s01")
+
+          assert book.is_ready
+          assert book.page_map_row(20).get("printed_page") == "1"
+          assert book.page_map_row(442).get("printed_page") == "423"
+          assert len(course.chapter_ids()) == 8
+          section_count = sum(
+              len(course.sections_for_chapter(chapter_id))
+              for chapter_id in course.chapter_ids()
+          )
+          assert section_count == 132
+          assert library.course_ids() == ["functional_analysis_course"]
+          assert selected.book_ids() == ["stein_shakarchi_functional_analysis_2011"]
+          assert learning.source().section_id == "ch01_s01"
+          modes = [
+              learning.preview()["mode"],
+              learning.learn()["mode"],
+              learning.review()["mode"],
+              learning.practice()["mode"],
+          ]
+          assert modes == ["preview", "learn", "review", "practice"]
+
+          print(
+              json.dumps(
+                  {
+                      "runtime_status": readiness.get("status"),
+                      "book_runtime_open": True,
+                      "course_runtime_open": True,
+                      "library_runtime_open": True,
+                      "section_learning_runtime_open": True,
+                      "course_id": selected.course_id,
+                      "book_id": selected.main_book().book_id,
+                      "course_chapter_count": len(course.chapter_ids()),
+                      "course_section_count": section_count,
+                      "section_id": learning.source().section_id,
+                      "modes": modes,
+                      "page_map_rows": len(book.page_map),
+                      "search_record_count": sum(1 for _ in book.iter_search_records()),
+                      "figure_count": len(book.figures),
+                      "missing_required_files": readiness.get("missing_required_files"),
+                      "stale_files": readiness.get("stale_files"),
+                      "identity_mismatches": readiness.get("identity_mismatches"),
+                  },
+                  ensure_ascii=False,
+                  indent=2,
+              )
+          )
+          PY
 
       - name: Upload audited recovery candidates
         if: matrix.python-version == '3.13'
