@@ -9,6 +9,12 @@ from .book_runtime import BookRuntimeError
 from .course_runtime import CourseRuntime
 
 
+REVIEW_TYPES = frozenset(
+    {"definition", "theorem", "proposition", "lemma", "corollary", "formula"}
+)
+PRACTICE_TYPES = frozenset({"exercise", "problem"})
+
+
 class SectionLearningRuntimeError(RuntimeError):
     """Base error for Section learning runtime operations."""
 
@@ -152,3 +158,75 @@ class SectionLearningRuntime:
 
     def source(self) -> SectionLearningSource:
         return self._source
+
+    def _envelope(self, mode: str, items: list[dict[str, Any]]) -> dict[str, Any]:
+        return {
+            "mode": mode,
+            "course_id": self._source.course_id,
+            "book_id": self._source.book_id,
+            "chapter_id": self._source.chapter_id,
+            "section_id": self._source.section_id,
+            "source_status": "available",
+            "items": items,
+            "source_refs": [
+                {"kind": str(item["kind"]), "source_id": str(item["source_id"])}
+                for item in items
+            ],
+        }
+
+    def preview(self) -> dict[str, Any]:
+        items: list[dict[str, Any]] = []
+        items.extend(
+            {
+                "kind": "object",
+                "source_id": row["id"],
+                "object_type": row["type"],
+            }
+            for row in self._source.objects
+        )
+        items.extend(
+            {"kind": "figure", "source_id": row["id"]}
+            for row in self._source.figures
+        )
+        items.extend(
+            {
+                "kind": "translation",
+                "source_id": row["batch_id"],
+                "available": row["available"],
+            }
+            for row in self._source.translation_sources
+        )
+        return self._envelope("preview", items)
+
+    def learn(self) -> dict[str, Any]:
+        items = (
+            [
+                {"kind": "object", "source_id": row["id"]}
+                for row in self._source.objects
+            ]
+            + [
+                {"kind": "figure", "source_id": row["id"]}
+                for row in self._source.figures
+            ]
+            + [
+                {"kind": "translation", "source_id": row["batch_id"]}
+                for row in self._source.translation_sources
+            ]
+        )
+        return self._envelope("learn", items)
+
+    def review(self) -> dict[str, Any]:
+        items = [
+            {"kind": "object", "source_id": row["id"]}
+            for row in self._source.objects
+            if str(row.get("type") or "").strip().casefold() in REVIEW_TYPES
+        ]
+        return self._envelope("review", items)
+
+    def practice(self) -> dict[str, Any]:
+        items = [
+            {"kind": "object", "source_id": row["id"]}
+            for row in self._source.objects
+            if str(row.get("type") or "").strip().casefold() in PRACTICE_TYPES
+        ]
+        return self._envelope("practice", items)
