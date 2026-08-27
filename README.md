@@ -9,34 +9,30 @@ Book 是一个面向真实教材学习的 **Course OS / Book App**：在同一�
 - 底层 `CourseRuntime` 保留通用多书能力作为兼容能力，但当前 Book App 产品入口只接纳恰好一本 enabled 主教材的课程。
 - PDF 页码与纸质教材印刷页码必须分离，并通过稳定内容锚点连接。
 - 每一节固定提供 **预习｜学习｜复习｜刷题** 四个并列入口，用户自由选择，不强制顺序。
-- 每章未来生成：章节总结、核心知识点、考点、公式、思维导图和章节测试。
-- 教材图片尽量保留；公式、表格、例题、习题同时结构化。
-- 课堂录音未来支持实时字幕、专业术语纠错、标点/断句修正和课后精修稿。
-- 后续自动提取老师拓展、重点、作业、期中/期末范围、成绩占比等关键事件，并保留录音时间戳证据。
-- 每个考点最终必须能快速跳转到教材对应段落/公式/图表/例题，并能一键返回原考点且恢复页面状态。
-- 每本教材支持中英双语搜索与教材内提问，回答必须返回教材来源锚点。
+- 教材内容与来源必须可追溯；缺失的中文内容、答案、解析或 anchor 保持缺失，不由 UI 静默编造。
 - 每本教材结构化完成后必须执行全书通篇质量检查，存在 `FAIL` 时不得进入正式学习运行时。
 
-## 当前运行时架构
+## 当前软件架构
 
 ```text
-Book App
-   ↓
-LibraryRuntime
-   ↓
-CourseRuntime        # 当前产品：一个 course 对应一本教材
-   ↓
-BookRuntime
-   ↓
-SectionLearningRuntime
-   ↓
-预习 / 学习 / 复习 / 刷题
+React / TypeScript / Vite PWA
+              ↓
+        local FastAPI
+              ↓
+       BookAppService
+              ↓
+LibraryRuntime → CourseRuntime → BookRuntime
+              ↓
+ SectionLearningRuntime / SourceResolver
+              ↓
+     预习 / 学习 / 复习 / 刷题
 ```
 
-后续新增《实分析》等教材时，新增独立 `courses/<slug>/course.json` 并注册进 `library/library.json`，复用同一套运行时代码，教材数据彼此隔离。
+前端只消费稳定 API DTO，不直接读取 `books/`、`courses/`、`library/` 或 chunk 文件。教材事实与解析规则继续由 Python Runtime 持有。
 
 ## 文档
 
+- [本地 App 启动与验收](app/README.md)
 - [总体计划](docs/MASTER_PLAN.md)
 - [数据模型](docs/DATA_MODEL.md)
 - [交互与导航](docs/UX_NAVIGATION.md)
@@ -60,6 +56,7 @@ SectionLearningRuntime
 - 最终纸质页：**423**
 - 全书审计：**PASS 20 / WARN 1 / FAIL 0**
 - 最终搜索索引：`search_index_v0_36.jsonl`，1493 条唯一记录
+- Runtime 目录树：**8 Chapter / 132 Section**
 - 课程目录：`courses/functional-analysis`
 - 教材目录：[books/functional-analysis](books/functional-analysis/README.md)
 - 完成标记：[STRUCTURED_COMPLETE.json](books/functional-analysis/STRUCTURED_COMPLETE.json)
@@ -69,9 +66,9 @@ SectionLearningRuntime
 
 Phase 1A 已完成第一本真实教材的全书结构化资产恢复与 `RUNTIME_READY` gate。
 
-Phase 1B 已完成并合并：`Course → Book → Chapter → Section`，Functional Analysis 可稳定暴露 **8 个 Chapter / 132 个 Section**。
+Phase 1B 已完成 `Course → Book → Chapter → Section` Runtime 层级，Functional Analysis 稳定暴露 **8 个 Chapter / 132 个 Section**。
 
-当前主线 **Phase 1C** 已打通运行时软件链路：
+Phase 1C 已完成 App Library 与 Section Learning Runtime：
 
 ```text
 Library
@@ -81,14 +78,27 @@ Library
 → Preview / Learn / Review / Practice
 ```
 
-Phase 1C 的四个模式当前是**确定性、来源可追溯的教材投影**，不会把 AI 生成内容冒充成教材内容。
+Phase 1D 已完成第一个 **local-first Book App MVP**：
 
-后续顺序：
+- React + TypeScript + Vite/PWA 前端。
+- 本机 FastAPI 只读适配层。
+- 教材库 → Course → Chapter → Section 真实导航。
+- `预习｜学习｜复习｜刷题` 四模式中文优先 UI，默认 `学习`，互不锁定。
+- 结构化教材来源页，展示真实教材页 / PDF 页 / anchor 状态 / 上下文。
+- `sessionStorage` 支持来源往返时恢复 mode、展开项与滚动位置。
+- `package-lock.json` 已固化，CI 使用 `npm ci`。
+- GitHub Actions 同时运行 App API、17 个 Web 单元测试、TypeScript、PWA build 与 Chromium 真实浏览器验收。
+- Functional Analysis 当前浏览器 acceptance 覆盖桌面真实来源往返和 390×844 窄屏。
 
-1. 在真实 App UI 中实现 Library → Course → Chapter → Section 页面。
-2. 将 `预习｜学习｜复习｜刷题` 四个运行时 payload 接到 Section 页面。
-3. 打通教材内容锚点定位、考点往返与页面状态恢复。
-4. 接入教材内搜索/问答与学习进度记录。
-5. 选择一章完成端到端真实验收，再按同一结构逐本加入《实分析》等课程。
+Phase 1D 仍然是本地 Web/PWA，不是已封装的 Windows 桌面程序。PWA 可缓存前端静态资源，但教材动态数据仍需要本机 FastAPI 运行；仓库当前也不包含完整原始 PDF Reader。
+
+## 后续顺序
+
+1. 基于现有 1493 条真实索引接入教材内中文/英文搜索与来源跳转。
+2. 接入教材内问答，强制答案携带真实来源；不把 AI 输出冒充教材正文。
+3. 增加长期 `StudyRecord` / 最近学习位置 / 四模式独立进度；与当前 session 恢复机制分离。
+4. 在现有四模式来源投影之上增加更丰富的预习、复习和刷题学习产品能力。
+5. 保持一课程一本主教材的 App 入口规则，按同一导入契约逐本加入《实分析》等独立课程。
+6. Web/PWA 稳定后再评估 Tauri Windows 打包与移动端复用。
 
 原始产品/架构基线保留在 Issue #1；较早文档中的“单课程多教材”描述应视为底层兼容/未来架构，而非当前 Book App 的产品入口规则。
