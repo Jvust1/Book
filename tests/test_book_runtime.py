@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from runtime.book_runtime import BookRuntime, BookRuntimeBlockedError
+from tests.test_search_recovery_diagnostics import SearchRecoveryDiagnostics  # noqa: F401
 from tools import rebuild_runtime_artifacts as rebuild
 
 
