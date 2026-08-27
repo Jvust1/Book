@@ -202,6 +202,20 @@ class LibraryRuntime:
             )
         return candidate
 
+    @staticmethod
+    def _validate_product_profile(entry: LibraryCourseEntry, course: CourseRuntime) -> None:
+        book_ids = course.book_ids()
+        if len(book_ids) != 1:
+            raise LibraryManifestError(
+                f"Book App course {entry.course_id!r} must expose exactly one enabled book; "
+                f"found {len(book_ids)}"
+            )
+        if course.main_book().book_id != book_ids[0]:
+            raise LibraryManifestError(
+                f"Book App course {entry.course_id!r} main book does not match its sole "
+                "mounted book"
+            )
+
     def _open_courses(self) -> None:
         for entry in self.entries:
             if not entry.enabled:
@@ -223,9 +237,39 @@ class LibraryRuntime:
                     f"CourseRuntime ID {course.course_id!r}"
                 )
 
+            self._validate_product_profile(entry, course)
             self._courses[entry.course_id] = course
 
-    def course_ids(self) -> list[str]:
-        """Return enabled mounted course IDs in manifest order for the base contract."""
+    def _enabled_entries(self) -> list[LibraryCourseEntry]:
+        return sorted(
+            (entry for entry in self.entries if entry.enabled),
+            key=lambda entry: (entry.order, entry.position),
+        )
 
-        return [entry.course_id for entry in self.entries if entry.enabled]
+    def course_ids(self) -> list[str]:
+        return [entry.course_id for entry in self._enabled_entries()]
+
+    def courses(self) -> list[CourseRuntime]:
+        return [self._courses[course_id] for course_id in self.course_ids()]
+
+    def course(self, course_id: str) -> CourseRuntime:
+        try:
+            return self._courses[course_id]
+        except KeyError as exc:
+            raise LibraryRuntimeError(f"Unknown or disabled course: {course_id}") from exc
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "library_id": self.library_id,
+            "name": self.name,
+            "course_count": len(self._courses),
+            "courses": [
+                {
+                    "course_id": course.course_id,
+                    "name": course.name,
+                    "book_count": len(course.book_ids()),
+                    "main_book_id": course.main_book_id,
+                }
+                for course in self.courses()
+            ],
+        }
