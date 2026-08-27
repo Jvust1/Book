@@ -171,35 +171,6 @@ class ModelResponse:
         )
 
 
-# Temporary compatibility contracts for the pre-v2 provider/runtime path.
-# Tasks 4-5 migrate callers to ModelRequest/ModelResponse and then remove these.
-@dataclass(frozen=True)
-class ProviderRequest:
-    """Legacy provider request retained only during the v2 staged migration."""
-
-    question: str
-    course_id: str
-    book_id: str
-    evidence: tuple[EvidenceItem, ...]
-
-    @classmethod
-    def from_pack(cls, pack: EvidencePack) -> "ProviderRequest":
-        return cls(
-            question=pack.question,
-            course_id=pack.course_id,
-            book_id=pack.book_id,
-            evidence=pack.evidence,
-        )
-
-
-@dataclass(frozen=True)
-class ProviderAnswer:
-    """Legacy provider response retained only during the v2 staged migration."""
-
-    answer_text: str
-    cited_evidence_ids: tuple[str, ...]
-
-
 @dataclass(frozen=True)
 class QACitation:
     """Verified citation projected exclusively from server-owned evidence."""
