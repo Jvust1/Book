@@ -1,47 +1,452 @@
 {
   "chunk_id": "chunk_011b",
   "parent_storage_chunk": "chunk_011",
-  "pdf_pages": [211, 220],
-  "printed_pages": [192, 201],
+  "pdf_pages": [
+    211,
+    220
+  ],
+  "printed_pages": [
+    192,
+    201
+  ],
   "status": "structured_v0.13_translation_learning_layer",
-  "chapter_ids": ["chapter_05"],
+  "chapter_ids": [
+    "chapter_05"
+  ],
   "sections": [
-    {"id":"ch05_s01","number":"1","title_en":"Bernoulli trials","title_zh":"Bernoulli 试验","pdf_pages":[208,227],"printed_pages":[189,208],"batch_coverage":[211,220],"continued_from":"chunk_011a","continues_in":"chunk_012a"},
-    {"id":"ch05_s01_02","number":"1.2","title_en":"The case N = ∞","title_zh":"N = ∞ 的情形","pdf_pages":[210,213],"printed_pages":[191,194],"batch_coverage":[211,213],"continued_from":"chunk_011a","completed_in":"chunk_011b"},
-    {"id":"ch05_s01_03","number":"1.3","title_en":"Behavior of S_N as N → ∞, first results","title_zh":"N→∞ 时 S_N 的行为：初步结果","pdf_pages":[213,214],"printed_pages":[194,195],"batch_coverage":[213,214],"completed_in":"chunk_011b"},
-    {"id":"ch05_s01_04","number":"1.4","title_en":"Central limit theorem","title_zh":"中心极限定理","pdf_pages":[214,215],"printed_pages":[195,196],"batch_coverage":[214,215],"completed_in":"chunk_011b"},
-    {"id":"ch05_s01_05","number":"1.5","title_en":"Statement and proof of the theorem","title_zh":"定理的陈述与证明","pdf_pages":[216,217],"printed_pages":[197,198],"batch_coverage":[216,217],"completed_in":"chunk_011b"},
-    {"id":"ch05_s01_06","number":"1.6","title_en":"Random series","title_zh":"随机级数","pdf_pages":[218,222],"printed_pages":[199,203],"batch_coverage":[218,220],"continues_in":"chunk_012a"}
+    {
+      "id": "ch05_s01",
+      "number": "1",
+      "title_en": "Bernoulli trials",
+      "title_zh": "Bernoulli 试验",
+      "pdf_pages": [
+        208,
+        227
+      ],
+      "printed_pages": [
+        189,
+        208
+      ],
+      "batch_coverage": [
+        211,
+        220
+      ],
+      "continued_from": "chunk_011a",
+      "continues_in": "chunk_012a"
+    },
+    {
+      "id": "ch05_s01_02",
+      "number": "1.2",
+      "title_en": "The case N = ∞",
+      "title_zh": "N = ∞ 的情形",
+      "pdf_pages": [
+        210,
+        213
+      ],
+      "printed_pages": [
+        191,
+        194
+      ],
+      "batch_coverage": [
+        211,
+        213
+      ],
+      "continued_from": "chunk_011a",
+      "completed_in": "chunk_011b"
+    },
+    {
+      "id": "ch05_s01_03",
+      "number": "1.3",
+      "title_en": "Behavior of S_N as N → ∞, first results",
+      "title_zh": "N→∞ 时 S_N 的行为：初步结果",
+      "pdf_pages": [
+        213,
+        214
+      ],
+      "printed_pages": [
+        194,
+        195
+      ],
+      "batch_coverage": [
+        213,
+        214
+      ],
+      "completed_in": "chunk_011b"
+    },
+    {
+      "id": "ch05_s01_04",
+      "number": "1.4",
+      "title_en": "Central limit theorem",
+      "title_zh": "中心极限定理",
+      "pdf_pages": [
+        214,
+        215
+      ],
+      "printed_pages": [
+        195,
+        196
+      ],
+      "batch_coverage": [
+        214,
+        215
+      ],
+      "completed_in": "chunk_011b"
+    },
+    {
+      "id": "ch05_s01_05",
+      "number": "1.5",
+      "title_en": "Statement and proof of the theorem",
+      "title_zh": "定理的陈述与证明",
+      "pdf_pages": [
+        216,
+        217
+      ],
+      "printed_pages": [
+        197,
+        198
+      ],
+      "batch_coverage": [
+        216,
+        217
+      ],
+      "completed_in": "chunk_011b"
+    },
+    {
+      "id": "ch05_s01_06",
+      "number": "1.6",
+      "title_en": "Random series",
+      "title_zh": "随机级数",
+      "pdf_pages": [
+        218,
+        222
+      ],
+      "printed_pages": [
+        199,
+        203
+      ],
+      "batch_coverage": [
+        218,
+        220
+      ],
+      "continues_in": "chunk_012a"
+    }
   ],
   "key_objects": [
-    {"type":"definition","id":"def_ch5_infinite_bernoulli_space","name_zh":"无限 Bernoulli 空间 X=Z_2^∞","name_en":"infinite Bernoulli space X=Z_2^∞","anchor":{"pdf_page":211,"printed_page":192},"continued_from":"chunk_011a","description":"由柱集上的自然有限维概率一致延拓得到乘积概率测度。"},
-    {"type":"definition","id":"def_ch5_probability_space","name_zh":"概率空间与概率测度","name_en":"probability space and probability measure","anchor":{"pdf_page":211,"printed_page":192},"formula":"m(X)=1","description":"书中同时约定 almost surely 与 almost everywhere 在此语境下同义。"},
-    {"type":"mapping","id":"map_ch5_D_binary","number":"(2)","name_zh":"无限 0-1 序列到 [0,1] 的二进制映射 D","name_en":"binary map D from Z_2^∞ to [0,1]","anchor":{"pdf_page":211,"printed_page":192},"formula":"D(x)=Σ_{j≥1} x_j/2^j","description":"除去可数的二进制展开歧义点后与 [0,1] 建立一一对应；柱集对应二进区间且保持测度。"},
-    {"type":"definition","id":"def_ch5_rademacher_functions","name_zh":"Rademacher 函数","name_en":"Rademacher functions","anchor":{"pdf_page":211,"printed_page":192},"formula":"r_n(x)=1-2x_n;  r_n(t)=r_1(2^{n-1}t)","description":"把无限 Bernoulli 坐标函数搬到 [0,1] 上。"},
-    {"type":"figure","id":"fig_ch5_01_rademacher","number":"Figure 1","name_zh":"Rademacher 函数 r_1 与 r_2","name_en":"The Rademacher functions r1 and r2","anchor":{"pdf_page":212,"printed_page":193},"asset":"figures/fig_ch5_01_rademacher_r1_r2.png","visual_check":"completed"},
-    {"type":"definition","id":"def_ch5_mutual_independence","name_zh":"相互独立函数","name_en":"mutually independent functions","anchor":{"pdf_page":212,"printed_page":193},"formula":"m(∩{f_n∈B_n})=∏m({f_n∈B_n})","description":"强调相互独立强于两两独立。"},
-    {"type":"identity","id":"prop_ch5_independent_product_integral","number":"(4)","name_zh":"独立函数乘积的积分分解","name_en":"factorization of the integral of independent functions","anchor":{"pdf_page":212,"printed_page":193},"formula":"∫_X f_1⋯f_n dm = ∏_{j=1}^n ∫_X f_j dm"},
-    {"type":"proposition","id":"prop_ch5_1_1_SN_L2","number":"1.1","name_zh":"S_N 的 L² 范数","name_en":"L2 norm of S_N","anchor":{"pdf_page":213,"printed_page":194},"formula":"||S_N||_2=N^{1/2}","description":"由 Rademacher 系统在 L²([0,1]) 中的正交归一性得到；更一般有 ||Σa_nr_n||²_2=Σ|a_n|²。"},
-    {"type":"definition","id":"def_ch5_convergence_in_probability","name_zh":"依概率收敛","name_en":"convergence in probability","anchor":{"pdf_page":214,"printed_page":195},"formula":"m({|f_N-f|>ε})→0 for every ε>0"},
-    {"type":"corollary","id":"cor_ch5_1_2_SN_over_N_probability","number":"1.2","name_zh":"S_N/N 依概率收敛到 0","name_en":"S_N/N converges to 0 in probability","anchor":{"pdf_page":214,"printed_page":195},"formula":"m(|S_N/N|>ε)≤1/(ε²N)","description":"同一估计给出 α>1/2 时 S_N/N^α→0 in probability。"},
-    {"type":"definition","id":"def_ch5_distribution_measure","name_zh":"函数的分布测度","name_en":"distribution measure of a function","anchor":{"pdf_page":214,"printed_page":195},"formula":"μ_f(B)=m({x:f(x)∈B})"},
-    {"type":"identity","id":"identity_ch5_pushforward_G","number":"(6)","name_zh":"通过分布测度计算 G(f) 的积分","name_en":"integration through the distribution measure","anchor":{"pdf_page":215,"printed_page":196},"formula":"∫_X G(f)dm=∫_R G(t)dμ(t)"},
-    {"type":"definition","id":"def_ch5_expectation","name_zh":"均值/期望","name_en":"mean / expectation","anchor":{"pdf_page":215,"printed_page":196},"formula":"m_0=∫_X f dm=∫_R t dμ(t)"},
-    {"type":"definition","id":"def_ch5_variance","name_zh":"方差","name_en":"variance","anchor":{"pdf_page":215,"printed_page":196},"formula":"σ²=∫_X(f-m_0)²dm"},
-    {"type":"definition","id":"def_ch5_gaussian","name_zh":"Gaussian/正态分布","name_en":"Gaussian / normal distribution","anchor":{"pdf_page":215,"printed_page":196},"formula":"dν_{σ²}(t)=[1/(σ√(2π))]e^{-t²/(2σ²)}dt"},
-    {"type":"theorem","id":"thm_ch5_1_3_de_moivre_clt","number":"1.3","name_zh":"De Moivre 中心极限定理","name_en":"De Moivre central limit theorem","anchor":{"pdf_page":216,"printed_page":197},"formula":"m(a<S_N/N^{1/2}<b)→∫_a^b e^{-t²/2}/√(2π) dt","proof_status":"completed_in_batch"},
-    {"type":"asymptotic","id":"formula_ch5_1_3_local_binomial_asymptotic","number":"(7)","name_zh":"中心区二项概率的局部 Gaussian 渐近","name_en":"local Gaussian asymptotic for central binomial probabilities","anchor":{"pdf_page":216,"printed_page":197},"formula":"P_r=[2/(√(2π)N^{1/2})]e^{-2r²/N}[1+O(N^{-1/2})], r=O(N^{1/2})"},
-    {"type":"figure","id":"fig_ch5_02_gaussian_integral","number":"Figure 2","name_zh":"Gaussian 积分的矩形和近似","name_en":"Approximating the integral of a Gaussian","anchor":{"pdf_page":217,"printed_page":198},"asset":"figures/fig_ch5_02_gaussian_integral_approx.png","visual_check":"completed"},
-    {"type":"theorem","id":"thm_ch5_1_4_random_series","number":"1.4","name_zh":"Rademacher 随机级数的几乎处处收敛/发散判别","name_en":"a.e. convergence/divergence criterion for Rademacher random series","anchor":{"pdf_page":218,"printed_page":199},"statement":["Σ|a_n|²<∞ ⇒ Σa_nr_n(t) converges a.e.","Σ|a_n|²=∞ ⇒ Σa_nr_n(t) diverges a.e."],"proof_status":"part_a_completed_part_b_continues_in_chunk_012a"},
-    {"type":"definition","id":"def_ch5_dyadic_averaging_EN","name_zh":"二进区间平均算子 E_N","name_en":"dyadic averaging operator E_N","anchor":{"pdf_page":218,"printed_page":199},"formula":"E_N(f)(t)=m(I)^{-1}∫_I f(s)ds, t∈I, |I|=2^{-N}"},
-    {"type":"identity","id":"identity_ch5_EN_equals_SN","number":"(8)","name_zh":"Rademacher 展开的 dyadic average = partial sum","name_en":"dyadic average equals Rademacher partial sum","anchor":{"pdf_page":218,"printed_page":199},"formula":"E_N(f)=S_N(f)"},
-    {"type":"corollary","id":"cor_ch5_1_5_strong_law_rademacher","number":"1.5","name_zh":"Rademacher 情形的大数强律","name_en":"strong law for Rademacher sums","anchor":{"pdf_page":219,"printed_page":200},"formula":"S_N/N→0 a.e.; moreover S_N/N^α→0 a.e. for α>1/2","proof_status":"completed_in_batch"},
-    {"type":"lemma","id":"lem_ch5_1_6_positive_set_lower_bound","number":"1.6","name_zh":"正测度集合上的 Rademacher 尾和 L² 下界","name_en":"L2 lower bound on a positive-measure set for Rademacher tail sums","anchor":{"pdf_page":220,"printed_page":201},"formula":"∫_E|F|²dt ≥ c Σ_{n≥N_0}a_n²","proof_status":"started_continues_in_chunk_012a","continues_in":"chunk_012a","description":"证明已建立 φ_{n,m}=r_nr_m 的正交性与 Bessel 控制，下一批继续 Schwarz 估计并用于 Theorem 1.4(b)。"}
+    {
+      "type": "definition",
+      "id": "def_ch5_infinite_bernoulli_space",
+      "name_zh": "无限 Bernoulli 空间 X=Z_2^∞",
+      "name_en": "infinite Bernoulli space X=Z_2^∞",
+      "anchor": {
+        "pdf_page": 211,
+        "printed_page": 192
+      },
+      "continued_from": "chunk_011a",
+      "description": "由柱集上的自然有限维概率一致延拓得到乘积概率测度。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_probability_space",
+      "name_zh": "概率空间与概率测度",
+      "name_en": "probability space and probability measure",
+      "anchor": {
+        "pdf_page": 211,
+        "printed_page": 192
+      },
+      "formula": "m(X)=1",
+      "description": "书中同时约定 almost surely 与 almost everywhere 在此语境下同义。"
+    },
+    {
+      "type": "mapping",
+      "id": "map_ch5_D_binary",
+      "number": "(2)",
+      "name_zh": "无限 0-1 序列到 [0,1] 的二进制映射 D",
+      "name_en": "binary map D from Z_2^∞ to [0,1]",
+      "anchor": {
+        "pdf_page": 211,
+        "printed_page": 192
+      },
+      "formula": "D(x)=Σ_{j≥1} x_j/2^j",
+      "description": "除去可数的二进制展开歧义点后与 [0,1] 建立一一对应；柱集对应二进区间且保持测度。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_rademacher_functions",
+      "name_zh": "Rademacher 函数",
+      "name_en": "Rademacher functions",
+      "anchor": {
+        "pdf_page": 211,
+        "printed_page": 192
+      },
+      "formula": "r_n(x)=1-2x_n;  r_n(t)=r_1(2^{n-1}t)",
+      "description": "把无限 Bernoulli 坐标函数搬到 [0,1] 上。"
+    },
+    {
+      "type": "figure",
+      "id": "fig_ch5_01_rademacher",
+      "number": "Figure 1",
+      "name_zh": "Rademacher 函数 r_1 与 r_2",
+      "name_en": "The Rademacher functions r1 and r2",
+      "anchor": {
+        "pdf_page": 212,
+        "printed_page": 193
+      },
+      "asset": "figures/fig_ch5_01_rademacher_r1_r2.png",
+      "visual_check": "completed"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_mutual_independence",
+      "name_zh": "相互独立函数",
+      "name_en": "mutually independent functions",
+      "anchor": {
+        "pdf_page": 212,
+        "printed_page": 193
+      },
+      "formula": "m(∩{f_n∈B_n})=∏m({f_n∈B_n})",
+      "description": "强调相互独立强于两两独立。"
+    },
+    {
+      "type": "identity",
+      "id": "prop_ch5_independent_product_integral",
+      "number": "(4)",
+      "name_zh": "独立函数乘积的积分分解",
+      "name_en": "factorization of the integral of independent functions",
+      "anchor": {
+        "pdf_page": 212,
+        "printed_page": 193
+      },
+      "formula": "∫_X f_1⋯f_n dm = ∏_{j=1}^n ∫_X f_j dm"
+    },
+    {
+      "type": "proposition",
+      "id": "prop_ch5_1_1_SN_L2",
+      "number": "1.1",
+      "name_zh": "S_N 的 L² 范数",
+      "name_en": "L2 norm of S_N",
+      "anchor": {
+        "pdf_page": 213,
+        "printed_page": 194
+      },
+      "formula": "||S_N||_2=N^{1/2}",
+      "description": "由 Rademacher 系统在 L²([0,1]) 中的正交归一性得到；更一般有 ||Σa_nr_n||²_2=Σ|a_n|²。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_convergence_in_probability",
+      "name_zh": "依概率收敛",
+      "name_en": "convergence in probability",
+      "anchor": {
+        "pdf_page": 214,
+        "printed_page": 195
+      },
+      "formula": "m({|f_N-f|>ε})→0 for every ε>0"
+    },
+    {
+      "type": "corollary",
+      "id": "cor_ch5_1_2_SN_over_N_probability",
+      "number": "1.2",
+      "name_zh": "S_N/N 依概率收敛到 0",
+      "name_en": "S_N/N converges to 0 in probability",
+      "anchor": {
+        "pdf_page": 214,
+        "printed_page": 195
+      },
+      "formula": "m(|S_N/N|>ε)≤1/(ε²N)",
+      "description": "同一估计给出 α>1/2 时 S_N/N^α→0 in probability。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_distribution_measure",
+      "name_zh": "函数的分布测度",
+      "name_en": "distribution measure of a function",
+      "anchor": {
+        "pdf_page": 214,
+        "printed_page": 195
+      },
+      "formula": "μ_f(B)=m({x:f(x)∈B})"
+    },
+    {
+      "type": "identity",
+      "id": "identity_ch5_pushforward_G",
+      "number": "(6)",
+      "name_zh": "通过分布测度计算 G(f) 的积分",
+      "name_en": "integration through the distribution measure",
+      "anchor": {
+        "pdf_page": 215,
+        "printed_page": 196
+      },
+      "formula": "∫_X G(f)dm=∫_R G(t)dμ(t)"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_expectation",
+      "name_zh": "均值/期望",
+      "name_en": "mean / expectation",
+      "anchor": {
+        "pdf_page": 215,
+        "printed_page": 196
+      },
+      "formula": "m_0=∫_X f dm=∫_R t dμ(t)"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_variance",
+      "name_zh": "方差",
+      "name_en": "variance",
+      "anchor": {
+        "pdf_page": 215,
+        "printed_page": 196
+      },
+      "formula": "σ²=∫_X(f-m_0)²dm"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_gaussian",
+      "name_zh": "Gaussian/正态分布",
+      "name_en": "Gaussian / normal distribution",
+      "anchor": {
+        "pdf_page": 215,
+        "printed_page": 196
+      },
+      "formula": "dν_{σ²}(t)=[1/(σ√(2π))]e^{-t²/(2σ²)}dt"
+    },
+    {
+      "type": "theorem",
+      "id": "thm_ch5_1_3_de_moivre_clt",
+      "number": "1.3",
+      "name_zh": "De Moivre 中心极限定理",
+      "name_en": "De Moivre central limit theorem",
+      "anchor": {
+        "pdf_page": 216,
+        "printed_page": 197
+      },
+      "formula": "m(a<S_N/N^{1/2}<b)→∫_a^b e^{-t²/2}/√(2π) dt",
+      "proof_status": "completed_in_batch"
+    },
+    {
+      "type": "asymptotic",
+      "id": "formula_ch5_1_3_local_binomial_asymptotic",
+      "number": "(7)",
+      "name_zh": "中心区二项概率的局部 Gaussian 渐近",
+      "name_en": "local Gaussian asymptotic for central binomial probabilities",
+      "anchor": {
+        "pdf_page": 216,
+        "printed_page": 197
+      },
+      "formula": "P_r=[2/(√(2π)N^{1/2})]e^{-2r²/N}[1+O(N^{-1/2})], r=O(N^{1/2})"
+    },
+    {
+      "type": "figure",
+      "id": "fig_ch5_02_gaussian_integral",
+      "number": "Figure 2",
+      "name_zh": "Gaussian 积分的矩形和近似",
+      "name_en": "Approximating the integral of a Gaussian",
+      "anchor": {
+        "pdf_page": 217,
+        "printed_page": 198
+      },
+      "asset": "figures/fig_ch5_02_gaussian_integral_approx.png",
+      "visual_check": "completed"
+    },
+    {
+      "type": "theorem",
+      "id": "thm_ch5_1_4_random_series",
+      "number": "1.4",
+      "name_zh": "Rademacher 随机级数的几乎处处收敛/发散判别",
+      "name_en": "a.e. convergence/divergence criterion for Rademacher random series",
+      "anchor": {
+        "pdf_page": 218,
+        "printed_page": 199
+      },
+      "statement": [
+        "Σ|a_n|²<∞ ⇒ Σa_nr_n(t) converges a.e.",
+        "Σ|a_n|²=∞ ⇒ Σa_nr_n(t) diverges a.e."
+      ],
+      "proof_status": "part_a_completed_part_b_continues_in_chunk_012a"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_dyadic_averaging_EN",
+      "name_zh": "二进区间平均算子 E_N",
+      "name_en": "dyadic averaging operator E_N",
+      "anchor": {
+        "pdf_page": 218,
+        "printed_page": 199
+      },
+      "formula": "E_N(f)(t)=m(I)^{-1}∫_I f(s)ds, t∈I, |I|=2^{-N}"
+    },
+    {
+      "type": "identity",
+      "id": "identity_ch5_EN_equals_SN",
+      "number": "(8)",
+      "name_zh": "Rademacher 展开的 dyadic average = partial sum",
+      "name_en": "dyadic average equals Rademacher partial sum",
+      "anchor": {
+        "pdf_page": 218,
+        "printed_page": 199
+      },
+      "formula": "E_N(f)=S_N(f)"
+    },
+    {
+      "type": "corollary",
+      "id": "cor_ch5_1_5_strong_law_rademacher",
+      "number": "1.5",
+      "name_zh": "Rademacher 情形的大数强律",
+      "name_en": "strong law for Rademacher sums",
+      "anchor": {
+        "pdf_page": 219,
+        "printed_page": 200
+      },
+      "formula": "S_N/N→0 a.e.; moreover S_N/N^α→0 a.e. for α>1/2",
+      "proof_status": "completed_in_batch"
+    },
+    {
+      "type": "lemma",
+      "id": "lem_ch5_1_6_positive_set_lower_bound",
+      "number": "1.6",
+      "name_zh": "正测度集合上的 Rademacher 尾和 L² 下界",
+      "name_en": "L2 lower bound on a positive-measure set for Rademacher tail sums",
+      "anchor": {
+        "pdf_page": 220,
+        "printed_page": 201
+      },
+      "formula": "∫_E|F|²dt ≥ c Σ_{n≥N_0}a_n²",
+      "proof_status": "started_continues_in_chunk_012a",
+      "continues_in": "chunk_012a",
+      "description": "证明已建立 φ_{n,m}=r_nr_m 的正交性与 Bessel 控制，下一批继续 Schwarz 估计并用于 Theorem 1.4(b)。"
+    }
   ],
   "figure_anchors": [
-    {"figure":"Figure 1","title_zh":"Rademacher 函数 r_1 与 r_2","pdf_page":212,"printed_page":193,"asset":"figures/fig_ch5_01_rademacher_r1_r2.png","preserve_original":true,"visual_check":"completed"},
-    {"figure":"Figure 2","title_zh":"Gaussian 积分的矩形和近似","pdf_page":217,"printed_page":198,"asset":"figures/fig_ch5_02_gaussian_integral_approx.png","preserve_original":true,"visual_check":"completed"}
+    {
+      "figure": "Figure 1",
+      "title_zh": "Rademacher 函数 r_1 与 r_2",
+      "pdf_page": 212,
+      "printed_page": 193,
+      "asset": "figures/fig_ch5_01_rademacher_r1_r2.png",
+      "preserve_original": true,
+      "visual_check": "completed",
+      "id": "Figure 1@pdf:212"
+    },
+    {
+      "figure": "Figure 2",
+      "title_zh": "Gaussian 积分的矩形和近似",
+      "pdf_page": 217,
+      "printed_page": 198,
+      "asset": "figures/fig_ch5_02_gaussian_integral_approx.png",
+      "preserve_original": true,
+      "visual_check": "completed",
+      "id": "Figure 2@pdf:217"
+    }
   ],
-  "translation_status": {"learning_layer_zh":"completed_for_pdf_211_220","definitions_and_theorem_statements":"completed_for_covered_pages","proof_logic":"completed_for_covered_pages_except_cross_batch_continuation","theorem_1_4_part_b":"continues_in_chunk_012a","lemma_1_6":"started_continues_in_chunk_012a","figures":"2_instructional_figures_visual_checked_and_preserved","sentence_level_full_translation":"pending"},
+  "translation_status": {
+    "learning_layer_zh": "completed_for_pdf_211_220",
+    "definitions_and_theorem_statements": "completed_for_covered_pages",
+    "proof_logic": "completed_for_covered_pages_except_cross_batch_continuation",
+    "theorem_1_4_part_b": "continues_in_chunk_012a",
+    "lemma_1_6": "started_continues_in_chunk_012a",
+    "figures": "2_instructional_figures_visual_checked_and_preserved",
+    "sentence_level_full_translation": "pending"
+  },
   "next_action": "PDF 221-230：完成 Lemma 1.6 与 Theorem 1.4(b)，处理 §1.7 随机 Fourier 级数、§1.8 一般 Bernoulli 试验，并进入 §2 独立随机变量之和。"
 }

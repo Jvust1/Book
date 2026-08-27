@@ -1,59 +1,637 @@
 {
   "chunk_id": "chunk_011a",
   "parent_storage_chunk": "chunk_011",
-  "pdf_pages": [201,210],
-  "printed_pages": [182,191],
+  "pdf_pages": [
+    201,
+    210
+  ],
+  "printed_pages": [
+    182,
+    191
+  ],
   "status": "structured_v0.12_translation_learning_layer",
-  "chapter_ids": ["chapter_04","chapter_05"],
+  "chapter_ids": [
+    "chapter_04",
+    "chapter_05"
+  ],
   "sections": [
-    {"id":"ch04_s06","number":"6","title_en":"Exercises","title_zh":"练习","pdf_pages":[200,204],"printed_pages":[181,185],"batch_coverage":[201,204],"continued_from":"chunk_010b","completed_in":"chunk_011a"},
-    {"id":"ch04_s07","number":"7","title_en":"Problems","title_zh":"问题","pdf_pages":[204,206],"printed_pages":[185,187],"batch_coverage":[204,206],"completed_in":"chunk_011a"},
-    {"id":"chapter_05","number":"5","title_en":"Rudiments of Probability Theory","title_zh":"概率论基础","pdf_pages":[207,null],"printed_pages":[188,null],"batch_coverage":[207,210],"started_in":"chunk_011a"},
-    {"id":"ch05_s01","number":"1","title_en":"Bernoulli trials","title_zh":"Bernoulli 试验","pdf_pages":[208,227],"printed_pages":[189,208],"batch_coverage":[208,210],"continues_in":"chunk_011b"},
-    {"id":"ch05_s01_01","number":"1.1","title_en":"Coin flips","title_zh":"抛硬币","pdf_pages":[208,210],"printed_pages":[189,191],"batch_coverage":[208,210],"completed_in":"chunk_011a"},
-    {"id":"ch05_s01_02","number":"1.2","title_en":"The case N = ∞","title_zh":"N = ∞ 的情形","pdf_pages":[210,213],"printed_pages":[191,194],"batch_coverage":[210,210],"continues_in":"chunk_011b"}
+    {
+      "id": "ch04_s06",
+      "number": "6",
+      "title_en": "Exercises",
+      "title_zh": "练习",
+      "pdf_pages": [
+        200,
+        204
+      ],
+      "printed_pages": [
+        181,
+        185
+      ],
+      "batch_coverage": [
+        201,
+        204
+      ],
+      "continued_from": "chunk_010b",
+      "completed_in": "chunk_011a"
+    },
+    {
+      "id": "ch04_s07",
+      "number": "7",
+      "title_en": "Problems",
+      "title_zh": "问题",
+      "pdf_pages": [
+        204,
+        206
+      ],
+      "printed_pages": [
+        185,
+        187
+      ],
+      "batch_coverage": [
+        204,
+        206
+      ],
+      "completed_in": "chunk_011a"
+    },
+    {
+      "id": "chapter_05",
+      "number": "5",
+      "title_en": "Rudiments of Probability Theory",
+      "title_zh": "概率论基础",
+      "pdf_pages": [
+        207,
+        null
+      ],
+      "printed_pages": [
+        188,
+        null
+      ],
+      "batch_coverage": [
+        207,
+        210
+      ],
+      "started_in": "chunk_011a"
+    },
+    {
+      "id": "ch05_s01",
+      "number": "1",
+      "title_en": "Bernoulli trials",
+      "title_zh": "Bernoulli 试验",
+      "pdf_pages": [
+        208,
+        227
+      ],
+      "printed_pages": [
+        189,
+        208
+      ],
+      "batch_coverage": [
+        208,
+        210
+      ],
+      "continues_in": "chunk_011b"
+    },
+    {
+      "id": "ch05_s01_01",
+      "number": "1.1",
+      "title_en": "Coin flips",
+      "title_zh": "抛硬币",
+      "pdf_pages": [
+        208,
+        210
+      ],
+      "printed_pages": [
+        189,
+        191
+      ],
+      "batch_coverage": [
+        208,
+        210
+      ],
+      "completed_in": "chunk_011a"
+    },
+    {
+      "id": "ch05_s01_02",
+      "number": "1.2",
+      "title_en": "The case N = ∞",
+      "title_zh": "N = ∞ 的情形",
+      "pdf_pages": [
+        210,
+        213
+      ],
+      "printed_pages": [
+        191,
+        194
+      ],
+      "batch_coverage": [
+        210,
+        210
+      ],
+      "continues_in": "chunk_011b"
+    }
   ],
   "key_objects": [
-    {"type":"exercise","id":"ex_ch4_01b","number":"1(b)","name_zh":"Exercise 1(b)：构造第一纲但 Lebesgue 满测度的集合","name_en":"Exercise 1(b): construct a first-category subset of [0,1] with full Lebesgue measure","anchor":{"pdf_page":201,"printed_page":182},"continued_from":"chunk_010b","description":"用 Cantor-like 集构造；其补集因此是 generic 且测度为零。"},
-    {"type":"exercise","id":"ex_ch4_02","number":"2","name_zh":"Exercise 2：闭集/开集的第一纲与 generic 判别","name_en":"Exercise 2: first-category and generic criteria for closed and open sets","anchor":{"pdf_page":201,"printed_page":182},"parts":["闭集第一纲 iff 内部为空","开集第一纲 iff 为空","由此推出闭集/开集何时 generic"]},
-    {"type":"exercise","id":"ex_ch4_03","number":"3","name_zh":"Exercise 3：Baire 纲定理对完备空间开子集的推广","name_en":"Exercise 3: Baire category conclusion for an open subset of a complete metric space","anchor":{"pdf_page":201,"printed_page":182}},
-    {"type":"exercise","id":"ex_ch4_04","number":"4","name_zh":"Exercise 4：用处处不可微连续函数一致逼近任意连续函数","name_en":"Exercise 4: uniformly approximate every continuous function by nowhere differentiable continuous functions","anchor":{"pdf_page":201,"printed_page":182}},
-    {"type":"exercise","id":"ex_ch4_05","number":"5","name_zh":"Exercise 5：G_delta、F_sigma 与 generic 集","name_en":"Exercise 5: G-delta, F-sigma, and generic sets","anchor":{"pdf_page":201,"printed_page":182},"parts":["稠密 G_delta 是 generic","可数稠密集是 F_sigma 但非 G_delta","generic 集包含一个稠密 G_delta 子集"]},
-    {"type":"exercise","id":"ex_ch4_06","number":"6","name_zh":"Exercise 6：连续点恰为无理数的函数与“不可能恰为有理数”","name_en":"Exercise 6: a function continuous exactly at the irrationals and impossibility of continuity exactly at rationals","anchor":{"pdf_page":201,"printed_page":182},"description":"题中函数是 Thomae 型函数；提示使用连续点集合是 G_delta。"},
-    {"type":"exercise","id":"ex_ch4_07","number":"7","name_zh":"Exercise 7：第一纲/generic 性在子区间中的局部化与反例","name_en":"Exercise 7: localization of first-category/generic behavior to subintervals and a counterexample","anchor":{"pdf_page":202,"printed_page":183}},
-    {"type":"exercise","id":"ex_ch4_08","number":"8","name_zh":"Exercise 8：Banach 空间不能有可数 Hamel 基","name_en":"Exercise 8: a Banach space cannot have a countable Hamel basis","anchor":{"pdf_page":202,"printed_page":183}},
-    {"type":"exercise","id":"ex_ch4_09","number":"9","name_zh":"Exercise 9：L¹ 中不属于 L^p 的函数是 generic 的","name_en":"Exercise 9: functions in L1 but not in Lp are generic","anchor":{"pdf_page":202,"printed_page":183},"conditions":["Lebesgue measure on [0,1]","p>1"]},
-    {"type":"exercise","id":"ex_ch4_10","number":"10","name_zh":"Exercise 10：Hölder 空间 Λ_α 中处处不可微函数 generic","name_en":"Exercise 10: nowhere differentiable functions are generic in Hölder space Lambda_alpha","anchor":{"pdf_page":202,"printed_page":183},"conditions":["0<α<1"]},
-    {"type":"exercise","id":"ex_ch4_11","number":"11","name_zh":"Exercise 11：C([0,1]) 中任何区间上都不单调的函数 generic","name_en":"Exercise 11: functions monotone on no interval are generic in C([0,1])","anchor":{"pdf_page":202,"printed_page":183}},
-    {"type":"exercise","id":"ex_ch4_12","number":"12","name_zh":"Exercise 12：分别连续的双线性映射自动联合连续","name_en":"Exercise 12: separately continuous bilinear maps between Banach spaces are jointly continuous","anchor":{"pdf_page":202,"printed_page":183},"formula":"||T(x,y)||_Z ≤ C||x||_X||y||_Y"},
-    {"type":"exercise","id":"ex_ch4_13","number":"13","name_zh":"Exercise 13：L^p 中弱有界序列必范数有界","name_en":"Exercise 13: weakly bounded sequences in Lp are norm bounded","anchor":{"pdf_page":203,"printed_page":184},"conditions":["1<p<∞"],"description":"提示把 ℓ_n(g)=∫f_n g 看作 L^q 上的线性泛函并用一致有界原理。"},
-    {"type":"exercise","id":"ex_ch4_14","number":"14","name_zh":"Exercise 14：连续自映射的 universal elements 要么为空要么 generic","name_en":"Exercise 14: universal elements of a continuous self-map are either empty or generic","anchor":{"pdf_page":203,"printed_page":184},"description":"universal 指轨道 {T^n(x*)} 在 X 中稠密。"},
-    {"type":"exercise","id":"ex_ch4_15","number":"15","name_zh":"Exercise 15：Hausdorff 紧集空间中零测度/无处稠密紧集 generic","name_en":"Exercise 15: measure-zero and nowhere-dense compact subsets are generic in the Hausdorff metric space","anchor":{"pdf_page":203,"printed_page":184},"description":"对象是闭单位球 B 的紧子集空间。"},
-    {"type":"problem","id":"prob_ch4_01","number":"1","name_zh":"Problem 1：有界线性算子的像要么满射，要么为第一纲","name_en":"Problem 1: the range of a bounded linear map is either surjective or first category","anchor":{"pdf_page":204,"printed_page":185},"parts":["T(B1) 若非满射则在 B2 中第一纲","应用到 L^{p2}⊂L^{p1}：除平凡情形外 L^{p2} 在 L^{p1} 中第一纲"]},
-    {"type":"problem","id":"prob_ch4_02","number":"2","name_zh":"Problem 2：Diophantine 逼近集合 Λ_n 的 generic 性与 Hausdorff 维数","name_en":"Problem 2: genericity and Hausdorff dimension of Diophantine approximation sets Lambda_n","anchor":{"pdf_page":204,"printed_page":185},"formula":"Λ_n={x: |x-p/q|≤q^{-n} for infinitely many p/q}","claims":["Λ_n generic in R","dim_H(Λ_n)=2/n","n>2 时 m(Λ_n)=0","交集给出 Liouville numbers"]},
-    {"type":"problem","id":"prob_ch4_03","number":"3","name_zh":"Problem 3：Fourier 级数在 generic 点集发散的连续函数本身构成 generic 集","name_en":"Problem 3: continuous functions whose Fourier series diverges on a generic set form a generic set","anchor":{"pdf_page":204,"printed_page":185}},
-    {"type":"problem","id":"prob_ch4_04","number":"4","name_zh":"Problem 4：单位圆盘上无法跨任何边界点解析延拓的函数 generic","name_en":"Problem 4: disc-algebra functions with no analytic continuation past any boundary point are generic","anchor":{"pdf_page":204,"printed_page":185}},
-    {"type":"problem","id":"prob_ch4_05","number":"5","name_zh":"Problem 5：C^∞([0,1]) 的完备度量与处处 Taylor 奇异函数 generic","name_en":"Problem 5: completeness of C-infinity([0,1]) and generic everywhere-singular Taylor series","anchor":{"pdf_page":205,"printed_page":186},"formula":"d(f,g)=Σ 2^{-n} ρ_n(f-g)/(1+ρ_n(f-g))"},
-    {"type":"problem","id":"prob_ch4_06","number":"6","name_zh":"Problem 6：Theorem 4.2 中 L∞ 不能替换为任何有限 q 的 L^q","name_en":"Problem 6: L-infinity in Theorem 4.2 cannot be replaced by finite Lq","anchor":{"pdf_page":205,"printed_page":186},"description":"存在 L¹([0,1]) 的闭无限维子空间，其每个元素属于所有 1≤q<∞ 的 L^q。"},
-    {"type":"problem","id":"prob_ch4_07_star","number":"7*","name_zh":"Problem 7*：Birkhoff/MacLane universal entire functions 的 generic 性","name_en":"Problem 7*: genericity of Birkhoff/MacLane universal entire functions","anchor":{"pdf_page":205,"printed_page":186},"proof_end":{"pdf_page":206,"printed_page":187},"description":"在整个函数空间 H 的完备度量下，平移轨道稠密与导数轨道稠密各自 generic，因此二者同时成立也是 generic。"},
-    {"type":"chapter","id":"chapter_05","number":"5","name_zh":"第 5 章：概率论基础","name_en":"Chapter 5: Rudiments of Probability Theory","anchor":{"pdf_page":207,"printed_page":188},"overview":["Bernoulli 试验与 Rademacher 函数","独立函数/随机变量","中心极限定理","大数定律与遍历定理","martingale sequences 与极大定理","d 维随机游走的常返/暂留"]},
-    {"type":"concept","id":"concept_ch5_independence_overview","name_zh":"独立事件与相互独立随机变量是本章核心结构","name_en":"Independent events and mutually independent random variables as the core structure","anchor":{"pdf_page":207,"printed_page":188}},
-    {"type":"concept","id":"concept_ch5_zero_one_random_fourier_overview","name_zh":"随机 Fourier 级数的零一现象（章节预告）","name_en":"Zero-one phenomenon for randomized Fourier series (chapter overview)","anchor":{"pdf_page":207,"printed_page":188},"description":"用 Rademacher 函数随机化形式 Fourier 级数后：几乎所有结果对每个 p<∞ 都对应 L^p 函数，或几乎没有一个是 L¹ 函数的 Fourier 级数。"},
-    {"type":"section","id":"sec_ch5_1_bernoulli_trials","number":"1","name_zh":"Bernoulli 试验","name_en":"Bernoulli trials","anchor":{"pdf_page":208,"printed_page":189}},
-    {"type":"subsection","id":"sec_ch5_1_1_coin_flips","number":"1.1","name_zh":"抛硬币","name_en":"Coin flips","anchor":{"pdf_page":208,"printed_page":189}},
-    {"type":"definition","id":"def_ch5_finite_bernoulli_space","name_zh":"有限 Bernoulli 概率空间 Z_2^N","name_en":"finite Bernoulli probability space Z_2^N","anchor":{"pdf_page":209,"printed_page":190},"formula":"Z_2^N={x=(x_1,...,x_N): x_j∈{0,1}}"},
-    {"type":"definition","id":"def_ch5_uniform_probability_measure","name_zh":"均匀概率测度：每个结果点质量 2^{-N}","name_en":"uniform probability measure assigning mass 2^{-N} to every outcome","anchor":{"pdf_page":209,"printed_page":190},"formula":"m({x})=2^{-N},  m(Z_2^N)=1"},
-    {"type":"definition","id":"def_ch5_event_En_heads","name_zh":"事件 E_n：第 n 次抛硬币为正面","name_en":"event E_n: the nth coin flip is heads","anchor":{"pdf_page":209,"printed_page":190},"formula":"E_n={x:x_n=0},  m(E_n)=1/2"},
-    {"type":"definition","id":"def_ch5_independent_events_pair","name_zh":"独立事件的乘法关系（抛硬币坐标事件）","name_en":"multiplicative relation for independent coordinate events","anchor":{"pdf_page":209,"printed_page":190},"formula":"m(E_n∩E_m)=m(E_n)m(E_m), n≠m"},
-    {"type":"definition","id":"def_ch5_rademacher_rn_finite","name_zh":"第 n 次收益函数 r_n（±1）","name_en":"nth payoff/Rademacher coordinate function r_n","anchor":{"pdf_page":209,"printed_page":190},"formula":"r_n(x)=1 if x_n=0; r_n(x)=-1 if x_n=1"},
-    {"type":"definition","id":"def_ch5_SN_total_winnings","name_zh":"总收益 S_N","name_en":"total winnings S_N","anchor":{"pdf_page":209,"printed_page":190},"formula":"S_N(x)=Σ_{n=1}^N r_n(x)"},
-    {"type":"formula","id":"formula_ch5_binomial_law_SN","number":"(1)","name_zh":"S_N=k 的二项概率公式","name_en":"binomial probability formula for S_N=k","anchor":{"pdf_page":209,"printed_page":190},"formula":"m({x:S_N(x)=k})=2^{-N} N! / [((N+k)/2)!((N-k)/2)!]","conditions":["k 与 N 同奇偶","|k|≤N"]},
-    {"type":"formula","id":"formula_ch5_binomial_ratio","name_zh":"相邻允许值的概率比","name_en":"ratio of probabilities at adjacent admissible values","anchor":{"pdf_page":210,"printed_page":191},"formula":"m(S_N=k+2)/m(S_N=k)=(N-k)/(N+k+2)"},
-    {"type":"estimate","id":"estimate_ch5_central_binomial_peak","name_zh":"k=0 时二项分布峰值的 Stirling 近似","name_en":"Stirling approximation to the central binomial peak","anchor":{"pdf_page":210,"printed_page":191},"formula":"m(S_N=0)≈sqrt(2/π) N^{-1/2}","conditions":["N even"]},
-    {"type":"subsection","id":"sec_ch5_1_2_N_infinity","number":"1.2","name_zh":"N=∞ 的情形","name_en":"The case N = infinity","anchor":{"pdf_page":210,"printed_page":191},"continues_in":"chunk_011b"},
-    {"type":"definition","id":"def_ch5_infinite_bernoulli_space","name_zh":"无限 Bernoulli 空间 X=Z_2^∞","name_en":"infinite Bernoulli space X=Z_2^infinity","anchor":{"pdf_page":210,"printed_page":191},"formula":"X={x=(x_1,x_2,...):x_n∈{0,1}}","continues_in":"chunk_011b"},
-    {"type":"definition","id":"def_ch5_cylinder_set","name_zh":"柱集（cylinder set）","name_en":"cylinder set","anchor":{"pdf_page":210,"printed_page":191},"description":"E⊂X 若只由前有限个坐标 (x_1,...,x_N) 是否属于某个 E′⊂Z_2^N 决定，则称为柱集。","continues_in":"chunk_011b"}
+    {
+      "type": "exercise",
+      "id": "ex_ch4_01b",
+      "number": "1(b)",
+      "name_zh": "Exercise 1(b)：构造第一纲但 Lebesgue 满测度的集合",
+      "name_en": "Exercise 1(b): construct a first-category subset of [0,1] with full Lebesgue measure",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      },
+      "continued_from": "chunk_010b",
+      "description": "用 Cantor-like 集构造；其补集因此是 generic 且测度为零。"
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_02",
+      "number": "2",
+      "name_zh": "Exercise 2：闭集/开集的第一纲与 generic 判别",
+      "name_en": "Exercise 2: first-category and generic criteria for closed and open sets",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      },
+      "parts": [
+        "闭集第一纲 iff 内部为空",
+        "开集第一纲 iff 为空",
+        "由此推出闭集/开集何时 generic"
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_03",
+      "number": "3",
+      "name_zh": "Exercise 3：Baire 纲定理对完备空间开子集的推广",
+      "name_en": "Exercise 3: Baire category conclusion for an open subset of a complete metric space",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      }
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_04",
+      "number": "4",
+      "name_zh": "Exercise 4：用处处不可微连续函数一致逼近任意连续函数",
+      "name_en": "Exercise 4: uniformly approximate every continuous function by nowhere differentiable continuous functions",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      }
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_05",
+      "number": "5",
+      "name_zh": "Exercise 5：G_delta、F_sigma 与 generic 集",
+      "name_en": "Exercise 5: G-delta, F-sigma, and generic sets",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      },
+      "parts": [
+        "稠密 G_delta 是 generic",
+        "可数稠密集是 F_sigma 但非 G_delta",
+        "generic 集包含一个稠密 G_delta 子集"
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_06",
+      "number": "6",
+      "name_zh": "Exercise 6：连续点恰为无理数的函数与“不可能恰为有理数”",
+      "name_en": "Exercise 6: a function continuous exactly at the irrationals and impossibility of continuity exactly at rationals",
+      "anchor": {
+        "pdf_page": 201,
+        "printed_page": 182
+      },
+      "description": "题中函数是 Thomae 型函数；提示使用连续点集合是 G_delta。"
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_07",
+      "number": "7",
+      "name_zh": "Exercise 7：第一纲/generic 性在子区间中的局部化与反例",
+      "name_en": "Exercise 7: localization of first-category/generic behavior to subintervals and a counterexample",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      }
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_08",
+      "number": "8",
+      "name_zh": "Exercise 8：Banach 空间不能有可数 Hamel 基",
+      "name_en": "Exercise 8: a Banach space cannot have a countable Hamel basis",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      }
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_09",
+      "number": "9",
+      "name_zh": "Exercise 9：L¹ 中不属于 L^p 的函数是 generic 的",
+      "name_en": "Exercise 9: functions in L1 but not in Lp are generic",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      },
+      "conditions": [
+        "Lebesgue measure on [0,1]",
+        "p>1"
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_10",
+      "number": "10",
+      "name_zh": "Exercise 10：Hölder 空间 Λ_α 中处处不可微函数 generic",
+      "name_en": "Exercise 10: nowhere differentiable functions are generic in Hölder space Lambda_alpha",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      },
+      "conditions": [
+        "0<α<1"
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_11",
+      "number": "11",
+      "name_zh": "Exercise 11：C([0,1]) 中任何区间上都不单调的函数 generic",
+      "name_en": "Exercise 11: functions monotone on no interval are generic in C([0,1])",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      }
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_12",
+      "number": "12",
+      "name_zh": "Exercise 12：分别连续的双线性映射自动联合连续",
+      "name_en": "Exercise 12: separately continuous bilinear maps between Banach spaces are jointly continuous",
+      "anchor": {
+        "pdf_page": 202,
+        "printed_page": 183
+      },
+      "formula": "||T(x,y)||_Z ≤ C||x||_X||y||_Y"
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_13",
+      "number": "13",
+      "name_zh": "Exercise 13：L^p 中弱有界序列必范数有界",
+      "name_en": "Exercise 13: weakly bounded sequences in Lp are norm bounded",
+      "anchor": {
+        "pdf_page": 203,
+        "printed_page": 184
+      },
+      "conditions": [
+        "1<p<∞"
+      ],
+      "description": "提示把 ℓ_n(g)=∫f_n g 看作 L^q 上的线性泛函并用一致有界原理。"
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_14",
+      "number": "14",
+      "name_zh": "Exercise 14：连续自映射的 universal elements 要么为空要么 generic",
+      "name_en": "Exercise 14: universal elements of a continuous self-map are either empty or generic",
+      "anchor": {
+        "pdf_page": 203,
+        "printed_page": 184
+      },
+      "description": "universal 指轨道 {T^n(x*)} 在 X 中稠密。"
+    },
+    {
+      "type": "exercise",
+      "id": "ex_ch4_15",
+      "number": "15",
+      "name_zh": "Exercise 15：Hausdorff 紧集空间中零测度/无处稠密紧集 generic",
+      "name_en": "Exercise 15: measure-zero and nowhere-dense compact subsets are generic in the Hausdorff metric space",
+      "anchor": {
+        "pdf_page": 203,
+        "printed_page": 184
+      },
+      "description": "对象是闭单位球 B 的紧子集空间。"
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_01",
+      "number": "1",
+      "name_zh": "Problem 1：有界线性算子的像要么满射，要么为第一纲",
+      "name_en": "Problem 1: the range of a bounded linear map is either surjective or first category",
+      "anchor": {
+        "pdf_page": 204,
+        "printed_page": 185
+      },
+      "parts": [
+        "T(B1) 若非满射则在 B2 中第一纲",
+        "应用到 L^{p2}⊂L^{p1}：除平凡情形外 L^{p2} 在 L^{p1} 中第一纲"
+      ]
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_02",
+      "number": "2",
+      "name_zh": "Problem 2：Diophantine 逼近集合 Λ_n 的 generic 性与 Hausdorff 维数",
+      "name_en": "Problem 2: genericity and Hausdorff dimension of Diophantine approximation sets Lambda_n",
+      "anchor": {
+        "pdf_page": 204,
+        "printed_page": 185
+      },
+      "formula": "Λ_n={x: |x-p/q|≤q^{-n} for infinitely many p/q}",
+      "claims": [
+        "Λ_n generic in R",
+        "dim_H(Λ_n)=2/n",
+        "n>2 时 m(Λ_n)=0",
+        "交集给出 Liouville numbers"
+      ]
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_03",
+      "number": "3",
+      "name_zh": "Problem 3：Fourier 级数在 generic 点集发散的连续函数本身构成 generic 集",
+      "name_en": "Problem 3: continuous functions whose Fourier series diverges on a generic set form a generic set",
+      "anchor": {
+        "pdf_page": 204,
+        "printed_page": 185
+      }
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_04",
+      "number": "4",
+      "name_zh": "Problem 4：单位圆盘上无法跨任何边界点解析延拓的函数 generic",
+      "name_en": "Problem 4: disc-algebra functions with no analytic continuation past any boundary point are generic",
+      "anchor": {
+        "pdf_page": 204,
+        "printed_page": 185
+      }
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_05",
+      "number": "5",
+      "name_zh": "Problem 5：C^∞([0,1]) 的完备度量与处处 Taylor 奇异函数 generic",
+      "name_en": "Problem 5: completeness of C-infinity([0,1]) and generic everywhere-singular Taylor series",
+      "anchor": {
+        "pdf_page": 205,
+        "printed_page": 186
+      },
+      "formula": "d(f,g)=Σ 2^{-n} ρ_n(f-g)/(1+ρ_n(f-g))"
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_06",
+      "number": "6",
+      "name_zh": "Problem 6：Theorem 4.2 中 L∞ 不能替换为任何有限 q 的 L^q",
+      "name_en": "Problem 6: L-infinity in Theorem 4.2 cannot be replaced by finite Lq",
+      "anchor": {
+        "pdf_page": 205,
+        "printed_page": 186
+      },
+      "description": "存在 L¹([0,1]) 的闭无限维子空间，其每个元素属于所有 1≤q<∞ 的 L^q。"
+    },
+    {
+      "type": "problem",
+      "id": "prob_ch4_07_star",
+      "number": "7*",
+      "name_zh": "Problem 7*：Birkhoff/MacLane universal entire functions 的 generic 性",
+      "name_en": "Problem 7*: genericity of Birkhoff/MacLane universal entire functions",
+      "anchor": {
+        "pdf_page": 205,
+        "printed_page": 186
+      },
+      "proof_end": {
+        "pdf_page": 206,
+        "printed_page": 187
+      },
+      "description": "在整个函数空间 H 的完备度量下，平移轨道稠密与导数轨道稠密各自 generic，因此二者同时成立也是 generic。"
+    },
+    {
+      "type": "chapter",
+      "id": "chapter_05",
+      "number": "5",
+      "name_zh": "第 5 章：概率论基础",
+      "name_en": "Chapter 5: Rudiments of Probability Theory",
+      "anchor": {
+        "pdf_page": 207,
+        "printed_page": 188
+      },
+      "overview": [
+        "Bernoulli 试验与 Rademacher 函数",
+        "独立函数/随机变量",
+        "中心极限定理",
+        "大数定律与遍历定理",
+        "martingale sequences 与极大定理",
+        "d 维随机游走的常返/暂留"
+      ]
+    },
+    {
+      "type": "concept",
+      "id": "concept_ch5_independence_overview",
+      "name_zh": "独立事件与相互独立随机变量是本章核心结构",
+      "name_en": "Independent events and mutually independent random variables as the core structure",
+      "anchor": {
+        "pdf_page": 207,
+        "printed_page": 188
+      }
+    },
+    {
+      "type": "concept",
+      "id": "concept_ch5_zero_one_random_fourier_overview",
+      "name_zh": "随机 Fourier 级数的零一现象（章节预告）",
+      "name_en": "Zero-one phenomenon for randomized Fourier series (chapter overview)",
+      "anchor": {
+        "pdf_page": 207,
+        "printed_page": 188
+      },
+      "description": "用 Rademacher 函数随机化形式 Fourier 级数后：几乎所有结果对每个 p<∞ 都对应 L^p 函数，或几乎没有一个是 L¹ 函数的 Fourier 级数。"
+    },
+    {
+      "type": "section",
+      "id": "sec_ch5_1_bernoulli_trials",
+      "number": "1",
+      "name_zh": "Bernoulli 试验",
+      "name_en": "Bernoulli trials",
+      "anchor": {
+        "pdf_page": 208,
+        "printed_page": 189
+      }
+    },
+    {
+      "type": "subsection",
+      "id": "sec_ch5_1_1_coin_flips",
+      "number": "1.1",
+      "name_zh": "抛硬币",
+      "name_en": "Coin flips",
+      "anchor": {
+        "pdf_page": 208,
+        "printed_page": 189
+      }
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_finite_bernoulli_space",
+      "name_zh": "有限 Bernoulli 概率空间 Z_2^N",
+      "name_en": "finite Bernoulli probability space Z_2^N",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "Z_2^N={x=(x_1,...,x_N): x_j∈{0,1}}"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_uniform_probability_measure",
+      "name_zh": "均匀概率测度：每个结果点质量 2^{-N}",
+      "name_en": "uniform probability measure assigning mass 2^{-N} to every outcome",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "m({x})=2^{-N},  m(Z_2^N)=1"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_event_En_heads",
+      "name_zh": "事件 E_n：第 n 次抛硬币为正面",
+      "name_en": "event E_n: the nth coin flip is heads",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "E_n={x:x_n=0},  m(E_n)=1/2"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_independent_events_pair",
+      "name_zh": "独立事件的乘法关系（抛硬币坐标事件）",
+      "name_en": "multiplicative relation for independent coordinate events",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "m(E_n∩E_m)=m(E_n)m(E_m), n≠m"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_rademacher_rn_finite",
+      "name_zh": "第 n 次收益函数 r_n（±1）",
+      "name_en": "nth payoff/Rademacher coordinate function r_n",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "r_n(x)=1 if x_n=0; r_n(x)=-1 if x_n=1"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_SN_total_winnings",
+      "name_zh": "总收益 S_N",
+      "name_en": "total winnings S_N",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "S_N(x)=Σ_{n=1}^N r_n(x)"
+    },
+    {
+      "type": "formula",
+      "id": "formula_ch5_binomial_law_SN",
+      "number": "(1)",
+      "name_zh": "S_N=k 的二项概率公式",
+      "name_en": "binomial probability formula for S_N=k",
+      "anchor": {
+        "pdf_page": 209,
+        "printed_page": 190
+      },
+      "formula": "m({x:S_N(x)=k})=2^{-N} N! / [((N+k)/2)!((N-k)/2)!]",
+      "conditions": [
+        "k 与 N 同奇偶",
+        "|k|≤N"
+      ]
+    },
+    {
+      "type": "formula",
+      "id": "formula_ch5_binomial_ratio",
+      "name_zh": "相邻允许值的概率比",
+      "name_en": "ratio of probabilities at adjacent admissible values",
+      "anchor": {
+        "pdf_page": 210,
+        "printed_page": 191
+      },
+      "formula": "m(S_N=k+2)/m(S_N=k)=(N-k)/(N+k+2)"
+    },
+    {
+      "type": "estimate",
+      "id": "estimate_ch5_central_binomial_peak",
+      "name_zh": "k=0 时二项分布峰值的 Stirling 近似",
+      "name_en": "Stirling approximation to the central binomial peak",
+      "anchor": {
+        "pdf_page": 210,
+        "printed_page": 191
+      },
+      "formula": "m(S_N=0)≈sqrt(2/π) N^{-1/2}",
+      "conditions": [
+        "N even"
+      ]
+    },
+    {
+      "type": "subsection",
+      "id": "sec_ch5_1_2_N_infinity",
+      "number": "1.2",
+      "name_zh": "N=∞ 的情形",
+      "name_en": "The case N = infinity",
+      "anchor": {
+        "pdf_page": 210,
+        "printed_page": 191
+      },
+      "continues_in": "chunk_011b"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_infinite_bernoulli_space",
+      "name_zh": "无限 Bernoulli 空间 X=Z_2^∞",
+      "name_en": "infinite Bernoulli space X=Z_2^∞",
+      "anchor": {
+        "pdf_page": 210,
+        "printed_page": 191
+      },
+      "formula": "X={x=(x_1,x_2,...):x_n∈{0,1}}",
+      "continues_in": "chunk_011b"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch5_cylinder_set",
+      "name_zh": "柱集（cylinder set）",
+      "name_en": "cylinder set",
+      "anchor": {
+        "pdf_page": 210,
+        "printed_page": 191
+      },
+      "description": "E⊂X 若只由前有限个坐标 (x_1,...,x_N) 是否属于某个 E′⊂Z_2^N 决定，则称为柱集。",
+      "continues_in": "chunk_011b"
+    }
   ],
-  "translation_status": {"learning_layer_zh":"completed_for_pdf_201_210","chapter4_exercises_and_problems":"indexed_and_translated_without_solutions","chapter5_intro":"completed_for_covered_pages","definitions_and_formulas":"completed_for_covered_pages","figures":"no_new_instructional_figure_detected_in_pdf_201_210","sentence_level_full_translation":"pending"},
-  "next_action":"PDF 211-220：继续 Chapter 5 §1.2 的无限 Bernoulli 乘积测度与 Rademacher 函数，进入 §1.3、§1.4 中心极限定理及 §1.6 随机级数。"
+  "translation_status": {
+    "learning_layer_zh": "completed_for_pdf_201_210",
+    "chapter4_exercises_and_problems": "indexed_and_translated_without_solutions",
+    "chapter5_intro": "completed_for_covered_pages",
+    "definitions_and_formulas": "completed_for_covered_pages",
+    "figures": "no_new_instructional_figure_detected_in_pdf_201_210",
+    "sentence_level_full_translation": "pending"
+  },
+  "next_action": "PDF 211-220：继续 Chapter 5 §1.2 的无限 Bernoulli 乘积测度与 Rademacher 函数，进入 §1.3、§1.4 中心极限定理及 §1.6 随机级数。"
 }

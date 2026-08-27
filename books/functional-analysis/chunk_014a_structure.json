@@ -1,1 +1,379 @@
-{"chunk_id":"chunk_014a","parent_storage_chunk":"chunk_014","pdf_pages":[261,270],"printed_pages":[242,251],"status":"structured_v0.18_translation_learning_layer","chapter_ids":["chapter_06"],"sections":[{"id":"ch06_s02","number":"2","title_en":"Technical Preliminaries","title_zh":"技术预备","pdf_pages":[260,265],"printed_pages":[241,246],"batch_coverage":[261,265],"continued_from":"chunk_013b","completed_in":"chunk_014a"},{"id":"ch06_s03","number":"3","title_en":"Construction of Brownian motion","title_zh":"Brownian motion 的构造","pdf_pages":[265,269],"printed_pages":[246,250],"batch_coverage":[265,269],"completed_in":"chunk_014a"},{"id":"ch06_s04","number":"4","title_en":"Some further properties of Brownian motion","title_zh":"Brownian motion 的进一步性质","pdf_pages":[270,null],"printed_pages":[251,null],"batch_coverage":[270,270],"continues_in":"chunk_014b"}],"continuations":[{"object_id":"def_ch6_path_metric_dn_d","continued_from":"chunk_013b","completed_in":"chunk_014a","anchor":{"pdf_page":261,"printed_page":242},"note":"Completes the metric facts: d-convergence is uniform convergence on compact time intervals; P is complete and separable."},{"object_id":"thm_ch6_4_2_holder_nowhere_diff","started_in":"chunk_014a","continues_in":"chunk_014b","anchor":{"pdf_page":270,"printed_page":251},"note":"Part (a) is stated on PDF 270; part (b) and the proof continue on PDF 271."}],"key_objects":[{"type":"concept","id":"concept_ch6_path_metric_basic_properties","name_zh":"路径度量 d 的基本性质","name_en":"basic properties of the path-space metric d","anchor":{"pdf_page":261,"printed_page":242},"description":"d(pk,p)→0 当且仅当 pk 在每个紧时间区间上一致收敛到 p；路径空间 P 在 d 下完备且可分。"},{"type":"definition","id":"def_ch6_borel_sigma_algebra_P","name_zh":"路径空间 P 的 Borel σ-代数 B","name_en":"Borel sigma-algebra B on path space P","anchor":{"pdf_page":261,"printed_page":242},"description":"由 P 的开集生成；因 P 可分，也可由开球生成。"},{"type":"definition","id":"def_ch6_cylindrical_sets","name_zh":"cylindrical sets（柱形集合）","name_en":"cylindrical sets on path space","anchor":{"pdf_page":261,"printed_page":242},"formula":"{p∈P:(p(t1),...,p(tk))∈A}, 0≤t1≤...≤tk, A Borel in R^{dk}"},{"type":"lemma","id":"lem_ch6_2_1_borel_equals_cylindrical","number":"2.1","name_zh":"cylindrical σ-代数与 Borel σ-代数相同","name_en":"the cylindrical sigma-algebra equals the Borel sigma-algebra","anchor":{"pdf_page":261,"printed_page":242},"statement":"C=B. Cylindrical sets are Borel, and open balls can be recovered from countably many rational-time constraints."},{"type":"definition","id":"def_ch6_measure_section_mu_t","number":"(4)","name_zh":"路径测度的有限维 section","name_en":"finite-dimensional section of a path measure","anchor":{"pdf_page":262,"printed_page":243},"formula":"μ^(t1,...,tk)(A)=μ({p∈P:(p(t1),...,p(tk))∈A})"},{"type":"concept","id":"concept_ch6_path_measure_determined_by_sections","name_zh":"路径测度由全部有限维 sections 唯一确定","name_en":"path measure determined by all finite-dimensional sections","anchor":{"pdf_page":262,"printed_page":243},"description":"由 Lemma 2.1 及 cylindrical sets 的闭交性质，若两个路径测度的所有有限维 sections 相同，则两测度相同。"},{"type":"definition","id":"def_ch6_weak_convergence_path_measures","number":"(5)","name_zh":"路径空间概率测度的弱收敛","name_en":"weak convergence of probability measures on path space","anchor":{"pdf_page":262,"printed_page":243},"formula":"∫_P f dμ_N → ∫_P f dμ for every f∈C_b(P)"},{"type":"definition","id":"def_ch6_tight_sequence_measures","number":"(6)","name_zh":"概率测度序列的 tightness","name_en":"tightness of a sequence of probability measures","anchor":{"pdf_page":262,"printed_page":243},"formula":"for every ε>0, there is compact K_ε⊂X with μ_N(K_ε^c)≤ε for all N"},{"type":"lemma","id":"lem_ch6_2_2_prokhorov","number":"2.2","name_zh":"Prokhorov 紧性引理","name_en":"Prokhorov compactness lemma","anchor":{"pdf_page":262,"printed_page":243},"statement":"若 {μ_N} tight，则存在子列 {μ_Nk} 弱收敛到 X 上的概率测度 μ。","proof_pages":[262,264]},{"type":"corollary","id":"cor_ch6_2_3_tight_fdd_convergence","number":"2.3","name_zh":"tightness + 有限维分布收敛推出路径测度弱收敛","name_en":"tightness plus convergence of finite-dimensional sections implies weak convergence","anchor":{"pdf_page":264,"printed_page":245},"statement":"若 {μ_N} tight，且每个 μ_N^(t1,...,tk) 都弱收敛到指定 μ_{t1,...,tk}，则 μ_N 弱收敛到 μ，且 μ^(t1,...,tk)=μ_{t1,...,tk}。"},{"type":"lemma","id":"lem_ch6_2_4_path_compactness_modulus","number":"2.4","name_zh":"路径集紧性的模连续性判据","name_en":"compactness criterion for closed subsets of path space","anchor":{"pdf_page":265,"printed_page":246},"formula":"sup_{p∈K} sup_{0≤t≤T}|p(t+h)-p(t)|≤w_T(h), w_T(h)→0","description":"闭集 K 若在每个有限时间区间有统一模连续性，则 K 紧；本质上是 Arzelà-Ascoli 判据。"},{"type":"theorem","id":"thm_ch6_3_1_wiener_measure_construction","number":"3.1","name_zh":"由缩放随机游走构造 Wiener measure","name_en":"construction of Wiener measure from rescaled random walks","anchor":{"pdf_page":265,"printed_page":246},"statement":"路径测度 μ_N 在 P 上弱收敛；其极限正是 Wiener measure W。","proof_pages":[266,269]},{"type":"lemma","id":"lem_ch6_3_2_random_walk_maximal_tail","number":"3.2","name_zh":"随机游走最大偏差的多项式尾界","name_en":"polynomial maximal tail bound for the random walk","anchor":{"pdf_page":266,"printed_page":247},"formula":"sup_{n≥1} m({sup_{k≤n}|s_k|>λ n^{1/2}})=O(λ^{-p}) for every p≥2","proof_pages":[266,267]},{"type":"formula","id":"formula_ch6_9_stopped_martingale_tail","number":"(9)","name_zh":"停止 martingale 的最大尾界","name_en":"maximal tail inequality for the stopped martingale","anchor":{"pdf_page":266,"printed_page":247},"formula":"m({s_n^*>α})≤α^{-1}∫_{|s_n|>α}|s_n|dm"},{"type":"formula","id":"formula_ch6_10_modulus_tightness_bound","number":"(10)","name_zh":"缩放随机游走的统一模连续性概率界","name_en":"probabilistic modulus-of-continuity bound for scaled random walks","anchor":{"pdf_page":267,"printed_page":248},"formula":"m({sup_{0≤t≤1,0≤h≤δ}|S_{t+h}^{(N)}-S_t^{(N)}|>c_1 δ^a for some δ≤1})≤ε"},{"type":"concept","id":"concept_ch6_tightness_via_holder_modulus","name_zh":"通过 Hölder 型模连续性控制证明 tightness","name_en":"tightness via a Holder-type modulus of continuity","anchor":{"pdf_page":267,"printed_page":248},"description":"取 0<a<1/2，用 dyadic δ=2^{-k}、Lemma 3.2 与求和控制得到各有限 T 上的统一增量界，再交叠 K(T) 并用 Lemma 2.4 得到共同紧集。"},{"type":"concept","id":"concept_ch6_finite_dimensional_clt_to_wiener","name_zh":"有限维分布由中心极限定理收敛到 Wiener sections","name_en":"finite-dimensional distributions converge to Wiener sections by the CLT","anchor":{"pdf_page":269,"printed_page":250},"description":"各增量 S_{t_j}^{(N)}-S_{t_{j-1}}^{(N)} 由多维 CLT 收敛到相应 Gaussian；独立增量结构给出整个向量的有限维分布收敛。"},{"type":"principle","id":"principle_ch6_donsker_invariance","name_zh":"Donsker invariance principle","name_en":"Donsker invariance principle","anchor":{"pdf_page":269,"printed_page":250},"statement":"对 iid、均值 0、协方差 I 的平方可积 R^d 值增量，按同样的时间/空间缩放和线性插值构造的路径测度也弱收敛到 Wiener measure。"},{"type":"theorem","id":"thm_ch6_4_1_brownian_invariances","number":"4.1","name_zh":"Brownian motion 的三个不变性","name_en":"three invariance properties of Brownian motion","anchor":{"pdf_page":270,"printed_page":251},"parts":["δ^{-1/2}B_{tδ} is Brownian motion","o(B_t) is Brownian for orthogonal o","B_{t+σ0}-B_{σ0} is Brownian for fixed σ0≥0"]},{"type":"theorem","id":"thm_ch6_4_2_holder_nowhere_diff","number":"4.2","name_zh":"Brownian 路径的 Hölder 正则性与非光滑性","name_en":"Holder regularity and roughness of Brownian paths","anchor":{"pdf_page":270,"printed_page":251},"statement_start":"(a) 对 0<a<1/2 和 T>0，W-a.e. 路径满足 sup_{0≤t≤T,0<h≤1}|p(t+h)-p(t)|/h^a<∞。","continues_in":"chunk_014b"}],"exercises":[],"problems":[],"figure_anchors":[],"visual_check":{"pages":[261,262,263,264,265,266,267,268,269,270],"result":"all_pages_checked; text_formula_theorem_proof_layout_normal; no_new_standalone_teaching_figures","contact_sheet":"contact_261_270.png"},"translation_status":{"learning_layer":"complete_for_batch","full_literal_translation":false},"boundary":{"next_pdf_page":271,"next_printed_page":252,"continues":"Chapter 6 §4 Theorem 4.2: part (b) and proof of Brownian path roughness/nowhere differentiability."}}
+{
+  "chunk_id": "chunk_014a",
+  "parent_storage_chunk": "chunk_014",
+  "pdf_pages": [
+    261,
+    270
+  ],
+  "printed_pages": [
+    242,
+    251
+  ],
+  "status": "structured_v0.18_translation_learning_layer",
+  "chapter_ids": [
+    "chapter_06"
+  ],
+  "sections": [
+    {
+      "id": "ch06_s02",
+      "number": "2",
+      "title_en": "Technical Preliminaries",
+      "title_zh": "技术预备",
+      "pdf_pages": [
+        260,
+        265
+      ],
+      "printed_pages": [
+        241,
+        246
+      ],
+      "batch_coverage": [
+        261,
+        265
+      ],
+      "continued_from": "chunk_013b",
+      "completed_in": "chunk_014a"
+    },
+    {
+      "id": "ch06_s03",
+      "number": "3",
+      "title_en": "Construction of Brownian motion",
+      "title_zh": "Brownian motion 的构造",
+      "pdf_pages": [
+        265,
+        269
+      ],
+      "printed_pages": [
+        246,
+        250
+      ],
+      "batch_coverage": [
+        265,
+        269
+      ],
+      "completed_in": "chunk_014a"
+    },
+    {
+      "id": "ch06_s04",
+      "number": "4",
+      "title_en": "Some further properties of Brownian motion",
+      "title_zh": "Brownian motion 的进一步性质",
+      "pdf_pages": [
+        270,
+        null
+      ],
+      "printed_pages": [
+        251,
+        null
+      ],
+      "batch_coverage": [
+        270,
+        270
+      ],
+      "continues_in": "chunk_014b"
+    }
+  ],
+  "continuations": [
+    {
+      "object_id": "def_ch6_path_metric_dn_d",
+      "continued_from": "chunk_013b",
+      "completed_in": "chunk_014a",
+      "anchor": {
+        "pdf_page": 261,
+        "printed_page": 242
+      },
+      "note": "Completes the metric facts: d-convergence is uniform convergence on compact time intervals; P is complete and separable."
+    },
+    {
+      "object_id": "thm_ch6_4_2_holder_nowhere_diff",
+      "started_in": "chunk_014a",
+      "continues_in": "chunk_014b",
+      "anchor": {
+        "pdf_page": 270,
+        "printed_page": 251
+      },
+      "note": "Part (a) is stated on PDF 270; part (b) and the proof continue on PDF 271."
+    }
+  ],
+  "key_objects": [
+    {
+      "type": "concept",
+      "id": "concept_ch6_path_metric_basic_properties",
+      "name_zh": "路径度量 d 的基本性质",
+      "name_en": "basic properties of the path-space metric d",
+      "anchor": {
+        "pdf_page": 261,
+        "printed_page": 242
+      },
+      "description": "d(pk,p)→0 当且仅当 pk 在每个紧时间区间上一致收敛到 p；路径空间 P 在 d 下完备且可分。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch6_borel_sigma_algebra_P",
+      "name_zh": "路径空间 P 的 Borel σ-代数 B",
+      "name_en": "Borel sigma-algebra B on path space P",
+      "anchor": {
+        "pdf_page": 261,
+        "printed_page": 242
+      },
+      "description": "由 P 的开集生成；因 P 可分，也可由开球生成。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch6_cylindrical_sets",
+      "name_zh": "cylindrical sets（柱形集合）",
+      "name_en": "cylindrical sets on path space",
+      "anchor": {
+        "pdf_page": 261,
+        "printed_page": 242
+      },
+      "formula": "{p∈P:(p(t1),...,p(tk))∈A}, 0≤t1≤...≤tk, A Borel in R^{dk}"
+    },
+    {
+      "type": "lemma",
+      "id": "lem_ch6_2_1_borel_equals_cylindrical",
+      "number": "2.1",
+      "name_zh": "cylindrical σ-代数与 Borel σ-代数相同",
+      "name_en": "the cylindrical sigma-algebra equals the Borel sigma-algebra",
+      "anchor": {
+        "pdf_page": 261,
+        "printed_page": 242
+      },
+      "statement": "C=B. Cylindrical sets are Borel, and open balls can be recovered from countably many rational-time constraints."
+    },
+    {
+      "type": "definition",
+      "id": "def_ch6_measure_section_mu_t",
+      "number": "(4)",
+      "name_zh": "路径测度的有限维 section",
+      "name_en": "finite-dimensional section of a path measure",
+      "anchor": {
+        "pdf_page": 262,
+        "printed_page": 243
+      },
+      "formula": "μ^(t1,...,tk)(A)=μ({p∈P:(p(t1),...,p(tk))∈A})"
+    },
+    {
+      "type": "concept",
+      "id": "concept_ch6_path_measure_determined_by_sections",
+      "name_zh": "路径测度由全部有限维 sections 唯一确定",
+      "name_en": "path measure determined by all finite-dimensional sections",
+      "anchor": {
+        "pdf_page": 262,
+        "printed_page": 243
+      },
+      "description": "由 Lemma 2.1 及 cylindrical sets 的闭交性质，若两个路径测度的所有有限维 sections 相同，则两测度相同。"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch6_weak_convergence_path_measures",
+      "number": "(5)",
+      "name_zh": "路径空间概率测度的弱收敛",
+      "name_en": "weak convergence of probability measures on path space",
+      "anchor": {
+        "pdf_page": 262,
+        "printed_page": 243
+      },
+      "formula": "∫_P f dμ_N → ∫_P f dμ for every f∈C_b(P)"
+    },
+    {
+      "type": "definition",
+      "id": "def_ch6_tight_sequence_measures",
+      "number": "(6)",
+      "name_zh": "概率测度序列的 tightness",
+      "name_en": "tightness of a sequence of probability measures",
+      "anchor": {
+        "pdf_page": 262,
+        "printed_page": 243
+      },
+      "formula": "for every ε>0, there is compact K_ε⊂X with μ_N(K_ε^c)≤ε for all N"
+    },
+    {
+      "type": "lemma",
+      "id": "lem_ch6_2_2_prokhorov",
+      "number": "2.2",
+      "name_zh": "Prokhorov 紧性引理",
+      "name_en": "Prokhorov compactness lemma",
+      "anchor": {
+        "pdf_page": 262,
+        "printed_page": 243
+      },
+      "statement": "若 {μ_N} tight，则存在子列 {μ_Nk} 弱收敛到 X 上的概率测度 μ。",
+      "proof_pages": [
+        262,
+        264
+      ]
+    },
+    {
+      "type": "corollary",
+      "id": "cor_ch6_2_3_tight_fdd_convergence",
+      "number": "2.3",
+      "name_zh": "tightness + 有限维分布收敛推出路径测度弱收敛",
+      "name_en": "tightness plus convergence of finite-dimensional sections implies weak convergence",
+      "anchor": {
+        "pdf_page": 264,
+        "printed_page": 245
+      },
+      "statement": "若 {μ_N} tight，且每个 μ_N^(t1,...,tk) 都弱收敛到指定 μ_{t1,...,tk}，则 μ_N 弱收敛到 μ，且 μ^(t1,...,tk)=μ_{t1,...,tk}。"
+    },
+    {
+      "type": "lemma",
+      "id": "lem_ch6_2_4_path_compactness_modulus",
+      "number": "2.4",
+      "name_zh": "路径集紧性的模连续性判据",
+      "name_en": "compactness criterion for closed subsets of path space",
+      "anchor": {
+        "pdf_page": 265,
+        "printed_page": 246
+      },
+      "formula": "sup_{p∈K} sup_{0≤t≤T}|p(t+h)-p(t)|≤w_T(h), w_T(h)→0",
+      "description": "闭集 K 若在每个有限时间区间有统一模连续性，则 K 紧；本质上是 Arzelà-Ascoli 判据。"
+    },
+    {
+      "type": "theorem",
+      "id": "thm_ch6_3_1_wiener_measure_construction",
+      "number": "3.1",
+      "name_zh": "由缩放随机游走构造 Wiener measure",
+      "name_en": "construction of Wiener measure from rescaled random walks",
+      "anchor": {
+        "pdf_page": 265,
+        "printed_page": 246
+      },
+      "statement": "路径测度 μ_N 在 P 上弱收敛；其极限正是 Wiener measure W。",
+      "proof_pages": [
+        266,
+        269
+      ]
+    },
+    {
+      "type": "lemma",
+      "id": "lem_ch6_3_2_random_walk_maximal_tail",
+      "number": "3.2",
+      "name_zh": "随机游走最大偏差的多项式尾界",
+      "name_en": "polynomial maximal tail bound for the random walk",
+      "anchor": {
+        "pdf_page": 266,
+        "printed_page": 247
+      },
+      "formula": "sup_{n≥1} m({sup_{k≤n}|s_k|>λ n^{1/2}})=O(λ^{-p}) for every p≥2",
+      "proof_pages": [
+        266,
+        267
+      ]
+    },
+    {
+      "type": "formula",
+      "id": "formula_ch6_9_stopped_martingale_tail",
+      "number": "(9)",
+      "name_zh": "停止 martingale 的最大尾界",
+      "name_en": "maximal tail inequality for the stopped martingale",
+      "anchor": {
+        "pdf_page": 266,
+        "printed_page": 247
+      },
+      "formula": "m({s_n^*>α})≤α^{-1}∫_{|s_n|>α}|s_n|dm"
+    },
+    {
+      "type": "formula",
+      "id": "formula_ch6_10_modulus_tightness_bound",
+      "number": "(10)",
+      "name_zh": "缩放随机游走的统一模连续性概率界",
+      "name_en": "probabilistic modulus-of-continuity bound for scaled random walks",
+      "anchor": {
+        "pdf_page": 267,
+        "printed_page": 248
+      },
+      "formula": "m({sup_{0≤t≤1,0≤h≤δ}|S_{t+h}^{(N)}-S_t^{(N)}|>c_1 δ^a for some δ≤1})≤ε"
+    },
+    {
+      "type": "concept",
+      "id": "concept_ch6_tightness_via_holder_modulus",
+      "name_zh": "通过 Hölder 型模连续性控制证明 tightness",
+      "name_en": "tightness via a Holder-type modulus of continuity",
+      "anchor": {
+        "pdf_page": 267,
+        "printed_page": 248
+      },
+      "description": "取 0<a<1/2，用 dyadic δ=2^{-k}、Lemma 3.2 与求和控制得到各有限 T 上的统一增量界，再交叠 K(T) 并用 Lemma 2.4 得到共同紧集。"
+    },
+    {
+      "type": "concept",
+      "id": "concept_ch6_finite_dimensional_clt_to_wiener",
+      "name_zh": "有限维分布由中心极限定理收敛到 Wiener sections",
+      "name_en": "finite-dimensional distributions converge to Wiener sections by the CLT",
+      "anchor": {
+        "pdf_page": 269,
+        "printed_page": 250
+      },
+      "description": "各增量 S_{t_j}^{(N)}-S_{t_{j-1}}^{(N)} 由多维 CLT 收敛到相应 Gaussian；独立增量结构给出整个向量的有限维分布收敛。"
+    },
+    {
+      "type": "principle",
+      "id": "principle_ch6_donsker_invariance",
+      "name_zh": "Donsker invariance principle",
+      "name_en": "Donsker invariance principle",
+      "anchor": {
+        "pdf_page": 269,
+        "printed_page": 250
+      },
+      "statement": "对 iid、均值 0、协方差 I 的平方可积 R^d 值增量，按同样的时间/空间缩放和线性插值构造的路径测度也弱收敛到 Wiener measure。"
+    },
+    {
+      "type": "theorem",
+      "id": "thm_ch6_4_1_brownian_invariances",
+      "number": "4.1",
+      "name_zh": "Brownian motion 的三个不变性",
+      "name_en": "three invariance properties of Brownian motion",
+      "anchor": {
+        "pdf_page": 270,
+        "printed_page": 251
+      },
+      "parts": [
+        "δ^{-1/2}B_{tδ} is Brownian motion",
+        "o(B_t) is Brownian for orthogonal o",
+        "B_{t+σ0}-B_{σ0} is Brownian for fixed σ0≥0"
+      ]
+    },
+    {
+      "type": "theorem",
+      "id": "thm_ch6_4_2_holder_nowhere_diff",
+      "number": "4.2",
+      "name_zh": "Brownian 路径的 Hölder 正则性与粗糙性",
+      "name_en": "Holder regularity and roughness of Brownian paths",
+      "anchor": {
+        "pdf_page": 270,
+        "printed_page": 251
+      },
+      "statement_start": "(a) 对 0<a<1/2 和 T>0，W-a.e. 路径满足 sup_{0≤t≤T,0<h≤1}|p(t+h)-p(t)|/h^a<∞。",
+      "continues_in": "chunk_014b"
+    }
+  ],
+  "exercises": [],
+  "problems": [],
+  "figure_anchors": [],
+  "visual_check": {
+    "pages": [
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270
+    ],
+    "result": "all_pages_checked; text_formula_theorem_proof_layout_normal; no_new_standalone_teaching_figures",
+    "contact_sheet": "contact_261_270.png"
+  },
+  "translation_status": {
+    "learning_layer": "complete_for_batch",
+    "full_literal_translation": false
+  },
+  "boundary": {
+    "next_pdf_page": 271,
+    "next_printed_page": 252,
+    "continues": "Chapter 6 §4 Theorem 4.2: part (b) and proof of Brownian path roughness/nowhere differentiability."
+  }
+}
