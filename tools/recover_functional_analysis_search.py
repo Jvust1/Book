@@ -16,9 +16,13 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Iterable
+
+if __package__ in (None, ""):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from tools import rebuild_runtime_artifacts as base
 
