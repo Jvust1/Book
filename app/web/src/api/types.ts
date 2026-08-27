@@ -173,8 +173,6 @@ export interface QACitationItem {
   printed_page: number | string | null
   pdf_page: number | null
   source_anchor: string | null
-  /** @deprecated Removed from the v2 server DTO; kept only until Task 9 migrates QAPage keys. */
-  citation_id?: never
 }
 
 export interface QAResponse {
