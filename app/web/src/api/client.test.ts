@@ -78,7 +78,7 @@ describe('bookApi', () => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'content-type': 'application/json',
         },
         body: JSON.stringify({ question: '什么是巴拿赫空间？' }),
       }),
