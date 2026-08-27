@@ -26,6 +26,11 @@
       "detail": "qa_retrieval_policy.json book_id normalized to canonical book_id"
     },
     {
+      "name": "chunk_002_final_learning_layer",
+      "status": "PASS",
+      "detail": "chunk_002_translation_zh.md restored; proof logic completed; partial file removed; continuation corrected to chunk_003a"
+    },
+    {
       "name": "page_map",
       "status": "FAIL",
       "detail": "book_metadata.json references page_map.csv but the file is absent from the current GitHub tree"
@@ -39,23 +44,14 @@
       "name": "final_search_index",
       "status": "FAIL",
       "detail": "STRUCTURED_COMPLETE.json references search_index_v0_36.jsonl but the file is absent from the current GitHub tree"
-    },
-    {
-      "name": "chunk_002_final_learning_layer",
-      "status": "FAIL",
-      "detail": "current tree still contains chunks/chunk_002_translation_zh_partial.md and stale partial status in chunk_002_structure.json; final-audit replacement is not synced"
     }
   ],
   "missing_required_files": [
     "page_map.csv",
     "toc_bilingual.json",
-    "search_index_v0_36.jsonl",
-    "chunks/chunk_002_translation_zh.md"
+    "search_index_v0_36.jsonl"
   ],
-  "stale_files": [
-    "chunks/chunk_002_translation_zh_partial.md",
-    "chunks/chunk_002_structure.json"
-  ],
+  "stale_files": [],
   "identity_mismatches": [],
   "drive_probe": {
     "book_folder_found": true,
@@ -63,5 +59,13 @@
     "exports_folder_currently_empty": true,
     "final_v0_36_export_found": false
   },
-  "next_action": "Recover or regenerate the v0.36 FINAL export artifacts, sync them to GitHub/Drive, then rerun runtime readiness before implementing the production loader."
+  "recovery_progress": {
+    "full_source_pdf_found_in_file_library": true,
+    "chunk_002_restored": true,
+    "runtime_checker_added": true,
+    "runtime_reference_loader_added": true,
+    "rebuild_tool_added": true,
+    "ci_added": true
+  },
+  "next_action": "Rebuild and validate page_map.csv, toc_bilingual.json, and search_index_v0_36.jsonl from canonical source PDF + structure batches; then rerun readiness to READY."
 }
