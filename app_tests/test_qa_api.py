@@ -15,6 +15,7 @@ from app.api.service import BookAppService
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 COURSE_ID = "functional_analysis_course"
+SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 
 
 class InvalidCitationProvider:
@@ -40,7 +41,7 @@ class BookAppQAApiTests(unittest.TestCase):
         return self.client.post(f"/api/courses/{COURSE_ID}/qa", json=payload)
 
     def test_valid_question_returns_generated_answer_with_canonical_citation(self) -> None:
-        response = self.post({"question": "什么是巴拿赫空间？"})
+        response = self.post({"question": SUFFICIENT_QA_QUESTION})
 
         self.assertEqual(response.status_code, 200)
         body = response.json()
@@ -96,7 +97,7 @@ class BookAppQAApiTests(unittest.TestCase):
     def test_default_unavailable_provider_is_stable_503(self) -> None:
         app.dependency_overrides[get_service] = lambda: BookAppService(REPO_ROOT)
 
-        response = self.post({"question": "什么是巴拿赫空间？"})
+        response = self.post({"question": SUFFICIENT_QA_QUESTION})
 
         self.assertEqual(response.status_code, 503)
         self.assertEqual(
@@ -110,7 +111,7 @@ class BookAppQAApiTests(unittest.TestCase):
             qa_provider=InvalidCitationProvider(),
         )
 
-        response = self.post({"question": "什么是巴拿赫空间？"})
+        response = self.post({"question": SUFFICIENT_QA_QUESTION})
 
         self.assertEqual(response.status_code, 502)
         self.assertEqual(
