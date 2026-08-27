@@ -28,6 +28,13 @@ from .section_learning_runtime import (
     SectionLearningSource,
     SectionLearningSourceError,
 )
+from .search_runtime import (
+    SearchHit,
+    SearchIndexUnavailableError,
+    SearchQueryError,
+    SearchRuntime,
+    SearchRuntimeError,
+)
 from .source_resolver import (
     ResolvedSource,
     SourceResolutionError,
@@ -56,6 +63,11 @@ __all__ = [
     "SectionLearningRuntimeError",
     "SectionLearningSource",
     "SectionLearningSourceError",
+    "SearchHit",
+    "SearchIndexUnavailableError",
+    "SearchQueryError",
+    "SearchRuntime",
+    "SearchRuntimeError",
     "ResolvedSource",
     "SourceResolutionError",
     "SourceResolver",
