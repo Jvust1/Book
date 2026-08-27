@@ -8,6 +8,8 @@ on:
       - "runtime/**"
       - "courses/**"
       - "library/**"
+      - "books/functional-analysis/**"
+      - "tests/test_source_resolver.py"
       - ".github/workflows/app-ui-tests.yml"
   pull_request:
     paths:
@@ -16,10 +18,12 @@ on:
       - "runtime/**"
       - "courses/**"
       - "library/**"
+      - "books/functional-analysis/**"
+      - "tests/test_source_resolver.py"
       - ".github/workflows/app-ui-tests.yml"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   app-api:
@@ -52,21 +56,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
 
       - name: Install web dependencies
-        run: npm install
-
-      - name: Commit generated package lock
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          if git diff --cached --quiet; then
-            echo "package-lock.json already current"
-            exit 0
-          fi
-          git commit -m "build: lock Book web dependencies"
-          git push
+        run: npm ci
 
       - name: Run web tests
         run: npm test
@@ -76,3 +70,6 @@ jobs:
 
       - name: Build web app
         run: npm run build
+
+      - name: Run browser acceptance
+        run: npm run e2e
