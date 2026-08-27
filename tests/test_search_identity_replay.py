@@ -56,7 +56,7 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
                     previous = records.get(rid, {})
                     merged = dict(previous)
                     merged.update({k: v for k, v in row.items() if v not in (None, "", [], {})})
-                    records[rid] = rebuild.normalize_search_row(merged, book_id=book_id)
+                    records[rid] = rebuild.anchor_record(merged, book_id=book_id, rid=rid)
 
         chunk001 = rebuild.load_json(root / "chunks" / "chunk_001_structure.json")
         content_unit_ids: list[str] = []
@@ -65,27 +65,10 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
                 continue
             rid = str(raw["unit_id"])
             content_unit_ids.append(rid)
-            pdf_page = raw.get("pdf_page")
-            if pdf_page is None and isinstance(raw.get("pdf_pages"), list) and raw["pdf_pages"]:
-                pdf_page = raw["pdf_pages"][0]
-            printed_page = raw.get("printed_page")
-            row: dict[str, Any] = {
-                "id": rid,
-                "book_id": book_id,
-                "chunk_id": "chunk_001",
-                "type": raw.get("type") or "frontmatter",
-                "title_en": raw.get("title_en"),
-                "title_zh": raw.get("title_zh"),
-                "pdf_page": pdf_page,
-                "printed_page": printed_page,
-                "source_anchor": rebuild.canonical_source_anchor(
-                    book_id,
-                    rid,
-                    pdf_page,
-                    printed_page,
-                ),
-            }
-            records[rid] = rebuild.normalize_search_row(row, book_id=book_id)
+            row = dict(raw)
+            row["id"] = rid
+            row["chunk_id"] = "chunk_001"
+            records[rid] = rebuild.anchor_record(row, book_id=book_id, rid=rid)
 
         self.assertEqual(len(early_core_added), 157)
         self.assertEqual(len(content_unit_ids), 7)
@@ -104,8 +87,7 @@ class SearchIdentityReplayDiagnostics(unittest.TestCase):
             previous = canonical.get(target, {})
             merged = dict(previous)
             merged.update({k: v for k, v in row.items() if v not in (None, "", [], {})})
-            merged["id"] = target
-            canonical[target] = rebuild.normalize_search_row(merged, book_id=book_id)
+            canonical[target] = rebuild.anchor_record(merged, book_id=book_id, rid=target)
 
         suffix_collisions = {
             target: sources
