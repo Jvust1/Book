@@ -94,18 +94,26 @@
 
 > 当前 PWA 不是“没有 Python 后端也能完全离线运行”的桌面程序。前端静态资源可缓存，但教材动态数据仍由本机 FastAPI 提供。Phase 1D 也尚未包含完整原始 PDF Reader。
 
-## Phase 1E：教材内搜索与来源跳转 — 下一主线
+## Phase 1E：教材内搜索与来源跳转 — 已完成
 
-优先复用 Functional Analysis 已存在的 1493 条真实索引，不重新发明搜索资产。
+直接复用 Functional Analysis 已存在的 1493 条真实 canonical 索引，不重新发明搜索资产。
 
-- [ ] 中文搜索
-- [ ] 英文搜索
-- [ ] 术语 / 定理 / 公式 / 例题 / 习题统一命中
-- [ ] 搜索结果保留 canonical course / book / source identity
-- [ ] 点击命中项进入结构化教材来源
-- [ ] 从来源返回搜索上下文
-- [ ] 无结果与索引不可用状态明确区分
-- [ ] 浏览器端真实搜索 acceptance
+- [x] 中文搜索
+- [x] 英文搜索
+- [x] 术语 / 定理 / 公式 / 例题 / 习题统一命中
+- [x] 搜索结果保留 canonical course / book / source identity
+- [x] 只为能映射到真实 object / figure 的索引记录生成可跳转结果
+- [x] 点击命中项进入结构化教材来源
+- [x] 从来源返回搜索上下文
+- [x] Search 返回状态与 Section 返回状态分离，并保持 Search 优先匹配当前来源
+- [x] `sessionStorage` 只保存 route / query / scroll / active source，不缓存结果 DTO，不冒充长期 `StudyRecord`
+- [x] 无结果与索引不可用状态明确区分
+- [x] FastAPI 明确区分 200 空结果 / 400 查询错误 / 404 course / 503 search unavailable
+- [x] 浏览器端真实搜索 acceptance
+- [x] 390×844 搜索与来源往返无 body 横向溢出
+- [x] Runtime CI 在 Python 3.11 / 3.12 / 3.13 运行 SearchRuntime gate
+- [x] canonical `search_index*.jsonl` 变更会触发 Runtime workflow
+- [x] 当前 Web gate：29 个 Vitest 单元测试、TypeScript、PWA build；Chromium acceptance 5 / 5 通过
 
 ## Phase 1F：教材内问答
 
@@ -188,7 +196,7 @@
 - [ ] 恢复滚动 / 展开 / 筛选状态
 - [ ] 上一个 / 下一个考点
 
-> Phase 1D 已完成通用 Section ↔ Source 返回状态机制；本阶段是在其上增加 ExamPoint 业务对象，不重复实现另一套导航状态系统。
+> Phase 1D 已完成通用 Section ↔ Source 返回状态机制；Phase 1E 已增加 Search ↔ Source 短期返回状态。本阶段是在同一导航原则上增加 ExamPoint 业务对象，不重复实现另一套导航状态系统。
 
 ## Phase 1K：本地 PDF Reader 接入
 
@@ -202,7 +210,7 @@
 
 ## Phase 1 首章完整产品验收
 
-Phase 1D 已完成 `ch01_s01` 的基础浏览器闭环，但下列完整学习产品验收要等搜索、问答、长期记录等能力接入后完成。
+Phase 1E 已完成 `ch01_s01` 基础学习闭环与教材搜索闭环；下列完整学习产品验收仍要等问答、长期记录等能力接入后完成。
 
 - [x] Library → Course → Chapter → Section 导航
 - [x] 四学习入口可用
@@ -210,7 +218,7 @@ Phase 1D 已完成 `ch01_s01` 的基础浏览器闭环，但下列完整学习�
 - [x] 结构化来源 → 返回学习闭环
 - [x] 窄屏基础可用性
 - [ ] 关键图 / 例题 / 习题完整交互验收
-- [ ] 中英搜索
+- [x] 中英搜索
 - [ ] 教材内问答返回真实来源
 - [ ] 长期学习进度保存与恢复
 - [ ] ExamPoint → 教材来源 → 返回考点闭环
@@ -314,6 +322,6 @@ AI 回答的证据优先级和可用资料源必须显式配置；回答与教�
 
 ## 当前单一下一步
 
-**Phase 1E：接入教材内搜索与来源跳转，直接复用 Functional Analysis 已存在的 1493 条真实索引。**
+**Phase 1F：在已经稳定的教材搜索 / Source 来源体系上接入教材内问答，并强制回答携带真实来源。**
 
-搜索闭环稳定后，再在同一来源体系上接教材内问答与长期 `StudyRecord`；当前不进入课堂录音，也不重复结构化已经完成的 Functional Analysis。
+Phase 1E 的搜索闭环已经稳定；下一阶段不重新实现搜索，也不把 AI 输出写成教材正文。教材问答稳定后，再进入长期 `StudyRecord`；当前仍不进入课堂录音，也不重复结构化已经完成的 Functional Analysis。
