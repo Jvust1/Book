@@ -2,209 +2,262 @@
 
 更新时间：2026-08-28
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 文档或更早规划冲突，以 GitHub 当前分支中的本文件、`docs/ROADMAP.md`、`docs/MASTER_PLAN.md` 和已批准设计规范为准。历史 Git 提交继续保留事实，不把已废弃方案写入当前计划。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以当前分支中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
-- `main` 当前 HEAD：`2fe6758d65a3317691922964e644f3a681571d24`
-- Phase 1F 教材内问答已通过最终 CI 并由 PR #8 合并；Phase 1F merge commit：`8d78b5beea8339f4326749ffebd123d1903f1a2b`。
-- 最新治理/安全基线已经同步到 Phase 1G 分支；PR #9 merge commit：`8b184ba459b64a6928b1fc66b419f8cb3d9c8884`。
+- `main` 当前已知 HEAD：`2fe6758d65a3317691922964e644f3a681571d24`
+- Phase 1F merge commit：`8d78b5beea8339f4326749ffebd123d1903f1a2b`
 - 当前开发分支：`feature/study-record-phase-1g`
-- Phase 1G 设计规范：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
-- Phase 1G 实施计划：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
-- Phase 1G 实施计划提交：`229e5369c80412a66d1e37bba252d9bb817d3991`
-- Phase 1G 当前状态：设计和详细实施计划均已完成；业务代码实现尚未开始。
+- Phase 1G governance sync merge：`8b184ba459b64a6928b1fc66b419f8cb3d9c8884`
+- Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
+- Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
+- implementation plan commit：`229e5369c80412a66d1e37bba252d9bb817d3991`
+- Phase 1G 状态：设计和详细实施计划均已完成；业务代码实现尚未开始。
 
-## 2. 当前教材与 Runtime 基线
+当前跨阶段正式架构文档：
 
-当前 canonical course：
+- `docs/MASTER_PLAN.md`
+- `docs/ROADMAP.md`
+- `docs/DEVELOPMENT_STRATEGY.md`
+- `docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`
 
-- `course_id = functional_analysis_course`
-- `book_id = stein_shakarchi_functional_analysis_2011`
-- Stein & Shakarchi《Functional Analysis》
-- 8 Chapters / 132 Sections
-- 1493 条唯一搜索记录
-- `STRUCTURED_COMPLETE / RUNTIME_READY`
-- PDF 442 / 442 页覆盖，最终印刷页 423
-- 全书审计：PASS 20 / WARN 1 / FAIL 0
+## 2. 当前教材 / Runtime 基线
 
-Phase 1F 分支和合并未修改 `books/functional-analysis/**` canonical 教材资产。
+当前 Golden Course 候选：Stein & Shakarchi《Functional Analysis》。
 
-这本教材是当前第一本完整结构化的数学教材，也是通用 Book App 的首个真实验证载体。长期目标不是为每本书单独写 App，而是让新教材通过统一导入/结构化/注册流程进入同一个系统。
+```text
+course_id = functional_analysis_course
+book_id = stein_shakarchi_functional_analysis_2011
+8 Chapters
+132 Sections
+1493 unique search records
+STRUCTURED_COMPLETE / RUNTIME_READY
+PDF 442 / 442
+final printed page 423
+audit PASS 20 / WARN 1 / FAIL 0
+```
+
+Phase 1F 未修改 `books/functional-analysis/**` canonical 教材资产。
+
+长期把这本教材固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord、Concept、ExamPoint、Exam Sprint 和后续录音关联的自动回归。
 
 ## 3. 已完成产品能力
 
 ### Phase 1A–1C
 
-已完成 Runtime 导入契约、Book / Course / Library Runtime、Chapter / Section 树、四学习模式确定性教材投影和真实来源解析基础。
+- Runtime 导入契约
+- Book / Course / Library Runtime
+- Chapter / Section 树
+- Preview / Learn / Review / Practice 四模式确定性教材投影
+- SourceResolver 基础
 
 ### Phase 1D
 
-已完成 Local-first FastAPI + React/TypeScript/Vite PWA MVP，包括：
-
+- Local-first FastAPI + React/TypeScript/Vite PWA
 - Library → Course → Chapter → Section
-- `预习 / 学习 / 复习 / 刷题` 四个并列入口
-- 结构化教材来源页
-- 纸质页 / PDF 页身份
+- 四学习模式
+- 真实来源页、PDF/printed page identity
 - Section → Source → Section 返回状态恢复
-- 桌面和 390×844 浏览器验收
+- 桌面和移动尺寸浏览器验收
 
 ### Phase 1E
 
-已完成教材 canonical 搜索：
-
-- 中英文搜索
-- 术语 / 定理 / 公式 / 例题 / 习题统一命中
-- Search → Source → Search 返回状态恢复
-- 无结果、查询错误、course 不存在、search unavailable 明确区分
+- deterministic canonical search
+- 中英文术语 / 定理 / 公式 / 例题 / 习题检索
+- Search → Source → Search 恢复
+- zero-result / query error / unavailable 分离
 
 ### Phase 1F
 
-已完成 source-grounded conversational textbook QA：
-
-- Course 整本教材问答
-- Section 优先、证据不足时显式 fallback 到整本
-- server-owned EvidenceGate
-- citation 服务端验证
-- 证据不足 fail closed，不猜测答案
-- QA → Source → QA 恢复已验证会话，不重新生成旧回答
-- OpenAI-compatible provider 仅存在于服务端，浏览器不接触 API Key
+- Course / Section source-grounded textbook QA
+- Section-first → book fallback
+- server EvidenceGate
+- citation verification
+- 证据不足 fail closed
+- QA → Source → QA 会话恢复
+- OpenAI-compatible provider 仅服务端持有 key
 - deterministic fake provider 支持 CI
 
-## 4. Phase 1G：已批准且已完成实施计划
+## 4. 当前唯一工程主线：Phase 1G
 
-Phase 1G 只实现长期学习记录和 sync-ready 本地持久化，不提前实现录音、Drive 同步或 Meeting。
-
-### 持久化与身份
-
-- 本机 SQLite 是长期学习记录的权威运行存储。
-- 浏览器通过 FastAPI 访问持久层，不直接操作 SQLite。
-- UI 仍为单用户，不做登录或多用户选择。
-- 每个安装/设备自动生成一个稳定隐藏 UUID `profile_id`。
-- 不使用跨设备共享的 `local-default` 作为持久身份。
-
-### StudyRecord
-
-逻辑唯一键：
+Phase 1G 不扩大范围，只实现：
 
 ```text
-profile_id + course_id + section_id + mode
+StudyRecord
++ SQLite
++ hidden profile_id
++ recent learning
++ sync-ready metadata
 ```
 
-四种 mode：
+规则：
 
-```text
-preview / learn / review / practice
-```
-
-四模式互相独立，不锁定、不自动联动完成状态。
-
-进度规则：
-
-- 没有记录 = 从未开始
-- 首次进入有效 Section / mode = 创建 `in_progress`，`progress=0`
-- 再次进入 = 更新 `last_studied_at`，不破坏已完成状态
-- 用户手动点击“标记完成” = `completed`，`progress=100`
-- 第一版不根据滚动距离、停留时间或 AI 判断制造中间百分比
-
-最近学习位置以 `last_studied_at` 为准。
-
-### Sync-ready 但不做同步
-
-Phase 1G 预留：
-
-```text
-profile_id
-study_record_id
-revision
-updated_at
-deleted_at
-sync_status
-```
-
-Phase 1G 中 `sync_status` 固定为 `local`。不实现 Drive、SyncEvent、SyncEngine、云账号或冲突合并。
-
-当前 `sectionViewState / searchViewState / qaSessionState` 的 `sessionStorage` 继续只负责短期返回状态，不能作为长期 StudyRecord。
+- 本机 SQLite 是 durable StudyRecord authority
+- UI 单用户；每个安装生成稳定隐藏 UUID `profile_id`
+- logical key：`profile_id + course_id + section_id + mode`
+- preview / learn / review / practice 独立
+- 无记录 = 未开始
+- 首次进入 = `in_progress / progress 0`
+- 手动完成 = `completed / progress 100`
+- completed 再进入不回退
+- `last_studied_at` 决定 recent learning
+- `sessionStorage` 只负责短期返回状态
+- 预留 revision / updated_at / deleted_at / sync_status
+- 1G 中 `sync_status=local`
+- 不提前实现 Drive / SyncEvent / 录音 / Meeting / ExamPoint / Unified Retrieval / Mastery
 
 ## 5. 当前确认的课程产品模型
 
-Book 的核心单位是“课程”，每门课程可以使用课堂主教材和辅助教材。教材先进入统一结构化流程，再由同一个 App 自动提供学习功能。
-
-目标工作流：
+Book 的核心单位是 Course。
 
 ```text
-上传课堂主教材 / 辅助教材
-→ 统一结构化
-→ canonical identity / source anchors / Runtime readiness
-→ 注册到 Course / Library
-→ 自动获得学习能力
+Course
+├── primary textbook
+├── supplementary / reference / translation books
+├── Chapter / Section reading structure
+├── Concept Graph learning structure
+├── Lectures
+├── Exam model
+└── Personal learning state
 ```
 
-每门课程按三个层级组织：
+按节：预习 / 学习 / 复习 / 刷题。
+
+按章：核心考点 / 章节总结 / 可点击思维导图 / 章节测试。
+
+按整本/课程：Exam Sprint / 期末速通。
+
+最终原则：**App 通用，教材是数据。** 新课程主要走“上传资料 → Course Compiler/结构化 → readiness → 注册”，不是为每本书重新开发 App。
+
+## 6. 同一课程多教材：已确认方案
+
+如果上传两本泛函分析教材，默认放在同一个 Functional Analysis Course 中，而不是简单创建两个孤立课程，也不把原文融合成一本书。
 
 ```text
-按节 Section
-├── 预习
-├── 学习
-├── 复习
-└── 刷题
-
-按章 Chapter
-├── 核心考点
-├── 章节总结
-└── 可点击思维导图
-
-按整本 Book
-└── Exam Sprint / 期末速通资料
+Course
+├── Book A: primary
+├── Book B: supplementary / reference
+└── Concept Graph
 ```
 
-最终产品原则是“App 通用、教材是数据”。在通用 App 和教材导入契约稳定后，新增课程应主要是上传教材、完成结构化并注册，而不是为每本教材重新开发一套程序。
+每本 Book 保持独立 `book_id / book_version_id / chapter / section / page / source_anchor / proof / notation`。
 
-当前 App gate 仍以每门 course 的 enabled 主教材作为教材事实主源；辅助教材的多书证据融合属于后续扩展，不能在尚未实现时当作已完成能力。
-
-## 6. 已确认的 Learning 课堂录音架构
-
-课堂录音属于 Learning 域，并与 canonical 教材建立关联，但两者不是同一事实源。
-
-永远分离：
+课程级统一发生在 Concept 层，通过 `ConceptAlignment` 连接：
 
 ```text
-Textbook fact layer
-Lecture fact layer
-Derived / AI fusion layer
+concept_id
+book_id
+book_version_id
+section_id
+source_anchor
+relation
+confidence
+revision
 ```
 
-教材负责稳定、结构化、可引用的知识基线；课堂录音负责老师真实讲授方式、强调、考试信号和教材之外的补充；AI 负责匹配、整理和补充，但不能混淆来源。
+第一版仍由 primary book 提供课程 Section 主骨架；辅助教材作为同 Concept/Section 的补充证据源。
 
-录音处理采用 local-first：
+同一本教材不同 edition 使用 `logical_book_id + book_version_id + Version Mapping`，新版不能覆盖旧版。
+
+## 7. Course Compiler / Course Package
+
+Phase 1G 后优先冻结统一 Course Package Contract。
+
+目标：
 
 ```text
-课堂录音
-→ 本地 VAD / ASR
+主教材 + 辅助教材
+→ Course Compiler
+→ identity / version / PageMap
+→ Chapter / Section / objects
+→ source anchors
+→ terminology / search index
+→ Concept candidates / dependency
+→ readiness PASS/WARN/FAIL
+→ Course Package
+→ App
+```
+
+Functional Analysis 作为 Golden Course 验证“换教材不换程序”。
+
+## 8. Unified Retrieval：已确认长期搜索架构
+
+现有 Phase 1E deterministic search 保留为 Exact 高可信层。
+
+长期组合：
+
+```text
+Query Normalizer
+↓
+Canonical Exact
++ SQLite FTS5 / BM25
++ Formula
++ Concept
++ Semantic
++ LectureEvent
++ ExamPoint
++ Personal
++ isolated Meeting
+↓
+RRF / equivalent fusion
+↓
+source-aware reranking
+↓
+provenance-preserving hits
+```
+
+数学查询逐步支持中英文术语别名、Unicode/LaTeX/数学符号归一。
+
+Search 与 QA 共用 Retrieval Engine；Search 返回证据，QA 基于同一 retrieval 构造 Evidence Pack。
+
+结果明确标记来源：主教材 / 辅助教材 / 课堂 / 老师重点 / 考试 / 个人 / AI Derived / Meeting。
+
+Meeting retrieval 与 Learning retrieval 授权和索引隔离。
+
+## 9. Concept Graph / Concept 360
+
+Chapter/Section 是阅读骨架，Concept Graph 是知识依赖骨架。
+
+Concept 连接：
+
+- 主教材定义/定理/公式/证明/例题
+- 辅助教材解释/其他证明/补充题
+- prerequisite / dependent concepts
+- 课堂讲解与老师强调
+- ExamPoint / Exam
+- Questions / Mistakes
+- Mastery
+
+Concept 360 View 最终展示“一个知识点的一生”，但每条内容保留独立 provenance，不生成不可追踪的融合原文。
+
+## 10. 课堂录音与教材协同
+
+桌面/PWA 和手机/Android 的业务功能一致，都保留录音能力；只允许因平台权限、后台策略、布局和算力造成实现差异。
+
+课堂录音 local-first：
+
+```text
+Audio
+→ VAD / local ASR
 → raw_transcript
-→ 本地术语纠错 / 断句
-→ 初步 Section / Concept 匹配
-→ 即时课堂初加工
-→ pending_ai
+→ local_refined
+→ Section / Concept matching
+→ LectureEvents / pending_ai
 ```
 
-即时初加工除逐字记录外，应尽可能结构化提取并标注置信度：
+即时初加工尽量识别：老师重点、考点、考试范围、分值/占比、成绩规则、作业、Deadline、老师扩展，以及“不考 / 不要求证明 / 了解即可”等信号。
 
-- 老师强调 / 重点
-- 初步考点
-- 考试范围
-- 分值 / 占比 / 成绩规则
-- 作业
-- Deadline
-- 老师额外知识
-- 明确“不考 / 不要求证明 / 了解即可”等教学要求
+永久分层：
 
-老师原话不会被教材补充改写。系统可以识别课堂知识缺口，再从真实教材结构化数据中补充定义、定理、公式、证明、例题和相关考点，并明确标注教材来源。
+```text
+Textbook fact
+Lecture fact
+Derived / AI fusion
+```
 
-教材结构化数据还可用于生成课程术语词典，帮助数学术语、公式和已有对象的 ASR 二次纠错。
-
-录音派生层永久分开：
+以及：
 
 ```text
 raw_audio
@@ -213,195 +266,141 @@ local_refined
 ai_refined
 ```
 
-`raw_audio` 按当前产品决策永久保留，不由精修稿覆盖。当前不要求 App 在上传 Drive 前自行加密原始录音。
+教材补充不能伪装成老师原话，AI refinement 不能覆盖 raw source。
 
-## 7. 每日 GPT 精加工与“老师课堂独立知识体系”
+## 11. 每日 GPT 精加工 / Processing Job
 
-第一版不做自动定时 AI，由用户每天手动触发 GPT 精加工当天新增录音。
-
-目标不是只生成课堂摘要，而是逐步构建每门课独立的“老师课堂知识体系”，保留老师自己的讲法、强调、考试要求和课程组织方式，再用教材结构化数据补足老师没有完整展开的正式知识。
-
-处理链：
+第一版由用户每天手动触发，不做自动定时。
 
 ```text
-App 本地初加工
-→ processing_status=pending_ai
-→ 允许同步的数据进入 Drive
-+
-GitHub 当前 schema / rules / project state / canonical structures
-→ GPT 每日精加工
-→ 老师课堂知识体系 + 教材补充 + 来源关联
-→ 新 processing revision 写回 Drive
-→ App 反向同步 processed 结果
+App local first-pass
+→ Drive pending_ai
++ GitHub schema/rules/current state
++ canonical Course Package
+→ GPT versioned Processing Job
+→ refined transcript / LectureEvents / concept links / exam signals / textbook supplements / derived notes
+→ processed revision
+→ Drive / Sync API
+→ App
 ```
 
-Learning 精加工至少包括：
+每次保留 `input_revision / processor_version / schema_version / textbook_version / processed_at`。
 
-- 术语与数学表达校正
-- 老师讲课内容重组，但保留原始时间戳与来源
-- 老师独立知识点 / Concept 体系
-- 老师强调与考试信号归档
-- 考点、考试范围、占比/成绩规则、作业、Deadline 抽取
-- 与 Section / Concept / ExamPoint 建立关系
-- 识别老师未完整展开的知识缺口
-- 从主教材/辅助教材结构化数据补充定义、定理、公式、证明、例题和习题
-- 明确区分“老师说的”“教材补的”“GPT 组织/建议的”
+同时逐步生成 Course Timeline 和 What Changed 增量摘要。
 
-同一录音不因每天运行而重复精加工；需要重跑时生成新的 processing revision，而不是覆盖 raw source。
+## 12. ExamPoint / Exam Sprint / Exam Digital Twin
 
-## 8. 多设备 / App ↔ Drive/GitHub ↔ GPT ↔ App 方向
+ExamPoint 第一版只用教材真实结构化证据计算基础重要度，保存 priority/reasons/prerequisites/canonical anchors。
 
-用户与朋友最终都只使用联网 App。每台设备保持自己的 SQLite 和稳定 `profile_id`，不共享同一个 SQLite 文件。
-
-长期数据流：
+Exam Sprint：
 
 ```text
-你的 App ─┐
-          ├─ Book Sync API ─→ owner-controlled Drive ─→ pending_ai
-朋友 App ─┘                                      │
-                                                │
-GitHub：代码 / schema / rules / current state ───┤
-                                                ↓
-                                               GPT
-                                                ↓
-                                     processed revisions
-                                                ↓
-                                       Drive / Sync API
-                                                ↓
-                                           双方 App
+30 min 保命版
+2 h 核心版
+6 h 考试版
+完整速通
 ```
 
-职责边界：
+按 ExamPoint + 最小 prerequisite closure 组织。
 
-- Drive 保存用户数据、录音、大文件、同步包和 processed 结果。
-- GitHub 保存代码、schema、处理规则、产品治理和适合版本管理的 canonical 结构/规范。
-- 原始录音和私有 Meeting 数据不提交 GitHub。
-- 朋友端 APK 不内置 owner Drive Token、Google 账号凭证或长期秘密。
-- 未来同步采用增量 event/record，不整库覆盖；同一 `event_id` 只应用一次。
-- StudyRecord 是否共享作为独立策略处理，不与课堂共享强绑定。
+Exam Digital Twin 后续保存考试日期、范围、总分、章节/主题占比、题型、老师明确考试信号、confirmed/probable/unknown、当前覆盖率和风险区域。
 
-## 9. 独立 Private Meeting 域
+## 13. Mistake / Mastery / Next Best Action
 
-Meeting 独立于 Course / Book / Section 教材体系之外。
+StudyRecord 记录学习行为，不等于真正掌握。
 
-它可以复用：
+Mastery 长期根据复习、刷题、错题、回忆、时间间隔和明确自评等证据更新。
 
-- Audio capture
-- VAD / ASR
-- 本地 SQLite
-- `profile_id`
-- Drive transport
-- processing queue
-- AI refinement pipeline
+Mistake 映射 Concept 和 prerequisite，识别 definition gap / theorem condition / formula misuse / prerequisite gap / reasoning break / calculation / careless 等根因，并生成最短修复路径。
 
-但业务数据独立，例如：
+Next Best Action 最终组合：
 
 ```text
-Meeting
-MeetingTranscriptSegment
-MeetingEvent
-Decision
-ActionItem
-Deadline
-FollowUp
+ExamPoint
++ teacher emphasis
++ Exam Digital Twin
++ StudyRecord
++ Mastery
++ Mistakes
++ remaining time
++ prerequisite graph
 ```
 
-Meeting 默认私有：
+输出“现在最应该学什么”，并显示 reason/evidence；AI 不得无证据直接修改事实或 Mastery。
 
-- 不进入朋友共享 Learning 数据流
-- 不参与教材知识融合
-- 精加工结果只回到 owner App
-- 每天新增 Meeting 录音同样进入夜间 `pending_ai` 处理
+## 14. 多设备同步
 
-## 10. 每本结构化教材的 ExamPoint / 思维导图 / Exam Sprint
-
-### 按章：ExamPoint + Chapter Hub
-
-章节层应形成：
-
-- 核心考点
-- 章节总结
-- 核心知识点 / 公式
-- 可点击思维导图
-- 章节测试
-
-第一版 ExamPoint 只根据教材真实结构化证据确定基础重要度，不让 AI 凭感觉决定重点。
-
-基础信号包括：
-
-- 定义 / 核心概念
-- 定理 / 命题
-- 公式及使用条件
-- 证明及证明主线
-- 典型例题
-- 教材习题
-- 教材内部重复引用
-- 前置 / 后续知识依赖
-- 教材显式强调
-
-每个考点保存可解释 priority、reasons 和 canonical source anchors。以后可叠加老师强调、考试范围、作业、错题和 Mastery，但课堂/个人信号必须与教材基础证据分开保存。
-
-### 按整本：Exam Sprint / 期末速通
-
-每本 `STRUCTURED_COMPLETE / RUNTIME_READY` 教材都应具备独立 Exam Sprint：
+长期：
 
 ```text
-30 分钟：保命版
-2 小时：核心版
-6 小时：考试版
-完整速通：覆盖全部核心考点
+App(s)
+→ Book Sync API
+→ owner-controlled Drive
 ```
 
-路线必须考虑 ExamPoint priority 和最小必要前置依赖，不只是按章节截断。每一项显示“为什么重要”和真实教材来源；AI 只负责组织已经有证据的材料。
+每台设备保持自己的 SQLite / profile_id；同步增量 record/event，不共享整个 SQLite。
 
-## 11. 主开发与 Codex 的协作策略
+`event_id` 全局唯一，远端幂等应用。
 
-当前正式开发策略：
+朋友端不持有 owner Drive Token/Google 凭证。
+
+桌面与手机共享同一业务 contract 和允许同步的数据语义。
+
+## 15. Private Meeting
+
+Meeting 与 Course/Book/Section 独立，默认私有。
+
+复用 Audio/VAD/ASR/SQLite/profile_id/sync/ProcessingJob，但不参与教材知识融合，不进入朋友 shared Learning feed。
+
+Meeting retrieval 与 Learning retrieval 隔离。
+
+## 16. 开发系统策略
+
+正式策略：
 
 ```text
-ChatGPT 聊天模式 = 项目主开发
-Codex = 完整版本后的独立审计 + 定向升级
+ChatGPT chat = 主开发
+GitHub Actions = 自动测试 / 构建 / regression
+Functional Analysis = Golden Course
+Codex = 完整版本后的独立审计 + targeted upgrade
 ```
 
-聊天模式负责从当前 Phase 1G 开始继续推进整个项目：设计、Spec、Plan、代码实现、测试、CI、GitHub/Drive 状态维护和阶段 PR 审查。
+开发采用 Spec/Schema/Acceptance Contract、Vertical Slice、TDD、Architecture Fitness Functions、分层 CI 和 exact-head gate。
 
-Codex 不作为主线连续开发依赖。等项目达到一个完整可用版本后，再让 Codex：
+GitHub-hosted runner 主要跑快速/PR gate；重型教材 rebuild、ASR、本地模型、Android/Windows 特殊验证后续可使用 self-hosted runner。
 
-1. 先做全仓独立审计，重点检查 Architecture / Data Model / SQLite / FastAPI / React / TypeScript / CI / Security / Sync readiness / Android readiness / Performance / Maintainability / canonical data integrity。
-2. 审计结果按严重度形成 Upgrade Spec，不直接无边界大改仓库。
-3. 需要升级时在独立 upgrade branch 上做 targeted upgrade，再重新跑完整回归。
+## 17. 当前明确未实现
 
-这样主线不会受 Codex 额度/会话连续性影响，同时保留第二视角审计和后期重构价值。
+以下均已进入正式计划，但当前不能当作已完成：
 
-## 12. 当前明确未实现的能力
+- Phase 1G StudyRecord / SQLite 业务代码
+- Course Compiler / Course Package v2
+- 多教材 ConceptAlignment
+- Golden Course 自动 gate
+- Architecture Fitness Functions
+- Unified Retrieval v1/扩展
+- Minimal Concept Graph / Concept 360
+- Chapter Hub / 思维导图
+- ExamPoint / Exam Sprint / Exam Digital Twin
+- 录音 UI / VAD / ASR / LectureEvent
+- Drive Sync / SyncEvent / SyncEngine
+- GPT Processing pipeline 真实写回
+- Course Timeline / What Changed
+- Mistake / Mastery / Next Best Action
+- Meeting UI / storage
+- Android APK
+- raw PDF Reader
 
-以下均为已确认的后续方向，但当前不能当成已完成成果：
+## 18. 当前唯一下一步
 
-- Phase 1G SQLite / StudyRecord 代码实现
-- 丰富四模式体验
-- Chapter Hub / 可点击思维导图
-- ExamPoint Engine
-- Exam Sprint / 期末速通
-- Android APK 封装
-- Google Drive 登录/同步
-- Book Sync API
-- SyncEvent / SyncEngine
-- 多设备冲突解决
-- 录音 UI、VAD、ASR
-- 即时课堂结构化提取
-- Learning 课堂知识体系与教材融合
-- 每日 GPT processing pipeline 的真实写回/反向同步
-- Meeting UI / Meeting storage
-- 原始 PDF Reader
+保持 `feature/study-record-phase-1g`，直接按：
 
-## 13. 当前唯一下一步
+`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
 
-保持当前分支 `feature/study-record-phase-1g`，直接按已经完成的实施计划进行测试驱动实现：
+进行 TDD，实现：
 
 ```text
 StudyRecord + SQLite + hidden profile_id + recent learning + sync-ready metadata
 ```
 
-实施计划：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
-
-不要在 Phase 1G 顺手实现录音、Meeting、Drive Sync、SyncEvent、ExamPoint 或 Exam Sprint。完成 Phase 1G 后继续沿 `docs/ROADMAP.md` 推进，主线开发默认由聊天模式完成；Codex 留到完整版本后的独立审计与定向升级阶段。
+当前不提前实现后续架构能力。
