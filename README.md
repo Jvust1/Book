@@ -32,7 +32,7 @@ Book 是一个面向真实课程学习的 **Course OS**：把持续上传的多�
 
 - 中文工作名：《泛函分析：分析学进一步专题导论》
 - 作者：Elias M. Stein、Rami Shakarchi
-- 状态：**STRUCTURED_COMPLETE**
+- 状态：**STRUCTURED_COMPLETE / RUNTIME_READY**
 - 最终版本：**v0.36 FINAL**
 - 源 PDF：**442 / 442 页全部完成结构化覆盖**
 - 最终纸质页：**423**
@@ -44,16 +44,16 @@ Book 是一个面向真实课程学习的 **Course OS**：把持续上传的多�
 
 ## 当前状态
 
-第一本真实教材的全书结构化阶段已经完成，**不再继续执行 PDF 51–60 等旧批次任务**。
+第一本真实教材的全书结构化和 runtime import/readiness recovery 已完成。
 
-当前主线已经切换到 **Course OS 软件 MVP**：
+当前主线是 **CourseRuntime Phase 1B**：打通 `Course → Book → Chapter → Section`。Functional Analysis 已作为第一本真实 course fixture 接入；Section 的 `预习｜学习｜复习｜刷题` 学习壳仍是下一里程碑，尚未在本阶段实现。
 
-1. 建立结构化教材运行时导入/读取契约。
-2. 用 Functional Analysis v0.36 作为第一本真实 fixture。
-3. 打通 `Course → Book → Chapter → Section`。
-4. 打通每节 `预习｜学习｜复习｜刷题` 四个独立入口。
-5. 打通教材内容锚点定位、考点往返与页面状态恢复。
-6. 接入教材搜索/问答与学习进度记录。
-7. 选择一章完成端到端真实验收。
+后续顺序：
 
-原始产品/架构基线保留在 Issue #1：`Book Course OS 总体计划与架构基线`，已同步更新到上述里程碑。
+1. 完成并集成 CourseRuntime Phase 1B。
+2. 打通每节 `预习｜学习｜复习｜刷题` 四个独立入口。
+3. 打通教材内容锚点定位、考点往返与页面状态恢复。
+4. 接入教材搜索/问答与学习进度记录。
+5. 选择一章完成端到端真实验收。
+
+原始产品/架构基线保留在 Issue #1：`Book Course OS 总体计划与架构基线`。

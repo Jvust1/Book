@@ -1,0 +1,17 @@
+{
+  "schema_version": "course_manifest_v1",
+  "course_id": "functional_analysis_course",
+  "name": "Functional Analysis",
+  "language": "bilingual",
+  "status": "active",
+  "main_book_id": "stein_shakarchi_functional_analysis_2011",
+  "books": [
+    {
+      "book_id": "stein_shakarchi_functional_analysis_2011",
+      "role": "main",
+      "path": "../../books/functional-analysis",
+      "required": true,
+      "enabled": true
+    }
+  ]
+}

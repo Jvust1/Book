@@ -7,6 +7,13 @@ from .book_runtime import (
     RuntimeObject,
     RuntimeSection,
 )
+from .course_runtime import (
+    CourseBookResolutionError,
+    CourseManifestError,
+    CourseRuntime,
+    CourseRuntimeBlockedError,
+    CourseRuntimeError,
+)
 
 __all__ = [
     "BookRuntime",
@@ -14,4 +21,9 @@ __all__ = [
     "BookRuntimeError",
     "RuntimeObject",
     "RuntimeSection",
+    "CourseBookResolutionError",
+    "CourseManifestError",
+    "CourseRuntime",
+    "CourseRuntimeBlockedError",
+    "CourseRuntimeError",
 ]
