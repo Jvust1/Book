@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 
 const BASE_URL = 'http://127.0.0.1:5173'
 const COURSE_ID = 'functional_analysis_course'
@@ -62,7 +62,7 @@ async function readJson<T>(response: {
   return (await response.json()) as T
 }
 
-async function openQA(page: Parameters<typeof test>[0] extends never ? never : any) {
+async function openQA(page: Page) {
   await page.goto(`/courses/${COURSE_ID}`)
   await page.getByRole('link', { name: '教材问答' }).click()
   await expect(page).toHaveURL(`${BASE_URL}/courses/${COURSE_ID}/qa`)
@@ -117,10 +117,7 @@ test('real Functional Analysis desktop source round trip', async ({ page, reques
 
   await page.locator(`a[href="${sectionPath}"]`).click()
   await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=learn`)
-  await expect(page.getByRole('tab', { name: '学习' })).toHaveAttribute(
-    'aria-selected',
-    'true',
-  )
+  await expect(page.getByRole('tab', { name: '学习' })).toHaveAttribute('aria-selected', 'true')
 
   const sourceLink = page.locator(`a[href="${sourcePath}"]`)
   await expect(sourceLink).toBeVisible()
@@ -129,9 +126,7 @@ test('real Functional Analysis desktop source round trip', async ({ page, reques
   await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
   await expect(page.getByText(`教材页：${source.printed_page ?? '暂缺'}`)).toBeVisible()
   await expect(page.getByText(`PDF 页：${source.pdf_page ?? '暂缺'}`)).toBeVisible()
-  await expect(
-    page.getByText(`结构化来源：${realObject.kind}:${realObject.source_id}`),
-  ).toBeVisible()
+  await expect(page.getByText(`结构化来源：${realObject.kind}:${realObject.source_id}`)).toBeVisible()
   if (source.source_anchor === null) {
     await expect(page.getByText('教材锚点暂未提供')).toBeVisible()
   } else {
@@ -147,15 +142,10 @@ test('real Functional Analysis desktop source round trip', async ({ page, reques
   await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=practice`)
 })
 
-test('real Functional Analysis desktop textbook search round trip preserves canonical context', async ({
-  page,
-  request,
-}) => {
+test('real Functional Analysis desktop textbook search round trip preserves canonical context', async ({ page, request }) => {
   const query = 'Hölder'
   const search = await readJson<SearchResponse>(
-    await request.get(
-      `${BASE_URL}/api/courses/${COURSE_ID}/search?q=${encodeURIComponent(query)}`,
-    ),
+    await request.get(`${BASE_URL}/api/courses/${COURSE_ID}/search?q=${encodeURIComponent(query)}`),
   )
   expect(search.query).toBe(query)
   expect(search.result_count).toBeGreaterThan(0)
@@ -187,7 +177,7 @@ test('real Functional Analysis desktop textbook search round trip preserves cano
 
   const persisted = await page.evaluate((courseId) => {
     const raw = sessionStorage.getItem(`book:search-view:${courseId}`)
-    return raw ? JSON.parse(raw) as Record<string, unknown> : null
+    return raw ? (JSON.parse(raw) as Record<string, unknown>) : null
   }, COURSE_ID)
   expect(persisted?.query).toBe(query)
   expect(persisted?.activeSourceKey).toBe(sourceKey)
@@ -195,15 +185,10 @@ test('real Functional Analysis desktop textbook search round trip preserves cano
 
   await page.getByRole('button', { name: '返回搜索' }).click()
   await expect(page).toHaveURL(new RegExp(`/courses/${COURSE_ID}/search\\?q=H%C3%B6lder$`))
-  await expect(page.locator(`[data-source-key="${sourceKey}"]`)).toHaveAttribute(
-    'aria-current',
-    'true',
-  )
+  await expect(page.locator(`[data-source-key="${sourceKey}"]`)).toHaveAttribute('aria-current', 'true')
 })
 
-test('real Functional Analysis search distinguishes Chinese hits from normal zero hits', async ({
-  page,
-}) => {
+test('real Functional Analysis search distinguishes Chinese hits from normal zero hits', async ({ page }) => {
   await page.goto(`/courses/${COURSE_ID}/search`)
   const input = page.getByRole('searchbox', { name: '教材搜索词' })
 
@@ -218,9 +203,7 @@ test('real Functional Analysis search distinguishes Chinese hits from normal zer
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
-test('real Functional Analysis textbook QA answers English theorem questions from verified evidence', async ({
-  page,
-}) => {
+test('real Functional Analysis textbook QA answers English theorem questions from verified evidence', async ({ page }) => {
   await openQA(page)
   await page.getByRole('textbox', { name: '教材问题' }).fill('What does Hölder inequality say?')
   await page.getByRole('button', { name: '提问' }).click()
@@ -230,9 +213,7 @@ test('real Functional Analysis textbook QA answers English theorem questions fro
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
-test('real Functional Analysis Chinese QA citation source round trip restores question without caching answer payload', async ({
-  page,
-}) => {
+test('real Functional Analysis Chinese QA citation source round trip restores question without caching answer payload', async ({ page }) => {
   const question = '什么是巴拿赫空间？'
   await openQA(page)
   await page.getByRole('textbox', { name: '教材问题' }).fill(question)
@@ -247,7 +228,7 @@ test('real Functional Analysis Chinese QA citation source round trip restores qu
 
   const persisted = await page.evaluate((courseId) => {
     const raw = sessionStorage.getItem(`book:qa-view:${courseId}`)
-    return raw ? JSON.parse(raw) as Record<string, unknown> : null
+    return raw ? (JSON.parse(raw) as Record<string, unknown>) : null
   }, COURSE_ID)
   expect(persisted?.question).toBe(question)
   expect(persisted).not.toHaveProperty('answer')
@@ -260,13 +241,9 @@ test('real Functional Analysis Chinese QA citation source round trip restores qu
   await expect(page.locator('.qa-citation-card[aria-current="true"]')).toHaveCount(1)
 })
 
-test('real Functional Analysis textbook QA treats nonexistent questions as normal insufficient evidence', async ({
-  page,
-}) => {
+test('real Functional Analysis textbook QA treats nonexistent questions as normal insufficient evidence', async ({ page }) => {
   await openQA(page)
-  await page
-    .getByRole('textbox', { name: '教材问题' })
-    .fill('definitely-no-such-textbook-concept-92831')
+  await page.getByRole('textbox', { name: '教材问题' }).fill('definitely-no-such-textbook-concept-92831')
   await page.getByRole('button', { name: '提问' }).click()
 
   await expect(page.locator('.qa-result')).toBeVisible()
@@ -274,15 +251,10 @@ test('real Functional Analysis textbook QA treats nonexistent questions as norma
   await expect(page.getByRole('alert')).toHaveCount(0)
 })
 
-test('real Functional Analysis narrow Section remains reachable without body overflow', async ({
-  page,
-}) => {
+test('real Functional Analysis narrow Section remains reachable without body overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto(`/courses/${COURSE_ID}/sections/${SECTION_ID}?mode=learn`)
-  await expect(page.getByRole('tab', { name: '学习' })).toHaveAttribute(
-    'aria-selected',
-    'true',
-  )
+  await expect(page.getByRole('tab', { name: '学习' })).toHaveAttribute('aria-selected', 'true')
 
   for (const label of ['预习', '学习', '复习', '刷题']) {
     const tab = page.getByRole('tab', { name: label })
@@ -296,9 +268,7 @@ test('real Functional Analysis narrow Section remains reachable without body ove
   expect(fitsViewport).toBe(true)
 })
 
-test('real Functional Analysis narrow search and source round trip avoid body overflow', async ({
-  page,
-}) => {
+test('real Functional Analysis narrow search and source round trip avoid body overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto(`/courses/${COURSE_ID}/search?q=H%C3%B6lder`)
 
@@ -327,9 +297,7 @@ test('real Functional Analysis narrow search and source round trip avoid body ov
   ).toBe(true)
 })
 
-test('real Functional Analysis narrow QA/source round trip avoids body overflow', async ({
-  page,
-}) => {
+test('real Functional Analysis narrow QA/source round trip avoids body overflow', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await openQA(page)
   await page.getByRole('textbox', { name: '教材问题' }).fill('什么是巴拿赫空间？')
