@@ -1,0 +1,209 @@
+{
+  "book_id": "stein_shakarchi_functional_analysis_2011",
+  "status": "PASS_CANDIDATE",
+  "recovery_kind": "materialized_from_audited_repository_evidence",
+  "original_pdf_binary_re_read": false,
+  "evidence": [
+    "book_metadata.json: pdf_total_pages=442",
+    "book_metadata.json: main_text_pdf_pages=20-442",
+    "book_metadata.json: main_text_printed_pages=1-423",
+    "book_metadata.json: source PDF used embedded page labels",
+    "chunks/chunk_001_structure.json: stored Cover/vii/xi/xvii/printed-1 anchors",
+    "frontmatter sequence: Cover + i-xviii before printed page 1"
+  ],
+  "row_count": 442,
+  "frontmatter_cover_count": 1,
+  "frontmatter_roman_count": 18,
+  "main_text_count": 423,
+  "main_text_pdf_range": [
+    20,
+    442
+  ],
+  "main_text_printed_range": [
+    1,
+    423
+  ],
+  "anchor_checks_pass": true,
+  "anchor_checks": [
+    {
+      "name": "chunk_001_range_labels",
+      "pdf_page": 1,
+      "expected_page_label": "Cover",
+      "status": "PASS",
+      "actual": {
+        "page_label": "Cover",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "chunk_001_end_label",
+      "pdf_page": 20,
+      "expected_page_label": "1",
+      "status": "PASS",
+      "actual": {
+        "page_label": "1",
+        "printed_page": "1"
+      }
+    },
+    {
+      "name": "front_cover",
+      "pdf_page": 1,
+      "expected_page_label": "Cover",
+      "status": "PASS",
+      "actual": {
+        "page_label": "Cover",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "foreword_start",
+      "pdf_page": 8,
+      "expected_page_label": "vii",
+      "status": "PASS",
+      "actual": {
+        "page_label": "vii",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "foreword_end",
+      "pdf_page": 10,
+      "expected_page_label": "ix",
+      "status": "PASS",
+      "actual": {
+        "page_label": "ix",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "toc_start",
+      "pdf_page": 12,
+      "expected_page_label": "xi",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xi",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "toc_end",
+      "pdf_page": 16,
+      "expected_page_label": "xv",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xv",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "preface_iv",
+      "pdf_page": 18,
+      "expected_page_label": "xvii",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xvii",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "chapter_1_opening_printed",
+      "pdf_page": 20,
+      "expected_printed_page": "1",
+      "status": "PASS",
+      "actual": {
+        "page_label": "1",
+        "printed_page": "1"
+      }
+    },
+    {
+      "name": "final_anchor_pdf_1",
+      "pdf_page": 1,
+      "expected_page_label": "Cover",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "Cover",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_2",
+      "pdf_page": 2,
+      "expected_page_label": "i",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "i",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_8",
+      "pdf_page": 8,
+      "expected_page_label": "vii",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "vii",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_12",
+      "pdf_page": 12,
+      "expected_page_label": "xi",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xi",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_18",
+      "pdf_page": 18,
+      "expected_page_label": "xvii",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xvii",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_19",
+      "pdf_page": 19,
+      "expected_page_label": "xviii",
+      "expected_printed_page": "",
+      "status": "PASS",
+      "actual": {
+        "page_label": "xviii",
+        "printed_page": ""
+      }
+    },
+    {
+      "name": "final_anchor_pdf_20",
+      "pdf_page": 20,
+      "expected_page_label": "1",
+      "expected_printed_page": "1",
+      "status": "PASS",
+      "actual": {
+        "page_label": "1",
+        "printed_page": "1"
+      }
+    },
+    {
+      "name": "final_anchor_pdf_442",
+      "pdf_page": 442,
+      "expected_page_label": "423",
+      "expected_printed_page": "423",
+      "status": "PASS",
+      "actual": {
+        "page_label": "423",
+        "printed_page": "423"
+      }
+    }
+  ],
+  "candidate": "page_map.csv.candidate",
+  "promoted": true
+}
