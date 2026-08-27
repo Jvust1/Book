@@ -4,6 +4,7 @@ import type {
   LearningMode,
   LibraryResponse,
   ModeResponse,
+  SearchResponse,
   SectionResponse,
   SourceResponse,
 } from './types'
@@ -88,6 +89,16 @@ export const bookApi = {
   ): Promise<ModeResponse> {
     return request<ModeResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/${mode}`,
+    )
+  },
+
+  searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {
+    const params = new URLSearchParams({
+      q: query,
+      limit: String(limit),
+    })
+    return request<SearchResponse>(
+      `/api/courses/${segment(courseId)}/search?${params.toString()}`,
     )
   },
 
