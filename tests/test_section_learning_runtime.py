@@ -169,5 +169,112 @@ class SectionLearningSourceTests(unittest.TestCase):
         )
 
 
+class SectionLearningModeTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.learning = SectionLearningRuntime.from_course(FakeCourse(), "s1")
+
+    def test_preview_preserves_identity_and_compact_source_metadata(self) -> None:
+        payload = self.learning.preview()
+        self.assertEqual(payload["mode"], "preview")
+        self.assertEqual(
+            (
+                payload["course_id"],
+                payload["book_id"],
+                payload["chapter_id"],
+                payload["section_id"],
+            ),
+            ("fixture_course", "fixture_book", "chapter_01", "s1"),
+        )
+        object_item = next(
+            row
+            for row in payload["items"]
+            if row["kind"] == "object" and row["source_id"] == "def_1"
+        )
+        translation_item = next(
+            row
+            for row in payload["items"]
+            if row["kind"] == "translation" and row["source_id"] == "b1"
+        )
+        self.assertEqual(object_item["object_type"], "definition")
+        self.assertIs(translation_item["available"], True)
+
+    def test_learn_references_all_source_objects_figures_and_translations_in_order(self) -> None:
+        source = self.learning.source()
+        payload = self.learning.learn()
+        expected = (
+            [("object", row["id"]) for row in source.objects]
+            + [("figure", row["id"]) for row in source.figures]
+            + [("translation", row["batch_id"]) for row in source.translation_sources]
+        )
+        self.assertEqual(
+            [(row["kind"], row["source_id"]) for row in payload["items"]],
+            expected,
+        )
+
+    def test_review_uses_exact_normalized_policy_and_preserves_source_type(self) -> None:
+        payload = self.learning.review()
+        source = self.learning.source()
+        by_id = {row["id"]: row for row in source.objects}
+        self.assertEqual(
+            [row["source_id"] for row in payload["items"]],
+            ["def_1", "thm_1"],
+        )
+        self.assertEqual(by_id["thm_1"]["type"], " Theorem ")
+
+    def test_practice_uses_only_exact_exercise_problem_policy(self) -> None:
+        payload = self.learning.practice()
+        self.assertEqual(
+            [row["source_id"] for row in payload["items"]],
+            ["ex_1", "prob_1"],
+        )
+
+    def test_empty_review_and_practice_subsets_are_valid(self) -> None:
+        course = FakeCourse()
+        course._book._objects = [
+            RuntimeObject(id="remark_only", type="remark", section_id="s1")
+        ]
+        learning = SectionLearningRuntime.from_course(course, "s1")
+        self.assertEqual(learning.review()["items"], [])
+        self.assertEqual(learning.practice()["items"], [])
+
+    def test_every_mode_item_maps_to_source_by_kind_and_source_id(self) -> None:
+        source = self.learning.source()
+        source_keys = (
+            {("object", row["id"]) for row in source.objects}
+            | {("figure", row["id"]) for row in source.figures}
+            | {
+                ("translation", row["batch_id"])
+                for row in source.translation_sources
+            }
+        )
+        for payload in (
+            self.learning.preview(),
+            self.learning.learn(),
+            self.learning.review(),
+            self.learning.practice(),
+        ):
+            for item in payload["items"]:
+                self.assertIn((item["kind"], item["source_id"]), source_keys)
+            self.assertEqual(
+                payload["source_refs"],
+                [
+                    {"kind": item["kind"], "source_id": item["source_id"]}
+                    for item in payload["items"]
+                ],
+            )
+
+    def test_modes_have_no_ordering_lock(self) -> None:
+        fresh = SectionLearningRuntime.from_course(FakeCourse(), "s1")
+        self.assertEqual(
+            [
+                fresh.practice()["mode"],
+                fresh.preview()["mode"],
+                fresh.review()["mode"],
+                fresh.learn()["mode"],
+            ],
+            ["practice", "preview", "review", "learn"],
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
