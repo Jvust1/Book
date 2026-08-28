@@ -27,10 +27,16 @@ class CourseManifestNormalizationTests(unittest.TestCase):
 
     def test_path_escape_fails_closed(self):
         repo, course = self._synthetic_repo()
-        outside = repo.parent / "outside"
-        outside.mkdir(exist_ok=True)
-        self._write_manifest(course, path=str(outside))
+        self._write_manifest(course, path="../../../outside")
         with self.assertRaisesRegex(ManifestNormalizationError, "escapes repository root"):
+            normalize_course_manifest(course, repo)
+
+    def test_absolute_book_path_is_rejected_even_inside_repository(self):
+        repo, course = self._synthetic_repo()
+        book = repo / "books" / "a"
+        self._write_ready_book(book, "book_a")
+        self._write_manifest(course, path=str(book.resolve()))
+        with self.assertRaisesRegex(ManifestNormalizationError, "absolute book paths are not allowed"):
             normalize_course_manifest(course, repo)
 
     def test_unsupported_legacy_role_fails_closed(self):
@@ -83,9 +89,7 @@ class CourseManifestNormalizationTests(unittest.TestCase):
         repo, course = self._synthetic_repo()
         book = repo / "books" / "a"
         book.mkdir(parents=True)
-        self._write_json(book / "STRUCTURED_COMPLETE.json", {
-            "status": "STRUCTURED_COMPLETE", "book_id": "book_a", "version": "",
-        })
+        self._write_json(book / "STRUCTURED_COMPLETE.json", {"status": "STRUCTURED_COMPLETE", "book_id": "book_a", "version": ""})
         self._write_manifest(course)
         with self.assertRaisesRegex(ManifestNormalizationError, "structured version"):
             normalize_course_manifest(course, repo)
@@ -119,13 +123,7 @@ class CourseManifestNormalizationTests(unittest.TestCase):
             "name": "Fixture Course",
             "language": "en",
             "main_book_id": book_id,
-            "books": [{
-                "book_id": book_id,
-                "role": role,
-                "path": path,
-                "required": True,
-                "enabled": True,
-            }],
+            "books": [{"book_id": book_id, "role": role, "path": path, "required": True, "enabled": True}],
         }
 
     def _write_manifest(self, course: Path, **kwargs):
