@@ -14,6 +14,8 @@ from course_package.validator import validate_compiled_package, validate_course_
 ROOT = Path(__file__).resolve().parents[1]
 COURSE_DIR = ROOT / "courses" / "functional-analysis"
 
+# This test path intentionally triggers the current legacy full CI gates for validator changes.
+
 
 def _write_json(path: Path, value: object) -> None:
     path.write_text(
