@@ -3,15 +3,19 @@
   "updated_date": "2026-08-29",
   "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "foundation/course-package-contract-a",
-  "phase": "FOUNDATION_A_COURSE_PACKAGE_CONTRACT",
-  "status": "IN_PROGRESS",
-  "base_main_commit": "a99d4638f959e04e54d91efe0ee0dd9ac50488a6",
-  "last_verified_implementation_head": "94fee411b5f8d67a5db2ef5779657f39c226c220",
+  "active_branch": "main",
+  "phase": "POST_FOUNDATION_A_TRANSITION",
+  "status": "READY_FOR_NEXT_PHASE_DESIGN",
+  "base_main_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
+  "last_verified_implementation_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "foundation_a": {
+    "status": "COMPLETE_MERGED",
     "approved_design": "docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md",
     "implementation_plan": "docs/superpowers/plans/2026-08-28-foundation-a-course-package.md",
+    "merged_pr": 13,
+    "merged_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
+    "merge_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
     "completed_tasks": [
       {"task": 1, "name": "Course Package v1 contract and schemas", "status": "COMPLETE"},
       {"task": 2, "name": "Legacy course manifest normalization", "status": "COMPLETE"},
@@ -21,9 +25,10 @@
       {"task": 6, "name": "Functional Analysis Golden Course gate", "status": "COMPLETE"},
       {"task": 7, "name": "Executable architecture fitness functions", "status": "COMPLETE"},
       {"task": 8, "name": "Compiler and validator CLI entry points", "status": "COMPLETE"},
-      {"task": 9, "name": "Layer CI into FAST, PR FULL, and HEAVY gates", "status": "COMPLETE"}
+      {"task": 9, "name": "Layer CI into FAST, PR FULL, and HEAVY gates", "status": "COMPLETE"},
+      {"task": 10, "name": "Exact-HEAD full regression, documentation state, and PR readiness", "status": "COMPLETE"}
     ],
-    "next_task": {"task": 10, "name": "Exact-HEAD full regression, documentation state, and PR readiness", "status": "IN_PROGRESS"},
+    "next_task": null,
     "canonical_book_mutation_allowed": false,
     "runtime_consumer_migration_in_scope": false
   },
@@ -58,5 +63,5 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Open the reviewable Foundation A PR to main, require exact-final-head Course Package FAST, Runtime Python 3.11/3.12/3.13, App API/Web/Chromium checks, review the PR diff/threads, then request explicit authorization for that specific PR before merge."
+  "next_step": "Select and explicitly approve the next roadmap phase design before implementing any genuinely new architectural subsystem. Safe read-only analysis and post-merge governance reconciliation may continue automatically."
 }
