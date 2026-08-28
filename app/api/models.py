@@ -157,6 +157,24 @@ class SearchResponse(BaseModel):
     results: list[SearchResultItem]
 
 
+class StudyRecordResponse(BaseModel):
+    course_id: str
+    book_id: str
+    section_id: str
+    mode: LearningMode
+    status: Literal["in_progress", "completed"]
+    progress: Literal[0, 100]
+    started_at: str
+    last_studied_at: str
+    completed_at: str | None
+    updated_at: str
+
+
+class StudyRecordListResponse(BaseModel):
+    course_id: str
+    records: list[StudyRecordResponse]
+
+
 class QAHistoryMessageDTO(BaseModel):
     role: Literal["user", "assistant"]
     content: str
