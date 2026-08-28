@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-28
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已通过最终 CI 并合并到 `main`。当前唯一工程主线是 Phase 1G 长期学习记录；Phase 1G 设计和详细实施计划均已完成，下一步直接按计划 TDD 实现。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已在 `feature/study-record-phase-1g` 完成实现并通过 exact-code-head Runtime / App / Web / Chromium 验证；当前进入文档收尾与 PR 准备，下一工程阶段为 Foundation A。
 
 详细跨阶段架构：
 
@@ -19,6 +19,7 @@
 - [x] 教材来源必须可追溯；缺失内容与锚点不得静默编造
 - [x] 第一本文档资产完成全书结构化、审计与完成标记
 - [x] 教材搜索与教材问答已形成真实来源闭环
+- [x] 本机 SQLite 持久化四模式 StudyRecord，隐藏本机 `profile_id`
 - [ ] 同一课程支持 `primary + supplementary + reference + translation` 多教材角色
 - [ ] 同一教材多版本通过 `logical_book_id + book_version_id` 管理，不覆盖历史版本
 - [ ] 桌面/PWA 与手机/Android 保持业务功能一致；允许设备交互差异，但不人为删除桌面录音能力
@@ -40,7 +41,7 @@
 - Runtime / App / Web / Chromium gates
 - Phase 1F PR #8 已合并
 
-## Phase 1G：长期 StudyRecord — 设计与实施计划已完成，待实现
+## Phase 1G：长期 StudyRecord — 已实现并通过代码 HEAD 验证
 
 设计：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 
@@ -48,36 +49,58 @@
 
 ### 持久化
 
-- [ ] 本机 SQLite 持久层
-- [ ] FastAPI `StudyRecordService` / repository boundary
-- [ ] 可移植数据库路径抽象
+- [x] 本机 SQLite 持久层
+- [x] FastAPI `StudyRecordService` / repository boundary
+- [x] 可移植数据库路径抽象与 `BOOK_APP_DATA_DIR` 覆盖
 
 ### 身份
 
-- [ ] 首次初始化生成稳定隐藏 UUID `profile_id`
-- [ ] 单用户 UI，不做账号选择
-- [ ] 浏览器不能指定/伪造 profile identity
+- [x] 首次初始化生成稳定隐藏 UUID `profile_id`
+- [x] 单用户 UI，不做账号选择
+- [x] 浏览器不能指定/伪造 profile identity
+- [x] `book_id` 由服务器从 canonical Runtime 解析，浏览器不能提交身份字段
 
 ### 四模式进度
 
-- [ ] `preview / learn / review / practice` 四模式独立
-- [ ] 首次进入有效 mode：`in_progress`, `progress=0`
-- [ ] 再次进入更新 `last_studied_at`
-- [ ] 手动 `标记完成`：`completed`, `progress=100`
-- [ ] completed 再进入不倒退
-- [ ] 不用滚动距离/停留时间制造伪百分比
+- [x] `preview / learn / review / practice` 四模式独立
+- [x] 首次进入有效 mode：`in_progress`, `progress=0`
+- [x] 再次进入更新 `last_studied_at`
+- [x] 手动 `标记完成`：`completed`, `progress=100`
+- [x] completed 再进入不倒退
+- [x] 重复完成幂等，不制造 revision churn
+- [x] 不用滚动距离/停留时间制造伪百分比
+- [x] StudyRecord 保存失败不阻断教材内容阅读，并提供可重试状态
 
 ### 最近学习与 Sync-ready
 
-- [ ] 最近学习按 `last_studied_at`
-- [ ] 与 sessionStorage 短期返回状态严格分离
-- [ ] 保留 `study_record_id / profile_id / revision / updated_at / deleted_at / sync_status`
-- [ ] 1G 中 `sync_status=local`
-- [ ] 不提前实现 Drive / SyncEvent / SyncEngine / 录音 / Meeting / ExamPoint
+- [x] 最近学习按 `last_studied_at`
+- [x] 与 sessionStorage 短期返回状态严格分离
+- [x] 保留 `study_record_id / profile_id / revision / updated_at / deleted_at / sync_status`
+- [x] 1G 中 `sync_status=local`
+- [x] 浏览器 DTO 不暴露内部 `profile_id / revision / sync_status`
+- [x] 不提前实现 Drive / SyncEvent / SyncEngine / 录音 / Meeting / ExamPoint
+
+### Phase 1G 验证基线
+
+代码 HEAD 验证已通过：
+
+- Runtime discovery：146 / 146
+- Functional Analysis readiness：`READY`
+- App discovery：86 / 86
+- Web tests / typecheck / production build：PASS
+- real Chromium acceptance：PASS
+- StudyRecord completion 跨 reload 持久化：PASS
+- 四模式独立：PASS
+- Source → Section 往返：PASS
+- 390×844 窄屏无 body 横向溢出：PASS
+- StudyRecord SQLite read connection lifecycle regression：PASS
+- `books/functional-analysis/**` 在 Phase 1G 产品改动中保持 canonical 零修改
+
+Phase 1G 尚未合并到 `main`；完成最终文档 HEAD gate 后进入 PR / review。
 
 ## Foundation A：Course Package / Course Compiler / 自动验收基础
 
-Phase 1G 通过 exact-head gate 后优先冻结这一层，不要求作为大型 UI 版本发布。
+Phase 1G exact-head 收尾后优先冻结这一层，不要求作为大型 UI 版本发布。
 
 ### Course Package / Compiler
 
@@ -382,6 +405,6 @@ Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫
 
 ## 当前唯一下一步
 
-**保持 `feature/study-record-phase-1g`，直接按已完成的实施计划 `docs/superpowers/plans/2026-08-28-study-record-phase-1g.md` 进行 TDD，实现 `StudyRecord + SQLite + hidden profile_id + recent learning + sync-ready metadata`。**
+**完成 Phase 1G 最终文档 HEAD gate 与代码审查后，创建/更新 Phase 1G PR；合并需单独明确授权。随后进入 Foundation A：冻结 Course Package / Course Compiler contract、把 Functional Analysis 固化为 Golden Course，并建立 Architecture Fitness Functions 与分层 CI。**
 
 当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。
