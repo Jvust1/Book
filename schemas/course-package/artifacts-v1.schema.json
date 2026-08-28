@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "book://schemas/course-package/artifacts-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifacts"],
+  "properties": {
+    "schema_version": {"const": "course_package_v1"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifact_type",
+          "relative_path",
+          "sha256",
+          "size_bytes",
+          "required",
+          "book_id"
+        ],
+        "properties": {
+          "artifact_type": {
+            "enum": [
+              "book_metadata",
+              "structured_complete",
+              "audit_report",
+              "toc",
+              "page_map",
+              "search_index",
+              "qa_policy",
+              "structure",
+              "readiness"
+            ]
+          },
+          "relative_path": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "required": {"type": "boolean"},
+          "book_id": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}
