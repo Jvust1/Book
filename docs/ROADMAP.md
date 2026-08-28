@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-28
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已在 `feature/study-record-phase-1g` 完成实现并通过 exact-code-head Runtime / App / Web / Chromium 验证；当前进入文档收尾与 PR 准备，下一工程阶段为 Foundation A。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿；当前正式进入 Foundation A。
 
 详细跨阶段架构：
 
@@ -41,7 +41,7 @@
 - Runtime / App / Web / Chromium gates
 - Phase 1F PR #8 已合并
 
-## Phase 1G：长期 StudyRecord — 已实现并通过代码 HEAD 验证
+## Phase 1G：长期 StudyRecord — 已完成并合并到 `main`
 
 设计：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 
@@ -83,7 +83,7 @@
 
 ### Phase 1G 验证基线
 
-代码 HEAD 验证已通过：
+PR #11 合并后，`main` merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的 Book App UI tests run #194 已通过：
 
 - Runtime discovery：146 / 146
 - Functional Analysis readiness：`READY`
@@ -98,11 +98,11 @@
 - StudyRecord repository 初始化失败稳定 503 / no-detail-leak regression：PASS
 - `books/functional-analysis/**` 在 Phase 1G 产品改动中保持 canonical 零修改
 
-Phase 1G 尚未合并到 `main`；完成最终文档 HEAD gate 后进入 PR / review。
+Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 
 ## Foundation A：Course Package / Course Compiler / 自动验收基础
 
-Phase 1G exact-head 收尾后优先冻结这一层，不要求作为大型 UI 版本发布。
+当前优先冻结这一层，不要求作为大型 UI 版本发布。
 
 ### Course Package / Compiler
 
@@ -407,6 +407,6 @@ Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫
 
 ## 当前唯一下一步
 
-**完成 Phase 1G 最终文档 HEAD gate 与代码审查后，创建/更新 Phase 1G PR；合并需单独明确授权。随后进入 Foundation A：冻结 Course Package / Course Compiler contract、把 Functional Analysis 固化为 Golden Course，并建立 Architecture Fitness Functions 与分层 CI。**
+**进入 Foundation A：先冻结 Course Package schema/version 与教材角色，随后把 Functional Analysis 固化为 Golden Course，并建立 Architecture Fitness Functions、Contract-first 边界和 FAST / PR FULL / HEAVY 分层 CI；契约稳定后实现 Course Compiler 主链路。**
 
 当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。
