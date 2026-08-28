@@ -7,14 +7,12 @@
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
-- `main` 当前已知 HEAD：`2fe6758d65a3317691922964e644f3a681571d24`
-- Phase 1F merge commit：`8d78b5beea8339f4326749ffebd123d1903f1a2b`
 - 当前开发分支：`feature/study-record-phase-1g`
-- Phase 1G governance sync merge：`8b184ba459b64a6928b1fc66b419f8cb3d9c8884`
+- Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
-- implementation plan commit：`229e5369c80412a66d1e37bba252d9bb817d3991`
-- Phase 1G 状态：设计和详细实施计划均已完成；业务代码实现尚未开始。
+- Phase 1G 业务实现：已完成
+- 当前状态：最终文档同步与 exact-final-HEAD gate / review / PR 准备中；尚未合并到 `main`
 
 当前跨阶段正式架构文档：
 
@@ -39,7 +37,7 @@ final printed page 423
 audit PASS 20 / WARN 1 / FAIL 0
 ```
 
-Phase 1F 未修改 `books/functional-analysis/**` canonical 教材资产。
+Phase 1G 产品状态实现没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态保持单向边界。
 
 长期把这本教材固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord、Concept、ExamPoint、Exam Sprint 和后续录音关联的自动回归。
 
@@ -80,35 +78,84 @@ Phase 1F 未修改 `books/functional-analysis/**` canonical 教材资产。
 - OpenAI-compatible provider 仅服务端持有 key
 - deterministic fake provider 支持 CI
 
-## 4. 当前唯一工程主线：Phase 1G
+### Phase 1G
 
-Phase 1G 不扩大范围，只实现：
+- 本机 SQLite durable StudyRecord authority
+- 首次初始化生成稳定隐藏 UUID `profile_id`
+- 可移植数据库路径；支持 `BOOK_APP_DATA_DIR`
+- `preview / learn / review / practice` 四模式独立记录
+- 首次进入有效模式：`in_progress / progress=0`
+- 再次进入更新 `last_studied_at`
+- 手动 `标记完成`：`completed / progress=100`
+- completed 再进入不倒退；重复完成幂等
+- `last_studied_at` 驱动 recent learning
+- 保留 `study_record_id / revision / updated_at / deleted_at / sync_status` 等 sync-ready metadata
+- 1G 中 `sync_status=local`
+- 服务器从 canonical Runtime 取得 `book_id`；浏览器不能伪造 `profile_id` 或 `book_id`
+- 浏览器 StudyRecord DTO 不暴露内部 `profile_id / revision / sync_status`
+- Section 页面只有在真实学习模式内容成功加载后才 touch StudyRecord
+- StudyRecord 保存失败不阻断教材内容阅读，并提供重试
+- completion 可跨页面 reload 持久化
+- Source → Section 往返继续保持原有 route / scroll / expanded state 恢复
+- SQLite read connections 有专门生命周期回归测试
+
+## 4. Phase 1G API / storage contract
+
+当前 StudyRecord 产品接口：
 
 ```text
-StudyRecord
-+ SQLite
-+ hidden profile_id
-+ recent learning
-+ sync-ready metadata
+POST /api/courses/{course_id}/sections/{section_id}/study/{mode}/touch
+POST /api/courses/{course_id}/sections/{section_id}/study/{mode}/complete
+GET  /api/courses/{course_id}/study-records
+GET  /api/study/recent
 ```
 
-规则：
+逻辑唯一键：
 
-- 本机 SQLite 是 durable StudyRecord authority
-- UI 单用户；每个安装生成稳定隐藏 UUID `profile_id`
-- logical key：`profile_id + course_id + section_id + mode`
-- preview / learn / review / practice 独立
-- 无记录 = 未开始
-- 首次进入 = `in_progress / progress 0`
-- 手动完成 = `completed / progress 100`
-- completed 再进入不回退
-- `last_studied_at` 决定 recent learning
-- `sessionStorage` 只负责短期返回状态
-- 预留 revision / updated_at / deleted_at / sync_status
-- 1G 中 `sync_status=local`
-- 不提前实现 Drive / SyncEvent / 录音 / Meeting / ExamPoint / Unified Retrieval / Mastery
+```text
+profile_id + course_id + section_id + mode
+```
 
-## 5. 当前确认的课程产品模型
+状态只有：
+
+```text
+无记录 = 未开始
+in_progress = progress 0
+completed = progress 100
+```
+
+不使用滚动距离或停留时间伪造百分比。
+
+`sessionStorage` 仍只负责短期 Section / Search / QA 返回状态，不能替代 SQLite StudyRecord。
+
+## 5. Phase 1G 最新验证证据
+
+代码 HEAD 的完整 GitHub Actions 验证已通过：
+
+```text
+Runtime discovery            146 / 146 PASS
+Functional Analysis readiness READY
+App discovery                 86 / 86 PASS
+Web tests                     PASS
+TypeScript typecheck          PASS
+Web production build          PASS
+real Chromium acceptance      PASS
+```
+
+真实浏览器验收覆盖：
+
+- StudyRecord 首次 touch
+- `learn` 标记完成
+- reload 后 completion 仍存在
+- `preview` 与 `learn` 状态独立
+- `/api/study/recent`
+- 内部身份/同步字段不泄露给浏览器
+- Source → Section 往返
+- 390×844 窄屏无 body 横向溢出
+
+Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；最新日志不再出现 `unclosed database`。目前仍可见 FastAPI/Starlette 自身的第三方弃用提示，不属于 Phase 1G 数据连接泄漏。
+
+## 6. 当前确认的课程产品模型
 
 Book 的核心单位是 Course。
 
@@ -131,7 +178,7 @@ Course
 
 最终原则：**App 通用，教材是数据。** 新课程主要走“上传资料 → Course Compiler/结构化 → readiness → 注册”，不是为每本书重新开发 App。
 
-## 6. 同一课程多教材：已确认方案
+## 7. 同一课程多教材：已确认方案
 
 如果上传两本泛函分析教材，默认放在同一个 Functional Analysis Course 中，而不是简单创建两个孤立课程，也不把原文融合成一本书。
 
@@ -161,9 +208,9 @@ revision
 
 同一本教材不同 edition 使用 `logical_book_id + book_version_id + Version Mapping`，新版不能覆盖旧版。
 
-## 7. Course Compiler / Course Package
+## 8. Foundation A：下一工程阶段
 
-Phase 1G 后优先冻结统一 Course Package Contract。
+Phase 1G 完成最终文档 HEAD gate、review 和 PR 后，优先冻结统一 Course Package Contract。
 
 目标：
 
@@ -180,9 +227,16 @@ Phase 1G 后优先冻结统一 Course Package Contract。
 → App
 ```
 
-Functional Analysis 作为 Golden Course 验证“换教材不换程序”。
+Foundation A 同时推进：
 
-## 8. Unified Retrieval：已确认长期搜索架构
+- Functional Analysis 固化为 Golden Course
+- 8 Chapters / 132 Sections / 1493 search records 自动基线
+- canonical identity / source integrity regression
+- Architecture Fitness Functions
+- Contract-first / OpenAPI 或 JSON Schema 权威边界
+- FAST / PR FULL / HEAVY 分层 CI
+
+## 9. Unified Retrieval：已确认长期搜索架构
 
 现有 Phase 1E deterministic search 保留为 Exact 高可信层。
 
@@ -208,35 +262,17 @@ source-aware reranking
 provenance-preserving hits
 ```
 
-数学查询逐步支持中英文术语别名、Unicode/LaTeX/数学符号归一。
+Search 与 QA 共用 Retrieval Engine；Meeting retrieval 与 Learning retrieval 授权和索引隔离。
 
-Search 与 QA 共用 Retrieval Engine；Search 返回证据，QA 基于同一 retrieval 构造 Evidence Pack。
-
-结果明确标记来源：主教材 / 辅助教材 / 课堂 / 老师重点 / 考试 / 个人 / AI Derived / Meeting。
-
-Meeting retrieval 与 Learning retrieval 授权和索引隔离。
-
-## 9. Concept Graph / Concept 360
+## 10. Concept Graph / Concept 360
 
 Chapter/Section 是阅读骨架，Concept Graph 是知识依赖骨架。
 
-Concept 连接：
+Concept 连接主教材、辅助教材、prerequisites、课堂、ExamPoint、Questions/Mistakes 与 Mastery。Concept 360 View 最终展示一个知识点从教材到个人学习状态的完整生命周期，但每条内容保持独立 provenance。
 
-- 主教材定义/定理/公式/证明/例题
-- 辅助教材解释/其他证明/补充题
-- prerequisite / dependent concepts
-- 课堂讲解与老师强调
-- ExamPoint / Exam
-- Questions / Mistakes
-- Mastery
-
-Concept 360 View 最终展示“一个知识点的一生”，但每条内容保留独立 provenance，不生成不可追踪的融合原文。
-
-## 10. 课堂录音与教材协同
+## 11. 课堂录音与教材协同
 
 桌面/PWA 和手机/Android 的业务功能一致，都保留录音能力；只允许因平台权限、后台策略、布局和算力造成实现差异。
-
-课堂录音 local-first：
 
 ```text
 Audio
@@ -247,88 +283,18 @@ Audio
 → LectureEvents / pending_ai
 ```
 
-即时初加工尽量识别：老师重点、考点、考试范围、分值/占比、成绩规则、作业、Deadline、老师扩展，以及“不考 / 不要求证明 / 了解即可”等信号。
+永久分层：`Textbook fact / Lecture fact / Derived AI fusion`，并保留 `raw_audio / raw_transcript / local_refined / ai_refined`。AI refinement 不覆盖 raw source。
 
-永久分层：
+## 12. Exam / Mistake / Mastery / Next Best Action
 
-```text
-Textbook fact
-Lecture fact
-Derived / AI fusion
-```
+- ExamPoint 第一版只用真实教材结构化证据计算基础重要度。
+- Exam Sprint 按 ExamPoint + 最小 prerequisite closure 组织。
+- Exam Digital Twin 后续保存考试日期、范围、分值、题型与可信状态。
+- StudyRecord 记录学习行为，不等于真正掌握。
+- Mastery 根据复习、刷题、错题、回忆和时间等证据更新。
+- Next Best Action 最终输出可解释的下一学习动作，AI 不得无证据直接修改事实或 Mastery。
 
-以及：
-
-```text
-raw_audio
-raw_transcript
-local_refined
-ai_refined
-```
-
-教材补充不能伪装成老师原话，AI refinement 不能覆盖 raw source。
-
-## 11. 每日 GPT 精加工 / Processing Job
-
-第一版由用户每天手动触发，不做自动定时。
-
-```text
-App local first-pass
-→ Drive pending_ai
-+ GitHub schema/rules/current state
-+ canonical Course Package
-→ GPT versioned Processing Job
-→ refined transcript / LectureEvents / concept links / exam signals / textbook supplements / derived notes
-→ processed revision
-→ Drive / Sync API
-→ App
-```
-
-每次保留 `input_revision / processor_version / schema_version / textbook_version / processed_at`。
-
-同时逐步生成 Course Timeline 和 What Changed 增量摘要。
-
-## 12. ExamPoint / Exam Sprint / Exam Digital Twin
-
-ExamPoint 第一版只用教材真实结构化证据计算基础重要度，保存 priority/reasons/prerequisites/canonical anchors。
-
-Exam Sprint：
-
-```text
-30 min 保命版
-2 h 核心版
-6 h 考试版
-完整速通
-```
-
-按 ExamPoint + 最小 prerequisite closure 组织。
-
-Exam Digital Twin 后续保存考试日期、范围、总分、章节/主题占比、题型、老师明确考试信号、confirmed/probable/unknown、当前覆盖率和风险区域。
-
-## 13. Mistake / Mastery / Next Best Action
-
-StudyRecord 记录学习行为，不等于真正掌握。
-
-Mastery 长期根据复习、刷题、错题、回忆、时间间隔和明确自评等证据更新。
-
-Mistake 映射 Concept 和 prerequisite，识别 definition gap / theorem condition / formula misuse / prerequisite gap / reasoning break / calculation / careless 等根因，并生成最短修复路径。
-
-Next Best Action 最终组合：
-
-```text
-ExamPoint
-+ teacher emphasis
-+ Exam Digital Twin
-+ StudyRecord
-+ Mastery
-+ Mistakes
-+ remaining time
-+ prerequisite graph
-```
-
-输出“现在最应该学什么”，并显示 reason/evidence；AI 不得无证据直接修改事实或 Mastery。
-
-## 14. 多设备同步
+## 13. 多设备同步
 
 长期：
 
@@ -338,46 +304,20 @@ App(s)
 → owner-controlled Drive
 ```
 
-每台设备保持自己的 SQLite / profile_id；同步增量 record/event，不共享整个 SQLite。
+每台设备保持自己的 SQLite / profile_id；同步增量 record/event，不共享整个 SQLite。朋友端不持有 owner Drive Token/Google 凭证。
 
-`event_id` 全局唯一，远端幂等应用。
+## 14. Private Meeting
 
-朋友端不持有 owner Drive Token/Google 凭证。
+Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/SQLite/profile_id/sync/ProcessingJob，但不参与教材知识融合，不进入 shared Learning feed；Meeting retrieval 与 Learning retrieval 隔离。
 
-桌面与手机共享同一业务 contract 和允许同步的数据语义。
-
-## 15. Private Meeting
-
-Meeting 与 Course/Book/Section 独立，默认私有。
-
-复用 Audio/VAD/ASR/SQLite/profile_id/sync/ProcessingJob，但不参与教材知识融合，不进入朋友 shared Learning feed。
-
-Meeting retrieval 与 Learning retrieval 隔离。
-
-## 16. 开发系统策略
-
-正式策略：
-
-```text
-ChatGPT chat = 主开发
-GitHub Actions = 自动测试 / 构建 / regression
-Functional Analysis = Golden Course
-Codex = 完整版本后的独立审计 + targeted upgrade
-```
-
-开发采用 Spec/Schema/Acceptance Contract、Vertical Slice、TDD、Architecture Fitness Functions、分层 CI 和 exact-head gate。
-
-GitHub-hosted runner 主要跑快速/PR gate；重型教材 rebuild、ASR、本地模型、Android/Windows 特殊验证后续可使用 self-hosted runner。
-
-## 17. 当前明确未实现
+## 15. 当前明确未实现
 
 以下均已进入正式计划，但当前不能当作已完成：
 
-- Phase 1G StudyRecord / SQLite 业务代码
 - Course Compiler / Course Package v2
-- 多教材 ConceptAlignment
-- Golden Course 自动 gate
-- Architecture Fitness Functions
+- 同 Course 多教材运行时支持与 ConceptAlignment
+- Golden Course 完整自动 gate
+- Architecture Fitness Functions 完整集合
 - Unified Retrieval v1/扩展
 - Minimal Concept Graph / Concept 360
 - Chapter Hub / 思维导图
@@ -391,16 +331,11 @@ GitHub-hosted runner 主要跑快速/PR gate；重型教材 rebuild、ASR、本�
 - Android APK
 - raw PDF Reader
 
-## 18. 当前唯一下一步
+## 16. 当前唯一下一步
 
-保持 `feature/study-record-phase-1g`，直接按：
+1. 完成 Phase 1G 最终文档 HEAD 的 full gate。
+2. 对 Phase 1G 做独立 code review / diff review。
+3. 创建或更新 Phase 1G PR；**不得自动合并到 `main`**。
+4. 获得明确合并授权并完成集成后，进入 Foundation A。
 
-`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
-
-进行 TDD，实现：
-
-```text
-StudyRecord + SQLite + hidden profile_id + recent learning + sync-ready metadata
-```
-
-当前不提前实现后续架构能力。
+当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action。
