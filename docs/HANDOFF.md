@@ -29,39 +29,40 @@ Repository evidence outranks chat memory.
 - Phase: `Foundation A — Course Package Contract`
 - Main base for this branch: `a99d4638f959e04e54d91efe0ee0dd9ac50488a6`
 
-Foundation A Tasks 1–4 are complete. The last implementation verification HEAD before the source-review documentation checkpoint was:
+Foundation A Tasks 1–5 are complete.
 
-`df5346c0598495bf8e84f5d214afbf2e9cd55c63`
+Task 5 TDD/verification checkpoints:
 
-Source-level external comparison was then recorded at:
-
-`16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6`
+- RED contract commit: `b198f97068137e6deb787c60762501cd0440decc`; Runtime #149 and Book App UI #205 concluded `failure` before validator implementation.
+- GREEN validator implementation: `9d92a166d45aaf6493ae2ab9466031a0d69d62b6`.
+- exact-head verification: `b133e32c3355f0cac8478beaea960e81c2144b61`.
+- Runtime reference tests #150: Python 3.11 / 3.12 / 3.13 all `success`; Python 3.13 full discovery 179 / 179 PASS.
+- validator coverage: 12 / 12 PASS, including schema, primary-role, path escape, artifact missing/hash mismatch, identity drift, structural drift, readiness, and secret-key fail-closed cases.
+- Book App UI tests #206: App API, Web tests, TypeScript typecheck, production build, and real Chromium acceptance all `success`.
+- Functional Analysis Runtime remained `READY`; Task 5 implementation did not modify `books/functional-analysis/**`.
 
 ## Current next task
 
-**Task 5 — Course Package Validator**
+**Task 6 — Freeze Functional Analysis as the Golden Course Gate**
 
 Implement by TDD according to:
 
 `docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
 
-Validator hardening from the source-level review:
+Task 6 must add only:
 
-1. closed contract shape + forbidden secret-like keys
-2. path boundary checks before referenced-file reads
-3. exact required artifacts and exactly one primary
-4. artifact SHA-256 / content identity verification
-5. independent `package_identity` recomputation
-6. structural baseline checks
-7. Book/runtime readiness aggregation
-8. deterministic diagnostics and final `PASS / WARN / FAIL`
+- `tests/golden/functional_analysis_course_package_baseline.json`
+- `course_package/golden.py`
+- `tests/test_golden_course_package.py`
 
-A stored package `PASS` never overrides an independently discovered failure.
+The gate must verify the frozen Functional Analysis baseline, require validator `PASS`, prove deterministic compile/package bytes, and prove canonical `books/functional-analysis/**` remains byte-identical before/after verification. Baseline mismatch must fail closed; the gate must never repair or rewrite canonical textbook evidence.
 
 ## Protected facts
 
 Functional Analysis Golden Course:
 
+- course: `functional_analysis_course`
+- book: `stein_shakarchi_functional_analysis_2011`
 - 8 chapters
 - 132 sections
 - 1493 search records
@@ -74,8 +75,8 @@ Foundation A must not write `books/functional-analysis/**` or migrate the existi
 
 ## Pending synchronization
 
-`governance/pending_sync.json` currently contains no blocking item. External fixed-commit source archives are pending non-blocking until a verified archival execution path is available for Book. Do not mark them archived without exact snapshot hash + Drive file ID.
+`governance/pending_sync.json` currently contains no blocking item. External fixed-commit source archives and the Drive raw-source SHA-256 remain pending non-blocking. Do not mark them complete without the required verified hashes/Drive evidence.
 
 ## Merge rule
 
-Do not write `main` directly. Work on the non-default branch, verify exact final HEAD, open a reviewable PR, and merge only after explicit authorization for that specific PR and required checks.
+Do not write `main` directly. Work on the non-default branch, verify the implementation HEAD, open a reviewable PR when the Foundation A branch reaches its planned integration checkpoint, and merge only after explicit authorization for that specific PR and required checks.
