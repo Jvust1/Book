@@ -29,33 +29,50 @@ Repository evidence outranks chat memory.
 - Phase: `Foundation A — Course Package Contract`
 - Main base for this branch: `a99d4638f959e04e54d91efe0ee0dd9ac50488a6`
 
-Foundation A Tasks 1–5 are complete.
+Foundation A Tasks 1–6 are complete.
 
-Task 5 TDD/verification checkpoints:
+### Task 5 — Fail-closed Course Package validator
 
-- RED contract commit: `b198f97068137e6deb787c60762501cd0440decc`; Runtime #149 and Book App UI #205 concluded `failure` before validator implementation.
-- GREEN validator implementation: `9d92a166d45aaf6493ae2ab9466031a0d69d62b6`.
+- RED: `b198f97068137e6deb787c60762501cd0440decc`.
+- GREEN: `9d92a166d45aaf6493ae2ab9466031a0d69d62b6`.
 - exact-head verification: `b133e32c3355f0cac8478beaea960e81c2144b61`.
-- Runtime reference tests #150: Python 3.11 / 3.12 / 3.13 all `success`; Python 3.13 full discovery 179 / 179 PASS.
-- validator coverage: 12 / 12 PASS, including schema, primary-role, path escape, artifact missing/hash mismatch, identity drift, structural drift, readiness, and secret-key fail-closed cases.
-- Book App UI tests #206: App API, Web tests, TypeScript typecheck, production build, and real Chromium acceptance all `success`.
-- Functional Analysis Runtime remained `READY`; Task 5 implementation did not modify `books/functional-analysis/**`.
+- Runtime #150 and Book App UI #206: success.
+- validator coverage: 12 / 12 PASS; Python full discovery: 179 / 179 PASS.
+
+### Task 6 — Functional Analysis Golden Course gate
+
+- RED: `9b68187c2c0adf4b364c41b42c47ab1a3756219b`; new Golden test failed because `course_package.golden` did not yet exist.
+- GREEN: `6823c9c806a9175b4e4444345b40cf406fa5dde2`.
+- exact-head verification: `eeb2d4adee699d44924ed2ebfc2207df595f9ed6`.
+- Runtime reference tests #152: success on Python 3.11 / 3.12 / 3.13; Python 3.13 full discovery 182 / 182 PASS and Golden gate 3 / 3 PASS.
+- Book App UI tests #208: App API, Web tests, TypeScript typecheck, production build, and real Chromium acceptance all success; Chromium 11 / 11 PASS.
+- Golden gate verifies frozen values, validator PASS, deterministic package identity/bytes, and canonical tree byte identity.
+- Task 6 implementation diff contains only `course_package/golden.py`, the Golden baseline JSON, and Golden tests; no `books/functional-analysis/**` path changed.
 
 ## Current next task
 
-**Task 6 — Freeze Functional Analysis as the Golden Course Gate**
+**Task 7 — Add Executable Architecture Fitness Functions**
 
 Implement by TDD according to:
 
 `docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
 
-Task 6 must add only:
+Task 7 files:
 
-- `tests/golden/functional_analysis_course_package_baseline.json`
-- `course_package/golden.py`
-- `tests/test_golden_course_package.py`
+- `course_package/fitness.py`
+- `tools/check_architecture_fitness.py`
+- `tests/test_architecture_fitness.py`
 
-The gate must verify the frozen Functional Analysis baseline, require validator `PASS`, prove deterministic compile/package bytes, and prove canonical `books/functional-analysis/**` remains byte-identical before/after verification. Baseline mismatch must fail closed; the gate must never repair or rewrite canonical textbook evidence.
+Active Foundation A fitness rules now:
+
+1. browser source under `app/web/src/**` must not use Python `sqlite3`, direct `sqlite://` URLs, or `.sqlite3` durable-storage filenames;
+2. compiler/validator outputs must remain outside canonical `books/**` and `courses/**`;
+3. real Golden compile/validation must leave the canonical Functional Analysis Book tree byte-identical;
+4. compiled package must contain no absolute paths;
+5. compiled package must contain no secret-like fields;
+6. primary-role, artifact-hash, deterministic identity and Golden identity checks delegate to the existing validator/Golden gate.
+
+The fitness runner must aggregate diagnostics rather than repair or mutate project evidence. CLI JSON exit contract: PASS/WARN => 0, FAIL => 1, invalid invocation => 2.
 
 ## Protected facts
 
