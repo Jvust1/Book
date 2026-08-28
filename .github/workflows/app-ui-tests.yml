@@ -10,7 +10,15 @@ on:
       - "library/**"
       - "books/functional-analysis/**"
       - "tests/**"
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
+      - ".github/workflows/course-package-heavy.yml"
       - ".github/workflows/app-ui-tests.yml"
   pull_request:
     paths:
@@ -21,7 +29,15 @@ on:
       - "library/**"
       - "books/functional-analysis/**"
       - "tests/**"
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
+      - ".github/workflows/course-package-heavy.yml"
       - ".github/workflows/app-ui-tests.yml"
 
 permissions:

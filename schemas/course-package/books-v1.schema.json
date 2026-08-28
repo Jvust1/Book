@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "book://schemas/course-package/books-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "books"],
+  "properties": {
+    "schema_version": {"const": "course_package_v1"},
+    "books": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/book"}
+    }
+  },
+  "$defs": {
+    "book": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "book_id",
+        "logical_book_id",
+        "book_version_id",
+        "role",
+        "canonical_path",
+        "enabled",
+        "required",
+        "structured_status",
+        "structured_version",
+        "runtime_status",
+        "pdf_page_count",
+        "printed_final_page",
+        "content_identity"
+      ],
+      "properties": {
+        "book_id": {"type": "string", "minLength": 1},
+        "logical_book_id": {"type": "string", "minLength": 1},
+        "book_version_id": {"type": "string", "minLength": 1},
+        "role": {"enum": ["primary", "supplementary", "reference", "translation"]},
+        "canonical_path": {"type": "string", "minLength": 1},
+        "enabled": {"type": "boolean"},
+        "required": {"type": "boolean"},
+        "structured_status": {"type": "string", "minLength": 1},
+        "structured_version": {"type": "string", "minLength": 1},
+        "runtime_status": {"type": "string", "minLength": 1},
+        "pdf_page_count": {"type": "integer", "minimum": 0},
+        "printed_final_page": {"type": ["integer", "string"]},
+        "content_identity": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

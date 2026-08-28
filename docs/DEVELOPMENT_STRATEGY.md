@@ -452,14 +452,14 @@ Book v2 Targeted Upgrade
 
 ## 15. 当前执行优先级
 
-现在不改变当前唯一工程下一步：
+当前唯一工程优先级已切换到 Foundation A：
 
 ```text
-feature/study-record-phase-1g
-→ 按 docs/superpowers/plans/2026-08-28-study-record-phase-1g.md
-→ TDD 实现 Phase 1G
+foundation/course-package-contract-a
+→ 按 docs/superpowers/plans/2026-08-28-foundation-a-course-package.md
+→ Tasks 1–9 已完成；执行 Task 10 exact-final-HEAD regression / documentation state / PR readiness
 ```
 
-Phase 1G 完成并通过 exact-head gate 后，再正式冻结 Course Package Contract / Golden Course automation / Architecture Fitness Functions 的首版设计。
+Foundation A 仍保持 App Runtime consumer migration out of scope；只有 exact-final-HEAD 的 FAST / Runtime / App / Chromium gates 和 PR diff/review 均通过后，才进入该 PR 的逐项审查与合并授权阶段。
 
-这三个项目是近期最优先的开发系统升级，因为它们直接决定未来接入几十本教材时复杂度是否仍可控。
+Course Package Contract / Functional Analysis Golden Course / Architecture Fitness Functions / CI 分层已经形成当前基础实现；后续阶段继续按 Roadmap 引入多教材 Runtime、Concept Graph、Unified Retrieval、录音、同步和考试能力，不提前把未来能力混入 Foundation A。

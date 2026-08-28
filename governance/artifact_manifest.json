@@ -1,0 +1,84 @@
+{
+  "schema_version": "book_artifact_manifest_v1",
+  "updated_date": "2026-08-28",
+  "project": {
+    "repository": "Jvust1/Book",
+    "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
+    "drive_root_name": "Book"
+  },
+  "artifacts": [
+    {
+      "artifact_id": "functional_analysis_source_bundle_split20_23parts",
+      "file_name": "Functional_Analysis_split20_23parts.zip",
+      "type": "raw",
+      "drive_file_id": "1hHxBrwUdHzGideWJV24coQUCdPJRkCwf",
+      "drive_path": "Book/01_Textbooks/Functional_Analysis_split20_23parts.zip",
+      "size_bytes": 9982095,
+      "sha256": null,
+      "version": "source_bundle_current_known",
+      "source": "user_project_drive",
+      "purpose": "Raw/recovery source bundle for the Functional Analysis textbook inputs.",
+      "status": "active_unhashed",
+      "verification": "Drive ID + name + size verified; SHA-256 pending in governance/pending_sync.json"
+    },
+    {
+      "artifact_id": "external_references_root",
+      "file_name": "External_References",
+      "type": "reference_area",
+      "drive_file_id": "19B2EHtgp3BM7Mwu8a0hQf8hKr5zBA4KM",
+      "drive_path": "Book/00_Project/External_References",
+      "sha256": null,
+      "version": "v1",
+      "source": "assistant_generated_structure",
+      "purpose": "Long-term fixed-version third-party source study archive and notes.",
+      "status": "active",
+      "verification": "Drive folder identity read back"
+    },
+    {
+      "artifact_id": "external_references_notes",
+      "file_name": "Notes",
+      "type": "reference_area",
+      "drive_file_id": "14-4GER--ZVUtaYflLNx_1Zf225dCA2HW",
+      "drive_path": "Book/00_Project/External_References/Notes",
+      "sha256": null,
+      "version": "v1",
+      "source": "assistant_generated_structure",
+      "purpose": "Reusable source-level study notes.",
+      "status": "active",
+      "verification": "Drive folder identity read back"
+    },
+    {
+      "artifact_id": "external_references_snapshots",
+      "file_name": "Snapshots",
+      "type": "reference_area",
+      "drive_file_id": "1SFx65_RCKkNiQ-Vwb6dVNCrMGFff-kCK",
+      "drive_path": "Book/00_Project/External_References/Snapshots",
+      "sha256": null,
+      "version": "v1",
+      "source": "assistant_generated_structure",
+      "purpose": "Exact-commit source archives; currently empty/pending.",
+      "status": "active_empty_pending_sync",
+      "verification": "Drive folder identity read back; archive files not yet present"
+    },
+    {
+      "artifact_id": "book_app_source_foundation_a_7c053ab_2026_08_28",
+      "file_name": "Book_App_Source_Foundation_A_7c053ab_2026-08-28.zip",
+      "type": "generated",
+      "drive_file_id": "1eJAD4pqnKmGnLaypSho3UWFx5bFg7-fb",
+      "drive_path": "Book/03_Exports/Book_App_Source_Foundation_A_7c053ab_2026-08-28.zip",
+      "size_bytes": 1050147,
+      "sha256": "8a00aa25ee23df0c09e9eb1d212372cf4c01db8e9cd158833d1fe0745f529dae",
+      "version": "foundation_a_source_delivery_v2",
+      "source": "assistant_generated",
+      "related_commit": "7c053ab85932cab5132821b2b3fc6cc5252a1e59",
+      "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
+      "status": "active",
+      "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    }
+  ],
+  "notes": [
+    "This initial manifest deliberately lists only artifacts/areas directly reconciled during the 2026-08-28 governance checkpoint.",
+    "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
+    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
+  ]
+}

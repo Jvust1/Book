@@ -1,0 +1,51 @@
+name: Course Package FAST
+
+on:
+  push:
+    paths:
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
+      - "tests/test_course_package_*.py"
+      - "tests/test_golden_course_package.py"
+      - "tests/test_architecture_fitness.py"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
+  pull_request:
+    paths:
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
+      - "tests/test_course_package_*.py"
+      - "tests/test_golden_course_package.py"
+      - "tests/test_architecture_fitness.py"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-fast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Compile Foundation modules
+        run: python -m py_compile course_package/*.py tools/compile_course_package.py tools/validate_course_package.py tools/check_architecture_fitness.py
+
+      - name: Run Foundation FAST tests
+        run: python -m unittest tests.test_course_package_schema tests.test_course_manifest_normalization tests.test_course_package_artifacts tests.test_course_package_compiler tests.test_course_package_validator tests.test_golden_course_package tests.test_architecture_fitness tests.test_course_package_cli -v
+
+      - name: Run architecture fitness
+        run: python tools/check_architecture_fitness.py

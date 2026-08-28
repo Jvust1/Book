@@ -1,21 +1,26 @@
 # Book 当前状态
 
-更新时间：2026-08-28
+更新时间：2026-08-29
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。当前 Foundation A 尚在非默认分支接受 exact-final-HEAD / PR gate，因此该分支上的最新证据优先用于 Foundation A 审查，不代表已经集成到 `main`。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
-- 当前集成分支：`main`
+- 稳定集成分支：`main`
+- 当前开发分支：`foundation/course-package-contract-a`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
 - Phase 1G 业务实现：已完成
 - Phase 1G：已通过 PR #11 合并到 `main`
 - Phase 1G merge commit：`4b111e4b1ffde86a365aaad2a3164f8aedccc819`
-- 合并后验证：`main` Book App UI tests run #194 全绿
-- 当前状态：Phase 1G 已完成并集成；下一工程阶段为 Foundation A
+- Phase 1G 合并后验证：`main` Book App UI tests run #194 全绿
+- Foundation A design：`docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md`
+- Foundation A implementation plan：`docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
+- Foundation A Tasks 1–9：实现完成
+- Foundation A 当前状态：Task 10 exact-final-HEAD regression / documentation state / PR readiness
+- Runtime/App consumer migration：Foundation A 明确不在范围内
 
 当前跨阶段正式架构文档：
 
@@ -26,7 +31,7 @@
 
 ## 2. 当前教材 / Runtime 基线
 
-当前 Golden Course 候选：Stein & Shakarchi《Functional Analysis》。
+当前 Golden Course：Stein & Shakarchi《Functional Analysis》。
 
 ```text
 course_id = functional_analysis_course
@@ -40,9 +45,9 @@ final printed page 423
 audit PASS 20 / WARN 1 / FAIL 0
 ```
 
-Phase 1G 产品状态实现没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态保持单向边界。
+Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态、生成包输出保持单向边界。
 
-长期把这本教材固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord、Concept、ExamPoint、Exam Sprint 和后续录音关联的自动回归。
+这本教材已经被 Foundation A 固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord 及后续能力的自动回归基准。
 
 ## 3. 已完成产品能力
 
@@ -103,6 +108,24 @@ Phase 1G 产品状态实现没有修改 `books/functional-analysis/**` canonical
 - Source → Section 往返继续保持原有 route / scroll / expanded state 恢复
 - SQLite read connections 有专门生命周期回归测试
 
+### Foundation A — Course Package v1 基础实现
+
+- Course Package schema：`course_package_v1`
+- Package version：`1.0.0`
+- canonical roles：`primary / supplementary / reference / translation`
+- legacy course manifest normalization
+- canonical artifact inventory + SHA-256 + deterministic Book content identity
+- deterministic Course Package compiler；同一 source → 相同 `package_identity` 与 bytes
+- fail-closed staged validator
+- compiler / validator CLI + 稳定 JSON/exit contract
+- Functional Analysis Golden Course executable gate
+- Golden baseline：8 / 132 / 1493 / 442 / printed 423 PASS
+- Golden compile 必须通过独立 validator；canonical tree 前后 byte identity 保持一致
+- executable Architecture Fitness Functions
+- browser durable-SQLite leakage / compiled absolute path / secret-like field / canonical output boundary / Golden mutation 等当前 Foundation invariants 自动检查
+- FAST / PR FULL / manual HEAVY 三层 CI 已接线
+- App 仍消费既有 Runtime；Foundation A 未迁移 Runtime/App consumer
+
 ## 4. Phase 1G API / storage contract
 
 当前 StudyRecord 产品接口：
@@ -132,7 +155,9 @@ completed = progress 100
 
 `sessionStorage` 仍只负责短期 Section / Search / QA 返回状态，不能替代 SQLite StudyRecord。
 
-## 5. Phase 1G 最新验证证据
+## 5. 最新验证证据
+
+### Phase 1G 集成基线
 
 Phase 1G 已合并到 `main`。merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 GitHub Actions run #194 已通过：
 
@@ -146,18 +171,38 @@ Web production build          PASS
 real Chromium acceptance      PASS
 ```
 
-真实浏览器验收覆盖：
+真实浏览器验收覆盖 StudyRecord 首次 touch、completion 跨 reload、四模式独立、`/api/study/recent`、内部身份字段不泄露、Source → Section 往返和 390×844 窄屏无 body 横向溢出。
 
-- StudyRecord 首次 touch
-- `learn` 标记完成
-- reload 后 completion 仍存在
-- `preview` 与 `learn` 状态独立
-- `/api/study/recent`
-- 内部身份/同步字段不泄露给浏览器
-- Source → Section 往返
-- 390×844 窄屏无 body 横向溢出
+Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；repository dependency 初始化失败也有回归测试，稳定映射 `study_store_unavailable` 503 且不泄露 SQLite 路径。目前仍可见 FastAPI/Starlette 自身第三方弃用提示，不属于数据连接泄漏。
 
-Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；最新日志不再出现 `unclosed database`。repository dependency 初始化失败也有 RED → GREEN 回归测试，验证稳定 `study_store_unavailable` 503 且不泄露 SQLite 路径。目前仍可见 FastAPI/Starlette 自身的第三方弃用提示，不属于 Phase 1G 数据连接泄漏。
+### Foundation A 当前实现 HEAD 证据
+
+Task 8 exact-head `116cf4275b8006bc48860943c8e50987547cb5a5`：
+
+```text
+Course Package CLI focused   4 / 4 PASS
+Python full discovery         192 / 192 PASS
+Runtime reference #156        Python 3.11 / 3.12 / 3.13 PASS
+Book App UI #212              app-api / web-client / browser PASS
+real Chromium                 11 / 11 PASS
+Functional Analysis readiness READY
+```
+
+Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`：
+
+```text
+Course Package FAST #1        PASS
+Foundation FAST focused       46 / 46 PASS
+Architecture Fitness          PASS
+Runtime reference #157        Python 3.11 / 3.12 / 3.13 PASS
+Golden compile/validate       PASS on Python 3.13 PR FULL path
+Book App UI #213              app-api / web-client / browser PASS
+real Chromium                 11 / 11 PASS
+```
+
+`course-package-heavy.yml` 已定义为 `workflow_dispatch` 手动门，采用 `/tmp` 隔离副本进行重建/恢复，再对 canonical tree 做只读 readiness / Golden / fitness 验证；当前连接器没有 `workflow_dispatch` 启动动作，因此没有伪造 HEAVY 执行结果。Task 10 / PR required checks 仍以 FAST、Runtime matrix、App API/Web/Chromium exact-head 为硬门。
+
+从 Foundation A 起点 `a99d4638f959e04e54d91efe0ee0dd9ac50488a6` 到 Task 9 implementation HEAD 的差异审计未出现 `app/**` 源码变更，也未出现 `books/functional-analysis/**` canonical 教材变更。
 
 ## 6. 当前确认的课程产品模型
 
@@ -212,33 +257,33 @@ revision
 
 同一本教材不同 edition 使用 `logical_book_id + book_version_id + Version Mapping`，新版不能覆盖旧版。
 
-## 8. Foundation A：下一工程阶段
+## 8. Foundation A：实现状态
 
-Phase 1G 已完成、已通过 PR #11 合并，并在 `main` 上完成合并后全量验证。现在优先冻结统一 Course Package Contract。
+Foundation A 的 Course Package v1 基础实现已在 `foundation/course-package-contract-a` 完成 Tasks 1–9，当前执行 Task 10 exact-final-HEAD / PR readiness。
 
-目标：
+已完成：
+
+- Course Package schema/version 与教材角色冻结
+- legacy manifest normalization
+- artifact/hash/content identity
+- deterministic compiler
+- fail-closed validator
+- compiler/validator CLI
+- Functional Analysis Golden Course executable gate
+- Architecture Fitness Functions 当前 Foundation 集合
+- FAST / PR FULL / manual HEAVY CI 分层
+
+仍不属于 Foundation A 已实现范围：
 
 ```text
-主教材 + 辅助教材
-→ Course Compiler
-→ identity / version / PageMap
-→ Chapter / Section / objects
-→ source anchors
-→ terminology / search index
-→ Concept candidates / dependency
-→ readiness PASS/WARN/FAIL
-→ Course Package
-→ App
+上传任意新教材
+→ 完整自动结构化
+→ validation
+→ readiness
+→ 自动注册到 Runtime/Library
 ```
 
-Foundation A 同时推进：
-
-- Functional Analysis 固化为 Golden Course
-- 8 Chapters / 132 Sections / 1493 search records 自动基线
-- canonical identity / source integrity regression
-- Architecture Fitness Functions
-- Contract-first / OpenAPI 或 JSON Schema 权威边界
-- FAST / PR FULL / HEAVY 分层 CI
+这条通用新教材接入主链路仍是后续 Course Compiler 产品化工作；Foundation A 本轮冻结的是可验证 contract / compiler package boundary / Golden trust root，不把 Runtime/App consumer 改造成新 package consumer。
 
 ## 9. Unified Retrieval：已确认长期搜索架构
 
@@ -318,10 +363,10 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 以下均已进入正式计划，但当前不能当作已完成：
 
-- Course Compiler / Course Package v2
-- 同 Course 多教材运行时支持与 ConceptAlignment
-- Golden Course 完整自动 gate
-- Architecture Fitness Functions 完整集合
+- 通用“上传任意教材 → 自动结构化 → validation → readiness → Runtime/Library 注册”的 Course Compiler 产品主链路
+- Course Package v2 / 后续 schema evolution 与 migration policy
+- 同 Course 多教材 Runtime consumer 与 ConceptAlignment
+- Architecture Fitness 对 raw audio / transcript / Meeting / ExamPoint / Sync 等未来模块的完整集合
 - Unified Retrieval v1/扩展
 - Minimal Concept Graph / Concept 360
 - Chapter Hub / 思维导图
@@ -337,12 +382,12 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-进入 Foundation A，按顺序完成：
+完成 Foundation A Task 10：
 
-1. 冻结 Course Package schema/version 与教材角色 `primary / supplementary / reference / translation`。
-2. 固化 Functional Analysis 为 Golden Course，并把 8 Chapters / 132 Sections / 1493 search records、canonical identity/source integrity 纳入自动 gate。
-3. 建立 Architecture Fitness Functions 与 Contract-first 边界。
-4. 把 CI 分成 FAST / PR FULL / HEAVY 三层。
-5. 在上述契约稳定后实现 Course Compiler 的“上传资料 → 结构化 → validation → readiness → 注册”主链路。
+1. 以最终文档提交形成 exact final HEAD。
+2. 打开 `foundation/course-package-contract-a → main` 的 reviewable PR。
+3. 只接受该 PR exact HEAD 的 `Course Package FAST`、Runtime Python 3.11/3.12/3.13、Book App API/Web/Chromium 全绿证据。
+4. 复核 PR diff：`books/functional-analysis/**` 零修改、App Runtime migration 为 0、无 secrets、无跟踪 `.build` 产物、无未处理 review thread。
+5. 在上述全部通过后，才可请求用户对该**具体 PR**给出显式合并授权。
 
 当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action。

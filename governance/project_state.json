@@ -1,0 +1,62 @@
+{
+  "schema_version": "book_project_state_v1",
+  "updated_date": "2026-08-29",
+  "repository": "Jvust1/Book",
+  "default_branch": "main",
+  "active_branch": "foundation/course-package-contract-a",
+  "phase": "FOUNDATION_A_COURSE_PACKAGE_CONTRACT",
+  "status": "IN_PROGRESS",
+  "base_main_commit": "a99d4638f959e04e54d91efe0ee0dd9ac50488a6",
+  "last_verified_implementation_head": "94fee411b5f8d67a5db2ef5779657f39c226c220",
+  "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
+  "foundation_a": {
+    "approved_design": "docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md",
+    "implementation_plan": "docs/superpowers/plans/2026-08-28-foundation-a-course-package.md",
+    "completed_tasks": [
+      {"task": 1, "name": "Course Package v1 contract and schemas", "status": "COMPLETE"},
+      {"task": 2, "name": "Legacy course manifest normalization", "status": "COMPLETE"},
+      {"task": 3, "name": "Canonical artifact inventory and content identity", "status": "COMPLETE"},
+      {"task": 4, "name": "Deterministic Course Package compiler", "status": "COMPLETE"},
+      {"task": 5, "name": "Course Package validator", "status": "COMPLETE"},
+      {"task": 6, "name": "Functional Analysis Golden Course gate", "status": "COMPLETE"},
+      {"task": 7, "name": "Executable architecture fitness functions", "status": "COMPLETE"},
+      {"task": 8, "name": "Compiler and validator CLI entry points", "status": "COMPLETE"},
+      {"task": 9, "name": "Layer CI into FAST, PR FULL, and HEAVY gates", "status": "COMPLETE"}
+    ],
+    "next_task": {"task": 10, "name": "Exact-HEAD full regression, documentation state, and PR readiness", "status": "IN_PROGRESS"},
+    "canonical_book_mutation_allowed": false,
+    "runtime_consumer_migration_in_scope": false
+  },
+  "golden_course": {
+    "course_id": "functional_analysis_course",
+    "book_id": "stein_shakarchi_functional_analysis_2011",
+    "chapter_count": 8,
+    "section_count": 132,
+    "search_record_count": 1493,
+    "pdf_page_count": 442,
+    "printed_final_page": 423,
+    "structured_status": "STRUCTURED_COMPLETE",
+    "runtime_status": "READY"
+  },
+  "governance": {
+    "global_entry": "Google Drive / 全项目",
+    "security_policy": "SECURITY_POLICY.md",
+    "agent_entry": "AGENTS.md",
+    "north_star": "docs/PROJECT_NORTH_STAR.md",
+    "architecture_invariants": "docs/ARCHITECTURE_INVARIANTS.md",
+    "current_state": "docs/CURRENT_STATE.md",
+    "decision_ledger": "docs/DECISION_LEDGER.md",
+    "evaluation_ledger": "docs/EVALUATION_LEDGER.md",
+    "handoff": "docs/HANDOFF.md",
+    "preflight": "docs/PRE_FLIGHT_CHECKLIST.md",
+    "artifact_manifest": "governance/artifact_manifest.json",
+    "pending_sync": "governance/pending_sync.json"
+  },
+  "external_reference_review": {
+    "status": "SOURCE_LEVEL_REVIEW_COMPLETE",
+    "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
+    "snapshot_sync_status": "PENDING_NON_BLOCKING"
+  },
+  "blocking_items": [],
+  "next_step": "Open the reviewable Foundation A PR to main, require exact-final-head Course Package FAST, Runtime Python 3.11/3.12/3.13, App API/Web/Chromium checks, review the PR diff/threads, then request explicit authorization for that specific PR before merge."
+}

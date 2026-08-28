@@ -9,14 +9,17 @@ Google Drive 项目根目录：`Book`
 ```text
 Book/
 ├── 00_Project/
-│   └── GitHub_Sync/
+│   ├── GitHub_Sync/
+│   └── External_References/
+│       ├── Notes/
+│       └── Snapshots/
 ├── 01_Textbooks/
 ├── 02_Lectures/
 ├── 03_Exports/
 └── 04_Backups/
 ```
 
-以上是当前实际存在的项目目录。未来同步和 Meeting 目录只在对应功能阶段创建，不提前制造空目录。
+以上是当前实际存在的项目目录。`External_References` 因本项目已进入真实源码级对标而创建，用于固定版本第三方参考资料；其中完整源码快照尚未归档完成，状态由 `governance/pending_sync.json` 跟踪。未来同步和 Meeting 等其他目录只在对应功能阶段创建，不提前制造无用途空目录。
 
 ## 2. GitHub 与 Drive 的职责
 
@@ -54,7 +57,10 @@ Drive 是原始文件、大型产物和未来用户同步数据的保险库，�
 
 ```text
 00_Project/
-└── GitHub_Sync/
+├── GitHub_Sync/
+└── External_References/
+    ├── Notes/
+    └── Snapshots/
 ```
 
 `GitHub_Sync` 可保存：
@@ -64,6 +70,13 @@ Drive 是原始文件、大型产物和未来用户同步数据的保险库，�
 - CI / acceptance checkpoint
 - Drive artifact identity
 - 历史阶段归档
+
+`External_References` 用于源码级外部对标：
+
+- `Notes/`：固定 `owner/repo@commit` 的源码学习记录与项目影响结论；
+- `Snapshots/`：真正进入源码级研究后，对应精确 commit 的完整源码快照。
+
+第三方源码快照必须记录固定 commit、license/NOTICE、快照 SHA-256、大小和 Drive File ID；同一 `owner/repo@commit` 已有经过验证的快照时应复用，不重复上传。当前五个 Foundation A 参考仓库的快照仍为 non-blocking pending，不得在未实际上传和核验前标记为已归档。
 
 当前状态文档应原位更新并尽量复用 Drive File ID；历史 archive / freeze 仍保留，不因 CURRENT 更新而删除。
 
