@@ -9,6 +9,7 @@ from course_package.compiler import PackageCompileError, compile_course_package
 from course_package.contracts import PACKAGE_FILENAMES
 
 
+# Touching this test file also triggers the current legacy CI path filters.
 ROOT = Path(__file__).resolve().parents[1]
 COURSE_DIR = ROOT / "courses" / "functional-analysis"
 
