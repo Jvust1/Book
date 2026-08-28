@@ -8,6 +8,19 @@ const jsonResponse = (body: unknown, status = 200): Response =>
     headers: { 'content-type': 'application/json' },
   })
 
+const studyRecord = {
+  course_id: 'functional_analysis_course',
+  book_id: 'stein_shakarchi_functional_analysis_2011',
+  section_id: 'ch01_s01',
+  mode: 'learn',
+  status: 'in_progress',
+  progress: 0,
+  started_at: '2026-08-28T01:00:00+00:00',
+  last_studied_at: '2026-08-28T01:00:00+00:00',
+  completed_at: null,
+  updated_at: '2026-08-28T01:00:00+00:00',
+}
+
 describe('bookApi', () => {
   afterEach(() => {
     vi.unstubAllGlobals()
@@ -94,6 +107,81 @@ describe('bookApi', () => {
         },
         body: JSON.stringify(request),
       }),
+    )
+  })
+
+  it('posts StudyRecord touch without a browser identity body', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(studyRecord))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await bookApi.touchStudy(
+      'functional_analysis_course',
+      'ch01_s01',
+      'learn',
+    )
+
+    expect(result).toEqual(studyRecord)
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/courses/functional_analysis_course/sections/ch01_s01/study/learn/touch',
+      expect.objectContaining({
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+      }),
+    )
+    expect(fetchMock.mock.calls[0]?.[1]).not.toHaveProperty('body')
+  })
+
+  it('posts StudyRecord completion through the exact mode path', async () => {
+    const completed = {
+      ...studyRecord,
+      mode: 'practice',
+      status: 'completed',
+      progress: 100,
+      completed_at: '2026-08-28T01:05:00+00:00',
+    }
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(completed))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await bookApi.completeStudy(
+      'functional_analysis_course',
+      'ch01_s01',
+      'practice',
+    )
+
+    expect(result).toEqual(completed)
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/courses/functional_analysis_course/sections/ch01_s01/study/practice/complete',
+      expect.objectContaining({ method: 'POST' }),
+    )
+  })
+
+  it('gets all durable StudyRecords for one course', async () => {
+    const responseBody = {
+      course_id: 'functional_analysis_course',
+      records: [studyRecord],
+    }
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(responseBody))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await bookApi.getCourseStudyRecords('functional_analysis_course')
+
+    expect(result).toEqual(responseBody)
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/courses/functional_analysis_course/study-records',
+      expect.objectContaining({ headers: { Accept: 'application/json' } }),
+    )
+  })
+
+  it('gets recent StudyRecord and preserves null from a fresh store', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(jsonResponse(null))
+    vi.stubGlobal('fetch', fetchMock)
+
+    const result = await bookApi.getRecentStudy()
+
+    expect(result).toBeNull()
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/study/recent',
+      expect.objectContaining({ headers: { Accept: 'application/json' } }),
     )
   })
 
