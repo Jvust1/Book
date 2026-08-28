@@ -60,6 +60,7 @@ completed     = progress 100
 - completed 再进入只更新活动时间，不回退完成状态。
 - recent learning 按 `last_studied_at` 排序。
 - StudyRecord 保存失败时教材内容仍可阅读，界面显示“进度暂未保存”并提供重试。
+- repository 初始化失败和运行期 SQLite storage failure 都返回稳定 `study_store_unavailable` 503，响应不暴露数据库路径或内部错误细节。
 - 浏览器不能提交 `profile_id` 或 `book_id`；`book_id` 由服务端从 canonical Runtime 解析。
 - 浏览器 DTO 不暴露内部 `profile_id / revision / sync_status`。
 - Phase 1G 预留 `revision / updated_at / deleted_at / sync_status`，但当前 `sync_status` 固定为 `local`，没有实现 Drive Sync。
@@ -232,7 +233,7 @@ npx playwright install --with-deps chromium
 
 GitHub Actions 中 `.github/workflows/runtime-reference-tests.yml` 保留 Runtime/canonical 参考 gate；`.github/workflows/app-ui-tests.yml` 当前执行全量 Runtime discovery、Functional Analysis readiness、全量 App discovery、Web Vitest/typecheck/build，以及使用临时 SQLite 数据目录和 deterministic fake provider 的真实 Chromium acceptance。
 
-Phase 1G 当前代码 HEAD 验证基线：Runtime 146/146、App 86/86、Functional Analysis readiness `READY`、Web tests/typecheck/build PASS、real Chromium PASS。
+Phase 1G 当前代码 HEAD 验证基线：Runtime 146/146、App 87/87、Functional Analysis readiness `READY`、Web tests/typecheck/build PASS、real Chromium PASS。
 
 ## 本地 API
 
@@ -274,7 +275,7 @@ QA request 使用：
 }
 ```
 
-Course 整本问答时 `section_id` 为 `null`；Section 问答时传真实 Section ID。用户可见错误统一为中文稳定 JSON；初始化失败不会在 Python import 阶段直接终止应用。
+Course 整本问答时 `section_id` 为 `null`；Section 问答时传真实 Section ID。用户可见错误统一为中文稳定 JSON；教材 Runtime、QA provider 或 StudyRecord repository 初始化失败均不会在 Python import 阶段直接终止应用，相关用户可见错误通过稳定错误契约返回。
 
 ## 状态保存
 
