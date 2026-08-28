@@ -25,6 +25,8 @@ _BROWSER_SECRET_PATTERNS = (
     ),
     re.compile(r"\bclient_?secret\b", re.IGNORECASE),
 )
+_BROWSER_LOCAL_STORAGE = re.compile(r"\blocalStorage\b")
+_BROWSER_STUDY_RECORD = re.compile(r"\bstudy[-_]?records?\b", re.IGNORECASE)
 _SECRET_KEYS = frozenset(
     {
         "api_key",
@@ -141,6 +143,14 @@ def check_browser_source(repository_root: Path) -> tuple[PackageDiagnostic, ...]
                 _diagnostic(
                     "browser_secret_material_forbidden",
                     "Browser source contains forbidden owner Drive credential material.",
+                    relative,
+                )
+            )
+        if _BROWSER_LOCAL_STORAGE.search(text) and _BROWSER_STUDY_RECORD.search(text):
+            diagnostics.append(
+                _diagnostic(
+                    "browser_studyrecord_localstorage_forbidden",
+                    "Browser source must not use localStorage as StudyRecord durable authority.",
                     relative,
                 )
             )
