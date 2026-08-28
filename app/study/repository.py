@@ -66,7 +66,265 @@ class StudyRecordRepository:
 
         if row is None:
             raise CorruptProfileError("Local study profile is missing")
-        return self._validate_profile_id(str(row[0]))
+        return self._validate_profile_id(str(row["profile_id"]))
+
+    def get_record(
+        self,
+        course_id: str,
+        section_id: str,
+        mode: str,
+    ) -> StudyRecord | None:
+        profile_id = self.get_profile_id()
+        try:
+            with self._connect() as connection:
+                row = connection.execute(
+                    """
+                    SELECT *
+                    FROM study_records
+                    WHERE profile_id = ?
+                      AND course_id = ?
+                      AND section_id = ?
+                      AND mode = ?
+                      AND deleted_at IS NULL
+                    """,
+                    (profile_id, course_id, section_id, mode),
+                ).fetchone()
+        except sqlite3.Error as exc:
+            raise StudyRecordRepositoryError(
+                "Unable to read the local study record"
+            ) from exc
+        return None if row is None else self._record_from_row(row)
+
+    def touch_record(
+        self,
+        course_id: str,
+        book_id: str,
+        section_id: str,
+        mode: str,
+    ) -> StudyRecord:
+        profile_id = self.get_profile_id()
+        connection = self._connect()
+        try:
+            connection.execute("BEGIN IMMEDIATE")
+            row = self._select_logical_record(
+                connection,
+                profile_id,
+                course_id,
+                section_id,
+                mode,
+            )
+            timestamp = self._timestamp()
+            if row is None:
+                study_record_id = self._new_uuid()
+                connection.execute(
+                    """
+                    INSERT INTO study_records (
+                        study_record_id,
+                        profile_id,
+                        course_id,
+                        book_id,
+                        section_id,
+                        mode,
+                        status,
+                        progress,
+                        started_at,
+                        last_studied_at,
+                        completed_at,
+                        created_at,
+                        updated_at,
+                        revision,
+                        deleted_at,
+                        sync_status
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        study_record_id,
+                        profile_id,
+                        course_id,
+                        book_id,
+                        section_id,
+                        mode,
+                        "in_progress",
+                        0,
+                        timestamp,
+                        timestamp,
+                        None,
+                        timestamp,
+                        timestamp,
+                        1,
+                        None,
+                        "local",
+                    ),
+                )
+            else:
+                study_record_id = str(row["study_record_id"])
+                connection.execute(
+                    """
+                    UPDATE study_records
+                    SET last_studied_at = ?,
+                        updated_at = ?,
+                        revision = revision + 1
+                    WHERE study_record_id = ?
+                    """,
+                    (timestamp, timestamp, study_record_id),
+                )
+
+            result = self._select_record_by_id(connection, study_record_id)
+            connection.commit()
+            return self._record_from_row(result)
+        except StudyRecordRepositoryError:
+            connection.rollback()
+            raise
+        except sqlite3.Error as exc:
+            connection.rollback()
+            raise StudyRecordRepositoryError(
+                "Unable to save the local study record"
+            ) from exc
+        except Exception:
+            connection.rollback()
+            raise
+        finally:
+            connection.close()
+
+    def complete_record(
+        self,
+        course_id: str,
+        book_id: str,
+        section_id: str,
+        mode: str,
+    ) -> StudyRecord:
+        profile_id = self.get_profile_id()
+        connection = self._connect()
+        try:
+            connection.execute("BEGIN IMMEDIATE")
+            row = self._select_logical_record(
+                connection,
+                profile_id,
+                course_id,
+                section_id,
+                mode,
+            )
+            if row is not None and str(row["status"]) == "completed":
+                connection.commit()
+                return self._record_from_row(row)
+
+            timestamp = self._timestamp()
+            if row is None:
+                study_record_id = self._new_uuid()
+                connection.execute(
+                    """
+                    INSERT INTO study_records (
+                        study_record_id,
+                        profile_id,
+                        course_id,
+                        book_id,
+                        section_id,
+                        mode,
+                        status,
+                        progress,
+                        started_at,
+                        last_studied_at,
+                        completed_at,
+                        created_at,
+                        updated_at,
+                        revision,
+                        deleted_at,
+                        sync_status
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        study_record_id,
+                        profile_id,
+                        course_id,
+                        book_id,
+                        section_id,
+                        mode,
+                        "completed",
+                        100,
+                        timestamp,
+                        timestamp,
+                        timestamp,
+                        timestamp,
+                        timestamp,
+                        1,
+                        None,
+                        "local",
+                    ),
+                )
+            else:
+                study_record_id = str(row["study_record_id"])
+                connection.execute(
+                    """
+                    UPDATE study_records
+                    SET status = 'completed',
+                        progress = 100,
+                        completed_at = ?,
+                        last_studied_at = ?,
+                        updated_at = ?,
+                        revision = revision + 1
+                    WHERE study_record_id = ?
+                    """,
+                    (timestamp, timestamp, timestamp, study_record_id),
+                )
+
+            result = self._select_record_by_id(connection, study_record_id)
+            connection.commit()
+            return self._record_from_row(result)
+        except StudyRecordRepositoryError:
+            connection.rollback()
+            raise
+        except sqlite3.Error as exc:
+            connection.rollback()
+            raise StudyRecordRepositoryError(
+                "Unable to complete the local study record"
+            ) from exc
+        except Exception:
+            connection.rollback()
+            raise
+        finally:
+            connection.close()
+
+    def list_course_records(self, course_id: str) -> tuple[StudyRecord, ...]:
+        profile_id = self.get_profile_id()
+        try:
+            with self._connect() as connection:
+                rows = connection.execute(
+                    """
+                    SELECT *
+                    FROM study_records
+                    WHERE profile_id = ?
+                      AND course_id = ?
+                      AND deleted_at IS NULL
+                    ORDER BY last_studied_at DESC, updated_at DESC
+                    """,
+                    (profile_id, course_id),
+                ).fetchall()
+        except sqlite3.Error as exc:
+            raise StudyRecordRepositoryError(
+                "Unable to list local study records"
+            ) from exc
+        return tuple(self._record_from_row(row) for row in rows)
+
+    def get_recent_record(self) -> StudyRecord | None:
+        profile_id = self.get_profile_id()
+        try:
+            with self._connect() as connection:
+                row = connection.execute(
+                    """
+                    SELECT *
+                    FROM study_records
+                    WHERE profile_id = ?
+                      AND deleted_at IS NULL
+                    ORDER BY last_studied_at DESC, updated_at DESC
+                    LIMIT 1
+                    """,
+                    (profile_id,),
+                ).fetchone()
+        except sqlite3.Error as exc:
+            raise StudyRecordRepositoryError(
+                "Unable to read recent local study activity"
+            ) from exc
+        return None if row is None else self._record_from_row(row)
 
     def _initialize(self) -> None:
         try:
@@ -124,7 +382,7 @@ class StudyRecordRepository:
                         (profile_id, self._timestamp()),
                     )
                 else:
-                    self._validate_profile_id(str(row[0]))
+                    self._validate_profile_id(str(row["profile_id"]))
                 connection.commit()
             except Exception:
                 connection.rollback()
@@ -139,7 +397,82 @@ class StudyRecordRepository:
             ) from exc
 
     def _connect(self) -> sqlite3.Connection:
-        return sqlite3.connect(self._db_path, isolation_level=None)
+        connection = sqlite3.connect(self._db_path, isolation_level=None)
+        connection.row_factory = sqlite3.Row
+        return connection
+
+    @staticmethod
+    def _select_logical_record(
+        connection: sqlite3.Connection,
+        profile_id: str,
+        course_id: str,
+        section_id: str,
+        mode: str,
+    ) -> sqlite3.Row | None:
+        return connection.execute(
+            """
+            SELECT *
+            FROM study_records
+            WHERE profile_id = ?
+              AND course_id = ?
+              AND section_id = ?
+              AND mode = ?
+              AND deleted_at IS NULL
+            """,
+            (profile_id, course_id, section_id, mode),
+        ).fetchone()
+
+    @staticmethod
+    def _select_record_by_id(
+        connection: sqlite3.Connection,
+        study_record_id: str,
+    ) -> sqlite3.Row:
+        row = connection.execute(
+            "SELECT * FROM study_records WHERE study_record_id = ?",
+            (study_record_id,),
+        ).fetchone()
+        if row is None:
+            raise StudyRecordRepositoryError(
+                "Local study record disappeared during mutation"
+            )
+        return row
+
+    @staticmethod
+    def _record_from_row(row: sqlite3.Row) -> StudyRecord:
+        return StudyRecord(
+            study_record_id=str(row["study_record_id"]),
+            profile_id=str(row["profile_id"]),
+            course_id=str(row["course_id"]),
+            book_id=str(row["book_id"]),
+            section_id=str(row["section_id"]),
+            mode=str(row["mode"]),
+            status=str(row["status"]),
+            progress=int(row["progress"]),
+            started_at=str(row["started_at"]),
+            last_studied_at=str(row["last_studied_at"]),
+            completed_at=(
+                None if row["completed_at"] is None else str(row["completed_at"])
+            ),
+            created_at=str(row["created_at"]),
+            updated_at=str(row["updated_at"]),
+            revision=int(row["revision"]),
+            deleted_at=None if row["deleted_at"] is None else str(row["deleted_at"]),
+            sync_status=str(row["sync_status"]),
+        )
+
+    def _new_uuid(self) -> str:
+        value = str(self._uuid_factory())
+        try:
+            normalized = str(UUID(value))
+        except (ValueError, AttributeError, TypeError) as exc:
+            raise StudyRecordRepositoryError(
+                "Generated local record identity is invalid"
+            ) from exc
+        if normalized != value:
+            raise StudyRecordRepositoryError(
+                "Generated local record identity is not canonical"
+            )
+        return value
 
     def _timestamp(self) -> str:
         value = self._now()
