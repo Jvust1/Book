@@ -1,23 +1,12 @@
 # Book Handoff
 
-Updated: 2026-08-28
+Updated: 2026-08-29
 
 ## Start here
 
-1. Read Google Drive root `全项目`.
-2. Dynamically read every root file beginning `全项目_`.
-3. Read `AGENTS.md` and `SECURITY_POLICY.md`.
-4. Read:
-   - `governance/project_state.json`
-   - `docs/PROJECT_NORTH_STAR.md`
-   - `docs/ARCHITECTURE_INVARIANTS.md`
-   - `docs/CURRENT_STATE.md`
-   - `docs/DECISION_LEDGER.md`
-   - `docs/EVALUATION_LEDGER.md`
-   - `governance/artifact_manifest.json`
-   - `governance/pending_sync.json`
-   - `docs/PRE_FLIGHT_CHECKLIST.md`
-5. Then read the active phase Spec/Plan.
+1. Read Google Drive root `全项目` and current `全项目_*` governance baselines.
+2. Read `AGENTS.md` and `SECURITY_POLICY.md` on the exact target branch.
+3. Read `governance/project_state.json`, project invariants/current state/decision and evaluation ledgers, pending sync, preflight, then the active Foundation A design and plan.
 
 Repository evidence outranks chat memory.
 
@@ -27,73 +16,73 @@ Repository evidence outranks chat memory.
 - Default protected branch: `main`
 - Active development branch: `foundation/course-package-contract-a`
 - Phase: `Foundation A — Course Package Contract`
-- Main base for this branch: `a99d4638f959e04e54d91efe0ee0dd9ac50488a6`
+- Main base: `a99d4638f959e04e54d91efe0ee0dd9ac50488a6`
 
-Foundation A Tasks 1–6 are complete.
+Foundation A Tasks 1–7 are complete.
 
 ### Task 5 — Fail-closed Course Package validator
 
-- RED: `b198f97068137e6deb787c60762501cd0440decc`.
-- GREEN: `9d92a166d45aaf6493ae2ab9466031a0d69d62b6`.
-- exact-head verification: `b133e32c3355f0cac8478beaea960e81c2144b61`.
-- Runtime #150 and Book App UI #206: success.
-- validator coverage: 12 / 12 PASS; Python full discovery: 179 / 179 PASS.
+- RED: `b198f97068137e6deb787c60762501cd0440decc`
+- GREEN: `9d92a166d45aaf6493ae2ab9466031a0d69d62b6`
+- exact-head: `b133e32c3355f0cac8478beaea960e81c2144b61`
+- Runtime #150 and Book App UI #206: success
+- validator 12 / 12; Python full discovery 179 / 179
 
 ### Task 6 — Functional Analysis Golden Course gate
 
-- RED: `9b68187c2c0adf4b364c41b42c47ab1a3756219b`; new Golden test failed because `course_package.golden` did not yet exist.
-- GREEN: `6823c9c806a9175b4e4444345b40cf406fa5dde2`.
-- exact-head verification: `eeb2d4adee699d44924ed2ebfc2207df595f9ed6`.
-- Runtime reference tests #152: success on Python 3.11 / 3.12 / 3.13; Python 3.13 full discovery 182 / 182 PASS and Golden gate 3 / 3 PASS.
-- Book App UI tests #208: App API, Web tests, TypeScript typecheck, production build, and real Chromium acceptance all success; Chromium 11 / 11 PASS.
-- Golden gate verifies frozen values, validator PASS, deterministic package identity/bytes, and canonical tree byte identity.
-- Task 6 implementation diff contains only `course_package/golden.py`, the Golden baseline JSON, and Golden tests; no `books/functional-analysis/**` path changed.
+- RED: `9b68187c2c0adf4b364c41b42c47ab1a3756219b`
+- GREEN: `6823c9c806a9175b4e4444345b40cf406fa5dde2`
+- exact-head: `eeb2d4adee699d44924ed2ebfc2207df595f9ed6`
+- Runtime #152 and Book App UI #208: success
+- Golden 3 / 3; Python full discovery 182 / 182; Chromium 11 / 11
+
+### Task 7 — Executable architecture fitness functions
+
+- RED: `ac9cdd62fe38d683079d6f5aa63a0895ea09c1b0`; expected failure because `course_package.fitness` did not yet exist.
+- GREEN: `bf49326b0e54c20b4e24a36cb56c1485a5cd6a16`.
+- exact-head: `e0a303a51a3c4ac8cc1970ece067260b7d17a57c`.
+- Architecture fitness focused coverage: 6 / 6 PASS.
+- Python 3.13 full discovery: 188 / 188 PASS.
+- Runtime #154: Python 3.11 / 3.12 / 3.13 jobs all success; Functional Analysis remained `READY` with 8 chapters, 132 sections, 1493 search records, 442 PDF pages, final printed page 423, and no identity/readiness drift.
+- Book App UI #210: App API, Web tests, TypeScript typecheck, production build and real Chromium acceptance all success; Chromium 11 / 11 PASS.
+- Task 7 diff from the Task 6 governance checkpoint contains only `course_package/fitness.py`, `tools/check_architecture_fitness.py`, and `tests/test_architecture_fitness.py`; it does not modify `books/functional-analysis/**`.
 
 ## Current next task
 
-**Task 7 — Add Executable Architecture Fitness Functions**
+**Task 8 — Add Compiler and Validator CLI Entry Points**
 
-Implement by TDD according to:
+Authoritative plan: `docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`.
 
-`docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
+Files:
+- create `tools/compile_course_package.py`
+- create `tools/validate_course_package.py`
+- create `tests/test_course_package_cli.py`
+- modify `course_package/__init__.py`
 
-Task 7 files:
+Required CLI contracts:
+- compile: `python tools/compile_course_package.py courses/functional-analysis --repository-root . --output-root .build/course-packages`
+- compile JSON: `status`, `course_id`, `package_identity`, `package_dir`; exit 0 success, 1 compile/validation failure, 2 invalid invocation
+- validate: `python tools/validate_course_package.py <package-dir> --repository-root .`
+- validate JSON: `status`, `diagnostics`; exit 0 PASS/WARN, 1 FAIL, 2 invalid invocation
+- invalid paths must return 2 without Python traceback leakage in stdout JSON
+- `course_package.__init__` exports compiler, Golden, and validator public APIs specified by the plan
 
-- `course_package/fitness.py`
-- `tools/check_architecture_fitness.py`
-- `tests/test_architecture_fitness.py`
+Use TDD RED -> GREEN, then focused Foundation tests and exact-head Runtime/App regression verification.
 
-Active Foundation A fitness rules now:
+## Protected facts and boundaries
 
-1. browser source under `app/web/src/**` must not use Python `sqlite3`, direct `sqlite://` URLs, or `.sqlite3` durable-storage filenames;
-2. compiler/validator outputs must remain outside canonical `books/**` and `courses/**`;
-3. real Golden compile/validation must leave the canonical Functional Analysis Book tree byte-identical;
-4. compiled package must contain no absolute paths;
-5. compiled package must contain no secret-like fields;
-6. primary-role, artifact-hash, deterministic identity and Golden identity checks delegate to the existing validator/Golden gate.
+Functional Analysis Golden Course remains:
+- `functional_analysis_course`
+- `stein_shakarchi_functional_analysis_2011`
+- 8 chapters / 132 sections / 1493 search records / 442 PDF pages / printed final page 423
+- `STRUCTURED_COMPLETE` / Runtime `READY`
 
-The fitness runner must aggregate diagnostics rather than repair or mutate project evidence. CLI JSON exit contract: PASS/WARN => 0, FAIL => 1, invalid invocation => 2.
-
-## Protected facts
-
-Functional Analysis Golden Course:
-
-- course: `functional_analysis_course`
-- book: `stein_shakarchi_functional_analysis_2011`
-- 8 chapters
-- 132 sections
-- 1493 search records
-- 442 PDF pages
-- final printed page 423
-- `STRUCTURED_COMPLETE`
-- Runtime `READY`
-
-Foundation A must not write `books/functional-analysis/**` or migrate the existing Runtime/App consumer.
+Foundation A must not modify `books/functional-analysis/**` and must not migrate Runtime/App consumers.
 
 ## Pending synchronization
 
-`governance/pending_sync.json` currently contains no blocking item. External fixed-commit source archives and the Drive raw-source SHA-256 remain pending non-blocking. Do not mark them complete without the required verified hashes/Drive evidence.
+`governance/pending_sync.json` has no blocking item. External fixed-commit source archives and the Drive raw-source SHA-256 remain pending non-blocking and must not be marked complete without verified evidence.
 
 ## Merge rule
 
-Do not write `main` directly. Work on the non-default branch, verify the implementation HEAD, open a reviewable PR when the Foundation A branch reaches its planned integration checkpoint, and merge only after explicit authorization for that specific PR and required checks.
+Do not write `main` directly. Continue on the non-default branch. Open a reviewable PR only at the planned integration checkpoint and merge only after explicit authorization for that specific PR and required checks.
