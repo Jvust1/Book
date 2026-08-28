@@ -59,6 +59,21 @@
       "purpose": "Exact-commit source archives; currently empty/pending.",
       "status": "active_empty_pending_sync",
       "verification": "Drive folder identity read back; archive files not yet present"
+    },
+    {
+      "artifact_id": "book_app_source_foundation_a_7c053ab_2026_08_28",
+      "file_name": "Book_App_Source_Foundation_A_7c053ab_2026-08-28.zip",
+      "type": "generated",
+      "drive_file_id": "1eJAD4pqnKmGnLaypSho3UWFx5bFg7-fb",
+      "drive_path": "Book/03_Exports/Book_App_Source_Foundation_A_7c053ab_2026-08-28.zip",
+      "size_bytes": 1050147,
+      "sha256": "8a00aa25ee23df0c09e9eb1d212372cf4c01db8e9cd158833d1fe0745f529dae",
+      "version": "foundation_a_source_delivery_v2",
+      "source": "assistant_generated",
+      "related_commit": "7c053ab85932cab5132821b2b3fc6cc5252a1e59",
+      "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
+      "status": "active",
+      "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
     }
   ],
   "notes": [
