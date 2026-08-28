@@ -1,8 +1,8 @@
 # Book 开发路线图
 
-> 状态同步：2026-08-28
+> 状态同步：2026-08-29
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿；当前正式进入 Foundation A。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A 已在 `foundation/course-package-contract-a` 完成 Tasks 1–9 的实现与分层 gate 接线，当前进入 Task 10 exact-final-HEAD / PR readiness；尚未合并到 `main`。
 
 详细跨阶段架构：
 
@@ -20,7 +20,7 @@
 - [x] 第一本文档资产完成全书结构化、审计与完成标记
 - [x] 教材搜索与教材问答已形成真实来源闭环
 - [x] 本机 SQLite 持久化四模式 StudyRecord，隐藏本机 `profile_id`
-- [ ] 同一课程支持 `primary + supplementary + reference + translation` 多教材角色
+- [ ] 同一课程支持 `primary + supplementary + reference + translation` 多教材角色（Course Package contract 已支持角色；Runtime consumer 尚未迁移）
 - [ ] 同一教材多版本通过 `logical_book_id + book_version_id` 管理，不覆盖历史版本
 - [ ] 桌面/PWA 与手机/Android 保持业务功能一致；允许设备交互差异，但不人为删除桌面录音能力
 
@@ -102,42 +102,54 @@ Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 
 ## Foundation A：Course Package / Course Compiler / 自动验收基础
 
-当前优先冻结这一层，不要求作为大型 UI 版本发布。
+当前基础实现已完成 Tasks 1–9；Task 10 正在进行 exact-final-HEAD / PR readiness。Foundation A 不要求作为大型 UI 版本发布，也不迁移现有 Runtime/App consumer。
 
 ### Course Package / Compiler
 
-- [ ] 冻结 Course Package schema/version
-- [ ] 支持教材角色：`primary / supplementary / reference / translation`
-- [ ] `course_manifest`
-- [ ] book/version identity + hashes
-- [ ] chapters / sections / objects / source map
-- [ ] terminology / search index
-- [ ] readiness `PASS / WARN / FAIL`
-- [ ] Course Compiler：上传资料 → 结构化 → validation → readiness → 注册
+- [x] 冻结 Course Package schema/version：`course_package_v1` / `1.0.0`
+- [x] Course Package contract 支持教材角色：`primary / supplementary / reference / translation`
+- [x] legacy `course_manifest` normalization
+- [x] book/version identity + hashes
+- [x] chapters / sections / objects / source map 等当前 package artifacts 的确定性编译边界
+- [x] terminology / search index 等当前 canonical artifacts 纳入 package inventory / identity
+- [x] readiness `PASS / WARN / FAIL`
+- [ ] 通用 Course Compiler 产品主链路：上传任意资料 → 自动结构化 → validation → readiness → Runtime/Library 注册
 
 ### Golden Course
 
-- [ ] Functional Analysis 固化为 Golden Course
-- [ ] 8 Chapters / 132 Sections / 1493 search records 自动基线
-- [ ] canonical identity / source integrity 回归
-- [ ] Course Package compatibility 回归
+- [x] Functional Analysis 固化为 Golden Course
+- [x] 8 Chapters / 132 Sections / 1493 search records / 442 PDF pages / printed 423 自动基线
+- [x] canonical identity / source integrity 回归
+- [x] Course Package compatibility / deterministic compile / independent validation 回归
 
 ### Architecture Fitness Functions / Contract-first
 
-- [ ] browser 不直接访问 SQLite
-- [ ] raw audio 不进入 GitHub
-- [ ] raw transcript 不被 refined 覆盖
-- [ ] Meeting private data 不进入 shared Learning
-- [ ] ExamPoint 必须有 evidence
-- [ ] canonical assets 不被产品状态反向修改
-- [ ] OpenAPI/JSON Schema 逐步作为前后端契约权威来源
+- [x] browser source 不允许 durable SQLite 依赖/路径模式
+- [ ] raw audio 不进入 GitHub（对应模块尚未实现，未来阶段加入 gate）
+- [ ] raw transcript 不被 refined 覆盖（对应模块尚未实现）
+- [ ] Meeting private data 不进入 shared Learning（对应模块尚未实现）
+- [ ] ExamPoint 必须有 evidence（对应模块尚未实现）
+- [x] canonical assets 不被 Course Package / Golden / fitness 产品状态反向修改
+- [x] Course Package JSON Schema 作为 Foundation A contract 权威来源；其他前后端 OpenAPI/Schema 继续分阶段推进
 
 ### CI 分层
 
-- [ ] FAST GATE：targeted tests / Vitest / typecheck / architecture checks
-- [ ] PR FULL GATE：Python matrix / API / SQLite / build / Chromium / Golden Course
-- [ ] HEAVY/RELEASE GATE：canonical rebuild / readiness / release artifacts
+- [x] FAST GATE：Python 3.13 syntax / Foundation focused tests / architecture fitness
+- [x] PR FULL GATE：Python 3.11/3.12/3.13 / Golden compile+validate / App API / Web / build / Chromium
+- [x] HEAVY GATE：manual `workflow_dispatch`，隔离副本 rebuild/recovery + canonical readiness / Golden / fitness；不写回 canonical
 - [ ] 重型教材重建、ASR、本地模型、Android/Windows 特殊验证后续可走 self-hosted runner
+
+### Foundation A 当前验证证据
+
+Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`：
+
+- Course Package FAST #1：PASS，Foundation focused 46 / 46，Architecture Fitness PASS
+- Runtime reference #157：Python 3.11 / 3.12 / 3.13 PASS；3.13 Golden compile/validate + fitness PASS
+- Book App UI #213：app-api / web-client / browser-acceptance PASS
+- real Chromium：11 / 11 PASS
+- Foundation A 起点到 Task 9 HEAD：`books/functional-analysis/**` canonical diff = 0，App source diff = 0
+
+manual HEAVY workflow 已定义但当前连接器不提供 `workflow_dispatch` 启动动作，因此未伪造运行结果；Task 10 exact PR gate 继续以自动 FAST / Runtime / App / Chromium 为合并前硬门。
 
 ## Phase 1H：丰富四模式学习体验
 
@@ -407,6 +419,6 @@ Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫
 
 ## 当前唯一下一步
 
-**进入 Foundation A：先冻结 Course Package schema/version 与教材角色，随后把 Functional Analysis 固化为 Golden Course，并建立 Architecture Fitness Functions、Contract-first 边界和 FAST / PR FULL / HEAVY 分层 CI；契约稳定后实现 Course Compiler 主链路。**
+**完成 Foundation A Task 10：形成 exact final HEAD，打开 `foundation/course-package-contract-a → main` 的 reviewable PR，并只接受该 PR exact HEAD 的 FAST / Runtime Python matrix / App API-Web-Chromium 全绿结果；随后复核 PR diff/review threads，再请求用户对该具体 PR 的显式合并授权。**
 
 当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。
