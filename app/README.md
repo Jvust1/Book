@@ -1,8 +1,8 @@
 # Book App 本地运行说明
 
-当前 `feature/study-record-phase-1g` 上的 Book App 已完成 Phase 1G 实现：React/Vite PWA 负责界面，FastAPI 负责把现有 Python Runtime 投影成稳定 JSON，并在服务器侧执行教材搜索、证据选择、教材问答与 StudyRecord 持久化。教材解析与事实来源仍由 Runtime 负责，前端不会直接读取 `books/`、`courses/`、`library/`、结构化教材文件或 SQLite。
+当前 `main` 上的 Book App 已完成 Phase 1G：React/Vite PWA 负责界面，FastAPI 负责把现有 Python Runtime 投影成稳定 JSON，并在服务器侧执行教材搜索、证据选择、教材问答与 StudyRecord 持久化。教材解析与事实来源仍由 Runtime 负责，前端不会直接读取 `books/`、`courses/`、`library/`、结构化教材文件或 SQLite。
 
-> Phase 1G 当前仍在开发分支，尚未合并到 `main`。
+> Phase 1G 已通过 PR #11 合并到 `main`；merge commit 为 `4b111e4b1ffde86a365aaad2a3164f8aedccc819`，合并后 `main` 的 Book App UI tests run #194 再次全绿。
 
 ## 当前能力
 
@@ -233,7 +233,7 @@ npx playwright install --with-deps chromium
 
 GitHub Actions 中 `.github/workflows/runtime-reference-tests.yml` 保留 Runtime/canonical 参考 gate；`.github/workflows/app-ui-tests.yml` 当前执行全量 Runtime discovery、Functional Analysis readiness、全量 App discovery、Web Vitest/typecheck/build，以及使用临时 SQLite 数据目录和 deterministic fake provider 的真实 Chromium acceptance。
 
-Phase 1G 当前代码 HEAD 验证基线：Runtime 146/146、App 87/87、Functional Analysis readiness `READY`、Web tests/typecheck/build PASS、real Chromium PASS。
+Phase 1G 合并后 `main` 验证基线（merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819`，run #194）：Runtime 146/146、App 87/87、Functional Analysis readiness `READY`、Web tests/typecheck/build PASS、real Chromium PASS。
 
 ## 本地 API
 
