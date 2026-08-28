@@ -2,17 +2,20 @@
 
 更新时间：2026-08-28
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以当前分支中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
-- 当前开发分支：`feature/study-record-phase-1g`
+- 当前集成分支：`main`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
 - Phase 1G 业务实现：已完成
-- 当前状态：最终文档同步与 exact-final-HEAD gate / review / PR 准备中；尚未合并到 `main`
+- Phase 1G：已通过 PR #11 合并到 `main`
+- Phase 1G merge commit：`4b111e4b1ffde86a365aaad2a3164f8aedccc819`
+- 合并后验证：`main` Book App UI tests run #194 全绿
+- 当前状态：Phase 1G 已完成并集成；下一工程阶段为 Foundation A
 
 当前跨阶段正式架构文档：
 
@@ -131,7 +134,7 @@ completed = progress 100
 
 ## 5. Phase 1G 最新验证证据
 
-代码 HEAD 的完整 GitHub Actions 验证已通过：
+Phase 1G 已合并到 `main`。merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 GitHub Actions run #194 已通过：
 
 ```text
 Runtime discovery            146 / 146 PASS
@@ -211,7 +214,7 @@ revision
 
 ## 8. Foundation A：下一工程阶段
 
-Phase 1G 完成最终文档 HEAD gate、review 和 PR 后，优先冻结统一 Course Package Contract。
+Phase 1G 已完成、已通过 PR #11 合并，并在 `main` 上完成合并后全量验证。现在优先冻结统一 Course Package Contract。
 
 目标：
 
@@ -334,9 +337,12 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-1. 完成 Phase 1G 最终文档 HEAD 的 full gate。
-2. 对 Phase 1G 做独立 code review / diff review。
-3. 创建或更新 Phase 1G PR；**不得自动合并到 `main`**。
-4. 获得明确合并授权并完成集成后，进入 Foundation A。
+进入 Foundation A，按顺序完成：
+
+1. 冻结 Course Package schema/version 与教材角色 `primary / supplementary / reference / translation`。
+2. 固化 Functional Analysis 为 Golden Course，并把 8 Chapters / 132 Sections / 1493 search records、canonical identity/source integrity 纳入自动 gate。
+3. 建立 Architecture Fitness Functions 与 Contract-first 边界。
+4. 把 CI 分成 FAST / PR FULL / HEAVY 三层。
+5. 在上述契约稳定后实现 Course Compiler 的“上传资料 → 结构化 → validation → readiness → 注册”主链路。
 
 当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action。
