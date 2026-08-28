@@ -32,7 +32,7 @@ class StudyRecordService:
             return self._repository.touch_record(
                 section.course_id,
                 section.book_id,
-                section.section.id,
+                section.section.section_id,
                 normalized_mode,
             )
         except StudyRecordRepositoryError as exc:
@@ -50,7 +50,7 @@ class StudyRecordService:
             return self._repository.complete_record(
                 section.course_id,
                 section.book_id,
-                section.section.id,
+                section.section.section_id,
                 normalized_mode,
             )
         except StudyRecordRepositoryError as exc:
