@@ -95,6 +95,7 @@ Phase 1G 产品状态实现没有修改 `books/functional-analysis/**` canonical
 - 浏览器 StudyRecord DTO 不暴露内部 `profile_id / revision / sync_status`
 - Section 页面只有在真实学习模式内容成功加载后才 touch StudyRecord
 - StudyRecord 保存失败不阻断教材内容阅读，并提供重试
+- repository 初始化失败与运行期 storage failure 都稳定映射为 503，不泄露 SQLite 路径或内部细节
 - completion 可跨页面 reload 持久化
 - Source → Section 往返继续保持原有 route / scroll / expanded state 恢复
 - SQLite read connections 有专门生命周期回归测试
@@ -135,7 +136,7 @@ completed = progress 100
 ```text
 Runtime discovery            146 / 146 PASS
 Functional Analysis readiness READY
-App discovery                 86 / 86 PASS
+App discovery                 87 / 87 PASS
 Web tests                     PASS
 TypeScript typecheck          PASS
 Web production build          PASS
@@ -153,7 +154,7 @@ real Chromium acceptance      PASS
 - Source → Section 往返
 - 390×844 窄屏无 body 横向溢出
 
-Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；最新日志不再出现 `unclosed database`。目前仍可见 FastAPI/Starlette 自身的第三方弃用提示，不属于 Phase 1G 数据连接泄漏。
+Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；最新日志不再出现 `unclosed database`。repository dependency 初始化失败也有 RED → GREEN 回归测试，验证稳定 `study_store_unavailable` 503 且不泄露 SQLite 路径。目前仍可见 FastAPI/Starlette 自身的第三方弃用提示，不属于 Phase 1G 数据连接泄漏。
 
 ## 6. 当前确认的课程产品模型
 
