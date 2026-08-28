@@ -54,15 +54,17 @@ class StudyRecordRepository:
         return self._db_path
 
     def get_profile_id(self) -> str:
+        connection = self._connect()
         try:
-            with self._connect() as connection:
-                row = connection.execute(
-                    "SELECT profile_id FROM app_profile WHERE singleton = 1"
-                ).fetchone()
+            row = connection.execute(
+                "SELECT profile_id FROM app_profile WHERE singleton = 1"
+            ).fetchone()
         except sqlite3.Error as exc:
             raise StudyRecordRepositoryError(
                 "Unable to read the local study profile"
             ) from exc
+        finally:
+            connection.close()
 
         if row is None:
             raise CorruptProfileError("Local study profile is missing")
@@ -75,24 +77,26 @@ class StudyRecordRepository:
         mode: str,
     ) -> StudyRecord | None:
         profile_id = self.get_profile_id()
+        connection = self._connect()
         try:
-            with self._connect() as connection:
-                row = connection.execute(
-                    """
-                    SELECT *
-                    FROM study_records
-                    WHERE profile_id = ?
-                      AND course_id = ?
-                      AND section_id = ?
-                      AND mode = ?
-                      AND deleted_at IS NULL
-                    """,
-                    (profile_id, course_id, section_id, mode),
-                ).fetchone()
+            row = connection.execute(
+                """
+                SELECT *
+                FROM study_records
+                WHERE profile_id = ?
+                  AND course_id = ?
+                  AND section_id = ?
+                  AND mode = ?
+                  AND deleted_at IS NULL
+                """,
+                (profile_id, course_id, section_id, mode),
+            ).fetchone()
         except sqlite3.Error as exc:
             raise StudyRecordRepositoryError(
                 "Unable to read the local study record"
             ) from exc
+        finally:
+            connection.close()
         return None if row is None else self._record_from_row(row)
 
     def touch_record(
@@ -286,44 +290,48 @@ class StudyRecordRepository:
 
     def list_course_records(self, course_id: str) -> tuple[StudyRecord, ...]:
         profile_id = self.get_profile_id()
+        connection = self._connect()
         try:
-            with self._connect() as connection:
-                rows = connection.execute(
-                    """
-                    SELECT *
-                    FROM study_records
-                    WHERE profile_id = ?
-                      AND course_id = ?
-                      AND deleted_at IS NULL
-                    ORDER BY last_studied_at DESC, updated_at DESC
-                    """,
-                    (profile_id, course_id),
-                ).fetchall()
+            rows = connection.execute(
+                """
+                SELECT *
+                FROM study_records
+                WHERE profile_id = ?
+                  AND course_id = ?
+                  AND deleted_at IS NULL
+                ORDER BY last_studied_at DESC, updated_at DESC
+                """,
+                (profile_id, course_id),
+            ).fetchall()
         except sqlite3.Error as exc:
             raise StudyRecordRepositoryError(
                 "Unable to list local study records"
             ) from exc
+        finally:
+            connection.close()
         return tuple(self._record_from_row(row) for row in rows)
 
     def get_recent_record(self) -> StudyRecord | None:
         profile_id = self.get_profile_id()
+        connection = self._connect()
         try:
-            with self._connect() as connection:
-                row = connection.execute(
-                    """
-                    SELECT *
-                    FROM study_records
-                    WHERE profile_id = ?
-                      AND deleted_at IS NULL
-                    ORDER BY last_studied_at DESC, updated_at DESC
-                    LIMIT 1
-                    """,
-                    (profile_id,),
-                ).fetchone()
+            row = connection.execute(
+                """
+                SELECT *
+                FROM study_records
+                WHERE profile_id = ?
+                  AND deleted_at IS NULL
+                ORDER BY last_studied_at DESC, updated_at DESC
+                LIMIT 1
+                """,
+                (profile_id,),
+            ).fetchone()
         except sqlite3.Error as exc:
             raise StudyRecordRepositoryError(
                 "Unable to read recent local study activity"
             ) from exc
+        finally:
+            connection.close()
         return None if row is None else self._record_from_row(row)
 
     def _initialize(self) -> None:
