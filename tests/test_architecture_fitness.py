@@ -89,6 +89,46 @@ class ArchitectureFitnessTests(unittest.TestCase):
             {"app/web/src/bad.ts"},
         )
 
+    def test_browser_source_rejects_studyrecord_localstorage_authority(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "app" / "web" / "src"
+            source.mkdir(parents=True)
+            (source / "studyState.ts").write_text(
+                "export function saveStudyRecord(records: StudyRecord[]) {\n"
+                "  localStorage.setItem('book:study-records', JSON.stringify(records))\n"
+                "}\n",
+                encoding="utf-8",
+            )
+
+            diagnostics = check_browser_source(root)
+
+        self.assertTrue(diagnostics)
+        self.assertEqual(
+            {item.code for item in diagnostics},
+            {"browser_studyrecord_localstorage_forbidden"},
+        )
+        self.assertEqual(
+            {item.relative_path for item in diagnostics},
+            {"app/web/src/studyState.ts"},
+        )
+
+    def test_browser_source_allows_unrelated_localstorage_preferences(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "app" / "web" / "src"
+            source.mkdir(parents=True)
+            (source / "theme.ts").write_text(
+                "export function saveTheme(theme: string) {\n"
+                "  localStorage.setItem('book:theme', theme)\n"
+                "}\n",
+                encoding="utf-8",
+            )
+
+            diagnostics = check_browser_source(root)
+
+        self.assertEqual(diagnostics, ())
+
     def test_browser_source_ignores_non_source_explanatory_text(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
