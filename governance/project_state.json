@@ -7,7 +7,7 @@
   "phase": "FOUNDATION_A_COURSE_PACKAGE_CONTRACT",
   "status": "IN_PROGRESS",
   "base_main_commit": "a99d4638f959e04e54d91efe0ee0dd9ac50488a6",
-  "last_verified_implementation_head": "e0a303a51a3c4ac8cc1970ece067260b7d17a57c",
+  "last_verified_implementation_head": "116cf4275b8006bc48860943c8e50987547cb5a5",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "foundation_a": {
     "approved_design": "docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md",
@@ -19,9 +19,10 @@
       {"task": 4, "name": "Deterministic Course Package compiler", "status": "COMPLETE"},
       {"task": 5, "name": "Course Package validator", "status": "COMPLETE"},
       {"task": 6, "name": "Functional Analysis Golden Course gate", "status": "COMPLETE"},
-      {"task": 7, "name": "Executable architecture fitness functions", "status": "COMPLETE"}
+      {"task": 7, "name": "Executable architecture fitness functions", "status": "COMPLETE"},
+      {"task": 8, "name": "Compiler and validator CLI entry points", "status": "COMPLETE"}
     ],
-    "next_task": {"task": 8, "name": "Compiler and validator CLI entry points", "status": "NEXT"},
+    "next_task": {"task": 9, "name": "Layer CI into FAST, PR FULL, and HEAVY gates", "status": "NEXT"},
     "canonical_book_mutation_allowed": false,
     "runtime_consumer_migration_in_scope": false
   },
@@ -56,5 +57,5 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Execute Foundation A Task 8 with TDD: add compiler and validator CLI entry points, verify subprocess JSON/exit contracts including invalid paths, then perform exact-head Foundation and Runtime/App regressions."
+  "next_step": "Execute Foundation A Task 9: layer Course Package acceptance into FAST, PR FULL backend/product, and manual HEAVY gates; verify workflow triggers and exact-head regressions without canonical writes."
 }
