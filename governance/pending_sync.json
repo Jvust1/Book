@@ -1,6 +1,6 @@
 {
   "schema_version": "book_pending_sync_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-08-29",
   "blocking_count": 0,
   "items": [
     {
@@ -26,8 +26,17 @@
       "scope": "Book/01_Textbooks/Functional_Analysis_split20_23parts.zip",
       "drive_file_id": "1hHxBrwUdHzGideWJV24coQUCdPJRkCwf",
       "size_bytes": 9982095,
-      "reason": "Drive ID and size are verified, but the available normalized metadata response did not expose a SHA-256 checksum. Foundation A Task 5 consumes canonical GitHub structured assets, so this does not block current validator work.",
+      "reason": "Drive ID and size are verified, but the available normalized metadata response did not expose a SHA-256 checksum. Foundation A consumes canonical GitHub structured assets, so this does not block the next phase.",
       "resolution": "At a suitable artifact checkpoint, obtain or compute SHA-256 without replacing the Drive object, then update governance/artifact_manifest.json.",
+      "blocks_next_step": false
+    },
+    {
+      "pending_id": "foundation_a_post_merge_narrative_sync_2026_08_29",
+      "blocking": false,
+      "status": "PENDING",
+      "scope": "docs/CURRENT_STATE.md; docs/ROADMAP.md; docs/DEVELOPMENT_STRATEGY.md",
+      "reason": "Foundation A PR #13 merged after these long-form narrative documents were authored, so isolated current-state sentences may still describe Task 10 or PR readiness as pending. The merged repository state is authoritative and the stale wording must not be interpreted as an unmerged implementation.",
+      "resolution": "When the next phase design is selected, update only stale current-state wording while preserving historical sections and prior evidence. Use governance/project_state.json, docs/HANDOFF.md, PR #13, and merge commit 82f0cbbcfe5078d304ca7c163b81d4eb01b515f4 as the post-merge authority until then.",
       "blocks_next_step": false
     }
   ]
