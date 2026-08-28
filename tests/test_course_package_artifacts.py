@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+# Verification bridge until Foundation A CI paths include course_package/**.
+
 import json
 import os
 import tempfile
