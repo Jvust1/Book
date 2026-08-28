@@ -66,6 +66,29 @@ class ArchitectureFitnessTests(unittest.TestCase):
             {"app/web/src/bad.ts"},
         )
 
+    def test_browser_source_rejects_owner_drive_secret_material(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "app" / "web" / "src"
+            source.mkdir(parents=True)
+            (source / "bad.ts").write_text(
+                "const driveAccessToken = 'ya29.redacted';\n"
+                "const clientSecret = 'must-not-live-in-browser';\n",
+                encoding="utf-8",
+            )
+
+            diagnostics = check_browser_source(root)
+
+        self.assertTrue(diagnostics)
+        self.assertEqual(
+            {item.code for item in diagnostics},
+            {"browser_secret_material_forbidden"},
+        )
+        self.assertEqual(
+            {item.relative_path for item in diagnostics},
+            {"app/web/src/bad.ts"},
+        )
+
     def test_browser_source_ignores_non_source_explanatory_text(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
