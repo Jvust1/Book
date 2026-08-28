@@ -13,6 +13,7 @@ from pydantic import ValidationError
 from app.study import (
     StudyRecord,
     StudyRecordRepository,
+    StudyRecordRepositoryError,
     StudyRecordService,
     resolve_study_db_path,
 )
@@ -137,6 +138,20 @@ async def handle_invalid_qa_provider_response(
 @app.exception_handler(AppUnavailableError)
 async def handle_unavailable(_request: Request, error: AppUnavailableError) -> JSONResponse:
     return _error_response(error, 503)
+
+
+@app.exception_handler(StudyRecordRepositoryError)
+async def handle_study_repository_error(
+    _request: Request, error: StudyRecordRepositoryError
+) -> JSONResponse:
+    return _error_response(
+        AppUnavailableError(
+            code="study_store_unavailable",
+            user_message="学习进度暂无法保存",
+            detail=str(error),
+        ),
+        503,
+    )
 
 
 @app.get("/api/health")
