@@ -85,6 +85,37 @@ Verified at exact HEAD:
 
 The CLI layer exposes the already-verified compiler/validator trust roots without changing the Runtime/App consumer and without permitting the default CLI output root to escape the repository.
 
+## E-008 — Foundation A Task 9 layered CI gates
+
+Status: `PASS / FEATURE_BRANCH`
+
+Implementation HEAD:
+
+`94fee411b5f8d67a5db2ef5779657f39c226c220`
+
+Pure Task 9 compare from `03b23305710e361bde9caf17470c1a2e75510092` to the implementation HEAD contains exactly:
+
+- `.github/workflows/course-package-fast.yml`
+- `.github/workflows/course-package-heavy.yml`
+- `.github/workflows/runtime-reference-tests.yml`
+- `.github/workflows/app-ui-tests.yml`
+
+No canonical textbook or App source file is in the Task 9 diff.
+
+Verified automatically at the Task 9 implementation HEAD:
+
+- Course Package FAST run #1 (`33190233674`): success
+- Foundation FAST focused suite: 46 / 46 PASS
+- Architecture Fitness: PASS
+- Runtime reference run #157 (`33190233583`): Python 3.11 / 3.12 / 3.13 all success
+- Python 3.13 PR FULL path: Golden Course Package compile PASS, independent validation PASS, architecture fitness PASS
+- Book App UI run #213 (`33190233579`): app-api success, web-client success, browser-acceptance success
+- real Chromium acceptance: 11 / 11 PASS
+
+HEAVY is intentionally `workflow_dispatch` only. Its implementation rebuilds/recovery-checks an isolated `/tmp` copy rather than using canonical `--promote-safe` writes, then checks canonical readiness and Golden package/fitness read-only. The connected GitHub toolset does not expose a workflow-dispatch action, so this ledger does not claim that HEAVY was manually executed.
+
+Task 9 therefore proves the automatic FAST + Runtime PR FULL + App PR FULL wiring and defines a non-canonical-writing manual HEAVY gate. Final Foundation A PR readiness still requires exact PR-head automatic gates after the Task 10 documentation/governance commits.
+
 ## Next evaluation
 
-Foundation A Task 9 must layer acceptance into FAST, PR FULL backend/product, and manual HEAVY workflows. Verification must prove Foundation source changes trigger the appropriate gates, Python 3.13 PR FULL performs Golden compile/validate + fitness, App PR FULL remains unchanged except trigger coverage, HEAVY performs only clean-checkout candidate rebuild/readiness/package validation without committing canonical changes, and the exact workflow HEAD remains regression-green.
+Foundation A Task 10 must open the reviewable PR to `main`, require exact-final-head Course Package FAST, Runtime Python 3.11 / 3.12 / 3.13, App API/Web/Chromium success, inspect the final diff and review threads, and confirm canonical textbook diff = 0, App runtime migration = 0, no secrets/tokens, and no tracked `.build` output before any specific merge authorization is requested.
