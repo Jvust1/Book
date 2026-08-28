@@ -1,153 +1,145 @@
 # Book 开发路线图
 
-> 状态同步：2026-08-27
+> 状态同步：2026-08-28
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化：`STRUCTURED_COMPLETE` / `RUNTIME_READY`，版本 `v0.36 FINAL`，442 / 442 PDF 页覆盖，最终纸质页 423，全书审计 PASS 20 / WARN 1 / FAIL 0。当前项目主线已从“继续分批结构化第一本书”切换为 Book App 软件能力建设；Phase 1F 教材内问答已完成，下一主线为 Phase 1G 长期学习记录。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已在 `feature/study-record-phase-1g` 完成实现并通过 exact-code-head Runtime / App / Web / Chromium 验证；当前进入文档收尾与 PR 准备，下一工程阶段为 Foundation A。
+
+详细跨阶段架构：
+
+- `docs/DEVELOPMENT_STRATEGY.md`
+- `docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`
 
 ## 产品基线
 
-- [x] 一个 Book App 支持多门彼此独立的教材课程
-- [x] 当前 App 产品入口：一门 course 恰好对应一本 enabled 主教材
+- [x] 一个 Book App 支持多门彼此独立的课程
+- [x] 当前 App gate：一门 course 恰好对应一本 enabled 主教材
 - [x] PDF 页 / 纸质页分离
 - [x] 每节固定提供 `预习｜学习｜复习｜刷题` 四个并列入口
 - [x] 四模式不强制顺序、不互相锁定
 - [x] 教材来源必须可追溯；缺失内容与锚点不得静默编造
 - [x] 第一本文档资产完成全书结构化、审计与完成标记
-- [ ] 后续加入《实分析》等教材时，作为新的独立 course 注册到 Library
+- [x] 教材搜索与教材问答已形成真实来源闭环
+- [x] 本机 SQLite 持久化四模式 StudyRecord，隐藏本机 `profile_id`
+- [ ] 同一课程支持 `primary + supplementary + reference + translation` 多教材角色
+- [ ] 同一教材多版本通过 `logical_book_id + book_version_id` 管理，不覆盖历史版本
+- [ ] 桌面/PWA 与手机/Android 保持业务功能一致；允许设备交互差异，但不人为删除桌面录音能力
 
-## Phase 1：教材运行时与本地学习 App
+## Phase 1A–1F：Runtime、App MVP、搜索、教材问答 — 已完成
 
-### 1A. Runtime 教材导入契约 — 已完成
+已完成：
 
-- [x] 读取 `STRUCTURED_COMPLETE.json`
-- [x] 未完成/blocked 教材拒绝进入正式 Runtime
-- [x] 读取教材 metadata、PageMap、结构化 chunk、中文学习层与搜索索引
-- [x] 校验关键文件、版本、ID 与 canonical identity
-- [x] 建立统一 `BookRuntime`
-- [x] Functional Analysis 达到 `RUNTIME_READY`
+- Runtime 导入契约与 readiness gate
+- Book / Course / Library Runtime
+- Functional Analysis：8 Chapters / 132 Sections / 1493 search records
+- Local-first FastAPI + React/TypeScript/Vite PWA
+- Library → Course → Chapter → Section
+- 预习 / 学习 / 复习 / 刷题
+- SourceResolver 与真实教材来源跳转
+- deterministic canonical search
+- source-grounded textbook QA
+- server EvidenceGate / citation verification / fail closed
+- Runtime / App / Web / Chromium gates
+- Phase 1F PR #8 已合并
 
-当前真实基线：442 PageMap 行、1493 条唯一搜索记录。
+## Phase 1G：长期 StudyRecord — 已实现并通过代码 HEAD 验证
 
-### 1B. Course → Book → Chapter → Section — 已完成
+设计：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 
-- [x] `CourseRuntime`
-- [x] `BookRuntime`
-- [x] Chapter 树
-- [x] Section 列表
-- [x] PDF 页 / 纸质页同时暴露
-- [x] Functional Analysis 稳定暴露 8 Chapter / 132 Section
+实施计划：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
 
-> 底层 `CourseRuntime` 仍保留通用多书兼容能力；当前 App 层只接纳一课程一本 enabled 主教材。
+### 持久化
 
-### 1C. Library + Section Learning Runtime — 已完成
+- [x] 本机 SQLite 持久层
+- [x] FastAPI `StudyRecordService` / repository boundary
+- [x] 可移植数据库路径抽象与 `BOOK_APP_DATA_DIR` 覆盖
+- [x] repository 初始化失败与运行期 storage failure 都稳定映射为用户可见 503，不泄露 SQLite 路径/内部细节
 
-- [x] `LibraryRuntime`
-- [x] App Library 注册真实课程
-- [x] `SectionLearningRuntime`
-- [x] Preview / Learn / Review / Practice 四个确定性来源投影
-- [x] 四模式自由进入
-- [x] review / practice 空结果作为正常状态
-- [x] 不把 AI 生成内容冒充教材内容
+### 身份
 
-### 1D. Local-first Book App MVP — 已完成
+- [x] 首次初始化生成稳定隐藏 UUID `profile_id`
+- [x] 单用户 UI，不做账号选择
+- [x] 浏览器不能指定/伪造 profile identity
+- [x] `book_id` 由服务器从 canonical Runtime 解析，浏览器不能提交身份字段
 
-#### App / API
+### 四模式进度
 
-- [x] `SourceResolver`：object / figure / translation 真实来源解析
-- [x] `BookAppService`：Runtime → 稳定 DTO
-- [x] FastAPI 本地只读接口
-- [x] 用户可见错误使用中文稳定 JSON
-- [x] 默认绑定本机 `127.0.0.1`
+- [x] `preview / learn / review / practice` 四模式独立
+- [x] 首次进入有效 mode：`in_progress`, `progress=0`
+- [x] 再次进入更新 `last_studied_at`
+- [x] 手动 `标记完成`：`completed`, `progress=100`
+- [x] completed 再进入不倒退
+- [x] 重复完成幂等，不制造 revision churn
+- [x] 不用滚动距离/停留时间制造伪百分比
+- [x] StudyRecord 保存失败不阻断教材内容阅读，并提供可重试状态
 
-#### Web / PWA
+### 最近学习与 Sync-ready
 
-- [x] React + TypeScript + Vite
-- [x] PWA 静态资源支持
-- [x] Library → Course → Chapter → Section 真实页面
-- [x] Section 默认 `mode=learn`
-- [x] `预习｜学习｜复习｜刷题` 四个并列 tab
-- [x] 中文优先，英文作为辅助证据
-- [x] 缺失中文内容显示明确 fallback，不用英文正文替代
-- [x] review 内容默认折叠
-- [x] practice 无解析时明确说明教材数据暂未提供
+- [x] 最近学习按 `last_studied_at`
+- [x] 与 sessionStorage 短期返回状态严格分离
+- [x] 保留 `study_record_id / profile_id / revision / updated_at / deleted_at / sync_status`
+- [x] 1G 中 `sync_status=local`
+- [x] 浏览器 DTO 不暴露内部 `profile_id / revision / sync_status`
+- [x] 不提前实现 Drive / SyncEvent / SyncEngine / 录音 / Meeting / ExamPoint
 
-#### 教材来源往返
+### Phase 1G 验证基线
 
-- [x] 结构化来源页
-- [x] 显示纸质教材页 / PDF 页
-- [x] 显示真实 `source_anchor`；缺失时明确提示
-- [x] 显示来源上下文
-- [x] `sessionStorage` 保存当前会话的 route / scroll / expanded IDs / active source
-- [x] 从来源返回后恢复 mode、展开状态和滚动位置
-- [x] 不把 session 状态伪装成长期 `StudyRecord`
+代码 HEAD 验证已通过：
 
-#### 工程质量门
+- Runtime discovery：146 / 146
+- Functional Analysis readiness：`READY`
+- App discovery：87 / 87
+- Web tests / typecheck / production build：PASS
+- real Chromium acceptance：PASS
+- StudyRecord completion 跨 reload 持久化：PASS
+- 四模式独立：PASS
+- Source → Section 往返：PASS
+- 390×844 窄屏无 body 横向溢出：PASS
+- StudyRecord SQLite read connection lifecycle regression：PASS
+- StudyRecord repository 初始化失败稳定 503 / no-detail-leak regression：PASS
+- `books/functional-analysis/**` 在 Phase 1G 产品改动中保持 canonical 零修改
 
-- [x] 固化 `package-lock.json`
-- [x] CI 使用 `npm ci`
-- [x] Vitest 与 Playwright 测试范围隔离
-- [x] TypeScript typecheck
-- [x] Vite + PWA build
-- [x] Chromium 真实浏览器 acceptance
-- [x] 桌面真实来源往返验收
-- [x] 390×844 窄屏四模式与横向溢出验收
+Phase 1G 尚未合并到 `main`；完成最终文档 HEAD gate 后进入 PR / review。
 
-> 当前 PWA 不是“没有 Python 后端也能完全离线运行”的桌面程序。前端静态资源可缓存，但教材动态数据仍由本机 FastAPI 提供。Phase 1D 也尚未包含完整原始 PDF Reader。
+## Foundation A：Course Package / Course Compiler / 自动验收基础
 
-## Phase 1E：教材内搜索与来源跳转 — 已完成
+Phase 1G exact-head 收尾后优先冻结这一层，不要求作为大型 UI 版本发布。
 
-直接复用 Functional Analysis 已存在的 1493 条真实 canonical 索引，不重新发明搜索资产。
+### Course Package / Compiler
 
-- [x] 中文搜索
-- [x] 英文搜索
-- [x] 术语 / 定理 / 公式 / 例题 / 习题统一命中
-- [x] 搜索结果保留 canonical course / book / source identity
-- [x] 只为能映射到真实 object / figure 的索引记录生成可跳转结果
-- [x] 点击命中项进入结构化教材来源
-- [x] 从来源返回搜索上下文
-- [x] Search 返回状态与 Section 返回状态分离，并保持 Search 优先匹配当前来源
-- [x] `sessionStorage` 只保存 route / query / scroll / active source，不缓存结果 DTO，不冒充长期 `StudyRecord`
-- [x] 无结果与索引不可用状态明确区分
-- [x] FastAPI 明确区分 200 空结果 / 400 查询错误 / 404 course / 503 search unavailable
-- [x] 浏览器端真实搜索 acceptance
-- [x] 390×844 搜索与来源往返无 body 横向溢出
-- [x] Runtime CI 在 Python 3.11 / 3.12 / 3.13 运行 SearchRuntime gate
-- [x] canonical `search_index*.jsonl` 变更会触发 Runtime workflow
-- [x] Phase 1E 完成基线：29 个 Vitest 单元测试、TypeScript、PWA build；Chromium acceptance 5 / 5 通过
+- [ ] 冻结 Course Package schema/version
+- [ ] 支持教材角色：`primary / supplementary / reference / translation`
+- [ ] `course_manifest`
+- [ ] book/version identity + hashes
+- [ ] chapters / sections / objects / source map
+- [ ] terminology / search index
+- [ ] readiness `PASS / WARN / FAIL`
+- [ ] Course Compiler：上传资料 → 结构化 → validation → readiness → 注册
 
-## Phase 1F：教材内问答 — 已完成
+### Golden Course
 
-- [x] 问答只使用当前课程允许的真实 canonical 教材资料源
-- [x] Course 入口支持整本教材问答
-- [x] Section 入口优先当前小节，并在本节证据不足时显式 fallback 到整本教材
-- [x] EvidencePack 数量/文本长度有界；最近对话 history 有界，且 history 不作为教材证据
-- [x] 服务端证据 gate 先判断是否具备真实可回答内容；模型可做第二次资料不足判断
-- [x] 回答必须携带服务端验证过的真实来源引用；未知/伪造 citation fail closed
-- [x] 点击 citation 进入现有教材来源页
-- [x] QA → Source → QA 返回时恢复同一份已验证会话，不重新调用模型生成原回答
-- [x] 连续追问向模型发送当前短期会话 history
-- [x] 模型生成回答与教材正文明确区分，不写回教材资产、搜索索引或 canonical source
-- [x] 无足够证据时返回稳定资料不足 system notice，不猜测答案
-- [x] 服务器侧支持 OpenAI-compatible provider；API Key 不进入浏览器 DTO/sessionStorage
-- [x] deterministic fake provider 支持 CI/浏览器验收，不要求外部模型 secret
-- [x] 390×844 下 Section QA、citation 来源往返无 body 横向溢出
-- [x] Runtime 3.11 / 3.12 / 3.13 Phase 1F contract gate 与全量 `tests` discovery 通过
-- [x] Python 3.13 Functional Analysis canonical rebuild/readiness/QA smoke 通过
-- [x] 全量 `app_tests` discovery、Web Vitest、TypeScript typecheck、Vite/PWA build 与 Chromium acceptance 通过
-- [x] Phase 1F 分支未修改 `books/functional-analysis/**` canonical 教材资产
+- [ ] Functional Analysis 固化为 Golden Course
+- [ ] 8 Chapters / 132 Sections / 1493 search records 自动基线
+- [ ] canonical identity / source integrity 回归
+- [ ] Course Package compatibility 回归
 
-## Phase 1G：长期学习记录
+### Architecture Fitness Functions / Contract-first
 
-- [ ] `StudyRecord`
-- [ ] 四模式独立进度
-- [ ] 最近学习 Course / Section / mode
-- [ ] 本地持久化
-- [ ] 与当前 `sessionStorage` 短期返回状态分离
-- [ ] 后续账号同步接口预留，但本阶段不实现云同步
+- [ ] browser 不直接访问 SQLite
+- [ ] raw audio 不进入 GitHub
+- [ ] raw transcript 不被 refined 覆盖
+- [ ] Meeting private data 不进入 shared Learning
+- [ ] ExamPoint 必须有 evidence
+- [ ] canonical assets 不被产品状态反向修改
+- [ ] OpenAPI/JSON Schema 逐步作为前后端契约权威来源
+
+### CI 分层
+
+- [ ] FAST GATE：targeted tests / Vitest / typecheck / architecture checks
+- [ ] PR FULL GATE：Python matrix / API / SQLite / build / Chromium / Golden Course
+- [ ] HEAVY/RELEASE GATE：canonical rebuild / readiness / release artifacts
+- [ ] 重型教材重建、ASR、本地模型、Android/Windows 特殊验证后续可走 self-hosted runner
 
 ## Phase 1H：丰富四模式学习体验
-
-当前 Phase 1D 已提供四模式的确定性教材来源投影；以下是更高层学习产品能力，尚未完成。
 
 ### 预习
 
@@ -163,177 +155,258 @@
 
 - [x] 教材真实对象与来源
 - [x] 公式 / 结构化对象基础展示
-- [ ] 更完整的图表 / 例题交互
+- [ ] 更完整图表 / 例题交互
 - [ ] 个人笔记入口
+- [ ] 辅助教材补充入口
 - [ ] 老师课堂补充入口预留
 
 ### 复习
 
 - [x] Runtime 核心对象过滤
-- [x] 内容按需展开
 - [ ] 1 分钟 / 5 分钟 / 完整复习
-- [ ] 闪卡
-- [ ] 填空 / 判断 / 简答
+- [ ] 闪卡 / 填空 / 判断 / 简答
 - [ ] 公式回忆
 - [ ] 错题重做入口
 
 ### 刷题
 
-- [x] Runtime 教材 exercise / problem 投影
+- [x] 教材 exercise / problem 投影
 - [ ] 题目筛选
 - [ ] 作答与答案记录
 - [ ] 教材变式题接口
 - [ ] AI 生成题接口
 - [ ] 错题筛选
 
-> 任何新增学习目标、检测题、变式题或 AI 题都必须与“教材原文/教材结构化事实”在数据和 UI 上明确区分。
+## Foundation B：Minimal Concept Graph + ConceptAlignment + Unified Retrieval v1
 
-## Phase 1I：Chapter Hub
+### Concept Graph
+
+- [ ] `Concept`
+- [ ] prerequisite / dependent relations
+- [ ] Chapter/Section ↔ Concept
+- [ ] 教材对象 ↔ Concept
+- [ ] 第一版使用确定性 graph records，不要求图数据库
+
+### 多教材 ConceptAlignment
+
+- [ ] 同一 Course 下多本 Book 保持原文/页码/编号独立
+- [ ] `ConceptAlignment`
+- [ ] `defines / explains / proves / examples / exercises / extends / contrasts`
+- [ ] 自动对齐保留 confidence / revision
+- [ ] primary book 第一版继续提供课程 Section 主骨架
+- [ ] 同一本书不同 edition 使用 version mapping，不覆盖旧 anchor
+
+### Unified Retrieval v1
+
+- [ ] 保留现有 deterministic Exact Search
+- [ ] SQLite FTS5 / BM25 全文检索
+- [ ] Query normalization：中英文、术语别名、Unicode/LaTeX/符号
+- [ ] Exact + FTS 结果做 provenance-aware fusion
+- [ ] Search 与 QA 共用 Retrieval boundary
+- [ ] 结果显式显示主教材/辅助教材/课堂/个人/AI Derived 来源
+
+后续逐步加入：FormulaRetriever、SemanticRetriever、LectureEventRetriever、ExamPointRetriever、PersonalRetriever、MeetingRetriever 和 RRF/等价 rank fusion。
+
+## Phase 1I：Chapter Hub / 思维导图
 
 - [ ] 章节总结
 - [ ] 核心知识点
 - [ ] 章节公式
 - [ ] 初始考点
-- [ ] 可点击思维导图
+- [ ] 基于 Concept Graph 的可点击思维导图
 - [ ] 章节测试
 
-## Phase 1J：ExamPoint 与教材锚点
+## Phase 1J：ExamPoint Engine
+
+第一版基础重要度只使用真实教材结构化证据。
 
 - [ ] `ExamPoint`
 - [ ] `ExamPointAnchor`
-- [ ] 考点绑定多个真实教材位置
-- [ ] 点击后跳具体来源/锚点
-- [ ] 精确高亮（仅在真实几何/anchor 可用时）
-- [ ] 一键返回考点
-- [ ] 恢复滚动 / 展开 / 筛选状态
-- [ ] 上一个 / 下一个考点
+- [ ] S / A / B / C 或等价 priority
+- [ ] `priority_score / reasons`
+- [ ] 定义 / 定理 / 公式 / 证明 / 例题 / 习题证据
+- [ ] 重复引用 / 显式强调 / dependency signals
+- [ ] 每个考点绑定 canonical source anchors
+- [ ] 点击跳真实来源并恢复上下文
 
-> Phase 1D 已完成通用 Section ↔ Source 返回状态机制；Phase 1E 已增加 Search ↔ Source 短期返回状态；Phase 1F 已增加 QA ↔ Source 会话返回状态。本阶段是在同一导航原则上增加 ExamPoint 业务对象，不重复实现另一套导航状态系统。
+课堂、考试、作业、错题和 Mastery 只能作为独立追加证据，不能覆盖教材基础证据。
 
-## Phase 1K：本地 PDF Reader 接入
+## Phase 1K：Exam Sprint / 期末速通
 
-- [ ] 按 canonical `book_id` 注册本机原始 PDF 路径
-- [ ] 不把大体积原始 PDF 提交进 GitHub
-- [ ] PDF.js 或等价前端查看器
-- [ ] PageMap 驱动 PDF 页 / 纸质页跳转
-- [ ] 有真实 anchor geometry 时精确高亮
-- [ ] geometry 缺失时只做真实页级定位，不伪造高亮
-- [ ] 与现有结构化来源页并存或平滑切换
+- [ ] 30 分钟保命版
+- [ ] 2 小时核心版
+- [ ] 6 小时考试版
+- [ ] 完整速通
+- [ ] ExamPoint priority 裁剪
+- [ ] 最小必要 prerequisite closure
+- [ ] 定义 / 定理 / 公式 / 条件
+- [ ] 证明主线与是否要求完整证明
+- [ ] 典型例题 / 习题 / 易混淆点
+- [ ] 每项显示“为什么重要”与真实来源
 
-## Phase 1 首章完整产品验收
+## Phase 1L：本地 PDF Reader
 
-Phase 1F 已完成 `ch01_s01` 基础学习、教材搜索和教材问答来源闭环；长期学习记录、ExamPoint 与本地 PDF Reader 仍待后续阶段完成。
+- [ ] canonical `book_id` → 本机 PDF
+- [ ] PDF.js 或等价查看器
+- [ ] PageMap 驱动 PDF / printed page 跳转
+- [ ] 有真实 geometry 才精确高亮
+- [ ] geometry 缺失时只做真实页级定位
+- [ ] 与结构化来源页并存
 
-- [x] Library → Course → Chapter → Section 导航
-- [x] 四学习入口可用
-- [x] 纸质页 / PDF 页来源显示
-- [x] 结构化来源 → 返回学习闭环
-- [x] 窄屏基础可用性
-- [ ] 关键图 / 例题 / 习题完整交互验收
-- [x] 中英搜索
-- [x] 教材内问答返回真实来源
-- [ ] 长期学习进度保存与恢复
-- [ ] ExamPoint → 教材来源 → 返回考点闭环
-- [ ] 本地原始 PDF 页级/锚点级查看
+## Phase 2：Learning 录音与本地初加工
 
-## Phase 2：课堂录音 MVP
+桌面/PWA 与手机/Android 都提供录音业务能力；可因平台权限和后台策略采用不同实现。
 
 - [ ] 开始 / 暂停 / 结束录音
-- [ ] Lecture 对象
-- [ ] 音频本地持久化
-- [ ] 实时语音识别
-- [ ] 实时字幕
-- [ ] 基础标点与断句
-- [ ] 中英文混排
-- [ ] 数字 / 百分比
-- [ ] 从教材生成专业术语热词
+- [ ] `Lecture`
+- [ ] raw audio 本地持久化并永久保留
+- [ ] VAD / local ASR / 时间戳字幕
+- [ ] 断句 / 标点 / 中英文 / 数字百分比
+- [ ] 教材术语词典辅助 ASR 二次纠错
+- [ ] 初步 Section / Concept 匹配
+- [ ] `raw_transcript` 与 `local_refined` 分开
+- [ ] 快捷标记：重点 / 考试 / 作业 / 没听懂 / 拓展
 
-### 快捷标记
+## Phase 3：Drive-backed 多设备协作同步
 
-- [ ] ⭐ 重点
-- [ ] 🎓 考试
-- [ ] 📝 作业
-- [ ] ❓ 没听懂
-- [ ] 💡 拓展
+- [ ] Book Sync API
+- [ ] 每台设备自己的 SQLite
+- [ ] Drive 保存用户数据、大文件、同步包
+- [ ] `profile_id` 区分参与者
+- [ ] 增量同步，不共享整个 SQLite
+- [ ] `SyncEvent` 全局唯一 `event_id`
+- [ ] unseen event 幂等应用
+- [ ] per-record revision / tombstone
+- [ ] 大文件 hash + Drive reference
+- [ ] shared Learning 与 private Meeting 隔离
+- [ ] 允许同步的数据在桌面和手机保持一致业务语义
 
-每次点击保存时间戳。
+## Phase 4：课堂智能结构化、LectureEvent 与 GPT Processing Jobs
 
-## Phase 3：课堂智能结构化
+事实层永久分开：
 
-- [ ] 原始逐字稿
-- [ ] AI 精修稿
-- [ ] 错别字 / 标点 / 断句修正
-- [ ] 口癖 / 重复清理
-- [ ] 专业术语规范
-- [ ] 精修段落回听原音
+```text
+Textbook fact
+Lecture fact
+Derived / AI fusion
+```
 
-### LectureEvent
+- [ ] `raw_transcript / local_refined / ai_refined`
+- [ ] LectureEvent：IMPORTANT / EXAM_POINT / EXAM_SCOPE / GRADE_WEIGHT / GRADE_RULE / HOMEWORK / DEADLINE / NO_PROOF_REQUIRED / NOT_EXAMINED / TEACHER_EXTENSION / TEXTBOOK_REFERENCE / QUESTION
+- [ ] 老师原话保留时间戳
+- [ ] Concept / Section 对齐
+- [ ] 教材补充显示 canonical source，不伪装老师原话
+- [ ] versioned `ProcessingJob`
+- [ ] `input_revision / processor_version / schema_version / textbook_version / processed_at`
+- [ ] 每日人工触发 GPT，处理 `pending_ai`
+- [ ] 生成新 processing revision，不覆盖 raw source
+- [ ] Course Timeline
+- [ ] What Changed 增量摘要
 
-- [ ] IMPORTANT
-- [ ] EXAM
-- [ ] HOMEWORK
-- [ ] DEADLINE
-- [ ] SCOPE
-- [ ] GRADE_RULE
-- [ ] TEACHER_EXTENSION
-- [ ] TEXTBOOK_REFERENCE
-- [ ] QUESTION
+## Phase 5：Private Meeting
 
-## Phase 4：考试中心
+- [ ] Meeting 首页/入口
+- [ ] 录音 / VAD / ASR
+- [ ] `Meeting / MeetingTranscriptSegment / MeetingEvent`
+- [ ] Decision / ActionItem / Deadline / FollowUp
+- [ ] 复用 SQLite / profile_id / sync / ProcessingJob
+- [ ] 默认私有
+- [ ] 不参与教材知识融合
+- [ ] Meeting Search 与 Learning Search 授权/索引隔离
 
-- [ ] 成绩构成
-- [ ] 作业 / 期中 / 期末比例
-- [ ] 考试日期与范围
-- [ ] 不考 / 必考内容
+## Phase 6：Exam Digital Twin / 考试中心
+
+- [ ] `Exam`
+- [ ] 日期 / 范围 / 总分
+- [ ] 章节/主题占比
 - [ ] 题型 / 分值
-- [ ] 开卷 / 闭卷 / 允许资料
-- [ ] 是否提供公式
-- [ ] 已确认 / 高概率 / 待确认状态
-- [ ] 用户确认 / 修正流程
+- [ ] 开卷/闭卷/允许资料/公式表
+- [ ] 老师明确考试信号
+- [ ] confirmed / probable / unknown
+- [ ] 当前知识覆盖率 / 风险区域
+- [ ] ExamPoint / Exam Sprint 使用该模型作为独立证据层
 
-## Phase 5：教材与课堂融合
+## Phase 7：更多课程、同课程多教材与版本更新
 
-- [ ] 老师说纸质页码时通过 PageMap 匹配
-- [ ] 识别 Chapter / Section 引用
-- [ ] 语义匹配知识点
-- [ ] 课堂补充挂到 Concept
-- [ ] 老师重点更新考点权重
-- [ ] 课堂题进入统一题库
+- [ ] 不同学科/不同课程注册为独立 Course
+- [ ] 同一门课的第二本泛函分析教材优先作为同 Course 的 supplementary/reference，而不是复制 App/创建孤立课程
+- [ ] primary / supplementary / reference / translation role
+- [ ] 多教材 ConceptAlignment
+- [ ] 同一本 logical book 多 edition version mapping
+- [ ] 旧 anchor → 新 anchor 重映射
+- [ ] 历史课堂 / 笔记 / StudyRecord 不失效
+- [ ] 各 Book 保持独立 canonical provenance
 
-## Phase 6：更多独立课程与教材版本更新
-
-- [ ] 新教材作为独立 course 注册到 Library
-- [ ] 复用现有 Runtime / API / Web，不复制应用代码
-- [ ] 教材版本差异分析
-- [ ] 旧锚点 → 新锚点重映射
-- [ ] 历史课堂 / 笔记不失效
-- [ ] 如未来确有需求，再设计 App 层多主教材课程，不提前放宽当前产品 gate
-
-## Phase 7：掌握度与自适应复习
+## Phase 8：Mistake / Mastery Graph / 自适应复习
 
 - [ ] AnswerRecord
 - [ ] Mistake
-- [ ] Mastery
-- [ ] 错误类型分析
-- [ ] 正确率与复习次数
-- [ ] 最近复习时间
-- [ ] 遗忘管理
-- [ ] 间隔复习
-- [ ] 考前优先级
+- [ ] Mastery 独立于 StudyRecord
+- [ ] `unseen / seen / understood / recallable / basic_problem_ready / transfer_problem_ready / stable`
+- [ ] 错误类型：definition gap / theorem condition / formula misuse / prerequisite gap / reasoning / calculation / careless
+- [ ] 错题映射 Concept 与 prerequisite
+- [ ] shortest repair path
+- [ ] 遗忘管理 / 间隔复习
 
-## Phase 8：全课程搜索与 AI
+## Phase 9：Unified Retrieval 扩展
 
-- [ ] 搜教材
-- [ ] 搜课堂
-- [ ] 搜考点
-- [ ] 搜题目
-- [ ] 搜笔记
-- [ ] 搜错题
+- [ ] FormulaRetriever
+- [ ] SemanticRetriever
+- [ ] ConceptRetriever
+- [ ] LectureEventRetriever
+- [ ] ExamPointRetriever
+- [ ] PersonalRetriever
+- [ ] MeetingRetriever（隔离）
+- [ ] RRF / equivalent fusion
+- [ ] source-aware reranking
+- [ ] 搜教材 / 辅助教材 / 课堂 / 考点 / 题目 / 笔记 / 错题
+- [ ] Search / QA 共享统一 Retrieval Engine
 
-AI 回答的证据优先级和可用资料源必须显式配置；回答与教材原文在 UI 上保持可区分，并提供可追溯来源。
+## Phase 10：Next Best Action 学习决策引擎
 
-## 当前单一下一步
+输入：
 
-**Phase 1G：建立长期 `StudyRecord`，保存最近学习位置与四模式独立进度，并与现有 Section / Search / QA `sessionStorage` 短期返回状态严格分离。**
+```text
+ExamPoint
++ teacher emphasis
++ Exam Digital Twin
++ StudyRecord
++ Mastery
++ Mistakes
++ remaining time
++ prerequisite graph
+```
 
-Phase 1F 的教材问答闭环已经稳定；下一阶段不重新实现搜索/问答，也不把短期会话恢复状态冒充长期学习记录。当前仍不进入课堂录音，也不重复结构化已经完成的 Functional Analysis。
+- [ ] 生成可解释的下一最佳学习动作
+- [ ] 说明每个推荐的 evidence / reason
+- [ ] 支持考试倒计时下的最短有效学习路径
+- [ ] 不允许 AI 无证据直接修改 Mastery 或考试事实
+
+## Android / APK 产品化
+
+- [ ] Android App / APK
+- [ ] 与桌面/PWA 共享业务 contract
+- [ ] 本地 SQLite / profile identity / sync boundary 跨平台
+- [ ] 录音在手机与桌面均可用，平台差异只存在于实现/交互层
+- [ ] 教材、模型、ASR 权重按需安装/导入，避免巨大 APK
+
+## 完整版本后的 Codex 阶段
+
+```text
+Full usable version
+→ Codex Full Repository Audit (read-only first)
+→ P0 / P1 / P2 / P3 findings
+→ ChatGPT review
+→ Upgrade Spec
+→ independent upgrade branch
+→ targeted upgrade
+→ exact-head full regression
+```
+
+Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫除式重构稳定仓库。
+
+## 当前唯一下一步
+
+**完成 Phase 1G 最终文档 HEAD gate 与代码审查后，创建/更新 Phase 1G PR；合并需单独明确授权。随后进入 Foundation A：冻结 Course Package / Course Compiler contract、把 Functional Analysis 固化为 Golden Course，并建立 Architecture Fitness Functions 与分层 CI。**
+
+当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。

@@ -1,14 +1,22 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
-import type { LearningMode, ModeResponse, SectionResponse } from '../api/types'
+import type {
+  LearningMode,
+  ModeResponse,
+  SectionResponse,
+  StudyRecord,
+} from '../api/types'
 import { EmptyState } from '../components/EmptyState'
 import { LearningObjectCard } from '../components/LearningObjectCard'
 import { ModeTabs } from '../components/ModeTabs'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
+const STUDY_SAVE_FALLBACK = '学习进度暂无法保存'
+
+type StudyRetryAction = 'touch' | 'complete'
 
 const isLearningMode = (value: string | null): value is LearningMode =>
   value !== null && VALID_MODES.includes(value as LearningMode)
@@ -28,13 +36,21 @@ export function SectionPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const rawMode = searchParams.get('mode')
   const mode: LearningMode = isLearningMode(rawMode) ? rawMode : 'learn'
+  const studyKey = courseId && sectionId ? `${courseId}:${sectionId}:${mode}` : null
 
   const [section, setSection] = useState<SectionResponse | null>(null)
   const [sectionError, setSectionError] = useState<string | null>(null)
   const [payload, setPayload] = useState<ModeResponse | null>(null)
   const [modeError, setModeError] = useState<string | null>(null)
+  const [studyRecord, setStudyRecord] = useState<StudyRecord | null>(null)
+  const [studyError, setStudyError] = useState<string | null>(null)
+  const [studyRetryAction, setStudyRetryAction] = useState<StudyRetryAction | null>(null)
+  const [studySaving, setStudySaving] = useState(false)
+  const [completionSaving, setCompletionSaving] = useState(false)
   const [expandedSourceIds, setExpandedSourceIds] = useState<string[]>([])
   const restoredKeyRef = useRef<string | null>(null)
+  const activeStudyKeyRef = useRef<string | null>(studyKey)
+  const touchedKeyRef = useRef<string | null>(null)
 
   useEffect(() => {
     if (isLearningMode(rawMode)) return
@@ -69,6 +85,15 @@ export function SectionPage() {
   useEffect(() => {
     if (!courseId || !sectionId) return
 
+    const nextStudyKey = `${courseId}:${sectionId}:${mode}`
+    activeStudyKeyRef.current = nextStudyKey
+    touchedKeyRef.current = null
+    setStudyRecord(null)
+    setStudyError(null)
+    setStudyRetryAction(null)
+    setStudySaving(false)
+    setCompletionSaving(false)
+
     let active = true
     setPayload(null)
     setModeError(null)
@@ -83,8 +108,52 @@ export function SectionPage() {
 
     return () => {
       active = false
+      if (activeStudyKeyRef.current === nextStudyKey) {
+        activeStudyKeyRef.current = null
+      }
     }
   }, [courseId, mode, sectionId])
+
+  const persistTouch = useCallback(
+    async (expectedStudyKey: string) => {
+      if (!courseId || !sectionId) return
+
+      setStudySaving(true)
+      setStudyError(null)
+      setStudyRetryAction(null)
+      try {
+        const record = await bookApi.touchStudy(courseId, sectionId, mode)
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setStudyRecord(record)
+        }
+      } catch (reason: unknown) {
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setStudyError(errorMessage(reason, STUDY_SAVE_FALLBACK))
+          setStudyRetryAction('touch')
+        }
+      } finally {
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setStudySaving(false)
+        }
+      }
+    },
+    [courseId, mode, sectionId],
+  )
+
+  useEffect(() => {
+    if (!courseId || !sectionId || !payload || !studyKey) return
+    if (
+      payload.course_id !== courseId ||
+      payload.section_id !== sectionId ||
+      payload.mode !== mode
+    ) {
+      return
+    }
+    if (touchedKeyRef.current === studyKey) return
+
+    touchedKeyRef.current = studyKey
+    void persistTouch(studyKey)
+  }, [courseId, mode, payload, persistTouch, sectionId, studyKey])
 
   useEffect(() => {
     setExpandedSourceIds([])
@@ -139,6 +208,41 @@ export function SectionPage() {
       expandedSourceIds,
       activeSourceId: sourceId,
     })
+  }
+
+  const completeCurrentMode = useCallback(
+    async (expectedStudyKey: string) => {
+      if (!courseId || !sectionId || studyRecord?.status === 'completed') return
+
+      setCompletionSaving(true)
+      setStudyError(null)
+      setStudyRetryAction(null)
+      try {
+        const record = await bookApi.completeStudy(courseId, sectionId, mode)
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setStudyRecord(record)
+        }
+      } catch (reason: unknown) {
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setStudyError(errorMessage(reason, STUDY_SAVE_FALLBACK))
+          setStudyRetryAction('complete')
+        }
+      } finally {
+        if (activeStudyKeyRef.current === expectedStudyKey) {
+          setCompletionSaving(false)
+        }
+      }
+    },
+    [courseId, mode, sectionId, studyRecord?.status],
+  )
+
+  const retryStudySave = () => {
+    if (!studyKey) return
+    if (studyRetryAction === 'complete') {
+      void completeCurrentMode(studyKey)
+      return
+    }
+    void persistTouch(studyKey)
   }
 
   if (!courseId || !sectionId) {
@@ -199,6 +303,47 @@ export function SectionPage() {
       </header>
 
       <ModeTabs mode={mode} onChange={switchMode} />
+
+      {payload && (studyRecord || studySaving || studyError) ? (
+        <section className="study-progress-panel" aria-live="polite">
+          {studyRecord ? (
+            <div className="study-progress-summary">
+              <p>
+                {studyRecord.status === 'completed'
+                  ? '学习进度：已完成'
+                  : '学习进度：进行中'}
+              </p>
+              {studyRecord.status !== 'completed' ? (
+                <button
+                  className="secondary-button"
+                  disabled={completionSaving}
+                  onClick={() => studyKey && void completeCurrentMode(studyKey)}
+                  type="button"
+                >
+                  {completionSaving ? '正在完成…' : '标记完成'}
+                </button>
+              ) : null}
+            </div>
+          ) : studySaving && !studyError ? (
+            <p className="secondary-text">正在保存学习进度…</p>
+          ) : null}
+
+          {studyError ? (
+            <div className="study-progress-warning" role="status">
+              <p>学习内容仍可正常查看。学习进度暂未保存。</p>
+              <p className="secondary-text">{studyError}</p>
+              <button
+                className="secondary-button"
+                disabled={studySaving || completionSaving}
+                onClick={retryStudySave}
+                type="button"
+              >
+                重试
+              </button>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
 
       {modeError ? (
         <div className="status-panel" role="alert">

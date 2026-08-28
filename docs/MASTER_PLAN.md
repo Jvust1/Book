@@ -1,495 +1,401 @@
-# Book Course OS 总体计划
+# Book 总体产品计划
+
+更新时间：2026-08-28
 
 ## 1. 产品目标
 
-Book 的目标不是做“PDF + AI 聊天”，而是把真实课程学习过程结构化为一个长期可更新的 Course OS。
+Book 的目标不是做“PDF + AI 聊天”，而是构建一个长期可更新、来源可追溯、跨设备同步的个人 Course OS，并在同一产品中提供独立私有的 Meeting 域。
 
-系统持续接收：
-
-- 多本教材 PDF
-- 教材后续版本更新
-- 课堂录音
-- 老师补充与口头说明
-- 作业与截止时间
-- 期中/期末范围
-- 成绩构成
-- 用户笔记
-- 题库、错题与学习记录
-
-最终把它们统一到课程知识体系中，并始终保留来源与定位。
-
-## 2. 顶层结构
+核心原则：
 
 ```text
-Course
-├── CourseKnowledgeTree
-├── Books
-│   ├── Main Textbook
-│   ├── Supplementary Textbooks
-│   ├── English / Reference Textbooks
-│   └── Versions
-├── Lectures
-├── Questions
-├── Exams
-├── Notes
-├── Mistakes
-└── StudyRecords
+App 通用，教材是数据
+教材告诉系统“知识是什么”
+课堂告诉系统“老师怎么教、怎么考”
+个人数据告诉系统“我掌握到哪里”
+AI 负责连接、解释和推荐，但不覆盖事实来源
 ```
 
-## 3. 多教材体系
+长期输入：
 
-一门课程可以绑定多本教材：
+- 主教材 / 辅助教材 / 参考教材及版本更新
+- 教材结构化数据
+- 课堂录音与逐字稿
+- 老师重点、考试范围、成绩规则、作业、Deadline
+- 个人笔记、题目、错题、StudyRecord、Mastery
+- 私有 Meeting 录音与会议数据
 
-- 主教材：优先决定课程初始章节结构
-- 辅助教材：补充解释、图表、案例、习题
-- 英文教材：提供英文原版术语和表达
-- 参考教材：默认不改变主课程结构，仅作为额外来源
-
-同一个知识点只建立一个统一知识节点，例如 `concept_finance_wacc`，不同教材只是这个节点的不同来源。
-
-## 4. 教材版本管理
-
-同一本教材更新时不直接覆盖旧数据。
-
-每个版本保存：
-
-- `book_id`
-- `book_version_id`
-- 文件哈希
-- 版次 / 版本信息
-- 导入时间
-- 章节差异
-- 页码差异
-- 新增 / 删除 / 修改内容
-
-新版本上传后流程：
+## 2. 顶层产品结构
 
 ```text
-上传 → 判断是否同一本书 → 版本比对 → 页码重建 → 内容差异检测 → 知识节点重新映射 → 增量合并
+Book
+├── Learning / Course OS
+│   ├── Courses
+│   ├── Books / Versions
+│   ├── Course Package / Compiler
+│   ├── Chapters / Sections
+│   ├── Concepts / ConceptAlignment
+│   ├── StudyRecords / Mastery
+│   ├── Unified Retrieval / QA
+│   ├── Lectures / LectureEvents
+│   ├── ExamPoints / Exam Sprint
+│   ├── Exam Digital Twin
+│   ├── Questions / Mistakes
+│   ├── Timeline / What Changed
+│   └── Next Best Action
+│
+├── Meeting (private)
+│   ├── Meetings / Transcripts
+│   ├── Decisions / ActionItems
+│   ├── Deadlines / FollowUps
+│   └── private retrieval
+│
+└── Shared Infrastructure
+    ├── local SQLite
+    ├── hidden profile_id
+    ├── Audio / VAD / ASR
+    ├── local-first processing
+    ├── Sync transport
+    └── versioned AI Processing Jobs
 ```
 
-已有课堂关联、笔记、错题和学习记录必须保留。
+Learning 与 Meeting 可以复用技术基础，但业务事实和授权域必须分开。
 
-## 5. PDF 与纸质教材定位
+## 3. Canonical 教材与来源原则
 
-PDF 页码与纸质教材页码必须分离。
+教材结构化数据是教材事实层 canonical source。
 
-一个内容对象至少同时保存：
+任何教材对象至少保留：
 
 ```text
+course_id
 book_id
+logical_book_id
 book_version_id
-pdf_page_index
-printed_page
 chapter_id
 section_id
+pdf_page_index
+printed_page
 content_anchor_id
 element_type
 element_id
 ```
 
-其中：
+PDF 页与纸质页分离。缺失内容、页码、几何位置或来源不得由 AI 静默编造。
 
-- `pdf_page_index`：程序内部 PDF 页位置
-- `printed_page`：纸质教材印刷页码
-- `content_anchor_id`：稳定内容锚点
+教材新版本不能覆盖旧版本；历史课堂、引用、笔记、StudyRecord 和 ExamPoint 必须仍能定位到当时版本。
 
-导入时建立：
+## 4. 一门课程支持多本教材
 
-```text
-PDF 页 ↔ 印刷页 ↔ 章节 / 节 ↔ 段落 / 公式 / 图表 / 例题
-```
+同一课程的多本教材保持 Book 级独立，在 Concept 层对齐。
 
-必须允许人工修正，以处理前言、目录、罗马数字页码、插页、扫描缺页、重复页等情况。
-
-## 6. 教材结构化
-
-每一本教材保留原始结构，同时拆解为：
+教材角色：
 
 ```text
-Book
-├── Chapter
-│   ├── Section
-│   │   ├── Subsection
-│   │   ├── Paragraph
-│   │   ├── Concept
-│   │   ├── Definition
-│   │   ├── Formula
-│   │   ├── Figure
-│   │   ├── Table
-│   │   ├── Example
-│   │   ├── Case
-│   │   ├── Exercise
-│   │   └── KeyPoint
+primary
+supplementary
+reference
+translation
 ```
 
-### 图像
+第一版由 primary book 决定课程 Chapter/Section 主骨架；辅助教材通过 ConceptAlignment 和 Section/Concept 关系提供补充定义、解释、证明、例题和习题。
 
-教材原图尽量保留，包括：
+多本教材不能强制融合成“唯一原文”，必须保留各自：
 
-- 示意图
-- 坐标图
-- 流程图
-- 数据图
-- 财务报表
-- 案例图片
+- 定义写法
+- 定理编号
+- 符号体系
+- 证明方式
+- 页码与 source anchor
 
-每张图绑定图号、标题、书籍版本、PDF 页、印刷页、章节、节和相关知识点。
+如果未来确实存在两本同等权威教材，再增加独立 CourseSyllabus / Concept-first 课程骨架。
 
-### 表格
+详细规则见：`docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`。
 
-同时保存：
+## 5. Course Compiler / Course Package
 
-1. 原始表格图像
-2. 结构化表格数据
-
-### 公式
-
-每个公式保存：
-
-- 结构化表达 / LaTeX
-- 名称
-- 符号含义
-- 使用条件
-- 前提假设
-- 示例
-- 常见错误
-- 教材来源锚点
-
-### 例题与习题
-
-每题绑定：
-
-- 章节
-- 节
-- 知识点
-- 题型
-- 难度
-- 原题
-- 答案
-- 解析
-- 来源页
-- 来源锚点
-
-## 7. 每节四个独立入口
-
-每一节固定提供四个并列按钮：
-
-**预习｜学习｜复习｜刷题**
-
-规则：
-
-- 用户自己决定进入哪个模块
-- 不强制固定顺序
-- 不互相锁定
-- 四个模块分别记录进度
-
-示例：
+长期新增教材应通过统一编译流程进入系统：
 
 ```text
-4.2 WACC
-预习：已完成
-学习：70%
-复习：2 次
-刷题：18 / 30
+上传主教材 / 辅助教材
+→ Course Compiler
+→ 结构化 + identity + source anchors
+→ search / terminology / Concept candidates
+→ readiness PASS/WARN/FAIL
+→ Course Package
+→ 注册 Course / Library
+→ 自动获得 App 学习能力
 ```
 
-## 8. 预习模块
+Course Package 至少包含 schema version、content hashes、books/versions、chapters、sections、objects、source map、search records、terminology、dependency information 和 readiness。
 
-目标：5–10 分钟快速建立框架。
+Functional Analysis 作为 Golden Course / Reference Course，长期用于验证 Course Package 与 App 行为。
 
-内容：
+## 6. Section 四模式与 StudyRecord
 
-- 本节学习目标
-- 前置知识
-- 3–6 个核心概念
-- 核心公式预览
-- 关键教材图
-- 易卡点
-- “带着问题听课”
-- 3–5 道预习检测
-
-## 9. 学习模块
-
-围绕知识点组织，而不是复制 PDF。
+每一节固定提供：
 
 ```text
-知识点
-→ 教材核心内容
-→ 图表
-→ 公式
-→ 解释
-→ 示例 / 例题
-→ 常见错误
-→ 老师课堂补充
-→ 我的笔记
+预习 / 学习 / 复习 / 刷题
 ```
 
-同一知识点可以切换：主教材、辅助教材、英文原版、老师讲解、我的笔记。
+四模式自由进入、互不锁定、独立记录。
 
-## 10. 复习模块
-
-复习围绕统一知识点，而不是某一本书。
-
-提供：
-
-- 1 分钟复习
-- 5 分钟复习
-- 完整复习
-- 闪卡
-- 填空
-- 判断
-- 选择
-- 简答
-- 公式回忆
-- 概念比较
-- 错题重做
-
-后续加入间隔复习与遗忘管理。
-
-## 11. 刷题模块
-
-题源：
-
-- 教材原题
-- 教材变式题
-- AI 生成题
-- 老师课堂题
-- 错题
-- 综合题
-
-筛选：
-
-- 按章节
-- 按知识点
-- 按考点
-- 按难度
-- 按教材来源
-- 只看错题
-
-每道题必须绑定具体知识节点，以支持薄弱点诊断。
-
-## 12. Chapter Hub
-
-每章固定提供：
-
-1. 本章总结
-2. 核心知识点
-3. 本章公式
-4. 考点
-5. 思维导图
-6. 本章测试
-
-思维导图必须是可点击知识导航，不只是静态图片。
-
-## 13. 考点系统
-
-考点来源：
-
-- 教材结构推测
-- 老师明确强调
-- 老师说“会考 / 重点”
-- 作业出现频率
-- 课堂练习
-- 期中 / 期末范围
-- 用户错题与掌握情况
-
-考点可分 S / A / B / C 级，但必须保留证据来源。
-
-### 13.1 考点快速跳转
-
-每个考点必须绑定一个或多个稳定教材锚点。
-
-示例：
+Phase 1G 第一版：
 
 ```text
-考点：WACC 的计算与适用条件
-├── 定义 → 主教材 P216
-├── 公式 → P217
-├── 使用条件 → P218
-├── 例题 → P220
-├── 辅助教材对应位置
-└── 老师课堂 → 第 7 次课 01:06:42
+无记录 = 未开始
+in_progress = progress 0
+completed = progress 100
 ```
 
-点击后直接定位到具体段落 / 公式 / 图表 / 例题，而不是只打开整页或 PDF 首页。
+本地 SQLite 是 durable StudyRecord authority；sessionStorage 只负责短期返回状态。
 
-### 13.2 快速返回
+每台安装生成稳定隐藏 UUID `profile_id`，浏览器不能自行指定身份。
 
-从教材或课堂返回考点时必须恢复：
+## 7. Unified Retrieval 与 QA
 
-- 原滚动位置
-- 已展开区域
-- 当前筛选条件
-- 当前考点上下文
+现有 deterministic canonical search 保留为 Exact 高可信层。
 
-形成：
+长期统一检索组合：
 
 ```text
-考点 → 原文 / 公式 / 例题 → 返回考点 → 下一个考点
+Exact
++ SQLite FTS5 / BM25
++ Formula
++ Concept
++ Semantic
++ LectureEvent
++ ExamPoint
++ Personal
++ isolated Meeting
+→ rank fusion / source-aware reranking
 ```
 
-并支持“前一个考点 / 下一个考点”。
+数学查询需处理术语别名、Unicode/LaTeX/数学符号归一。
 
-## 14. 课堂录音
+Search 和 QA 共用同一个 Retrieval Engine：Search 返回来源证据，QA 在同一检索结果上构建 Evidence Pack，经 EvidenceGate 后再交给 LLM。
 
-课堂录音用于捕获教材之外的真实课程信息。
+结果必须显式区分主教材、辅助教材、课堂、考试、个人资料和 AI Derived。AI Derived 不能覆盖 canonical exact evidence。
 
-录音对象保存：
+Meeting 检索与 Learning 检索保持授权/索引隔离。
 
-- 课程
-- 第几次课
-- 日期
-- 开始 / 结束时间
-- 原始音频
-- 实时字幕
-- 精修字幕
-- 课堂事件
+## 8. Concept Graph 与 Concept 360 View
 
-## 15. 实时字幕与纠错
+Chapter/Section 是阅读骨架；Concept Graph 是学习依赖骨架。
 
-实时字幕目标：低延迟、可读、专业术语准确。
+Concept 可连接：
 
-实时处理：
+```text
+prerequisites / dependents
+主教材 evidence
+辅助教材 evidence
+课堂 evidence
+ExamPoint / Exam
+Questions / Mistakes
+Mastery
+```
 
-- 基础断句
-- 标点
-- 中英文混排
-- 数字与百分比
-- 专业术语
-- 明显错别字
+Concept Graph 为多教材对齐、思维导图、Exam Sprint、错题诊断、Mastery 和 Next Best Action 提供基础。
 
-教材结构化后自动生成课程专属术语词典，增强识别，例如：
+Concept 360 View 最终展示一个知识点从教材、课堂、考试到个人学习状态的完整生命周期，但每一条信息必须保留来源。
 
-`WACC / CAPM / EBITDA / NPV / IRR / duration / convexity / beta / yield curve / basis point`
+## 9. Chapter Hub / ExamPoint / Exam Sprint
 
-### 双层字幕
+### Chapter Hub
 
-必须同时保留：
+按章提供：核心知识点、公式、考点、章节总结、可点击思维导图、章节测试。
 
-1. 原始逐字稿
-2. AI 精修稿
+### ExamPoint
 
-精修稿可纠正错别字、错误标点、病句、口头重复、口癖和专业术语，但任何修改后的结论都必须能回听原录音时间戳。
+第一版只根据教材真实结构化证据形成基础重要度：定义、定理、公式、证明、例题、习题、重复引用、依赖关系和教材显式强调。
 
-## 16. 课堂实时标记
+每个考点保留 priority、reasons、prerequisites、canonical source anchors。
 
-录音界面提供：
+### Exam Sprint
 
-- ⭐ 重点
-- 🎓 考试
-- 📝 作业
-- ❓ 没听懂
-- 💡 拓展
+```text
+30 分钟：保命版
+2 小时：核心版
+6 小时：考试版
+完整速通
+```
 
-点击即记录时间戳，课后优先分析附近语音。
+按 ExamPoint + 最小必要前置依赖组织，不按章节机械截断。
 
-## 17. 课后自动结构化
+老师强调、考试范围、错题和 Mastery 可以作为后续独立信号叠加，但不能改写教材基础证据。
 
-每节课自动生成：
+## 10. Learning 课堂录音
 
-- 本节涉及教材章节 / 节
-- 老师核心讲解
-- 教材外拓展
-- 老师强调
-- 重要考点
-- 作业
-- Deadline
-- 考试范围
-- 成绩规则
-- 不确定信息
+桌面/PWA 与手机/Android 均提供录音业务能力。平台可以采用不同权限、后台录音和 UI 实现，但不人为把桌面端做成无录音精简版。
 
-所有信息尽量绑定原始时间戳。
+课堂录音 local-first：
 
-## 18. 考试与成绩信息
+```text
+Audio
+→ VAD / local ASR
+→ raw_transcript
+→ local refinement / terminology correction
+→ Section / Concept initial linking
+→ LectureEvents / pending_ai
+```
 
-自动抽取：
+即时初加工尽量提取：
 
-- 平时成绩比例
-- 作业比例
-- 期中比例
-- 期末比例
-- 期中 / 期末时间
-- 考试范围
-- 不考内容
-- 必考内容
-- 题型
-- 分值
-- 是否允许资料
-- 是否提供公式
+- IMPORTANT / EXAM_POINT
+- EXAM_SCOPE
+- GRADE_WEIGHT / GRADE_RULE
+- HOMEWORK / DEADLINE
+- NO_PROOF_REQUIRED / NOT_EXAMINED
+- TEACHER_EXTENSION
+- TEXTBOOK_REFERENCE / QUESTION
 
-置信度分为：
+## 11. 教材事实、老师事实、AI 派生永久分层
 
-- 已确认
-- 高概率
-- 待确认
+永远保留：
 
-模糊表述不能直接升级为正式规则。
+```text
+Textbook fact
+Lecture fact
+Derived / AI fusion
+```
 
-## 19. 课堂与教材自动对齐
+老师没有讲完整时，可以用教材补定义、定理、公式、证明、例题和习题，但必须显示教材来源，不能显示成老师原话。
 
-老师若说“看教材 87 页”，默认解释为纸质印刷页，再通过页码映射定位对应 PDF 页与内容锚点。
+录音层至少分：
 
-老师不说页码时，通过术语和语义匹配到知识点。
+```text
+raw_audio
+raw_transcript
+local_refined
+ai_refined
+```
 
-最终每个知识点可以显示：
+raw source 永久保留；精加工只能生成新 revision。
 
-- 教材怎么说
-- 不同教材怎么说
-- 老师怎么说
-- 老师补充什么
-- 老师强调什么
-- 我的笔记
-- 我的错题
+## 12. 每日 GPT Processing Job
 
-## 20. 社科多观点保留
+第一版人工触发，不做后台定时。
 
-不同教材存在分歧时不由 AI 强行统一。
+```text
+App local first-pass
+→ Drive pending_ai
++ GitHub schema/rules/current state
++ canonical Course Package
+→ GPT Processing Job
+→ refined transcript / LectureEvents / concept links / exam signals / textbook supplements / derived notes
+→ processed revision
+→ Drive / Sync API
+→ App
+```
 
-保留：
+每次 Processing Job 保留 input revision、processor version、schema/rule version、教材版本和 processed time。以后模型升级可重新处理历史录音，但不覆盖 raw source。
 
-- 教材 A 观点
-- 教材 B 观点
-- 共同点
-- 分歧点
-- 老师课堂倾向（只有证据时显示）
+同时生成 What Changed 增量摘要和 Course Timeline 更新。
 
-## 21. 搜索
+## 13. 多设备同步
 
-统一搜索一个术语时返回：
+每台设备保持自己的 SQLite 和 `profile_id`。
 
-- 教材来源
-- 课堂出现位置
-- 相关题目
-- 我的笔记
-- 错题
-- 考点
+```text
+App(s)
+→ Book Sync API
+→ owner-controlled Drive
+```
 
-## 22. AI 问答定位
+未来按增量 record/event 同步；每个 event 使用全局唯一 `event_id`，远端幂等应用。禁止两台设备直接编辑同一个 SQLite。
 
-AI 不是主界面。回答优先依据：
+朋友端不持有 owner Drive Token / Google 凭证。
 
-1. 当前课程知识库
-2. 当前教材
-3. 课堂记录
-4. 老师补充
-5. 用户笔记
+桌面和手机共享同一业务 contract，允许同步的数据语义一致。
 
-并区分：教材依据、课堂依据、AI 补充。
+## 14. Private Meeting
 
-## 23. 第一阶段验收目标
+Meeting 与 Course / Book / Section 独立，默认私有。
 
-第一批教材进入后，至少完成：
+可复用 Audio / VAD / ASR / SQLite / profile_id / Sync transport / ProcessingJob，但：
 
-- 页码映射
-- 章节 / 小节识别
-- 知识点拆解
-- 公式 / 图 / 表 / 例题 / 习题提取
-- 每节四入口
-- 每章总结、考点、思维导图
-- 课堂录音
-- 实时字幕
-- 课堂事件标记
-- 考点 ↔ 教材锚点双向导航
+- 不参与教材知识融合
+- 不进入朋友 shared Learning feed
+- Meeting retrieval 与 Learning retrieval 隔离
+- 精加工输出 Decision / ActionItem / Deadline / Risk / FollowUp 等会议对象
 
-第一本教材优先做一章完整样板，验证后再批量扩展。
+## 15. Exam Digital Twin
+
+考试中心最终建立可追踪 Exam 模型：日期、范围、总分、章节/主题占比、题型、老师明确提示、confirmed/probable/unknown 状态、覆盖率和风险区域。
+
+LectureEvent 中的考试信号是证据之一，不直接覆盖用户确认事实。
+
+Exam Digital Twin 是 Exam Sprint 和 Next Best Action 的目标约束。
+
+## 16. Mistake / Mastery
+
+StudyRecord 只表示学习行为，不等于真正掌握。
+
+Mastery 应根据复习测试、刷题正确率、重复错误、回忆能力、时间间隔和明确自评等证据逐步估计。
+
+错题不仅保存题目，还映射到 Concept 和 prerequisite，区分：definition gap、theorem condition、formula misuse、prerequisite gap、reasoning break、calculation/careless 等错误，并生成最短修复路径。
+
+## 17. Next Best Action
+
+长期系统应回答“现在最应该学什么”，而不是只展示资料。
+
+输入：
+
+```text
+ExamPoint
++ teacher emphasis
++ Exam Digital Twin
++ StudyRecord
++ Mastery
++ Mistakes
++ remaining time
++ prerequisite graph
+```
+
+输出必须是可解释学习动作，并显示 reason/evidence。AI 不得无证据直接提高 Mastery 或修改考试事实。
+
+## 18. Google Drive 与 GitHub 分工
+
+GitHub：代码、schema、Course Package contract、processing rules、产品规范、Current State、Roadmap、测试/CI、小型 canonical 治理数据。
+
+Drive：原始教材 PDF、课堂/Meeting 录音、用户附件、同步包、processing bundles、大型生成结果、exports/backups。
+
+原始教材和原始录音不得因为已结构化/已精修而删除。
+
+## 19. Android / Desktop / PWA
+
+Book 最终支持桌面/PWA 与 Android App。
+
+业务能力保持一致；设备差异只影响交互和底层实现。SQLite 路径、profile identity、sync boundary、课程资产和录音能力均不能绑定某一台 Windows 电脑。
+
+教材、ASR 权重和本地模型长期按需安装/导入，避免把所有资产打入巨大 APK。
+
+## 20. 开发与验收策略
+
+详细见 `docs/DEVELOPMENT_STRATEGY.md`。
+
+核心：
+
+- ChatGPT 聊天模式 = 主开发
+- Spec / Schema / Acceptance Contract
+- Vertical Slice + TDD
+- GitHub Actions 分层 CI
+- Functional Analysis = Golden Course
+- Architecture Fitness Functions
+- exact final HEAD 才能宣称阶段完成
+- 完整版本后 Codex 先做 read-only Full Repository Audit，再形成 Upgrade Spec 定向升级
+
+## 21. 当前阶段边界
+
+当前 Phase 1G 只做：
+
+```text
+StudyRecord
+SQLite
+hidden profile_id
+recent learning
+sync-ready metadata
+```
+
+多教材、Course Compiler、Unified Retrieval、Concept Graph、录音、Drive Sync、Meeting、ExamPoint、Mastery、Next Best Action 等均是已确认后续方向，不能在尚未实现时当成当前能力。

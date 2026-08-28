@@ -10,6 +10,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
+from app.study import (
+    StudyRecord,
+    StudyRecordRepository,
+    StudyRecordRepositoryError,
+    StudyRecordService,
+    resolve_study_db_path,
+)
 from runtime import QAHistoryMessage
 
 from .errors import (
@@ -32,6 +39,8 @@ from .models import (
     SearchResponse,
     SectionResponse,
     SourceResponse,
+    StudyRecordListResponse,
+    StudyRecordResponse,
 )
 from .qa_provider_factory import QAProviderConfigurationError, provider_from_environment
 from .service import BookAppService
@@ -70,6 +79,22 @@ def default_service() -> BookAppService:
 
 def get_service() -> BookAppService:
     return default_service()
+
+
+@lru_cache(maxsize=1)
+def default_study_repository() -> StudyRecordRepository:
+    return StudyRecordRepository(resolve_study_db_path())
+
+
+def get_study_repository() -> StudyRecordRepository:
+    return default_study_repository()
+
+
+def get_study_service(
+    book_service: BookAppService = Depends(get_service),
+    repository: StudyRecordRepository = Depends(get_study_repository),
+) -> StudyRecordService:
+    return StudyRecordService(book_service, repository)
 
 
 def _error_response(error: BookAppError, status_code: int) -> JSONResponse:
@@ -113,6 +138,20 @@ async def handle_invalid_qa_provider_response(
 @app.exception_handler(AppUnavailableError)
 async def handle_unavailable(_request: Request, error: AppUnavailableError) -> JSONResponse:
     return _error_response(error, 503)
+
+
+@app.exception_handler(StudyRecordRepositoryError)
+async def handle_study_repository_error(
+    _request: Request, error: StudyRecordRepositoryError
+) -> JSONResponse:
+    return _error_response(
+        AppUnavailableError(
+            code="study_store_unavailable",
+            user_message="学习进度暂无法保存",
+            detail=str(error),
+        ),
+        503,
+    )
 
 
 @app.get("/api/health")
@@ -252,6 +291,73 @@ def practice(
     service: BookAppService = Depends(get_service),
 ) -> ModeResponse:
     return _mode_response(course_id, section_id, "practice", service)
+
+
+def _study_record_response(record: StudyRecord) -> StudyRecordResponse:
+    return StudyRecordResponse(
+        course_id=record.course_id,
+        book_id=record.book_id,
+        section_id=record.section_id,
+        mode=record.mode,
+        status=record.status,
+        progress=record.progress,
+        started_at=record.started_at,
+        last_studied_at=record.last_studied_at,
+        completed_at=record.completed_at,
+        updated_at=record.updated_at,
+    )
+
+
+@app.post(
+    "/api/courses/{course_id}/sections/{section_id}/study/{mode}/touch",
+    response_model=StudyRecordResponse,
+)
+def touch_study(
+    course_id: str,
+    section_id: str,
+    mode: str,
+    service: StudyRecordService = Depends(get_study_service),
+) -> StudyRecordResponse:
+    return _study_record_response(service.touch(course_id, section_id, mode))
+
+
+@app.post(
+    "/api/courses/{course_id}/sections/{section_id}/study/{mode}/complete",
+    response_model=StudyRecordResponse,
+)
+def complete_study(
+    course_id: str,
+    section_id: str,
+    mode: str,
+    service: StudyRecordService = Depends(get_study_service),
+) -> StudyRecordResponse:
+    return _study_record_response(service.complete(course_id, section_id, mode))
+
+
+@app.get(
+    "/api/courses/{course_id}/study-records",
+    response_model=StudyRecordListResponse,
+)
+def course_study_records(
+    course_id: str,
+    service: StudyRecordService = Depends(get_study_service),
+) -> StudyRecordListResponse:
+    records = service.list_course(course_id)
+    return StudyRecordListResponse(
+        course_id=course_id,
+        records=[_study_record_response(record) for record in records],
+    )
+
+
+@app.get(
+    "/api/study/recent",
+    response_model=StudyRecordResponse | None,
+)
+def recent_study(
+    service: StudyRecordService = Depends(get_study_service),
+) -> StudyRecordResponse | None:
+    record = service.recent()
+    return None if record is None else _study_record_response(record)
 
 
 @app.get(

@@ -144,6 +144,26 @@ export interface SearchResponse {
   results: SearchResultItem[]
 }
 
+export type StudyStatus = 'in_progress' | 'completed'
+
+export interface StudyRecord {
+  course_id: string
+  book_id: string
+  section_id: string
+  mode: LearningMode
+  status: StudyStatus
+  progress: 0 | 100
+  started_at: string
+  last_studied_at: string
+  completed_at: string | null
+  updated_at: string
+}
+
+export interface StudyRecordListResponse {
+  course_id: string
+  records: StudyRecord[]
+}
+
 export type QAAnswerStyle = 'brief' | 'explain' | 'compare' | 'proof'
 export type QAScopeRequested = 'book' | 'section_then_book'
 export type QAScopeUsed = 'section' | 'book'

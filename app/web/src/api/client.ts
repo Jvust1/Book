@@ -9,6 +9,8 @@ import type {
   SearchResponse,
   SectionResponse,
   SourceResponse,
+  StudyRecord,
+  StudyRecordListResponse,
 } from './types'
 
 const GENERIC_ERROR_MESSAGE = '请求失败，请稍后重试'
@@ -100,6 +102,38 @@ export const bookApi = {
     return request<ModeResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/${mode}`,
     )
+  },
+
+  touchStudy(
+    courseId: string,
+    sectionId: string,
+    mode: LearningMode,
+  ): Promise<StudyRecord> {
+    return request<StudyRecord>(
+      `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/touch`,
+      { method: 'POST' },
+    )
+  },
+
+  completeStudy(
+    courseId: string,
+    sectionId: string,
+    mode: LearningMode,
+  ): Promise<StudyRecord> {
+    return request<StudyRecord>(
+      `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/complete`,
+      { method: 'POST' },
+    )
+  },
+
+  getCourseStudyRecords(courseId: string): Promise<StudyRecordListResponse> {
+    return request<StudyRecordListResponse>(
+      `/api/courses/${segment(courseId)}/study-records`,
+    )
+  },
+
+  getRecentStudy(): Promise<StudyRecord | null> {
+    return request<StudyRecord | null>('/api/study/recent')
   },
 
   searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {

@@ -206,6 +206,34 @@ textarea {
   font-size: 13px;
 }
 
+.study-progress-panel {
+  display: grid;
+  gap: 12px;
+  padding: 18px 20px;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.study-progress-summary,
+.study-progress-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.study-progress-summary p,
+.study-progress-warning p {
+  margin: 0;
+}
+
+.study-progress-warning {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
 .learning-list {
   display: grid;
   gap: 16px;
@@ -399,7 +427,9 @@ textarea {
   .card-footer,
   .learning-card-header,
   .search-form,
-  .qa-form {
+  .qa-form,
+  .study-progress-summary,
+  .study-progress-warning {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -407,7 +437,8 @@ textarea {
   .search-input,
   .search-form .secondary-button,
   .qa-input,
-  .qa-form .secondary-button {
+  .qa-form .secondary-button,
+  .study-progress-panel .secondary-button {
     width: 100%;
   }
 
