@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sqlite3
 import unittest
+from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -60,7 +61,7 @@ class StudyRecordRepositoryFoundationTests(unittest.TestCase):
                         section_id=f"invalid-{index}",
                         **overrides,
                     )
-                    with sqlite3.connect(db_path) as connection:
+                    with closing(sqlite3.connect(db_path)) as connection:
                         with self.assertRaises(sqlite3.IntegrityError):
                             self._insert_record(connection, values)
 
@@ -71,7 +72,7 @@ class StudyRecordRepositoryFoundationTests(unittest.TestCase):
             first = self._record_values(profile_id=profile_id)
             duplicate = self._record_values(profile_id=profile_id)
 
-            with sqlite3.connect(db_path) as connection:
+            with closing(sqlite3.connect(db_path)) as connection:
                 self._insert_record(connection, first)
                 connection.commit()
                 with self.assertRaises(sqlite3.IntegrityError):
@@ -84,7 +85,7 @@ class StudyRecordRepositoryFoundationTests(unittest.TestCase):
             first = self._record_values(profile_id=repo.get_profile_id())
             second = self._record_values(profile_id=str(uuid4()))
 
-            with sqlite3.connect(db_path) as connection:
+            with closing(sqlite3.connect(db_path)) as connection:
                 self._insert_record(connection, first)
                 self._insert_record(connection, second)
                 connection.commit()
@@ -293,7 +294,7 @@ class StudyRecordRepositoryBehaviorTests(unittest.TestCase):
             "other_section",
             "review",
         )
-        with sqlite3.connect(self.db_path) as connection:
+        with closing(sqlite3.connect(self.db_path)) as connection:
             connection.execute(
                 "UPDATE study_records SET deleted_at = ? WHERE study_record_id = ?",
                 ("2026-08-28T02:00:00+00:00", deleted.study_record_id),
