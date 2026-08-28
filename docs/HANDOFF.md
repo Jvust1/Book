@@ -6,7 +6,7 @@ Updated: 2026-08-29
 
 1. Read Google Drive root `全项目` and current `全项目_*` governance baselines.
 2. Read `AGENTS.md` and `SECURITY_POLICY.md` on the exact target branch.
-3. Read `governance/project_state.json`, project invariants/current state/decision and evaluation ledgers, pending sync, preflight, then the active Foundation A design and plan.
+3. Read `governance/project_state.json`, project invariants/current state/decision and evaluation ledgers, pending sync, preflight, then the relevant approved phase design and plan.
 
 Repository evidence outranks chat memory.
 
@@ -14,11 +14,13 @@ Repository evidence outranks chat memory.
 
 - Repository: `Jvust1/Book`
 - Default protected branch: `main`
-- Active development branch: `foundation/course-package-contract-a`
-- Phase: `Foundation A — Course Package Contract`
-- Main base: `a99d4638f959e04e54d91efe0ee0dd9ac50488a6`
+- Integrated Foundation A merge commit: `82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
+- Foundation A reviewed head: `f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
+- Foundation A PR: `#13`
+- Phase: `Post-Foundation A transition`
+- Current canonical integrated state: `main`
 
-Foundation A Tasks 1–9 are complete. Task 10 exact-final-HEAD / PR readiness is in progress.
+Foundation A Tasks 1–10 are complete and PR #13 has been merged into `main`. No next architectural implementation branch is approved yet.
 
 ### Task 7 — Executable architecture fitness functions
 
@@ -47,25 +49,29 @@ Foundation A Tasks 1–9 are complete. Task 10 exact-final-HEAD / PR readiness i
 - HEAVY is `workflow_dispatch` only and rebuilds/recovery-checks an isolated `/tmp` Book copy before read-only canonical readiness / Golden / fitness checks. It does not use canonical `--promote-safe` writes.
 - The current connector does not expose workflow dispatch, so no HEAVY execution result is claimed.
 
+### Task 10 — Exact-HEAD PR gate and merge
+
+Final PR #13 exact head: `f1eb4ebd144ccb233e5b8b74e97001af214c60bb`.
+
+Final automatic acceptance evidence before merge:
+
+- Course Package FAST: 46 / 46 focused tests + Architecture Fitness PASS.
+- Runtime reference tests: Python 3.11 / 3.12 / 3.13 PASS; Python 3.13 full discovery 192 / 192; Golden compile/validate + fitness PASS.
+- Book App UI: app-api / web-client / browser-acceptance PASS.
+- real Chromium: 11 / 11 PASS.
+- final diff audit: no `books/functional-analysis/**` canonical changes, no App Runtime consumer migration, no tracked `.build` output, no unresolved review thread.
+- user explicitly authorized merge of PR #13.
+- merge commit: `82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`.
+
 ## Current task
 
-**Task 10 — Exact-HEAD Full Regression, Documentation State, and PR Readiness**
+**Post-Foundation A transition / next-phase selection**
 
-Authoritative plan: `docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`.
+Foundation A is no longer an in-progress branch. The immediate safe work is to reconcile post-merge governance and then select the next roadmap phase.
 
-Completed in Task 10 so far:
+The next genuinely new subsystem is an architectural decision and must pass a fresh design approval gate before implementation. Safe repository inspection, comparison, evidence gathering, and non-destructive governance reconciliation may continue automatically.
 
-- full Foundation A branch diff audit from base shows no `app/**` source changes and no `books/functional-analysis/**` canonical changes;
-- `docs/CURRENT_STATE.md`, `docs/ROADMAP.md`, and the stale execution-priority section of `docs/DEVELOPMENT_STRATEGY.md` have been updated with evidence, not projections;
-- governance now records Task 9 complete and Task 10 in progress.
-
-Next action:
-
-1. open `foundation/course-package-contract-a → main` as a reviewable PR;
-2. require exact PR-head `Course Package FAST`, Runtime Python 3.11 / 3.12 / 3.13, Book App app-api / web-client / browser-acceptance success;
-3. inspect final PR diff and review threads;
-4. confirm no canonical Book changes, no App runtime migration, no secret/token, no tracked `.build` output;
-5. only then request explicit user authorization for that specific PR. Never auto-merge.
+Some long-form narrative docs can still contain pre-merge wording because they were authored before PR #13 merged. Until those lines are reconciled, use `governance/project_state.json`, this handoff, PR #13, and merge commit `82f0cbbc...` as the authoritative post-merge evidence rather than interpreting stale “awaiting PR” sentences literally.
 
 ## Protected facts and boundaries
 
@@ -75,11 +81,13 @@ Functional Analysis Golden Course remains:
 - 8 chapters / 132 sections / 1493 search records / 442 PDF pages / printed final page 423
 - `STRUCTURED_COMPLETE` / Runtime `READY`
 
-Foundation A must not modify `books/functional-analysis/**` and must not migrate Runtime/App consumers.
+Foundation A did not modify `books/functional-analysis/**` and did not migrate Runtime/App consumers.
 
 ## Pending synchronization
 
 `governance/pending_sync.json` has no blocking item. External fixed-commit source archives and Drive raw-source SHA-256 remain pending non-blocking and must not be marked complete without verified evidence.
+
+Post-merge wording in `docs/CURRENT_STATE.md`, `docs/ROADMAP.md`, and any other narrative document that still says Foundation A is awaiting PR merge is a non-blocking documentation reconciliation item. Preserve historical sections; update only current-state wording when touched.
 
 ## Merge rule
 
