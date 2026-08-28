@@ -8,8 +8,13 @@ import {
 } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { bookApi } from '../api/client'
-import type { LearningMode, ModeItem, ModeResponse } from '../api/types'
+import { ApiError, bookApi } from '../api/client'
+import type {
+  LearningMode,
+  ModeItem,
+  ModeResponse,
+  StudyRecord,
+} from '../api/types'
 import {
   loadSectionViewState,
   saveSectionViewState,
@@ -24,6 +29,8 @@ vi.mock('../api/client', async () => {
       ...actual.bookApi,
       getSection: vi.fn(),
       getMode: vi.fn(),
+      touchStudy: vi.fn(),
+      completeStudy: vi.fn(),
     },
   }
 })
@@ -73,6 +80,22 @@ const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse =
   source_refs: items.map(({ kind, source_id }) => ({ kind, source_id })),
 })
 
+const studyRecord = (
+  mode: LearningMode,
+  status: 'in_progress' | 'completed' = 'in_progress',
+): StudyRecord => ({
+  course_id: 'functional_analysis_course',
+  book_id: 'stein_shakarchi_functional_analysis_2011',
+  section_id: 'ch01_s01',
+  mode,
+  status,
+  progress: status === 'completed' ? 100 : 0,
+  started_at: '2026-08-28T01:00:00+00:00',
+  last_studied_at: '2026-08-28T01:01:00+00:00',
+  completed_at: status === 'completed' ? '2026-08-28T01:01:00+00:00' : null,
+  updated_at: '2026-08-28T01:01:00+00:00',
+})
+
 function LocationProbe() {
   const location = useLocation()
   return <output data-testid="location">{location.pathname}{location.search}</output>
@@ -103,9 +126,16 @@ function renderSection(initialEntry: string) {
 describe('SectionPage', () => {
   beforeEach(() => {
     sessionStorage.clear()
+    vi.clearAllMocks()
     vi.mocked(bookApi.getSection).mockResolvedValue(sectionResponse)
     vi.mocked(bookApi.getMode).mockImplementation(
       async (_courseId, _sectionId, mode) => modePayload(mode),
+    )
+    vi.mocked(bookApi.touchStudy).mockImplementation(
+      async (_courseId, _sectionId, mode) => studyRecord(mode),
+    )
+    vi.mocked(bookApi.completeStudy).mockImplementation(
+      async (_courseId, _sectionId, mode) => studyRecord(mode, 'completed'),
     )
   })
 
@@ -257,5 +287,108 @@ describe('SectionPage', () => {
     await waitFor(() => {
       expect(scrollTo).toHaveBeenCalledWith({ top: 420, behavior: 'auto' })
     })
+  })
+
+  it('touches exactly once only after the current mode payload resolves', async () => {
+    let resolveMode!: (payload: ModeResponse) => void
+    vi.mocked(bookApi.getMode).mockImplementation(
+      () => new Promise<ModeResponse>((resolve) => { resolveMode = resolve }),
+    )
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    await screen.findByRole('heading', { name: 'L^p 空间' })
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+
+    resolveMode(modePayload('learn'))
+    await waitFor(() => {
+      expect(bookApi.touchStudy).toHaveBeenCalledTimes(1)
+      expect(bookApi.touchStudy).toHaveBeenCalledWith(
+        'functional_analysis_course',
+        'ch01_s01',
+        'learn',
+      )
+    })
+  })
+
+  it('does not touch progress when the mode payload fails', async () => {
+    vi.mocked(bookApi.getMode).mockRejectedValue(new Error('mode unavailable'))
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByText('学习内容加载失败')).toBeInTheDocument()
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+  })
+
+  it('touches preview and learn independently when the user switches modes', async () => {
+    const user = userEvent.setup()
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=preview')
+
+    await waitFor(() => {
+      expect(bookApi.touchStudy).toHaveBeenCalledWith(
+        'functional_analysis_course',
+        'ch01_s01',
+        'preview',
+      )
+    })
+
+    await user.click(screen.getByRole('tab', { name: '学习' }))
+    await waitFor(() => {
+      expect(bookApi.touchStudy).toHaveBeenCalledWith(
+        'functional_analysis_course',
+        'ch01_s01',
+        'learn',
+      )
+      expect(bookApi.touchStudy).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  it('shows in-progress state and completes only through the explicit action', async () => {
+    const user = userEvent.setup()
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByText('学习进度：进行中')).toBeInTheDocument()
+    const completeButton = screen.getByRole('button', { name: '标记完成' })
+    await user.click(completeButton)
+
+    await waitFor(() => {
+      expect(bookApi.completeStudy).toHaveBeenCalledTimes(1)
+      expect(bookApi.completeStudy).toHaveBeenCalledWith(
+        'functional_analysis_course',
+        'ch01_s01',
+        'learn',
+      )
+    })
+    expect(await screen.findByText('学习进度：已完成')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '标记完成' })).not.toBeInTheDocument()
+  })
+
+  it('keeps textbook content readable when progress persistence fails and retries explicitly', async () => {
+    const user = userEvent.setup()
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('learn', [reviewItem]))
+    vi.mocked(bookApi.touchStudy)
+      .mockRejectedValueOnce(
+        new ApiError('学习进度暂无法保存', 503, 'study_store_unavailable'),
+      )
+      .mockResolvedValueOnce(studyRecord('learn'))
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByRole('heading', { name: 'L^p 空间' })).toBeInTheDocument()
+    expect(await screen.findByText('复习定理')).toBeInTheDocument()
+    expect(
+      await screen.findByText('学习内容仍可正常查看。学习进度暂未保存。'),
+    ).toBeInTheDocument()
+    expect(screen.getByText('学习进度暂无法保存')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '重试' }))
+
+    await waitFor(() => {
+      expect(bookApi.touchStudy).toHaveBeenCalledTimes(2)
+      expect(
+        screen.queryByText('学习内容仍可正常查看。学习进度暂未保存。'),
+      ).not.toBeInTheDocument()
+    })
+    expect(screen.getByText('学习进度：进行中')).toBeInTheDocument()
   })
 })
