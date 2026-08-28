@@ -26,6 +26,8 @@ EXPECTED_BASELINE = {
     "runtime_status": "READY",
 }
 
+# This test path intentionally triggers the current legacy full CI gates for Golden verification.
+
 
 def snapshot_tree(root: Path) -> dict[str, str]:
     return {
