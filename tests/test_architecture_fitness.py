@@ -20,6 +20,8 @@ from course_package.golden import GOLDEN_COURSE_DIR
 ROOT = Path(__file__).resolve().parents[1]
 BOOK_ROOT = ROOT / "books" / "functional-analysis"
 
+# This test path intentionally triggers the current legacy full CI gates for fitness verification.
+
 
 def snapshot_tree(root: Path) -> dict[str, str]:
     return {
