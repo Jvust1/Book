@@ -1,0 +1,35 @@
+name: Course Package heavy gate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  golden-heavy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Rebuild candidates in isolated copy
+        run: |
+          rm -rf /tmp/book-heavy-functional-analysis
+          cp -a books/functional-analysis /tmp/book-heavy-functional-analysis
+          python tools/rebuild_runtime_artifacts.py /tmp/book-heavy-functional-analysis --toc
+          python tools/recover_functional_analysis_search.py /tmp/book-heavy-functional-analysis
+          python tools/recover_functional_analysis_page_map.py /tmp/book-heavy-functional-analysis
+
+      - name: Validate canonical readiness and Golden Package
+        run: |
+          python tools/check_runtime_readiness.py books/functional-analysis
+          python tools/compile_course_package.py courses/functional-analysis --repository-root . --output-root .build/course-packages > /tmp/course-package.json
+          PACKAGE_DIR=$(python -c "import json; print(json.load(open('/tmp/course-package.json'))['package_dir'])")
+          python tools/validate_course_package.py "$PACKAGE_DIR" --repository-root .
+          python tools/check_architecture_fitness.py

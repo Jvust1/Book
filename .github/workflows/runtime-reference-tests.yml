@@ -6,6 +6,11 @@ on:
       - "runtime/**"
       - "courses/**"
       - "library/**"
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
@@ -16,12 +21,19 @@ on:
       - "books/functional-analysis/chunks/chunk_*_structure.json"
       - "books/functional-analysis/search_index*.jsonl"
       - "tests/**"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
       - ".github/workflows/runtime-reference-tests.yml"
   pull_request:
     paths:
       - "runtime/**"
       - "courses/**"
       - "library/**"
+      - "course_package/**"
+      - "schemas/course-package/**"
+      - "tools/compile_course_package.py"
+      - "tools/validate_course_package.py"
+      - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
       - "tools/recover_functional_analysis_search.py"
@@ -32,6 +44,8 @@ on:
       - "books/functional-analysis/chunks/chunk_*_structure.json"
       - "books/functional-analysis/search_index*.jsonl"
       - "tests/**"
+      - "tests/golden/**"
+      - ".github/workflows/course-package-fast.yml"
       - ".github/workflows/runtime-reference-tests.yml"
 
 permissions:
@@ -212,6 +226,14 @@ jobs:
               )
           )
           PY
+
+      - name: Compile and validate Golden Course Package
+        if: matrix.python-version == '3.13'
+        run: |
+          python tools/compile_course_package.py courses/functional-analysis --repository-root . --output-root .build/course-packages > /tmp/course-package.json
+          PACKAGE_DIR=$(python -c "import json; print(json.load(open('/tmp/course-package.json'))['package_dir'])")
+          python tools/validate_course_package.py "$PACKAGE_DIR" --repository-root .
+          python tools/check_architecture_fitness.py
 
       - name: Upload audited recovery candidates
         if: matrix.python-version == '3.13'
