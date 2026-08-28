@@ -13,6 +13,8 @@ COMPILE_CLI = ROOT / "tools" / "compile_course_package.py"
 VALIDATE_CLI = ROOT / "tools" / "validate_course_package.py"
 COURSE_DIR = Path("courses/functional-analysis")
 
+# This test path intentionally triggers the current legacy full CI gates for CLI verification.
+
 
 class CoursePackageCliTests(unittest.TestCase):
     def run_cli(self, *args: object) -> subprocess.CompletedProcess[str]:
