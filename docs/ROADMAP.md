@@ -52,6 +52,7 @@
 - [x] 本机 SQLite 持久层
 - [x] FastAPI `StudyRecordService` / repository boundary
 - [x] 可移植数据库路径抽象与 `BOOK_APP_DATA_DIR` 覆盖
+- [x] repository 初始化失败与运行期 storage failure 都稳定映射为用户可见 503，不泄露 SQLite 路径/内部细节
 
 ### 身份
 
@@ -86,7 +87,7 @@
 
 - Runtime discovery：146 / 146
 - Functional Analysis readiness：`READY`
-- App discovery：86 / 86
+- App discovery：87 / 87
 - Web tests / typecheck / production build：PASS
 - real Chromium acceptance：PASS
 - StudyRecord completion 跨 reload 持久化：PASS
@@ -94,6 +95,7 @@
 - Source → Section 往返：PASS
 - 390×844 窄屏无 body 横向溢出：PASS
 - StudyRecord SQLite read connection lifecycle regression：PASS
+- StudyRecord repository 初始化失败稳定 503 / no-detail-leak regression：PASS
 - `books/functional-analysis/**` 在 Phase 1G 产品改动中保持 canonical 零修改
 
 Phase 1G 尚未合并到 `main`；完成最终文档 HEAD gate 后进入 PR / review。
