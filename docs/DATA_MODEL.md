@@ -40,6 +40,7 @@ Mistake
 ReviewRecord
 AnswerRecord
 Mastery
+AppProfile
 StudyRecord
 ExamPoint
 ExamPointAnchor
@@ -368,20 +369,58 @@ created_at
 
 跳到教材、课堂或题目时将状态压入导航栈；返回时完整恢复。
 
-## 22. StudyRecord
+当前 Web/PWA 的 Section / Search / QA 返回状态使用 `sessionStorage`，它只属于短期浏览恢复，不是长期学习事实。
+
+## 22. AppProfile / StudyRecord
+
+Phase 1G 已实现本机单用户身份与长期学习记录。首次初始化生成一个稳定、隐藏的 UUID `profile_id`，保存在本机 SQLite `app_profile` 单例记录中；当前没有账号选择 UI。
 
 ```text
-study_record_id
-user_id
-course_id
-section_id
-mode                    // preview / learn / review / practice
-started_at
-ended_at
-progress
+AppProfile
+profile_id              // stable hidden UUID
+created_at
 ```
 
-四种模式并列，互不锁定。
+StudyRecord 实际持久化字段：
+
+```text
+study_record_id          // UUID
+profile_id               // hidden local identity
+course_id
+book_id                  // server resolves canonical main book identity
+section_id
+mode                     // preview / learn / review / practice
+status                   // in_progress / completed
+progress                 // 0 / 100
+started_at
+last_studied_at
+completed_at             // nullable
+created_at
+updated_at
+revision                 // >= 1
+deleted_at               // nullable; sync-ready tombstone field
+sync_status              // Phase 1G 固定为 local
+```
+
+逻辑唯一键：
+
+```text
+(profile_id, course_id, section_id, mode)
+```
+
+当前语义：
+
+- 四种模式并列、互不锁定、独立记录。
+- 首次进入已成功加载的模式：`in_progress / progress=0`。
+- 再次进入更新 `last_studied_at / updated_at / revision`。
+- 手动完成：`completed / progress=100`。
+- 已完成记录再次进入不会倒退；重复完成保持幂等，不制造 revision churn。
+- `last_studied_at` 决定 recent learning。
+- 浏览器不能提交或伪造 `profile_id` / `book_id`；`book_id` 由服务端通过 canonical Runtime 校验得到。
+- 浏览器 DTO 不暴露内部 `profile_id / revision / sync_status`。
+- SQLite 是 durable StudyRecord authority；`sessionStorage` 不是长期进度存储。
+
+本地数据库路径由 `app/study/paths.py` 统一解析，并支持 `BOOK_APP_DATA_DIR` 覆盖。默认位置：Windows `%LOCALAPPDATA%/BookApp/book-app.sqlite3`，macOS `~/Library/Application Support/BookApp/book-app.sqlite3`，Linux/XDG `${XDG_DATA_HOME:-~/.local/share}/BookApp/book-app.sqlite3`。
 
 ## 23. Mastery
 
@@ -398,6 +437,8 @@ status
 ```
 
 状态可映射：未学习 / 已学习 / 初步理解 / 基本掌握 / 熟练 / 长期掌握。
+
+`StudyRecord` 只表示学习行为，不等价于 `Mastery`。
 
 ## 24. Mistake
 
