@@ -1,0 +1,39 @@
+{
+  "schema_version": "concept_graph_v1",
+  "concepts": [
+    {
+      "concept_id": "concept.lp-space",
+      "title": "L^p space",
+      "aliases": [
+        "Lp space"
+      ],
+      "prerequisite_concept_ids": [],
+      "revision": "r1",
+      "provenance": "synthetic-test"
+    },
+    {
+      "concept_id": "concept.holder",
+      "title": "Hölder inequality",
+      "aliases": [],
+      "prerequisite_concept_ids": [
+        "concept.lp-space"
+      ],
+      "revision": "r1",
+      "provenance": "synthetic-test"
+    }
+  ],
+  "alignments": [
+    {
+      "alignment_id": "align.holder.definition",
+      "concept_id": "concept.holder",
+      "book_version_id": "fixture_book@v1",
+      "section_id": "ch01_s01",
+      "source_kind": "object",
+      "source_id": "thm_holder",
+      "relation": "explains",
+      "confidence": 1.0,
+      "revision": "r1",
+      "provenance": "synthetic-test"
+    }
+  ]
+}
