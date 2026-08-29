@@ -116,17 +116,17 @@ Final automatic acceptance evidence before merge:
 
 ## Current task
 
-**Post-H3a governance reconciliation, then H4a shadow evaluation.**
+**H4a shadow FTS5/BM25 evaluation.**
 
-This branch/PR is governance-only. Its job is to make current-state documents match the already integrated H0–H3a evidence without rewriting historical evidence.
-
-After this reconciliation is integrated, the next implementation stage is H4a:
+The post-Foundation-A/post-H3a governance reconciliation is carried by PR #17 and is historical once integrated. The durable next implementation stage is H4a:
 
 ```text
 shadow FTS5/BM25 evaluation
 ```
 
-H4a must preserve public Exact-only Search/QA behavior. It may collect shadow ranking/coverage/evaluation evidence, but must not silently activate FTS/BM25 in the user-visible path. Any activation belongs to a later separately reviewed stage.
+H4a must preserve public Exact-only Search/QA behavior. It may collect shadow ranking/coverage/evaluation evidence, but must not silently activate FTS5/BM25 in the user-visible path. Any activation belongs to a later separately reviewed stage.
+
+Before implementation, define deterministic evaluation datasets/queries, metrics, provenance checks, failure semantics, and exact-head acceptance evidence. Use the existing H2 Retrieval boundary rather than bypassing it.
 
 ## Protected facts and boundaries
 
@@ -138,7 +138,7 @@ Functional Analysis Golden Course remains:
 
 Foundation A, H0, H1, H2 and H3a did not rewrite `books/functional-analysis/**` canonical textbook facts.
 
-H3a does not authorize H3b. H4a does not authorize public FTS/BM25 activation. StudyRecord book-version migration is still separately gated.
+H3a does not authorize H3b. H4a does not authorize public FTS5/BM25 activation. StudyRecord book-version migration is still separately gated.
 
 ## Pending synchronization
 
