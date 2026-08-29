@@ -160,8 +160,14 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
         self.assertEqual([hit.score for hit in prefix[:2]], [800, 800])
         self.assertEqual([hit.rank for hit in prefix[:2]], [1, 2])
 
+        title_substring = runtime.search("space")
+        self.assertEqual(title_substring[0].score, 700)
+
         formula = runtime.search("||x|| < infinity")
         self.assertEqual(formula[0].score, 600)
+
+        formula_substring = runtime.search("infinity")
+        self.assertEqual(formula_substring[0].score, 500)
 
         by_type = runtime.search("definition")
         self.assertEqual(by_type[0].score, 300)
@@ -253,7 +259,7 @@ class SearchRuntimeFixtureTests(unittest.TestCase):
                 with self.assertRaises(SearchQueryError):
                     runtime.search(query)
 
-        for limit in (0, 101, True):
+        for limit in (-1, 0, 101, True, 1.5):
             with self.subTest(limit=limit):
                 with self.assertRaises(SearchQueryError):
                     runtime.search("Banach", limit=limit)
