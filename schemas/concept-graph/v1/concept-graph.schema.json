@@ -80,6 +80,38 @@
         "revision",
         "provenance"
       ],
+      "dependentRequired": {
+        "source_kind": ["source_id"],
+        "source_id": ["source_kind"]
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["source_kind"],
+            "properties": {
+              "source_kind": {"type": "null"}
+            }
+          },
+          "then": {
+            "properties": {
+              "source_id": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["source_id"],
+            "properties": {
+              "source_id": {"type": "null"}
+            }
+          },
+          "then": {
+            "properties": {
+              "source_kind": {"type": "null"}
+            }
+          }
+        }
+      ],
       "properties": {
         "alignment_id": {
           "$ref": "#/$defs/nonBlankString"

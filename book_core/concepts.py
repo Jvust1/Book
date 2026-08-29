@@ -265,6 +265,25 @@ def parse_concept_graph(value: object) -> ConceptGraph:
                 f"unsupported alignment relation: {relation}"
             )
 
+        source_kind_present = "source_kind" in raw_alignment
+        source_id_present = "source_id" in raw_alignment
+        if source_kind_present != source_id_present:
+            raise ConceptGraphValidationError(
+                f"alignments[{index}].source_kind and source_id must be supplied together"
+            )
+        source_kind = _optional_nonblank_string(
+            raw_alignment.get("source_kind"),
+            label=f"alignments[{index}].source_kind",
+        )
+        source_id = _optional_nonblank_string(
+            raw_alignment.get("source_id"),
+            label=f"alignments[{index}].source_id",
+        )
+        if (source_kind is None) != (source_id is None):
+            raise ConceptGraphValidationError(
+                f"alignments[{index}].source_kind and source_id must both be null or non-null"
+            )
+
         confidence_value = raw_alignment.get("confidence")
         confidence: float | None
         if confidence_value is None:
@@ -295,14 +314,8 @@ def parse_concept_graph(value: object) -> ConceptGraph:
                     raw_alignment.get("section_id"),
                     label=f"alignments[{index}].section_id",
                 ),
-                source_kind=_optional_nonblank_string(
-                    raw_alignment.get("source_kind"),
-                    label=f"alignments[{index}].source_kind",
-                ),
-                source_id=_optional_nonblank_string(
-                    raw_alignment.get("source_id"),
-                    label=f"alignments[{index}].source_id",
-                ),
+                source_kind=source_kind,
+                source_id=source_id,
                 confidence=confidence,
                 revision=_require_nonblank_string(
                     raw_alignment["revision"],

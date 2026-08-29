@@ -36,15 +36,13 @@ class ConceptReferenceValidator:
                     f"Unknown mounted book_version_id: {alignment.book_version_id!r}"
                 )
 
-            if (
-                alignment.section_id is not None
-                and alignment.book_version_id == main_book_version_id
-            ):
+            if alignment.section_id is not None:
                 try:
-                    self.course.section(alignment.section_id)
+                    self.course.book(identity.book_id).section(alignment.section_id)
                 except (BookRuntimeError, CourseRuntimeError) as exc:
                     raise ConceptReferenceValidationError(
-                        f"Unknown main-book section_id: {alignment.section_id!r}"
+                        "Unknown section_id for book_version_id "
+                        f"{alignment.book_version_id!r}: {alignment.section_id!r}"
                     ) from exc
 
             has_source_kind = alignment.source_kind is not None
