@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-29
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A 已在 `foundation/course-package-contract-a` 完成 Tasks 1–9 的实现与分层 gate 接线，当前进入 Task 10 exact-final-HEAD / PR readiness；尚未合并到 `main`。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A Tasks 1–10 已完成，并通过 PR #13 合并到 `main`；reviewed head 为 `f1eb4ebd144ccb233e5b8b74e97001af214c60bb`，merge commit 为 `82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`。
 
 详细跨阶段架构：
 
@@ -100,9 +100,12 @@ PR #11 合并后，`main` merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819
 
 Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 
-## Foundation A：Course Package / Course Compiler / 自动验收基础
+## Foundation A：Course Package / Course Compiler / 自动验收基础 — 已完成并合并
 
-当前基础实现已完成 Tasks 1–9；Task 10 正在进行 exact-final-HEAD / PR readiness。Foundation A 不要求作为大型 UI 版本发布，也不迁移现有 Runtime/App consumer。
+Foundation A Tasks 1–10 已完成，并通过 PR #13 合并到 `main`。Foundation A 不要求作为大型 UI 版本发布，也没有迁移现有 Runtime/App consumer。
+
+- reviewed head：`f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
+- merge commit：`82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
 
 ### Course Package / Compiler
 
@@ -139,7 +142,7 @@ Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 - [x] HEAVY GATE：manual `workflow_dispatch`，隔离副本 rebuild/recovery + canonical readiness / Golden / fitness；不写回 canonical
 - [ ] 重型教材重建、ASR、本地模型、Android/Windows 特殊验证后续可走 self-hosted runner
 
-### Foundation A 当前验证证据
+### Foundation A 历史验证证据
 
 Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`：
 
@@ -149,7 +152,26 @@ Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`�
 - real Chromium：11 / 11 PASS
 - Foundation A 起点到 Task 9 HEAD：`books/functional-analysis/**` canonical diff = 0，App source diff = 0
 
-manual HEAVY workflow 已定义但当前连接器不提供 `workflow_dispatch` 启动动作，因此未伪造运行结果；Task 10 exact PR gate 继续以自动 FAST / Runtime / App / Chromium 为合并前硬门。
+manual HEAVY workflow 已定义，但没有实际手工运行记录时不得声称 HEAVY 已通过。
+
+### Approved dependency exception — 2026-08-29
+
+历史 Roadmap 顺序继续保留。下一实现周期已经批准按以下依赖顺序执行：
+
+```text
+H0 → H1 → H2 → H3a → H4a → Phase 1H
+```
+
+这是明确的依赖例外，不是对历史路线图的追溯式重写。
+
+- H0：neutral Book identity
+- H1：internal source provenance
+- H2：Exact-only shared Retrieval seam
+- H3a：Concept/ConceptAlignment contract + reference validation
+- H4a：shadow FTS5/BM25 evaluation
+- 然后回到 Phase 1H 用户可见切片
+
+`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍是以后分别批准的独立决策。H4a 之前及 H4a 本身都不改变 public Search 的 Exact-only 行为。
 
 ## Phase 1H：丰富四模式学习体验
 
@@ -419,6 +441,6 @@ Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫
 
 ## 当前唯一下一步
 
-**完成 Foundation A Task 10：形成 exact final HEAD，打开 `foundation/course-package-contract-a → main` 的 reviewable PR，并只接受该 PR exact HEAD 的 FAST / Runtime Python matrix / App API-Web-Chromium 全绿结果；随后复核 PR diff/review threads，再请求用户对该具体 PR 的显式合并授权。**
+按 2026-08-29 已批准依赖例外执行：先完成 post-Foundation-A governance reconciliation，然后依次进入 `H0 → H1 → H2 → H3a → H4a → Phase 1H`。每个阶段都保持非默认分支、TDD、reviewable PR、exact-HEAD verification；具体 PR 合并仍需用户对该 PR 的明确授权。
 
-当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。
+当前不要提前实现 `H3b`、`B4b`、`B5`、StudyRecord book-version migration，也不要提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
