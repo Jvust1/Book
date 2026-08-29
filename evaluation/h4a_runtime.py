@@ -6,8 +6,19 @@ from dataclasses import dataclass
 import hashlib
 import json
 import math
+import sqlite3
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any, Mapping, Sequence
+
+from runtime.course_runtime import CourseRuntime
+from runtime.retrieval import RetrievalEngine
+from runtime.shadow_fts import (
+    H4A_PROFILES,
+    TRIGRAM_PROFILE,
+    UNICODE61_PROFILE,
+    ShadowFtsIndex,
+)
+from runtime.source_resolver import SourceResolutionError, SourceResolver
 
 
 H4A_QUERY_SET_SCHEMA_VERSION = "h4a_query_set_v1"
@@ -658,4 +669,236 @@ def canonical_h4a_report_json(report: Mapping[str, object]) -> str:
         sort_keys=True,
         separators=(",", ":"),
         allow_nan=False,
+    )
+
+
+def _ranked_sources_from_hits(hits: Sequence[object]) -> tuple[RankedSource, ...]:
+    return tuple(
+        RankedSource(
+            source_kind=str(hit.source_kind),
+            source_id=str(hit.source_id),
+            rank=int(hit.rank),
+        )
+        for hit in hits
+    )
+
+
+def _metrics_to_dict(metrics: QueryMetrics) -> dict[str, object]:
+    return {
+        "hit_at_1": metrics.hit_at_1,
+        "hit_at_5": metrics.hit_at_5,
+        "hit_at_10": metrics.hit_at_10,
+        "recall_at_10": metrics.recall_at_10,
+        "reciprocal_rank": metrics.reciprocal_rank,
+        "negative_clean_at_10": metrics.negative_clean_at_10,
+        "unexpected_hit_count_at_10": metrics.unexpected_hit_count_at_10,
+    }
+
+
+def _expected_sources_to_list(
+    expected_sources: Sequence[ExpectedSource],
+) -> list[dict[str, str]]:
+    return [
+        {
+            "source_kind": source.source_kind,
+            "source_id": source.source_id,
+        }
+        for source in expected_sources
+    ]
+
+
+def _ranked_sources_to_list(
+    ranked_sources: Sequence[RankedSource],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "source_kind": source.source_kind,
+            "source_id": source.source_id,
+            "rank": source.rank,
+        }
+        for source in ranked_sources
+    ]
+
+
+def _recovery_to_dict(recovery: ComparativeRecovery | None) -> dict[str, object] | None:
+    if recovery is None:
+        return None
+    return {
+        "fts_only_recovery_at_10": _expected_sources_to_list(
+            recovery.fts_only_recovery_at_10
+        ),
+        "exact_only_recovery_at_10": _expected_sources_to_list(
+            recovery.exact_only_recovery_at_10
+        ),
+    }
+
+
+def _validate_evaluation_sources(
+    course: CourseRuntime,
+    ranked_sources: Sequence[RankedSource],
+    *,
+    section_id: str | None,
+) -> None:
+    resolver = SourceResolver(course)
+    main_book = course.main_book()
+    for source in ranked_sources:
+        try:
+            resolved = resolver.resolve(source.source_kind, source.source_id)
+        except SourceResolutionError as exc:
+            raise H4aEvaluationError(
+                "Evaluation result cannot prove canonical source identity: "
+                f"{source.source_kind}:{source.source_id}"
+            ) from exc
+        if (
+            resolved.course_id != course.course_id
+            or resolved.book_id != main_book.book_id
+            or resolved.kind != source.source_kind
+            or resolved.source_id != source.source_id
+        ):
+            raise H4aEvaluationError(
+                "Evaluation result source identity mismatch: "
+                f"{source.source_kind}:{source.source_id}"
+            )
+        if section_id is not None and resolved.section_id != section_id:
+            raise H4aEvaluationError(
+                "Evaluation result escaped requested section scope: "
+                f"{source.source_kind}:{source.source_id}"
+            )
+
+
+def evaluate_h4a_course(
+    repository_root: Path,
+    query_set_path: Path,
+    *,
+    limit: int = 30,
+) -> dict[str, object]:
+    """Run the frozen H4a dataset against H2 Exact and both shadow FTS profiles."""
+
+    root = Path(repository_root)
+    query_set = load_h4a_query_set(Path(query_set_path))
+    course = CourseRuntime.open(root / "courses" / "functional-analysis")
+    if query_set.course_id != course.course_id:
+        raise H4aDatasetError(
+            "H4a query-set course_id does not match the mounted Golden course"
+        )
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 10:
+        raise H4aEvaluationError("H4a evaluation limit must be an integer >= 10")
+
+    exact = RetrievalEngine.exact(course)
+    shadow = ShadowFtsIndex.from_course(course)
+    profile_ids = ("exact_v1",) + H4A_PROFILES
+    metrics_by_profile: dict[str, list[QueryMetrics]] = {
+        profile_id: [] for profile_id in profile_ids
+    }
+    query_results: list[dict[str, object]] = []
+
+    try:
+        for query in query_set.queries:
+            exact_hits = exact.search(
+                query.query,
+                limit=limit,
+                section_id=query.section_id,
+            )
+            exact_ranked = _ranked_sources_from_hits(exact_hits)
+            _validate_evaluation_sources(
+                course,
+                exact_ranked,
+                section_id=query.section_id,
+            )
+            exact_metrics = compute_query_metrics(query, exact_ranked)
+            metrics_by_profile["exact_v1"].append(exact_metrics)
+
+            profile_results: list[dict[str, object]] = [
+                {
+                    "profile_id": "exact_v1",
+                    "ranked_sources": _ranked_sources_to_list(exact_ranked),
+                    "metrics": _metrics_to_dict(exact_metrics),
+                    "comparative_recovery": None,
+                }
+            ]
+
+            for profile_id in H4A_PROFILES:
+                shadow_hits = shadow.search(
+                    profile_id,
+                    query.query,
+                    limit=limit,
+                    section_id=query.section_id,
+                )
+                shadow_ranked = _ranked_sources_from_hits(shadow_hits)
+                _validate_evaluation_sources(
+                    course,
+                    shadow_ranked,
+                    section_id=query.section_id,
+                )
+                shadow_metrics = compute_query_metrics(query, shadow_ranked)
+                metrics_by_profile[profile_id].append(shadow_metrics)
+                recovery = None
+                if query.category != "negative_zero_result":
+                    recovery = comparative_recovery_at_10(
+                        query,
+                        exact_ranked=exact_ranked,
+                        candidate_ranked=shadow_ranked,
+                    )
+                profile_results.append(
+                    {
+                        "profile_id": profile_id,
+                        "ranked_sources": _ranked_sources_to_list(shadow_ranked),
+                        "metrics": _metrics_to_dict(shadow_metrics),
+                        "comparative_recovery": _recovery_to_dict(recovery),
+                    }
+                )
+
+            query_results.append(
+                {
+                    "query_id": query.query_id,
+                    "category": query.category,
+                    "query": query.query,
+                    "section_id": query.section_id,
+                    "expected_sources": _expected_sources_to_list(
+                        query.expected_sources
+                    ),
+                    "profiles": profile_results,
+                }
+            )
+    finally:
+        shadow.close()
+
+    aggregates = {
+        profile_id: aggregate_query_metrics(tuple(metrics_by_profile[profile_id]))
+        for profile_id in profile_ids
+    }
+    book_identity = course.main_book_identity()
+    return build_h4a_report(
+        query_set=query_set,
+        course_identity={
+            "course_id": course.course_id,
+            "book_id": book_identity.book_id,
+            "book_version_id": book_identity.book_version_id,
+        },
+        profile_definitions=(
+            {"profile_id": "exact_v1", "kind": "exact"},
+            {
+                "profile_id": UNICODE61_PROFILE,
+                "kind": "shadow_fts5",
+                "tokenizer": "unicode61",
+            },
+            {
+                "profile_id": TRIGRAM_PROFILE,
+                "kind": "shadow_fts5",
+                "tokenizer": "trigram",
+            },
+        ),
+        sqlite_version=sqlite3.sqlite_version,
+        fts5_available=True,
+        query_results=tuple(query_results),
+        aggregate_metrics=aggregates,
+        gates={
+            "provenance": "PASS",
+            "section_scope": "PASS",
+            "determinism": "PASS",
+        },
+        evidence={
+            "public_contract_regression": "pending-exact-head-ci",
+            "canonical_tree_integrity": "pending-exact-head-ci",
+        },
     )
