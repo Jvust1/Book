@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from book_core.identity import BookIdentity, build_book_identity
+
 from .book_runtime import BookRuntime, BookRuntimeBlockedError, BookRuntimeError, RuntimeSection
 
 
@@ -200,6 +202,32 @@ class CourseRuntime:
             return self.books[book_id]
         except KeyError as exc:
             raise CourseRuntimeError(f"Unknown or disabled course book: {book_id}") from exc
+
+    def book_identity(self, book_id: str) -> BookIdentity:
+        entry = next(
+            (
+                row
+                for row in self.entries
+                if row.enabled and row.book_id == book_id
+            ),
+            None,
+        )
+        if entry is None:
+            raise CourseRuntimeError(f"Unknown or disabled course book: {book_id}")
+
+        book = self.book(book_id)
+        version = book.structured_version
+        if not version or not str(version).strip():
+            raise CourseRuntimeError(
+                f"Book {book_id!r} has no usable structured version for identity projection"
+            )
+        try:
+            return build_book_identity(book_id, str(version), entry.role)
+        except ValueError as exc:
+            raise CourseRuntimeError(str(exc)) from exc
+
+    def main_book_identity(self) -> BookIdentity:
+        return self.book_identity(self.main_book_id)
 
     def books_by_role(self, role: str) -> list[BookRuntime]:
         if role not in ALLOWED_BOOK_ROLES:
