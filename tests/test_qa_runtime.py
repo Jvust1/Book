@@ -9,6 +9,7 @@ from pathlib import Path
 from runtime import CourseRuntime, QARuntime, QAQuestionError
 from runtime.qa_models import ModelResponse, QAHistoryMessage
 from runtime.qa_runtime import QASectionError
+from runtime.retrieval import RetrievalEngine
 from tests.runtime_fixture_factory import main_book_entry, make_repo, write_course, write_ready_book
 
 
@@ -46,6 +47,15 @@ class FailIfCalledProvider:
     def answer(self, request):
         self.called = True
         raise AssertionError(f"provider must not be called: {request!r}")
+
+
+class SpyRetrievalFactory:
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+
+    def __call__(self, course: CourseRuntime) -> RetrievalEngine:
+        self.calls.append(course.course_id)
+        return RetrievalEngine.exact(course)
 
 
 class QARuntimeTests(unittest.TestCase):
@@ -118,6 +128,29 @@ class QARuntimeTests(unittest.TestCase):
             book_entries=[main_book_entry("fixture_book", "../../books/fixture-book")],
         )
         self.course = CourseRuntime.open(course_dir)
+
+    def test_old_constructor_and_factory_calls_remain_legal(self) -> None:
+        provider = RecordingModelProvider()
+        direct = QARuntime(self.course, provider=provider)
+        factory = QARuntime.from_course(self.course, provider=provider)
+
+        self.assertIsInstance(direct, QARuntime)
+        self.assertIsInstance(factory, QARuntime)
+
+    def test_retrieval_factory_threads_into_evidence_builder(self) -> None:
+        provider = RecordingModelProvider()
+        spy = SpyRetrievalFactory()
+        runtime = QARuntime.from_course(
+            self.course,
+            provider=provider,
+            retrieval_factory=spy,
+        )
+
+        result = runtime.answer("甲概念是什么？")
+
+        self.assertFalse(result.insufficient_evidence)
+        self.assertTrue(spy.calls)
+        self.assertTrue(all(course_id == "fixture_course" for course_id in spy.calls))
 
     def test_rejects_blank_overlong_malformed_history_and_unknown_section(self) -> None:
         runtime = QARuntime.from_course(self.course, provider=RecordingModelProvider())
