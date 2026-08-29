@@ -10,6 +10,13 @@ from app.api.models import (
 )
 
 
+FORBIDDEN_INTERNAL_KEYS = {
+    "book_version_id",
+    "logical_book_id",
+    "provenance",
+    "identity",
+    "retriever_id",
+}
 SEARCH_RESULT_KEYS = {
     "rank",
     "score",
@@ -77,6 +84,15 @@ QA_CITATION_KEYS = {
 
 
 class SerializationContractTests(unittest.TestCase):
+    def test_internal_provenance_keys_are_forbidden_from_all_frozen_dtos(self) -> None:
+        for keys in (
+            SEARCH_RESULT_KEYS,
+            SOURCE_KEYS,
+            QA_RESPONSE_KEYS,
+            QA_CITATION_KEYS,
+        ):
+            self.assertTrue(FORBIDDEN_INTERNAL_KEYS.isdisjoint(keys))
+
     def test_search_result_keys_are_frozen(self) -> None:
         item = SearchResultItem(
             rank=1,
