@@ -11,6 +11,12 @@ from app.api.errors import (
     InvalidSearchQueryError,
 )
 from app.api.service import BookAppService
+from runtime.retrieval import (
+    RetrievalEngine,
+    RetrievalInvariantError,
+    RetrievalQueryError,
+    RetrievalUnavailableError,
+)
 from tests.runtime_fixture_factory import (
     dump_json,
     main_book_entry,
@@ -21,6 +27,31 @@ from tests.runtime_fixture_factory import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+class SpyRetrievalFactory:
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+
+    def __call__(self, course):
+        self.calls.append(course.course_id)
+        return RetrievalEngine.exact(course)
+
+
+class ErrorRetrievalEngine:
+    def __init__(self, error: Exception) -> None:
+        self.error = error
+
+    def search(self, query: str, *, limit: int = 30, section_id: str | None = None):
+        raise self.error
+
+
+class ErrorRetrievalFactory:
+    def __init__(self, error: Exception) -> None:
+        self.error = error
+
+    def __call__(self, course):
+        return ErrorRetrievalEngine(self.error)
 
 
 class BookAppServiceRealLibraryTests(unittest.TestCase):
@@ -84,6 +115,15 @@ class BookAppServiceRealLibraryTests(unittest.TestCase):
         self.assertEqual(first.source_kind, "object")
         self.assertEqual(first.object_type, "theorem")
         self.assertNotEqual(first.source_kind, first.object_type)
+
+    def test_search_uses_configured_exact_retrieval_factory(self) -> None:
+        spy = SpyRetrievalFactory()
+        service = BookAppService(REPO_ROOT, retrieval_factory=spy)
+
+        response = service.search("functional_analysis_course", "Hölder")
+
+        self.assertEqual(spy.calls, ["functional_analysis_course"])
+        self.assertGreater(response.result_count, 0)
 
     def test_search_blank_query_maps_to_stable_app_error(self) -> None:
         with self.assertRaises(InvalidSearchQueryError) as ctx:
@@ -179,6 +219,122 @@ class BookAppServiceEmptyModeTests(unittest.TestCase):
         self.assertEqual(review.source_refs, [])
         self.assertEqual(practice.items, [])
         self.assertEqual(practice.source_refs, [])
+
+
+class BookAppServiceSearchContractTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.tempdir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tempdir.cleanup)
+        self.repo = make_repo(Path(self.tempdir.name))
+        self.book_dir = self.repo / "books" / "fixture-book"
+        write_ready_book(
+            self.book_dir,
+            book_id="fixture_book",
+            objects=[
+                {
+                    "type": "definition",
+                    "id": "def_fixture",
+                    "name_zh": "测试定义",
+                    "name_en": "Fixture definition",
+                    "number": "1.1",
+                    "formula": "x=x",
+                    "anchor": {
+                        "pdf_page": 1,
+                        "printed_page": 1,
+                        "source_anchor": "fixture:p1:def_fixture",
+                    },
+                }
+            ],
+            search_records=[
+                {
+                    "id": "def_fixture",
+                    "book_id": "fixture_book",
+                    "type": "definition",
+                    "name_zh": "测试定义",
+                    "name_en": "Fixture definition",
+                    "number": "1.1",
+                    "formula": "x=x",
+                    "pdf_page": 1,
+                    "printed_page": 1,
+                    "source_anchor": "fixture:p1:def_fixture",
+                }
+            ],
+        )
+        write_course(
+            self.repo / "courses" / "fixture-course",
+            course_id="fixture_course",
+            main_book_id="fixture_book",
+            book_entries=[main_book_entry("fixture_book", "../../books/fixture-book")],
+        )
+        dump_json(
+            self.repo / "library" / "library.json",
+            {
+                "schema_version": "library_manifest_v1",
+                "library_id": "fixture_library",
+                "name": "测试书架",
+                "courses": [
+                    {
+                        "course_id": "fixture_course",
+                        "name": "测试课程",
+                        "path": "../courses/fixture-course",
+                        "enabled": True,
+                        "order": 10,
+                    }
+                ],
+            },
+        )
+
+    def test_search_payload_is_exactly_frozen_across_retrieval_seam(self) -> None:
+        service = BookAppService(self.repo, retrieval_factory=RetrievalEngine.exact)
+        payload = service.search("fixture_course", "测试定义", limit=10).model_dump()
+
+        self.assertEqual(
+            payload,
+            {
+                "course_id": "fixture_course",
+                "book_id": "fixture_book",
+                "query": "测试定义",
+                "result_count": 1,
+                "results": [
+                    {
+                        "rank": 1,
+                        "score": 1000,
+                        "source_kind": "object",
+                        "source_id": "def_fixture",
+                        "object_type": "definition",
+                        "number": "1.1",
+                        "title_zh": "测试定义",
+                        "title_en": "Fixture definition",
+                        "formula": "x=x",
+                        "pdf_page": 1,
+                        "printed_page": 1,
+                        "source_anchor": "fixture:p1:def_fixture",
+                        "snippet": "测试定义",
+                    }
+                ],
+            },
+        )
+        dumped = str(payload)
+        self.assertNotIn("book_version_id", dumped)
+        self.assertNotIn("retriever_id", dumped)
+        self.assertNotIn("identity", dumped)
+
+    def test_retrieval_errors_preserve_existing_app_error_contract(self) -> None:
+        cases = (
+            (RetrievalQueryError("bad query"), InvalidSearchQueryError, "invalid_search_query", "搜索条件无效"),
+            (RetrievalUnavailableError("index down"), AppUnavailableError, "search_unavailable", "教材搜索暂不可用"),
+            (RetrievalInvariantError("identity mismatch"), AppUnavailableError, "search_unavailable", "教材搜索暂不可用"),
+        )
+        for error, error_type, code, message in cases:
+            with self.subTest(error_type=type(error).__name__):
+                service = BookAppService(
+                    self.repo,
+                    retrieval_factory=ErrorRetrievalFactory(error),
+                )
+                with self.assertRaises(error_type) as ctx:
+                    service.search("fixture_course", "测试")
+                self.assertEqual(ctx.exception.code, code)
+                self.assertEqual(ctx.exception.user_message, message)
 
 
 class BookAppServiceSearchUnavailableTests(unittest.TestCase):

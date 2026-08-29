@@ -7,11 +7,13 @@ import unittest
 from pathlib import Path
 
 from runtime import (
+    CourseRuntime,
     DeterministicFakeModelProvider,
     ModelProviderUnavailableError,
     ModelResponse,
     QAHistoryMessage,
 )
+from runtime.retrieval import RetrievalEngine
 
 from app.api.errors import (
     AppNotFoundError,
@@ -57,7 +59,35 @@ class UpstreamUnavailableProvider:
         )
 
 
+class SpyRetrievalFactory:
+    def __init__(self) -> None:
+        self.calls: list[str] = []
+
+    def __call__(self, course: CourseRuntime) -> RetrievalEngine:
+        self.calls.append(course.course_id)
+        return RetrievalEngine.exact(course)
+
+
 class BookAppQAServiceTests(unittest.TestCase):
+    def test_same_retrieval_factory_serves_search_and_qa(self) -> None:
+        spy = SpyRetrievalFactory()
+        service = BookAppService(
+            REPO_ROOT,
+            qa_provider=DeterministicFakeModelProvider(),
+            retrieval_factory=spy,
+        )
+
+        search = service.search(COURSE_ID, "Hölder")
+        after_search = len(spy.calls)
+        qa = service.ask(COURSE_ID, SUFFICIENT_QA_QUESTION)
+
+        self.assertGreater(search.result_count, 0)
+        self.assertEqual(after_search, 1)
+        self.assertGreater(len(spy.calls), after_search)
+        self.assertTrue(all(course_id == COURSE_ID for course_id in spy.calls))
+        self.assertEqual(qa.answer_kind, "generated")
+        self.assertTrue(qa.citations)
+
     def test_scoped_history_projects_v2_response_and_canonical_citations(self) -> None:
         service = BookAppService(
             REPO_ROOT,

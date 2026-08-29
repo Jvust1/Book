@@ -8,10 +8,47 @@ from fastapi.testclient import TestClient
 from app.api.errors import AppUnavailableError
 from app.api.main import app, get_service
 from app.api.service import BookAppService
+from runtime.retrieval import (
+    RetrievalInvariantError,
+    RetrievalQueryError,
+    RetrievalUnavailableError,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 REAL_SERVICE = BookAppService(REPO_ROOT)
+
+SEARCH_RESULT_KEYS = {
+    "rank",
+    "score",
+    "source_kind",
+    "source_id",
+    "object_type",
+    "number",
+    "title_zh",
+    "title_en",
+    "formula",
+    "pdf_page",
+    "printed_page",
+    "source_anchor",
+    "snippet",
+}
+
+
+class ErrorRetrievalEngine:
+    def __init__(self, error: Exception) -> None:
+        self.error = error
+
+    def search(self, query: str, *, limit: int = 30, section_id: str | None = None):
+        raise self.error
+
+
+class ErrorRetrievalFactory:
+    def __init__(self, error: Exception) -> None:
+        self.error = error
+
+    def __call__(self, course):
+        return ErrorRetrievalEngine(self.error)
 
 
 class BookAppApiTests(unittest.TestCase):
@@ -93,20 +130,28 @@ class BookAppApiTests(unittest.TestCase):
                 )
                 self.assertEqual(payload["section_id"], "ch01_s01")
 
-    def test_search_route_returns_real_canonical_results(self) -> None:
+    def test_search_route_returns_real_canonical_results_with_frozen_keys(self) -> None:
         response = self.client.get(
             "/api/courses/functional_analysis_course/search",
             params={"q": "Hölder", "limit": 10},
         )
         self.assertEqual(response.status_code, 200)
         payload = response.json()
+        self.assertEqual(
+            set(payload.keys()),
+            {"course_id", "book_id", "query", "result_count", "results"},
+        )
         self.assertEqual(payload["course_id"], "functional_analysis_course")
         self.assertEqual(payload["book_id"], "stein_shakarchi_functional_analysis_2011")
         self.assertEqual(payload["query"], "Hölder")
         self.assertGreater(payload["result_count"], 0)
         self.assertEqual(payload["result_count"], len(payload["results"]))
+        self.assertEqual(set(payload["results"][0].keys()), SEARCH_RESULT_KEYS)
         self.assertEqual(payload["results"][0]["source_kind"], "object")
         self.assertEqual(payload["results"][0]["object_type"], "theorem")
+        self.assertNotIn("identity", response.text)
+        self.assertNotIn("book_version_id", response.text)
+        self.assertNotIn("retriever_id", response.text)
 
     def test_search_route_supports_chinese_and_normal_empty_results(self) -> None:
         chinese = self.client.get(
@@ -143,6 +188,40 @@ class BookAppApiTests(unittest.TestCase):
         )
         self.assertEqual(out_of_range.status_code, 400)
         self.assertEqual(out_of_range.json()["error"]["code"], "invalid_search_query")
+
+    def test_retrieval_errors_keep_existing_http_search_mapping(self) -> None:
+        cases = (
+            (
+                RetrievalQueryError("bad query"),
+                400,
+                {"error": {"code": "invalid_search_query", "message": "搜索条件无效"}},
+            ),
+            (
+                RetrievalUnavailableError("index unavailable"),
+                503,
+                {"error": {"code": "search_unavailable", "message": "教材搜索暂不可用"}},
+            ),
+            (
+                RetrievalInvariantError("identity mismatch"),
+                503,
+                {"error": {"code": "search_unavailable", "message": "教材搜索暂不可用"}},
+            ),
+        )
+        for error, status_code, expected_json in cases:
+            with self.subTest(error_type=type(error).__name__):
+                service = BookAppService(
+                    REPO_ROOT,
+                    retrieval_factory=ErrorRetrievalFactory(error),
+                )
+                app.dependency_overrides[get_service] = lambda service=service: service
+                response = self.client.get(
+                    "/api/courses/functional_analysis_course/search",
+                    params={"q": "Banach"},
+                )
+                self.assertEqual(response.status_code, status_code)
+                self.assertEqual(response.json(), expected_json)
+                self.assertNotIn(str(error), response.text)
+                self.assertNotIn("Traceback", response.text)
 
     def test_search_unknown_course_is_stable_404(self) -> None:
         response = self.client.get("/api/courses/missing/search", params={"q": "Banach"})

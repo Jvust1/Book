@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import re
 from typing import Iterable, Literal, Mapping
@@ -16,7 +17,7 @@ from .qa_models import (
     QAHistoryMessage,
 )
 from .qa_provider import AnswerProviderInvalidResponseError
-from .search_runtime import SearchHit, SearchRuntime, SearchRuntimeError
+from .retrieval import RetrievalEngine, RetrievalError, RetrievalHit
 from .source_resolver import SourceResolutionError, SourceResolver
 
 
@@ -129,7 +130,7 @@ def normalize_history(
 
 @dataclass(frozen=True)
 class _EvidenceCandidate:
-    hit: SearchHit
+    hit: RetrievalHit
     probe_index: int
 
     @property
@@ -140,12 +141,23 @@ class _EvidenceCandidate:
 class EvidenceBuilder:
     """Build bounded, source-resolved evidence from one course's canonical index."""
 
-    def __init__(self, course: CourseRuntime):
+    def __init__(
+        self,
+        course: CourseRuntime,
+        *,
+        retrieval_factory: Callable[[CourseRuntime], RetrievalEngine] | None = None,
+    ):
         self.course = course
+        self._retrieval_factory = retrieval_factory or RetrievalEngine.exact
 
     @classmethod
-    def from_course(cls, course: CourseRuntime) -> "EvidenceBuilder":
-        return cls(course)
+    def from_course(
+        cls,
+        course: CourseRuntime,
+        *,
+        retrieval_factory: Callable[[CourseRuntime], RetrievalEngine] | None = None,
+    ) -> "EvidenceBuilder":
+        return cls(course, retrieval_factory=retrieval_factory)
 
     def build(
         self,
@@ -170,11 +182,11 @@ class EvidenceBuilder:
             )
 
         try:
-            search = SearchRuntime.from_course(self.course)
+            engine = self._retrieval_factory(self.course)
             merged: dict[tuple[str, str], _EvidenceCandidate] = {}
             search_limit = min(100, max(30, normalized_limit * 4))
             for probe_index, probe in enumerate(probes):
-                for hit in search.search(
+                for hit in engine.search(
                     probe,
                     limit=search_limit,
                     section_id=section_id,
@@ -183,7 +195,7 @@ class EvidenceBuilder:
                     existing = merged.get(candidate.key)
                     if existing is None or self._is_better(candidate, existing):
                         merged[candidate.key] = candidate
-        except SearchRuntimeError as exc:
+        except RetrievalError as exc:
             raise QAEvidenceUnavailableError(str(exc)) from exc
 
         ordered = sorted(

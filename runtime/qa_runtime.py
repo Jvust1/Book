@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import replace
 from typing import Iterable, Mapping
 
@@ -16,6 +17,7 @@ from .qa_evidence import (
 )
 from .qa_models import ModelRequest, ModelResponse, QAHistoryMessage, QAResult
 from .qa_provider import ModelProvider, ModelProviderInvalidResponseError
+from .retrieval import RetrievalEngine
 
 
 class QARuntimeError(RuntimeError):
@@ -33,15 +35,34 @@ class QASectionError(QARuntimeError):
 class QARuntime:
     """Coordinate trusted retrieval, model generation and citation verification."""
 
-    def __init__(self, course: CourseRuntime, *, provider: ModelProvider):
+    def __init__(
+        self,
+        course: CourseRuntime,
+        *,
+        provider: ModelProvider,
+        retrieval_factory: Callable[[CourseRuntime], RetrievalEngine] | None = None,
+    ):
         self.course = course
         self._provider = provider
-        self._builder = EvidenceBuilder.from_course(course)
+        self._builder = EvidenceBuilder.from_course(
+            course,
+            retrieval_factory=retrieval_factory,
+        )
         self._verifier = CitationVerifier.from_course(course)
 
     @classmethod
-    def from_course(cls, course: CourseRuntime, *, provider: ModelProvider) -> "QARuntime":
-        return cls(course, provider=provider)
+    def from_course(
+        cls,
+        course: CourseRuntime,
+        *,
+        provider: ModelProvider,
+        retrieval_factory: Callable[[CourseRuntime], RetrievalEngine] | None = None,
+    ) -> "QARuntime":
+        return cls(
+            course,
+            provider=provider,
+            retrieval_factory=retrieval_factory,
+        )
 
     def answer(
         self,

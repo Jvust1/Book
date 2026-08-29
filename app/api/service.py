@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from pathlib import Path
 from typing import cast
 
@@ -16,9 +17,6 @@ from runtime import (
     QARuntime,
     QAQuestionError,
     QASectionError,
-    SearchQueryError,
-    SearchRuntime,
-    SearchRuntimeError,
     SectionLearningRuntime,
     SectionLearningRuntimeError,
     SourceResolutionError,
@@ -27,6 +25,12 @@ from runtime import (
 )
 from runtime.book_runtime import RuntimeSection
 from runtime.course_runtime import CourseRuntime
+from runtime.retrieval import (
+    RetrievalEngine,
+    RetrievalInvariantError,
+    RetrievalQueryError,
+    RetrievalUnavailableError,
+)
 
 from .errors import (
     AppNotFoundError,
@@ -69,11 +73,13 @@ class BookAppService:
         repository_root: Path,
         *,
         qa_provider: ModelProvider | None = None,
+        retrieval_factory: Callable[[CourseRuntime], RetrievalEngine] | None = None,
     ):
         self.repository_root = Path(repository_root).resolve()
         self._qa_provider: ModelProvider = (
             qa_provider if qa_provider is not None else UnavailableModelProvider()
         )
+        self._retrieval_factory = retrieval_factory or RetrievalEngine.exact
         try:
             self._library = LibraryRuntime.open(
                 self.repository_root / "library",
@@ -208,15 +214,15 @@ class BookAppService:
     def search(self, course_id: str, query: str, *, limit: int = 30) -> SearchResponse:
         course = self._course(course_id)
         try:
-            runtime = SearchRuntime.from_course(course)
-            hits = runtime.search(query, limit=limit)
-        except SearchQueryError as exc:
+            engine = self._retrieval_factory(course)
+            hits = engine.search(query, limit=limit)
+        except RetrievalQueryError as exc:
             raise InvalidSearchQueryError(
                 code="invalid_search_query",
                 user_message="搜索条件无效",
                 detail=str(exc),
             ) from exc
-        except SearchRuntimeError as exc:
+        except (RetrievalUnavailableError, RetrievalInvariantError) as exc:
             raise AppUnavailableError(
                 code="search_unavailable",
                 user_message="教材搜索暂不可用",
@@ -259,7 +265,11 @@ class BookAppService:
     ) -> QAResponse:
         course = self._course(course_id)
         try:
-            result = QARuntime.from_course(course, provider=self._qa_provider).answer(
+            result = QARuntime.from_course(
+                course,
+                provider=self._qa_provider,
+                retrieval_factory=self._retrieval_factory,
+            ).answer(
                 question,
                 section_id=section_id,
                 history=history,
