@@ -18,6 +18,13 @@ _BROWSER_FORBIDDEN = (
     re.compile(r"sqlite:\/\/", re.IGNORECASE),
     re.compile(r"\.sqlite3\b", re.IGNORECASE),
 )
+_BROWSER_SECRET_PATTERNS = (
+    re.compile(
+        r"\b(?:owner|google)?_?drive_?(?:access_?|refresh_?)?token\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\bclient_?secret\b", re.IGNORECASE),
+)
 _SECRET_KEYS = frozenset(
     {
         "api_key",
@@ -126,6 +133,14 @@ def check_browser_source(repository_root: Path) -> tuple[PackageDiagnostic, ...]
                 _diagnostic(
                     "browser_durable_storage_forbidden",
                     "Browser source contains a forbidden durable SQLite dependency or filename.",
+                    relative,
+                )
+            )
+        if any(pattern.search(text) for pattern in _BROWSER_SECRET_PATTERNS):
+            diagnostics.append(
+                _diagnostic(
+                    "browser_secret_material_forbidden",
+                    "Browser source contains forbidden owner Drive credential material.",
                     relative,
                 )
             )
