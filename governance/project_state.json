@@ -3,10 +3,10 @@
   "updated_date": "2026-08-29",
   "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "main",
-  "phase": "POST_FOUNDATION_A_TRANSITION",
-  "status": "READY_FOR_NEXT_PHASE_DESIGN",
-  "base_main_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
+  "active_branch": "design/hybrid-h0-h4a-phase1h",
+  "phase": "HYBRID_H0_H4A_PHASE1H",
+  "status": "IMPLEMENTATION_PLAN_READY",
+  "base_main_commit": "6c8734658a25c8b27cff33252a520d80e25cc704",
   "last_verified_implementation_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "foundation_a": {
@@ -31,6 +31,32 @@
     "next_task": null,
     "canonical_book_mutation_allowed": false,
     "runtime_consumer_migration_in_scope": false
+  },
+  "hybrid_route": {
+    "status": "DESIGN_APPROVED_PLAN_READY",
+    "approved_design": "docs/superpowers/specs/2026-08-29-hybrid-h0-h4a-phase1h-design.md",
+    "plan_set": "docs/superpowers/plans/2026-08-29-hybrid-h0-h4a-phase1h-plan-set.md",
+    "design_branch": "design/hybrid-h0-h4a-phase1h",
+    "planning_artifact_checkpoint": "8dce16754cd8cc4bf0600e05e939e2ea2b8cbb00",
+    "execution_mode": "SUBAGENT_DRIVEN_SELECTED",
+    "implementation_started": false,
+    "sequence": [
+      "POST_FOUNDATION_A_GOVERNANCE_RECONCILIATION",
+      "H0_NEUTRAL_BOOK_IDENTITY",
+      "H1_INTERNAL_SOURCE_PROVENANCE",
+      "H2_EXACT_ONLY_SHARED_RETRIEVAL",
+      "H3A_CONCEPT_CONTRACT_AND_REFERENCE_VALIDATION",
+      "H4A_SHADOW_FTS5_BM25_EVALUATION",
+      "PHASE_1H_S1_S6_LEARNING_SLICES"
+    ],
+    "deferred_requires_new_design_approval": [
+      "H3B_PRODUCTION_CONCEPT_AUTHORITY_LIFECYCLE",
+      "B4B_PUBLIC_FTS_FUSION_RANKING_ACTIVATION",
+      "B5_PUBLIC_MULTI_BOOK_API_DTO_BROWSER_SESSION_MIGRATION",
+      "STUDY_RECORD_BOOK_VERSION_MIGRATION"
+    ],
+    "canonical_book_mutation_allowed": false,
+    "public_search_mode_through_h4a": "EXACT_ONLY"
   },
   "golden_course": {
     "course_id": "functional_analysis_course",
@@ -63,5 +89,5 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Select and explicitly approve the next roadmap phase design before implementing any genuinely new architectural subsystem. Safe read-only analysis and post-merge governance reconciliation may continue automatically."
+  "next_step": "Execute the approved plan set with Superpowers Subagent-Driven Development in Codex, beginning with the post-Foundation-A governance reconciliation and then H0. Each stage stays on a non-default implementation branch with TDD, review, exact-HEAD verification, and explicit per-PR human merge authorization. Do not implement H3b, B4b, B5, or StudyRecord book-version migration without a new approved design."
 }
