@@ -4,11 +4,60 @@
   "repository": "Jvust1/Book",
   "default_branch": "main",
   "active_branch": "main",
-  "phase": "POST_FOUNDATION_A_TRANSITION",
-  "status": "READY_FOR_NEXT_PHASE_DESIGN",
-  "base_main_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
-  "last_verified_implementation_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
+  "phase": "FOUNDATION_B_TRANSITION",
+  "status": "H3A_MERGED_READY_FOR_H4A",
+  "base_main_commit": "f69166568839b7038b0f0472baefcee34299fa17",
+  "last_verified_implementation_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
+  "approved_dependency_sequence": [
+    "H0",
+    "H1",
+    "H2",
+    "H3a",
+    "H4a",
+    "Phase 1H"
+  ],
+  "transition_stages": {
+    "H0": {
+      "status": "COMPLETE_MERGED",
+      "name": "neutral Book identity",
+      "merged_pr": 18,
+      "reviewed_head": "56c289ccdb5bd692efcbd642dfd9267278f5e5af",
+      "merge_commit": "3dcc600c2c8a39e1ffc41c07fbf290adfba5035c"
+    },
+    "H1": {
+      "status": "COMPLETE_MERGED",
+      "name": "internal source provenance and serialization freezes",
+      "merged_pr": 19,
+      "reviewed_head": "a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2",
+      "merge_commit": "7e54e87b9674455e9f3d275016313f6c9e2487ac"
+    },
+    "H2": {
+      "status": "COMPLETE_MERGED",
+      "name": "Exact-only shared Retrieval seam",
+      "merged_pr": 20,
+      "reviewed_head": "66ac966c5dfe59ebeea82b168b2ee67fc85f9474",
+      "merge_commit": "410cede92bcc0783e4fca9b02faec79e5fe77112"
+    },
+    "H3a": {
+      "status": "COMPLETE_MERGED",
+      "name": "deterministic Concept/ConceptAlignment contract and repository-bound reference validation",
+      "merged_pr": 21,
+      "reviewed_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
+      "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
+    },
+    "H4a": {
+      "status": "NEXT_APPROVED_STAGE",
+      "name": "shadow FTS5/BM25 evaluation",
+      "public_search_behavior": "EXACT_ONLY_UNCHANGED"
+    }
+  },
+  "separate_human_gates": [
+    "H3b",
+    "B4b",
+    "B5",
+    "StudyRecord book-version migration"
+  ],
   "foundation_a": {
     "status": "COMPLETE_MERGED",
     "approved_design": "docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md",
@@ -63,5 +112,5 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Select and explicitly approve the next roadmap phase design before implementing any genuinely new architectural subsystem. Safe read-only analysis and post-merge governance reconciliation may continue automatically."
+  "next_step": "Proceed to H4a shadow FTS5/BM25 evaluation through the shared H2 Retrieval boundary while keeping public Search/QA Exact-only. Define deterministic evaluation data, ranking/coverage metrics, provenance checks, failure semantics, and exact-head evidence before any later activation proposal. H3b, B4b, B5, and StudyRecord book-version migration remain separate human gates."
 }

@@ -33,10 +33,10 @@
     {
       "pending_id": "foundation_a_post_merge_narrative_sync_2026_08_29",
       "blocking": false,
-      "status": "PENDING",
-      "scope": "docs/CURRENT_STATE.md; docs/ROADMAP.md; docs/DEVELOPMENT_STRATEGY.md",
-      "reason": "Foundation A PR #13 merged after these long-form narrative documents were authored, so isolated current-state sentences may still describe Task 10 or PR readiness as pending. The merged repository state is authoritative and the stale wording must not be interpreted as an unmerged implementation.",
-      "resolution": "When the next phase design is selected, update only stale current-state wording while preserving historical sections and prior evidence. Use governance/project_state.json, docs/HANDOFF.md, PR #13, and merge commit 82f0cbbcfe5078d304ca7c163b81d4eb01b515f4 as the post-merge authority until then.",
+      "status": "RESOLVED_BY_PR_17",
+      "scope": "docs/CURRENT_STATE.md; docs/ROADMAP.md; docs/DEVELOPMENT_STRATEGY.md; docs/HANDOFF.md; docs/EVALUATION_LEDGER.md; governance/project_state.json",
+      "reason": "Foundation A PR #13 merged after the original long-form narratives were authored. H0 through H3a subsequently also merged before the narrative reconciliation branch was integrated.",
+      "resolution": "PR #17 reconciles the long-form Foundation A wording, records the approved H0 -> H1 -> H2 -> H3a -> H4a -> Phase 1H dependency exception, advances current machine/handoff/evaluation state through merged H3a, and preserves historical evidence. This item becomes resolved when PR #17 is integrated to main.",
       "blocks_next_step": false
     }
   ]

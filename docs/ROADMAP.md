@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-29
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A 已在 `foundation/course-package-contract-a` 完成 Tasks 1–9 的实现与分层 gate 接线，当前进入 Task 10 exact-final-HEAD / PR readiness；尚未合并到 `main`。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A Tasks 1–10 已完成并通过 PR #13 合并；H0/H1/H2/H3a 也已分别通过 PR #18/#19/#20/#21 集成到 `main`。当前 `main` 为 H3a merge commit `f69166568839b7038b0f0472baefcee34299fa17`，下一批准阶段为 H4a shadow FTS5/BM25 evaluation。
 
 详细跨阶段架构：
 
@@ -100,9 +100,12 @@ PR #11 合并后，`main` merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819
 
 Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 
-## Foundation A：Course Package / Course Compiler / 自动验收基础
+## Foundation A：Course Package / Course Compiler / 自动验收基础 — 已完成并合并
 
-当前基础实现已完成 Tasks 1–9；Task 10 正在进行 exact-final-HEAD / PR readiness。Foundation A 不要求作为大型 UI 版本发布，也不迁移现有 Runtime/App consumer。
+Foundation A Tasks 1–10 已完成，并通过 PR #13 合并到 `main`。Foundation A 不要求作为大型 UI 版本发布，也没有迁移现有 Runtime/App consumer。
+
+- reviewed head：`f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
+- merge commit：`82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
 
 ### Course Package / Compiler
 
@@ -139,7 +142,7 @@ Phase 1G 已完成并集成；后续不再把它作为待合并工作项。
 - [x] HEAVY GATE：manual `workflow_dispatch`，隔离副本 rebuild/recovery + canonical readiness / Golden / fitness；不写回 canonical
 - [ ] 重型教材重建、ASR、本地模型、Android/Windows 特殊验证后续可走 self-hosted runner
 
-### Foundation A 当前验证证据
+### Foundation A 历史验证证据
 
 Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`：
 
@@ -149,7 +152,26 @@ Task 9 workflow implementation HEAD `94fee411b5f8d67a5db2ef5779657f39c226c220`�
 - real Chromium：11 / 11 PASS
 - Foundation A 起点到 Task 9 HEAD：`books/functional-analysis/**` canonical diff = 0，App source diff = 0
 
-manual HEAVY workflow 已定义但当前连接器不提供 `workflow_dispatch` 启动动作，因此未伪造运行结果；Task 10 exact PR gate 继续以自动 FAST / Runtime / App / Chromium 为合并前硬门。
+manual HEAVY workflow 已定义，但没有实际手工运行记录时不得声称 HEAVY 已通过。
+
+### Approved dependency exception — 2026-08-29
+
+历史 Roadmap 顺序继续保留。当前实现周期批准按以下依赖顺序执行：
+
+```text
+H0 → H1 → H2 → H3a → H4a → Phase 1H
+```
+
+这是明确的依赖例外，不是对历史路线图的追溯式重写。当前进度：
+
+- [x] H0：neutral Book identity — PR #18 merged
+- [x] H1：internal source provenance — PR #19 merged
+- [x] H2：Exact-only shared Retrieval seam — PR #20 merged
+- [x] H3a：Concept/ConceptAlignment contract + reference validation — PR #21 merged
+- [ ] H4a：shadow FTS5/BM25 evaluation — NEXT
+- [ ] Phase 1H：user-visible slices — AFTER H4a
+
+`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍是以后分别批准的独立决策。H4a 本身不改变 public Search 的 Exact-only 行为。
 
 ## Phase 1H：丰富四模式学习体验
 
@@ -193,28 +215,29 @@ manual HEAVY workflow 已定义但当前连接器不提供 `workflow_dispatch` �
 
 ### Concept Graph
 
-- [ ] `Concept`
-- [ ] prerequisite / dependent relations
-- [ ] Chapter/Section ↔ Concept
-- [ ] 教材对象 ↔ Concept
-- [ ] 第一版使用确定性 graph records，不要求图数据库
+- [ ] `Concept` production authority/data
+- [ ] prerequisite / dependent relations production data
+- [ ] Chapter/Section ↔ Concept production alignment
+- [ ] 教材对象 ↔ Concept production alignment
+- [x] H3a inert `Concept / ConceptAlignment / ConceptGraph` v1 contract + repository reference validation
+- [ ] 第一版 production graph 使用确定性 graph records，不要求图数据库
 
 ### 多教材 ConceptAlignment
 
 - [ ] 同一 Course 下多本 Book 保持原文/页码/编号独立
-- [ ] `ConceptAlignment`
-- [ ] `defines / explains / proves / examples / exercises / extends / contrasts`
-- [ ] 自动对齐保留 confidence / revision
-- [ ] primary book 第一版继续提供课程 Section 主骨架
+- [x] H3a `ConceptAlignment` contract / schema
+- [x] H3a `defines / explains / proves / examples / exercises / extends / contrasts` relation contract
+- [ ] 自动对齐保留 confidence / revision 的 production lifecycle
+- [ ] primary book 第一版继续提供课程 Section 主骨架的 multi-book Runtime consumer
 - [ ] 同一本书不同 edition 使用 version mapping，不覆盖旧 anchor
 
 ### Unified Retrieval v1
 
-- [ ] 保留现有 deterministic Exact Search
-- [ ] SQLite FTS5 / BM25 全文检索
+- [x] 保留现有 deterministic Exact Search
+- [ ] SQLite FTS5 / BM25 全文检索公开激活（H4a 仅 shadow evaluation）
 - [ ] Query normalization：中英文、术语别名、Unicode/LaTeX/符号
 - [ ] Exact + FTS 结果做 provenance-aware fusion
-- [ ] Search 与 QA 共用 Retrieval boundary
+- [x] Search 与 QA 共用 H2 internal Exact-only Retrieval boundary
 - [ ] 结果显式显示主教材/辅助教材/课堂/个人/AI Derived 来源
 
 后续逐步加入：FormulaRetriever、SemanticRetriever、LectureEventRetriever、ExamPointRetriever、PersonalRetriever、MeetingRetriever 和 RRF/等价 rank fusion。
@@ -419,6 +442,6 @@ Codex 不作为主线开发依赖，也不在没有 Upgrade Spec 时自由大扫
 
 ## 当前唯一下一步
 
-**完成 Foundation A Task 10：形成 exact final HEAD，打开 `foundation/course-package-contract-a → main` 的 reviewable PR，并只接受该 PR exact HEAD 的 FAST / Runtime Python matrix / App API-Web-Chromium 全绿结果；随后复核 PR diff/review threads，再请求用户对该具体 PR 的显式合并授权。**
+**H4a shadow FTS5/BM25 evaluation** 是当前唯一下一实现阶段。它必须通过 H2 shared Retrieval boundary 做 shadow 候选/排名/覆盖率评估，并保持 public Search/QA 的 Exact-only 排名、分数、顺序与返回行为不变。
 
-当前不要提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action；这些能力已经进入正式路线图，等对应阶段再实现。
+H4a 需要先定义确定性 query/dataset、coverage/ranking metrics、provenance checks、failure semantics 与 exact-HEAD evidence，再进入实现。当前不要提前实现 `H3b`、`B4b`、`B5`、StudyRecord book-version migration，也不要提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。

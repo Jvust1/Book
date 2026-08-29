@@ -1,12 +1,12 @@
 # Book 开发系统策略
 
-更新时间：2026-08-28
+更新时间：2026-08-29
 
 ## 1. 目的
 
 本文件定义 Book 在当前产品架构之上的长期开发方法。它不替代 `docs/MASTER_PLAN.md`、`docs/ROADMAP.md` 或各 Phase 已批准的 spec/implementation plan，而是规定如何把 Book 从“按功能逐步开发的单一 App”升级为“由标准 Course Package 驱动、可自动验收、可持续扩展到多教材/多课程的 Course OS”。
 
-当前 Phase 1G 的范围不变：先按已批准实施计划完成 StudyRecord + SQLite + hidden profile_id + recent learning + sync-ready metadata。以下能力按后续阶段逐步引入，不提前塞进 Phase 1G。
+Phase 1G 和 Foundation A 已完成并合并。2026-08-29 批准的依赖顺序为 `H0 → H1 → H2 → H3a → H4a → Phase 1H`；H0–H3a 已完成并集成，当前下一阶段是 H4a。该顺序是面向当前实现周期的依赖例外，不追溯改写历史 Roadmap；H3b、B4b、B5 与 StudyRecord book-version migration 仍需以后分别批准。
 
 ## 2. 总体开发模型
 
@@ -140,7 +140,7 @@ validation
 - schema evolution 要有 version / migration policy。
 - API contract 变化必须有兼容性测试。
 
-不要求 Phase 1G 为此重写现有 API；先完成 Phase 1G，再在 Course Package/contract foundation 阶段引入。
+Phase 1G 已完成；新的 contract-first 基础继续按后续批准阶段逐步引入，不反向重写现有稳定 API。
 
 ## 6. Architecture Fitness Functions：把架构规则变成 CI 可执行约束
 
@@ -229,7 +229,7 @@ full regression
 - 减少大批代码写完后才发现架构错误。
 - 每个 checkpoint 都能形成真实进展，而不是半完成模块。
 
-Phase 1G 已有 TDD 实施计划，执行时优先保持这种纵向切片思想，但不得擅自改写已批准范围。
+Phase 1G 与 H0–H3a 的纵向切片已经完成并合并；H4a 与后续 Phase 1H 继续沿用同样的独立 reviewable slice 原则。
 
 ## 9. Concept Graph：从“目录结构”升级到“学习依赖结构”
 
@@ -260,6 +260,19 @@ Concept Graph 的价值：
 - 辅助教材可以对齐同一 Concept，同时保留各自原始来源。
 
 Concept Graph 建议在 Chapter Hub / ExamPoint 之前建立最小基础，不要求一开始实现复杂知识图数据库；可先使用确定性结构化 graph records。
+
+### 当前批准的 Concept / Retrieval 分段
+
+当前实现周期明确把长期方向拆成互不偷跑的阶段：
+
+```text
+H3a = Concept/ConceptAlignment contract + repository reference validation only [COMPLETE_MERGED]
+H3b = real production Concept authority/lifecycle; later approval required
+H4a = shadow FTS5/BM25 evidence only; public ranking unchanged [NEXT]
+B4b = public FTS/fusion/ranking activation; later approval required
+```
+
+因此 H3a 没有创建 production Concept authority，H4a 也不能改变真实 Search/QA 返回；这些边界是为了让未来能力建立在可验证证据上，而不是把长期路线一次性塞入当前产品。
 
 ## 10. LectureEvent：录音保留事件流，不只保留最终总结
 
@@ -398,7 +411,7 @@ Codex 不应在没有 Upgrade Spec 的情况下自由“大扫除式重构”稳
 
 ## 14. 与当前 Roadmap 的推荐插入位置
 
-当前 Phase 名称继续以 `docs/ROADMAP.md` 为准，推荐按以下方式吸收本策略：
+历史 Phase 名称继续以 `docs/ROADMAP.md` 为准。原长期顺序仍保留，但 2026-08-29 已批准一个当前周期依赖例外：
 
 ```text
 Phase 1G
@@ -410,11 +423,22 @@ Golden Course automation
 Architecture Fitness Functions foundation
 Contract-first foundation
         ↓
+[Approved dependency exception]
+H0 neutral Book identity                     [COMPLETE_MERGED]
+        ↓
+H1 internal source provenance                [COMPLETE_MERGED]
+        ↓
+H2 Exact-only shared Retrieval seam          [COMPLETE_MERGED]
+        ↓
+H3a Concept/ConceptAlignment contract        [COMPLETE_MERGED]
+        ↓
+H4a shadow FTS5/BM25 evaluation              [NEXT]
+        ↓
 Phase 1H
 四模式增强（按 Vertical Slice 实现）
         ↓
-Cross-cutting Foundation B
-Minimal Concept Graph
+Cross-cutting Foundation B / later separately approved work
+Minimal Concept Graph production lifecycle / public retrieval activation / multi-book migration
         ↓
 Phase 1I
 Chapter Hub / 思维导图
@@ -452,14 +476,19 @@ Book v2 Targeted Upgrade
 
 ## 15. 当前执行优先级
 
-当前唯一工程优先级已切换到 Foundation A：
+当前唯一工程优先级是 **H4a shadow FTS5/BM25 evaluation**。
 
 ```text
-foundation/course-package-contract-a
-→ 按 docs/superpowers/plans/2026-08-28-foundation-a-course-package.md
-→ Tasks 1–9 已完成；执行 Task 10 exact-final-HEAD regression / documentation state / PR readiness
+H0 neutral Book identity                         COMPLETE_MERGED
+→ H1 internal source provenance                  COMPLETE_MERGED
+→ H2 Exact-only shared Retrieval seam            COMPLETE_MERGED
+→ H3a Concept/ConceptAlignment contract          COMPLETE_MERGED
+→ H4a shadow FTS5/BM25 evaluation                NEXT
+→ Phase 1H user-visible slices                   AFTER_H4A
 ```
 
-Foundation A 仍保持 App Runtime consumer migration out of scope；只有 exact-final-HEAD 的 FAST / Runtime / App / Chromium gates 和 PR diff/review 均通过后，才进入该 PR 的逐项审查与合并授权阶段。
+H4a 只允许通过 H2 shared Retrieval boundary 做 shadow evaluation，定义确定性 query/dataset、coverage/ranking metrics、provenance checks 与 failure semantics；public Search/QA 排名、分数、顺序和返回行为必须保持 Exact-only，不得在 H4a 内静默激活 FTS/BM25。
 
-Course Package Contract / Functional Analysis Golden Course / Architecture Fitness Functions / CI 分层已经形成当前基础实现；后续阶段继续按 Roadmap 引入多教材 Runtime、Concept Graph、Unified Retrieval、录音、同步和考试能力，不提前把未来能力混入 Foundation A。
+每一阶段继续采用非默认分支、TDD、exact-final-HEAD gate 和 reviewable PR。设计批准不等于 merge 授权；每个具体 PR 仍需要单独的人类明确合并授权。
+
+Foundation A 的 App Runtime consumer migration 仍保持 out of scope。`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 不属于当前批准序列，不得因为长期策略文档已经描述相关方向就提前实现。

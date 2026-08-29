@@ -112,10 +112,68 @@ Verified automatically at the Task 9 implementation HEAD:
 - Book App UI run #213 (`33190233579`): app-api success, web-client success, browser-acceptance success
 - real Chromium acceptance: 11 / 11 PASS
 
-HEAVY is intentionally `workflow_dispatch` only. Its implementation rebuilds/recovery-checks an isolated `/tmp` copy rather than using canonical `--promote-safe` writes, then checks canonical readiness and Golden package/fitness read-only. The connected GitHub toolset does not expose a workflow-dispatch action, so this ledger does not claim that HEAVY was manually executed.
+HEAVY is intentionally `workflow_dispatch` only. Its implementation rebuilds/recovery-checks an isolated `/tmp` copy rather than using canonical `--promote-safe` writes, then checks canonical readiness and Golden package/fitness read-only. No HEAVY execution result is claimed without an actual run record.
 
-Task 9 therefore proves the automatic FAST + Runtime PR FULL + App PR FULL wiring and defines a non-canonical-writing manual HEAVY gate. Final Foundation A PR readiness still requires exact PR-head automatic gates after the Task 10 documentation/governance commits.
+Task 9 proves the automatic FAST + Runtime PR FULL + App PR FULL wiring and defines a non-canonical-writing manual HEAVY gate. Foundation A was subsequently completed and merged through PR #13.
+
+## E-009 — H0 neutral Book identity seam
+
+Status: `PASS / INTEGRATED`
+
+- PR: `#18`
+- exact reviewed head: `56c289ccdb5bd692efcbd642dfd9267278f5e5af`
+- merge commit: `3dcc600c2c8a39e1ffc41c07fbf290adfba5035c`
+- Course Package FAST #22: SUCCESS
+- Runtime reference #185: Python 3.11 / 3.12 / 3.13 PASS; Python 3.13 Golden rebuild/validate + architecture fitness PASS
+- Book App UI #241: App API, Web and real Chromium acceptance PASS
+- scope audit: no `books/**`, `courses/**`, `library/**`, App product code, StudyRecord, H1+, or public API migration
+
+Conclusion: the neutral `BookIdentity` / canonical role owner is integrated without changing legacy product behavior.
+
+## E-010 — H1 internal source provenance and serialization freezes
+
+Status: `PASS / INTEGRATED`
+
+- PR: `#19`
+- exact reviewed head: `a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2`
+- merge commit: `7e54e87b9674455e9f3d275016313f6c9e2487ac`
+- Course Package FAST #38: SUCCESS
+- Runtime reference #209: Python 3.11 / 3.12 / 3.13 PASS; Python 3.13 Golden/readiness/fitness PASS
+- Book App UI #271: App API, full Runtime/App discovery, Web and real Chromium acceptance PASS
+- public Search/Source/QA DTO shapes and browser persistence shapes remained frozen; internal provenance did not leak into external DTOs
+
+Conclusion: collision-safe `(book_version_id, source_kind, source_id)` identity and internal provenance adapters are integrated while external serialization remains unchanged.
+
+## E-011 — H2 Exact-only shared Retrieval seam
+
+Status: `PASS / INTEGRATED`
+
+- PR: `#20`
+- exact reviewed head: `66ac966c5dfe59ebeea82b168b2ee67fc85f9474`
+- merge commit: `410cede92bcc0783e4fca9b02faec79e5fe77112`
+- Runtime reference #220: SUCCESS across Python 3.11 / 3.12 / 3.13, including Python 3.13 Functional Analysis rebuild/readiness, Golden validation and architecture fitness
+- Book App UI #287: App API, Web and Chromium acceptance SUCCESS
+- SearchRuntime versus RetrievalEngine equivalence covered English, Chinese, formula, zero-result and Section-scoped queries
+- no FTS/BM25/semantic implementation, StudyRecord migration, public multi-book DTO migration or canonical textbook change
+
+Conclusion: Search and QA evidence candidate retrieval share the internal Exact-only Retrieval seam while public ranking, score, order and error semantics remain frozen.
+
+## E-012 — H3a deterministic Concept graph contract
+
+Status: `PASS / INTEGRATED`
+
+- PR: `#21`
+- exact reviewed head: `1ed4fc6574417b56b4342ae639f81a69dd842c6b`
+- merge commit: `f69166568839b7038b0f0472baefcee34299fa17`
+- review-repair RED: `2bc7fb6b215b618298e6d860450087a7ef4c67af`; Foundation B contract #4 failed exactly on source-pair/schema and non-main Section validation gaps
+- final exact-head Course Package FAST #45: SUCCESS
+- Runtime reference #236: SUCCESS; Python 3.11 / 3.12 / 3.13 PASS
+- Foundation B contract #8: SUCCESS
+- Book App UI #303: App API, Web tests/typecheck/build and real Chromium acceptance PASS
+- final scope remains eight H3a files only; no production Concept dataset, Search/QA/App activation, StudyRecord change, FTS/BM25 implementation, H3b or public multi-book migration
+
+Conclusion: the inert v1 Concept/ConceptAlignment contract, deterministic canonicalization/cycle diagnostics, paired source contract, and repository-bound per-book Section reference validation are integrated. H3b is not authorized by H3a.
 
 ## Next evaluation
 
-Foundation A Task 10 must open the reviewable PR to `main`, require exact-final-head Course Package FAST, Runtime Python 3.11 / 3.12 / 3.13, App API/Web/Chromium success, inspect the final diff and review threads, and confirm canonical textbook diff = 0, App runtime migration = 0, no secrets/tokens, and no tracked `.build` output before any specific merge authorization is requested.
+H4a is the next approved stage. Its evaluation must remain shadow-only: measure FTS5/BM25 retrieval coverage/ranking against the existing Exact baseline through the shared H2 Retrieval boundary without changing public Search/QA behavior. The H4a gate must define deterministic datasets/queries, comparison metrics, provenance checks, failure semantics and exact-head regression evidence before any later activation proposal. `H3b`, `B4b`, `B5`, and StudyRecord book-version migration remain separate human gates.
