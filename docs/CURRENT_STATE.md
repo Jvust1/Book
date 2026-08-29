@@ -441,13 +441,13 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。
+H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。PR #17 承载本轮治理对账；一旦集成，它只作为历史治理证据，不再构成新的前置开发阶段。
 
-1. 先通过本治理 PR 把 post-H3a 状态对账到 `main`；具体 PR 合并仍需用户明确指向该 PR 授权。
-2. H4a 只做 shadow evaluation：构建/比较 FTS5/BM25 候选与现有 Exact baseline，不改变 public Search/QA 排名与返回行为。
-3. H4a 必须定义确定性 query/dataset、覆盖率/排名比较指标、provenance 校验、失败语义与 exact-HEAD regression evidence。
+1. H4a 只做 shadow evaluation：构建/比较 FTS5/BM25 候选与现有 Exact baseline，不改变 public Search/QA 排名与返回行为。
+2. H4a 必须定义确定性 query/dataset、覆盖率/排名比较指标、provenance 校验、失败语义与 exact-HEAD regression evidence。
+3. H4a 应复用 H2 shared Retrieval boundary，不绕过现有 Exact baseline 或来源身份链路。
 4. 不修改 `books/functional-analysis/**` canonical 教材事实。
-5. 使用非默认分支、TDD、reviewable PR、exact-HEAD verification。
+5. 使用非默认分支、TDD、reviewable PR、exact-HEAD verification；具体 PR 合并仍需用户明确指向该 PR 授权。
 6. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 不在本轮批准范围内。
 
 当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
