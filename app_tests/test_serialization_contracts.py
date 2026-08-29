@@ -5,6 +5,7 @@ import unittest
 from app.api.models import (
     QACitationItem,
     QAResponse,
+    SearchResponse,
     SearchResultItem,
     SourceResponse,
 )
@@ -16,6 +17,13 @@ FORBIDDEN_INTERNAL_KEYS = {
     "provenance",
     "identity",
     "retriever_id",
+}
+SEARCH_RESPONSE_KEYS = {
+    "course_id",
+    "book_id",
+    "query",
+    "result_count",
+    "results",
 }
 SEARCH_RESULT_KEYS = {
     "rank",
@@ -86,6 +94,7 @@ QA_CITATION_KEYS = {
 class SerializationContractTests(unittest.TestCase):
     def test_internal_provenance_keys_are_forbidden_from_all_frozen_dtos(self) -> None:
         for keys in (
+            SEARCH_RESPONSE_KEYS,
             SEARCH_RESULT_KEYS,
             SOURCE_KEYS,
             QA_RESPONSE_KEYS,
@@ -93,7 +102,7 @@ class SerializationContractTests(unittest.TestCase):
         ):
             self.assertTrue(FORBIDDEN_INTERNAL_KEYS.isdisjoint(keys))
 
-    def test_search_result_keys_are_frozen(self) -> None:
+    def test_search_response_and_result_keys_are_frozen(self) -> None:
         item = SearchResultItem(
             rank=1,
             score=7,
@@ -109,7 +118,16 @@ class SerializationContractTests(unittest.TestCase):
             source_anchor="anchor",
             snippet="snippet",
         )
-        self.assertEqual(set(item.model_dump().keys()), SEARCH_RESULT_KEYS)
+        response = SearchResponse(
+            course_id="course",
+            book_id="book",
+            query="query",
+            result_count=1,
+            results=[item],
+        )
+        dumped = response.model_dump()
+        self.assertEqual(set(dumped.keys()), SEARCH_RESPONSE_KEYS)
+        self.assertEqual(set(dumped["results"][0].keys()), SEARCH_RESULT_KEYS)
 
     def test_source_response_keys_are_frozen(self) -> None:
         source = SourceResponse(
