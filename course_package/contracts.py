@@ -5,9 +5,10 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
+from book_core.identity import CANONICAL_BOOK_ROLES
+
 SCHEMA_VERSION = "course_package_v1"
 PACKAGE_VERSION = "1.0.0"
-CANONICAL_BOOK_ROLES = frozenset({"primary", "supplementary", "reference", "translation"})
 READINESS_STATUSES = frozenset({"PASS", "WARN", "FAIL"})
 PACKAGE_FILENAMES = (
     "course_package.json",
