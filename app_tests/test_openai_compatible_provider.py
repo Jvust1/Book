@@ -26,6 +26,37 @@ BASE_URL = "https://model.example.test/v1/"
 MODEL = "example-model"
 _REAL_HTTPX_CLIENT = httpx.Client
 
+HISTORY_PAYLOAD_KEYS = {"role", "content"}
+EVIDENCE_PAYLOAD_KEYS = {
+    "evidence_id",
+    "source_kind",
+    "source_id",
+    "object_type",
+    "title_zh",
+    "title_en",
+    "number",
+    "formula",
+    "content_zh",
+    "source_anchor",
+    "pdf_page",
+    "printed_page",
+    "search_score",
+    "course_id",
+    "book_id",
+    "chapter_id",
+    "section_id",
+    "type_zh",
+}
+USER_PAYLOAD_KEYS = {
+    "question",
+    "course_id",
+    "book_id",
+    "section_id",
+    "history",
+    "evidence",
+    "allowed_answer_styles",
+}
+
 
 def model_request() -> ModelRequest:
     evidence = EvidenceItem(
@@ -110,6 +141,33 @@ class OpenAICompatibleModelProviderTests(unittest.TestCase):
         )
         return provider, mocked_client
 
+    def test_explicit_allow_list_helpers_freeze_provider_payload_shapes(self) -> None:
+        request = model_request()
+        provider = OpenAICompatibleModelProvider(
+            base_url=BASE_URL,
+            api_key=API_KEY,
+            model=MODEL,
+        )
+
+        self.assertEqual(
+            set(provider._history_payload(request.history[0]).keys()),
+            HISTORY_PAYLOAD_KEYS,
+        )
+        self.assertEqual(
+            set(provider._evidence_payload(request.evidence[0]).keys()),
+            EVIDENCE_PAYLOAD_KEYS,
+        )
+
+        body = provider._request_body(request)
+        user_payload = json.loads(body["messages"][1]["content"])
+        self.assertEqual(set(user_payload.keys()), USER_PAYLOAD_KEYS)
+        self.assertTrue(
+            all(set(row.keys()) == HISTORY_PAYLOAD_KEYS for row in user_payload["history"])
+        )
+        self.assertTrue(
+            all(set(row.keys()) == EVIDENCE_PAYLOAD_KEYS for row in user_payload["evidence"])
+        )
+
     def test_posts_bounded_textbook_only_request_and_parses_strict_response(self) -> None:
         captured: list[httpx.Request] = []
 
@@ -139,6 +197,7 @@ class OpenAICompatibleModelProviderTests(unittest.TestCase):
         self.assertIn("evidence_id", body["messages"][0]["content"])
 
         user_payload = json.loads(body["messages"][1]["content"])
+        self.assertEqual(set(user_payload.keys()), USER_PAYLOAD_KEYS)
         self.assertEqual(user_payload["question"], "p 和 q 满足什么关系？")
         self.assertEqual(user_payload["section_id"], "ch01_s01")
         self.assertEqual(len(user_payload["history"]), 2)
