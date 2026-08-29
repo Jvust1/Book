@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://book.local/schemas/concept-graph/v1/concept-graph.schema.json",
+  "title": "Book Concept Graph v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "concepts",
+    "alignments"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "concept_graph_v1"
+    },
+    "concepts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/concept"
+      }
+    },
+    "alignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/alignment"
+      }
+    }
+  },
+  "$defs": {
+    "nonBlankString": {
+      "type": "string",
+      "pattern": ".*\\S.*"
+    },
+    "concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept_id",
+        "title",
+        "revision",
+        "provenance"
+      ],
+      "properties": {
+        "concept_id": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "title": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonBlankString"
+          }
+        },
+        "prerequisite_concept_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonBlankString"
+          }
+        },
+        "revision": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "provenance": {
+          "$ref": "#/$defs/nonBlankString"
+        }
+      }
+    },
+    "alignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "alignment_id",
+        "concept_id",
+        "book_version_id",
+        "relation",
+        "revision",
+        "provenance"
+      ],
+      "properties": {
+        "alignment_id": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "concept_id": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "book_version_id": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "section_id": {
+          "anyOf": [
+            {"$ref": "#/$defs/nonBlankString"},
+            {"type": "null"}
+          ]
+        },
+        "source_kind": {
+          "anyOf": [
+            {"$ref": "#/$defs/nonBlankString"},
+            {"type": "null"}
+          ]
+        },
+        "source_id": {
+          "anyOf": [
+            {"$ref": "#/$defs/nonBlankString"},
+            {"type": "null"}
+          ]
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "contrasts",
+            "defines",
+            "examples",
+            "exercises",
+            "explains",
+            "extends",
+            "proves"
+          ]
+        },
+        "confidence": {
+          "type": ["number", "null"],
+          "minimum": 0.0,
+          "maximum": 1.0
+        },
+        "revision": {
+          "$ref": "#/$defs/nonBlankString"
+        },
+        "provenance": {
+          "$ref": "#/$defs/nonBlankString"
+        }
+      }
+    }
+  }
+}
