@@ -5,6 +5,7 @@ import copy
 import json
 from pathlib import Path
 import unittest
+from unittest import mock
 
 import evaluation.h4a_runtime as h4a_runtime
 from evaluation.h4a_runtime import (
@@ -463,6 +464,134 @@ class H4aReportTests(unittest.TestCase):
         second = canonical(self._report())
         self.assertEqual(first, second)
         self.assertEqual(json.loads(first), json.loads(second))
+
+
+class H4aGoldenEvaluationTests(unittest.TestCase):
+    def _api(self, name: str):
+        value = getattr(h4a_runtime, name, None)
+        self.assertIsNotNone(value, f"evaluation.h4a_runtime.{name} must exist")
+        return value
+
+    def _evaluate(self):
+        evaluate = self._api("evaluate_h4a_course")
+        return evaluate(ROOT, GOLDEN_QUERY_SET_PATH)
+
+    @staticmethod
+    def _source_signatures(report: dict[str, object]) -> list[object]:
+        signatures: list[object] = []
+        for query_result in report["queries"]:
+            profile_signatures = []
+            for profile in query_result["profiles"]:
+                profile_signatures.append(
+                    (
+                        profile["profile_id"],
+                        tuple(
+                            (
+                                source["source_kind"],
+                                source["source_id"],
+                                source["rank"],
+                            )
+                            for source in profile["ranked_sources"]
+                        ),
+                    )
+                )
+            signatures.append((query_result["query_id"], tuple(profile_signatures)))
+        return signatures
+
+    def test_golden_evaluation_uses_h2_exact_baseline(self) -> None:
+        evaluate = self._api("evaluate_h4a_course")
+        engine_type = getattr(h4a_runtime, "RetrievalEngine", None)
+        self.assertIsNotNone(
+            engine_type,
+            "H4a evaluator must use the existing H2 RetrievalEngine import seam",
+        )
+        original_exact = engine_type.exact
+        with mock.patch.object(
+            engine_type,
+            "exact",
+            side_effect=original_exact,
+        ) as exact_spy:
+            report = evaluate(ROOT, GOLDEN_QUERY_SET_PATH)
+
+        exact_spy.assert_called_once()
+        self.assertEqual(
+            [profile["profile_id"] for profile in report["profiles"]],
+            ["exact_v1", "fts_unicode61_bm25_v1", "fts_trigram_bm25_v1"],
+        )
+
+    def test_golden_evaluation_runs_both_shadow_profiles(self) -> None:
+        report = self._evaluate()
+        self.assertEqual(report["dataset"]["dataset_id"], "functional_analysis_h4a_v1")
+        self.assertEqual(report["course"]["course_id"], "functional_analysis_course")
+        self.assertEqual(
+            report["course"]["book_id"],
+            "stein_shakarchi_functional_analysis_2011",
+        )
+        self.assertEqual(
+            [profile["profile_id"] for profile in report["profiles"]],
+            ["exact_v1", "fts_unicode61_bm25_v1", "fts_trigram_bm25_v1"],
+        )
+        for query_result in report["queries"]:
+            self.assertEqual(
+                [profile["profile_id"] for profile in query_result["profiles"]],
+                ["exact_v1", "fts_unicode61_bm25_v1", "fts_trigram_bm25_v1"],
+            )
+
+    def test_all_shadow_hits_have_valid_provenance(self) -> None:
+        report = self._evaluate()
+        course = CourseRuntime.open(GOLDEN_COURSE_PATH)
+        resolver = SourceResolver(course)
+
+        for query_result in report["queries"]:
+            for profile in query_result["profiles"]:
+                if not profile["profile_id"].startswith("fts_"):
+                    continue
+                for source in profile["ranked_sources"]:
+                    with self.subTest(
+                        query_id=query_result["query_id"],
+                        profile_id=profile["profile_id"],
+                        source_id=source["source_id"],
+                    ):
+                        resolved = resolver.resolve(
+                            source["source_kind"],
+                            source["source_id"],
+                        )
+                        self.assertEqual(resolved.course_id, course.course_id)
+                        self.assertEqual(resolved.book_id, course.main_book().book_id)
+                        self.assertEqual(resolved.kind, source["source_kind"])
+                        self.assertEqual(resolved.source_id, source["source_id"])
+
+    def test_section_scoped_queries_do_not_escape_scope(self) -> None:
+        report = self._evaluate()
+        course = CourseRuntime.open(GOLDEN_COURSE_PATH)
+        resolver = SourceResolver(course)
+
+        for query_result in report["queries"]:
+            section_id = query_result["section_id"]
+            if section_id is None:
+                continue
+            for profile in query_result["profiles"]:
+                for source in profile["ranked_sources"]:
+                    with self.subTest(
+                        query_id=query_result["query_id"],
+                        profile_id=profile["profile_id"],
+                        source_id=source["source_id"],
+                    ):
+                        resolved = resolver.resolve(
+                            source["source_kind"],
+                            source["source_id"],
+                        )
+                        self.assertEqual(resolved.section_id, section_id)
+
+    def test_repeat_run_source_signatures_are_identical(self) -> None:
+        first = self._evaluate()
+        second = self._evaluate()
+
+        self.assertEqual(
+            self._source_signatures(first),
+            self._source_signatures(second),
+        )
+        self.assertEqual(first["aggregates"], second["aggregates"])
 
 
 if __name__ == "__main__":
