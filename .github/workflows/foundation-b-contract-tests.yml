@@ -1,0 +1,52 @@
+name: Foundation B contract tests
+
+on:
+  push:
+    paths:
+      - "book_core/**"
+      - "schemas/concept-graph/**"
+      - "runtime/concept_validation.py"
+      - "tests/test_concept_graph_contract.py"
+      - "tests/test_concept_reference_validation.py"
+      - "tests/test_foundation_b_isolation.py"
+      - "tests/fixtures/concept-graph/**"
+      - ".github/workflows/foundation-b-contract-tests.yml"
+  pull_request:
+    paths:
+      - "book_core/**"
+      - "schemas/concept-graph/**"
+      - "runtime/concept_validation.py"
+      - "tests/test_concept_graph_contract.py"
+      - "tests/test_concept_reference_validation.py"
+      - "tests/test_foundation_b_isolation.py"
+      - "tests/fixtures/concept-graph/**"
+      - ".github/workflows/foundation-b-contract-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-b-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Compile Foundation B contract modules
+        run: |
+          python -m py_compile book_core/*.py
+          python -m py_compile runtime/concept_validation.py
+
+      - name: Run Foundation B focused contract tests
+        run: >-
+          python -m unittest
+          tests.test_concept_graph_contract
+          tests.test_concept_reference_validation
+          tests.test_foundation_b_isolation
+          -v
