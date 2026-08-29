@@ -15,6 +15,7 @@ on:
       - "tests/test_shadow_fts.py"
       - "tests/test_h4a_evaluation.py"
       - "tests/test_h4a_cli.py"
+      - "tests/test_h4a_isolation.py"
       - "tests/fixtures/concept-graph/**"
       - ".github/workflows/foundation-b-contract-tests.yml"
   pull_request:
@@ -31,6 +32,7 @@ on:
       - "tests/test_shadow_fts.py"
       - "tests/test_h4a_evaluation.py"
       - "tests/test_h4a_cli.py"
+      - "tests/test_h4a_isolation.py"
       - "tests/fixtures/concept-graph/**"
       - ".github/workflows/foundation-b-contract-tests.yml"
 
@@ -67,6 +69,7 @@ jobs:
           tests.test_shadow_fts
           tests.test_h4a_evaluation
           tests.test_h4a_cli
+          tests.test_h4a_isolation
           -v
 
       - name: Run Golden H4a shadow retrieval evaluation
