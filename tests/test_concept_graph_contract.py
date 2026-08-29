@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+from pathlib import Path
 import unittest
 
 from book_core.concepts import (
@@ -13,6 +14,9 @@ from book_core.concepts import (
     parse_concept_graph,
 )
 
+
+ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_PATH = ROOT / "schemas" / "concept-graph" / "v1" / "concept-graph.schema.json"
 
 VALID = {
     "schema_version": "concept_graph_v1",
@@ -168,6 +172,21 @@ class ConceptGraphContractTests(unittest.TestCase):
         cycles = find_prerequisite_cycles(graph)
 
         self.assertEqual(cycles, (("concept.holder", "concept.lp-space"),))
+
+    def test_published_schema_mirrors_version_relations_and_strict_fields(self) -> None:
+        schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            schema["properties"]["schema_version"]["const"],
+            CONCEPT_GRAPH_SCHEMA_VERSION,
+        )
+        self.assertEqual(
+            set(schema["$defs"]["alignment"]["properties"]["relation"]["enum"]),
+            set(ALIGNMENT_RELATIONS),
+        )
+        self.assertFalse(schema["additionalProperties"])
+        self.assertFalse(schema["$defs"]["concept"]["additionalProperties"])
+        self.assertFalse(schema["$defs"]["alignment"]["additionalProperties"])
 
 
 if __name__ == "__main__":
