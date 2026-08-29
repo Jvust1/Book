@@ -124,7 +124,7 @@ The key boundary rule is:
 
 This avoids prematurely changing H2 just to make an experiment fit a production type.
 
-## 5. Shadow corpus authority
+## 5. Shadow corpus authority and candidate eligibility
 
 The H4a corpus is derived data. It is never authority.
 
@@ -135,7 +135,16 @@ Authoritative inputs remain:
 - the canonical primary Book `search_index.jsonl`;
 - `SourceResolver` and current internal provenance helpers.
 
-Each indexable row MUST resolve to a canonical source before it may enter the shadow index. Rows that cannot prove source identity fail the shadow build closed.
+The shadow builder MUST preserve the existing Exact candidate boundary rather than inventing a broader corpus.
+
+Candidate eligibility is deterministic:
+
+1. A search-index row with no `id`/`unit_id` is non-indexable and is skipped.
+2. A row whose source ID is not a supported current canonical object/figure source is non-indexable and is skipped, matching the existing Exact candidate boundary rather than turning unrelated rows into an error.
+3. A row that claims to identify an indexable canonical object/figure but cannot be resolved consistently, has a book/source identity mismatch, or cannot prove canonical provenance fails the shadow build closed.
+4. Only rows that pass the source trust check may receive a shadow `rowid` and enter FTS5.
+
+The builder MUST NOT silently repair malformed canonical data merely to increase FTS coverage.
 
 The shadow builder MUST NOT mutate, normalize in place, rewrite, repair, or promote canonical book files.
 
@@ -180,7 +189,7 @@ shadow_documents
 - snippet TEXT
 ```
 
-`rowid` assignment MUST be deterministic and follow canonical search-index order after non-indexable/unresolvable rows are rejected according to the same source trust rules.
+`rowid` assignment MUST be deterministic and follow canonical search-index order among eligible rows.
 
 The metadata table is the only place where rowid-to-source mapping is interpreted. FTS internal shadow tables such as `_data`, `_idx`, `_docsize`, `_content`, and `_config` are SQLite implementation detail and never provenance authority.
 
@@ -210,7 +219,7 @@ fts_trigram_bm25_v1
 
 H4a deliberately avoids weight tuning. Weight tuning after seeing the evaluation set would make the first comparison less trustworthy and belongs to a later versioned experiment if needed.
 
-### 6.3 Indexed text
+### 6.3 Indexed text projection
 
 The initial H4a profiles index the same bounded textual fields:
 
@@ -223,6 +232,14 @@ number
 object_type
 snippet
 ```
+
+Projection from a canonical search-index row is deterministic:
+
+- scalar text fields use their existing canonical text value after the same non-semantic whitespace trimming used by current Runtime helpers;
+- missing/`None` scalar values become the empty string for FTS storage;
+- `initial_concepts_zh`, when it is a list, is projected to `concepts_zh` by preserving source list order and joining non-empty string members with `\n`;
+- no sorting, stemming, synonym injection, translation, AI expansion, or query-derived text is added during H4a;
+- `snippet` uses the same bounded canonical projection logic already used by current search diagnostics, not generated prose.
 
 Canonical source identity fields are not treated as relevance text. `source_kind`, `source_id`, and `section_id` remain metadata/filter/provenance fields.
 
@@ -316,7 +333,9 @@ The first dataset SHOULD contain 24–30 queries with minimum category coverage:
 | Section-scoped queries | 3 |
 | Deliberate zero-result negatives | 2 |
 
-One query may have multiple relevant canonical sources where the source material genuinely supports that judgment.
+One positive query may have multiple relevant canonical sources where the source material genuinely supports that judgment.
+
+For positive categories, `expected_sources` MUST contain at least one canonical source. For the deliberate zero-result negative category, `expected_sources` MUST be an empty list.
 
 ### 9.2 Ground-truth rule
 
@@ -337,32 +356,47 @@ Metrics are computed separately for:
 - Exact baseline;
 - `fts_unicode61_bm25_v1`;
 - `fts_trigram_bm25_v1`;
-- each query category;
-- overall aggregate.
+- each positive query category;
+- deliberate negative queries;
+- overall positive-query aggregate.
 
-Required metrics:
+### 10.1 Positive-query coverage / recall
 
-### 10.1 Coverage / recall
+For queries with one or more `expected_sources`:
 
 - `hit_at_1`: whether at least one expected source appears at rank 1.
 - `hit_at_5`: whether at least one expected source appears in top 5.
 - `hit_at_10`: whether at least one expected source appears in top 10.
 - `recall_at_10`: expected sources retrieved in top 10 / expected sources.
 
-### 10.2 Ranking
+Aggregate `hit_at_k` values are reported as rates across positive queries.
+
+### 10.2 Positive-query ranking
 
 - `reciprocal_rank`: `1 / rank` of the first expected source, else 0.
-- `MRR`: arithmetic mean of per-query reciprocal rank.
+- `MRR`: arithmetic mean of per-query reciprocal rank over positive queries only.
 
 ### 10.3 Comparative recovery/loss
 
-For each profile:
+For each positive query/profile:
 
 - `fts_only_recovery_at_10`: expected source appears in FTS top 10 but not Exact top 10.
 - `exact_only_recovery_at_10`: expected source appears in Exact top 10 but not FTS top 10.
 - query-level delta table showing exact rank versus FTS rank for each expected source.
 
-### 10.4 Correctness invariants
+### 10.4 Negative-query behavior
+
+Negative queries are not included in Recall/MRR denominators.
+
+For each deliberate zero-result negative query/profile, report:
+
+- `negative_clean_at_10`: true when the retriever returns zero top-10 candidates;
+- `unexpected_hit_count_at_10`: number of returned candidates up to 10;
+- returned canonical source identities for diagnosis when the count is non-zero.
+
+These metrics reveal broad false-positive behavior without inventing a recall denominator of zero.
+
+### 10.5 Correctness invariants
 
 These are hard correctness gates:
 
@@ -408,7 +442,8 @@ profile definitions
 sqlite version / FTS5 availability
 per-query Exact results
 per-query shadow results
-per-query relevance metrics
+positive-query relevance metrics
+negative-query cleanliness metrics
 aggregate metrics by profile/category
 provenance gate
 section-scope gate
@@ -436,14 +471,16 @@ Detect capability by attempting to create the required FTS5 virtual table in an 
 
 ### 13.2 Corpus/provenance failure
 
-If an index row cannot resolve to a canonical source, book identity mismatches, or source scope is inconsistent:
+If an eligible index row cannot resolve to a canonical source, book identity mismatches, or source scope is inconsistent:
 
 - fail shadow index construction closed;
 - do not emit metrics from a partially trusted index.
 
+Rows that are explicitly non-indexable under the existing Exact candidate boundary are skipped, not misreported as provenance failures.
+
 ### 13.3 Query/dataset failure
 
-Malformed dataset shape, duplicate query IDs, missing expected sources, invalid section IDs, blank queries, invalid limits, or non-finite metric values are hard evaluation errors.
+Malformed dataset shape, duplicate query IDs, a positive query with no expected sources, a negative query with non-empty expected sources, a missing/unresolvable expected source, invalid section IDs, blank queries, invalid limits, or non-finite metric values are hard evaluation errors.
 
 ### 13.4 Profile-specific no-match
 
@@ -460,6 +497,8 @@ At minimum:
 - FTS5 capability detection;
 - safe query quoting / operator-neutralization;
 - parameterized MATCH execution;
+- existing-candidate-boundary skip behavior;
+- deterministic text projection, including ordered `initial_concepts_zh` joining;
 - deterministic rowid assignment;
 - unicode61 English/Unicode behavior fixture;
 - trigram substring behavior fixture;
@@ -467,9 +506,11 @@ At minimum:
 - deterministic BM25 ordering with rowid tie-break;
 - section filtering;
 - canonical provenance re-validation;
-- mismatched/unresolvable source fail-closed;
+- mismatched/unresolvable eligible source fail-closed;
 - malformed dataset fail-closed;
 - duplicate query IDs fail-closed;
+- positive/negative expected-source shape validation;
+- negative-query metrics exclude Recall/MRR denominators;
 - zero-result is valid data;
 - non-finite score rejection if encountered;
 - stable report schema;
@@ -480,7 +521,8 @@ At minimum:
 - committed v1 dataset validates independently;
 - Exact baseline results are obtained through `RetrievalEngine.exact`;
 - both FTS profiles execute over the Golden Course;
-- query/category metrics are produced;
+- positive query/category metrics are produced;
+- negative-query cleanliness diagnostics are produced;
 - all shadow hits prove canonical provenance;
 - section-scoped queries never escape scope.
 
@@ -524,19 +566,21 @@ H4a is ready for review only when all of the following are true on one exact fin
 
 1. The v1 evaluation dataset is versioned and independently validated.
 2. Dataset relevance labels are canonical-source-derived, not retriever-generated.
-3. Both unicode61 and trigram shadow profiles build from canonical inputs without canonical writes.
-4. Both profiles use safe parameterized FTS query compilation.
-5. BM25 values remain evaluation-only and are not mixed with Exact scores.
-6. All shadow hits pass canonical provenance checks.
-7. All section-scoped shadow hits pass scope checks.
-8. Repeat runs preserve ordered source signatures in the same environment.
-9. Exact baseline uses the H2 `RetrievalEngine.exact` boundary.
-10. Public Search/QA ranking, score, order, DTO, and error behavior remain Exact-only and regression-clean.
-11. `books/functional-analysis/**` is unchanged.
-12. The exact-head H4a report contains query-level and aggregate metrics for Exact, unicode61, and trigram.
-13. Required Runtime/App/Web/Chromium checks pass on the exact final HEAD.
-14. External source-study provenance is recorded with fixed upstream commits/licenses; any required Drive source snapshots are archived or explicitly tracked as non-blocking `pending_sync` before the H4a checkpoint is declared fully reconciled.
-15. No code path or report field automatically activates B4b.
+3. Positive and deliberate negative query semantics are validated deterministically.
+4. Both unicode61 and trigram shadow profiles build from canonical inputs without canonical writes.
+5. Candidate eligibility matches the existing Exact source boundary; unsupported/non-indexable rows are skipped while inconsistent eligible sources fail closed.
+6. Both profiles use safe parameterized FTS query compilation.
+7. BM25 values remain evaluation-only and are not mixed with Exact scores.
+8. All shadow hits pass canonical provenance checks.
+9. All section-scoped shadow hits pass scope checks.
+10. Repeat runs preserve ordered source signatures in the same environment.
+11. Exact baseline uses the H2 `RetrievalEngine.exact` boundary.
+12. Public Search/QA ranking, score, order, DTO, and error behavior remain Exact-only and regression-clean.
+13. `books/functional-analysis/**` is unchanged.
+14. The exact-head H4a report contains positive-query and negative-query evidence for Exact, unicode61, and trigram.
+15. Required Runtime/App/Web/Chromium checks pass on the exact final HEAD.
+16. External source-study provenance is recorded with fixed upstream commits/licenses; any required Drive source snapshots are archived or explicitly tracked as non-blocking `pending_sync` before the H4a checkpoint is declared fully reconciled.
+17. No code path or report field automatically activates B4b.
 
 ## 17. Evidence interpretation after H4a
 
@@ -609,6 +653,6 @@ The implementation plan MUST verify the repository's existing patterns before fr
 
 ## 20. Final design decision
 
-H4a will use an **offline, ephemeral, shadow-only SQLite FTS5 evaluator** with two fixed tokenizer profiles (`unicode61` and `trigram`) and built-in unweighted BM25. It will compare those profiles to the existing H2 Exact baseline using a pre-authored deterministic Golden Course dataset, canonical source identities, section-scope checks, Recall@10/MRR/coverage/recovery metrics, and exact-HEAD regression evidence.
+H4a will use an **offline, ephemeral, shadow-only SQLite FTS5 evaluator** with two fixed tokenizer profiles (`unicode61` and `trigram`) and built-in unweighted BM25. It will compare those profiles to the existing H2 Exact baseline using a pre-authored deterministic Golden Course dataset, canonical source identities, section-scope checks, positive-query Recall@10/MRR/coverage/recovery metrics, explicit negative-query cleanliness metrics, and exact-HEAD regression evidence.
 
 The experiment is intentionally unable to change public Search/QA behavior. Its purpose is to produce trustworthy evidence for or against a later B4b proposal, not to smuggle B4b activation into H4a.
