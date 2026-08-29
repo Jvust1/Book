@@ -5,12 +5,14 @@ on:
     paths:
       - "book_core/**"
       - "runtime/**"
+      - "evaluation/**"
       - "courses/**"
       - "library/**"
       - "course_package/**"
       - "schemas/course-package/**"
       - "tools/compile_course_package.py"
       - "tools/validate_course_package.py"
+      - "tools/evaluate_h4a_retrieval.py"
       - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
@@ -29,12 +31,14 @@ on:
     paths:
       - "book_core/**"
       - "runtime/**"
+      - "evaluation/**"
       - "courses/**"
       - "library/**"
       - "course_package/**"
       - "schemas/course-package/**"
       - "tools/compile_course_package.py"
       - "tools/validate_course_package.py"
+      - "tools/evaluate_h4a_retrieval.py"
       - "tools/check_architecture_fitness.py"
       - "tools/check_runtime_readiness.py"
       - "tools/rebuild_runtime_artifacts.py"
@@ -83,6 +87,9 @@ jobs:
           python -m py_compile runtime/qa_provider.py
           python -m py_compile runtime/qa_evidence.py
           python -m py_compile runtime/qa_runtime.py
+          python -m py_compile runtime/shadow_fts.py
+          python -m py_compile evaluation/*.py
+          python -m py_compile tools/evaluate_h4a_retrieval.py
           python -m py_compile tools/check_runtime_readiness.py
           python -m py_compile tools/rebuild_runtime_artifacts.py
           python -m py_compile tools/recover_functional_analysis_search.py
@@ -97,6 +104,12 @@ jobs:
 
       - name: Run Phase 1F search and QA contract tests
         run: python -m unittest tests.test_search_runtime tests.test_retrieval tests.test_qa_evidence tests.test_qa_provider tests.test_qa_runtime -v
+
+      - name: Run H4a shadow retrieval evaluation tests
+        run: python -m unittest tests.test_shadow_fts tests.test_h4a_evaluation tests.test_h4a_cli -v
+
+      - name: Run Golden H4a shadow retrieval evaluation
+        run: python tools/evaluate_h4a_retrieval.py
 
       - name: Run remaining runtime regression tests
         run: python -m unittest tests.test_book_identity tests.test_course_runtime_identity tests.test_source_identity tests.test_runtime_provenance tests.test_book_runtime tests.test_course_runtime tests.test_library_runtime tests.test_section_learning_runtime tests.test_source_resolver tests.test_functional_analysis_page_map tests.test_continuation_integrity tests.test_runtime_object_merge tests.test_functional_analysis_identity_normalizer tests.test_functional_analysis_figure_normalizer -v

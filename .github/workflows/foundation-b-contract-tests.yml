@@ -6,9 +6,15 @@ on:
       - "book_core/**"
       - "schemas/concept-graph/**"
       - "runtime/concept_validation.py"
+      - "runtime/shadow_fts.py"
+      - "evaluation/**"
+      - "tools/evaluate_h4a_retrieval.py"
       - "tests/test_concept_graph_contract.py"
       - "tests/test_concept_reference_validation.py"
       - "tests/test_foundation_b_isolation.py"
+      - "tests/test_shadow_fts.py"
+      - "tests/test_h4a_evaluation.py"
+      - "tests/test_h4a_cli.py"
       - "tests/fixtures/concept-graph/**"
       - ".github/workflows/foundation-b-contract-tests.yml"
   pull_request:
@@ -16,9 +22,15 @@ on:
       - "book_core/**"
       - "schemas/concept-graph/**"
       - "runtime/concept_validation.py"
+      - "runtime/shadow_fts.py"
+      - "evaluation/**"
+      - "tools/evaluate_h4a_retrieval.py"
       - "tests/test_concept_graph_contract.py"
       - "tests/test_concept_reference_validation.py"
       - "tests/test_foundation_b_isolation.py"
+      - "tests/test_shadow_fts.py"
+      - "tests/test_h4a_evaluation.py"
+      - "tests/test_h4a_cli.py"
       - "tests/fixtures/concept-graph/**"
       - ".github/workflows/foundation-b-contract-tests.yml"
 
@@ -42,6 +54,9 @@ jobs:
         run: |
           python -m py_compile book_core/*.py
           python -m py_compile runtime/concept_validation.py
+          python -m py_compile runtime/shadow_fts.py
+          python -m py_compile evaluation/*.py
+          python -m py_compile tools/evaluate_h4a_retrieval.py
 
       - name: Run Foundation B focused contract tests
         run: >-
@@ -49,4 +64,10 @@ jobs:
           tests.test_concept_graph_contract
           tests.test_concept_reference_validation
           tests.test_foundation_b_isolation
+          tests.test_shadow_fts
+          tests.test_h4a_evaluation
+          tests.test_h4a_cli
           -v
+
+      - name: Run Golden H4a shadow retrieval evaluation
+        run: python tools/evaluate_h4a_retrieval.py
