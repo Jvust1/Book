@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from collections import Counter
 import copy
 import json
+from pathlib import Path
 import unittest
 
 from evaluation.h4a_runtime import (
@@ -11,7 +13,24 @@ from evaluation.h4a_runtime import (
     parse_h4a_query_set,
     query_set_sha256,
 )
+from runtime.course_runtime import CourseRuntime
+from runtime.source_resolver import SourceResolver
 
+
+ROOT = Path(__file__).resolve().parents[1]
+GOLDEN_QUERY_SET_PATH = (
+    ROOT / "evaluation" / "h4a" / "functional_analysis_queries.v1.json"
+)
+GOLDEN_COURSE_PATH = ROOT / "courses" / "functional-analysis"
+CATEGORY_MINIMUMS = {
+    "english_exact": 4,
+    "english_partial": 4,
+    "chinese_complete": 4,
+    "chinese_partial": 4,
+    "formula_symbol": 4,
+    "section_scoped": 3,
+    "negative_zero_result": 2,
+}
 
 VALID = {
     "schema_version": "h4a_query_set_v1",
@@ -139,6 +158,51 @@ class H4aQuerySetValidationTests(unittest.TestCase):
             canonical_query_set_json(backward),
         )
         self.assertEqual(query_set_sha256(forward), query_set_sha256(backward))
+
+
+class H4aGoldenDatasetTests(unittest.TestCase):
+    def test_functional_analysis_v1_dataset_has_required_category_coverage(self) -> None:
+        raw = json.loads(GOLDEN_QUERY_SET_PATH.read_text(encoding="utf-8"))
+        query_set = parse_h4a_query_set(raw)
+
+        self.assertEqual(query_set.course_id, "functional_analysis_course")
+        self.assertEqual(query_set.dataset_id, "functional_analysis_h4a_v1")
+        self.assertGreaterEqual(len(query_set.queries), 24)
+        self.assertLessEqual(len(query_set.queries), 30)
+
+        counts = Counter(query.category for query in query_set.queries)
+        for category, minimum in CATEGORY_MINIMUMS.items():
+            with self.subTest(category=category):
+                self.assertGreaterEqual(counts[category], minimum)
+
+        course = CourseRuntime.open(GOLDEN_COURSE_PATH)
+        self.assertEqual(course.course_id, "functional_analysis_course")
+        self.assertEqual(
+            course.main_book().book_id,
+            "stein_shakarchi_functional_analysis_2011",
+        )
+        resolver = SourceResolver(course)
+
+        for query in query_set.queries:
+            if query.category == "negative_zero_result":
+                continue
+            if query.category == "section_scoped":
+                self.assertIsNotNone(query.section_id)
+
+            for expected in query.expected_sources:
+                with self.subTest(
+                    query_id=query.query_id,
+                    source_kind=expected.source_kind,
+                    source_id=expected.source_id,
+                ):
+                    resolved = resolver.resolve(
+                        expected.source_kind,
+                        expected.source_id,
+                    )
+                    self.assertEqual(resolved.source_id, expected.source_id)
+                    self.assertEqual(resolved.kind, expected.source_kind)
+                    if query.category == "section_scoped":
+                        self.assertEqual(resolved.section_id, query.section_id)
 
 
 if __name__ == "__main__":
