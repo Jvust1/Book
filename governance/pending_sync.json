@@ -38,6 +38,27 @@
       "reason": "Foundation A PR #13 merged after the original long-form narratives were authored. H0 through H3a subsequently also merged before the narrative reconciliation branch was integrated.",
       "resolution": "PR #17 reconciles the long-form Foundation A wording, records the approved H0 -> H1 -> H2 -> H3a -> H4a -> Phase 1H dependency exception, advances current machine/handoff/evaluation state through merged H3a, and preserves historical evidence. This item becomes resolved when PR #17 is integrated to main.",
       "blocks_next_step": false
+    },
+    {
+      "pending_id": "h4a_external_reference_source_snapshots_2026_08_29",
+      "blocking": false,
+      "status": "PENDING",
+      "scope": "Book/00_Project/External_References/Snapshots",
+      "reason": "H4a entered real source-level study of sqlite-utils and Datasette at fixed commits; exact source snapshots are required by the all-project source-snapshot policy but are not yet archived through the available connector path.",
+      "references": [
+        {
+          "repository": "simonw/sqlite-utils",
+          "commit": "56dd09702fdb9e899f577ffd51693c1f2176cb08",
+          "license": "Apache-2.0"
+        },
+        {
+          "repository": "simonw/datasette",
+          "commit": "0337fba234bf574629d56be631468ea060495fa0",
+          "license": "Apache-2.0"
+        }
+      ],
+      "resolution": "Archive exact-commit source ZIPs to the existing External_References/Snapshots area with SHA-256/read-back when a trusted Book-accessible transfer path is available; preserve prior snapshots and do not overwrite them.",
+      "blocks_next_step": false
     }
   ]
 }
