@@ -2,14 +2,15 @@
 
 更新时间：2026-08-29
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 已通过 PR #13 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 与 H0/H1/H2/H3a 均已通过独立 PR 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
 - 稳定集成分支：`main`
-- 当前阶段：`POST_FOUNDATION_A_TRANSITION`
-- 当前状态：`READY_FOR_NEXT_PHASE_DESIGN`
+- 当前阶段：`FOUNDATION_B_TRANSITION`
+- 当前状态：`H3A_MERGED_READY_FOR_H4A`
+- 当前 `main`：`f69166568839b7038b0f0472baefcee34299fa17`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
@@ -24,7 +25,11 @@
 - Foundation A merged PR：`#13`
 - Foundation A reviewed head：`f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
 - Foundation A merge commit：`82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
-- Runtime/App consumer migration：Foundation A 明确不在范围内
+- H0 neutral Book identity：PR `#18`，reviewed head `56c289ccdb5bd692efcbd642dfd9267278f5e5af`，merge `3dcc600c2c8a39e1ffc41c07fbf290adfba5035c`
+- H1 internal source provenance：PR `#19`，reviewed head `a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2`，merge `7e54e87b9674455e9f3d275016313f6c9e2487ac`
+- H2 Exact-only shared Retrieval seam：PR `#20`，reviewed head `66ac966c5dfe59ebeea82b168b2ee67fc85f9474`，merge `410cede92bcc0783e4fca9b02faec79e5fe77112`
+- H3a deterministic Concept graph contract：PR `#21`，reviewed head `1ed4fc6574417b56b4342ae639f81a69dd842c6b`，merge `f69166568839b7038b0f0472baefcee34299fa17`
+- Runtime/App consumer migration：Foundation A 明确不在范围内；H0–H3a 也未做公开多教材迁移
 
 当前跨阶段正式架构文档：
 
@@ -33,18 +38,18 @@
 - `docs/DEVELOPMENT_STRATEGY.md`
 - `docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`
 
-### 已批准的下一依赖顺序（2026-08-29）
+### 已批准依赖顺序与当前进度（2026-08-29）
 
 ```text
-H0 neutral Book identity
-→ H1 internal source provenance
-→ H2 Exact-only shared Retrieval seam
-→ H3a Concept/ConceptAlignment contract + reference validation
-→ H4a shadow FTS5/BM25 evaluation
-→ Phase 1H user-visible slices
+H0 neutral Book identity                         COMPLETE_MERGED
+→ H1 internal source provenance                  COMPLETE_MERGED
+→ H2 Exact-only shared Retrieval seam            COMPLETE_MERGED
+→ H3a Concept/ConceptAlignment contract          COMPLETE_MERGED
+→ H4a shadow FTS5/BM25 evaluation                NEXT
+→ Phase 1H user-visible slices                   AFTER_H4A
 ```
 
-这是对历史 Roadmap 执行顺序的已批准依赖例外，不代表上述阶段已经实现。`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍需以后分别重新设计批准。
+这是对历史 Roadmap 执行顺序的已批准依赖例外，不追溯改写历史路线图。`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍需以后分别重新设计批准。H4a 本身也不改变 public Search 的 Exact-only 行为。
 
 ## 2. 当前教材 / Runtime 基线
 
@@ -62,7 +67,7 @@ final printed page 423
 audit PASS 20 / WARN 1 / FAIL 0
 ```
 
-Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态、生成包输出保持单向边界。
+Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态、生成包输出保持单向边界。H0–H3a 同样没有重写 canonical 教材事实。
 
 这本教材已经被 Foundation A 固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord 及后续能力的自动回归基准。
 
@@ -143,6 +148,14 @@ Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改
 - FAST / PR FULL / manual HEAVY 三层 CI 已接线
 - App 仍消费既有 Runtime；Foundation A 未迁移 Runtime/App consumer
 
+### Foundation B transition — H0–H3a
+
+- H0：neutral `BookIdentity` 与 canonical role owner，保持 legacy product behavior
+- H1：内部 `SourceIdentity` / provenance seam，冻结公开 Search/Source/QA DTO 与浏览器 persistence shapes
+- H2：Search 与 QA evidence candidate retrieval 共用 internal Exact-only Retrieval seam，保持原排名/分数/顺序/错误语义
+- H3a：纯 stdlib inert Concept/ConceptAlignment/ConceptGraph v1 contract、JSON Schema、确定性 canonical JSON / cycle diagnostics、repository-bound reference validation
+- H3a source-bearing non-main alignment 仍 fail closed；没有真实 Concept dataset，也没有 Search/QA/App/StudyRecord 激活
+
 ## 4. Phase 1G API / storage contract
 
 当前 StudyRecord 产品接口：
@@ -222,6 +235,25 @@ real Chromium                 11 / 11 PASS
 `course-package-heavy.yml` 已定义为 `workflow_dispatch` 手动门，采用 `/tmp` 隔离副本进行重建/恢复，再对 canonical tree 做只读 readiness / Golden / fitness 验证；没有实际手工运行记录时不得声称 HEAVY 已通过。
 
 从 Foundation A 起点 `a99d4638f959e04e54d91efe0ee0dd9ac50488a6` 到 Task 9 implementation HEAD 的差异审计未出现 `app/**` 源码变更，也未出现 `books/functional-analysis/**` canonical 教材变更。
+
+### H0–H3a 集成证据
+
+```text
+H0  PR #18  head 56c289cc...  merge 3dcc600c...
+    Course Package FAST #22 / Runtime #185 / Book App UI #241 PASS
+
+H1  PR #19  head a225f899...  merge 7e54e87b...
+    Course Package FAST #38 / Runtime #209 / Book App UI #271 PASS
+
+H2  PR #20  head 66ac966c...  merge 410cede9...
+    Runtime #220 / Book App UI #287 PASS
+
+H3a PR #21  head 1ed4fc65...  merge f6916656...
+    Course Package FAST #45 / Runtime #236 / Foundation B #8 / Book App UI #303 PASS
+    Python 3.11 / 3.12 / 3.13, App API, Web tests/typecheck/build, real Chromium PASS
+```
+
+H3a 独立复审曾发现两个 blocker；RED checkpoint `2bc7fb6b215b618298e6d860450087a7ef4c67af` 在 Foundation B contract #4 精确失败，最终 HEAD `1ed4fc6574417b56b4342ae639f81a69dd842c6b` 修复后全绿并通过第二轮 review。合并后的 `main` 为 `f69166568839b7038b0f0472baefcee34299fa17`。
 
 ## 6. 当前确认的课程产品模型
 
@@ -336,13 +368,15 @@ source-aware reranking
 provenance-preserving hits
 ```
 
-Search 与 QA 共用 Retrieval Engine；Meeting retrieval 与 Learning retrieval 授权和索引隔离。
+Search 与 QA 已通过 H2 共用内部 Exact-only Retrieval Engine seam；FTS5/BM25 等扩展尚未公开激活。Meeting retrieval 与 Learning retrieval 授权和索引隔离。
 
 ## 10. Concept Graph / Concept 360
 
 Chapter/Section 是阅读骨架，Concept Graph 是知识依赖骨架。
 
-Concept 连接主教材、辅助教材、prerequisites、课堂、ExamPoint、Questions/Mistakes 与 Mastery。Concept 360 View 最终展示一个知识点从教材到个人学习状态的完整生命周期，但每条内容保持独立 provenance。
+H3a 已完成 inert `Concept / ConceptAlignment / ConceptGraph` v1 contract、Schema 与 repository reference validation；当前没有真实生产 Concept dataset，也没有把 Concept 激活进 Search/QA/App/StudyRecord。
+
+Concept 最终连接主教材、辅助教材、prerequisites、课堂、ExamPoint、Questions/Mistakes 与 Mastery。Concept 360 View 最终展示一个知识点从教材到个人学习状态的完整生命周期，但每条内容保持独立 provenance。
 
 ## 11. 课堂录音与教材协同
 
@@ -390,10 +424,10 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 - 通用“上传任意教材 → 自动结构化 → validation → readiness → Runtime/Library 注册”的 Course Compiler 产品主链路
 - Course Package v2 / 后续 schema evolution 与 migration policy
-- 同 Course 多教材 Runtime consumer 与 ConceptAlignment
+- 同 Course 多教材 Runtime consumer activation 与真实 ConceptAlignment 数据集
 - Architecture Fitness 对 raw audio / transcript / Meeting / ExamPoint / Sync 等未来模块的完整集合
-- Unified Retrieval v1/扩展
-- Minimal Concept Graph / Concept 360
+- FTS5/BM25/semantic 等 Retrieval 扩展的公开激活；H2 仅完成 Exact seam，H4a shadow evaluation 尚未实现
+- 生产 Minimal Concept Graph dataset / Concept 360 UI；H3a 仅完成 inert contract/reference validation
 - Chapter Hub / 思维导图
 - ExamPoint / Exam Sprint / Exam Digital Twin
 - 录音 UI / VAD / ASR / LectureEvent
@@ -407,13 +441,13 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-执行已批准的依赖例外，但继续保持每阶段独立审查：
+H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。
 
-1. 先完成 post-Foundation-A governance reconciliation。
-2. 然后依次进入 H0 → H1 → H2 → H3a → H4a → Phase 1H。
-3. H0–H4a 期间 public Search 保持 Exact-only；H4a 仅做 shadow FTS5/BM25 evaluation。
+1. 先通过本治理 PR 把 post-H3a 状态对账到 `main`；具体 PR 合并仍需用户明确指向该 PR 授权。
+2. H4a 只做 shadow evaluation：构建/比较 FTS5/BM25 候选与现有 Exact baseline，不改变 public Search/QA 排名与返回行为。
+3. H4a 必须定义确定性 query/dataset、覆盖率/排名比较指标、provenance 校验、失败语义与 exact-HEAD regression evidence。
 4. 不修改 `books/functional-analysis/**` canonical 教材事实。
-5. 每个阶段使用非默认分支、TDD、reviewable PR、exact-HEAD verification；具体 PR 合并仍需用户对该 PR 的明确授权。
+5. 使用非默认分支、TDD、reviewable PR、exact-HEAD verification。
 6. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 不在本轮批准范围内。
 
 当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
