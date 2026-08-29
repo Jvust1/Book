@@ -85,7 +85,7 @@ class RuntimeProvenanceTests(unittest.TestCase):
     def test_collision_key_changes_when_book_version_changes(self) -> None:
         course = self._open_course()
         first = source_identity_for(course, "object", "thm_fixture")
-        course.main_book().structured_version = "v2"
+        course.main_book().completion["version"] = "v2"
         second = source_identity_for(course, "object", "thm_fixture")
 
         self.assertNotEqual(first.collision_key, second.collision_key)
