@@ -112,5 +112,5 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Complete this governance reconciliation through reviewable PR #17, then proceed to H4a shadow FTS5/BM25 evaluation while keeping public Search Exact-only. H3b, B4b, B5, and StudyRecord book-version migration remain separate human gates."
+  "next_step": "Proceed to H4a shadow FTS5/BM25 evaluation through the shared H2 Retrieval boundary while keeping public Search/QA Exact-only. Define deterministic evaluation data, ranking/coverage metrics, provenance checks, failure semantics, and exact-head evidence before any later activation proposal. H3b, B4b, B5, and StudyRecord book-version migration remain separate human gates."
 }
