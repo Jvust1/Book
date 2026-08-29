@@ -24,6 +24,16 @@ from tests.runtime_fixture_factory import (
 )
 
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _search_signature(hits: list[object]) -> list[tuple[int, int, str, str]]:
+    return [
+        (hit.rank, hit.score, hit.source_kind, hit.source_id)
+        for hit in hits
+    ]
+
+
 class RetrievalTests(unittest.TestCase):
     def _open_course(self) -> CourseRuntime:
         tempdir = tempfile.TemporaryDirectory()
@@ -83,10 +93,7 @@ class RetrievalTests(unittest.TestCase):
             RetrievalRequest("fixture", limit=10)
         )
 
-        self.assertEqual(
-            [(hit.rank, hit.score, hit.source_kind, hit.source_id) for hit in retrieval_hits],
-            [(hit.rank, hit.score, hit.source_kind, hit.source_id) for hit in search_hits],
-        )
+        self.assertEqual(_search_signature(retrieval_hits), _search_signature(search_hits))
         self.assertTrue(retrieval_hits)
         for hit in retrieval_hits:
             self.assertEqual(hit.identity.course_id, course.course_id)
@@ -98,10 +105,7 @@ class RetrievalTests(unittest.TestCase):
         course = self._open_course()
         expected = SearchRuntime.from_course(course).search("fixture", limit=10)
         actual = RetrievalEngine.exact(course).search("fixture", limit=10)
-        self.assertEqual(
-            [(hit.rank, hit.score, hit.source_kind, hit.source_id) for hit in actual],
-            [(hit.rank, hit.score, hit.source_kind, hit.source_id) for hit in expected],
-        )
+        self.assertEqual(_search_signature(actual), _search_signature(expected))
 
     def test_query_error_is_translated(self) -> None:
         retriever = CanonicalExactRetriever.from_course(self._open_course())
@@ -125,6 +129,33 @@ class RetrievalTests(unittest.TestCase):
         ):
             with self.assertRaises(RetrievalInvariantError):
                 retriever.search(RetrievalRequest("fixture"))
+
+
+class RealFunctionalAnalysisRetrievalEquivalenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.course = CourseRuntime.open(REPO_ROOT / "courses" / "functional-analysis")
+        cls.search = SearchRuntime.from_course(cls.course)
+        cls.retrieval = RetrievalEngine.exact(cls.course)
+
+    def test_golden_queries_match_exact_search_rank_score_and_identity(self) -> None:
+        queries = (
+            "Hölder",
+            "巴拿赫空间",
+            "1/p + 1/q = 1",
+            "definitely-no-such-text-92831",
+        )
+        for query in queries:
+            with self.subTest(query=query):
+                expected = self.search.search(query)
+                actual = self.retrieval.search(query)
+                self.assertEqual(_search_signature(actual), _search_signature(expected))
+
+    def test_section_scoped_golden_query_matches_exact_search(self) -> None:
+        query = "1/p + 1/q = 1"
+        expected = self.search.search(query, section_id="ch01_s01")
+        actual = self.retrieval.search(query, section_id="ch01_s01")
+        self.assertEqual(_search_signature(actual), _search_signature(expected))
 
 
 if __name__ == "__main__":
