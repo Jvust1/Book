@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import sqlite3
 from dataclasses import dataclass
 from pathlib import Path
@@ -38,7 +39,7 @@ class ShadowFtsInvariantError(ShadowFtsError):
 
 
 class ShadowFtsQueryError(ShadowFtsError):
-    """Reserved for H4a shadow query contract failures."""
+    """Raised when an H4a shadow query violates the closed query contract."""
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,17 @@ class ShadowDocument:
     formula: str
     concepts_zh: str
     snippet: str
+
+
+@dataclass(frozen=True)
+class ShadowHit:
+    profile_id: str
+    rank: int
+    bm25_score: float
+    identity: SourceIdentity
+    source_kind: str
+    source_id: str
+    section_id: str | None
 
 
 class ShadowFtsIndex:
@@ -94,6 +106,99 @@ class ShadowFtsIndex:
     def close(self) -> None:
         self.connection.close()
 
+    def search(
+        self,
+        profile_id: str,
+        query: str,
+        *,
+        limit: int = 30,
+        section_id: str | None = None,
+    ) -> list[ShadowHit]:
+        table_name = _profile_table_name(profile_id)
+        normalized_query = _validate_query(query)
+        _validate_limit(limit)
+        normalized_section_id = _validate_section_id(section_id)
+
+        if profile_id == TRIGRAM_PROFILE and len(normalized_query) < 3:
+            return []
+
+        match_expression = _compile_match_phrase(normalized_query)
+        sql = f"""
+            SELECT
+                d.rowid,
+                d.source_kind,
+                d.source_id,
+                d.section_id,
+                bm25({table_name}) AS bm25_score
+            FROM {table_name}
+            JOIN shadow_documents AS d
+                ON d.rowid = {table_name}.rowid
+            WHERE {table_name} MATCH ?
+        """
+        parameters: list[object] = [match_expression]
+        if normalized_section_id is not None:
+            sql += " AND d.section_id = ?"
+            parameters.append(normalized_section_id)
+        sql += f" ORDER BY bm25({table_name}) ASC, d.rowid ASC LIMIT ?"
+        parameters.append(limit)
+
+        try:
+            rows = self.connection.execute(sql, parameters).fetchall()
+        except sqlite3.Error as exc:
+            raise ShadowFtsQueryError("H4a shadow FTS query execution failed") from exc
+
+        documents_by_rowid = {document.rowid: document for document in self.documents}
+        hits: list[ShadowHit] = []
+        for rank, row in enumerate(rows, start=1):
+            rowid = int(row[0])
+            source_kind = str(row[1])
+            source_id = str(row[2])
+            returned_section_id = row[3]
+            bm25_score = float(row[4])
+
+            if not math.isfinite(bm25_score):
+                raise ShadowFtsInvariantError("Shadow FTS returned non-finite BM25 score")
+
+            document = documents_by_rowid.get(rowid)
+            if document is None:
+                raise ShadowFtsInvariantError(
+                    f"Shadow FTS returned unknown corpus rowid: {rowid}"
+                )
+            if (
+                document.source_kind != source_kind
+                or document.source_id != source_id
+                or document.section_id != returned_section_id
+            ):
+                raise ShadowFtsInvariantError(
+                    f"Shadow FTS metadata drift for rowid {rowid}"
+                )
+
+            resolved, identity = _revalidate_hit_identity(
+                self.course,
+                source_kind,
+                source_id,
+            )
+            if (
+                resolved.section_id != returned_section_id
+                or identity != document.identity
+            ):
+                raise ShadowFtsInvariantError(
+                    f"Shadow FTS canonical identity drift for {source_kind}:{source_id}"
+                )
+
+            hits.append(
+                ShadowHit(
+                    profile_id=profile_id,
+                    rank=rank,
+                    bm25_score=bm25_score,
+                    identity=identity,
+                    source_kind=source_kind,
+                    source_id=source_id,
+                    section_id=returned_section_id,
+                )
+            )
+        return hits
+
 
 def fts5_available() -> bool:
     """Probe runtime FTS5 support by creating a real virtual table in memory."""
@@ -107,6 +212,66 @@ def fts5_available() -> bool:
     finally:
         connection.close()
     return True
+
+
+def _profile_table_name(profile_id: object) -> str:
+    if not isinstance(profile_id, str) or profile_id not in _PROFILE_TOKENIZERS:
+        raise ShadowFtsQueryError("Unknown H4a shadow FTS profile")
+    return profile_id
+
+
+def _validate_query(query: object) -> str:
+    if not isinstance(query, str) or not query.strip():
+        raise ShadowFtsQueryError("Shadow FTS query must be a non-blank string")
+    return query.strip()
+
+
+def _validate_limit(limit: object) -> None:
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit <= 0:
+        raise ShadowFtsQueryError("Shadow FTS limit must be a positive integer")
+
+
+def _validate_section_id(section_id: object) -> str | None:
+    if section_id is None:
+        return None
+    if not isinstance(section_id, str) or not section_id.strip():
+        raise ShadowFtsQueryError("Shadow FTS section_id must be non-blank when supplied")
+    return section_id.strip()
+
+
+def _compile_match_phrase(query: str) -> str:
+    escaped = query.replace('"', '""')
+    return f'"{escaped}"'
+
+
+def _revalidate_hit_identity(
+    course: CourseRuntime,
+    source_kind: str,
+    source_id: str,
+):
+    try:
+        resolved = SourceResolver(course).resolve(source_kind, source_id)
+        identity = source_identity_for(course, source_kind, source_id)
+    except (SourceResolutionError, RuntimeProvenanceError) as exc:
+        raise ShadowFtsInvariantError(
+            f"Shadow FTS hit cannot prove provenance: {source_kind}:{source_id}"
+        ) from exc
+
+    main_book = course.main_book()
+    if (
+        resolved.course_id != course.course_id
+        or resolved.book_id != main_book.book_id
+        or resolved.kind != source_kind
+        or resolved.source_id != source_id
+        or identity.course_id != course.course_id
+        or identity.book != course.main_book_identity()
+        or identity.source_kind != source_kind
+        or identity.source_id != source_id
+    ):
+        raise ShadowFtsInvariantError(
+            f"Shadow FTS hit identity mismatch: {source_kind}:{source_id}"
+        )
+    return resolved, identity
 
 
 def _load_shadow_documents(course: CourseRuntime) -> tuple[ShadowDocument, ...]:
