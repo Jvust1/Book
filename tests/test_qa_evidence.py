@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+from dataclasses import fields
 from pathlib import Path
 
 from runtime import CourseRuntime, SourceResolver
@@ -22,6 +23,13 @@ from tests.runtime_fixture_factory import main_book_entry, make_repo, write_cour
 REPO_ROOT = Path(__file__).resolve().parents[1]
 COURSE_ID = "functional_analysis_course"
 BOOK_ID = "stein_shakarchi_functional_analysis_2011"
+FORBIDDEN_INTERNAL_KEYS = {
+    "book_version_id",
+    "logical_book_id",
+    "provenance",
+    "identity",
+    "retriever_id",
+}
 
 
 class QuestionProbeBuilderTests(unittest.TestCase):
@@ -179,6 +187,9 @@ class EvidenceFixtureTests(unittest.TestCase):
             self.assertEqual(row.chapter_id, "chapter_01")
             self.assertEqual(row.section_id, "sec_a")
             self.assertEqual(row.type_zh, "定义")
+            self.assertTrue(
+                FORBIDDEN_INTERNAL_KEYS.isdisjoint(field.name for field in fields(row))
+            )
         self.assertIsNone(pack.evidence[0].source_anchor)
 
     def test_builder_scope_filter_uses_real_section_identity(self) -> None:
@@ -268,6 +279,11 @@ class EvidenceFixtureTests(unittest.TestCase):
         self.assertEqual(citations[0].chapter_id, "chapter_01")
         self.assertEqual(citations[0].section_id, "sec_a")
         self.assertEqual(citations[0].type_zh, "定义")
+        self.assertTrue(
+            FORBIDDEN_INTERNAL_KEYS.isdisjoint(
+                field.name for field in fields(citations[0])
+            )
+        )
 
 
 class RealFunctionalAnalysisEvidenceTests(unittest.TestCase):
