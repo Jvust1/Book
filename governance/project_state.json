@@ -3,11 +3,11 @@
   "updated_date": "2026-08-29",
   "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "main",
+  "active_branch": "design/h4a-shadow-fts5-bm25-20260829",
   "phase": "FOUNDATION_B_TRANSITION",
-  "status": "H3A_MERGED_READY_FOR_H4A",
-  "base_main_commit": "f69166568839b7038b0f0472baefcee34299fa17",
-  "last_verified_implementation_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
+  "status": "H4A_IMPLEMENTED_CI_RUNNER_BLOCKED",
+  "base_main_commit": "f0f1951dff24e49e4eb25f968e208cdc69b7b577",
+  "last_verified_implementation_head": "a9d5a2d3fe446de739e74cb0b24438d39decf916",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
     "H0",
@@ -47,9 +47,30 @@
       "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
     },
     "H4a": {
-      "status": "NEXT_APPROVED_STAGE",
+      "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI",
       "name": "shadow FTS5/BM25 evaluation",
-      "public_search_behavior": "EXACT_ONLY_UNCHANGED"
+      "draft_pr": 23,
+      "implementation_checkpoint_head": "745b478c460e65509a6319cd76c6ec015c223709",
+      "last_successful_ci_head": "a9d5a2d3fe446de739e74cb0b24438d39decf916",
+      "public_search_behavior": "EXACT_ONLY_UNCHANGED",
+      "task_status": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE",
+        "7": "COMPLETE",
+        "8": "COMPLETE",
+        "9": "IMPLEMENTED_CI_RUNNER_BLOCKED",
+        "10": "PARTIAL_SCOPE_AUDIT_PASS_EXECUTION_BLOCKED"
+      },
+      "golden_query_set": {
+        "dataset_id": "functional_analysis_h4a_v1",
+        "query_count": 25,
+        "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
+      },
+      "ci_blocker": "GitHub-hosted jobs terminate before checkout with runner_id=0 and steps=[] across Runtime, Foundation B, and App workflows; no code/test failure is inferred from these attempts."
     }
   },
   "separate_human_gates": [
@@ -111,6 +132,8 @@
     "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
-  "blocking_items": [],
-  "next_step": "Proceed to H4a shadow FTS5/BM25 evaluation through the shared H2 Retrieval boundary while keeping public Search/QA Exact-only. Define deterministic evaluation data, ranking/coverage metrics, provenance checks, failure semantics, and exact-head evidence before any later activation proposal. H3b, B4b, B5, and StudyRecord book-version migration remain separate human gates."
+  "blocking_items": [
+    "github_actions_hosted_runner_unavailable_for_h4a_exact_head"
+  ],
+  "next_step": "Restore GitHub-hosted runner execution for PR #23 and rerun the unchanged exact-head Runtime, Foundation B, and App gates. If jobs actually execute and pass, complete H4a Task 10 exact-head verification and prepare PR #23 for review. Do not merge PR #23 without explicit user authorization for that specific PR."
 }
