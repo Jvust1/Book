@@ -17,6 +17,7 @@ from book_core.concepts import (
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "schemas" / "concept-graph" / "v1" / "concept-graph.schema.json"
+FIXTURE_PATH = ROOT / "tests" / "fixtures" / "concept-graph" / "valid-minimal.json"
 
 VALID = {
     "schema_version": "concept_graph_v1",
@@ -187,6 +188,25 @@ class ConceptGraphContractTests(unittest.TestCase):
         self.assertFalse(schema["additionalProperties"])
         self.assertFalse(schema["$defs"]["concept"]["additionalProperties"])
         self.assertFalse(schema["$defs"]["alignment"]["additionalProperties"])
+
+    def test_synthetic_fixture_round_trips_without_production_authority(self) -> None:
+        raw = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+        graph = parse_concept_graph(raw)
+
+        self.assertEqual(
+            concept_graph_to_canonical_json(graph),
+            concept_graph_to_canonical_json(parse_concept_graph(VALID)),
+        )
+        self.assertTrue(
+            all(concept.provenance == "synthetic-test" for concept in graph.concepts)
+        )
+        self.assertTrue(
+            all(
+                alignment.provenance == "synthetic-test"
+                and alignment.book_version_id == "fixture_book@v1"
+                for alignment in graph.alignments
+            )
+        )
 
 
 if __name__ == "__main__":
