@@ -7,6 +7,7 @@ import unittest
 from dataclasses import fields
 from pathlib import Path
 
+from book_core.provenance import SourceIdentity
 from runtime import CourseRuntime, SourceResolver
 from runtime.qa_evidence import (
     CitationVerifier,
@@ -17,6 +18,7 @@ from runtime.qa_evidence import (
     normalize_history,
 )
 from runtime.qa_models import EvidenceItem, EvidencePack, ModelResponse, QAHistoryMessage
+from runtime.retrieval import RetrievalHit, RetrievalUnavailableError
 from tests.runtime_fixture_factory import main_book_entry, make_repo, write_course, write_ready_book
 
 
@@ -30,6 +32,40 @@ FORBIDDEN_INTERNAL_KEYS = {
     "identity",
     "retriever_id",
 }
+
+
+class RecordingRetrievalEngine:
+    def __init__(
+        self,
+        hits: list[RetrievalHit] | None = None,
+        *,
+        error: Exception | None = None,
+    ) -> None:
+        self.hits = list(hits or [])
+        self.error = error
+        self.calls: list[tuple[str, int, str | None]] = []
+
+    def search(
+        self,
+        query: str,
+        *,
+        limit: int = 30,
+        section_id: str | None = None,
+    ) -> list[RetrievalHit]:
+        self.calls.append((query, limit, section_id))
+        if self.error is not None:
+            raise self.error
+        return list(self.hits)
+
+
+class RecordingRetrievalFactory:
+    def __init__(self, engine: RecordingRetrievalEngine) -> None:
+        self.engine = engine
+        self.calls: list[str] = []
+
+    def __call__(self, course: CourseRuntime) -> RecordingRetrievalEngine:
+        self.calls.append(course.course_id)
+        return self.engine
 
 
 class QuestionProbeBuilderTests(unittest.TestCase):
@@ -167,6 +203,40 @@ class EvidenceFixtureTests(unittest.TestCase):
         )
         return CourseRuntime.open(self.course_dir)
 
+    def _retrieval_hit(
+        self,
+        course: CourseRuntime,
+        source_id: str,
+        *,
+        score: int = 1000,
+    ) -> RetrievalHit:
+        resolved = None
+        try:
+            resolved = SourceResolver(course).resolve("object", source_id)
+        except Exception:
+            pass
+        return RetrievalHit(
+            rank=1,
+            score=score,
+            identity=SourceIdentity(
+                course_id=course.course_id,
+                book=course.main_book_identity(),
+                source_kind="object",
+                source_id=source_id,
+            ),
+            source_kind="object",
+            source_id=source_id,
+            object_type=getattr(resolved, "type", "definition"),
+            number=getattr(resolved, "number", None),
+            title_zh=getattr(resolved, "title_zh", "伪造标题"),
+            title_en=getattr(resolved, "title_en", None),
+            formula=getattr(resolved, "formula", None),
+            pdf_page=getattr(resolved, "pdf_page", 1),
+            printed_page=getattr(resolved, "printed_page", 1),
+            source_anchor=getattr(resolved, "source_anchor", None),
+            snippet=getattr(resolved, "title_zh", "伪造标题"),
+        )
+
     def test_builder_re_resolves_canonical_metadata_and_respects_budgets(self) -> None:
         course = self._open_course(long_evidence=True)
         pack = EvidenceBuilder.from_course(course).build(
@@ -207,6 +277,51 @@ class EvidenceFixtureTests(unittest.TestCase):
 
         self.assertEqual(section_pack.evidence, ())
         self.assertEqual([row.source_id for row in book_pack.evidence], ["def_b"])
+
+    def test_optional_retrieval_factory_is_used_and_receives_scope(self) -> None:
+        course = self._open_course()
+        engine = RecordingRetrievalEngine([self._retrieval_hit(course, "def_a")])
+        factory = RecordingRetrievalFactory(engine)
+
+        pack = EvidenceBuilder.from_course(
+            course,
+            retrieval_factory=factory,
+        ).build("甲概念", section_id="sec_a", limit=8)
+
+        self.assertEqual(factory.calls, ["fixture_course"])
+        self.assertTrue(engine.calls)
+        self.assertTrue(all(call[2] == "sec_a" for call in engine.calls))
+        self.assertEqual([row.source_id for row in pack.evidence], ["def_a"])
+
+    def test_unresolvable_retrieval_hit_is_rejected_before_evidence_exists(self) -> None:
+        course = self._open_course()
+        engine = RecordingRetrievalEngine([self._retrieval_hit(course, "missing")])
+
+        with self.assertRaises(QAEvidenceUnavailableError):
+            EvidenceBuilder.from_course(
+                course,
+                retrieval_factory=RecordingRetrievalFactory(engine),
+            ).build("伪造命中", section_id=None, limit=8)
+
+    def test_retrieval_hit_cannot_escape_requested_section_scope(self) -> None:
+        course = self._open_course()
+        engine = RecordingRetrievalEngine([self._retrieval_hit(course, "def_b")])
+
+        with self.assertRaises(QAEvidenceUnavailableError):
+            EvidenceBuilder.from_course(
+                course,
+                retrieval_factory=RecordingRetrievalFactory(engine),
+            ).build("乙概念", section_id="sec_a", limit=8)
+
+    def test_retrieval_infrastructure_error_maps_to_evidence_unavailable(self) -> None:
+        course = self._open_course()
+        engine = RecordingRetrievalEngine(error=RetrievalUnavailableError("index down"))
+
+        with self.assertRaises(QAEvidenceUnavailableError):
+            EvidenceBuilder.from_course(
+                course,
+                retrieval_factory=RecordingRetrievalFactory(engine),
+            ).build("甲概念", section_id=None, limit=8)
 
     def test_missing_search_index_is_infrastructure_unavailable(self) -> None:
         course = self._open_course()
