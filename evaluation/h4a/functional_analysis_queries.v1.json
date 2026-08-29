@@ -1,0 +1,322 @@
+{
+  "schema_version": "h4a_query_set_v1",
+  "dataset_id": "functional_analysis_h4a_v1",
+  "course_id": "functional_analysis_course",
+  "queries": [
+    {
+      "query_id": "en_exact_hilbert_transform_001",
+      "category": "english_exact",
+      "query": "Hilbert transform",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch2_hilbert_transform"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_exact_bmo_002",
+      "category": "english_exact",
+      "query": "BMO (bounded mean oscillation)",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch2_bmo"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_exact_pv_003",
+      "category": "english_exact",
+      "query": "principal value distribution pv(1/x)",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch3_pv_1_over_x"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_exact_hausdorff_young_004",
+      "category": "english_exact",
+      "query": "Hausdorff-Young inequality",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "ineq_hausdorff_young"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_partial_dyadic_cube_001",
+      "category": "english_partial",
+      "query": "dyadic cube decomposition",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "lemma_ch2_5_2_whitney_dyadic"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_partial_hilbert_h1r_002",
+      "category": "english_partial",
+      "query": "Hilbert transform maps H1_r",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_ch2_5_4_hilbert_h1r_l1"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_partial_homogeneous_tempered_003",
+      "category": "english_partial",
+      "query": "homogeneous tempered distribution",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "prop_ch3_2_2_fourier_homogeneous_degree"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "en_partial_cauchy_fourier_004",
+      "category": "english_partial",
+      "query": "Fourier representation of Cauchy integral",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "id_ch2_11_cauchy_fourier_rep"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_complete_holder_001",
+      "category": "chinese_complete",
+      "query": "Hölder 不等式",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_1_1_holder"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_complete_lp_dual_002",
+      "category": "chinese_complete",
+      "query": "L^p 对偶表示定理",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_4_1_lp_dual"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_complete_maximal_weak_003",
+      "category": "chinese_complete",
+      "query": "极大函数的弱 (1,1) 型估计",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "ineq_ch2_27_maximal_weak_11"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_complete_hilbert_singular_004",
+      "category": "chinese_complete",
+      "query": "Hilbert 变换的奇异积分表示",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "prop_ch2_3_1_singular_integral"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_partial_dual_space_001",
+      "category": "chinese_partial",
+      "query": "对偶空间",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_dual_space"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_partial_conjugate_poisson_002",
+      "category": "chinese_partial",
+      "query": "共轭 Poisson 核",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch2_poisson_conjugate_kernels"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_partial_point_support_003",
+      "category": "chinese_partial",
+      "query": "点支集分布",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_ch3_1_7_point_support"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "zh_partial_homogeneous_004",
+      "category": "chinese_partial",
+      "query": "齐次分布",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch3_homogeneous_distribution"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "formula_dual_exponents_001",
+      "category": "formula_symbol",
+      "query": "1/p + 1/q = 1",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_dual_exponents"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "formula_young_convolution_002",
+      "category": "formula_symbol",
+      "query": "||f*g||_q≤||f||_p||g||_r",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "ineq_ch2_9_young_convolution"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "formula_hilbert_square_003",
+      "category": "formula_symbol",
+      "query": "H^2=-I",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "fact_ch2_P_H_relations"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "formula_smooth_maximal_004",
+      "category": "formula_symbol",
+      "query": "M(f)(x)=sup_{ε>0}|(f*Φ_ε)(x)|",
+      "section_id": null,
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_ch2_hardy_maximal_M"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "section_holder_001",
+      "category": "section_scoped",
+      "query": "Hölder",
+      "section_id": "ch01_s01_01",
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_1_1_holder"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "section_linear_functional_002",
+      "category": "section_scoped",
+      "query": "线性泛函",
+      "section_id": "ch01_s03_02",
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "def_linear_functional"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "section_hilbert_lp_003",
+      "category": "section_scoped",
+      "query": "Hilbert 变换",
+      "section_id": "ch02_s03_02",
+      "expected_sources": [
+        {
+          "source_kind": "object",
+          "source_id": "thm_ch2_3_2_hilbert_lp"
+        }
+      ],
+      "notes": "Curated from canonical structured source metadata before any Golden FTS run."
+    },
+    {
+      "query_id": "negative_quaternionic_001",
+      "category": "negative_zero_result",
+      "query": "quaternionic wavelet dragon theorem",
+      "section_id": null,
+      "expected_sources": [],
+      "notes": "Deliberate no-relevant-source query; exact text verified absent from the canonical 1493-record search index before FTS evaluation."
+    },
+    {
+      "query_id": "negative_octonionic_002",
+      "category": "negative_zero_result",
+      "query": "octonionic zeta compactification principle",
+      "section_id": null,
+      "expected_sources": [],
+      "notes": "Deliberate no-relevant-source query; exact text verified absent from the canonical 1493-record search index before FTS evaluation."
+    }
+  ]
+}

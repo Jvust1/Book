@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib
 import json
+from pathlib import Path
 from typing import Any
 
 
@@ -229,6 +230,22 @@ def parse_h4a_query_set(payload: object) -> H4aQuerySet:
         course_id=course_id,
         queries=tuple(queries),
     )
+
+
+def load_h4a_query_set(path: Path) -> H4aQuerySet:
+    """Load and validate one UTF-8 H4a query set without modifying it."""
+
+    try:
+        payload_text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise H4aDatasetError(f"cannot read H4a query set: {path}") from exc
+
+    try:
+        payload = json.loads(payload_text)
+    except json.JSONDecodeError as exc:
+        raise H4aDatasetError(f"invalid H4a query set JSON: {path}") from exc
+
+    return parse_h4a_query_set(payload)
 
 
 def canonical_query_set_json(query_set: H4aQuerySet) -> str:
