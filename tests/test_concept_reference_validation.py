@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from book_core.concepts import ConceptGraph, concept_graph_to_canonical_json, parse_concept_graph
+from book_core.concepts import (
+    ConceptAlignment,
+    ConceptGraph,
+    concept_graph_to_canonical_json,
+    parse_concept_graph,
+)
 from runtime.concept_validation import (
     ConceptReferenceValidationError,
     ConceptReferenceValidator,
@@ -187,14 +192,26 @@ class ConceptReferenceValidationTests(unittest.TestCase):
 
         ConceptReferenceValidator(course).validate(graph)
 
-    def test_source_kind_and_source_id_must_be_supplied_together(self) -> None:
+    def test_validator_rejects_unparsed_partial_source_pairs(self) -> None:
         course = self._open_course()
         for source_kind, source_id in (("object", None), (None, "thm_fixture")):
             with self.subTest(source_kind=source_kind, source_id=source_id):
-                graph = self._graph(
-                    section_id=None,
-                    source_kind=source_kind,
-                    source_id=source_id,
+                graph = ConceptGraph(
+                    schema_version="concept_graph_v1",
+                    concepts=(),
+                    alignments=(
+                        ConceptAlignment(
+                            alignment_id="align.unparsed",
+                            concept_id="concept.fixture",
+                            book_version_id="fixture_book@v1",
+                            relation="explains",
+                            section_id=None,
+                            source_kind=source_kind,
+                            source_id=source_id,
+                            revision="r1",
+                            provenance="synthetic-test",
+                        ),
+                    ),
                 )
                 with self.assertRaises(ConceptReferenceValidationError):
                     ConceptReferenceValidator(course).validate(graph)
