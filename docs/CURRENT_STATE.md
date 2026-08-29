@@ -10,7 +10,7 @@
 - 稳定集成分支：`main`
 - 当前阶段：`FOUNDATION_B_TRANSITION`
 - 当前状态：`H3A_MERGED_READY_FOR_H4A`
-- 当前 `main`：`f69166568839b7038b0f0472baefcee34299fa17`
+- 当前 `main`：`3c5585b0c5c27d336473a4dfa59ca675097216fd`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
@@ -253,7 +253,7 @@ H3a PR #21  head 1ed4fc65...  merge f6916656...
     Python 3.11 / 3.12 / 3.13, App API, Web tests/typecheck/build, real Chromium PASS
 ```
 
-H3a 独立复审曾发现两个 blocker；RED checkpoint `2bc7fb6b215b618298e6d860450087a7ef4c67af` 在 Foundation B contract #4 精确失败，最终 HEAD `1ed4fc6574417b56b4342ae639f81a69dd842c6b` 修复后全绿并通过第二轮 review。合并后的 `main` 为 `f69166568839b7038b0f0472baefcee34299fa17`。
+H3a 独立复审曾发现两个 blocker；RED checkpoint `2bc7fb6b215b618298e6d860450087a7ef4c67af` 在 Foundation B contract #4 精确失败，最终 HEAD `1ed4fc6574417b56b4342ae639f81a69dd842c6b` 修复后全绿并通过第二轮 review。H3a merge commit 为 `f69166568839b7038b0f0472baefcee34299fa17`；post-H3a governance PR #17 合并后当前 `main` 为 `3c5585b0c5c27d336473a4dfa59ca675097216fd`。
 
 ## 6. 当前确认的课程产品模型
 
@@ -441,7 +441,7 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。PR #17 承载本轮治理对账；一旦集成，它只作为历史治理证据，不再构成新的前置开发阶段。
+H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。PR #17 已集成，现仅作为历史治理证据，不再构成新的前置开发阶段。
 
 1. H4a 只做 shadow evaluation：构建/比较 FTS5/BM25 候选与现有 Exact baseline，不改变 public Search/QA 排名与返回行为。
 2. H4a 必须定义确定性 query/dataset、覆盖率/排名比较指标、provenance 校验、失败语义与 exact-HEAD regression evidence。

@@ -2,7 +2,7 @@
 
 > 状态同步：2026-08-29
 >
-> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A Tasks 1–10 已完成并通过 PR #13 合并；H0/H1/H2/H3a 也已分别通过 PR #18/#19/#20/#21 集成到 `main`。当前 `main` 为 H3a merge commit `f69166568839b7038b0f0472baefcee34299fa17`，下一批准阶段为 H4a shadow FTS5/BM25 evaluation。
+> Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A Tasks 1–10 已完成并通过 PR #13 合并；H0/H1/H2/H3a 也已分别通过 PR #18/#19/#20/#21 集成到 `main`。H3a merge commit 为 `f69166568839b7038b0f0472baefcee34299fa17`；post-H3a governance PR #17 合并后当前 `main` 为 `3c5585b0c5c27d336473a4dfa59ca675097216fd`，下一批准阶段为 H4a shadow FTS5/BM25 evaluation。
 
 详细跨阶段架构：
 
