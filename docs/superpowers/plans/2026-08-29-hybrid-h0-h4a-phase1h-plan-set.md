@@ -19,6 +19,7 @@ These are not part of this plan set and must not be implemented without a new ap
 
 ## Execution order
 
+0. `docs/superpowers/plans/2026-08-29-post-foundation-a-governance-reconciliation.md` — documentation/governance reconciliation only; may be completed before H0 and must stay separate from product implementation.
 1. `docs/superpowers/plans/2026-08-29-h0-neutral-book-identity.md`
 2. `docs/superpowers/plans/2026-08-29-h1-internal-source-provenance.md`
 3. `docs/superpowers/plans/2026-08-29-h2-exact-retrieval-seam.md`
@@ -26,7 +27,20 @@ These are not part of this plan set and must not be implemented without a new ap
 5. `docs/superpowers/plans/2026-08-29-h4a-shadow-fts-evaluation.md`
 6. `docs/superpowers/plans/2026-08-29-phase1h-learning-slices.md`
 
-Each stage should normally use its own non-default implementation branch and PR. Phase 1H should be further split into independently reviewable S1–S6 PRs when practical.
+Each implementation stage should normally use its own non-default implementation branch and PR. Phase 1H should be further split into independently reviewable S1–S6 PRs when practical. The governance reconciliation is its own documentation-only review unit.
+
+## Execution-time branch-base rule
+
+Whenever a stage plan audits its diff, resolve the implementation branch base from Git rather than inventing or copying an old SHA:
+
+```bash
+git fetch origin main
+BASE_SHA=$(git merge-base origin/main HEAD)
+printf '%s\n' "$BASE_SHA"
+git diff --name-only "$BASE_SHA"...HEAD
+```
+
+Any symbolic stage-base notation in a plan refers to this dynamically resolved `BASE_SHA`; it is not a fixed project constant.
 
 ## Cross-stage invariants
 
@@ -64,4 +78,4 @@ For every PR:
 
 ## Completion
 
-The plan set is complete only when H0–H4a and Phase 1H S1–S6 are independently verified and merged through normal governance. The stable product at that point is still single-primary-book and Exact-only, with no production Concept graph and no StudyRecord version migration.
+The plan set is complete only when the governance narrative has been reconciled where still needed, H0–H4a and Phase 1H S1–S6 are independently verified, and all review units are merged through normal governance. The stable product at that point is still single-primary-book and Exact-only, with no production Concept graph and no StudyRecord version migration.
