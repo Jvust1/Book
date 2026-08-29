@@ -131,6 +131,18 @@ class ConceptReferenceValidationTests(unittest.TestCase):
         with self.assertRaises(ConceptReferenceValidationError):
             ConceptReferenceValidator(course).validate(graph)
 
+    def test_unknown_non_main_book_section_is_rejected(self) -> None:
+        course = self._open_course()
+        graph = self._graph(
+            book_version_id="supp_book@v1",
+            section_id="missing_section",
+            source_kind=None,
+            source_id=None,
+        )
+
+        with self.assertRaises(ConceptReferenceValidationError):
+            ConceptReferenceValidator(course).validate(graph)
+
     def test_unknown_source_id_is_rejected(self) -> None:
         course = self._open_course()
         graph = self._graph(source_id="missing_source")

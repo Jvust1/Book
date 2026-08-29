@@ -128,6 +128,14 @@ class ConceptGraphContractTests(unittest.TestCase):
         with self.assertRaises(ConceptGraphValidationError):
             parse_concept_graph(raw)
 
+    def test_source_kind_and_source_id_must_be_supplied_together_in_contract(self) -> None:
+        for missing_field in ("source_kind", "source_id"):
+            with self.subTest(missing_field=missing_field):
+                raw = copy.deepcopy(VALID)
+                raw["alignments"][0].pop(missing_field)
+                with self.assertRaises(ConceptGraphValidationError):
+                    parse_concept_graph(raw)
+
     def test_confidence_must_be_real_number_within_closed_unit_interval(self) -> None:
         for invalid in (-0.01, 1.01, True):
             with self.subTest(invalid=invalid):
@@ -176,18 +184,26 @@ class ConceptGraphContractTests(unittest.TestCase):
 
     def test_published_schema_mirrors_version_relations_and_strict_fields(self) -> None:
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+        alignment_schema = schema["$defs"]["alignment"]
 
         self.assertEqual(
             schema["properties"]["schema_version"]["const"],
             CONCEPT_GRAPH_SCHEMA_VERSION,
         )
         self.assertEqual(
-            set(schema["$defs"]["alignment"]["properties"]["relation"]["enum"]),
+            set(alignment_schema["properties"]["relation"]["enum"]),
             set(ALIGNMENT_RELATIONS),
+        )
+        self.assertEqual(
+            alignment_schema.get("dependentRequired"),
+            {
+                "source_kind": ["source_id"],
+                "source_id": ["source_kind"],
+            },
         )
         self.assertFalse(schema["additionalProperties"])
         self.assertFalse(schema["$defs"]["concept"]["additionalProperties"])
-        self.assertFalse(schema["$defs"]["alignment"]["additionalProperties"])
+        self.assertFalse(alignment_schema["additionalProperties"])
 
     def test_synthetic_fixture_round_trips_without_production_authority(self) -> None:
         raw = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
