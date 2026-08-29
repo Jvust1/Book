@@ -265,7 +265,11 @@ class BookAppService:
     ) -> QAResponse:
         course = self._course(course_id)
         try:
-            result = QARuntime.from_course(course, provider=self._qa_provider).answer(
+            result = QARuntime.from_course(
+                course,
+                provider=self._qa_provider,
+                retrieval_factory=self._retrieval_factory,
+            ).answer(
                 question,
                 section_id=section_id,
                 history=history,
