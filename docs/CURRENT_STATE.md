@@ -2,13 +2,14 @@
 
 更新时间：2026-08-29
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。当前 Foundation A 尚在非默认分支接受 exact-final-HEAD / PR gate，因此该分支上的最新证据优先用于 Foundation A 审查，不代表已经集成到 `main`。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 已通过 PR #13 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
 - 稳定集成分支：`main`
-- 当前开发分支：`foundation/course-package-contract-a`
+- 当前阶段：`POST_FOUNDATION_A_TRANSITION`
+- 当前状态：`READY_FOR_NEXT_PHASE_DESIGN`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
@@ -18,8 +19,11 @@
 - Phase 1G 合并后验证：`main` Book App UI tests run #194 全绿
 - Foundation A design：`docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md`
 - Foundation A implementation plan：`docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
-- Foundation A Tasks 1–9：实现完成
-- Foundation A 当前状态：Task 10 exact-final-HEAD regression / documentation state / PR readiness
+- Foundation A：`COMPLETE_MERGED`
+- Foundation A Tasks 1–10：`COMPLETE`
+- Foundation A merged PR：`#13`
+- Foundation A reviewed head：`f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
+- Foundation A merge commit：`82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
 - Runtime/App consumer migration：Foundation A 明确不在范围内
 
 当前跨阶段正式架构文档：
@@ -28,6 +32,19 @@
 - `docs/ROADMAP.md`
 - `docs/DEVELOPMENT_STRATEGY.md`
 - `docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`
+
+### 已批准的下一依赖顺序（2026-08-29）
+
+```text
+H0 neutral Book identity
+→ H1 internal source provenance
+→ H2 Exact-only shared Retrieval seam
+→ H3a Concept/ConceptAlignment contract + reference validation
+→ H4a shadow FTS5/BM25 evaluation
+→ Phase 1H user-visible slices
+```
+
+这是对历史 Roadmap 执行顺序的已批准依赖例外，不代表上述阶段已经实现。`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍需以后分别重新设计批准。
 
 ## 2. 当前教材 / Runtime 基线
 
@@ -175,7 +192,9 @@ real Chromium acceptance      PASS
 
 Python 3.13 暴露的 SQLite connection `ResourceWarning` 已通过 RED → GREEN 生命周期测试修复；repository dependency 初始化失败也有回归测试，稳定映射 `study_store_unavailable` 503 且不泄露 SQLite 路径。目前仍可见 FastAPI/Starlette 自身第三方弃用提示，不属于数据连接泄漏。
 
-### Foundation A 当前实现 HEAD 证据
+### Foundation A 历史 pre-merge 实现证据
+
+以下 Task 8/9 数据保留为 Foundation A 合并前的历史验证证据；Foundation A 最终状态以 PR #13、reviewed head `f1eb4ebd144ccb233e5b8b74e97001af214c60bb` 与 merge commit `82f0cbbcfe5078d304ca7c163b81d4eb01b515f4` 为准。
 
 Task 8 exact-head `116cf4275b8006bc48860943c8e50987547cb5a5`：
 
@@ -200,7 +219,7 @@ Book App UI #213              app-api / web-client / browser PASS
 real Chromium                 11 / 11 PASS
 ```
 
-`course-package-heavy.yml` 已定义为 `workflow_dispatch` 手动门，采用 `/tmp` 隔离副本进行重建/恢复，再对 canonical tree 做只读 readiness / Golden / fitness 验证；当前连接器没有 `workflow_dispatch` 启动动作，因此没有伪造 HEAVY 执行结果。Task 10 / PR required checks 仍以 FAST、Runtime matrix、App API/Web/Chromium exact-head 为硬门。
+`course-package-heavy.yml` 已定义为 `workflow_dispatch` 手动门，采用 `/tmp` 隔离副本进行重建/恢复，再对 canonical tree 做只读 readiness / Golden / fitness 验证；没有实际手工运行记录时不得声称 HEAVY 已通过。
 
 从 Foundation A 起点 `a99d4638f959e04e54d91efe0ee0dd9ac50488a6` 到 Task 9 implementation HEAD 的差异审计未出现 `app/**` 源码变更，也未出现 `books/functional-analysis/**` canonical 教材变更。
 
@@ -259,9 +278,14 @@ revision
 
 ## 8. Foundation A：实现状态
 
-Foundation A 的 Course Package v1 基础实现已在 `foundation/course-package-contract-a` 完成 Tasks 1–9，当前执行 Task 10 exact-final-HEAD / PR readiness。
+Foundation A 的 Course Package v1 基础实现已经完成 Tasks 1–10，并通过 PR #13 合并到 `main`。
 
-已完成：
+- reviewed head：`f1eb4ebd144ccb233e5b8b74e97001af214c60bb`
+- merge commit：`82f0cbbcfe5078d304ca7c163b81d4eb01b515f4`
+- canonical `books/functional-analysis/**`：零修改
+- Runtime/App consumer migration：仍为 0
+
+Foundation A 已完成：
 
 - Course Package schema/version 与教材角色冻结
 - legacy manifest normalization
@@ -272,6 +296,7 @@ Foundation A 的 Course Package v1 基础实现已在 `foundation/course-package
 - Functional Analysis Golden Course executable gate
 - Architecture Fitness Functions 当前 Foundation 集合
 - FAST / PR FULL / manual HEAVY CI 分层
+- exact-final-HEAD PR gate 与合并
 
 仍不属于 Foundation A 已实现范围：
 
@@ -283,7 +308,7 @@ Foundation A 的 Course Package v1 基础实现已在 `foundation/course-package
 → 自动注册到 Runtime/Library
 ```
 
-这条通用新教材接入主链路仍是后续 Course Compiler 产品化工作；Foundation A 本轮冻结的是可验证 contract / compiler package boundary / Golden trust root，不把 Runtime/App consumer 改造成新 package consumer。
+这条通用新教材接入主链路仍是后续 Course Compiler 产品化工作；Foundation A 冻结的是可验证 contract / compiler package boundary / Golden trust root，没有把 Runtime/App consumer 改造成新 package consumer。
 
 ## 9. Unified Retrieval：已确认长期搜索架构
 
@@ -382,12 +407,13 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-完成 Foundation A Task 10：
+执行已批准的依赖例外，但继续保持每阶段独立审查：
 
-1. 以最终文档提交形成 exact final HEAD。
-2. 打开 `foundation/course-package-contract-a → main` 的 reviewable PR。
-3. 只接受该 PR exact HEAD 的 `Course Package FAST`、Runtime Python 3.11/3.12/3.13、Book App API/Web/Chromium 全绿证据。
-4. 复核 PR diff：`books/functional-analysis/**` 零修改、App Runtime migration 为 0、无 secrets、无跟踪 `.build` 产物、无未处理 review thread。
-5. 在上述全部通过后，才可请求用户对该**具体 PR**给出显式合并授权。
+1. 先完成 post-Foundation-A governance reconciliation。
+2. 然后依次进入 H0 → H1 → H2 → H3a → H4a → Phase 1H。
+3. H0–H4a 期间 public Search 保持 Exact-only；H4a 仅做 shadow FTS5/BM25 evaluation。
+4. 不修改 `books/functional-analysis/**` canonical 教材事实。
+5. 每个阶段使用非默认分支、TDD、reviewable PR、exact-HEAD verification；具体 PR 合并仍需用户对该 PR 的明确授权。
+6. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 不在本轮批准范围内。
 
-当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Unified Retrieval、Mastery 或 Next Best Action。
+当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
