@@ -30,7 +30,15 @@ describe('searchViewState', () => {
     const persisted = JSON.parse(
       sessionStorage.getItem(searchStateKey('functional_analysis_course')) || '{}',
     ) as Record<string, unknown>
+    expect(Object.keys(persisted).sort()).toEqual(
+      ['activeSourceKey', 'query', 'route', 'scrollY'].sort(),
+    )
     expect(persisted).not.toHaveProperty('results')
+    expect(persisted).not.toHaveProperty('book_version_id')
+    expect(persisted).not.toHaveProperty('logical_book_id')
+    expect(persisted).not.toHaveProperty('provenance')
+    expect(persisted).not.toHaveProperty('retriever_id')
+    expect(persisted).not.toHaveProperty('index_metadata')
   })
 
   it('rejects malformed or wrong-shaped state and removes it', () => {

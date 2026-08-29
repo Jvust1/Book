@@ -69,6 +69,97 @@ describe('qaSessionState', () => {
     expect(raw).not.toMatch(/"BOOK_QA_API_KEY"\s*:/)
     expect(raw).not.toMatch(/"prompt"\s*:/)
     expect(raw).not.toMatch(/"raw_response"\s*:/)
+    expect(raw).not.toMatch(/"book_version_id"\s*:/)
+    expect(raw).not.toMatch(/"logical_book_id"\s*:/)
+    expect(raw).not.toMatch(/"provenance"\s*:/)
+    expect(raw).not.toMatch(/"retriever_id"\s*:/)
+  })
+
+  it('persists only the frozen qa session and verified response shapes', () => {
+    saveQASessionState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa?section=ch01_s01',
+      messages: [
+        { id: 'u1', role: 'user', content: '为什么要这样定义？' },
+        { id: 'a1', role: 'assistant', content: '基于教材证据的回答。', response },
+      ],
+      scrollY: 640,
+      activeCitationSourceId: 'def_fixture',
+    })
+
+    const persisted = JSON.parse(
+      sessionStorage.getItem(qaSessionStateKey('functional_analysis_course')) || '{}',
+    ) as Record<string, unknown>
+    expect(Object.keys(persisted).sort()).toEqual(
+      ['activeCitationSourceId', 'messages', 'route', 'scrollY'].sort(),
+    )
+
+    const messages = persisted.messages as Array<Record<string, unknown>>
+    const persistedResponse = messages[1].response as Record<string, unknown>
+    expect(Object.keys(persistedResponse).sort()).toEqual(
+      [
+        'answer',
+        'answer_kind',
+        'answer_style',
+        'book_id',
+        'citations',
+        'course_id',
+        'insufficient_evidence',
+        'message',
+        'question',
+        'scope_requested',
+        'scope_used',
+      ].sort(),
+    )
+    const citations = persistedResponse.citations as Array<Record<string, unknown>>
+    expect(Object.keys(citations[0]).sort()).toEqual(
+      [
+        'chapter_id',
+        'evidence_id',
+        'number',
+        'object_type',
+        'pdf_page',
+        'printed_page',
+        'section_id',
+        'source_anchor',
+        'source_id',
+        'source_kind',
+        'title_en',
+        'title_zh',
+        'type_zh',
+      ].sort(),
+    )
+  })
+
+  it('rejects cached qa citations with future book-version provenance fields', () => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(
+      key,
+      JSON.stringify({
+        route: '/courses/functional_analysis_course/qa?section=ch01_s01',
+        messages: [
+          { id: 'u1', role: 'user', content: '为什么要这样定义？' },
+          {
+            id: 'a1',
+            role: 'assistant',
+            content: '基于教材证据的回答。',
+            response: {
+              ...response,
+              citations: [
+                {
+                  ...response.citations[0],
+                  book_version_id: 'stein_shakarchi_functional_analysis_2011@v1',
+                },
+              ],
+            },
+          },
+        ],
+        scrollY: 640,
+        activeCitationSourceId: 'def_fixture',
+      }),
+    )
+
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+    expect(sessionStorage.getItem(key)).toBeNull()
   })
 
   it('removes corrupt or wrong-shaped session state', () => {

@@ -15,6 +15,15 @@ from tests.runtime_fixture_factory import (
 )
 
 
+FORBIDDEN_INTERNAL_KEYS = {
+    "book_version_id",
+    "logical_book_id",
+    "provenance",
+    "identity",
+    "retriever_id",
+}
+
+
 class SourceResolverTests(unittest.TestCase):
     def _open_course(
         self,
@@ -78,6 +87,7 @@ class SourceResolverTests(unittest.TestCase):
         self.assertEqual(source.printed_page, 1)
         self.assertEqual(source.source_anchor, "fixture:p1:thm_fixture")
         self.assertTrue(source.translation_available)
+        self.assertTrue(FORBIDDEN_INTERNAL_KEYS.isdisjoint(source.to_dict()))
 
     def test_resolves_figure_metadata_without_inventing_content(self) -> None:
         course = self._open_course(

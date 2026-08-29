@@ -2,18 +2,19 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
 import json
 from typing import Mapping
 
 import httpx
 
 from runtime import (
+    EvidenceItem,
     ModelProviderInvalidResponseError,
     ModelProviderUnavailableError,
     ModelRequest,
     ModelResponse,
     ModelResponseValidationError,
+    QAHistoryMessage,
 )
 
 
@@ -83,14 +84,44 @@ class OpenAICompatibleModelProvider:
             "Model provider returned an invalid structured response"
         )
 
+    @staticmethod
+    def _history_payload(message: QAHistoryMessage) -> dict[str, object]:
+        return {
+            "role": message.role,
+            "content": message.content,
+        }
+
+    @staticmethod
+    def _evidence_payload(item: EvidenceItem) -> dict[str, object]:
+        return {
+            "evidence_id": item.evidence_id,
+            "source_kind": item.source_kind,
+            "source_id": item.source_id,
+            "object_type": item.object_type,
+            "title_zh": item.title_zh,
+            "title_en": item.title_en,
+            "number": item.number,
+            "formula": item.formula,
+            "content_zh": item.content_zh,
+            "source_anchor": item.source_anchor,
+            "pdf_page": item.pdf_page,
+            "printed_page": item.printed_page,
+            "search_score": item.search_score,
+            "course_id": item.course_id,
+            "book_id": item.book_id,
+            "chapter_id": item.chapter_id,
+            "section_id": item.section_id,
+            "type_zh": item.type_zh,
+        }
+
     def _request_body(self, request: ModelRequest) -> dict[str, object]:
         user_payload = {
             "question": request.question,
             "course_id": request.course_id,
             "book_id": request.book_id,
             "section_id": request.section_id,
-            "history": [asdict(message) for message in request.history],
-            "evidence": [asdict(item) for item in request.evidence],
+            "history": [self._history_payload(message) for message in request.history],
+            "evidence": [self._evidence_payload(item) for item in request.evidence],
             "allowed_answer_styles": list(request.allowed_answer_styles),
         }
         return {

@@ -30,6 +30,20 @@ describe('sectionViewState', () => {
     expect(loadSectionViewState('functional_analysis_course', 'ch01_s01', 'review')).toEqual(
       STATE,
     )
+
+    const persisted = JSON.parse(
+      sessionStorage.getItem(
+        stateKey('functional_analysis_course', 'ch01_s01', 'review'),
+      ) || '{}',
+    ) as Record<string, unknown>
+    expect(Object.keys(persisted).sort()).toEqual(
+      ['activeSourceId', 'expandedSourceIds', 'route', 'scrollY'].sort(),
+    )
+    expect(persisted).not.toHaveProperty('book_version_id')
+    expect(persisted).not.toHaveProperty('logical_book_id')
+    expect(persisted).not.toHaveProperty('provenance')
+    expect(persisted).not.toHaveProperty('retriever_id')
+    expect(persisted).not.toHaveProperty('index_metadata')
   })
 
   it('clears exact state and rejects corrupt session JSON', () => {
