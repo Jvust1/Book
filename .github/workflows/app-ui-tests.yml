@@ -3,6 +3,7 @@ name: Book App UI tests
 on:
   push:
     paths:
+      - "book_core/**"
       - "app/**"
       - "app_tests/**"
       - "runtime/**"
@@ -22,6 +23,7 @@ on:
       - ".github/workflows/app-ui-tests.yml"
   pull_request:
     paths:
+      - "book_core/**"
       - "app/**"
       - "app_tests/**"
       - "runtime/**"

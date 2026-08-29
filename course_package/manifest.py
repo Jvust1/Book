@@ -5,14 +5,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .contracts import CANONICAL_BOOK_ROLES
-
-ROLE_ALIASES = {
-    "main": "primary",
-    "supplementary": "supplementary",
-    "reference": "reference",
-    "english": "translation",
-}
+from book_core.identity import (
+    CANONICAL_BOOK_ROLES,
+    LEGACY_BOOK_ROLE_ALIASES,
+    build_book_identity,
+    canonical_role_from_legacy,
+)
 
 
 class ManifestNormalizationError(RuntimeError):
@@ -90,11 +88,16 @@ def normalize_course_manifest(course_dir: Path, repository_root: Path) -> Normal
             raise ManifestNormalizationError(f"books[{index}] must be a JSON object")
         book_id = _require_text(raw.get("book_id"), f"books[{index}].book_id")
         role_value = raw.get("role")
-        if not isinstance(role_value, str) or role_value not in ROLE_ALIASES:
+        if not isinstance(role_value, str) or role_value not in LEGACY_BOOK_ROLE_ALIASES:
             raise ManifestNormalizationError(
                 f"books[{index}] unsupported legacy role: {role_value!r}"
             )
-        role = ROLE_ALIASES[role_value]
+        try:
+            role = canonical_role_from_legacy(role_value)
+        except ValueError as exc:
+            raise ManifestNormalizationError(
+                f"books[{index}] unsupported legacy role: {role_value!r}"
+            ) from exc
         if role not in CANONICAL_BOOK_ROLES:
             raise ManifestNormalizationError(f"normalized role is not canonical: {role!r}")
 
@@ -139,11 +142,18 @@ def normalize_course_manifest(course_dir: Path, repository_root: Path) -> Normal
             )
         structured_version = version_value.strip()
 
+        try:
+            identity = build_book_identity(book_id, structured_version, role_value)
+        except ValueError as exc:
+            raise ManifestNormalizationError(
+                f"books[{index}] cannot build canonical identity: {exc}"
+            ) from exc
+
         entry = NormalizedBookEntry(
-            book_id=book_id,
-            logical_book_id=book_id,
-            book_version_id=f"{book_id}@{structured_version}",
-            role=role,
+            book_id=identity.book_id,
+            logical_book_id=identity.logical_book_id,
+            book_version_id=identity.book_version_id,
+            role=identity.role,
             canonical_path=canonical_relative.as_posix(),
             required=required,
             enabled=enabled,

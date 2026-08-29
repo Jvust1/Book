@@ -2,6 +2,7 @@ import json
 import unittest
 from pathlib import Path
 
+from book_core.identity import CANONICAL_BOOK_ROLES as CORE_BOOK_ROLES
 from course_package.contracts import (
     CANONICAL_BOOK_ROLES,
     PACKAGE_FILENAMES,
@@ -38,6 +39,9 @@ class CoursePackageSchemaTests(unittest.TestCase):
                 "package.sha256",
             ),
         )
+
+    def test_course_package_roles_share_core_owner(self):
+        self.assertIs(CANONICAL_BOOK_ROLES, CORE_BOOK_ROLES)
 
     def test_published_schemas_match_contract_enums(self):
         course_schema = json.loads(
