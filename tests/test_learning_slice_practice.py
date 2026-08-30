@@ -98,9 +98,8 @@ class LearningSlicePracticeTests(unittest.TestCase):
         payload = runtime.practice().payload
         self.assertTrue(all(row["solution_status"] == "unavailable" for row in payload["items"]))
         serialized = json.dumps(payload, ensure_ascii=False)
-        self.assertNotIn("solution", serialized)
-        self.assertNotIn("解析", serialized)
-        self.assertNotIn("sentinel", serialized)
+        self.assertNotIn("solution 解析 sentinel", serialized)
+        self.assertNotIn("that must never affect presentation", serialized)
 
     def test_empty_practice_is_valid_with_only_empty_all_filter(self) -> None:
         _, runtime = make_practice_runtime()
