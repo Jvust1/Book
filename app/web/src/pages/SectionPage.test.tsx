@@ -11,6 +11,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiError, bookApi } from '../api/client'
 import type {
   LearningMode,
+  LearningSlicePresentation,
   ModeItem,
   ModeResponse,
   StudyRecord,
@@ -69,7 +70,61 @@ const reviewItem: ModeItem = {
   translation_available: true,
 }
 
-const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse => ({
+const presentationForMode = (mode: LearningMode): LearningSlicePresentation => {
+  if (mode === 'preview') {
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'preview',
+      overview: {
+        object_count: 0,
+        figure_count: 0,
+        translation_available: false,
+      },
+      object_counts: [],
+      objectives: [],
+      prerequisites: { status: 'unavailable', items: [] },
+      core_definitions: [],
+      core_formulas: [],
+      key_figures: [],
+      quick_checks: [],
+    }
+  }
+  if (mode === 'review') {
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'review',
+      presets: [
+        { id: 'one_minute', label: '1 分钟', source_refs: [] },
+        { id: 'five_minute', label: '5 分钟', source_refs: [] },
+        { id: 'full', label: '完整复习', source_refs: [] },
+      ],
+      prompts: [],
+    }
+  }
+  if (mode === 'practice') {
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'practice',
+      filters: [{ id: 'all', label: '全部' }],
+      items: [],
+    }
+  }
+  return {
+    schema_version: 'learning_slice_v1',
+    mode: 'learn',
+    groups: [],
+    extensions: {
+      supplementary: { status: 'unavailable' },
+      lecture: { status: 'unavailable' },
+    },
+  }
+}
+
+const modePayload = (
+  mode: LearningMode,
+  items: ModeItem[] = [],
+  presentation: LearningSlicePresentation = presentationForMode(mode),
+): ModeResponse => ({
   mode,
   course_id: 'functional_analysis_course',
   book_id: 'stein_shakarchi_functional_analysis_2011',
@@ -78,6 +133,7 @@ const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse =
   source_status: 'available',
   items,
   source_refs: items.map(({ kind, source_id }) => ({ kind, source_id })),
+  presentation,
 })
 
 const studyRecord = (
@@ -172,6 +228,56 @@ describe('SectionPage', () => {
         'review',
       )
     })
+  })
+
+  it('renders Preview from presentation instead of locally recomputing item counts', async () => {
+    const previewItem: ModeItem = {
+      kind: 'object',
+      source_id: 'def_preview',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: '预习定义',
+      title_en: null,
+      formula: null,
+      printed_page: 2,
+      pdf_page: 21,
+      content_zh: '教材定义正文。',
+      translation_available: true,
+    }
+    const previewPresentation: LearningSlicePresentation = {
+      schema_version: 'learning_slice_v1',
+      mode: 'preview',
+      overview: {
+        object_count: 9,
+        figure_count: 4,
+        translation_available: false,
+      },
+      object_counts: [{ object_type: 'theorem', count: 9 }],
+      objectives: [
+        {
+          text: '理解并能复述：预习定义',
+          derivation: 'deterministic_template',
+          source_ref: { kind: 'object', source_id: 'def_preview' },
+        },
+      ],
+      prerequisites: { status: 'unavailable', items: [] },
+      core_definitions: [],
+      core_formulas: [],
+      key_figures: [],
+      quick_checks: [],
+    }
+    vi.mocked(bookApi.getMode).mockResolvedValue(
+      modePayload('preview', [previewItem], previewPresentation),
+    )
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=preview')
+
+    expect(await screen.findByRole('heading', { name: '预习概览' })).toBeInTheDocument()
+    expect(screen.getByText('教材对象 9')).toBeInTheDocument()
+    expect(screen.getByText('教材图示 4')).toBeInTheDocument()
+    expect(screen.getByText('理解并能复述：预习定义')).toBeInTheDocument()
+    expect(screen.queryByText('定义 1')).not.toBeInTheDocument()
   })
 
   it('renders Chinese-first object content and exact missing-content fallback', async () => {
