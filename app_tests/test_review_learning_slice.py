@@ -81,7 +81,7 @@ class ReviewLearningSliceServiceTests(unittest.TestCase):
         )
         self.assertEqual(
             [(ref.kind, ref.source_id) for ref in presets["five_minute"].source_refs],
-            expected_preset_pairs(response.items, 5),
+            expected_preset_pairs(response.items, 10),
         )
         self.assertEqual(
             [(ref.kind, ref.source_id) for ref in presets["full"].source_refs],
