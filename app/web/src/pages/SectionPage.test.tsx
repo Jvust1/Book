@@ -511,4 +511,44 @@ describe('SectionPage', () => {
     })
     expect(screen.getByText('学习进度：进行中')).toBeInTheDocument()
   })
+  it('renders Learn through grouped presentation without duplicating the flat object list', async () => {
+    const learnItem: ModeItem = {
+      kind: 'object',
+      source_id: 'learn_def',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: '分组定义',
+      title_en: null,
+      formula: null,
+      printed_page: 2,
+      pdf_page: 21,
+      content_zh: '分组定义正文。',
+      translation_available: true,
+    }
+    const learnPresentation: LearningSlicePresentation = {
+      schema_version: 'learning_slice_v1',
+      mode: 'learn',
+      groups: [
+        {
+          id: 'definitions',
+          label: '定义 / 概念入口',
+          source_refs: [{ kind: 'object', source_id: 'learn_def' }],
+        },
+      ],
+      extensions: {
+        supplementary: { status: 'unavailable' },
+        lecture: { status: 'unavailable' },
+      },
+    }
+    vi.mocked(bookApi.getMode).mockResolvedValue(
+      modePayload('learn', [learnItem], learnPresentation),
+    )
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByRole('heading', { name: '定义 / 概念入口' })).toBeInTheDocument()
+    expect(screen.getAllByText('分组定义')).toHaveLength(1)
+  })
+
 })
