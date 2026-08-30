@@ -1,13 +1,14 @@
 import type {
+  LearningSlicePreset,
   ModeItem,
   ReviewLearningSlicePresentation,
-  ReviewPresetId,
   SourceRef,
 } from '../api/types'
 import { SourceLink } from './SourceLink'
 
 const MISSING_CONTENT = '本段中文学习内容暂未提供'
 const UNAVAILABLE_MESSAGE = '学习内容暂不可用'
+type ReviewPresetId = LearningSlicePreset['id']
 
 export interface ReviewLearningSliceProps {
   courseId: string
