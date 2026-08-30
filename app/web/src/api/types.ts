@@ -107,6 +107,8 @@ export interface LearningSlicePreset {
   source_refs: SourceRef[]
 }
 
+export type ReviewPresetId = LearningSlicePreset['id']
+
 export interface LearningSlicePracticeFilter {
   id: 'all' | 'exercise' | 'problem'
   label: string
