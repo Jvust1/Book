@@ -86,13 +86,41 @@ class LearningSliceRuntime:
         return self._projection(payload)
 
     def review(self) -> LearningSliceProjection:
-        raise LearningSliceModeError("Review learning-slice projection is not implemented yet")
+        return self._projection(
+            {
+                "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
+                "mode": "review",
+                "presets": [
+                    {"id": "one_minute", "label": "1 分钟", "source_refs": []},
+                    {"id": "five_minute", "label": "5 分钟", "source_refs": []},
+                    {"id": "full", "label": "完整复习", "source_refs": []},
+                ],
+                "prompts": [],
+            }
+        )
 
     def practice(self) -> LearningSliceProjection:
-        raise LearningSliceModeError("Practice learning-slice projection is not implemented yet")
+        return self._projection(
+            {
+                "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
+                "mode": "practice",
+                "filters": [{"id": "all", "label": "全部"}],
+                "items": [],
+            }
+        )
 
     def learn(self) -> LearningSliceProjection:
-        raise LearningSliceModeError("Learn learning-slice projection is not implemented yet")
+        return self._projection(
+            {
+                "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
+                "mode": "learn",
+                "groups": [],
+                "extensions": {
+                    "supplementary": {"status": "unavailable"},
+                    "lecture": {"status": "unavailable"},
+                },
+            }
+        )
 
     def presentation(self, mode: str) -> LearningSliceProjection:
         normalized = str(mode or "").strip().casefold()
