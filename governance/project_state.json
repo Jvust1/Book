@@ -3,11 +3,11 @@
   "updated_date": "2026-08-30",
   "repository": "Jvust2/Book",
   "default_branch": "main",
-  "active_branch": "design/h4a-shadow-fts5-bm25-20260829",
-  "phase": "FOUNDATION_B_TRANSITION",
-  "status": "H4A_IMPLEMENTED_REVERIFYING_AFTER_IDENTITY_SYNC",
-  "base_main_commit": "f0f1951dff24e49e4eb25f968e208cdc69b7b577",
-  "last_verified_implementation_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
+  "active_branch": "chore/h4a-post-merge-state-20260830",
+  "phase": "PHASE_1H_PREPARATION",
+  "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
+  "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
+  "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
     "H0",
@@ -47,12 +47,14 @@
       "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
     },
     "H4a": {
-      "status": "IMPLEMENTED_REVERIFYING_EXACT_HEAD_AFTER_IDENTITY_SYNC",
+      "status": "COMPLETE_MERGED",
       "name": "shadow FTS5/BM25 evaluation",
-      "draft_pr": 23,
-      "implementation_checkpoint_head": "745b478c460e65509a6319cd76c6ec015c223709",
-      "last_successful_ci_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
+      "merged_pr": 23,
+      "reviewed_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
+      "merge_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
+      "last_successful_ci_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
       "public_search_behavior": "EXACT_ONLY_UNCHANGED",
+      "evidence_classification": "FTS_EVIDENCE_NOT_PROMISING",
       "task_status": {
         "1": "COMPLETE",
         "2": "COMPLETE",
@@ -62,15 +64,33 @@
         "6": "COMPLETE",
         "7": "COMPLETE",
         "8": "COMPLETE",
-        "9": "COMPLETE_AT_PRE_IDENTITY_SYNC_HEAD",
-        "10": "EXACT_HEAD_PASS_AT_PRE_IDENTITY_SYNC_HEAD_REVERIFY_REQUIRED"
+        "9": "COMPLETE",
+        "10": "COMPLETE"
       },
       "golden_query_set": {
         "dataset_id": "functional_analysis_h4a_v1",
         "query_count": 25,
         "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
       },
-      "ci_blocker": "The former GitHub-hosted runner outage is resolved. Runtime, Foundation B, and App gates passed at 969b8b0c8c8b1b50df8e19e6076036ac980855a1. A new exact-head verification is required only because this governance identity reconciliation changes the PR head."
+      "evaluation_summary": {
+        "exact": {
+          "hit_at_1": 0.8696,
+          "hit_at_10": 0.913,
+          "mrr": 0.8913
+        },
+        "fts_trigram_bm25_v1": {
+          "hit_at_1": 0.7391,
+          "hit_at_10": 0.913,
+          "mrr": 0.8188,
+          "fts_only_top10_recoveries": 0
+        },
+        "fts_unicode61_bm25_v1": {
+          "hit_at_10": 0.8261,
+          "mrr": 0.8043,
+          "fts_only_top10_recoveries": 0,
+          "exact_only_top10_recoveries": 2
+        }
+      }
     }
   },
   "separate_human_gates": [
@@ -87,16 +107,56 @@
     "merged_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
     "merge_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
     "completed_tasks": [
-      {"task": 1, "name": "Course Package v1 contract and schemas", "status": "COMPLETE"},
-      {"task": 2, "name": "Legacy course manifest normalization", "status": "COMPLETE"},
-      {"task": 3, "name": "Canonical artifact inventory and content identity", "status": "COMPLETE"},
-      {"task": 4, "name": "Deterministic Course Package compiler", "status": "COMPLETE"},
-      {"task": 5, "name": "Course Package validator", "status": "COMPLETE"},
-      {"task": 6, "name": "Functional Analysis Golden Course gate", "status": "COMPLETE"},
-      {"task": 7, "name": "Executable architecture fitness functions", "status": "COMPLETE"},
-      {"task": 8, "name": "Compiler and validator CLI entry points", "status": "COMPLETE"},
-      {"task": 9, "name": "Layer CI into FAST, PR FULL, and HEAVY gates", "status": "COMPLETE"},
-      {"task": 10, "name": "Exact-HEAD full regression, documentation state, and PR readiness", "status": "COMPLETE"}
+      {
+        "task": 1,
+        "name": "Course Package v1 contract and schemas",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 2,
+        "name": "Legacy course manifest normalization",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 3,
+        "name": "Canonical artifact inventory and content identity",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 4,
+        "name": "Deterministic Course Package compiler",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 5,
+        "name": "Course Package validator",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 6,
+        "name": "Functional Analysis Golden Course gate",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 7,
+        "name": "Executable architecture fitness functions",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 8,
+        "name": "Compiler and validator CLI entry points",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 9,
+        "name": "Layer CI into FAST, PR FULL, and HEAVY gates",
+        "status": "COMPLETE"
+      },
+      {
+        "task": 10,
+        "name": "Exact-HEAD full regression, documentation state, and PR readiness",
+        "status": "COMPLETE"
+      }
     ],
     "next_task": null,
     "canonical_book_mutation_allowed": false,
@@ -132,8 +192,6 @@
     "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
-  "blocking_items": [
-    "h4a_exact_head_reverification_after_book_identity_sync"
-  ],
-  "next_step": "Rerun or observe PR #23 exact-head Runtime, Foundation B, and App gates at the new head produced by the Book identity reconciliation. If all required jobs execute and pass, prepare PR #23 for review. Do not merge PR #23 without explicit user authorization for that specific PR."
+  "blocking_items": [],
+  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
 }
