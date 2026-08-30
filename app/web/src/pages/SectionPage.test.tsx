@@ -113,7 +113,7 @@ const presentationForMode = (
     return {
       schema_version: 'learning_slice_v1',
       mode: 'practice',
-      filters: [{ id: 'all', label: '全部' }],
+      filters: [{ id: 'all', label: '全部', source_refs: [] }],
       items: [],
     }
   }
