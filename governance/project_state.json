@@ -3,12 +3,21 @@
   "updated_date": "2026-08-30",
   "repository": "Jvust2/Book",
   "default_branch": "main",
-  "active_branch": "chore/h4a-post-merge-state-20260830",
-  "phase": "PHASE_1H_PREPARATION",
-  "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
-  "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
-  "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
-  "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
+  "active_branch": "design/phase-1h-learning-slices-20260830",
+  "phase": "PHASE_1H_IMPLEMENTATION",
+  "status": "TASK7_COMPLETE_TASK8_RED_TESTS_ADDED",
+  "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+  "current_branch_head": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
+  "last_verified_implementation_head": "a803f8f1446fb728a09ef031e318db18b21e78d1",
+  "current_pr": {
+    "number": 26,
+    "state": "OPEN",
+    "draft": true,
+    "merged": false,
+    "mergeable": true,
+    "base_branch": "main",
+    "head_branch": "design/phase-1h-learning-slices-20260830"
+  },
   "approved_dependency_sequence": [
     "H0",
     "H1",
@@ -20,147 +29,73 @@
   "transition_stages": {
     "H0": {
       "status": "COMPLETE_MERGED",
-      "name": "neutral Book identity",
       "merged_pr": 18,
       "reviewed_head": "56c289ccdb5bd692efcbd642dfd9267278f5e5af",
       "merge_commit": "3dcc600c2c8a39e1ffc41c07fbf290adfba5035c"
     },
     "H1": {
       "status": "COMPLETE_MERGED",
-      "name": "internal source provenance and serialization freezes",
       "merged_pr": 19,
       "reviewed_head": "a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2",
       "merge_commit": "7e54e87b9674455e9f3d275016313f6c9e2487ac"
     },
     "H2": {
       "status": "COMPLETE_MERGED",
-      "name": "Exact-only shared Retrieval seam",
       "merged_pr": 20,
       "reviewed_head": "66ac966c5dfe59ebeea82b168b2ee67fc85f9474",
       "merge_commit": "410cede92bcc0783e4fca9b02faec79e5fe77112"
     },
     "H3a": {
       "status": "COMPLETE_MERGED",
-      "name": "deterministic Concept/ConceptAlignment contract and repository-bound reference validation",
       "merged_pr": 21,
       "reviewed_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
       "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
     },
     "H4a": {
       "status": "COMPLETE_MERGED",
-      "name": "shadow FTS5/BM25 evaluation",
       "merged_pr": 23,
       "reviewed_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
       "merge_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
-      "last_successful_ci_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
       "public_search_behavior": "EXACT_ONLY_UNCHANGED",
       "evidence_classification": "FTS_EVIDENCE_NOT_PROMISING",
-      "task_status": {
-        "1": "COMPLETE",
-        "2": "COMPLETE",
-        "3": "COMPLETE",
-        "4": "COMPLETE",
-        "5": "COMPLETE",
-        "6": "COMPLETE",
-        "7": "COMPLETE",
-        "8": "COMPLETE",
-        "9": "COMPLETE",
-        "10": "COMPLETE"
-      },
       "golden_query_set": {
         "dataset_id": "functional_analysis_h4a_v1",
         "query_count": 25,
         "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
-      },
-      "evaluation_summary": {
-        "exact": {
-          "hit_at_1": 0.8696,
-          "hit_at_10": 0.913,
-          "mrr": 0.8913
-        },
-        "fts_trigram_bm25_v1": {
-          "hit_at_1": 0.7391,
-          "hit_at_10": 0.913,
-          "mrr": 0.8188,
-          "fts_only_top10_recoveries": 0
-        },
-        "fts_unicode61_bm25_v1": {
-          "hit_at_10": 0.8261,
-          "mrr": 0.8043,
-          "fts_only_top10_recoveries": 0,
-          "exact_only_top10_recoveries": 2
-        }
       }
     }
   },
-  "separate_human_gates": [
-    "H3b",
-    "B4b",
-    "B5",
-    "StudyRecord book-version migration"
-  ],
-  "foundation_a": {
-    "status": "COMPLETE_MERGED",
-    "approved_design": "docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md",
-    "implementation_plan": "docs/superpowers/plans/2026-08-28-foundation-a-course-package.md",
-    "merged_pr": 13,
-    "merged_head": "f1eb4ebd144ccb233e5b8b74e97001af214c60bb",
-    "merge_commit": "82f0cbbcfe5078d304ca7c163b81d4eb01b515f4",
-    "completed_tasks": [
-      {
-        "task": 1,
-        "name": "Course Package v1 contract and schemas",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 2,
-        "name": "Legacy course manifest normalization",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 3,
-        "name": "Canonical artifact inventory and content identity",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 4,
-        "name": "Deterministic Course Package compiler",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 5,
-        "name": "Course Package validator",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 6,
-        "name": "Functional Analysis Golden Course gate",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 7,
-        "name": "Executable architecture fitness functions",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 8,
-        "name": "Compiler and validator CLI entry points",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 9,
-        "name": "Layer CI into FAST, PR FULL, and HEAVY gates",
-        "status": "COMPLETE"
-      },
-      {
-        "task": 10,
-        "name": "Exact-HEAD full regression, documentation state, and PR readiness",
-        "status": "COMPLETE"
-      }
-    ],
-    "next_task": null,
-    "canonical_book_mutation_allowed": false,
-    "runtime_consumer_migration_in_scope": false
+  "phase_1h": {
+    "status": "IMPLEMENTATION_IN_PROGRESS",
+    "design": "docs/superpowers/specs/2026-08-30-phase-1h-learning-slices-design.md",
+    "implementation_plan": "docs/superpowers/plans/2026-08-30-phase-1h-learning-slices.md",
+    "pr": 26,
+    "schema_version": "learning_slice_v1",
+    "task_status": {
+      "1": "COMPLETE",
+      "2": "COMPLETE",
+      "3": "COMPLETE",
+      "4": "COMPLETE",
+      "5": "COMPLETE",
+      "6": "COMPLETE",
+      "7": "COMPLETE",
+      "8": "RED_TESTS_ADDED_AWAITING_OBSERVATION",
+      "9": "PENDING",
+      "10": "PENDING",
+      "11": "PENDING"
+    },
+    "task7_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task7-practice-ui.md",
+    "task7_checkpoint_commit": "3896b0bc096df14f58c761034a48640040939d1b",
+    "task8_red_test_commit": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
+    "last_exact_green": {
+      "head": "a803f8f1446fb728a09ef031e318db18b21e78d1",
+      "runtime_reference_run": 33302247337,
+      "book_app_ui_run": 33302247332,
+      "web_tests": "81/81 PASS",
+      "typecheck": "PASS",
+      "production_build": "PASS",
+      "chromium": "12/12 PASS"
+    }
   },
   "golden_course": {
     "course_id": "functional_analysis_course",
@@ -173,6 +108,34 @@
     "structured_status": "STRUCTURED_COMPLETE",
     "runtime_status": "READY"
   },
+  "frozen_invariants": {
+    "public_search_qa": "EXACT_ONLY_UNCHANGED",
+    "study_record": {
+      "no_record": "not_started",
+      "in_progress": 0,
+      "completed": 100,
+      "schema_change_allowed": false
+    },
+    "section_session_storage_keys": [
+      "route",
+      "scrollY",
+      "expandedSourceIds",
+      "activeSourceId"
+    ],
+    "canonical_paths_read_only": [
+      "books/functional-analysis/**",
+      "courses/**"
+    ]
+  },
+  "separate_human_gates": [
+    "H3b",
+    "B4b",
+    "B5",
+    "StudyRecord book-version migration",
+    "multi-book Runtime consumer migration",
+    "Lecture authority",
+    "PR #26 merge"
+  ],
   "governance": {
     "global_entry": "Google Drive / 全项目",
     "security_policy": "SECURITY_POLICY.md",
@@ -183,15 +146,16 @@
     "decision_ledger": "docs/DECISION_LEDGER.md",
     "evaluation_ledger": "docs/EVALUATION_LEDGER.md",
     "handoff": "docs/HANDOFF.md",
+    "roadmap": "docs/ROADMAP.md",
     "preflight": "docs/PRE_FLIGHT_CHECKLIST.md",
     "artifact_manifest": "governance/artifact_manifest.json",
     "pending_sync": "governance/pending_sync.json"
   },
-  "external_reference_review": {
-    "status": "SOURCE_LEVEL_REVIEW_COMPLETE",
-    "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
-    "snapshot_sync_status": "PENDING_NON_BLOCKING"
+  "pending_sync": {
+    "blocking_count": 0,
+    "source": "governance/pending_sync.json",
+    "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
+  "next_step": "Observe and record the genuine Task 8 RED from the Learn grouping tests at the current Phase 1H head, then implement the minimum GREEN Learn Runtime/API projection and run focused plus exact-head regression. Do not start Task 9 until Task 8 is complete. Do not merge PR #26 without explicit PR-specific authorization."
 }
