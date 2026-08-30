@@ -624,7 +624,7 @@ Add App/API tests that `presentation.mode == "review"`, labels and IDs serialize
 python -m unittest tests.test_learning_slice_runtime app_tests.test_app_service app_tests.test_api -v
 ```
 
-Expected RED: Review presentation is still the minimal placeholder shape and lacks required preset membership/prompts.
+Expected RED: Review presentation is still the initial empty reference-safe structural Review projection and lacks required preset membership/prompts.
 
 Commit RED tests:
 
@@ -996,7 +996,7 @@ git commit -m "feat: render grouped Learn learning slice"
 
 ---
 
-## Task 10: Add isolation, real-Golden smoke coverage, and browser acceptance
+## Task 10: Add isolation, frozen real-Golden coverage, and browser acceptance
 
 **Files:**
 - Create: `tests/test_learning_slice_isolation.py`
@@ -1010,33 +1010,41 @@ git commit -m "feat: render grouped Learn learning slice"
 
 ### Frozen real-course fixtures for this plan
 
-The mandatory real section remains:
+The fixture selection below was performed during plan authoring from canonical read-only evidence. Tests must exercise the selected identities through Runtime/API product paths; structure JSON is selection evidence only, not a second product authority.
+
+Primary Section / Review fixture:
 
 ```text
 course_id = functional_analysis_course
 section_id = ch01_s01
 ```
 
-It is already the existing SectionLearning/Chromium Golden smoke section and contains real review-family source evidence (the existing browser acceptance already prefers `def_lp` when available).
+Reason: this is already the existing SectionLearning/Chromium Golden smoke Section and exposes real review-family source evidence including `def_lp`.
 
-For formula/theorem-heavy real Runtime coverage, freeze:
+Formula/theorem-heavy fixture:
 
 ```text
 section_id = ch01_s05_04
 ```
 
-Reason: the canonical `chunk_003a_structure.json` records Section 5.4 (`ch01_s05_04`) in the same source batch and includes definition/theorem/formula-bearing objects in its page range. The test must discover those through Runtime, never by importing the structure JSON as product authority.
+Reason: canonical `chunk_003a_structure.json` fixes Section 5.4 (`ch01_s05_04`) to PDF 42–46 and records definition/theorem/corollary objects with formula-bearing source evidence inside that Section page range.
 
-For Practice, do not fabricate a real section ID in the plan. The book audit proves exercise/problem records exist globally, but this planning session does not have a verified Section-level practice fixture identity from the Runtime contract. Therefore:
+Practice fixtures:
 
-- synthetic Runtime/App tests are authoritative for exact exercise/problem filter behavior;
-- the Chromium acceptance must deterministically scan course Sections through existing read-only API endpoints and pick the first Section in course navigation order whose `/practice` payload contains at least one item;
-- the test must assert that a match exists for the Structured Complete Golden Course and then exercise `practice_kind` filtering on that discovered Section;
-- the discovered value is test data only and is not written into canonical files.
+```text
+exercise_section_id = ch01_s08
+problem_section_id = ch01_s09
+```
 
-For figures, the book audit proves 22 structured figure records globally. Chromium acceptance must similarly scan Section `/learn` payloads in navigation order and select the first Section with a figure item; assert a match exists, then verify metadata/source-link rendering and absence of fabricated image pixels.
+Reason: canonical `chunk_004a_structure.json` fixes `ch01_s08` as “Exercises” (PDF 53–62) and `ch01_s09` as “Problems” (PDF 62–65), and records explicit `ch01_ex_*` exercise identities plus `ch01_prob_*` problem identities in those ranges. Product tests must obtain them through `SectionLearningRuntime.practice()` / the Practice endpoint, not by reading the structure file.
 
-This scan is deterministic because chapter/section navigation and mode payload ordering are deterministic, while avoiding an unsupported guessed fixture ID.
+Figure fixture:
+
+```text
+figure_section_id = ch01_s05_01
+```
+
+Reason: canonical `chunks/chunk_002_structure.json` fixes Section 5.1 (`ch01_s05_01`) to PDF 35–38 and records Figure 1 at PDF 36 and Figure 2 at PDF 37, both within that Section range. Product tests must resolve the figure item through the Learn/Preview Runtime paths and verify metadata/source navigation only.
 
 - [ ] **Step 1: Add failing isolation tests**
 
@@ -1053,7 +1061,7 @@ app.study
 
 Also assert the source contains no model-provider construction and that `runtime/retrieval.py` / `runtime/shadow_fts.py` are not modified by the Phase 1H diff.
 
-- [ ] **Step 2: Extend real Chromium tests**
+- [ ] **Step 2: Extend frozen Golden Runtime/API and real Chromium tests**
 
 Add acceptance scenarios covering:
 
@@ -1063,11 +1071,13 @@ Add acceptance scenarios covering:
 4. return and confirm mode/query/scroll/reveal state remains coherent;
 5. switch to Review and choose `one_minute`, then `five_minute`, then `full`;
 6. assert preset changes do not create additional StudyRecord identities for Review;
-7. discover the first real practice-bearing Section and exercise an available subtype filter;
-8. discover the first real figure-bearing Section and verify figure metadata/source navigation without an `<img>` fabricated by Phase 1H;
-9. mark one mode complete, reload, and confirm `completed/100` persists;
-10. verify existing scoped QA entry remains accessible and existing QA tests still pass;
-11. set viewport to exactly `390x844` and assert `document.documentElement.scrollWidth <= window.innerWidth` on Preview, Review, Practice, and Learn pages visited.
+7. open `ch01_s08` Practice, assert an `exercise` filter exists, select it, and verify every visible source ref is an exercise candidate;
+8. open `ch01_s09` Practice, assert a `problem` filter exists, select it, and verify every visible source ref is a problem candidate;
+9. open `ch01_s05_01` Learn/Preview, verify at least one figure reference resolves, verify metadata/source navigation, and verify Phase 1H did not fabricate an `<img>`;
+10. use `ch01_s05_04` in a real Runtime/API smoke assertion for theorem/formula-bearing presentation;
+11. mark one mode complete, reload, and confirm `completed/100` persists;
+12. verify existing scoped QA entry remains accessible and existing QA tests still pass;
+13. set viewport to exactly `390x844` and assert `document.documentElement.scrollWidth <= window.innerWidth` on Preview, Review, Practice, and Learn pages visited.
 
 Do not use elapsed-time assertions for the `1 分钟` / `5 分钟` labels; they are coverage presets, not timers.
 
