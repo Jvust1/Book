@@ -1,13 +1,13 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-08-29",
-  "repository": "Jvust1/Book",
+  "updated_date": "2026-08-30",
+  "repository": "Jvust2/Book",
   "default_branch": "main",
-  "active_branch": "main",
+  "active_branch": "design/h4a-shadow-fts5-bm25-20260829",
   "phase": "FOUNDATION_B_TRANSITION",
-  "status": "H3A_MERGED_READY_FOR_H4A",
-  "base_main_commit": "f69166568839b7038b0f0472baefcee34299fa17",
-  "last_verified_implementation_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
+  "status": "H4A_IMPLEMENTED_REVERIFYING_AFTER_IDENTITY_SYNC",
+  "base_main_commit": "f0f1951dff24e49e4eb25f968e208cdc69b7b577",
+  "last_verified_implementation_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
     "H0",
@@ -47,9 +47,30 @@
       "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
     },
     "H4a": {
-      "status": "NEXT_APPROVED_STAGE",
+      "status": "IMPLEMENTED_REVERIFYING_EXACT_HEAD_AFTER_IDENTITY_SYNC",
       "name": "shadow FTS5/BM25 evaluation",
-      "public_search_behavior": "EXACT_ONLY_UNCHANGED"
+      "draft_pr": 23,
+      "implementation_checkpoint_head": "745b478c460e65509a6319cd76c6ec015c223709",
+      "last_successful_ci_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
+      "public_search_behavior": "EXACT_ONLY_UNCHANGED",
+      "task_status": {
+        "1": "COMPLETE",
+        "2": "COMPLETE",
+        "3": "COMPLETE",
+        "4": "COMPLETE",
+        "5": "COMPLETE",
+        "6": "COMPLETE",
+        "7": "COMPLETE",
+        "8": "COMPLETE",
+        "9": "COMPLETE_AT_PRE_IDENTITY_SYNC_HEAD",
+        "10": "EXACT_HEAD_PASS_AT_PRE_IDENTITY_SYNC_HEAD_REVERIFY_REQUIRED"
+      },
+      "golden_query_set": {
+        "dataset_id": "functional_analysis_h4a_v1",
+        "query_count": 25,
+        "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
+      },
+      "ci_blocker": "The former GitHub-hosted runner outage is resolved. Runtime, Foundation B, and App gates passed at 969b8b0c8c8b1b50df8e19e6076036ac980855a1. A new exact-head verification is required only because this governance identity reconciliation changes the PR head."
     }
   },
   "separate_human_gates": [
@@ -111,6 +132,8 @@
     "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
-  "blocking_items": [],
-  "next_step": "Proceed to H4a shadow FTS5/BM25 evaluation through the shared H2 Retrieval boundary while keeping public Search/QA Exact-only. Define deterministic evaluation data, ranking/coverage metrics, provenance checks, failure semantics, and exact-head evidence before any later activation proposal. H3b, B4b, B5, and StudyRecord book-version migration remain separate human gates."
+  "blocking_items": [
+    "h4a_exact_head_reverification_after_book_identity_sync"
+  ],
+  "next_step": "Rerun or observe PR #23 exact-head Runtime, Foundation B, and App gates at the new head produced by the Book identity reconciliation. If all required jobs execute and pass, prepare PR #23 for review. Do not merge PR #23 without explicit user authorization for that specific PR."
 }
