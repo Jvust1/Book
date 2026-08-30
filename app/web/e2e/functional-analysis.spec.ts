@@ -544,3 +544,66 @@ test('real Functional Analysis narrow Section QA and source round trip avoid bod
     ),
   ).toBe(true)
 })
+
+test('Phase 1H real Learn presentation stays closed and round trips in Chromium', async ({
+  page,
+  request,
+}) => {
+  const learn = await sectionLearn(request)
+  const learnPresentation = (learn as ModeResponse & {
+    presentation?: {
+      mode: string
+      groups: Array<{
+        id: string
+        source_refs: Array<{ kind: string; source_id: string }>
+      }>
+    }
+  }).presentation
+
+  expect(learnPresentation?.mode).toBe('learn')
+  expect(learnPresentation).toBeTruthy()
+  if (!learnPresentation) return
+
+  const itemKeys = new Set(learn.items.map((item) => item.kind + ':' + item.source_id))
+  const groupIds = learnPresentation.groups.map((group) => group.id)
+  const order = ['definitions', 'theorem_family', 'formulas', 'examples', 'other_objects', 'figures', 'translations']
+  expect(groupIds).toEqual([...groupIds].sort((a, b) => order.indexOf(a) - order.indexOf(b)))
+
+  const presentationRefs = learnPresentation.groups.flatMap((group) => group.source_refs)
+  expect(presentationRefs.length).toBeGreaterThan(0)
+  for (const ref of presentationRefs) {
+    expect(itemKeys.has(ref.kind + ':' + ref.source_id)).toBe(true)
+  }
+
+  const sectionPath = '/courses/' + COURSE_ID + '/sections/' + SECTION_ID
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(sectionPath + '?mode=learn')
+  await expect(page.getByRole('heading', { name: '学习分组' })).toBeVisible()
+  await expect(page.locator('img')).toHaveCount(0)
+
+  const learnSourceLink = page.locator('a[href*="/sources/"]').first()
+  await expect(learnSourceLink).toBeVisible()
+  await learnSourceLink.click()
+  await expect(page.getByRole('heading', { name: '教材来源' })).toBeVisible()
+  await page.getByRole('button', { name: '返回学习' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=learn')
+
+  await page.getByRole('tab', { name: '复习' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=review&review_preset=full')
+  await expect(page.getByRole('button', { name: '1 分钟' })).toBeVisible()
+  await page.getByRole('button', { name: '1 分钟' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=review&review_preset=one_minute')
+  await page.getByRole('button', { name: '5 分钟' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=review&review_preset=five_minute')
+  await page.getByRole('button', { name: '完整复习' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=review&review_preset=full')
+
+  await page.getByRole('tab', { name: '刷题' }).click()
+  await expect(page).toHaveURL(BASE_URL + sectionPath + '?mode=practice&practice_kind=all')
+  await expect(page.getByRole('button', { name: '全部' })).toBeVisible()
+
+  const fitsViewport = await page.evaluate(
+    () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+  )
+  expect(fitsViewport).toBe(true)
+})
