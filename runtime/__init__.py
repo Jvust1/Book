@@ -14,6 +14,14 @@ from .course_runtime import (
     CourseRuntimeBlockedError,
     CourseRuntimeError,
 )
+from .learning_slice_runtime import (
+    LEARNING_SLICE_SCHEMA_VERSION,
+    LearningSliceIntegrityError,
+    LearningSliceModeError,
+    LearningSliceProjection,
+    LearningSliceRuntime,
+    LearningSliceRuntimeError,
+)
 from .library_runtime import (
     LibraryCourseResolutionError,
     LibraryManifestError,
@@ -101,6 +109,12 @@ __all__ = [
     "CourseRuntime",
     "CourseRuntimeBlockedError",
     "CourseRuntimeError",
+    "LEARNING_SLICE_SCHEMA_VERSION",
+    "LearningSliceIntegrityError",
+    "LearningSliceModeError",
+    "LearningSliceProjection",
+    "LearningSliceRuntime",
+    "LearningSliceRuntimeError",
     "LibraryCourseResolutionError",
     "LibraryManifestError",
     "LibraryRuntime",
