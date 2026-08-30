@@ -10,7 +10,7 @@
 - 稳定集成分支：`main`
 - Phase 1H implementation base：`2675d2cecab63b28b6ab81a4554e9b7f010afd72`
 - 当前实现分支：`design/phase-1h-learning-slices-20260830`
-- 当前分支 HEAD：`4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
+- 最新实现/测试变更 HEAD（本轮治理同步前）：`4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
 - 当前 PR：`#26`，OPEN / DRAFT / UNMERGED / mergeable
 - 当前阶段：`PHASE_1H_IMPLEMENTATION`
 - 当前状态：Tasks 1–7 COMPLETE；Task 8 RED tests 已加入，真实 RED observation 尚待执行；Tasks 9–11 PENDING
@@ -244,7 +244,7 @@ Learn presentation 只放 source refs，不复制正文。`supplementary` 与 `l
 
 ## 12. 当前唯一下一步
 
-1. 在当前 Task 8 RED test HEAD 上实际运行 focused Learn grouping tests，确认真实 RED 与批准合同一致。
+1. 在当前 Task 8 RED test implementation head 上实际运行 focused Learn grouping tests，确认真实 RED 与批准合同一致。
 2. 记录真实 RED 后，只实现最小 GREEN `LearningSliceRuntime.learn()` Runtime/API grouping。
 3. 运行 focused regression 与 exact-head CI；如果失败，按 TDD/系统调试修复，不降低测试标准。
 4. Task 8 完整 GREEN 后才进入 Task 9 Learn UI。

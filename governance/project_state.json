@@ -7,7 +7,7 @@
   "phase": "PHASE_1H_IMPLEMENTATION",
   "status": "TASK7_COMPLETE_TASK8_RED_TESTS_ADDED",
   "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
-  "current_branch_head": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
+  "latest_implementation_change_head": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
   "last_verified_implementation_head": "a803f8f1446fb728a09ef031e318db18b21e78d1",
   "current_pr": {
     "number": 26,
@@ -157,5 +157,5 @@
     "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Observe and record the genuine Task 8 RED from the Learn grouping tests at the current Phase 1H head, then implement the minimum GREEN Learn Runtime/API projection and run focused plus exact-head regression. Do not start Task 9 until Task 8 is complete. Do not merge PR #26 without explicit PR-specific authorization."
+  "next_step": "Observe and record the genuine Task 8 RED from the Learn grouping tests at the current Phase 1H implementation/test head, then implement the minimum GREEN Learn Runtime/API projection and run focused plus exact-head regression. Do not start Task 9 until Task 8 is complete. Do not merge PR #26 without explicit PR-specific authorization."
 }
