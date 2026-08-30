@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Book Recorder</string>
+    <string name="recording_channel">Active lecture recording</string>
+    <string name="start_recording">Start recording</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="stop">Stop</string>
+    <string name="title_hint">Recording title (optional)</string>
+    <string name="course_hint">Course reference (optional)</string>
+    <string name="section_hint">Section reference (optional)</string>
+    <string name="note_hint">Note (optional)</string>
+    <string name="state_format">State: %1$s</string>
+    <string name="state_permission_denied">State: Microphone permission denied</string>
+    <string name="saved_recordings">Saved recordings</string>
+    <string name="play">Play / Pause</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="edit_recording">Edit recording metadata</string>
+    <string name="share_recording">Share original recording</string>
+    <string name="microphone_permission_required">Microphone permission is required to record.</string>
+    <string name="library_read_failed">Could not reconcile the recording library.</string>
+    <string name="audio_file_missing">The original audio file is missing.</string>
+    <string name="playback_failed">Could not play this recording.</string>
+</resources>
