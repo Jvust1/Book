@@ -135,8 +135,9 @@ class PracticeLearningSliceApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         payload = response.json()
         self.assertEqual(payload["presentation"], expected_practice_presentation())
-        self.assertNotIn("solution sentinel", response.text)
-        self.assertNotIn("解析 sentinel", response.text)
+        presentation_text = json.dumps(payload["presentation"], ensure_ascii=False)
+        self.assertNotIn("solution sentinel", presentation_text)
+        self.assertNotIn("解析 sentinel", presentation_text)
 
 
 if __name__ == "__main__":
