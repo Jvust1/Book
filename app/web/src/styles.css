@@ -556,3 +556,23 @@ textarea {
     padding: 20px;
   }
 }
+
+
+.learn-groups {
+  display: grid;
+  gap: 24px;
+}
+
+.learn-group {
+  display: grid;
+  gap: 12px;
+}
+
+.learn-group > h2 {
+  margin: 0;
+}
+
+.figure-reference-card,
+.translation-reference-card {
+  gap: 12px;
+}

@@ -10,7 +10,7 @@ import type {
   SectionResponse,
   StudyRecord,
 } from '../api/types'
-import { LearningObjectCard } from '../components/LearningObjectCard'
+import { LearnLearningSlice } from '../components/LearnLearningSlice'
 import { ModeTabs } from '../components/ModeTabs'
 import { PracticeLearningSlice } from '../components/PracticeLearningSlice'
 import { PreviewLearningSlice } from '../components/PreviewLearningSlice'
@@ -469,20 +469,21 @@ export function SectionPage() {
         )
       ) : null}
 
-      {payload && mode === 'learn' && payload.items.length > 0 ? (
-        <div className="learning-list">
-          {payload.items.map((item) => (
-            <LearningObjectCard
-              courseId={courseId}
-              expanded={expandedSourceIds.includes(item.source_id)}
-              item={item}
-              key={`${item.kind}:${item.source_id}`}
-              mode={mode}
-              onBeforeSourceNavigate={() => saveBeforeSourceNavigation(item.source_id)}
-              onExpandedChange={(expanded) => setSourceExpanded(item.source_id, expanded)}
-            />
-          ))}
-        </div>
+      {payload && mode === 'learn' ? (
+        payload.presentation.mode === 'learn' ? (
+          <LearnLearningSlice
+            courseId={courseId}
+            expandedSourceIds={expandedSourceIds}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onExpandedChange={setSourceExpanded}
+            presentation={payload.presentation}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
       ) : null}
     </section>
   )
