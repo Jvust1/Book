@@ -15,6 +15,7 @@ PRACTICE_KIND_IDS = ("all", "exercise", "problem")
 _THEOREM_FAMILY_TYPES = frozenset({"theorem", "proposition", "lemma", "corollary"})
 _OBJECTIVE_CATEGORY_ORDER = ("definition", "theorem_family", "formula", "example", "practice")
 _QUICK_CHECK_CATEGORY_ORDER = ("definition", "theorem_family", "formula")
+_REVIEW_CATEGORY_ORDER = ("definition", "theorem_family", "formula")
 
 
 class LearningSliceRuntimeError(RuntimeError):
@@ -86,16 +87,45 @@ class LearningSliceRuntime:
         return self._projection(payload)
 
     def review(self) -> LearningSliceProjection:
+        rows = self._review_rows()
+        one_minute = self._select_diverse(
+            rows,
+            category_order=_REVIEW_CATEGORY_ORDER,
+            cap=3,
+        )
+        five_minute = self._select_diverse(
+            rows,
+            category_order=_REVIEW_CATEGORY_ORDER,
+            cap=5,
+        )
         return self._projection(
             {
                 "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
                 "mode": "review",
                 "presets": [
-                    {"id": "one_minute", "label": "1 分钟", "source_refs": []},
-                    {"id": "five_minute", "label": "5 分钟", "source_refs": []},
-                    {"id": "full", "label": "完整复习", "source_refs": []},
+                    {
+                        "id": "one_minute",
+                        "label": "1 分钟",
+                        "source_refs": [
+                            self._source_ref("object", row.get("id")) for row in one_minute
+                        ],
+                    },
+                    {
+                        "id": "five_minute",
+                        "label": "5 分钟",
+                        "source_refs": [
+                            self._source_ref("object", row.get("id")) for row in five_minute
+                        ],
+                    },
+                    {
+                        "id": "full",
+                        "label": "完整复习",
+                        "source_refs": [
+                            self._source_ref("object", row.get("id")) for row in rows
+                        ],
+                    },
                 ],
-                "prompts": [],
+                "prompts": [self._review_prompt(row) for row in rows],
             }
         )
 
@@ -175,6 +205,23 @@ class LearningSliceRuntime:
         object_type = self._normalize_type(row)
         return object_type or "object"
 
+    def _review_rows(self) -> list[dict[str, Any]]:
+        by_id = {
+            self._source_pair("object", row.get("id"))[1]: row for row in self._objects
+        }
+        rows: list[dict[str, Any]] = []
+        for item in self._learning.review()["items"]:
+            if str(item.get("kind") or "").strip() != "object":
+                raise LearningSliceIntegrityError("Review candidate must be an object source")
+            source_id = self._source_pair("object", item.get("source_id"))[1]
+            row = by_id.get(source_id)
+            if row is None:
+                raise LearningSliceIntegrityError(
+                    f"Review candidate source is unavailable: object:{source_id}"
+                )
+            rows.append(row)
+        return rows
+
     def _select_diverse(
         self,
         rows: list[dict[str, Any]],
@@ -237,6 +284,24 @@ class LearningSliceRuntime:
         if category not in templates:
             raise LearningSliceIntegrityError(
                 f"Unsupported quick-check category for source {row.get('id')!r}"
+            )
+        return {
+            "text": templates[category].format(label=label),
+            "derivation": "deterministic_template",
+            "source_ref": self._source_ref("object", row.get("id")),
+        }
+
+    def _review_prompt(self, row: dict[str, Any]) -> dict[str, object]:
+        category = self._category(row)
+        label = self._label(row)
+        templates = {
+            "definition": "先回忆「{label}」的定义，再显示教材内容。",
+            "theorem_family": "先回忆「{label}」的条件和结论，再显示教材内容。",
+            "formula": "先尝试写出「{label}」，再显示教材公式。",
+        }
+        if category not in templates:
+            raise LearningSliceIntegrityError(
+                f"Unsupported review category for source {row.get('id')!r}"
             )
         return {
             "text": templates[category].format(label=label),
