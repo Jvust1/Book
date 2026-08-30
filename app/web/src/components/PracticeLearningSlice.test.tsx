@@ -82,9 +82,7 @@ function renderPractice(
     items: [exerciseItem, problemItem],
     presentation,
     selectedFilterId: 'all',
-    expandedSourceIds: [],
     onFilterChange: vi.fn(),
-    onExpandedChange: vi.fn(),
     onBeforeSourceNavigate: vi.fn(),
     ...overrides,
   }
@@ -120,6 +118,7 @@ describe('PracticeLearningSlice', () => {
     renderPractice({ selectedFilterId: 'exercise' })
 
     expect(screen.getByText('练习甲')).toBeInTheDocument()
+    expect(screen.getByText('练习甲教材正文。')).toBeInTheDocument()
     expect(screen.queryByText('习题乙')).not.toBeInTheDocument()
     expect(screen.getByText('显示 1 / 2')).toBeInTheDocument()
   })
@@ -132,18 +131,10 @@ describe('PracticeLearningSlice', () => {
     expect(screen.queryByRole('button', { name: /正确|错误|提交答案/ })).not.toBeInTheDocument()
   })
 
-  it('uses page-level expansion and canonical source navigation only', async () => {
+  it('preserves canonical source navigation through the supplied callback', async () => {
     const user = userEvent.setup()
-    const onExpandedChange = vi.fn()
     const onBeforeSourceNavigate = vi.fn()
-    renderPractice({
-      selectedFilterId: 'exercise',
-      onExpandedChange,
-      onBeforeSourceNavigate,
-    })
-
-    await user.click(screen.getByRole('button', { name: '收起教材内容' }))
-    expect(onExpandedChange).toHaveBeenCalledWith('ex_practice', false)
+    renderPractice({ selectedFilterId: 'exercise', onBeforeSourceNavigate })
 
     await user.click(screen.getByRole('link', { name: '查看教材来源' }))
     expect(onBeforeSourceNavigate).toHaveBeenCalledWith('ex_practice')
