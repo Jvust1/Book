@@ -130,12 +130,52 @@ class LearningSliceRuntime:
         )
 
     def practice(self) -> LearningSliceProjection:
+        rows = self._practice_rows()
+        exercises = [row for row in rows if self._normalize_type(row) == "exercise"]
+        problems = [row for row in rows if self._normalize_type(row) == "problem"]
+
+        filters: list[dict[str, object]] = [
+            {
+                "id": "all",
+                "label": "全部",
+                "source_refs": [
+                    self._source_ref("object", row.get("id")) for row in rows
+                ],
+            }
+        ]
+        if exercises:
+            filters.append(
+                {
+                    "id": "exercise",
+                    "label": "练习",
+                    "source_refs": [
+                        self._source_ref("object", row.get("id")) for row in exercises
+                    ],
+                }
+            )
+        if problems:
+            filters.append(
+                {
+                    "id": "problem",
+                    "label": "习题",
+                    "source_refs": [
+                        self._source_ref("object", row.get("id")) for row in problems
+                    ],
+                }
+            )
+
         return self._projection(
             {
                 "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
                 "mode": "practice",
-                "filters": [{"id": "all", "label": "全部"}],
-                "items": [],
+                "filters": filters,
+                "items": [
+                    {
+                        "source_ref": self._source_ref("object", row.get("id")),
+                        "solution_status": "unavailable",
+                    }
+                    for row in rows
+                ],
             }
         )
 
@@ -218,6 +258,27 @@ class LearningSliceRuntime:
             if row is None:
                 raise LearningSliceIntegrityError(
                     f"Review candidate source is unavailable: object:{source_id}"
+                )
+            rows.append(row)
+        return rows
+
+    def _practice_rows(self) -> list[dict[str, Any]]:
+        by_id = {
+            self._source_pair("object", row.get("id"))[1]: row for row in self._objects
+        }
+        rows: list[dict[str, Any]] = []
+        for item in self._learning.practice()["items"]:
+            if str(item.get("kind") or "").strip() != "object":
+                raise LearningSliceIntegrityError("Practice candidate must be an object source")
+            source_id = self._source_pair("object", item.get("source_id"))[1]
+            row = by_id.get(source_id)
+            if row is None:
+                raise LearningSliceIntegrityError(
+                    f"Practice candidate source is unavailable: object:{source_id}"
+                )
+            if self._normalize_type(row) not in {"exercise", "problem"}:
+                raise LearningSliceIntegrityError(
+                    f"Practice candidate has unsupported type: object:{source_id}"
                 )
             rows.append(row)
         return rows
