@@ -1,6 +1,6 @@
 # Book 当前状态
 
-更新时间：2026-08-30 16:50 +08
+更新时间：2026-08-30 17:28 +08
 
 > 本文件只维护当前有效状态与下一步；历史细节通过 Git 历史、Decision/Evaluation Ledger 和独立 checkpoint 保留。若与旧聊天、旧 Drive CURRENT 或本文件的历史版本冲突，以当前分支的治理状态、已批准 Phase 1H Spec/Plan 和可回读验证证据为准。
 
@@ -10,11 +10,11 @@
 - 稳定集成分支：`main`
 - Phase 1H implementation base：`2675d2cecab63b28b6ab81a4554e9b7f010afd72`
 - 当前实现分支：`design/phase-1h-learning-slices-20260830`
-- 最新实现/测试变更 HEAD（本轮治理同步前）：`4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
+- 最新实现/测试变更 HEAD：`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 - 当前 PR：`#26`，OPEN / DRAFT / UNMERGED / mergeable
 - 当前阶段：`PHASE_1H_IMPLEMENTATION`
-- 当前状态：Tasks 1–7 COMPLETE；Task 8 RED tests 已加入，真实 RED observation 尚待执行；Tasks 9–11 PENDING
-- 最后一个 exact-head 全绿实现：`a803f8f1446fb728a09ef031e318db18b21e78d1`
+- 当前状态：Tasks 1–8 COMPLETE；Tasks 9–11 PENDING
+- 最后一个 exact-head 全绿实现：`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 - PR #26 不得自动合并；只有用户明确说“合并 PR #26”并且最终 exact-head gate 满足时才进入合并。
 
 已批准依赖序列：
@@ -62,7 +62,7 @@ React focused learning-slice components
 | 5 | Review UI | COMPLETE |
 | 6 | Practice Runtime/API | COMPLETE |
 | 7 | Practice UI | COMPLETE |
-| 8 | Learn type-aware grouping Runtime/API | RED_TESTS_ADDED_AWAITING_OBSERVATION |
+| 8 | Learn type-aware grouping Runtime/API | COMPLETE |
 | 9 | Learn grouped UI | PENDING |
 | 10 | Isolation + frozen Golden + Chromium acceptance | PENDING |
 | 11 | Exact-head regression + canonical-diff gate + PR readiness | PENDING |
@@ -72,11 +72,13 @@ Task 7 durable checkpoint：
 - `docs/superpowers/checkpoints/2026-08-30-phase-1h-task7-practice-ui.md`
 - checkpoint commit：`3896b0bc096df14f58c761034a48640040939d1b`
 
-Task 8 当前 RED test commit：
+Task 8 GREEN checkpoint：
 
-- `4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
-- tests 已定义 Learn 互斥分组、组内 source order、空组省略、theorem-with-formula 不重复进 formula group、figure/translation 顺序、extension unavailable、无正文复制与 closure。
-- 尚未把“RED 已观察”写成成果；下一动作是实际运行 focused tests 并记录真实失败。
+- RED test commit：`4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
+- 真实 RED：Runtime 全量发现 345 tests，4 failures + 2 errors，失败集中在 `LearningSliceRuntime.learn()` 的空 groups/缺失分组。
+- GREEN implementation commit：`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+- Learn groups 已按固定顺序互斥分组；只输出 source refs；theorem-with-formula 不重复进 formulas；空组省略；extensions 保持 unavailable。
+- 精确 HEAD CI：Runtime Reference 3.11/3.12/3.13 全绿（345 tests）；Book App UI 全绿（web 81/81、App Runtime 345、focused 147、full App 109、Chromium 12/12）。
 
 ## 4. Task 7 已交付行为
 
@@ -97,19 +99,19 @@ Practice 已从通用平铺卡片升级为 source-backed filter workflow：
 
 已验证实现 HEAD：
 
-`a803f8f1446fb728a09ef031e318db18b21e78d1`
+`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 
 GitHub Actions：
 
-- Runtime Reference Tests run `33302247337`：SUCCESS
-- Book App UI Tests run `33302247332`：SUCCESS
-- `app-api`：full Runtime discovery / canonical readiness / App API + Search/QA/StudyRecord / full App discovery 全绿
-- `web-client`：81 / 81 PASS
+- Runtime Reference Tests run `33304001568`：SUCCESS（Python 3.11 / 3.12 / 3.13；每个矩阵 345 tests）
+- Book App UI Tests run `33304001491`：SUCCESS
+- `app-api`：Runtime 345、focused App/API/Search/QA/StudyRecord 147、full App 109 全绿
+- `web-client`：16 files / 81 tests PASS
 - TypeScript typecheck：PASS
 - production build：PASS
 - real Chromium acceptance：12 / 12 PASS
 
-Task 8 RED 测试提交位于该已验证 GREEN 之后，因此 `4b03...` 当前不能被描述为新的 GREEN checkpoint。
+Task 8 已完成；下一普通步骤是 Task 9 Learn grouped UI。PR #26 仍保持 Draft / unmerged。
 
 ## 6. Golden Course / Runtime 基线
 
@@ -244,8 +246,7 @@ Learn presentation 只放 source refs，不复制正文。`supplementary` 与 `l
 
 ## 12. 当前唯一下一步
 
-1. 在当前 Task 8 RED test implementation head 上实际运行 focused Learn grouping tests，确认真实 RED 与批准合同一致。
-2. 记录真实 RED 后，只实现最小 GREEN `LearningSliceRuntime.learn()` Runtime/API grouping。
-3. 运行 focused regression 与 exact-head CI；如果失败，按 TDD/系统调试修复，不降低测试标准。
-4. Task 8 完整 GREEN 后才进入 Task 9 Learn UI。
-5. 最终 Task 11 通过后才能把 PR #26 从 Draft 推进到 review readiness；PR merge 仍需独立、明确的 `合并 PR #26` 授权。
+1. 进入 Task 9：实现 source-backed、互斥分组的 Learn grouped UI。
+2. 先为 Learn UI 写 focused RED tests，再做最小 GREEN；保持 `learning_slice_v1`、现有 Source round-trip 与 StudyRecord 语义不变。
+3. Task 9 GREEN 后进入 Task 10 isolation + frozen Golden + Chromium acceptance。
+4. Task 11 exact-head gate 通过后才能把 PR #26 推进到 review readiness；PR merge 仍需独立、明确的 `合并 PR #26` 授权。

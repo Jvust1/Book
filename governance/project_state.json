@@ -5,10 +5,10 @@
   "default_branch": "main",
   "active_branch": "design/phase-1h-learning-slices-20260830",
   "phase": "PHASE_1H_IMPLEMENTATION",
-  "status": "TASK7_COMPLETE_TASK8_RED_TESTS_ADDED",
+  "status": "TASK8_COMPLETE_TASK9_PENDING",
   "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
-  "latest_implementation_change_head": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
-  "last_verified_implementation_head": "a803f8f1446fb728a09ef031e318db18b21e78d1",
+  "latest_implementation_change_head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
+  "last_verified_implementation_head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
   "current_pr": {
     "number": 26,
     "state": "OPEN",
@@ -79,7 +79,7 @@
       "5": "COMPLETE",
       "6": "COMPLETE",
       "7": "COMPLETE",
-      "8": "RED_TESTS_ADDED_AWAITING_OBSERVATION",
+      "8": "COMPLETE",
       "9": "PENDING",
       "10": "PENDING",
       "11": "PENDING"
@@ -88,14 +88,16 @@
     "task7_checkpoint_commit": "3896b0bc096df14f58c761034a48640040939d1b",
     "task8_red_test_commit": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
     "last_exact_green": {
-      "head": "a803f8f1446fb728a09ef031e318db18b21e78d1",
-      "runtime_reference_run": 33302247337,
-      "book_app_ui_run": 33302247332,
+      "head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
+      "runtime_reference_run": 33304001568,
+      "book_app_ui_run": 33304001491,
       "web_tests": "81/81 PASS",
       "typecheck": "PASS",
       "production_build": "PASS",
       "chromium": "12/12 PASS"
-    }
+    },
+    "task8_green_implementation_commit": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
+    "task8_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task8-learn-grouping.md"
   },
   "golden_course": {
     "course_id": "functional_analysis_course",
@@ -157,5 +159,5 @@
     "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Observe and record the genuine Task 8 RED from the Learn grouping tests at the current Phase 1H implementation/test head, then implement the minimum GREEN Learn Runtime/API projection and run focused plus exact-head regression. Do not start Task 9 until Task 8 is complete. Do not merge PR #26 without explicit PR-specific authorization."
+  "next_step": "Start Task 9 Learn grouped UI with focused RED tests, then implement the minimum source-backed grouped presentation. Do not start Task 10 until Task 9 is complete. Do not merge PR #26 without explicit PR-specific authorization."
 }

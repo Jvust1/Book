@@ -1,6 +1,6 @@
 # Book Handoff
 
-Updated: 2026-08-30 16:50 +08
+Updated: 2026-08-30 17:28 +08
 
 ## Start here
 
@@ -16,10 +16,10 @@ Updated: 2026-08-30 16:50 +08
 - Phase 1H base: `2675d2cecab63b28b6ab81a4554e9b7f010afd72`
 - Active branch: `design/phase-1h-learning-slices-20260830`
 - Active PR: `#26` — OPEN / DRAFT / UNMERGED / mergeable
-- Current branch HEAD before this governance sync: `4b03a40398dbbe23c3fe57f5750299f27b5c5e0e`
-- Last exact-head GREEN implementation: `a803f8f1446fb728a09ef031e318db18b21e78d1`
-- Current stage: Phase 1H Task 8 — Learn Runtime/API grouping
-- Current Task 8 state: RED tests added; genuine RED observation not yet claimed
+- Latest implementation head before this governance sync: `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+- Last exact-head GREEN implementation: `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+- Current stage: Phase 1H Task 9 — Learn grouped UI
+- Current Task 8 state: GREEN and verified on exact implementation head `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 
 PR #26 must remain unmerged unless the user explicitly authorizes `合并 PR #26` after final readiness.
 
@@ -50,7 +50,7 @@ Task 4  Review Runtime/API                                     COMPLETE
 Task 5  Review UI                                              COMPLETE
 Task 6  Practice Runtime/API                                   COMPLETE
 Task 7  Practice UI                                            COMPLETE
-Task 8  Learn type-aware grouping Runtime/API                  RED_TESTS_ADDED_AWAITING_OBSERVATION
+Task 8  Learn type-aware grouping Runtime/API                  COMPLETE
 Task 9  Learn grouped UI                                       PENDING
 Task 10 isolation + frozen Golden + Chromium                   PENDING
 Task 11 exact-head regression + canonical-diff + PR readiness  PENDING
@@ -60,19 +60,18 @@ Task 11 exact-head regression + canonical-diff + PR readiness  PENDING
 
 Verified implementation head:
 
-`a803f8f1446fb728a09ef031e318db18b21e78d1`
+`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 
 Evidence:
 
-- Runtime Reference Tests run `33302247337`: SUCCESS
-- Book App UI Tests run `33302247332`: SUCCESS
-- app-api full regression/readiness: PASS
-- web tests: 81 / 81 PASS
-- TypeScript typecheck: PASS
-- production build: PASS
-- real Chromium acceptance: 12 / 12 PASS
+- Runtime Reference Tests run `33304001568`: SUCCESS on Python 3.11 / 3.12 / 3.13; each matrix ran 345 tests.
+- Book App UI Tests run `33304001491`: SUCCESS.
+- app-api: Runtime 345, focused 147, full App 109: PASS.
+- web-client: 16 files / 81 tests: PASS.
+- TypeScript typecheck and production build: PASS.
+- real Chromium acceptance: 12 / 12 PASS.
 
-Do not transfer that GREEN claim to later Task 8 head `4b03...`; the Task 8 tests were committed afterward.
+Task 8 is GREEN and the next ordinary step is Task 9 Learn grouped UI. PR #26 remains Draft / unmerged.
 
 ## Task 7 product checkpoint
 
@@ -126,13 +125,11 @@ Rules:
 
 ## Next exact actions
 
-1. Run the focused Task 8 Runtime/App/API tests at the current branch head.
-2. Observe and record the genuine RED. The current production `learn()` still emits empty `groups`, so expected failures must be checked from real test output rather than asserted from memory.
-3. Implement only the minimum GREEN grouping projection required by the accepted contract.
-4. Run focused regression, full Runtime/App CI and exact-head verification.
-5. Only after Task 8 GREEN proceed to Task 9 UI.
-
-If any test fails for an unexpected reason, use root-cause debugging; do not weaken or rewrite the test to match an incorrect implementation.
+1. Start Task 9 Learn grouped UI from the approved plan.
+2. Write focused Learn UI RED tests first; then implement the minimum source-backed grouped presentation.
+3. Run focused web/API/runtime regression and keep `learning_slice_v1`, Source round-trip, Search/QA Exact-only, and StudyRecord invariants unchanged.
+4. After Task 9 GREEN, proceed to Task 10 isolation + frozen Golden + Chromium acceptance.
+5. Keep PR #26 Draft/unmerged; only an explicit `合并 PR #26` may authorize a later merge.
 
 ## Frozen product invariants
 

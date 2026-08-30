@@ -1,6 +1,6 @@
 # Book 开发路线图
 
-> 状态同步：2026-08-30 16:50 +08  
+> 状态同步：2026-08-30 17:28 +08  
 > 当前执行权威：`governance/project_state.json` + `docs/CURRENT_STATE.md` + 已批准 Phase Spec/Plan。历史路线与详细阶段证据保存在 Git 历史、Ledger 和对应 PR/checkpoint 中。
 
 ## 当前总状态
@@ -22,9 +22,9 @@ STRUCTURED_COMPLETE / Runtime READY
 - branch `design/phase-1h-learning-slices-20260830`
 - PR #26 OPEN / DRAFT / UNMERGED
 - Tasks 1–7 COMPLETE
-- Task 8 Learn Runtime/API RED tests added; genuine RED observation pending
+- Task 8 Learn Runtime/API grouping COMPLETE at `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 - Tasks 9–11 PENDING
-- last exact GREEN `a803f8f1446fb728a09ef031e318db18b21e78d1`
+- last exact GREEN `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 
 ## 已完成阶段
 
@@ -114,7 +114,7 @@ Goal：在不改变教材 authority、Search/QA、StudyRecord 或冻结浏览器
 - [x] Task 5 — Review preset recall UI
 - [x] Task 6 — Practice Runtime/API filters + explicit no-solution state
 - [x] Task 7 — Practice filter UI
-- [ ] Task 8 — Learn type-aware grouping Runtime/API — **RED tests added; observation pending**
+- [x] Task 8 — Learn type-aware grouping Runtime/API
 - [ ] Task 9 — grouped Learn UI
 - [ ] Task 10 — isolation + frozen real-Golden + browser acceptance
 - [ ] Task 11 — exact-head regression + canonical-diff gate + PR readiness
@@ -214,23 +214,24 @@ Every item above requires its own approved design/gate when reached; Phase 1H mu
 
 ## Current verification baseline
 
-Last exact GREEN implementation head：`a803f8f1446fb728a09ef031e318db18b21e78d1`
+Last exact GREEN implementation head：`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
 
 ```text
-Runtime Reference Tests 33302247337    SUCCESS
-Book App UI Tests 33302247332          SUCCESS
+Runtime Reference Tests 33304001568    SUCCESS (3.11/3.12/3.13; 345 tests each)
+Book App UI Tests 33304001491          SUCCESS
 Web tests                              81 / 81 PASS
+App focused tests                      147 PASS
+Full App discovery                    109 PASS
 TypeScript typecheck                   PASS
 Production build                       PASS
 Chromium acceptance                    12 / 12 PASS
 ```
 
-Current Task 8 RED-test head `4b03a403...` is newer than this checkpoint and is not yet a GREEN baseline.
+Task 8 is now GREEN on implementation head `7a29a74cf97ea593de17edc8a14ef2b1989bd564`; next is Task 9 Learn grouped UI.
 
 ## 当前唯一下一步
 
-1. 在 Task 8 当前 RED-test head 上实际运行 Learn grouping focused tests并记录真实 RED。
-2. 最小实现 `LearningSliceRuntime.learn()` 的互斥 source-ref grouping。
-3. 跑 focused + full exact-head regression。
-4. Task 8 GREEN 后进入 Task 9。
-5. Task 11 最终 gate 通过后才把 PR #26 推进到 review readiness；合并仍需要明确 `合并 PR #26` 授权。
+1. 进入 Task 9：先写 Learn grouped UI focused RED tests。
+2. 最小实现 source-backed、互斥分组的 Learn UI，保持现有 `learning_slice_v1`、Source round-trip 与 StudyRecord 语义。
+3. Task 9 GREEN 后进入 Task 10 isolation + frozen Golden + Chromium acceptance。
+4. Task 11 exact-head gate 通过后才推进 PR #26 review readiness；合并仍需明确 `合并 PR #26` 授权。
