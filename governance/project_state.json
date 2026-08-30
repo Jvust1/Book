@@ -5,10 +5,10 @@
   "default_branch": "main",
   "active_branch": "design/phase-1h-learning-slices-20260830",
   "phase": "PHASE_1H_IMPLEMENTATION",
-  "status": "TASK8_COMPLETE_TASK9_PENDING",
+  "status": "TASK9_COMPLETE_TASK10_PENDING",
   "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
-  "latest_implementation_change_head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
-  "last_verified_implementation_head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
+  "latest_implementation_change_head": "5a64e7b58d9d97af81de8dd5564306124af54f21",
+  "last_verified_implementation_head": "74c2e00b0e279b4cd3096783741ee0aada5a6b6c",
   "current_pr": {
     "number": 26,
     "state": "OPEN",
@@ -80,7 +80,7 @@
       "6": "COMPLETE",
       "7": "COMPLETE",
       "8": "COMPLETE",
-      "9": "PENDING",
+      "9": "COMPLETE",
       "10": "PENDING",
       "11": "PENDING"
     },
@@ -88,16 +88,18 @@
     "task7_checkpoint_commit": "3896b0bc096df14f58c761034a48640040939d1b",
     "task8_red_test_commit": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
     "last_exact_green": {
-      "head": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
-      "runtime_reference_run": 33304001568,
-      "book_app_ui_run": 33304001491,
-      "web_tests": "81/81 PASS",
+      "head": "74c2e00b0e279b4cd3096783741ee0aada5a6b6c",
+      "runtime_reference_run": 33304524899,
+      "book_app_ui_run": 33304524902,
+      "web_tests": "87/87 PASS",
       "typecheck": "PASS",
       "production_build": "PASS",
       "chromium": "12/12 PASS"
     },
     "task8_green_implementation_commit": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
-    "task8_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task8-learn-grouping.md"
+    "task8_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task8-learn-grouping.md",
+    "task9_ui_implementation_commit": "5a64e7b58d9d97af81de8dd5564306124af54f21",
+    "task9_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task9-learn-ui.md"
   },
   "golden_course": {
     "course_id": "functional_analysis_course",
@@ -159,5 +161,5 @@
     "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Start Task 9 Learn grouped UI with focused RED tests, then implement the minimum source-backed grouped presentation. Do not start Task 10 until Task 9 is complete. Do not merge PR #26 without explicit PR-specific authorization."
+  "next_step": "Start Task 10 isolation tests and frozen Golden/Chromium acceptance with genuine RED observation. Do not start Task 11 until Task 10 is complete. Do not merge PR #26 without explicit PR-specific authorization."
 }

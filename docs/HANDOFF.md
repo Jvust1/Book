@@ -1,6 +1,6 @@
 # Book Handoff
 
-Updated: 2026-08-30 17:28 +08
+Updated: 2026-08-30 17:45 +08
 
 ## Start here
 
@@ -16,10 +16,10 @@ Updated: 2026-08-30 17:28 +08
 - Phase 1H base: `2675d2cecab63b28b6ab81a4554e9b7f010afd72`
 - Active branch: `design/phase-1h-learning-slices-20260830`
 - Active PR: `#26` — OPEN / DRAFT / UNMERGED / mergeable
-- Latest implementation head before this governance sync: `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
-- Last exact-head GREEN implementation: `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
-- Current stage: Phase 1H Task 9 — Learn grouped UI
-- Current Task 8 state: GREEN and verified on exact implementation head `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+- Latest exact implementation/test head before this governance sync: `74c2e00b0e279b4cd3096783741ee0aada5a6b6c`
+- Last exact-head GREEN implementation/test head: `74c2e00b0e279b4cd3096783741ee0aada5a6b6c` (Learn UI implementation `5a64e7b58d9d97af81de8dd5564306124af54f21`)
+- Current stage: Phase 1H Task 10 — isolation + frozen Golden + Chromium acceptance
+- Current Task 8 state: GREEN and verified
 
 PR #26 must remain unmerged unless the user explicitly authorizes `合并 PR #26` after final readiness.
 
@@ -51,27 +51,29 @@ Task 5  Review UI                                              COMPLETE
 Task 6  Practice Runtime/API                                   COMPLETE
 Task 7  Practice UI                                            COMPLETE
 Task 8  Learn type-aware grouping Runtime/API                  COMPLETE
-Task 9  Learn grouped UI                                       PENDING
+Task 9  Learn grouped UI                                       COMPLETE
 Task 10 isolation + frozen Golden + Chromium                   PENDING
 Task 11 exact-head regression + canonical-diff + PR readiness  PENDING
 ```
 
 ## Last verified GREEN checkpoint
 
-Verified implementation head:
+Verified exact head:
 
-`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+`74c2e00b0e279b4cd3096783741ee0aada5a6b6c`
+
+Learn UI implementation commit: `5a64e7b58d9d97af81de8dd5564306124af54f21`
 
 Evidence:
 
-- Runtime Reference Tests run `33304001568`: SUCCESS on Python 3.11 / 3.12 / 3.13; each matrix ran 345 tests.
-- Book App UI Tests run `33304001491`: SUCCESS.
+- Runtime Reference Tests run `33304524899`: SUCCESS on Python 3.11 / 3.12 / 3.13; each matrix ran 345 tests.
+- Book App UI Tests run `33304524902`: SUCCESS.
 - app-api: Runtime 345, focused 147, full App 109: PASS.
-- web-client: 16 files / 81 tests: PASS.
+- web-client: 17 files / 87 tests: PASS.
 - TypeScript typecheck and production build: PASS.
 - real Chromium acceptance: 12 / 12 PASS.
 
-Task 8 is GREEN and the next ordinary step is Task 9 Learn grouped UI. PR #26 remains Draft / unmerged.
+Task 9 is GREEN. The next ordinary step is Task 10 acceptance/isolation. PR #26 remains Draft / unmerged.
 
 ## Task 7 product checkpoint
 
@@ -125,11 +127,11 @@ Rules:
 
 ## Next exact actions
 
-1. Start Task 9 Learn grouped UI from the approved plan.
-2. Write focused Learn UI RED tests first; then implement the minimum source-backed grouped presentation.
-3. Run focused web/API/runtime regression and keep `learning_slice_v1`, Source round-trip, Search/QA Exact-only, and StudyRecord invariants unchanged.
-4. After Task 9 GREEN, proceed to Task 10 isolation + frozen Golden + Chromium acceptance.
-5. Keep PR #26 Draft/unmerged; only an explicit `合并 PR #26` may authorize a later merge.
+1. Start Task 10 isolation tests and frozen Golden/Chromium acceptance from the approved plan.
+2. Observe and record genuine acceptance RED before any acceptance-level fix.
+3. Keep Search/QA Exact-only, StudyRecord schema/semantics, canonical data, and frozen session state unchanged.
+4. After Task 10 GREEN, execute Task 11 exact-head regression and canonical-diff gate.
+5. Keep PR #26 Draft/unmerged; only an explicit 合并 PR #26 may authorize a later merge.
 
 ## Frozen product invariants
 

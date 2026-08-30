@@ -1,6 +1,6 @@
 # Book 开发路线图
 
-> 状态同步：2026-08-30 17:28 +08  
+> 状态同步：2026-08-30 17:45 +08  
 > 当前执行权威：`governance/project_state.json` + `docs/CURRENT_STATE.md` + 已批准 Phase Spec/Plan。历史路线与详细阶段证据保存在 Git 历史、Ledger 和对应 PR/checkpoint 中。
 
 ## 当前总状态
@@ -22,9 +22,9 @@ STRUCTURED_COMPLETE / Runtime READY
 - branch `design/phase-1h-learning-slices-20260830`
 - PR #26 OPEN / DRAFT / UNMERGED
 - Tasks 1–7 COMPLETE
-- Task 8 Learn Runtime/API grouping COMPLETE at `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
-- Tasks 9–11 PENDING
-- last exact GREEN `7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+- Task 8 Learn Runtime/API grouping COMPLETE
+- Task 9 GREEN; Tasks 10–11 PENDING
+- last exact GREEN `74c2e00b0e279b4cd3096783741ee0aada5a6b6c`
 
 ## 已完成阶段
 
@@ -115,7 +115,7 @@ Goal：在不改变教材 authority、Search/QA、StudyRecord 或冻结浏览器
 - [x] Task 6 — Practice Runtime/API filters + explicit no-solution state
 - [x] Task 7 — Practice filter UI
 - [x] Task 8 — Learn type-aware grouping Runtime/API
-- [ ] Task 9 — grouped Learn UI
+- [x] Task 9 — grouped Learn UI
 - [ ] Task 10 — isolation + frozen real-Golden + browser acceptance
 - [ ] Task 11 — exact-head regression + canonical-diff gate + PR readiness
 
@@ -214,7 +214,7 @@ Every item above requires its own approved design/gate when reached; Phase 1H mu
 
 ## Current verification baseline
 
-Last exact GREEN implementation head：`7a29a74cf97ea593de17edc8a14ef2b1989bd564`
+Last exact GREEN implementation/test head：`74c2e00b0e279b4cd3096783741ee0aada5a6b6c` (Learn UI implementation `5a64e7b58d9d97af81de8dd5564306124af54f21`)
 
 ```text
 Runtime Reference Tests 33304001568    SUCCESS (3.11/3.12/3.13; 345 tests each)
@@ -231,7 +231,7 @@ Task 8 is now GREEN on implementation head `7a29a74cf97ea593de17edc8a14ef2b1989b
 
 ## 当前唯一下一步
 
-1. 进入 Task 9：先写 Learn grouped UI focused RED tests。
-2. 最小实现 source-backed、互斥分组的 Learn UI，保持现有 `learning_slice_v1`、Source round-trip 与 StudyRecord 语义。
-3. Task 9 GREEN 后进入 Task 10 isolation + frozen Golden + Chromium acceptance。
-4. Task 11 exact-head gate 通过后才推进 PR #26 review readiness；合并仍需明确 `合并 PR #26` 授权。
+1. 进入 Task 10：写 isolation RED tests，扩展 frozen Golden Runtime/API 与 Chromium acceptance。
+2. 只做 acceptance-level 最小修复，保持 canonical 数据、Search/QA Exact-only、StudyRecord 与 sessionStorage 合同。
+3. Task 10 GREEN 后进入 Task 11 exact-head regression、canonical-diff gate 与 PR review readiness。
+4. PR #26 仍不合并；合并必须有明确 合并 PR #26 授权。
