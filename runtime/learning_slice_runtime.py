@@ -180,11 +180,94 @@ class LearningSliceRuntime:
         )
 
     def learn(self) -> LearningSliceProjection:
+        group_labels = {
+            "definitions": "定义 / 概念入口",
+            "theorem_family": "定理与命题",
+            "formulas": "公式",
+            "examples": "例题",
+            "other_objects": "其他教材对象",
+            "figures": "教材图示",
+            "translations": "中文学习层",
+        }
+        group_order = tuple(group_labels)
+
+        object_by_id = {
+            self._source_pair("object", row.get("id"))[1]: row for row in self._objects
+        }
+        figure_by_id = {
+            self._source_pair("figure", row.get("id"))[1]: row for row in self._figures
+        }
+        translation_by_id = {
+            self._source_pair("translation", row.get("batch_id"))[1]: row
+            for row in self._translations
+        }
+        group_refs: dict[str, list[dict[str, str]]] = {
+            group_id: [] for group_id in group_order
+        }
+        seen_refs: set[tuple[str, str]] = set()
+
+        object_group_by_type = {
+            "definition": "definitions",
+            "theorem": "theorem_family",
+            "proposition": "theorem_family",
+            "lemma": "theorem_family",
+            "corollary": "theorem_family",
+            "formula": "formulas",
+            "example": "examples",
+        }
+
+        for item in self._learning.learn()["items"]:
+            kind = str(item.get("kind") or "").strip().casefold()
+            source_id = self._source_pair(kind, item.get("source_id"))[1]
+
+            if kind == "object":
+                row = object_by_id.get(source_id)
+                if row is None:
+                    raise LearningSliceIntegrityError(
+                        f"Learn candidate source is unavailable: object:{source_id}"
+                    )
+                group_id = object_group_by_type.get(
+                    self._normalize_type(row), "other_objects"
+                )
+            elif kind == "figure":
+                if source_id not in figure_by_id:
+                    raise LearningSliceIntegrityError(
+                        f"Learn candidate source is unavailable: figure:{source_id}"
+                    )
+                group_id = "figures"
+            elif kind == "translation":
+                if source_id not in translation_by_id:
+                    raise LearningSliceIntegrityError(
+                        f"Learn candidate source is unavailable: translation:{source_id}"
+                    )
+                group_id = "translations"
+            else:
+                raise LearningSliceIntegrityError(
+                    f"Learn candidate has unsupported kind: {kind!r}"
+                )
+
+            identity = (kind, source_id)
+            if identity in seen_refs:
+                raise LearningSliceIntegrityError(
+                    f"Duplicate Learn candidate source identity: {kind}:{source_id}"
+                )
+            seen_refs.add(identity)
+            group_refs[group_id].append(self._source_ref(kind, source_id))
+
+        groups = [
+            {
+                "id": group_id,
+                "label": group_labels[group_id],
+                "source_refs": group_refs[group_id],
+            }
+            for group_id in group_order
+            if group_refs[group_id]
+        ]
         return self._projection(
             {
                 "schema_version": LEARNING_SLICE_SCHEMA_VERSION,
                 "mode": "learn",
-                "groups": [],
+                "groups": groups,
                 "extensions": {
                     "supplementary": {"status": "unavailable"},
                     "lecture": {"status": "unavailable"},
