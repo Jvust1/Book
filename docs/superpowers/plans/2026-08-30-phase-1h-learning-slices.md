@@ -1260,4 +1260,4 @@ Implementation is ready for PR review only when all conditions below hold simult
 
 ## Execution Handoff
 
-The implementation plan itself is now the approved execution authority for the next ordinary development step. The next action is **Task 1, Step 1**: create the failing `tests/test_learning_slice_runtime.py` contract tests on this same non-default branch, confirm a real RED, and record the RED checkpoint before implementation. No additional architecture choice is required before beginning Task 1.
+The implementation plan is the frozen execution authority for the next ordinary development step once this plan-review gate is approved. The next action after approval is **Task 1, Step 1**: create the failing `tests/test_learning_slice_runtime.py` contract tests on this same non-default branch, confirm a real RED, and record the RED checkpoint before implementation. No additional architecture choice is required before beginning Task 1. This document does not itself authorize product-code implementation before the plan-review gate is approved.
