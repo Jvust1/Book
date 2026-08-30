@@ -1,13 +1,13 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-08-29",
-  "repository": "Jvust1/Book",
+  "updated_date": "2026-08-30",
+  "repository": "Jvust2/Book",
   "default_branch": "main",
   "active_branch": "design/h4a-shadow-fts5-bm25-20260829",
   "phase": "FOUNDATION_B_TRANSITION",
-  "status": "H4A_IMPLEMENTED_CI_RUNNER_BLOCKED",
+  "status": "H4A_IMPLEMENTED_REVERIFYING_AFTER_IDENTITY_SYNC",
   "base_main_commit": "f0f1951dff24e49e4eb25f968e208cdc69b7b577",
-  "last_verified_implementation_head": "a9d5a2d3fe446de739e74cb0b24438d39decf916",
+  "last_verified_implementation_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
     "H0",
@@ -47,11 +47,11 @@
       "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
     },
     "H4a": {
-      "status": "IMPLEMENTED_AWAITING_EXACT_HEAD_CI",
+      "status": "IMPLEMENTED_REVERIFYING_EXACT_HEAD_AFTER_IDENTITY_SYNC",
       "name": "shadow FTS5/BM25 evaluation",
       "draft_pr": 23,
       "implementation_checkpoint_head": "745b478c460e65509a6319cd76c6ec015c223709",
-      "last_successful_ci_head": "a9d5a2d3fe446de739e74cb0b24438d39decf916",
+      "last_successful_ci_head": "969b8b0c8c8b1b50df8e19e6076036ac980855a1",
       "public_search_behavior": "EXACT_ONLY_UNCHANGED",
       "task_status": {
         "1": "COMPLETE",
@@ -62,15 +62,15 @@
         "6": "COMPLETE",
         "7": "COMPLETE",
         "8": "COMPLETE",
-        "9": "IMPLEMENTED_CI_RUNNER_BLOCKED",
-        "10": "PARTIAL_SCOPE_AUDIT_PASS_EXECUTION_BLOCKED"
+        "9": "COMPLETE_AT_PRE_IDENTITY_SYNC_HEAD",
+        "10": "EXACT_HEAD_PASS_AT_PRE_IDENTITY_SYNC_HEAD_REVERIFY_REQUIRED"
       },
       "golden_query_set": {
         "dataset_id": "functional_analysis_h4a_v1",
         "query_count": 25,
         "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
       },
-      "ci_blocker": "GitHub-hosted jobs terminate before checkout with runner_id=0 and steps=[] across Runtime, Foundation B, and App workflows; no code/test failure is inferred from these attempts."
+      "ci_blocker": "The former GitHub-hosted runner outage is resolved. Runtime, Foundation B, and App gates passed at 969b8b0c8c8b1b50df8e19e6076036ac980855a1. A new exact-head verification is required only because this governance identity reconciliation changes the PR head."
     }
   },
   "separate_human_gates": [
@@ -133,7 +133,7 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [
-    "github_actions_hosted_runner_unavailable_for_h4a_exact_head"
+    "h4a_exact_head_reverification_after_book_identity_sync"
   ],
-  "next_step": "Restore GitHub-hosted runner execution for PR #23 and rerun the unchanged exact-head Runtime, Foundation B, and App gates. If jobs actually execute and pass, complete H4a Task 10 exact-head verification and prepare PR #23 for review. Do not merge PR #23 without explicit user authorization for that specific PR."
+  "next_step": "Rerun or observe PR #23 exact-head Runtime, Foundation B, and App gates at the new head produced by the Book identity reconciliation. If all required jobs execute and pass, prepare PR #23 for review. Do not merge PR #23 without explicit user authorization for that specific PR."
 }
