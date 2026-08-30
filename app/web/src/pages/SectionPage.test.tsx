@@ -70,7 +70,10 @@ const reviewItem: ModeItem = {
   translation_available: true,
 }
 
-const presentationForMode = (mode: LearningMode): LearningSlicePresentation => {
+const presentationForMode = (
+  mode: LearningMode,
+  items: ModeItem[] = [],
+): LearningSlicePresentation => {
   if (mode === 'preview') {
     return {
       schema_version: 'learning_slice_v1',
@@ -90,15 +93,20 @@ const presentationForMode = (mode: LearningMode): LearningSlicePresentation => {
     }
   }
   if (mode === 'review') {
+    const sourceRefs = items.map(({ kind, source_id }) => ({ kind, source_id }))
     return {
       schema_version: 'learning_slice_v1',
       mode: 'review',
       presets: [
-        { id: 'one_minute', label: '1 分钟', source_refs: [] },
-        { id: 'five_minute', label: '5 分钟', source_refs: [] },
-        { id: 'full', label: '完整复习', source_refs: [] },
+        { id: 'one_minute', label: '1 分钟', source_refs: sourceRefs },
+        { id: 'five_minute', label: '5 分钟', source_refs: sourceRefs },
+        { id: 'full', label: '完整复习', source_refs: sourceRefs },
       ],
-      prompts: [],
+      prompts: items.map((item) => ({
+        text: `先回忆「${item.title_zh || item.number || item.type_zh || '教材对象'}」的条件和结论，再显示教材内容。`,
+        derivation: 'deterministic_template',
+        source_ref: { kind: item.kind, source_id: item.source_id },
+      })),
     }
   }
   if (mode === 'practice') {
@@ -123,7 +131,7 @@ const presentationForMode = (mode: LearningMode): LearningSlicePresentation => {
 const modePayload = (
   mode: LearningMode,
   items: ModeItem[] = [],
-  presentation: LearningSlicePresentation = presentationForMode(mode),
+  presentation: LearningSlicePresentation = presentationForMode(mode, items),
 ): ModeResponse => ({
   mode,
   course_id: 'functional_analysis_course',
@@ -220,7 +228,11 @@ describe('SectionPage', () => {
     }
 
     await user.click(screen.getByRole('tab', { name: '复习' }))
-    expect(screen.getByTestId('location')).toHaveTextContent('?mode=review')
+    await waitFor(() => {
+      expect(screen.getByTestId('location')).toHaveTextContent(
+        '?mode=review&review_preset=full',
+      )
+    })
     await waitFor(() => {
       expect(bookApi.getMode).toHaveBeenLastCalledWith(
         'functional_analysis_course',
@@ -333,7 +345,7 @@ describe('SectionPage', () => {
 
     expect(await screen.findByText('复习定理')).toBeInTheDocument()
     expect(screen.queryByText('这段内容必须在用户点击后才显示。')).not.toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: '显示内容' }))
+    await user.click(screen.getByRole('button', { name: '显示教材内容' }))
     expect(screen.getByText('这段内容必须在用户点击后才显示。')).toBeInTheDocument()
   })
 
@@ -361,13 +373,14 @@ describe('SectionPage', () => {
 
     renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=review')
     await screen.findByText('复习定理')
-    await user.click(screen.getByRole('button', { name: '显示内容' }))
+    await user.click(screen.getByRole('button', { name: '显示教材内容' }))
     await user.click(screen.getByRole('link', { name: '查看教材来源' }))
 
     expect(
       loadSectionViewState('functional_analysis_course', 'ch01_s01', 'review'),
     ).toEqual({
-      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      route:
+        '/courses/functional_analysis_course/sections/ch01_s01?mode=review&review_preset=full',
       scrollY: 420,
       expandedSourceIds: ['thm_review'],
       activeSourceId: 'thm_review',
@@ -379,7 +392,8 @@ describe('SectionPage', () => {
     const scrollTo = vi.fn()
     Object.defineProperty(window, 'scrollTo', { value: scrollTo, configurable: true })
     saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
-      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      route:
+        '/courses/functional_analysis_course/sections/ch01_s01?mode=review&review_preset=full',
       scrollY: 420,
       expandedSourceIds: ['thm_review'],
       activeSourceId: 'thm_review',
