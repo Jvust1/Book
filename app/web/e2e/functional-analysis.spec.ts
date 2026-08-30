@@ -291,7 +291,7 @@ test('real Functional Analysis desktop source round trip', async ({ page, reques
   await page.getByRole('tab', { name: '复习' }).click()
   await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=review&review_preset=full`)
   await page.getByRole('tab', { name: '刷题' }).click()
-  await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=practice`)
+  await expect(page).toHaveURL(`${BASE_URL}${sectionPath}?mode=practice&practice_kind=all`)
 })
 
 test('real Functional Analysis desktop textbook search round trip preserves canonical context', async ({ page, request }) => {
