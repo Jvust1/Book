@@ -123,6 +123,7 @@ class LearningSlicePreset(BaseModel):
 class LearningSlicePracticeFilter(BaseModel):
     id: Literal["all", "exercise", "problem"]
     label: str
+    source_refs: list[SourceRef]
 
 
 class LearningSlicePracticeItem(BaseModel):
