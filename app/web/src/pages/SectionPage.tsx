@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
@@ -11,6 +11,7 @@ import type {
 import { EmptyState } from '../components/EmptyState'
 import { LearningObjectCard } from '../components/LearningObjectCard'
 import { ModeTabs } from '../components/ModeTabs'
+import { PreviewLearningSlice } from '../components/PreviewLearningSlice'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
@@ -172,16 +173,6 @@ export function SectionPage() {
     }
     restoredKeyRef.current = restoreKey
   }, [courseId, mode, payload, sectionId])
-
-  const previewCounts = useMemo(() => {
-    if (mode !== 'preview' || !payload) return []
-    const counts = new Map<string, number>()
-    for (const item of payload.items) {
-      const label = item.type_zh || item.object_type || '教材对象'
-      counts.set(label, (counts.get(label) || 0) + 1)
-    }
-    return [...counts.entries()]
-  }, [mode, payload])
 
   const switchMode = (nextMode: LearningMode) => {
     const next = new URLSearchParams(searchParams)
@@ -354,21 +345,28 @@ export function SectionPage() {
 
       {!payload && !modeError ? <p role="status">正在读取学习内容…</p> : null}
 
-      {payload && mode === 'preview' && previewCounts.length > 0 ? (
-        <div className="preview-summary" aria-label="本节教材对象统计">
-          {previewCounts.map(([label, count]) => (
-            <span className="count-chip" key={label}>
-              {label} {count}
-            </span>
-          ))}
-        </div>
+      {payload && mode === 'preview' ? (
+        payload.presentation.mode === 'preview' ? (
+          <PreviewLearningSlice
+            courseId={courseId}
+            expandedSourceIds={expandedSourceIds}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onExpandedChange={setSourceExpanded}
+            presentation={payload.presentation}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
       ) : null}
 
-      {payload && payload.items.length === 0 && emptyMessage(mode) ? (
+      {payload && mode !== 'preview' && payload.items.length === 0 && emptyMessage(mode) ? (
         <EmptyState message={emptyMessage(mode)!} />
       ) : null}
 
-      {payload && payload.items.length > 0 ? (
+      {payload && mode !== 'preview' && payload.items.length > 0 ? (
         <div className="learning-list">
           {payload.items.map((item) => (
             <LearningObjectCard
