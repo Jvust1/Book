@@ -1255,3 +1255,9 @@ Implementation is ready for PR review only when all conditions below hold simult
 - `books/functional-analysis/**` and `courses/**` have no Phase 1H changes.
 - Python Runtime/App, web unit/type/build, Chromium, architecture fitness, Golden readiness, H4a isolation, and GitHub Actions are green on the exact final HEAD.
 - PR #26 is reviewable with no unresolved correctness blocker and remains unmerged until explicit user authorization.
+
+---
+
+## Execution Handoff
+
+The implementation plan itself is now the approved execution authority for the next ordinary development step. The next action is **Task 1, Step 1**: create the failing `tests/test_learning_slice_runtime.py` contract tests on this same non-default branch, confirm a real RED, and record the RED checkpoint before implementation. No additional architecture choice is required before beginning Task 1.
