@@ -120,7 +120,16 @@ const presentationForMode = (
   return {
     schema_version: 'learning_slice_v1',
     mode: 'learn',
-    groups: [],
+    groups:
+      items.length > 0
+        ? [
+            {
+              id: 'other_objects',
+              label: '其他教材对象',
+              source_refs: items.map(({ kind, source_id }) => ({ kind, source_id })),
+            },
+          ]
+        : [],
     extensions: {
       supplementary: { status: 'unavailable' },
       lecture: { status: 'unavailable' },
