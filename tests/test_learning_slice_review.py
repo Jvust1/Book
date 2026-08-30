@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from runtime.book_runtime import RuntimeAnchor, RuntimeObject
 from runtime.learning_slice_runtime import LearningSliceRuntime
 from runtime.section_learning_runtime import SectionLearningRuntime
 from tests.test_learning_slice_runtime import FakeCourse, collect_source_refs
@@ -38,11 +39,63 @@ class LearningSliceReviewTests(unittest.TestCase):
             ["def_1", "thm_1", "formula_1"],
         )
 
-    def test_five_minute_uses_same_diversity_seed_then_fills_to_five(self) -> None:
-        refs = self._preset("five_minute")["source_refs"]
+    def test_five_minute_uses_same_diversity_seed_then_fills_to_ten(self) -> None:
+        course = FakeCourse()
+        course._book._objects.extend(
+            [
+                RuntimeObject(
+                    id="def_3",
+                    type="definition",
+                    section_id="s1",
+                    name_zh="定义三",
+                    anchor=RuntimeAnchor(pdf_page=2, printed_page=12),
+                    source_batch="b2",
+                ),
+                RuntimeObject(
+                    id="thm_2",
+                    type="theorem",
+                    section_id="s1",
+                    name_zh="定理二",
+                    anchor=RuntimeAnchor(pdf_page=2, printed_page=12),
+                    source_batch="b2",
+                ),
+                RuntimeObject(
+                    id="formula_2",
+                    type="formula",
+                    section_id="s1",
+                    name_zh="公式二",
+                    formula="g(x) = x",
+                    anchor=RuntimeAnchor(pdf_page=2, printed_page=12),
+                    source_batch="b2",
+                ),
+                RuntimeObject(
+                    id="prop_2",
+                    type="proposition",
+                    section_id="s1",
+                    name_zh="命题二",
+                    anchor=RuntimeAnchor(pdf_page=2, printed_page=12),
+                    source_batch="b2",
+                ),
+            ]
+        )
+        runtime = LearningSliceRuntime(SectionLearningRuntime.from_course(course, "s1"))
+        preset = next(
+            row for row in runtime.review().payload["presets"] if row["id"] == "five_minute"
+        )
         self.assertEqual(
-            [row["source_id"] for row in refs],
-            ["def_1", "thm_1", "formula_1", "prop_1", "def_2"],
+            [row["source_id"] for row in preset["source_refs"]],
+            [
+                "def_1",
+                "thm_1",
+                "formula_1",
+                "prop_1",
+                "def_2",
+                "lemma_1",
+                "cor_1",
+                "def_3",
+                "thm_2",
+                "formula_2",
+            ],
         )
 
     def test_presets_never_duplicate_source_refs(self) -> None:
