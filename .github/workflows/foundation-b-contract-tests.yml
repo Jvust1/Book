@@ -74,3 +74,11 @@ jobs:
 
       - name: Run Golden H4a shadow retrieval evaluation
         run: python tools/evaluate_h4a_retrieval.py
+
+      - name: Retain exact-head H4a evaluation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: h4a-evaluation-report
+          path: .build/evaluations/h4a/functional_analysis_course/report.json
+          if-no-files-found: error
+          retention-days: 7
