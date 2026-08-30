@@ -397,8 +397,8 @@ python -m py_compile runtime/learning_slice_runtime.py runtime/section_learning_
 - [ ] **Step 5: Commit the Preview Runtime implementation**
 
 ```bash
-git add runtime/learning_slice_runtime.py runtime/__init__.py tests/test_learning_slice_runtime.py
-git commit -m "feat: add deterministic Preview learning slice"
+git add tests/test_learning_slice_runtime.py
+git commit -m "test: define Phase 1H learning slice contract"
 ```
 
 ---
