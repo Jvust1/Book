@@ -96,7 +96,7 @@ class LearningSliceRuntime:
         five_minute = self._select_diverse(
             rows,
             category_order=_REVIEW_CATEGORY_ORDER,
-            cap=5,
+            cap=10,
         )
         return self._projection(
             {
