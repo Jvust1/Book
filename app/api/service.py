@@ -7,6 +7,8 @@ from pathlib import Path
 from typing import cast
 
 from runtime import (
+    LearningSliceRuntime,
+    LearningSliceRuntimeError,
     LibraryRuntime,
     LibraryRuntimeError,
     ModelProvider,
@@ -198,6 +200,24 @@ class BookAppService:
                 )
             )
 
+        allowed_refs = {(item.kind, item.source_id) for item in items}
+        try:
+            projection = LearningSliceRuntime(learning).presentation(normalized_mode)
+        except LearningSliceRuntimeError as exc:
+            raise AppUnavailableError(
+                code="learning_slice_integrity_error",
+                user_message="学习内容暂不可用",
+                detail=str(exc),
+            ) from exc
+        missing_refs = [ref for ref in projection.source_refs if ref not in allowed_refs]
+        if missing_refs:
+            missing = ", ".join(f"{kind}:{source_id}" for kind, source_id in missing_refs)
+            raise AppUnavailableError(
+                code="learning_slice_integrity_error",
+                user_message="学习内容暂不可用",
+                detail=f"Presentation source refs escaped current mode items: {missing}",
+            )
+
         return ModeResponse(
             mode=cast(LearningMode, normalized_mode),
             course_id=str(payload["course_id"]),
@@ -209,6 +229,7 @@ class BookAppService:
             source_status=str(payload["source_status"]),
             items=items,
             source_refs=[SourceRef(**row) for row in payload["source_refs"]],
+            presentation=projection.payload,
         )
 
     def search(self, course_id: str, query: str, *, limit: int = 30) -> SearchResponse:
