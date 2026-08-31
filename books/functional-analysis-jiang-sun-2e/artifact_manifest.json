@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "dataset_id": "functional_analysis_2e_jiang_sun_structure_v2_20260831",
+  "book_id": "functional_analysis_2e_jiang_sun",
+  "source": {
+    "title": "泛函分析",
+    "edition": "第2版",
+    "authors": ["江泽坚", "孙善利"],
+    "publisher": "高等教育出版社",
+    "source_kind": "scanned_pdf",
+    "pdf_pages": 247,
+    "sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1",
+    "drive_file_id": "1KvpnDy7__2DCUYM65TrFHaondfoN3ciu"
+  },
+  "structure": {
+    "hierarchy": ["book", "chapter", "section", "page", "block", "semantic_unit"],
+    "chapters": 5,
+    "sections": 44,
+    "single_page_pdfs": 247,
+    "body_pages_segmented": 239,
+    "blocks": 4877,
+    "semantic_units": 425,
+    "formula_candidates": 1494,
+    "semantic_type_counts": {
+      "theorem": 110,
+      "proof": 137,
+      "definition": 79,
+      "example": 48,
+      "proposition": 45,
+      "corollary": 6
+    }
+  },
+  "drive_folder": {
+    "id": "1IroInYg8M0yw6FOrsrXiYYDIAA3Kjwcx",
+    "name": "FunctionalAnalysis2_Structured_V2_2026-08-31"
+  },
+  "artifacts": [
+    {
+      "name": "FunctionalAnalysis2_Structured_V2_Complete.zip",
+      "drive_file_id": "1NblcrHjMGl7fN_vJxAk9IeKRGPCDC-_l",
+      "size_bytes": 25188356,
+      "sha256": "52e30b99419a4a5f5fc7cd36b9febf9ecb2719f0cef95e7bd050dace065af60d",
+      "role": "complete_standalone_v2"
+    },
+    {
+      "name": "FunctionalAnalysis2_StructureV2_Addon.zip",
+      "drive_file_id": "1Paa5EJIK_uFFaXwP79zZ5IC-vWroe2o7",
+      "size_bytes": 4861505,
+      "sha256": "cc4f64d42cb3718b1331a136f8be4cff4290f4d5392985caa2e037c9e9b5d2aa",
+      "role": "v2_addon_only"
+    },
+    {
+      "name": "FunctionalAnalysis2_Metadata.zip",
+      "drive_file_id": "1ZMiAzq0awPc-DTRoSzs4wC-h-wf78Omx",
+      "size_bytes": 11117,
+      "sha256": "f56cdae75f8a49a6714b4b1bdff8ac02dae0e3fb9c42e983656ce40eafeaff23",
+      "role": "v1_metadata_only"
+    },
+    {
+      "name": "FunctionalAnalysis2_Structured_V1.zip",
+      "drive_file_id": "1Cx_Vkj8LK4TTVTUAr4KUorrckeWvIPqq",
+      "size_bytes": 20282093,
+      "sha256": "f6403f3260f9246c181a1e96dbe6a8574cd1ceb6925e2ed9c03992322cb17112",
+      "role": "v1_complete"
+    },
+    {
+      "name": "README.md",
+      "drive_file_id": "13qWluXnBkGqtvBgFrwEl6WNnoDbE9VD8",
+      "role": "human_readable_structure_notes"
+    },
+    {
+      "name": "artifact_manifest.json",
+      "drive_file_id": "167_xroufFzdtjHepjUlct_GqREvN0xmG",
+      "role": "artifact_integrity_and_provenance"
+    }
+  ],
+  "provenance_policy": {
+    "canonical_replacement": false,
+    "existing_stein_shakarchi_dataset_untouched": true,
+    "formula_transcription_policy": "formula_candidate only; no unverified OCR formula promoted to canonical text",
+    "pdf_page_anchor_immutable": true
+  }
+}
