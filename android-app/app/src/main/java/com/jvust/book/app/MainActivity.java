@@ -1,10 +1,12 @@
 package com.jvust.book.app;
 
 import android.annotation.SuppressLint;
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Insets;
 import android.net.Uri;
@@ -21,6 +23,8 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+import android.webkit.WebChromeClient;
+import android.webkit.PermissionRequest;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public final class MainActivity extends Activity {
+    private static final int RECORD_AUDIO_REQUEST = 73;
     private static final String TAG = "BookApp";
     private static final String WEB_STATE = "book.webState";
     private static final String APP_URL = "http://127.0.0.1:8765/";
@@ -53,6 +58,9 @@ public final class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         savedWebState = savedInstanceState == null ? null : savedInstanceState.getBundle(WEB_STATE);
         createContentView();
+        if (Build.VERSION.SDK_INT >= 23 && checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, RECORD_AUDIO_REQUEST);
+        }
         if (Build.VERSION.SDK_INT >= 33) {
             getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
                     OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::navigateBack);
@@ -80,6 +88,22 @@ public final class MainActivity extends Activity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setAllowFileAccess(false);
         webView.getSettings().setAllowContentAccess(false);
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onPermissionRequest(PermissionRequest request) {
+                runOnUiThread(() -> {
+                    boolean localOrigin = request.getOrigin() != null
+                            && "http".equals(request.getOrigin().getScheme())
+                            && "127.0.0.1".equals(request.getOrigin().getHost())
+                            && request.getOrigin().getPort() == 8765;
+                    if (localOrigin && (Build.VERSION.SDK_INT < 23 || checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)) {
+                        request.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+                    } else {
+                        request.deny();
+                    }
+                });
+            }
+        });
         WebView.setWebContentsDebuggingEnabled(
                 (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
         webView.setWebViewClient(new WebViewClient() {

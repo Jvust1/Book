@@ -39,6 +39,7 @@ textarea {
   padding: 0 32px;
   border-bottom: 1px solid #e4e4e7;
   background: #ffffff;
+  flex-wrap: wrap;
 }
 
 .app-brand {
@@ -53,6 +54,18 @@ textarea {
 .page-range {
   color: #71717a;
 }
+
+.header-action { font-weight: 600; text-decoration: none; }
+.recording-panel { display: grid; gap: 20px; max-width: 620px; }
+.recording-status { display: flex; align-items: center; gap: 10px; font-size: 20px; }
+.recording-dot { width: 12px; height: 12px; border-radius: 50%; background: #a1a1aa; }
+.recording-dot.is-live { background: #dc2626; box-shadow: 0 0 0 6px #fee2e2; }
+.recording-error { color: #b91c1c; }
+.recording-item audio { width: 100%; }
+.text-button { border: 0; background: none; color: #b91c1c; cursor: pointer; }
+.knowledge-course { gap: 24px; }
+.knowledge-chapters { display: grid; gap: 12px; }
+.knowledge-chapter { display: grid; gap: 4px; padding: 14px 16px; border-radius: 12px; background: #f4f4f5; }
 
 .eyebrow {
   margin: 0 0 8px;
@@ -504,6 +517,8 @@ textarea {
 @media (max-width: 640px) {
   .app-header {
     padding: 0 20px;
+    gap: 12px;
+    min-height: 72px;
   }
 
   .app-main {
