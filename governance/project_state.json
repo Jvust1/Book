@@ -181,6 +181,8 @@
     "branch": "build/book-app-android-apk-20260913",
     "pr": 29,
     "status": "BUILT_VERIFIED_SIMULATOR",
+    "release_manifest": "governance/android_0_1_3_release.json",
+    "source_snapshot_commit": "7273b5d741ae7528d1a966ee9be7f313c7d2f0d5",
     "notes": "LaTeX/Markdown display, responsive design, native foreground recording and legacy recording export. No new structured textbook data or AI provider.",
     "documentation": "android-app/README.md",
     "checkpoint": "docs/ANDROID_0_1_3.md",
