@@ -1,5 +1,9 @@
 # Book 当前状态
 
+## 当前权威覆盖 — 2026-09-13
+
+Phase 1H App 功能已在 PR #26 的 exact head `9fce2c794559ff8c1bfdd0beda8f1848f189b0e3` 完成并通过远端 CI。现有 App 范围包括教材浏览、Library/Course/Chapter/Section 导航、Preview/Learn/Review/Practice 四种学习切片、精确搜索、教材证据问答和 SQLite StudyRecord；Task 10 隔离/Golden/Chromium 验收与 Task 11 exact-head 回归均已完成。`books/functional-analysis/**`、`courses/**`、Search/QA Exact-only 行为和 StudyRecord 语义均未改动。结构化教材导入与新增教材注册暂缓，不属于本次 App 完成范围。PR #26 保持未合并，等待审阅。
+
 更新时间：2026-08-30 17:45 +08
 
 > 本文件只维护当前有效状态与下一步；历史细节通过 Git 历史、Decision/Evaluation Ledger 和独立 checkpoint 保留。若与旧聊天、旧 Drive CURRENT 或本文件的历史版本冲突，以当前分支的治理状态、已批准 Phase 1H Spec/Plan 和可回读验证证据为准。

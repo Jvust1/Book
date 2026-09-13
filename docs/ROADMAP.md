@@ -1,5 +1,9 @@
 # Book 开发路线图
 
+## 当前权威覆盖 — 2026-09-13
+
+现有 App 功能线已完成到 Phase 1H exact head `9fce2c794559ff8c1bfdd0beda8f1848f189b0e3`，PR #26 待审阅未合并。结构化教材导入、新教材注册以及后续多教材迁移继续保持单独范围，暂不启动。
+
 > 状态同步：2026-08-30 17:45 +08  
 > 当前执行权威：`governance/project_state.json` + `docs/CURRENT_STATE.md` + 已批准 Phase Spec/Plan。历史路线与详细阶段证据保存在 Git 历史、Ledger 和对应 PR/checkpoint 中。
 
