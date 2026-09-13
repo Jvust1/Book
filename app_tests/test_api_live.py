@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 import threading
 import time
 import unittest
@@ -18,34 +19,44 @@ SUFFICIENT_QA_QUESTION = "1/p + 1/q = 1"
 
 
 class BookAppLiveApiTests(unittest.TestCase):
-    def test_uvicorn_serves_real_library_and_search_on_loopback(self) -> None:
-        default_service.cache_clear()
+    def _start_server(self) -> str:
+        # Keep the chosen socket bound until Uvicorn takes it. Fixed test ports
+        # may be reserved by Windows/Hyper-V or occupied by another test run.
+        listener = socket.socket()
+        self.addCleanup(listener.close)
+        listener.bind(("127.0.0.1", 0))
+        port = listener.getsockname()[1]
         config = uvicorn.Config(
             app,
             host="127.0.0.1",
-            port=8765,
+            port=port,
             log_level="warning",
             access_log=False,
         )
         server = uvicorn.Server(config)
-        thread = threading.Thread(target=server.run, daemon=True)
+        thread = threading.Thread(target=server.run, kwargs={"sockets": [listener]}, daemon=True)
         thread.start()
         self.addCleanup(self._stop_server, server, thread)
-        self.addCleanup(default_service.cache_clear)
 
         for _ in range(100):
             if server.started:
                 break
             time.sleep(0.05)
         self.assertTrue(server.started, "Uvicorn did not start on 127.0.0.1")
+        return f"http://127.0.0.1:{port}"
 
-        with urllib.request.urlopen("http://127.0.0.1:8765/api/health", timeout=3) as response:
+    def test_uvicorn_serves_real_library_and_search_on_loopback(self) -> None:
+        default_service.cache_clear()
+        self.addCleanup(default_service.cache_clear)
+        base_url = self._start_server()
+
+        with urllib.request.urlopen(f"{base_url}/api/health", timeout=3) as response:
             health = json.loads(response.read().decode("utf-8"))
-        with urllib.request.urlopen("http://127.0.0.1:8765/api/library", timeout=3) as response:
+        with urllib.request.urlopen(f"{base_url}/api/library", timeout=3) as response:
             library = json.loads(response.read().decode("utf-8"))
         query = urllib.parse.quote("Hölder")
         with urllib.request.urlopen(
-            f"http://127.0.0.1:8765/api/courses/functional_analysis_course/search?q={query}",
+            f"{base_url}/api/courses/functional_analysis_course/search?q={query}",
             timeout=3,
         ) as response:
             search = json.loads(response.read().decode("utf-8"))
@@ -61,26 +72,10 @@ class BookAppLiveApiTests(unittest.TestCase):
         default_service.cache_clear()
         self.addCleanup(default_service.cache_clear)
         with patch.dict(os.environ, {"BOOK_QA_PROVIDER": "fake"}, clear=False):
-            config = uvicorn.Config(
-                app,
-                host="127.0.0.1",
-                port=8766,
-                log_level="warning",
-                access_log=False,
-            )
-            server = uvicorn.Server(config)
-            thread = threading.Thread(target=server.run, daemon=True)
-            thread.start()
-            self.addCleanup(self._stop_server, server, thread)
-
-            for _ in range(100):
-                if server.started:
-                    break
-                time.sleep(0.05)
-            self.assertTrue(server.started, "Uvicorn did not start on 127.0.0.1")
+            base_url = self._start_server()
 
             request = urllib.request.Request(
-                "http://127.0.0.1:8766/api/courses/functional_analysis_course/qa",
+                f"{base_url}/api/courses/functional_analysis_course/qa",
                 data=json.dumps(
                     {
                         "question": SUFFICIENT_QA_QUESTION,

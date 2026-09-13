@@ -2,10 +2,13 @@ import react from '@vitejs/plugin-react'
 import { configDefaults, defineConfig } from 'vitest/config'
 import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     VitePWA({
+      // Android already ships its assets; a service worker can serve stale UI
+      // after an APK upgrade instead of the newly bundled version.
+      disable: mode === 'android',
       registerType: 'autoUpdate',
       manifest: {
         name: 'Book 学习',
@@ -34,4 +37,4 @@ export default defineConfig({
     clearMocks: true,
     exclude: [...configDefaults.exclude, 'e2e/**'],
   },
-})
+}))

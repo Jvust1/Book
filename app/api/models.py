@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictStr
 
 
 LearningMode = Literal["preview", "learn", "review", "practice"]
@@ -283,12 +283,12 @@ class StudyRecordListResponse(BaseModel):
 
 class QAHistoryMessageDTO(BaseModel):
     role: Literal["user", "assistant"]
-    content: str
+    content: StrictStr
 
 
 class QARequest(BaseModel):
-    question: str
-    section_id: str | None = None
+    question: StrictStr
+    section_id: StrictStr | None = None
     history: list[QAHistoryMessageDTO] = Field(default_factory=list)
 
 

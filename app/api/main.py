@@ -70,6 +70,12 @@ def _validate_model(model_type: type[QARequest], payload: object) -> QARequest:
     continue to use the v2 API when available.
     """
 
+    if not isinstance(payload, dict):
+        raise ValueError("QA request must be a JSON object")
+    history = payload.get("history", [])
+    if not isinstance(history, list) or any(not isinstance(row, dict) for row in history):
+        raise ValueError("QA history must be a list of JSON objects")
+
     validator = getattr(model_type, "model_validate", None)
     if validator is not None:
         return validator(payload)

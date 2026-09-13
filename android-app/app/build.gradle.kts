@@ -8,15 +8,19 @@ plugins {
 val repositoryRoot = rootProject.projectDir.parentFile
 val webProject = repositoryRoot.resolve("app/web")
 val generatedPython = layout.buildDirectory.dir("generated/bookPython")
+val generatedWeb = layout.buildDirectory.dir("generated/bookWeb")
+val npmExecutable = if (System.getProperty("os.name").startsWith("Windows")) "npm.cmd" else "npm"
 
 val buildBookWeb by tasks.registering(Exec::class) {
     group = "book"
     description = "Build the React/PWA frontend for the embedded Android server."
     workingDir = webProject
-    commandLine("npm.cmd", "run", "build")
-    inputs.files(fileTree(webProject.resolve("src")), webProject.resolve("index.html"), webProject.resolve("vite.config.ts"))
-    inputs.file(webProject.resolve("package-lock.json"))
-    outputs.dir(webProject.resolve("dist"))
+    commandLine(npmExecutable, "run", "build", "--", "--mode", "android", "--outDir", generatedWeb.get().asFile, "--emptyOutDir")
+    inputs.files(fileTree(webProject.resolve("src")), fileTree(webProject.resolve("public")),
+        webProject.resolve("index.html"), webProject.resolve("vite.config.ts"),
+        webProject.resolve("package.json"), webProject.resolve("package-lock.json"))
+    inputs.files(fileTree(webProject) { include("tsconfig*.json") })
+    outputs.dir(generatedWeb)
 }
 
 val prepareBookPython by tasks.registering(Sync::class) {
@@ -26,7 +30,9 @@ val prepareBookPython by tasks.registering(Sync::class) {
     into(generatedPython)
 
     from(repositoryRoot) {
-        include("app/**/*.py")
+        include("app/__init__.py")
+        include("app/api/**/*.py")
+        include("app/study/**/*.py")
         include("runtime/**/*.py")
         include("book_core/**/*.py")
         include("books/functional-analysis/**")
@@ -35,7 +41,7 @@ val prepareBookPython by tasks.registering(Sync::class) {
         exclude("**/__pycache__/**")
         exclude("**/*.candidate")
     }
-    from(webProject.resolve("dist")) {
+    from(generatedWeb) {
         into("android_web")
     }
     from(project.file("src/main/python"))
@@ -49,11 +55,11 @@ android {
         applicationId = "com.jvust.book.app"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
 
         ndk {
-            abiFilters += listOf("arm64-v8a")
+            abiFilters += listOf("arm64-v8a", "x86_64")
         }
     }
 
@@ -72,7 +78,11 @@ android {
 chaquopy {
     defaultConfig {
         version = "3.11"
-        buildPython("C:/Program Files/Python311/python.exe")
+        // CourseRuntime locates its resource root using the runtime directory.
+        // Chaquopy otherwise keeps Python-only packages inside the APK archive.
+        extractPackages("runtime")
+        providers.gradleProperty("bookBuildPython").orElse(providers.environmentVariable("BOOK_BUILD_PYTHON"))
+            .orNull?.let { buildPython(it) }
         pip {
             // Keep the Android resolver deterministic. These versions are the
             // same API family used by the desktop test environment.
@@ -92,9 +102,6 @@ chaquopy {
             install("idna==3.10")
             install("sniffio==1.3.1")
             install("typing-extensions==4.12.2")
-            install("typing-inspection==0.4.1")
-            install("annotated-types==0.7.0")
-            install("annotated-doc==0.0.4")
         }
     }
     sourceSets {
