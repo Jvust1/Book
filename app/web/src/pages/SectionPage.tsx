@@ -1,19 +1,25 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type {
   LearningMode,
   ModeResponse,
+  PracticeFilterId,
+  ReviewPresetId,
   SectionResponse,
   StudyRecord,
 } from '../api/types'
-import { EmptyState } from '../components/EmptyState'
-import { LearningObjectCard } from '../components/LearningObjectCard'
+import { LearnLearningSlice } from '../components/LearnLearningSlice'
 import { ModeTabs } from '../components/ModeTabs'
+import { PracticeLearningSlice } from '../components/PracticeLearningSlice'
+import { PreviewLearningSlice } from '../components/PreviewLearningSlice'
+import { ReviewLearningSlice } from '../components/ReviewLearningSlice'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
+const VALID_REVIEW_PRESETS: readonly ReviewPresetId[] = ['one_minute', 'five_minute', 'full']
+const VALID_PRACTICE_FILTERS: readonly PracticeFilterId[] = ['all', 'exercise', 'problem']
 const STUDY_SAVE_FALLBACK = '学习进度暂无法保存'
 
 type StudyRetryAction = 'touch' | 'complete'
@@ -21,21 +27,27 @@ type StudyRetryAction = 'touch' | 'complete'
 const isLearningMode = (value: string | null): value is LearningMode =>
   value !== null && VALID_MODES.includes(value as LearningMode)
 
+const isReviewPreset = (value: string | null): value is ReviewPresetId =>
+  value !== null && VALID_REVIEW_PRESETS.includes(value as ReviewPresetId)
+
+const isPracticeFilter = (value: string | null): value is PracticeFilterId =>
+  value !== null && VALID_PRACTICE_FILTERS.includes(value as PracticeFilterId)
+
 const errorMessage = (error: unknown, fallback: string): string =>
   error instanceof ApiError ? error.message : fallback
-
-const emptyMessage = (mode: LearningMode): string | null => {
-  if (mode === 'review') return '本节暂无可复习的教材核心对象'
-  if (mode === 'practice') return '本节暂无教材练习或习题'
-  return null
-}
 
 export function SectionPage() {
   const { courseId, sectionId } = useParams()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const rawMode = searchParams.get('mode')
+  const rawReviewPreset = searchParams.get('review_preset')
+  const rawPracticeFilter = searchParams.get('practice_kind')
   const mode: LearningMode = isLearningMode(rawMode) ? rawMode : 'learn'
+  const reviewPreset: ReviewPresetId = isReviewPreset(rawReviewPreset) ? rawReviewPreset : 'full'
+  const practiceFilter: PracticeFilterId = isPracticeFilter(rawPracticeFilter)
+    ? rawPracticeFilter
+    : 'all'
   const studyKey = courseId && sectionId ? `${courseId}:${sectionId}:${mode}` : null
 
   const [section, setSection] = useState<SectionResponse | null>(null)
@@ -53,11 +65,45 @@ export function SectionPage() {
   const touchedKeyRef = useRef<string | null>(null)
 
   useEffect(() => {
-    if (isLearningMode(rawMode)) return
     const next = new URLSearchParams(searchParams)
-    next.set('mode', 'learn')
-    setSearchParams(next, { replace: true })
-  }, [rawMode, searchParams, setSearchParams])
+    let changed = false
+
+    if (!isLearningMode(rawMode)) {
+      next.set('mode', 'learn')
+      if (next.has('review_preset')) next.delete('review_preset')
+      if (next.has('practice_kind')) next.delete('practice_kind')
+      changed = true
+    } else if (mode === 'review') {
+      if (next.has('practice_kind')) {
+        next.delete('practice_kind')
+        changed = true
+      }
+      if (!isReviewPreset(rawReviewPreset)) {
+        next.set('review_preset', 'full')
+        changed = true
+      }
+    } else if (mode === 'practice') {
+      if (next.has('review_preset')) {
+        next.delete('review_preset')
+        changed = true
+      }
+      if (!isPracticeFilter(rawPracticeFilter)) {
+        next.set('practice_kind', 'all')
+        changed = true
+      }
+    } else {
+      if (rawReviewPreset !== null) {
+        next.delete('review_preset')
+        changed = true
+      }
+      if (rawPracticeFilter !== null) {
+        next.delete('practice_kind')
+        changed = true
+      }
+    }
+
+    if (changed) setSearchParams(next, { replace: true })
+  }, [mode, rawMode, rawPracticeFilter, rawReviewPreset, searchParams, setSearchParams])
 
   useEffect(() => {
     if (!courseId || !sectionId) {
@@ -173,19 +219,35 @@ export function SectionPage() {
     restoredKeyRef.current = restoreKey
   }, [courseId, mode, payload, sectionId])
 
-  const previewCounts = useMemo(() => {
-    if (mode !== 'preview' || !payload) return []
-    const counts = new Map<string, number>()
-    for (const item of payload.items) {
-      const label = item.type_zh || item.object_type || '教材对象'
-      counts.set(label, (counts.get(label) || 0) + 1)
-    }
-    return [...counts.entries()]
-  }, [mode, payload])
-
   const switchMode = (nextMode: LearningMode) => {
     const next = new URLSearchParams(searchParams)
     next.set('mode', nextMode)
+    if (nextMode === 'review') {
+      if (!isReviewPreset(next.get('review_preset'))) next.set('review_preset', 'full')
+      next.delete('practice_kind')
+    } else if (nextMode === 'practice') {
+      if (!isPracticeFilter(next.get('practice_kind'))) next.set('practice_kind', 'all')
+      next.delete('review_preset')
+    } else {
+      next.delete('review_preset')
+      next.delete('practice_kind')
+    }
+    setSearchParams(next)
+  }
+
+  const switchReviewPreset = (nextPreset: ReviewPresetId) => {
+    const next = new URLSearchParams(searchParams)
+    next.set('mode', 'review')
+    next.set('review_preset', nextPreset)
+    next.delete('practice_kind')
+    setSearchParams(next)
+  }
+
+  const switchPracticeFilter = (nextFilter: PracticeFilterId) => {
+    const next = new URLSearchParams(searchParams)
+    next.set('mode', 'practice')
+    next.set('practice_kind', nextFilter)
+    next.delete('review_preset')
     setSearchParams(next)
   }
 
@@ -354,34 +416,74 @@ export function SectionPage() {
 
       {!payload && !modeError ? <p role="status">正在读取学习内容…</p> : null}
 
-      {payload && mode === 'preview' && previewCounts.length > 0 ? (
-        <div className="preview-summary" aria-label="本节教材对象统计">
-          {previewCounts.map(([label, count]) => (
-            <span className="count-chip" key={label}>
-              {label} {count}
-            </span>
-          ))}
-        </div>
+      {payload && mode === 'preview' ? (
+        payload.presentation.mode === 'preview' ? (
+          <PreviewLearningSlice
+            courseId={courseId}
+            expandedSourceIds={expandedSourceIds}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onExpandedChange={setSourceExpanded}
+            presentation={payload.presentation}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
       ) : null}
 
-      {payload && payload.items.length === 0 && emptyMessage(mode) ? (
-        <EmptyState message={emptyMessage(mode)!} />
+      {payload && mode === 'review' ? (
+        payload.presentation.mode === 'review' ? (
+          <ReviewLearningSlice
+            courseId={courseId}
+            expandedSourceIds={expandedSourceIds}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onExpandedChange={setSourceExpanded}
+            onPresetChange={switchReviewPreset}
+            presentation={payload.presentation}
+            selectedPresetId={reviewPreset}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
       ) : null}
 
-      {payload && payload.items.length > 0 ? (
-        <div className="learning-list">
-          {payload.items.map((item) => (
-            <LearningObjectCard
-              courseId={courseId}
-              expanded={expandedSourceIds.includes(item.source_id)}
-              item={item}
-              key={`${item.kind}:${item.source_id}`}
-              mode={mode}
-              onBeforeSourceNavigate={() => saveBeforeSourceNavigation(item.source_id)}
-              onExpandedChange={(expanded) => setSourceExpanded(item.source_id, expanded)}
-            />
-          ))}
-        </div>
+      {payload && mode === 'practice' ? (
+        payload.presentation.mode === 'practice' ? (
+          <PracticeLearningSlice
+            courseId={courseId}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onFilterChange={switchPracticeFilter}
+            presentation={payload.presentation}
+            selectedFilterId={practiceFilter}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
+      ) : null}
+
+      {payload && mode === 'learn' ? (
+        payload.presentation.mode === 'learn' ? (
+          <LearnLearningSlice
+            courseId={courseId}
+            expandedSourceIds={expandedSourceIds}
+            items={payload.items}
+            onBeforeSourceNavigate={saveBeforeSourceNavigation}
+            onExpandedChange={setSourceExpanded}
+            presentation={payload.presentation}
+          />
+        ) : (
+          <div className="status-panel" role="alert">
+            <p>学习内容暂不可用</p>
+          </div>
+        )
       ) : null}
     </section>
   )

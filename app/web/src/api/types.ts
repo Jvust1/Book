@@ -79,6 +79,111 @@ export interface SourceRef {
   source_id: string
 }
 
+export interface LearningSliceDerivedPrompt {
+  text: string
+  derivation: 'deterministic_template'
+  source_ref: SourceRef
+}
+
+export interface LearningSliceObjectCount {
+  object_type: string
+  count: number
+}
+
+export interface LearningSliceOverview {
+  object_count: number
+  figure_count: number
+  translation_available: boolean
+}
+
+export interface LearningSlicePrerequisites {
+  status: 'unavailable'
+  items: SourceRef[]
+}
+
+export interface LearningSlicePreset {
+  id: 'one_minute' | 'five_minute' | 'full'
+  label: string
+  source_refs: SourceRef[]
+}
+
+export type ReviewPresetId = LearningSlicePreset['id']
+
+export interface LearningSlicePracticeFilter {
+  id: 'all' | 'exercise' | 'problem'
+  label: string
+  source_refs: SourceRef[]
+}
+
+export type PracticeFilterId = LearningSlicePracticeFilter['id']
+
+export interface LearningSlicePracticeItem {
+  source_ref: SourceRef
+  solution_status: 'unavailable'
+}
+
+export interface LearningSliceGroup {
+  id:
+    | 'definitions'
+    | 'theorem_family'
+    | 'formulas'
+    | 'examples'
+    | 'other_objects'
+    | 'figures'
+    | 'translations'
+  label: string
+  source_refs: SourceRef[]
+}
+
+export interface LearningSliceExtensionStatus {
+  status: 'unavailable'
+}
+
+export interface LearningSliceExtensions {
+  supplementary: LearningSliceExtensionStatus
+  lecture: LearningSliceExtensionStatus
+}
+
+export interface PreviewLearningSlicePresentation {
+  schema_version: 'learning_slice_v1'
+  mode: 'preview'
+  overview: LearningSliceOverview
+  object_counts: LearningSliceObjectCount[]
+  objectives: LearningSliceDerivedPrompt[]
+  prerequisites: LearningSlicePrerequisites
+  core_definitions: SourceRef[]
+  core_formulas: SourceRef[]
+  key_figures: SourceRef[]
+  quick_checks: LearningSliceDerivedPrompt[]
+}
+
+export interface ReviewLearningSlicePresentation {
+  schema_version: 'learning_slice_v1'
+  mode: 'review'
+  presets: LearningSlicePreset[]
+  prompts: LearningSliceDerivedPrompt[]
+}
+
+export interface PracticeLearningSlicePresentation {
+  schema_version: 'learning_slice_v1'
+  mode: 'practice'
+  filters: LearningSlicePracticeFilter[]
+  items: LearningSlicePracticeItem[]
+}
+
+export interface LearnLearningSlicePresentation {
+  schema_version: 'learning_slice_v1'
+  mode: 'learn'
+  groups: LearningSliceGroup[]
+  extensions: LearningSliceExtensions
+}
+
+export type LearningSlicePresentation =
+  | PreviewLearningSlicePresentation
+  | ReviewLearningSlicePresentation
+  | PracticeLearningSlicePresentation
+  | LearnLearningSlicePresentation
+
 export interface ModeResponse {
   mode: LearningMode
   course_id: string
@@ -88,6 +193,7 @@ export interface ModeResponse {
   source_status: string
   items: ModeItem[]
   source_refs: SourceRef[]
+  presentation: LearningSlicePresentation
 }
 
 export interface SourceContextItem {

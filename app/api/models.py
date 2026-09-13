@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field
 
@@ -92,6 +92,111 @@ class SourceRef(BaseModel):
     source_id: str
 
 
+class LearningSliceDerivedPrompt(BaseModel):
+    text: str
+    derivation: Literal["deterministic_template"]
+    source_ref: SourceRef
+
+
+class LearningSliceObjectCount(BaseModel):
+    object_type: str
+    count: int
+
+
+class LearningSliceOverview(BaseModel):
+    object_count: int
+    figure_count: int
+    translation_available: bool
+
+
+class LearningSlicePrerequisites(BaseModel):
+    status: Literal["unavailable"]
+    items: list[SourceRef]
+
+
+class LearningSlicePreset(BaseModel):
+    id: Literal["one_minute", "five_minute", "full"]
+    label: str
+    source_refs: list[SourceRef]
+
+
+class LearningSlicePracticeFilter(BaseModel):
+    id: Literal["all", "exercise", "problem"]
+    label: str
+    source_refs: list[SourceRef]
+
+
+class LearningSlicePracticeItem(BaseModel):
+    source_ref: SourceRef
+    solution_status: Literal["unavailable"]
+
+
+class LearningSliceGroup(BaseModel):
+    id: Literal[
+        "definitions",
+        "theorem_family",
+        "formulas",
+        "examples",
+        "other_objects",
+        "figures",
+        "translations",
+    ]
+    label: str
+    source_refs: list[SourceRef]
+
+
+class LearningSliceExtensionStatus(BaseModel):
+    status: Literal["unavailable"]
+
+
+class LearningSliceExtensions(BaseModel):
+    supplementary: LearningSliceExtensionStatus
+    lecture: LearningSliceExtensionStatus
+
+
+class PreviewLearningSlicePresentation(BaseModel):
+    schema_version: Literal["learning_slice_v1"]
+    mode: Literal["preview"]
+    overview: LearningSliceOverview
+    object_counts: list[LearningSliceObjectCount]
+    objectives: list[LearningSliceDerivedPrompt]
+    prerequisites: LearningSlicePrerequisites
+    core_definitions: list[SourceRef]
+    core_formulas: list[SourceRef]
+    key_figures: list[SourceRef]
+    quick_checks: list[LearningSliceDerivedPrompt]
+
+
+class ReviewLearningSlicePresentation(BaseModel):
+    schema_version: Literal["learning_slice_v1"]
+    mode: Literal["review"]
+    presets: list[LearningSlicePreset]
+    prompts: list[LearningSliceDerivedPrompt]
+
+
+class PracticeLearningSlicePresentation(BaseModel):
+    schema_version: Literal["learning_slice_v1"]
+    mode: Literal["practice"]
+    filters: list[LearningSlicePracticeFilter]
+    items: list[LearningSlicePracticeItem]
+
+
+class LearnLearningSlicePresentation(BaseModel):
+    schema_version: Literal["learning_slice_v1"]
+    mode: Literal["learn"]
+    groups: list[LearningSliceGroup]
+    extensions: LearningSliceExtensions
+
+
+LearningSlicePresentation = Annotated[
+    PreviewLearningSlicePresentation
+    | ReviewLearningSlicePresentation
+    | PracticeLearningSlicePresentation
+    | LearnLearningSlicePresentation,
+    Field(discriminator="mode"),
+]
+
+
 class ModeResponse(BaseModel):
     mode: LearningMode
     course_id: str
@@ -101,6 +206,7 @@ class ModeResponse(BaseModel):
     source_status: str
     items: list[ModeItem]
     source_refs: list[SourceRef]
+    presentation: LearningSlicePresentation
 
 
 class SourceContextItem(BaseModel):

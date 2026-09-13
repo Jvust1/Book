@@ -11,6 +11,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiError, bookApi } from '../api/client'
 import type {
   LearningMode,
+  LearningSlicePresentation,
   ModeItem,
   ModeResponse,
   StudyRecord,
@@ -69,7 +70,78 @@ const reviewItem: ModeItem = {
   translation_available: true,
 }
 
-const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse => ({
+const presentationForMode = (
+  mode: LearningMode,
+  items: ModeItem[] = [],
+): LearningSlicePresentation => {
+  if (mode === 'preview') {
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'preview',
+      overview: {
+        object_count: 0,
+        figure_count: 0,
+        translation_available: false,
+      },
+      object_counts: [],
+      objectives: [],
+      prerequisites: { status: 'unavailable', items: [] },
+      core_definitions: [],
+      core_formulas: [],
+      key_figures: [],
+      quick_checks: [],
+    }
+  }
+  if (mode === 'review') {
+    const sourceRefs = items.map(({ kind, source_id }) => ({ kind, source_id }))
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'review',
+      presets: [
+        { id: 'one_minute', label: '1 分钟', source_refs: sourceRefs },
+        { id: 'five_minute', label: '5 分钟', source_refs: sourceRefs },
+        { id: 'full', label: '完整复习', source_refs: sourceRefs },
+      ],
+      prompts: items.map((item) => ({
+        text: `先回忆「${item.title_zh || item.number || item.type_zh || '教材对象'}」的条件和结论，再显示教材内容。`,
+        derivation: 'deterministic_template',
+        source_ref: { kind: item.kind, source_id: item.source_id },
+      })),
+    }
+  }
+  if (mode === 'practice') {
+    return {
+      schema_version: 'learning_slice_v1',
+      mode: 'practice',
+      filters: [{ id: 'all', label: '全部', source_refs: [] }],
+      items: [],
+    }
+  }
+  return {
+    schema_version: 'learning_slice_v1',
+    mode: 'learn',
+    groups:
+      items.length > 0
+        ? [
+            {
+              id: 'other_objects',
+              label: '其他教材对象',
+              source_refs: items.map(({ kind, source_id }) => ({ kind, source_id })),
+            },
+          ]
+        : [],
+    extensions: {
+      supplementary: { status: 'unavailable' },
+      lecture: { status: 'unavailable' },
+    },
+  }
+}
+
+const modePayload = (
+  mode: LearningMode,
+  items: ModeItem[] = [],
+  presentation: LearningSlicePresentation = presentationForMode(mode, items),
+): ModeResponse => ({
   mode,
   course_id: 'functional_analysis_course',
   book_id: 'stein_shakarchi_functional_analysis_2011',
@@ -78,6 +150,7 @@ const modePayload = (mode: LearningMode, items: ModeItem[] = []): ModeResponse =
   source_status: 'available',
   items,
   source_refs: items.map(({ kind, source_id }) => ({ kind, source_id })),
+  presentation,
 })
 
 const studyRecord = (
@@ -164,7 +237,11 @@ describe('SectionPage', () => {
     }
 
     await user.click(screen.getByRole('tab', { name: '复习' }))
-    expect(screen.getByTestId('location')).toHaveTextContent('?mode=review')
+    await waitFor(() => {
+      expect(screen.getByTestId('location')).toHaveTextContent(
+        '?mode=review&review_preset=full',
+      )
+    })
     await waitFor(() => {
       expect(bookApi.getMode).toHaveBeenLastCalledWith(
         'functional_analysis_course',
@@ -172,6 +249,56 @@ describe('SectionPage', () => {
         'review',
       )
     })
+  })
+
+  it('renders Preview from presentation instead of locally recomputing item counts', async () => {
+    const previewItem: ModeItem = {
+      kind: 'object',
+      source_id: 'def_preview',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: '预习定义',
+      title_en: null,
+      formula: null,
+      printed_page: 2,
+      pdf_page: 21,
+      content_zh: '教材定义正文。',
+      translation_available: true,
+    }
+    const previewPresentation: LearningSlicePresentation = {
+      schema_version: 'learning_slice_v1',
+      mode: 'preview',
+      overview: {
+        object_count: 9,
+        figure_count: 4,
+        translation_available: false,
+      },
+      object_counts: [{ object_type: 'theorem', count: 9 }],
+      objectives: [
+        {
+          text: '理解并能复述：预习定义',
+          derivation: 'deterministic_template',
+          source_ref: { kind: 'object', source_id: 'def_preview' },
+        },
+      ],
+      prerequisites: { status: 'unavailable', items: [] },
+      core_definitions: [],
+      core_formulas: [],
+      key_figures: [],
+      quick_checks: [],
+    }
+    vi.mocked(bookApi.getMode).mockResolvedValue(
+      modePayload('preview', [previewItem], previewPresentation),
+    )
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=preview')
+
+    expect(await screen.findByRole('heading', { name: '预习概览' })).toBeInTheDocument()
+    expect(screen.getByText('教材对象 9')).toBeInTheDocument()
+    expect(screen.getByText('教材图示 4')).toBeInTheDocument()
+    expect(screen.getByText('理解并能复述：预习定义')).toBeInTheDocument()
+    expect(screen.queryByText('定义 1')).not.toBeInTheDocument()
   })
 
   it('renders Chinese-first object content and exact missing-content fallback', async () => {
@@ -227,7 +354,7 @@ describe('SectionPage', () => {
 
     expect(await screen.findByText('复习定理')).toBeInTheDocument()
     expect(screen.queryByText('这段内容必须在用户点击后才显示。')).not.toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: '显示内容' }))
+    await user.click(screen.getByRole('button', { name: '显示教材内容' }))
     expect(screen.getByText('这段内容必须在用户点击后才显示。')).toBeInTheDocument()
   })
 
@@ -255,13 +382,14 @@ describe('SectionPage', () => {
 
     renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=review')
     await screen.findByText('复习定理')
-    await user.click(screen.getByRole('button', { name: '显示内容' }))
+    await user.click(screen.getByRole('button', { name: '显示教材内容' }))
     await user.click(screen.getByRole('link', { name: '查看教材来源' }))
 
     expect(
       loadSectionViewState('functional_analysis_course', 'ch01_s01', 'review'),
     ).toEqual({
-      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      route:
+        '/courses/functional_analysis_course/sections/ch01_s01?mode=review&review_preset=full',
       scrollY: 420,
       expandedSourceIds: ['thm_review'],
       activeSourceId: 'thm_review',
@@ -273,7 +401,8 @@ describe('SectionPage', () => {
     const scrollTo = vi.fn()
     Object.defineProperty(window, 'scrollTo', { value: scrollTo, configurable: true })
     saveSectionViewState('functional_analysis_course', 'ch01_s01', 'review', {
-      route: '/courses/functional_analysis_course/sections/ch01_s01?mode=review',
+      route:
+        '/courses/functional_analysis_course/sections/ch01_s01?mode=review&review_preset=full',
       scrollY: 420,
       expandedSourceIds: ['thm_review'],
       activeSourceId: 'thm_review',
@@ -391,4 +520,44 @@ describe('SectionPage', () => {
     })
     expect(screen.getByText('学习进度：进行中')).toBeInTheDocument()
   })
+  it('renders Learn through grouped presentation without duplicating the flat object list', async () => {
+    const learnItem: ModeItem = {
+      kind: 'object',
+      source_id: 'learn_def',
+      object_type: 'definition',
+      type_zh: '定义',
+      number: '1.1',
+      title_zh: '分组定义',
+      title_en: null,
+      formula: null,
+      printed_page: 2,
+      pdf_page: 21,
+      content_zh: '分组定义正文。',
+      translation_available: true,
+    }
+    const learnPresentation: LearningSlicePresentation = {
+      schema_version: 'learning_slice_v1',
+      mode: 'learn',
+      groups: [
+        {
+          id: 'definitions',
+          label: '定义 / 概念入口',
+          source_refs: [{ kind: 'object', source_id: 'learn_def' }],
+        },
+      ],
+      extensions: {
+        supplementary: { status: 'unavailable' },
+        lecture: { status: 'unavailable' },
+      },
+    }
+    vi.mocked(bookApi.getMode).mockResolvedValue(
+      modePayload('learn', [learnItem], learnPresentation),
+    )
+
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+
+    expect(await screen.findByRole('heading', { name: '定义 / 概念入口' })).toBeInTheDocument()
+    expect(screen.getAllByText('分组定义')).toHaveLength(1)
+  })
+
 })
