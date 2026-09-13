@@ -6,9 +6,9 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     VitePWA({
-      // Android already ships its assets; a service worker can serve stale UI
-      // after an APK upgrade instead of the newly bundled version.
-      disable: mode === 'android',
+      // Native shells already ship their assets; a service worker can serve stale UI
+      // after an app upgrade instead of the newly bundled version.
+      disable: ['android', 'desktop'].includes(mode),
       registerType: 'autoUpdate',
       manifest: {
         name: 'Book 学习',

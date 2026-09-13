@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
-  changeRecording, exportBlob, exportUnsaved, getRecordings, isNativeRecorder,
+  changeRecording, exportBlob, exportUnsaved, getRecordings, isDesktopRecorder, isNativeRecorder,
   nativeCommand, pauseRecording, retrySave, startRecording, stopRecording, useRecorder, type Recording,
 } from '../state/recorder'
 import { Icon } from '../components/Icon'
@@ -101,6 +101,7 @@ export function RecordingPage() {
   const [error, setError] = useState<string | null>(null)
   const active = session.status === 'recording' || session.status === 'paused'
   const busy = session.status === 'requesting' || session.status === 'saving'
+  const desktop = isDesktopRecorder()
   const refresh = async () => {
     try { setRecordings(await getRecordings()); setError(null) }
     catch (reason) { setError('录音列表读取失败：' + errorMessage(reason)) }
@@ -147,18 +148,20 @@ export function RecordingPage() {
             </> : session.status === 'unsaved' ? <>
               <button className="primary-button" onClick={() => void retrySave()}>重试保存</button>
               <button className="secondary-button" onClick={exportUnsaved}>先导出音频</button>
-            </> : <button className="primary-button record-button" disabled={busy}
+            </> : <button className="primary-button record-button" disabled={busy || desktop}
               onClick={() => void startRecording(name.trim() || '课堂录音 ' + new Date().toLocaleString('zh-CN'))}>
-                <Icon name="mic" />{busy ? labels[session.status] : '开始录音'}
+                <Icon name="mic" />{desktop ? '请用手机录音' : busy ? labels[session.status] : '开始录音'}
               </button>}
           </div>
-          <p className="recording-hint">{isNativeRecorder()
+          <p className="recording-hint">{desktop
+            ? '电脑端不申请麦克风；请在手机端录音，学习进度在同一账号/同步包中保持一致。'
+            : isNativeRecorder()
             ? '支持锁屏和切换应用；通知栏可暂停或停止。'
             : '浏览器录音时请保持此页面打开；切换 App 内页面仍可继续。'}</p>
           {session.error ? <p className="recording-error" role="alert">{session.error}</p> : null}
         </section>
         <aside className="recording-guide">
-          <div><p className="eyebrow">声音笔记</p><h2>把课堂装进口袋</h2><p>回放难点，跟上思路。录完可直接导出原音频，自行整理或交给 ChatGPT 处理。</p></div>
+          <div><p className="eyebrow">声音笔记</p><h2>{desktop ? '手机负责记录' : '把课堂装进口袋'}</h2><p>{desktop ? '桌面端专注阅读、公式和学习进度；需要录音时请使用手机端，完成后再把音频交给 ChatGPT 整理。' : '回放难点，跟上思路。录完可直接导出原音频，自行整理或交给 ChatGPT 处理。'}</p></div>
           <div className="recording-stats"><div><strong>{recordings.length}</strong><span>段本机录音</span></div><div><strong>{formatDuration(total)}</strong><span>累计时长</span></div></div>
           <p className="recording-privacy"><Icon name="shield" />录音保存在本机；由你决定分享。</p>
         </aside>

@@ -1,5 +1,9 @@
 # Book 当前状态
 
+## Windows 0.1.3 桌面版交付 — 2026-09-13
+
+已新增 Windows x64 单文件桌面壳，打包本地 FastAPI、React/KaTeX 页面和 Functional Analysis 教材资源。桌面端不申请麦克风，录音入口明确引导到 Android；教材内容和页面代码与 Android 0.1.3 同源。学习进度仍按设备保存在 `%LOCALAPPDATA%\\BookApp`，本次无云端/API，因此暂不声称手机与电脑自动同步。构建与校验记录见 [Windows 交付记录](WINDOWS_0_1_3.md) 和 [桌面构建说明](../desktop-app/README.md)。
+
 ## Android 0.1.3 交付补充 — 2026-09-13
 
 当前 Android 工作分支为 `build/book-app-android-apk-20260913`，PR #29 仍未合并。0.1.3 增加离线 LaTeX/Markdown 公式显示、统一手机页面，以及 Android 前台服务录音（暂停/继续、锁屏、播放、导出、分享和中断恢复）。未扩展教材结构化数据，也未配置模型/API。功能、测试与实机验证边界见 [Android 交付记录](ANDROID_0_1_3.md) 和 [使用说明](../android-app/README.md)。下面保留 Phase 1H 的既有状态记录。

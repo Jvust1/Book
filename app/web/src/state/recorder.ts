@@ -4,8 +4,9 @@ import { checkpointRecording, listRecordings, recoverRecordings, saveRecording, 
 type Status = 'idle' | 'requesting' | 'recording' | 'paused' | 'saving' | 'unsaved'
 export type RecorderState = { status: Status; durationMs: number; level: number; name: string; error: string | null }
 export type Recording = Omit<SavedRecording, 'blob'> & { blob?: Blob; native?: boolean }
-declare global { interface Window { BookNative?: { request: (json: string) => void } } }
+declare global { interface Window { BookNative?: { request: (json: string) => void }; BookDesktop?: { platform: string } } }
 export const isNativeRecorder = () => !!window.BookNative
+export const isDesktopRecorder = () => !!window.BookDesktop
 let state: RecorderState = { status: 'idle', durationMs: 0, level: 0, name: '', error: null }
 const listeners = new Set<() => void>()
 const update = (patch: Partial<RecorderState>) => { state = { ...state, ...patch }; listeners.forEach(fn => fn()) }
@@ -76,6 +77,10 @@ function releaseMedia() {
   void audioContext?.close().catch(() => {}); audioContext = null; analyser = null; recorder = null
 }
 export async function startRecording(name: string) {
+  if (isDesktopRecorder()) {
+    update({ error: '桌面版不启用麦克风录音，请在手机端录音后导出。' })
+    return
+  }
   if (state.status !== 'idle' || starting) return
   starting = true; update({ status: 'requesting', error: null, name, durationMs: 0 })
   try {

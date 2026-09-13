@@ -2,6 +2,7 @@ import { chromium, expect } from '@playwright/test'
 import fs from 'node:fs'
 import path from 'node:path'
 const output = path.resolve('../../.build/web-013')
+const baseUrl = process.env.BOOK_WEB_BASE_URL || 'http://127.0.0.1:5173'
 fs.mkdirSync(output, { recursive: true })
 const browser = await chromium.launch({ headless: true, channel: 'chrome', args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] })
 const context = await browser.newContext({ viewport: { width: 390, height: 844 }, permissions: ['microphone'], acceptDownloads: true })
@@ -9,7 +10,7 @@ const page = await context.newPage(), errors = [], steps = []
 page.on('pageerror', error => errors.push(error.message))
 const pass = name => { steps.push(name); console.log('PASS ' + name) }
 try {
-  await page.goto('http://127.0.0.1:5173')
+  await page.goto(baseUrl)
   await expect(page.getByRole('link', { name: '进入课程' })).toBeVisible()
   await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(output, 'library-mobile.png') })
   await page.getByRole('link', { name: '课堂录音', exact: true }).click()
@@ -66,14 +67,14 @@ try {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(output, 'recordings-mobile.png') })
   pass('Recording page fits 320 / 390 / 768 / 1440 widths')
-  await page.goto('http://127.0.0.1:5173/courses/functional_analysis_course/search?q=1%2Fp')
+  await page.goto(baseUrl + '/courses/functional_analysis_course/search?q=1%2Fp')
   await expect(page.locator('.search-result-card').first()).toBeVisible()
   await page.locator('.search-result-card .source-link').first().click()
   await expect(page.locator('.katex').first()).toBeVisible()
   await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(output, 'formulas-mobile.png') })
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await page.setViewportSize({ width: 1440, height: 1000 })
-  await page.goto('http://127.0.0.1:5173')
+  await page.goto(baseUrl)
   await expect(page.getByRole('link', { name: '进入课程' })).toBeVisible()
   await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(output, 'library-desktop.png') })
   pass('Real textbook math renders with locally bundled fonts and no mobile overflow')
