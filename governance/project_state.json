@@ -180,7 +180,7 @@
     "version_code": 4,
     "branch": "build/book-app-android-apk-20260913",
     "pr": 29,
-    "status": "IMPLEMENTED_LOCAL_VALIDATION",
+    "status": "BUILT_VERIFIED_SIMULATOR",
     "notes": "LaTeX/Markdown display, responsive design, native foreground recording and legacy recording export. No new structured textbook data or AI provider.",
     "documentation": "android-app/README.md",
     "checkpoint": "docs/ANDROID_0_1_3.md",

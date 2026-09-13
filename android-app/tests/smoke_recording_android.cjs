@@ -47,6 +47,7 @@ const pass = name => { steps.push(name); console.log('PASS ' + name) };
 async function permissionChecks() {
   await browser.close(); browser = undefined;
   adb('shell', 'pm', 'revoke', 'com.jvust.book.app', 'android.permission.RECORD_AUDIO');
+  adb('shell', 'pm', 'clear-permission-flags', 'com.jvust.book.app', 'android.permission.RECORD_AUDIO', 'user-set', 'user-fixed');
   adb('shell', 'am', 'start', '-W', '-n', 'com.jvust.book.app/.MainActivity');
   await connect(); await page.goto(origin + '/recording');
   await page.getByRole('button', { name: '开始录音', exact: true }).click();
@@ -189,12 +190,13 @@ async function main() {
   await expect(legacy.getByText('已导出录音', { exact: true })).toBeVisible();
   expect(Number(adb('shell', 'stat', '-c', '%s', '/sdcard/Download/' + legacyName + '.webm'))).toBe(fixture.length);
   pass('Legacy IndexedDB WebM exports through Android SAF with exact byte length');
+  fs.writeFileSync(path.join(output, 'core-result.json'), JSON.stringify({ serial, steps, errors }, null, 2));
   await permissionChecks();
   expect(errors).toEqual([]);
   fs.writeFileSync(path.join(output, 'result.json'), JSON.stringify({ serial, steps, errors }, null, 2));
 }
 main().catch(async error => {
-  console.error(error);
+  console.error(String(error.stack || error).slice(0, 1600));
   if (page && !page.isClosed()) await page.screenshot({ path: path.join(output, 'failure.png'), timeout: 5000 }).catch(() => {});
   process.exitCode = 1;
 }).finally(async () => {

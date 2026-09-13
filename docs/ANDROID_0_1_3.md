@@ -23,7 +23,7 @@ Android recordings use an explicit, visible foreground microphone service. Audio
 
 ## Validation and limits
 
-Validation commands are in [the Android README](../android-app/README.md). The release manifest records source commit, artifact SHA-256 and per-suite results. Acceptance exercises the actual debug APK in an Android 15 x86_64 emulator, including permission refusal/retry, notification actions, force-stop recovery and exported legacy audio byte length. Browser checks use synthetic audio in Windows Chrome and inspect widths 320, 390, 768 and 1440.
+Validation commands are in [the Android README](../android-app/README.md). The release manifest records source commit, artifact SHA-256 and per-suite results. Typecheck and 98 Vitest tests passed; Android compile/lint passed (0 errors, 4 warnings); 7 existing app smoke stages and 4 browser acceptance stages passed. Native recording coverage includes 9 core stages plus 2 permission/notification stages. Acceptance exercises the actual debug APK in an Android 15 x86_64 emulator, including permission refusal/retry, notification actions, force-stop recovery and exported legacy audio byte length. Browser checks use synthetic audio in Windows Chrome and inspect widths 320, 390, 768 and 1440.
 
 This is a debug-signed sideload build. Physical ARM64 microphone quality, manufacturer battery restrictions, Bluetooth input and actual phone-call interruptions have not been verified. Browser background behavior is subject to browser policies. Audio is not automatically transcribed or uploaded; users can export it for their own ChatGPT workflow. No new model/API is configured. Canonical textbook data, exact search behavior and StudyRecord semantics remain unchanged.
 
