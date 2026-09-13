@@ -62,6 +62,20 @@ app.add_middleware(
 )
 
 
+def _validate_model(model_type: type[QARequest], payload: object) -> QARequest:
+    """Validate request DTOs across Pydantic v1 and v2 runtimes.
+
+    The Android build uses Pydantic v1 because Chaquopy does not provide the
+    native ``pydantic-core`` wheel required by Pydantic v2. Desktop installs
+    continue to use the v2 API when available.
+    """
+
+    validator = getattr(model_type, "model_validate", None)
+    if validator is not None:
+        return validator(payload)
+    return model_type.parse_obj(payload)
+
+
 @lru_cache(maxsize=1)
 def default_service() -> BookAppService:
     """Open the repository runtime lazily so module import cannot fail closed."""
@@ -216,7 +230,7 @@ async def qa(
     service: BookAppService = Depends(get_service),
 ) -> QAResponse:
     try:
-        payload = QARequest.model_validate(await request.json())
+        payload = _validate_model(QARequest, await request.json())
     except (ValueError, TypeError, ValidationError) as exc:
         raise InvalidQAQuestionError(
             code="invalid_qa_question",
