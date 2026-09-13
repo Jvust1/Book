@@ -1,121 +1,177 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  changeRecording, exportBlob, exportUnsaved, getRecordings, isNativeRecorder,
+  nativeCommand, pauseRecording, retrySave, startRecording, stopRecording, useRecorder, type Recording,
+} from '../state/recorder'
+import { Icon } from '../components/Icon'
 
-import { deleteRecording, listRecordings, saveRecording, type SavedRecording } from '../state/recordingStore'
+export const formatDuration = (ms: number) => {
+  const seconds = Math.floor(ms / 1000)
+  const hours = Math.floor(seconds / 3600)
+  return (hours ? String(hours).padStart(2, '0') + ':' : '') +
+    String(Math.floor(seconds / 60) % 60).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0')
+}
+const formatSize = (size: number) => size < 1048576 ? (size / 1024).toFixed(0) + ' KB' : (size / 1048576).toFixed(1) + ' MB'
+const errorMessage = (error: unknown) => error instanceof Error ? error.message : '操作失败，请重试'
 
-const preferredMimeTypes = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4']
-
-const formatDuration = (seconds: number): string =>
-  `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`
+function RecordingItem({ item, onChange }: { item: Recording; onChange: () => void }) {
+  const [renaming, setRenaming] = useState(false)
+  const [name, setName] = useState(item.name)
+  const [busy, setBusy] = useState(false)
+  const [notice, setNotice] = useState('')
+  const [url, setUrl] = useState('')
+  const [rate, setRate] = useState('1')
+  useEffect(() => {
+    const audioUrl = item.native ? '/__recordings/' + item.id : item.blob ? URL.createObjectURL(item.blob) : ''
+    setUrl(audioUrl)
+    return () => { if (audioUrl.startsWith('blob:')) URL.revokeObjectURL(audioUrl) }
+  }, [item.id, item.native, item.blob])
+  const action = async (fn: () => Promise<unknown>, done?: string) => {
+    setBusy(true); setNotice('')
+    try { await fn(); if (done) setNotice(done) }
+    catch (error) { setNotice(errorMessage(error)) }
+    finally { setBusy(false) }
+  }
+  return (
+    <article className="recording-item content-card compact-card">
+      <div className="recording-item-heading">
+        <span className="audio-cover"><Icon name="audio" /></span>
+        <div className="recording-item-title">
+          <h3>{item.name}</h3>
+          <p className="secondary-text">{new Date(item.createdAt).toLocaleString('zh-CN', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+        </div>
+        <span className="count-chip">{formatDuration(item.durationMs || 0)}</span>
+      </div>
+      {item.interrupted ? <p className="recording-notice">这段录音曾中断，已恢复保存到本机的部分。</p> : null}
+      <audio controls preload="metadata" src={url} aria-label={'播放 ' + item.name}
+        onPlay={event => {
+          document.querySelectorAll('audio').forEach(audio => { if (audio !== event.currentTarget) audio.pause() })
+          event.currentTarget.playbackRate = Number(rate)
+        }}
+        onError={() => setNotice('音频暂时无法播放，可先导出原文件。')} />
+      <div className="recording-item-tools">
+        <label className="speed-select">播放速度
+          <select aria-label={'播放速度 ' + item.name} value={rate} onChange={event => {
+            setRate(event.target.value)
+            const audio = event.currentTarget.closest('article')?.querySelector('audio')
+            if (audio) audio.playbackRate = Number(event.target.value)
+          }}>
+            {[0.75, 1, 1.25, 1.5, 2].map(value => <option key={value} value={value}>{value}×</option>)}
+          </select>
+        </label>
+        <span className="secondary-text">{formatSize(item.size ?? item.blob?.size ?? 0)}</span>
+      </div>
+      {renaming ? (
+        <form className="rename-form" onSubmit={event => {
+          event.preventDefault()
+          if (!name.trim()) { setNotice('请填写录音名称'); return }
+          void action(async () => { await changeRecording(item, { name: name.trim() }); setRenaming(false); onChange() })
+        }}>
+          <input aria-label="新的录音名称" value={name} maxLength={120} onChange={event => setName(event.target.value)} />
+          <button className="primary-button" disabled={busy}>保存名称</button>
+          <button className="text-button" type="button" onClick={() => setRenaming(false)}>取消</button>
+        </form>
+      ) : (
+        <div className="recording-item-tools">
+          <button className="secondary-button" disabled={busy} onClick={() => void action(async () => {
+            if (item.native) await nativeCommand('export', { recordingId: item.id })
+            else if (item.blob) await exportBlob(item.blob, item.name)
+          }, isNativeRecorder() ? '已导出录音' : '已发起下载')}>
+            <Icon name="download" />导出音频
+          </button>
+          {item.native ? <button className="text-button" disabled={busy} onClick={() => void action(() => nativeCommand('share', { recordingId: item.id }))}>分享</button> : null}
+          <button className="text-button" disabled={busy} onClick={() => { setName(item.name); setRenaming(true) }}>重命名</button>
+          <button className="text-button" disabled={busy} onClick={() => void action(async () => {
+            await changeRecording(item, { archived: !item.archived }); onChange()
+          })}>{item.archived ? '恢复到列表' : '归档'}</button>
+        </div>
+      )}
+      {notice ? <p role="status" className="recording-notice">{notice}</p> : null}
+    </article>
+  )
+}
 
 export function RecordingPage() {
-  const [recording, setRecording] = useState(false)
-  const [seconds, setSeconds] = useState(0)
-  const [recordings, setRecordings] = useState<SavedRecording[]>([])
+  const session = useRecorder()
+  const [name, setName] = useState('')
+  const [recordings, setRecordings] = useState<Recording[]>([])
+  const [query, setQuery] = useState('')
+  const [archived, setArchived] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const recorderRef = useRef<MediaRecorder | null>(null)
-  const streamRef = useRef<MediaStream | null>(null)
-  const chunksRef = useRef<Blob[]>([])
-  const timerRef = useRef<number | null>(null)
-  const urlsRef = useRef<string[]>([])
-
-  const refresh = () => listRecordings().then(setRecordings).catch(() => setRecordings([]))
-
+  const active = session.status === 'recording' || session.status === 'paused'
+  const busy = session.status === 'requesting' || session.status === 'saving'
+  const refresh = async () => {
+    try { setRecordings(await getRecordings()); setError(null) }
+    catch (reason) { setError('录音列表读取失败：' + errorMessage(reason)) }
+    finally { setLoading(false) }
+  }
+  useEffect(() => { if (session.status === 'idle') void refresh() }, [session.status])
   useEffect(() => {
-    void refresh()
-    return () => {
-      if (timerRef.current !== null) window.clearInterval(timerRef.current)
-      streamRef.current?.getTracks().forEach((track) => track.stop())
-      urlsRef.current.forEach((url) => URL.revokeObjectURL(url))
-    }
+    const fn = () => { if (document.visibilityState === 'visible') void refresh() }
+    document.addEventListener('visibilitychange', fn)
+    return () => document.removeEventListener('visibilitychange', fn)
   }, [])
-
-  const start = async () => {
-    setError(null)
-    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
-      setError('当前设备或浏览器不支持录音，请更新系统 WebView 后重试。')
-      return
-    }
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      const mimeType = preferredMimeTypes.find((value) => MediaRecorder.isTypeSupported(value))
-      const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined)
-      chunksRef.current = []
-      recorder.ondataavailable = (event) => { if (event.data.size) chunksRef.current.push(event.data) }
-      recorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || 'audio/webm' })
-        const now = Date.now()
-        void saveRecording({
-          id: `recording-${now}`,
-          name: `课堂录音 ${new Date(now).toLocaleString('zh-CN')}`,
-          createdAt: now,
-          mimeType: blob.type,
-          blob,
-        }).then(refresh).catch(() => setError('录音已结束，但保存到本机失败。'))
-        stream.getTracks().forEach((track) => track.stop())
-      }
-      streamRef.current = stream
-      recorderRef.current = recorder
-      recorder.start()
-      setRecording(true)
-      setSeconds(0)
-      timerRef.current = window.setInterval(() => setSeconds((value) => value + 1), 1000)
-    } catch {
-      setError('无法访问麦克风。请在系统设置中允许 Book 使用麦克风后重试。')
-    }
-  }
-
-  const stop = () => {
-    if (!recorderRef.current) return
-    recorderRef.current.stop()
-    recorderRef.current = null
-    streamRef.current = null
-    setRecording(false)
-    if (timerRef.current !== null) window.clearInterval(timerRef.current)
-    timerRef.current = null
-  }
-
-  const remove = async (id: string) => {
-    await deleteRecording(id)
-    setRecordings((items) => items.filter((item) => item.id !== id))
-  }
-
+  const visible = useMemo(() => recordings.filter(item => !!item.archived === archived && item.name.toLowerCase().includes(query.toLowerCase())), [recordings, archived, query])
+  const total = recordings.reduce((sum, item) => sum + (item.durationMs || 0), 0)
+  const labels = { idle: '准备就绪', requesting: '正在开启麦克风…', recording: '正在录音', paused: '已暂停', saving: '正在保存…', unsaved: '等待保存' }
   return (
     <section className="page-stack recording-page">
       <header className="page-heading">
-        <p className="eyebrow">Learning</p>
+        <p className="eyebrow">CAPTURE · 每一个重要时刻</p>
         <h1>课堂录音</h1>
-        <p>录音只保存在本机，停止后可以回放或下载；不会自动上传。</p>
+        <p>专心听讲，让声音留下来。</p>
       </header>
-
-      <section className="content-card recording-panel" aria-label="录音控制">
-        <div className="recording-status" aria-live="polite">
-          <span className={recording ? 'recording-dot is-live' : 'recording-dot'} aria-hidden="true" />
-          <strong>{recording ? `正在录音 ${formatDuration(seconds)}` : '准备录音'}</strong>
+      <div className="recording-workspace">
+        <section className="recording-panel" aria-label="录音控制">
+          <div className="recording-panel-top"><span className="eyebrow">VOICE RECORDER</span><Icon name="mic" /></div>
+          <div className="recording-status" role="status">
+            <span className={'recording-dot' + (session.status === 'recording' ? ' is-live' : '')} />
+            <strong>{labels[session.status]}</strong>
+          </div>
+          <div className="recording-clock" aria-label="录音时长">{formatDuration(session.durationMs)}</div>
+          <div className="waveform" aria-label="麦克风音量">
+            {Array.from({ length: 41 }, (_, index) => <i key={index}
+              style={{ height: (5 + session.level * (18 + 55 * Math.abs(Math.sin(index * 1.7)))) + 'px' }} />)}
+          </div>
+          {active ? <p className="recording-session-name">{session.name}</p> : (
+            <label className="recording-name-label">录音名称
+              <input value={name} maxLength={120} disabled={busy || session.status === 'unsaved'}
+                onChange={event => setName(event.target.value)} placeholder="例如：泛函分析 · 第一课" />
+            </label>
+          )}
+          <div className="recording-actions">
+            {active ? <>
+              <button className="secondary-button" onClick={() => void pauseRecording()}><Icon name={session.status === 'paused' ? 'play' : 'pause'} />{session.status === 'paused' ? '继续录音' : '暂停录音'}</button>
+              <button className="primary-button stop-button" onClick={stopRecording}><Icon name="stop" />停止并保存</button>
+            </> : session.status === 'unsaved' ? <>
+              <button className="primary-button" onClick={() => void retrySave()}>重试保存</button>
+              <button className="secondary-button" onClick={exportUnsaved}>先导出音频</button>
+            </> : <button className="primary-button record-button" disabled={busy}
+              onClick={() => void startRecording(name.trim() || '课堂录音 ' + new Date().toLocaleString('zh-CN'))}>
+                <Icon name="mic" />{busy ? labels[session.status] : '开始录音'}
+              </button>}
+          </div>
+          <p className="recording-hint">{isNativeRecorder()
+            ? '支持锁屏和切换应用；通知栏可暂停或停止。'
+            : '浏览器录音时请保持此页面打开；切换 App 内页面仍可继续。'}</p>
+          {session.error ? <p className="recording-error" role="alert">{session.error}</p> : null}
+        </section>
+        <aside className="recording-guide">
+          <div><p className="eyebrow">声音笔记</p><h2>把课堂装进口袋</h2><p>回放难点，跟上思路。录完可直接导出原音频，自行整理或交给 ChatGPT 处理。</p></div>
+          <div className="recording-stats"><div><strong>{recordings.length}</strong><span>段本机录音</span></div><div><strong>{formatDuration(total)}</strong><span>累计时长</span></div></div>
+          <p className="recording-privacy"><Icon name="shield" />录音保存在本机；由你决定分享。</p>
+        </aside>
+      </div>
+      <section className="page-stack" aria-label="已保存录音">
+        <div className="recording-list-heading"><h2>{archived ? '已归档录音' : '本机录音'}</h2>
+          <button className="text-button" onClick={() => setArchived(!archived)}>{archived ? '返回录音列表' : '查看归档'}</button>
         </div>
-        {recording ? (
-          <button className="primary-button" type="button" onClick={stop}>停止并保存</button>
-        ) : (
-          <button className="primary-button" type="button" onClick={() => void start()}>开始录音</button>
-        )}
-        {error ? <p className="recording-error" role="alert">{error}</p> : null}
-      </section>
-
-      <section className="list-stack" aria-label="已保存录音">
-        <h2>本机录音</h2>
-        {recordings.length === 0 ? <p className="secondary-text">还没有录音。</p> : recordings.map((item) => {
-          const url = URL.createObjectURL(item.blob)
-          urlsRef.current.push(url)
-          return (
-            <article className="content-card compact-card recording-item" key={item.id}>
-              <div><h3>{item.name}</h3><p className="secondary-text">{item.mimeType}</p></div>
-              <audio controls src={url}>当前浏览器不支持音频播放。</audio>
-              <div className="card-footer">
-                <a className="secondary-button" href={url} download={`${item.name}.webm`}>下载</a>
-                <button className="text-button" type="button" onClick={() => void remove(item.id)}>删除</button>
-              </div>
-            </article>
-          )
-        })}
+        <input className="recording-search" type="search" aria-label="搜索录音" placeholder="按名称查找录音…" value={query} onChange={event => setQuery(event.target.value)} />
+        {error ? <div className="status-panel" role="alert"><p>{error}</p><button className="secondary-button" onClick={() => void refresh()}>重新读取</button></div> : null}
+        {loading ? <p role="status">正在读取本机录音…</p> : !visible.length ? (
+          <div className="recording-empty"><Icon name="audio" /><h3>{query ? '没有找到匹配录音' : archived ? '暂无归档录音' : '第一段录音，从这里开始'}</h3><p>{query ? '试试其他名称。' : '点击上方麦克风，记录今天的新收获。'}</p></div>
+        ) : <div className="recording-grid">{visible.map(item => <RecordingItem key={item.id} item={item} onChange={() => void refresh()} />)}</div>}
       </section>
     </section>
   )

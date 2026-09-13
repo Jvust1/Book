@@ -5,6 +5,7 @@ import type {
   SourceRef,
 } from '../api/types'
 import { SourceLink } from './SourceLink'
+import { FormulaBlock, RichText } from './RichText'
 
 const MISSING_CONTENT = '本段中文学习内容暂未提供'
 const UNAVAILABLE_MESSAGE = '学习内容暂不可用'
@@ -125,8 +126,8 @@ export function ReviewLearningSlice({
 
                 {expanded ? (
                   <div className="review-source-content">
-                    {item.formula ? <div className="formula-block">{item.formula}</div> : null}
-                    <p className="learning-content">{content}</p>
+                    {item.formula ? <FormulaBlock formula={item.formula} /> : null}
+                    <RichText content={content} />
                   </div>
                 ) : null}
               </article>

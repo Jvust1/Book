@@ -5,6 +5,7 @@ import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { ApiError, bookApi } from '../api/client'
 import type { CourseResponse, SearchResponse, SearchResultItem } from '../api/types'
 import { loadSearchViewState, saveSearchViewState } from '../state/searchViewState'
+import { FormulaBlock, RichText } from '../components/RichText'
 
 const searchErrorMessage = (error: unknown): { message: string; unavailable: boolean } => {
   if (error instanceof ApiError) {
@@ -190,9 +191,9 @@ export function SearchPage() {
                   <h2>{resultTitle(item)}</h2>
                   {item.title_en ? <p className="secondary-text">{item.title_en}</p> : null}
                 </div>
-                {item.formula ? <div className="formula-block">{item.formula}</div> : null}
+                {item.formula ? <FormulaBlock formula={item.formula} /> : null}
                 {item.snippet && item.snippet !== item.title_zh ? (
-                  <p className="learning-content">{item.snippet}</p>
+                  <RichText content={item.snippet} />
                 ) : null}
                 <div className="search-result-meta">
                   <span>教材页：{item.printed_page ?? '暂缺'}</span>

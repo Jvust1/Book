@@ -30,9 +30,9 @@ export function KnowledgeBasePage() {
   return (
     <section className="page-stack knowledge-page">
       <header className="page-heading">
-        <p className="eyebrow">人类可读视图</p>
+        <p className="eyebrow">EXPLORE · 知识脉络</p>
         <h1>知识库</h1>
-        <p>这里展示课程、章节和小节名称。底层 JSON 只供程序读取，不直接展示给用户。</p>
+        <p>展开课程脉络，找到下一处想深入的知识。</p>
       </header>
       {courses.map((course) => (
         <section className="content-card knowledge-course" key={course.course.course_id}>

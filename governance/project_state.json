@@ -174,5 +174,17 @@
     "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Review PR #26 at exact head 9fce2c794559ff8c1bfdd0beda8f1848f189b0e3. The App implementation is review-ready; structured textbook ingestion remains deferred. Do not merge without explicit PR-specific authorization."
+  "next_step": "Review PR #26 at exact head 9fce2c794559ff8c1bfdd0beda8f1848f189b0e3. The App implementation is review-ready; structured textbook ingestion remains deferred. Do not merge without explicit PR-specific authorization.",
+  "android_delivery": {
+    "version": "0.1.3",
+    "version_code": 4,
+    "branch": "build/book-app-android-apk-20260913",
+    "pr": 29,
+    "status": "IMPLEMENTED_LOCAL_VALIDATION",
+    "notes": "LaTeX/Markdown display, responsive design, native foreground recording and legacy recording export. No new structured textbook data or AI provider.",
+    "documentation": "android-app/README.md",
+    "checkpoint": "docs/ANDROID_0_1_3.md",
+    "physical_device_recording": "NOT_TESTED",
+    "next_step": "Review PR #29 and test microphone/background behavior on ARM64 hardware; merge requires explicit PR authorization."
+  }
 }
