@@ -199,5 +199,18 @@
     "desktop_recording": "DISABLED_USE_ANDROID",
     "study_progress_sync": "DEVICE_LOCAL_NO_AUTHENTICATED_SYNC_SERVICE",
     "artifact_sha256": "57DCB774866DF185B6A5790B340CE3282000E1D86D83BBD5E11EBD92402A80E8"
+  },
+  "book_0_1_4_delivery": {
+    "version": "0.1.4",
+    "branch": "build/book-app-android-apk-20260913",
+    "status": "BUILT_VERIFIED",
+    "release_manifest": "governance/book_0_1_4_release.json",
+    "source_snapshot_commit": "8f37eab",
+    "manual_sync_schema": "book_study_sync_v1",
+    "desktop_recording": "DISABLED_USE_ANDROID",
+    "documentation": "docs/BOOK_0_1_4.md",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW",
+    "android_apk_sha256": "D7E29A73AC4333B8986910E9AD0BC5F6786179ABE6C5140CD7E2D6843D9BC666",
+    "windows_exe_sha256": "28922AB6AB13C85456248480FBA61F4F5F6B7C7854962ED45A8072880EE27642"
   }
 }

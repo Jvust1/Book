@@ -1,0 +1,31 @@
+{
+  "product": "Book",
+  "version": "0.1.4",
+  "branch": "build/book-app-android-apk-20260913",
+  "source_snapshot_commit": "8f37eab",
+  "status": "BUILT_VERIFIED",
+  "manual_sync_schema": "book_study_sync_v1",
+  "desktop_recording": "DISABLED_USE_ANDROID",
+  "artifacts": {
+    "android_apk": {
+      "file": "Book-0.1.4-debug.apk",
+      "sha256": "D7E29A73AC4333B8986910E9AD0BC5F6786179ABE6C5140CD7E2D6843D9BC666",
+      "size_bytes": 38979379
+    },
+    "windows_exe": {
+      "file": "Book-0.1.4-Windows-x64.exe",
+      "sha256": "28922AB6AB13C85456248480FBA61F4F5F6B7C7854962ED45A8072880EE27642",
+      "size_bytes": 31450008
+    }
+  },
+  "validation": {
+    "python_app_tests": "111 passed",
+    "web_tests": "20 files, 100 tests passed",
+    "android_build_lint": "PASS",
+    "android_emulator_smoke": "8 suites passed",
+    "windows_self_test": "PASS",
+    "desktop_playwright_sync_smoke": "NOT_RUN_PLAYWRIGHT_BROWSER_MISSING"
+  },
+  "documentation": "docs/BOOK_0_1_4.md",
+  "drive_folder_url": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW"
+}
