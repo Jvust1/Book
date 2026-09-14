@@ -5,11 +5,11 @@ The Windows build packages the local FastAPI runtime, React interface, current c
 Run `desktop-app/build.ps1` from PowerShell. The reproducible build uses Python 3.11, installs pinned desktop-packaging dependencies into `.venv-desktop`, runs `npm ci`, builds the frontend in desktop mode and emits:
 
 ```text
-dist/Book-0.1.3-Windows-x64.exe
+dist/Book-0.1.4-Windows-x64.exe
 ```
 
 Study progress is stored at `%LOCALAPPDATA%\BookApp\book-app.sqlite3`. WebView2 state, including browser-format recordings, is stored under `%LOCALAPPDATA%\BookApp\WebView2`. Logs are written to `%LOCALAPPDATA%\BookApp\logs\desktop.log`.
 
 The app binds only to `127.0.0.1:17866`. A second instance is rejected so that both processes cannot write the same local profile. Edge WebView2 Runtime is required; it is normally present on supported Windows 10/11 systems. The desktop build does not request microphone permission and its recording control is disabled; use the Android app for recording. Downloads use the Windows save dialog.
 
-The bundled textbook, formulas and learning UI use the same release source as Android. Study progress is stored locally on each device; this build does not silently upload it or require a model/API. Automatic cross-device progress sync requires an authenticated sync service, so the current offline release keeps the two device databases separate. Physical microphone quality and Bluetooth input are Android-side concerns.
+The bundled textbook, formulas and learning UI use the same release source as Android. Study progress is stored locally on each device. Use the in-app “同步” page to export a JSON progress file, transfer it by any method, and import it on the other device. Newer records win; recordings and textbook files are excluded. No account, model, API or cloud service is required.

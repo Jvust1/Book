@@ -270,6 +270,24 @@ export interface StudyRecordListResponse {
   records: StudyRecord[]
 }
 
+export interface StudySyncRecord extends StudyRecord {
+  created_at: string
+  revision: number
+  deleted_at: string | null
+}
+
+export interface StudyExportResponse {
+  schema_version: 'book_study_sync_v1'
+  exported_at: string
+  records: StudySyncRecord[]
+}
+
+export interface StudyImportResponse {
+  imported_count: number
+  skipped_count: number
+  total_count: number
+}
+
 export type QAAnswerStyle = 'brief' | 'explain' | 'compare' | 'proof'
 export type QAScopeRequested = 'book' | 'section_then_book'
 export type QAScopeUsed = 'section' | 'book'

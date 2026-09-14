@@ -208,6 +208,32 @@ class StudyRecordApiTests(unittest.TestCase):
         self.assertNotEqual(persisted.profile_id, "browser-controlled-profile")
         self.assertNotEqual(persisted.book_id, "browser-controlled-book")
 
+    def test_manual_export_import_merges_newer_records(self) -> None:
+        self.client.post(self.complete_path(mode="learn"))
+        exported = self.client.get("/api/study/export")
+        self.assertEqual(exported.status_code, 200)
+        payload = exported.json()
+        self.assertEqual(payload["schema_version"], "book_study_sync_v1")
+        self.assertEqual(len(payload["records"]), 1)
+        self.assertNotIn("profile_id", payload["records"][0])
+
+        destination = StudyRecordRepository(Path(self.temp.name) / "destination.sqlite3")
+        app.dependency_overrides[get_study_repository] = lambda: destination
+        imported = self.client.post("/api/study/import", json=payload)
+        self.assertEqual(imported.status_code, 200)
+        self.assertEqual(imported.json()["imported_count"], 1)
+        self.assertEqual(destination.get_recent_record().status, "completed")
+
+        repeated = self.client.post("/api/study/import", json=payload)
+        self.assertEqual(repeated.status_code, 200)
+        self.assertEqual(repeated.json()["imported_count"], 0)
+
+    def test_manual_import_rejects_invalid_package_without_mutation(self) -> None:
+        response = self.client.post("/api/study/import", json={"schema_version": "wrong", "records": []})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["error"]["code"], "invalid_study_sync")
+        self.assertIsNone(self.repository.get_recent_record())
+
 
 if __name__ == "__main__":
     unittest.main()

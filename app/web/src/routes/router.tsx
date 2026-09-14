@@ -10,6 +10,7 @@ import { RecordingPage } from '../pages/RecordingPage'
 import { SearchPage } from '../pages/SearchPage'
 import { SectionPage } from '../pages/SectionPage'
 import { SourcePage } from '../pages/SourcePage'
+import { SyncPage } from '../pages/SyncPage'
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <LibraryPage /> },
       { path: 'knowledge-base', element: <KnowledgeBasePage /> },
+      { path: 'sync', element: <SyncPage /> },
       { path: 'recording', element: <RecordingPage /> },
       {
         path: 'courses/:courseId',

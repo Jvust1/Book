@@ -37,5 +37,9 @@ class InvalidQAQuestionError(BookAppError):
     """Course textbook QA input is outside the stable question contract."""
 
 
+class InvalidStudySyncError(BookAppError):
+    """Manual study progress package is invalid or incompatible."""
+
+
 class QAProviderInvalidResponseError(BookAppError):
     """Configured QA provider returned an answer that failed trust validation."""

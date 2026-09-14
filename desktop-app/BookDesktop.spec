@@ -37,7 +37,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="Book-0.1.3-Windows-x64",
+    name="Book-0.1.4-Windows-x64",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

@@ -16,6 +16,7 @@ export function AppShell() {
           <NavLink to="/" end><Icon name="book" />教材库</NavLink>
           <NavLink to="/recording"><Icon name="mic" />课堂录音{active ? <span className="nav-recording-dot" /> : null}</NavLink>
           <NavLink to="/knowledge-base"><Icon name="grid" />知识库</NavLink>
+          <NavLink to="/sync"><Icon name="download" />同步</NavLink>
         </nav>
         <span className="app-phase"><i />本地学习空间</span>
       </header>

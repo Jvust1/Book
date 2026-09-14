@@ -1,6 +1,8 @@
 # Book Android APK
 
-Book 学习 0.1.3（versionCode 4）。适用于 Android 7.0（API 24）及以上的 ARM64 手机和 x86_64 模拟器。
+Book 学习 0.1.4（versionCode 5）新增手动学习进度传输。打开“同步”导出 JSON 文件，直接传到另一台设备后导入；较新的记录优先，重复导入安全，录音不会进入同步包。详见 [手动同步说明](../docs/MANUAL_PROGRESS_SYNC.md)。
+
+适用于 Android 7.0（API 24）及以上的 ARM64 手机和 x86_64 模拟器。
 安装包内包含 React 页面、FastAPI、Python Runtime 和 SQLite，无需另开电脑服务器。
 
 教材库、章节浏览、预习/学习/复习/刷题、教材搜索、来源查看和学习进度可离线使用。

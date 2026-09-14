@@ -27,4 +27,4 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Windows packaging failed.' }
 } finally { Pop-Location }
 
-Write-Host "Built: $(Join-Path $projectRoot 'dist\Book-0.1.3-Windows-x64.exe')"
+Write-Host "Built: $(Join-Path $projectRoot 'dist\Book-0.1.4-Windows-x64.exe')"

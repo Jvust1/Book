@@ -16,7 +16,7 @@ from pathlib import Path
 
 
 APP_NAME = "Book 学习"
-APP_VERSION = "0.1.3"
+APP_VERSION = "0.1.4"
 HOST = "127.0.0.1"
 PORT = 17866
 ORIGIN = f"http://{HOST}:{PORT}"

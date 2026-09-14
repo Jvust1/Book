@@ -1,5 +1,9 @@
 # Book 当前状态
 
+## Android / Windows 0.1.4 手动进度同步 — 2026-09-13
+
+两端新增统一的 `book_study_sync_v1` JSON 导出/导入入口，不依赖微云、GitHub、账号或 API。导入按“小节 + 学习模式”的更新时间合并，重复导入安全；同步包不包含录音和教材文件。详见 [手动同步说明](MANUAL_PROGRESS_SYNC.md)。
+
 ## Windows 0.1.3 桌面版交付 — 2026-09-13
 
 已新增 Windows x64 单文件桌面壳，打包本地 FastAPI、React/KaTeX 页面和 Functional Analysis 教材资源。桌面端不申请麦克风，录音入口明确引导到 Android；教材内容和页面代码与 Android 0.1.3 同源。学习进度仍按设备保存在 `%LOCALAPPDATA%\\BookApp`，本次无云端/API，因此暂不声称手机与电脑自动同步。构建与校验记录见 [Windows 交付记录](WINDOWS_0_1_3.md) 和 [桌面构建说明](../desktop-app/README.md)。

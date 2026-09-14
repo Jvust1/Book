@@ -22,6 +22,16 @@ let page;
 fs.mkdirSync(output, { recursive: true });
 const adb = (...args) => execFileSync(adbPath, ['-s', serial, ...args], { encoding: 'utf8', timeout: 30_000 }).trim();
 const passed = name => { steps.push(name); console.log('PASS ' + name); };
+async function tapSystem(match) {
+  await expect.poll(() => {
+    adb('shell', 'uiautomator', 'dump', '/sdcard/book-sync-picker.xml');
+    return adb('shell', 'cat', '/sdcard/book-sync-picker.xml');
+  }, { timeout: 20_000 }).toMatch(match);
+  const xml = adb('shell', 'cat', '/sdcard/book-sync-picker.xml');
+  const node = xml.match(/<node[^>]+>/g).find(item => match.test(item));
+  const bounds = node.match(/bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/);
+  adb('shell', 'input', 'tap', String((+bounds[1] + +bounds[3]) / 2), String((+bounds[2] + +bounds[4]) / 2));
+}
 
 async function connect() {
   const pid = adb('shell', 'pidof', 'com.jvust.book.app');
@@ -119,6 +129,30 @@ async function main() {
   expect(await page.evaluate(async () => (await fetch('/assets/missing.js')).status)).toBe(404);
   expect(await page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).length)).toBe(0);
   passed('Strict QA validation, honest unconfigured-model state and asset routing');
+
+  await page.goto(`${origin}/sync`);
+  await expect(page.getByRole('heading', { name: '学习进度同步' })).toBeVisible();
+  const exported = await api('/api/study/export');
+  expect(exported.status).toBe(200);
+  expect(exported.body.schema_version).toBe('book_study_sync_v1');
+  expect(exported.body.records.length).toBeGreaterThan(0);
+  expect(exported.body.records[0].profile_id).toBeUndefined();
+  const repeatedImport = await api('/api/study/import', exported.body);
+  expect(repeatedImport.status).toBe(200);
+  expect(repeatedImport.body.imported_count).toBe(0);
+  const invalidImport = await api('/api/study/import', { schema_version: 'wrong', records: [] });
+  expect(invalidImport.status).toBe(400);
+  expect(invalidImport.body.error.code).toBe('invalid_study_sync');
+
+  await page.getByRole('button', { name: '导出学习进度' }).click();
+  await tapSystem(/text="(?:SAVE|保存)" resource-id="android:id\/button1"/);
+  await expect(page.getByRole('button', { name: '导出学习进度' })).toBeEnabled();
+  await expect(page.getByRole('status')).toContainText('已导出');
+
+  await page.getByRole('button', { name: '导入学习进度' }).click();
+  await tapSystem(/text="book-study-progress-[^"]+\.json"/);
+  await expect(page.getByRole('status')).toContainText('导入完成');
+  passed('Manual progress export/import API and Android system pickers');
 
   await browser.close();
   browser = undefined;

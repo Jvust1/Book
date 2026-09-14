@@ -36,7 +36,7 @@ window.addEventListener('book-native-response', event => {
 export function nativeCommand<T = unknown>(action: string, args: Record<string, unknown> = {}): Promise<T> {
   const id = String(++sequence)
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => { pending.delete(id); reject(new Error('操作未收到回应，请返回录音页查看状态。')) }, ['export', 'export-web', 'start'].includes(action) ? 180000 : 15000)
+    const timer = setTimeout(() => { pending.delete(id); reject(new Error('操作未收到回应，请返回页面查看状态。')) }, ['export', 'export-web', 'export-data', 'start'].includes(action) ? 180000 : 15000)
     pending.set(id, { resolve: value => resolve(value as T), reject, timer })
     try { window.BookNative!.request(JSON.stringify({ ...args, id, action })) }
     catch (error) { clearTimeout(timer); pending.delete(id); reject(error) }

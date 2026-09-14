@@ -27,6 +27,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.WebViewClient;
+import android.webkit.ValueCallback;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,8 @@ public final class MainActivity extends Activity {
     private String webExportMime;
     private String webExportName;
     private static final int EXPORT_AUDIO_REQUEST = 74;
+    private static final int FILE_CHOOSER_REQUEST = 76;
+    private ValueCallback<Uri[]> fileChooserCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +99,8 @@ public final class MainActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setAllowFileAccess(false);
-        webView.getSettings().setAllowContentAccess(false);
+        // File content is reachable only after an explicit system picker choice.
+        webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         webView.addJavascriptInterface(new Object() {
             @JavascriptInterface public void request(String json) {
@@ -109,6 +113,20 @@ public final class MainActivity extends Activity {
             }
         }, "BookNative");
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> callback, FileChooserParams params) {
+                if (fileChooserCallback != null) fileChooserCallback.onReceiveValue(null);
+                fileChooserCallback = callback;
+                try {
+                    startActivityForResult(params.createIntent(), FILE_CHOOSER_REQUEST);
+                    return true;
+                } catch (ActivityNotFoundException error) {
+                    fileChooserCallback = null;
+                    Toast.makeText(MainActivity.this, "无法打开文件选择器", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+
             @Override
             public void onPermissionRequest(PermissionRequest request) {
                 runOnUiThread(() -> {
@@ -233,6 +251,21 @@ public final class MainActivity extends Activity {
                         .setType(webExportMime).putExtra(Intent.EXTRA_TITLE, webExportName);
                 startActivityForResult(intent, EXPORT_AUDIO_REQUEST); exportCommand = command; return;
             }
+            if ("export-data".equals(action)) {
+                if (exportCommand != null) throw new IOException("已有导出正在进行");
+                String content = command.optString("content");
+                if (content.length() > 5 * 1024 * 1024) throw new IOException("学习进度文件过大");
+                clearWebExport();
+                webExportFile = File.createTempFile("book-progress-", ".json", getCacheDir());
+                try (Writer writer = new OutputStreamWriter(new FileOutputStream(webExportFile), java.nio.charset.StandardCharsets.UTF_8)) {
+                    writer.write(content);
+                }
+                webExportMime = "application/json";
+                webExportName = command.optString("name", "book-study-progress.json").replaceAll("[\\\\/:*?\"<>|]", "_");
+                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                        .setType(webExportMime).putExtra(Intent.EXTRA_TITLE, webExportName);
+                startActivityForResult(intent, EXPORT_AUDIO_REQUEST); exportCommand = command; return;
+            }
             if ("start".equals(action)) {
                 if (RecordingService.current != null) throw new IOException("已有录音进行中");
                 if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -300,6 +333,12 @@ public final class MainActivity extends Activity {
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILE_CHOOSER_REQUEST) {
+            ValueCallback<Uri[]> callback = fileChooserCallback;
+            fileChooserCallback = null;
+            if (callback != null) callback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));
+            return;
+        }
         if (requestCode != EXPORT_AUDIO_REQUEST || exportCommand == null) return;
         JSONObject command = exportCommand;
         if (resultCode != RESULT_OK || data == null || data.getData() == null) {
@@ -307,7 +346,11 @@ public final class MainActivity extends Activity {
         }
         Uri destination = data.getData();
         final File source;
-        try { source = "export-web".equals(command.optString("action")) ? webExportFile : RecordingFiles.audio(this, command.optString("recordingId")); }
+        try {
+            String action = command.optString("action");
+            source = ("export-web".equals(action) || "export-data".equals(action))
+                    ? webExportFile : RecordingFiles.audio(this, command.optString("recordingId"));
+        }
         catch (IOException error) { exportCommand = null; reply(command, null, error.getMessage()); return; }
         executor.execute(() -> {
             try (InputStream in = new FileInputStream(source);
