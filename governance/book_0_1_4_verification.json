@@ -1,0 +1,27 @@
+{
+  "version": "0.1.4",
+  "source_snapshot_commit": "8f37eab",
+  "artifacts": {
+    "Book-0.1.4-debug.apk": {
+      "sha256": "D7E29A73AC4333B8986910E9AD0BC5F6786179ABE6C5140CD7E2D6843D9BC666",
+      "size_bytes": 38979379
+    },
+    "Book-0.1.4-Windows-x64.exe": {
+      "sha256": "28922AB6AB13C85456248480FBA61F4F5F6B7C7854962ED45A8072880EE27642",
+      "size_bytes": 31450008
+    },
+    "Book-0.1.4-source.zip": {
+      "sha256": "97EF8720E07535F71AF5CB1E90E5F64F3E8AE73C197DA3319F1B3AF2275919EE",
+      "size_bytes": 1365307
+    }
+  },
+  "tests": {
+    "python_app_tests": "111 passed",
+    "web_tests": "20 files, 100 tests passed",
+    "android_build_lint": "PASS",
+    "android_emulator_smoke": "8 suites passed",
+    "windows_self_test": "PASS",
+    "desktop_playwright_sync_smoke": "NOT_RUN_PLAYWRIGHT_BROWSER_MISSING"
+  },
+  "drive_folder": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW"
+}
