@@ -49,8 +49,15 @@ class CourseBookEntry:
 class CourseRuntime:
     """Fail-closed course runtime that delegates book internals to BookRuntime."""
 
-    def __init__(self, course_dir: Path, manifest: dict[str, Any]):
+    def __init__(
+        self,
+        course_dir: Path,
+        manifest: dict[str, Any],
+        *,
+        repository_root: Path | None = None,
+    ):
         self.course_dir = course_dir
+        self.repository_root = repository_root
         self.manifest = dict(manifest)
         self.course_id = str(manifest.get("course_id") or "")
         self.name = str(manifest.get("name") or self.course_id)
@@ -59,8 +66,16 @@ class CourseRuntime:
         self.books: dict[str, BookRuntime] = {}
 
     @classmethod
-    def open(cls, course_dir: str | Path) -> "CourseRuntime":
+    def open(
+        cls,
+        course_dir: str | Path,
+        *,
+        repository_root: str | Path | None = None,
+    ) -> "CourseRuntime":
         root = Path(course_dir).resolve()
+        explicit_repository_root = (
+            Path(repository_root).resolve() if repository_root is not None else None
+        )
         manifest_path = root / "course.json"
         if not root.is_dir():
             raise CourseManifestError(f"Course directory does not exist: {root}")
@@ -73,7 +88,7 @@ class CourseRuntime:
         if not isinstance(manifest, dict):
             raise CourseManifestError(f"Expected JSON object in {manifest_path}")
 
-        runtime = cls(root, manifest)
+        runtime = cls(root, manifest, repository_root=explicit_repository_root)
         runtime._load()
         return runtime
 
@@ -155,6 +170,14 @@ class CourseRuntime:
         self.entries = tuple(entries)
 
     def _find_repository_root(self) -> Path:
+        if self.repository_root is not None:
+            try:
+                self.course_dir.relative_to(self.repository_root)
+            except ValueError as exc:
+                raise CourseBookResolutionError(
+                    f"Course directory escapes repository root: {self.course_dir}"
+                ) from exc
+            return self.repository_root
         for candidate in (self.course_dir, *self.course_dir.parents):
             if (candidate / "runtime").is_dir() and (candidate / "books").is_dir():
                 return candidate.resolve()

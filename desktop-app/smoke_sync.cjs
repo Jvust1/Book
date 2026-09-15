@@ -8,7 +8,14 @@ const output = path.join(repo, '.build/desktop-sync');
 fs.mkdirSync(output, { recursive: true });
 
 async function main() {
-  const browser = await chromium.launch({ headless: true });
+  if (process.env.BOOK_DESKTOP_TEST_ISOLATED !== '1') {
+    throw new Error('Set BOOK_DESKTOP_TEST_ISOLATED=1 and start the server with an isolated BOOK_APP_DATA_DIR');
+  }
+  const browserPath = process.env.BOOK_BROWSER_PATH;
+  const browser = await chromium.launch({
+    headless: true,
+    ...(browserPath ? { executablePath: browserPath } : {}),
+  });
   const page = await browser.newPage({ viewport: { width: 1280, height: 840 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -27,11 +34,16 @@ async function main() {
     await download.saveAs(progressPath);
     const payload = JSON.parse(fs.readFileSync(progressPath, 'utf8'));
     expect(payload.schema_version).toBe('book_study_sync_v1');
-    expect(payload.records.length).toBe(1);
-    expect(payload.records[0].profile_id).toBeUndefined();
+    const target = payload.records.find(record =>
+      record.course_id === 'functional_analysis_course'
+      && record.section_id === 'ch01_s01'
+      && record.mode === 'learn'
+    );
+    expect(target).toBeDefined();
+    expect(target.profile_id).toBeUndefined();
 
     const future = '2099-01-01T00:00:00+00:00';
-    payload.records[0] = { ...payload.records[0], status: 'completed', progress: 100, completed_at: future, last_studied_at: future, updated_at: future };
+    payload.records = [{ ...target, status: 'completed', progress: 100, completed_at: future, last_studied_at: future, updated_at: future }];
     const bytes = Buffer.from(JSON.stringify(payload));
     const input = page.locator('input[type=file]');
     await input.setInputFiles({ name: 'phone-progress.json', mimeType: 'application/json', buffer: bytes });

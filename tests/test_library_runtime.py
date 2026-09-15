@@ -164,6 +164,24 @@ class LibraryRuntimeContractTests(unittest.TestCase):
             library = LibraryRuntime.open(custom, repository_root=repo)
             self.assertEqual(library.library_id, "fixture_library")
 
+    def test_explicit_root_supports_packaged_layout_without_runtime_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            repo = Path(temp).resolve()
+            write_ready_book(repo / "books" / "fixture", book_id="fixture_book")
+            write_course(
+                repo / "courses" / "fixture-course",
+                course_id="fixture_course",
+                book_entries=[main_book_entry("fixture_book", "../../books/fixture")],
+                main_book_id="fixture_book",
+            )
+            library_dir = repo / "library"
+            dump_json(library_dir / "library.json", self._manifest())
+
+            library = LibraryRuntime.open(library_dir, repository_root=repo)
+
+            self.assertEqual(library.course_ids(), ["fixture_course"])
+            self.assertFalse((repo / "runtime").exists())
+
     def test_canonical_course_id_mismatch_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             _, library_dir = self._ready_repo(Path(temp))
