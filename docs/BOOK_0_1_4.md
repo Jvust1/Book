@@ -2,6 +2,8 @@
 
 Book 0.1.4 packages the existing Functional Analysis study app for Android and Windows and adds manual study-progress transfer between devices.
 
+Release revision 2 fixes the packaged Windows runtime root lookup so the single-file EXE can load its bundled course and textbook assets. It also makes the desktop sync acceptance use an isolated data directory and avoids changing real study progress.
+
 ## Deliverables
 
 - Android debug APK, versionCode 5, with native foreground recording and Android system file pickers for sync import/export.
@@ -17,10 +19,10 @@ See [manual sync instructions](MANUAL_PROGRESS_SYNC.md).
 
 ## Verification
 
-- Python API tests: 111 passed.
+- Python Runtime and App tests: 460 passed.
 - Web tests: 20 files, 100 tests passed.
 - Android build and lint: passed with 0 errors.
 - Android emulator smoke: 8 suites passed, including API sync and system pickers.
 - Windows packaged `--self-test`: exit code 0.
-
-The desktop Playwright sync smoke script is checked in as `desktop-app/smoke_sync.cjs`; this machine does not have the Playwright Chromium binary installed, so that browser-only check is not claimed as passed.
+- Windows packaged library API: passed with the bundled Functional Analysis course.
+- Windows packaged manual sync browser test: passed with system Edge and an isolated test database.

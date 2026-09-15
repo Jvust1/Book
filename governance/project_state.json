@@ -205,12 +205,15 @@
     "branch": "build/book-app-android-apk-20260913",
     "status": "BUILT_VERIFIED",
     "release_manifest": "governance/book_0_1_4_release.json",
-    "source_snapshot_commit": "8f37eab",
+    "source_snapshot_commit": "07b28d3",
     "manual_sync_schema": "book_study_sync_v1",
     "desktop_recording": "DISABLED_USE_ANDROID",
     "documentation": "docs/BOOK_0_1_4.md",
     "drive_folder_url": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW",
-    "android_apk_sha256": "D7E29A73AC4333B8986910E9AD0BC5F6786179ABE6C5140CD7E2D6843D9BC666",
-    "windows_exe_sha256": "28922AB6AB13C85456248480FBA61F4F5F6B7C7854962ED45A8072880EE27642"
+    "release_revision": 2,
+    "android_apk_sha256": "3516D50C56242F263C98B8957A8F53786154098F3B957CACB3347436AB3689DE",
+    "windows_exe_sha256": "8D00950F324ACA0E9089F8E543C06F920C0F02DBF3FE725A6F8ED3A15677F751",
+    "desktop_packaged_library": "PASS",
+    "desktop_sync_smoke": "PASS_WITH_SYSTEM_EDGE_AND_ISOLATED_DATA"
   }
 }
