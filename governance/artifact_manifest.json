@@ -134,6 +134,66 @@
       "purpose": "Machine-readable r4 artifact, validation, synchronization and recovery manifest.",
       "status": "active",
       "verification": "Drive object updated in place to final verified status; complete remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r5_source_2026_09_21",
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r5-Source.zip",
+      "type": "generated",
+      "drive_file_id": "1qbkO2Da6-lbsyXpWVb1yWIatta-maFeb",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-0.1.5-dev-r5-Source.zip",
+      "size_bytes": 66596053,
+      "sha256": "5ef09f0ed7f104d87a45644b401cfa21e2a1a8fc33f07e73306b94f922738842",
+      "version": "r5",
+      "source": "assistant_generated",
+      "related_commit": "602c41c10049497239a86d34dda7b412c82d90d0",
+      "purpose": "Candidate reader with 23 recovered source figures, 269 original PDE page images, source introduction/appendix and targeted review evidence.",
+      "status": "active_candidate_not_integrated",
+      "verification": "Full remote bytes read back; size/SHA-256 matched; 1334 archive inventory entries independently rehashed. Whole-book mathematical review remains open."
+    },
+    {
+      "artifact_id": "book_two_courses_r5_textdata_2026_09_21",
+      "file_name": "Book-TwoCourses-TextData-r5.zip",
+      "type": "generated",
+      "drive_file_id": "1zbzdVCoHXFquBX7bInrkhHx5NhNHKAUW",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-TextData-r5.zip",
+      "size_bytes": 1846712,
+      "sha256": "8575e50c0e9ab3b3580ea8b189a86cfbeda60b2d1e7356c0dedc7b2758eff31c",
+      "version": "r5",
+      "source": "assistant_generated",
+      "related_commit": "602c41c10049497239a86d34dda7b412c82d90d0",
+      "purpose": "r5 JSON/JSONL/Markdown/LaTeX and source review metadata; no image bytes or runnable app.",
+      "status": "active_candidate_not_independently_proofread",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r5_readme_2026_09_21",
+      "file_name": "Book-TwoCourses-r5-原图补齐与定点校读说明.md",
+      "type": "generated",
+      "drive_file_id": "1tYDcBF1nM3Q7dHUXidIqHshlVzhLlyiv",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r5-原图补齐与定点校读说明.md",
+      "size_bytes": 22290,
+      "sha256": "c0d68249416a07f884b2e562d30c843e021e5b48e42839abd6ff7a7d0b305162",
+      "version": "r5",
+      "source": "assistant_generated",
+      "related_commit": "602c41c10049497239a86d34dda7b412c82d90d0",
+      "purpose": "Source figure page table, targeted formula checks, remaining gaps and reproduction instructions.",
+      "status": "active",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r5_delivery_manifest_2026_09_21",
+      "file_name": "Book-TwoCourses-r5-delivery-manifest.json",
+      "type": "generated",
+      "drive_file_id": "19S1YSBesCEUpvGrhx8We5JxJG9kJKhiP",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r5-delivery-manifest.json",
+      "size_bytes": 8468,
+      "sha256": "b6b0b1894873b0644c4ab15a55ea28290daf51871e4cbf4c100d11895f8e7b5e",
+      "version": "r5",
+      "source": "assistant_generated",
+      "related_commit": "602c41c10049497239a86d34dda7b412c82d90d0",
+      "purpose": "External r5 payload identities, sources, review boundaries, local test evidence and live GitHub checkpoint locator.",
+      "status": "active",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
     }
   ],
   "notes": [
@@ -154,6 +214,7 @@
       "purpose": "Installable debug APK, complete source snapshot, test evidence and instructions; artifact IDs and hashes in governance/android_0_1_3_release.json.",
       "status": "active",
       "verification": "Local SHA-256; Drive ID, parent, name and size read back"
-    }
+    },
+    "Latest dual-course reader candidate recovery entry: governance/two_courses_r5_source_supplement_20260921.json at checkpoint commit 602c41c10049497239a86d34dda7b412c82d90d0. r5 is archived, not integrated into main; whole-book review remains INCOMPLETE. r1-r4 historical archives are preserved unchanged."
   ]
 }
