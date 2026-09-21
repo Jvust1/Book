@@ -1,0 +1,105 @@
+{
+  "schema_version": "book_two_courses_sync_checkpoint_v1",
+  "date": "2026-09-21",
+  "revision": "r4",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "status": "R4_DRIVE_ARCHIVE_IN_PROGRESS_GITHUB_CHECKPOINT_CREATED",
+  "scope": "Additive archive/governance checkpoint. Does not merge reader implementation, does not modify main, and preserves r1-r3 historical artifacts.",
+  "content_status": "FA_WHOLE_BOOK_TRANSCRIPTION_DRAFT_COMPLETE_FULL_VERIFIED_CONTENT_INCOMPLETE",
+  "drive_target_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+  "artifacts": [
+    {
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r4-Source.zip",
+      "drive_file_id": "1HXHnBCSvCQMZOAgFJegrLmvwl5-FIXKb",
+      "size_bytes": 31422750,
+      "sha256": "ce8a166430565a1eae9a14ee2c1ca2a8456910d6f62ca892d0a79e1a84a05447",
+      "classification": "NEW",
+      "role": "candidate_source_and_course_data_snapshot",
+      "read_back_required": true
+    },
+    {
+      "file_name": "Book-TwoCourses-TextData-r4.zip",
+      "drive_file_id": "12GnBrkChroIM9XgUpQIkn_uevcdwy9so",
+      "size_bytes": 1736364,
+      "sha256": "32d2b3a64321813eabc0b1b1dfa695d70b387fbb1ca5bd385e702c7d82a0f826",
+      "classification": "NEW",
+      "role": "structured_text_json_markdown_latex_subset",
+      "read_back_required": true
+    }
+  ],
+  "courses": {
+    "partial_differential_equations": {
+      "title": "数学物理方程（第四版）",
+      "chapters": 7,
+      "numbered_sections": 33,
+      "directory_entries": 40,
+      "records": 3449,
+      "formula_segments": 6710,
+      "review_source_groups": 95,
+      "practice_source_groups": 194,
+      "missing_original_figures": 23,
+      "full_verified_content_complete": false
+    },
+    "jiang_sun_functional_analysis": {
+      "title": "泛函分析（第2版）",
+      "authors": ["江泽坚", "孙善利"],
+      "chapters": 5,
+      "numbered_sections": 29,
+      "directory_entries": 44,
+      "source_pages": 247,
+      "records": 5565,
+      "formula_segments": 9342,
+      "practice_source_groups": 110,
+      "remaining_numbered_sections": 0,
+      "whole_book_transcription_draft": "COMPLETE",
+      "independent_source_review": "PENDING",
+      "full_verified_content_complete": false
+    }
+  },
+  "learning_modes": {
+    "preview": "source-backed outline, typed objects and formula directory",
+    "learn": "ordered source text, definitions, theorems, proofs, examples, formulas and page/source identities",
+    "review": "source-backed recall filters, formula recall, local notes and self-assessment",
+    "practice": "source questions, continuations, LaTeX answer input and explicitly separated derived guidance when available"
+  },
+  "display_contract": {
+    "latex": true,
+    "math_renderer": "MathJax 3.2.1 SVG",
+    "font_preference": "书宋 / ShuSong",
+    "font_binary_distributed": false,
+    "font_loading": "actual local font load or user-owned local import; explicit serif fallback otherwise",
+    "font_size_px": {"min": 12, "max": 72, "step": 0.5}
+  },
+  "validation": {
+    "python_passed": 497,
+    "python_subtests_passed": 239,
+    "math_render_passed": 16484,
+    "math_render_total": 16484,
+    "browser_memory_checks_passed": 30,
+    "fa_source_entry_coverage": "PASS",
+    "data_integrity": "PASS",
+    "require_complete_exit_code": 2,
+    "mathematical_correctness_verified": false,
+    "android_build_r4": "NOT_RUN",
+    "physical_device": "NOT_TESTED"
+  },
+  "known_gaps": [
+    "23 PDE original figures are missing; no fabricated replacement is accepted as source.",
+    "Independent source proofreading and mathematical review remain pending.",
+    "FA first chapter retains 30 clearly labeled AI-derived reference derivations; 80 additional FA questions do not have new reference solutions.",
+    "Real Android/native font persistence/device acceptance is pending.",
+    "Reader implementation is archived but not integrated into repository runtime/main by this checkpoint."
+  ],
+  "history": {
+    "r1_r3_preserved": true,
+    "destructive_operations": 0,
+    "main_mutations": 0,
+    "pr_merge_performed": false
+  },
+  "sync_policy": {
+    "drive_dedupe_before_write": "No r4-named artifact existed in the target folder before upload.",
+    "github_write": "Single additive governance commit on an existing non-default review branch.",
+    "idempotency_recheck_required": true
+  }
+}
