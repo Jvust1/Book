@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-21",
+  "updated_date": "2026-09-22",
   "project": {
     "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -321,6 +321,70 @@
       "purpose": "Switch subsequent r6 review from full-page PDF comparison to structured-data self-check with PDF spot checks; preserve source and separate correction/derived layers.",
       "status": "active_strategy",
       "verification": "Drive full readback size/SHA-256 matched; does not alter Batch4 data bytes or claim completion."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_batch5_delta_2026_09_22",
+      "file_name": "Book-TwoCourses-r6-batch5-Delta.zip",
+      "type": "generated_incremental_source",
+      "drive_file_id": "1e8u1x_FYfu37-AZyB28NX9XdOdA55zHm",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-batch5-Delta.zip",
+      "size_bytes": 3429340,
+      "sha256": "b23e6c5defe8eff4a0b54daceb6073be5cee41fdad01e5052de1f02a4d83b323",
+      "version": "r6-batch5",
+      "stage": "STRUCTURED_REVIEW_AND_DERIVED_CONTENT_EXPANSION",
+      "source": "assistant_generated_with_preserved_source",
+      "related_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+      "purpose": "cumulative_source_delta",
+      "status": "active_candidate_not_independently_accepted",
+      "verification": "Full remote bytes read back; size and SHA-256 matched. Structural checks are not whole-book mathematical acceptance."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_batch5_textdata_2026_09_22",
+      "file_name": "Book-TwoCourses-TextData-r6-batch5.zip",
+      "type": "generated",
+      "drive_file_id": "1HYBhWNYmjlZKvW5lT_g2_3caCM6GAFTG",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-TextData-r6-batch5.zip",
+      "size_bytes": 3509920,
+      "sha256": "0e4ad8d48166a735779fee16bd3116f6db8bf448b93e798b83703ef7108af432",
+      "version": "r6-batch5",
+      "stage": "STRUCTURED_REVIEW_AND_DERIVED_CONTENT_EXPANSION",
+      "source": "assistant_generated_with_preserved_source",
+      "related_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+      "purpose": "consolidated_text_snapshot_no_images_no_app",
+      "status": "active_candidate_not_independently_accepted",
+      "verification": "Full remote bytes read back; size and SHA-256 matched. Structural checks are not whole-book mathematical acceptance."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_batch5_readme_2026_09_22",
+      "file_name": "Book-TwoCourses-r6-batch5-全量检查与内容补全说明.md",
+      "type": "generated",
+      "drive_file_id": "1h8EXfvwkTlHFaWWmtSUHwOl5QOj-NPmg",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-batch5-全量检查与内容补全说明.md",
+      "size_bytes": 11493,
+      "sha256": "18f5aaddc48e78bc7012fde1e04a858743a62c1a168c4a98b0d48b85d3deaaa4",
+      "version": "r6-batch5",
+      "stage": "STRUCTURED_REVIEW_AND_DERIVED_CONTENT_EXPANSION",
+      "source": "assistant_generated_with_preserved_source",
+      "related_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+      "purpose": "human_readable_delivery_and_boundaries",
+      "status": "active_candidate_not_independently_accepted",
+      "verification": "Full remote bytes read back; size and SHA-256 matched. Structural checks are not whole-book mathematical acceptance."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_batch5_delivery_manifest_2026_09_22",
+      "file_name": "Book-TwoCourses-r6-batch5-delivery-manifest.json",
+      "type": "generated",
+      "drive_file_id": "1KhA10Z0n7UeDzNdGlSo6XVq8UHI0nf-U",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-batch5-delivery-manifest.json",
+      "size_bytes": 10442,
+      "sha256": "342de83313cf3cc98067e790d9496610bc72b1f5b6c22c1af2f86ae8b63bdd89",
+      "version": "r6-batch5",
+      "stage": "STRUCTURED_REVIEW_AND_DERIVED_CONTENT_EXPANSION",
+      "source": "assistant_generated_with_preserved_source",
+      "related_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+      "purpose": "external_delivery_manifest",
+      "status": "active_candidate_not_independently_accepted",
+      "verification": "Full remote bytes read back; size and SHA-256 matched. Structural checks are not whole-book mathematical acceptance."
     }
   ],
   "notes": [
@@ -343,10 +407,12 @@
       "verification": "Local SHA-256; Drive ID, parent, name and size read back"
     },
     "Latest dual-course reader candidate recovery entry: governance/two_courses_r5_source_supplement_20260921.json at checkpoint commit 602c41c10049497239a86d34dda7b412c82d90d0. r5 is archived, not integrated into main; whole-book review remains INCOMPLETE. r1-r4 historical archives are preserved unchanged.",
-    "Current recovery entry superseding the preceding historical r5 pointer: governance/two_courses_r6_first_checkpoint_20260921.json at commit 089680bb3e744f0acc60a1fdb09f34374463767b. r6 is a FIRST_CHECKPOINT, not a complete whole-book review or integrated runtime release. All r1-r5 artifacts are preserved.",
+    "Historical first-r6 recovery entry superseding the preceding r5 pointer: governance/two_courses_r6_first_checkpoint_20260921.json at commit 089680bb3e744f0acc60a1fdb09f34374463767b. r6 is a FIRST_CHECKPOINT, not a complete whole-book review or integrated runtime release. All r1-r5 artifacts are preserved.",
     "Historical r6 Batch2 recovery entry: governance/two_courses_r6_batch2_checkpoint_20260921.json. Recover original r6 source ZIP plus byte-deduplicated batch2 delta. 27 pages source-compared, 13 first-pass, 476 unreviewed in r6, 0 independently accepted. First-r6 and prior artifacts remain historical evidence; no main or PR merge.",
     "Historical r6 Batch3 recovery entry: governance/two_courses_r6_batch3_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch3 delta. 44 pages source-compared, 13 first-pass, 459 unreviewed in r6, 0 independently accepted. Batch2 and earlier artifacts remain historical evidence; no main write or PR merge.",
-    "Current recovery entry: governance/two_courses_r6_batch4_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch4 delta. 68 pages source-compared, 13 first-pass, 435 unreviewed in r6, 0 independently accepted. Batch2/3 and earlier artifacts remain historical evidence; no main write or PR merge.",
-    "Current review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch4 remains the current data recovery entry until Batch5 produces new content."
-  ]
+    "Historical r6 Batch4 recovery entry: governance/two_courses_r6_batch4_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch4 delta. 68 pages source-compared, 13 first-pass, 435 unreviewed in r6, 0 independently accepted. Batch2/3 and earlier artifacts remain historical evidence; no main write or PR merge.",
+    "Current review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch5 now implements this strategy; see active_two_courses_checkpoint. Historical source ledgers remain evidence, not current completion criteria.",
+    "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained."
+  ],
+  "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json"
 }
