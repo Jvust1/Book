@@ -1,0 +1,35 @@
+{
+  "schema_version": "book_mobile_two_courses_r2_checkpoint_v1",
+  "date": "2026-09-21",
+  "repository": "Jvust2/Book",
+  "branch": "feature/mobile-two-courses-0.1.5-r2-20260921",
+  "base_head": "c80b6aaf90947b5f43e7df67d4a8b1c7b58fc674",
+  "recovered_candidate": {
+    "drive_file_id": "1LeVVIqmMpYT1X2nXKgYMztL-f8f74pAY",
+    "sha256": "4443b513e700875c5799dac7c12edcc94c084b9bf0e7d9104128a8840e69ac46"
+  },
+  "functional_analysis": {
+    "source_book_id": "functional_analysis_2e_jiang_sun",
+    "source_pdf_sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1",
+    "numbered_sections": 29,
+    "visual_transcribed_sections": [
+      "ch01_s01","ch01_s02","ch01_s03","ch01_s04","ch01_s05","ch01_s06","ch01_s07"
+    ],
+    "remaining_numbered_sections": 22,
+    "normalized_records": 783,
+    "full_content_complete": false
+  },
+  "pde": {
+    "chapters": 7,
+    "numbered_sections": 33,
+    "normalized_records": 3449,
+    "missing_source_images": 23,
+    "full_content_verified": false
+  },
+  "validation": {
+    "reader_tests": "18 passed",
+    "legacy_and_app_tests": "460 passed; 239 subtests passed",
+    "integrity": "PASS",
+    "complete_content_gate": "INCOMPLETE"
+  }
+}
