@@ -33,13 +33,18 @@ Visually transcribed from the supplied source scans into LaTeX/Markdown, pending
 - ch01_s08 — F－空间
 - ch01_s09 — 压缩映象原理，Fréchet 导数
 - ch01_exercises — 第一章习题 1–30
+- ch02_s01 — 内积空间
+- ch02_s02 — 正规正交基
+- ch02_s03 — 射影定理，Fréchet-Riesz 表现定理
+- ch02_s04 — Hilbert 共轭算子，Lax-Milgram 定理
+- ch02_exercises — 第二章习题 1–16
 
 Current audit after ingestion:
 - numbered teaching sections: 29
-- transcribed numbered sections: 9
-- transcribed exercise entries: 1 (chapter 1)
-- remaining numbered sections: 20
-- normalized reader records: 1126
+- transcribed numbered sections: 13
+- transcribed exercise entries: 2 (chapters 1–2)
+- remaining numbered sections: 16
+- normalized reader records: 1849
 - source pages retained: 247
 - full textbook content gate: INCOMPLETE
 
@@ -61,6 +66,7 @@ Missing diagrams are shown as gaps; they are not regenerated or guessed.
 
 - `python -m pytest tests_reader -q`: 18 passed
 - `python -m pytest tests app_tests -q`: 460 passed, 239 subtests passed
+- chapter 2 source transcription completed through §1–§4 plus exercises 1–16; still pending independent proofreading
 - audit bug fixed: exercise entries are tracked separately and no longer inflate numbered-section transcription counts
 - reader delivery integrity: PASS
 - full content status: INCOMPLETE
