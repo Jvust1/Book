@@ -1,0 +1,170 @@
+{
+  "schema": "book_two_courses_r6_first_checkpoint_v1",
+  "date": "2026-09-21",
+  "revision": "r6",
+  "stage": "FIRST_CHECKPOINT",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "parent_head": "0d02a6d79960ae5744bc8a3f48a9a52cbcec7b1b",
+  "pr": 33,
+  "status": "R6_FIRST_CHECKPOINT_ARCHIVED_FULL_READBACK_VERIFIED_WHOLE_BOOK_REVIEW_OPEN",
+  "scope": "Recoverable content/reader candidate archive only. This does not import the reader implementation into GitHub runtime/main, merge PRs, or supersede the Phase 1H implementation state.",
+  "full_verified_content": "INCOMPLETE",
+  "entry": "DELIVERY_README_zh.md inside the r6 source archive",
+  "drive_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+  "parent_archive": {
+    "drive_file_id": "1qbkO2Da6-lbsyXpWVb1yWIatta-maFeb",
+    "sha256": "5ef09f0ed7f104d87a45644b401cfa21e2a1a8fc33f07e73306b94f922738842",
+    "bytes": 66596053,
+    "preserved": true
+  },
+  "artifacts": [
+    {
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+      "drive_file_id": "1df-aInQnvsh25kKuPftv9z3bhsCbVDNZ",
+      "bytes": 68110384,
+      "sha256": "4f739cf2f637e7735338db2484a5d2a69bc65496ef07b9c5849ddcd4033222de",
+      "files": 1415,
+      "role": "candidate_reader_source_courses_original_images_and_review_evidence",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-TextData-r6.zip",
+      "drive_file_id": "14cbqMGjx_HGVoPfnOceylARG6Wj3I2Wo",
+      "bytes": 2354771,
+      "sha256": "77b184aa870d7dd642c953a759a2c71ca8a466ca37b4df3a55367c91f474651d",
+      "files": 189,
+      "role": "text_json_markdown_latex_and_review_ledger_no_images_or_runnable_app",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r6-首批录入与校读说明.md",
+      "drive_file_id": "1yyvNw234pPX0EoiZ17D474UKUm9ylj0F",
+      "bytes": 12917,
+      "sha256": "912e63c86fd20a02f4380d24e152068da54af263af2882a2b6cb7bf1b26f3f9b",
+      "role": "human_readable_checkpoint_scope_validation_and_next_step",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r6-delivery-manifest.json",
+      "drive_file_id": "1qXVQbBHPnemIdkYAD5UpJEgBpRUnwnAZ",
+      "bytes": 13457,
+      "sha256": "a438d840fd2207ec1201748a3377480f58bab46189f789927e80f34f3720c1b6",
+      "role": "external_payload_manifest_without_self_referential_hash",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "source_identities_reused": [
+    {"drive_file_id": "1JN-6cXSC0j4remyUpKR_wRmtMD99nEvB", "sha256": "0398ca63ce6e594da3e1e7a29035f0b81b4e547b303046df487e52c79b1814fc", "pdf_pages": 269},
+    {"drive_file_id": "1zqTkWK-XY2Li_WTWql4k7hVacP9qiplM", "sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1", "pdf_pages": 247}
+  ],
+  "pde": {
+    "book_version_id": "mathematical_physics_equations_4e@ee09004189c8f997",
+    "chapters": 7,
+    "numbered_sections": 33,
+    "directory_entries": 51,
+    "records": 3790,
+    "source_formula_segments": 6903,
+    "practice_source_groups": 194,
+    "practice_groups_are_not_individual_question_count": true,
+    "new_front_back_entries": 9,
+    "new_front_back_pdf_pages": [1,2,3,4,5,6,7,8,9,10,11,268,269],
+    "new_source_records": 161,
+    "new_source_formula_segments": 3,
+    "known_front_back_text_gap_remaining": 0,
+    "front_back_transcription_independently_accepted": false,
+    "source_comparison_pdf_pages": [12,259,260,261,262,263,264,265,266,267],
+    "source_comparison_records": 180,
+    "source_comparison_scope": "Current assistant compared specified pages; not independent second-review acceptance or whole-page mathematical proof.",
+    "text_overlay": {
+      "record_id": "appendix_special_functions-v-0116",
+      "part_index": 10,
+      "pdf_page": 264,
+      "before": "共轭复数。当",
+      "display_after": "为共轭复数。当",
+      "original_raw_text_latex_preserved": true
+    },
+    "mathematical_annotation_count": 6,
+    "annotation_origin": "AI_DERIVED_NOT_TEXTBOOK_NOT_OFFICIAL_ERRATUM",
+    "analysis_drafts": 5,
+    "insufficient_evidence_open": 1,
+    "annotation_independent_acceptance": "PENDING_FOR_ALL_SIX",
+    "toc_numbered_start_page_checks": "33/33 MATCH; not complete record-level proofreading",
+    "registered_missing_images": 0
+  },
+  "functional_analysis": {
+    "book_version_id": "functional_analysis_2e_jiang_sun@a43a305ed7c76f87",
+    "records": 5565,
+    "source_formula_segments": 9342,
+    "directory_entries": 44,
+    "original_questions": 110,
+    "coursepack_changed_in_r6": false,
+    "pages_reviewed_in_r6": 0,
+    "new_reference_answers": 0
+  },
+  "page_ledger": {
+    "path": "content_sources/source_review_r6/page_review_ledger.json",
+    "total": 516,
+    "first_pass_transcribed": 13,
+    "assistant_source_comparison": 10,
+    "not_reviewed_in_r6": 493,
+    "independently_accepted": 0,
+    "ledger_entries_are_not_review_claims": true
+  },
+  "validation": {
+    "scope": "Local candidate, not CI results for this governance-only PR",
+    "python_passed": 532,
+    "python_subtests_passed": 239,
+    "python_warnings": 4,
+    "math_syntax_svg_passed": 16691,
+    "math_syntax_svg_total": 16691,
+    "source_formula_segments": 16245,
+    "derived_formula_segments": 446,
+    "math_correctness_proved": false,
+    "browser_memory_checks": 51,
+    "browser_network_android_e2e": false,
+    "actual_consecutive_apply_runs": 2,
+    "coursepack_hashes_identical": true,
+    "coursepack_files_compared": 671,
+    "protected_r5_files_compared": 431,
+    "changed_protected_files": 0,
+    "original_pde_records_preserved": 3629,
+    "original_fa_records_preserved": 5565,
+    "source_archive_inventory_entries_rehashed": 1414,
+    "zip_crc": "PASS",
+    "integrity": "PASS",
+    "require_complete_exit": 2,
+    "full_verified_content": "INCOMPLETE",
+    "android_build": "NOT_RUN_R6",
+    "physical_device": "NOT_TESTED",
+    "new_apk": false
+  },
+  "display": {
+    "learning_modes": ["preview","learn","review","practice"],
+    "math": "offline MathJax3.2.1 SVG",
+    "font_size_px": {"min":12,"max":72,"step":0.5},
+    "shusong": "Actual local load or user-owned import; explicit fallback",
+    "font_binaries_distributed": 0,
+    "native_settings_persistence_verified": false
+  },
+  "remaining_work": [
+    "Independently proofread all source pages and check unregistered omissions of text, formulas, proofs, figures and exercises. Current independent page acceptance is zero.",
+    "Independently review the new 13-page transcription, ten-page source comparison, text display correction and six mathematical annotations; the integral identity remains unresolved.",
+    "Preserve existing 30 non-official FA reference derivations pending review; the other 80 FA answers and missing PDE solutions remain unavailable.",
+    "Review/import reader implementation on a non-default implementation branch; no automatic merge or change to main.",
+    "Complete Android/ARM64, real-network and native font/settings-persistence acceptance before a release claim."
+  ],
+  "next_step": "Continue source comparison from PDE full PDF page 13, using the explicit page ledger; then cover remaining PDE/FA pages, keeping source comparison, mathematical analysis and independent acceptance separate.",
+  "sync": {
+    "drive_new_objects": 4,
+    "drive_in_place_updates": 0,
+    "payload_and_manifest_full_readback_hash_matches": 4,
+    "historical_archives_preserved": "r1-r5",
+    "original_sources_reuploaded": 0,
+    "main_writes": 0,
+    "pr_merges": 0,
+    "destructive_operations": 0,
+    "notes_migrated": false,
+    "repeat_policy": "Reuse identical objects and skip normalized-identical GitHub text. Local apply idempotency was tested by real consecutive executions; later read-only cloud reconciliation is a different check."
+  }
+}
