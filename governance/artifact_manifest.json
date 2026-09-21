@@ -1,8 +1,8 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-09-21",
   "project": {
-    "repository": "Jvust1/Book",
+    "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
     "drive_root_name": "Book"
   },
@@ -74,6 +74,66 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "book_two_courses_r4_source_2026_09_21",
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r4-Source.zip",
+      "type": "generated",
+      "drive_file_id": "1HXHnBCSvCQMZOAgFJegrLmvwl5-FIXKb",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-0.1.5-dev-r4-Source.zip",
+      "size_bytes": 31422750,
+      "sha256": "ce8a166430565a1eae9a14ee2c1ca2a8456910d6f62ca892d0a79e1a84a05447",
+      "version": "r4",
+      "source": "assistant_generated",
+      "related_commit": "536ba03be6c443b88956063c9b1f0fbf38999d57",
+      "purpose": "Recoverable r4 candidate source and dual-course structured-data snapshot.",
+      "status": "active_candidate_not_integrated",
+      "verification": "Drive upload completed; complete remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r4_textdata_2026_09_21",
+      "file_name": "Book-TwoCourses-TextData-r4.zip",
+      "type": "generated",
+      "drive_file_id": "12GnBrkChroIM9XgUpQIkn_uevcdwy9so",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-TextData-r4.zip",
+      "size_bytes": 1736364,
+      "sha256": "32d2b3a64321813eabc0b1b1dfa695d70b387fbb1ca5bd385e702c7d82a0f826",
+      "version": "r4",
+      "source": "assistant_generated",
+      "related_commit": "536ba03be6c443b88956063c9b1f0fbf38999d57",
+      "purpose": "r4 structured text/JSON/Markdown/LaTeX subset for the two courses.",
+      "status": "active",
+      "verification": "Drive upload completed; complete remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r4_readme_2026_09_21",
+      "file_name": "Book-TwoCourses-r4-全书录入与验收说明.md",
+      "type": "generated",
+      "drive_file_id": "1y2PxGZ4-5fJWve2K1DlcdWDHjTGPR-_8",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r4-全书录入与验收说明.md",
+      "size_bytes": 17061,
+      "sha256": "23e99a08f6f7b108fc2d0cdc3306e52099b003b74c5ca6eb54e10f7372828327",
+      "version": "r4",
+      "source": "assistant_generated",
+      "related_commit": "536ba03be6c443b88956063c9b1f0fbf38999d57",
+      "purpose": "Human-readable r4 content coverage, usage, validation and known-gap report.",
+      "status": "active",
+      "verification": "Drive upload completed; complete remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r4_delivery_manifest_2026_09_21",
+      "file_name": "Book-TwoCourses-r4-delivery-manifest.json",
+      "type": "generated",
+      "drive_file_id": "1lM0ykZDcWIkWUsiHKIDjS0rTKLeyo9dB",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r4-delivery-manifest.json",
+      "size_bytes": 9255,
+      "sha256": "c74ebcb7ae39921bb358e40dae995bf88674da1ac60067eabb17cbe35074c6a1",
+      "version": "r4",
+      "source": "assistant_generated",
+      "related_commit": "536ba03be6c443b88956063c9b1f0fbf38999d57",
+      "purpose": "Machine-readable r4 artifact, validation, synchronization and recovery manifest.",
+      "status": "active",
+      "verification": "Drive object updated in place to final verified status; complete remote bytes read back; size and SHA-256 matched."
     }
   ],
   "notes": [
