@@ -274,6 +274,22 @@
       "purpose": "17 additional source pages compared; restored a summarized proof; source-layout, source-span and four-mode UI improvements. Requires immutable first-r6 base archive; no repeated PDFs/page images.",
       "status": "active_candidate_not_integrated_whole_book_review_open",
       "verification": "Full remote bytes downloaded; size, SHA-256, ZIP CRC matched. Separate restore to new directory matched candidate files and integrity audit."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_batch3_delta_2026_09_21",
+      "file_name": "Book-TwoCourses-r6-batch3-Delta.zip",
+      "type": "generated_incremental_source",
+      "drive_file_id": "1HVwEddwQII_V5fhh7_j7OQx4DzoV4fFR",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-batch3-Delta.zip",
+      "size_bytes": 424420,
+      "sha256": "5e608fd2f1454cbada37b74e16704c1e51fbdd8b7787be25646604d6bce1f4f7",
+      "version": "r6-batch3",
+      "stage": "SOURCE_REVIEW_CONTINUATION",
+      "source": "assistant_generated_from_source_visual_comparison",
+      "related_checkpoint": "governance/two_courses_r6_batch3_checkpoint_20260921.json",
+      "purpose": "Cumulative r6 Batch3 delta relative to immutable first-r6 base: 17 additional pages source-compared, cross-page provenance links, four-mode study enrichment and corrected completeness governance metadata.",
+      "status": "active_candidate_not_integrated_whole_book_review_open",
+      "verification": "Full remote bytes read back; size/SHA-256/ZIP CRC matched. Base+Batch3 delta restored 59 cumulative files byte-identically and passed integrity audit."
     }
   ],
   "notes": [
@@ -297,6 +313,7 @@
     },
     "Latest dual-course reader candidate recovery entry: governance/two_courses_r5_source_supplement_20260921.json at checkpoint commit 602c41c10049497239a86d34dda7b412c82d90d0. r5 is archived, not integrated into main; whole-book review remains INCOMPLETE. r1-r4 historical archives are preserved unchanged.",
     "Current recovery entry superseding the preceding historical r5 pointer: governance/two_courses_r6_first_checkpoint_20260921.json at commit 089680bb3e744f0acc60a1fdb09f34374463767b. r6 is a FIRST_CHECKPOINT, not a complete whole-book review or integrated runtime release. All r1-r5 artifacts are preserved.",
-    "Current recovery entry: governance/two_courses_r6_batch2_checkpoint_20260921.json. Recover original r6 source ZIP plus byte-deduplicated batch2 delta. 27 pages source-compared, 13 first-pass, 476 unreviewed in r6, 0 independently accepted. First-r6 and prior artifacts remain historical evidence; no main or PR merge."
+    "Current recovery entry: governance/two_courses_r6_batch2_checkpoint_20260921.json. Recover original r6 source ZIP plus byte-deduplicated batch2 delta. 27 pages source-compared, 13 first-pass, 476 unreviewed in r6, 0 independently accepted. First-r6 and prior artifacts remain historical evidence; no main or PR merge.",
+    "Current recovery entry: governance/two_courses_r6_batch3_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch3 delta. 44 pages source-compared, 13 first-pass, 459 unreviewed in r6, 0 independently accepted. Batch2 and earlier artifacts remain historical evidence; no main write or PR merge."
   ]
 }
