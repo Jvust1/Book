@@ -1,0 +1,179 @@
+{
+  "schema": "book_two_courses_r6_batch4_checkpoint_v1",
+  "project": "Jvust2/Book",
+  "date": "2026-09-21",
+  "stage": "R6_BATCH4_SOURCE_REVIEW_CONTINUATION",
+  "status": "RECOVERABLE_CANDIDATE_WHOLE_BOOK_REVIEW_INCOMPLETE",
+  "base_checkpoint": "governance/two_courses_r6_first_checkpoint_20260921.json",
+  "previous_checkpoint": "governance/two_courses_r6_batch3_checkpoint_20260921.json",
+  "github": {
+    "branch": "data/two-courses-r3-checkpoint-20260921",
+    "pr": 33,
+    "draft": true,
+    "merged": false,
+    "parent_sha": "16efc52755c9411e91cd9327ea3664a5ed1c834d",
+    "main_sha_observed": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+    "main_writes": 0,
+    "scope": "Archive/governance index only; runtime candidate is recoverable from immutable first-r6 ZIP plus cumulative Batch4 delta and is not integrated into main."
+  },
+  "artifact": {
+    "file_name": "Book-TwoCourses-r6-batch4-Delta.zip",
+    "drive_file_id": "1dXK86cf749LKll1AScbannBr0kZubYhP",
+    "drive_parent_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+    "size_bytes": 569281,
+    "sha256": "1397fba5774f5cd07e0fdfc345e5ed45f1716553b92af082b2fb7de5beeeda5f",
+    "delta_manifest_sha256": "6a784be26925f0d86a1b4c09cc066c2ee6439477d7574704bbf6d6b6500b6025",
+    "verification": "Full remote bytes downloaded; size, SHA-256 and ZIP CRC matched. Base+Batch4 delta recovered to a new directory; all 86 cumulative delta files matched candidate bytes and integrity audit passed."
+  },
+  "base_archive": {
+    "drive_file_id": "1df-aInQnvsh25kKuPftv9z3bhsCbVDNZ",
+    "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+    "sha256": "4f739cf2f637e7735338db2484a5d2a69bc65496ef07b9c5849ddcd4033222de",
+    "size_bytes": 68110384,
+    "reuploaded": false
+  },
+  "historical_deltas": {
+    "batch2": {
+      "drive_file_id": "1F5iBXMPtLDJuwqnRM1fDC45hvKRK9FUQ",
+      "preserved": true,
+      "required_for_batch4_recovery": false
+    },
+    "batch3": {
+      "drive_file_id": "1HVwEddwQII_V5fhh7_j7OQx4DzoV4fFR",
+      "preserved": true,
+      "required_for_batch4_recovery": false
+    }
+  },
+  "actual_source_comparison": {
+    "new_pages": 24,
+    "partial_differential_equations": {
+      "pdf_pages": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "next_pdf_page": 43
+    },
+    "jiang_sun_functional_analysis": {
+      "pdf_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "next_body_pdf_page": 29,
+      "front_pages_still_unreviewed": []
+    },
+    "method": "Original full-page visual comparison against anchored source records, formulas and page boundaries.",
+    "new_confirmed_source_text_or_latex_errors": 0,
+    "fa_pdf4_recheck": "Existing front_preface source already contained the full dual-space/weak-topology paragraph; no duplicate source completion was added.",
+    "independent_acceptance": "PENDING",
+    "whole_page_math_verified": false
+  },
+  "cumulative_r6_review": {
+    "total_source_pages": 516,
+    "first_pass_transcribed_pages": 13,
+    "source_comparison_pages": 68,
+    "pages_not_reviewed_in_r6": 435,
+    "independently_accepted_pages": 0,
+    "ledger": "content_sources/source_review_r6_batch4/page_review_ledger.json"
+  },
+  "content_changes": [
+    "Added eleven explicit cross-page provenance/continuity relationships (six PDE, five FA) without changing source record IDs/raw/text/LaTeX.",
+    "Added seven PDE source-backed preview/review concept groups, three PDE process hints for reviewed exercise groups, and eleven FA study-operation prompts; all labeled assistant-authored study assistance, not textbook source or official solutions.",
+    "Rechecked FA PDF4 against the frozen Batch3 baseline and removed a transient false-positive missing-preface interpretation; no duplicate source_completion remains.",
+    "Kept FA full-verbatim/full-LaTeX completeness flags false because Batch2 previously found a genuinely summarized proof."
+  ],
+  "source_versions": {
+    "partial_differential_equations": "mathematical_physics_equations_4e@78d03352e68071cc",
+    "jiang_sun_functional_analysis": "functional_analysis_2e_jiang_sun@63defe37ea662ccd"
+  },
+  "original_source_counts": {
+    "pde_records": 3790,
+    "fa_records": 5565,
+    "pde_original_formula_slots": 6903,
+    "fa_original_formula_slots": 9342,
+    "protected_legacy_source_record_hashes": {
+      "pde": 3629,
+      "fa": 5565
+    },
+    "new_record_ids": 0
+  },
+  "validation": {
+    "python_tests": 552,
+    "python_subtests": 239,
+    "warnings": 4,
+    "test_split": {
+      "tests": 349,
+      "app_tests": 111,
+      "tests_reader": 92
+    },
+    "math_syntax": {
+      "passed": 16709,
+      "total": 16709,
+      "not_mathematical_acceptance": true
+    },
+    "real_chromium_targeted_checks": 9,
+    "chromium_scope": "Actual Chromium DOM + reader.js + offline MathJax + FastAPI TestClient bridge; no managed-navigation bypass, native-storage persistence, real-network or Android claim.",
+    "integrity": "PASS",
+    "source_entry_identity": "PASS",
+    "whole_book_completeness": "INCOMPLETE",
+    "complete_gate_exit": 2,
+    "repeat_application": {
+      "actual_runs": 2,
+      "files_compared": 675,
+      "hashes_identical": true
+    },
+    "restored_candidate": {
+      "delta_files": 86,
+      "file_identity": true,
+      "integrity": "PASS"
+    },
+    "protected_golden_files_unchanged": 129,
+    "android_apk_arm64_device": "NOT_RUN",
+    "font_binary_bundled": false
+  },
+  "dedup": {
+    "candidate_files": {
+      "NEW": 57,
+      "CHANGED": 29,
+      "SKIP_IDENTICAL": 1386,
+      "HISTORICAL_DUPLICATE_PRESERVED": 0,
+      "CONFLICT_NEEDS_REVIEW": 0
+    },
+    "drive_created": 1,
+    "drive_updated": 0,
+    "deletions": 0,
+    "original_source_pdfs_and_page_images_reused": true
+  },
+  "remaining": [
+    "435 pages have not yet received r6 page-by-page source comparison; 13 first-pass pages still need subsequent comparison; all 516 remain independently unaccepted.",
+    "Continue looking for summarized or omitted passages, formulas, figures and exercises; page anchors are insufficient evidence of full verbatim completeness.",
+    "Independent mathematical review remains open for known source flags and AI annotations.",
+    "Complete worked solutions remain incomplete: FA 80 questions still have no derived guide; PDE process hints are not solutions.",
+    "Android/ARM64, real-network and native ShuSong/font-size persistence acceptance remain open; no new APK."
+  ],
+  "recovery": {
+    "readme": "docs/TWO_COURSES_R6_BATCH4_20260921.md",
+    "base_plus_delta": "Use immutable first-r6 Source ZIP plus Book-TwoCourses-r6-batch4-Delta.zip. Batch4 delta is cumulative relative to the first-r6 base; Batch2/3 remain historical evidence and are not required.",
+    "output_requirement": "Recover to a new nonexistent directory and validate hashes; do not overlay an existing worktree.",
+    "old_notes": "Preserved under original version keys; no automatic migration."
+  }
+}
