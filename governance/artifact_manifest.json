@@ -194,6 +194,70 @@
       "purpose": "External r5 payload identities, sources, review boundaries, local test evidence and live GitHub checkpoint locator.",
       "status": "active",
       "verification": "Full remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_source_2026_09_21",
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+      "type": "generated",
+      "drive_file_id": "1df-aInQnvsh25kKuPftv9z3bhsCbVDNZ",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+      "size_bytes": 68110384,
+      "sha256": "4f739cf2f637e7735338db2484a5d2a69bc65496ef07b9c5849ddcd4033222de",
+      "version": "r6",
+      "stage": "FIRST_CHECKPOINT",
+      "source": "assistant_generated",
+      "related_commit": "089680bb3e744f0acc60a1fdb09f34374463767b",
+      "purpose": "r6 first candidate checkpoint: 13 PDE front/back pages transcribed, ten source pages compared, explicit text correction, six separate AI annotations and 516-page review ledger.",
+      "status": "active_candidate_not_integrated_whole_book_review_open",
+      "verification": "Full remote bytes read back; size and SHA-256 matched; 1414 internal inventory entries rehashed. Not an independently accepted textbook or APK."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_textdata_2026_09_21",
+      "file_name": "Book-TwoCourses-TextData-r6.zip",
+      "type": "generated",
+      "drive_file_id": "14cbqMGjx_HGVoPfnOceylARG6Wj3I2Wo",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-TextData-r6.zip",
+      "size_bytes": 2354771,
+      "sha256": "77b184aa870d7dd642c953a759a2c71ca8a466ca37b4df3a55367c91f474651d",
+      "version": "r6",
+      "stage": "FIRST_CHECKPOINT",
+      "source": "assistant_generated",
+      "related_commit": "089680bb3e744f0acc60a1fdb09f34374463767b",
+      "purpose": "r6 source text/JSON/LaTeX, separate mathematical annotations and page-review ledger; no images or runnable app.",
+      "status": "active_candidate_not_independently_proofread",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_readme_2026_09_21",
+      "file_name": "Book-TwoCourses-r6-首批录入与校读说明.md",
+      "type": "generated",
+      "drive_file_id": "1yyvNw234pPX0EoiZ17D474UKUm9ylj0F",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-首批录入与校读说明.md",
+      "size_bytes": 12917,
+      "sha256": "912e63c86fd20a02f4380d24e152068da54af263af2882a2b6cb7bf1b26f3f9b",
+      "version": "r6",
+      "stage": "FIRST_CHECKPOINT",
+      "source": "assistant_generated",
+      "related_commit": "089680bb3e744f0acc60a1fdb09f34374463767b",
+      "purpose": "First r6 checkpoint scope, page/record counts, remaining independent review, validation and recovery instructions.",
+      "status": "active",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_two_courses_r6_delivery_manifest_2026_09_21",
+      "file_name": "Book-TwoCourses-r6-delivery-manifest.json",
+      "type": "generated",
+      "drive_file_id": "1qXVQbBHPnemIdkYAD5UpJEgBpRUnwnAZ",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-TwoCourses-r6-delivery-manifest.json",
+      "size_bytes": 13457,
+      "sha256": "a438d840fd2207ec1201748a3377480f58bab46189f789927e80f34f3720c1b6",
+      "version": "r6",
+      "stage": "FIRST_CHECKPOINT",
+      "source": "assistant_generated",
+      "related_commit": "089680bb3e744f0acc60a1fdb09f34374463767b",
+      "purpose": "External r6 payload hashes, source identities, local validation, limitations and live checkpoint locator; no self-referential hash.",
+      "status": "active",
+      "verification": "Full remote bytes read back; size and SHA-256 matched."
     }
   ],
   "notes": [
@@ -215,6 +279,7 @@
       "status": "active",
       "verification": "Local SHA-256; Drive ID, parent, name and size read back"
     },
-    "Latest dual-course reader candidate recovery entry: governance/two_courses_r5_source_supplement_20260921.json at checkpoint commit 602c41c10049497239a86d34dda7b412c82d90d0. r5 is archived, not integrated into main; whole-book review remains INCOMPLETE. r1-r4 historical archives are preserved unchanged."
+    "Latest dual-course reader candidate recovery entry: governance/two_courses_r5_source_supplement_20260921.json at checkpoint commit 602c41c10049497239a86d34dda7b412c82d90d0. r5 is archived, not integrated into main; whole-book review remains INCOMPLETE. r1-r4 historical archives are preserved unchanged.",
+    "Current recovery entry superseding the preceding historical r5 pointer: governance/two_courses_r6_first_checkpoint_20260921.json at commit 089680bb3e744f0acc60a1fdb09f34374463767b. r6 is a FIRST_CHECKPOINT, not a complete whole-book review or integrated runtime release. All r1-r5 artifacts are preserved."
   ]
 }
