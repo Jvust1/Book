@@ -1,8 +1,8 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-09-21",
   "project": {
-    "repository": "Jvust1/Book",
+    "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
     "drive_root_name": "Book"
   },
@@ -74,6 +74,78 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "jiang_sun_functional_analysis_v2_complete_20260831",
+      "file_name": "FunctionalAnalysis2_Structured_V2_Complete.zip",
+      "type": "raw",
+      "drive_file_id": "1NblcrHjMGl7fN_vJxAk9IeKRGPCDC-_l",
+      "drive_path": "Book/01_Textbooks/FunctionalAnalysis2_Structured_V2_2026-08-31/FunctionalAnalysis2_Structured_V2_Complete.zip",
+      "size_bytes": 25188356,
+      "sha256": "52e30b99419a4a5f5fc7cd36b9febf9ecb2719f0cef95e7bd050dace065af60d",
+      "version": "structure_v2_20260831",
+      "source": "user_project_drive",
+      "purpose": "Complete structured-source snapshot for Jiang/Sun Functional Analysis 2e; source-grounded input for the mobile two-course work.",
+      "status": "active_source",
+      "verification": "Drive identity/size read back; checksum recorded by source manifest."
+    },
+    {
+      "artifact_id": "mathematical_physics_4e_raw_upload_20260921",
+      "file_name": "5个文件合集.zip",
+      "type": "raw",
+      "drive_file_id": "1WV4PZTaYC_dCgwkJ0mcTcKBj0ei5I5iU",
+      "drive_path": "Book/01_Textbooks/MathematicalPhysics4e_Source_20260921/5个文件合集.zip",
+      "size_bytes": 1699497,
+      "sha256": "e135ad1b8a8961984ade2d76b6a091c69e57468dcd3a93514d0f260b2e74cbcf",
+      "version": "user_upload_20260921",
+      "source": "user_upload",
+      "purpose": "Original user-supplied seven-chapter Mathematical Physics Equations 4e/PDE structured-source bundle.",
+      "status": "active_source",
+      "verification": "Local uploaded bytes SHA-256 and size computed; Drive file identity and byte size read back."
+    },
+    {
+      "artifact_id": "book_mobile_two_courses_0_1_5_dev_r1_source",
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r1-Source.zip",
+      "type": "snapshot",
+      "drive_file_id": "1LeVVIqmMpYT1X2nXKgYMztL-f8f74pAY",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-0.1.5-dev-r1-Source.zip",
+      "size_bytes": 29224706,
+      "sha256": "4443b513e700875c5799dac7c12edcc94c084b9bf0e7d9104128a8840e69ac46",
+      "version": "0.1.5-dev-r1",
+      "source": "assistant_generated",
+      "related_commit": "d554cd4a1345c83fa0f3380dd995484480dfb92c",
+      "purpose": "Recoverable partial two-course mobile source candidate; application integration and complete-content gates remain open.",
+      "status": "active_partial_candidate",
+      "verification": "ZIP CRC + 836 manifested member hashes; Drive upload/readback; fresh-download SHA-256 match; fresh extraction Python regression 478 passed / 239 subtests."
+    },
+    {
+      "artifact_id": "book_mobile_two_courses_r1_verification",
+      "file_name": "Book-Mobile-TwoCourses-r1-Verification.zip",
+      "type": "experiment",
+      "drive_file_id": "1oVKPDH1a--3R7Vw6TegxY1dtFM4dqo-I",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-r1-Verification.zip",
+      "size_bytes": 299547,
+      "sha256": "a1047b4ea0baf1b6ba0b5f74d0216b9b7e41d6b369284d6b1e381fa0d1b2409e",
+      "version": "0.1.5-dev-r1",
+      "source": "assistant_generated",
+      "related_commit": "d554cd4a1345c83fa0f3380dd995484480dfb92c",
+      "purpose": "Verification logs and reports for the r1 two-course source candidate.",
+      "status": "active_evidence",
+      "verification": "Drive raw bytes downloaded and SHA-256 recomputed in the current sync."
+    },
+    {
+      "artifact_id": "book_mobile_two_courses_r1_notes",
+      "file_name": "Book-Mobile-TwoCourses-r1-说明.md",
+      "type": "generated",
+      "drive_file_id": "1s6C9YsjJbYT9IlyrH1-R8GZmftzEyIwg",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-Mobile-TwoCourses-r1-说明.md",
+      "sha256": null,
+      "version": "0.1.5-dev-r1",
+      "source": "assistant_generated",
+      "related_commit": "d554cd4a1345c83fa0f3380dd995484480dfb92c",
+      "purpose": "Human-readable recovery, coverage, verification and limitation notes for the candidate.",
+      "status": "active",
+      "verification": "Drive identity and readable content verified; checksum not yet recorded."
     }
   ],
   "notes": [
