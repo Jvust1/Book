@@ -21,13 +21,18 @@
       "ch01_s06",
       "ch01_s07",
       "ch01_s08",
-      "ch01_s09"
+      "ch01_s09",
+      "ch02_s01",
+      "ch02_s02",
+      "ch02_s03",
+      "ch02_s04"
     ],
-    "remaining_numbered_sections": 20,
-    "normalized_records": 1126,
+    "remaining_numbered_sections": 16,
+    "normalized_records": 1849,
     "full_content_complete": false,
     "visual_transcribed_exercises": [
-      "ch01_exercises"
+      "ch01_exercises",
+      "ch02_exercises"
     ]
   },
   "pde": {
