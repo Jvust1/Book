@@ -13,11 +13,22 @@
     "source_pdf_sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1",
     "numbered_sections": 29,
     "visual_transcribed_sections": [
-      "ch01_s01","ch01_s02","ch01_s03","ch01_s04","ch01_s05","ch01_s06","ch01_s07"
+      "ch01_s01",
+      "ch01_s02",
+      "ch01_s03",
+      "ch01_s04",
+      "ch01_s05",
+      "ch01_s06",
+      "ch01_s07",
+      "ch01_s08",
+      "ch01_s09"
     ],
-    "remaining_numbered_sections": 22,
-    "normalized_records": 783,
-    "full_content_complete": false
+    "remaining_numbered_sections": 20,
+    "normalized_records": 1126,
+    "full_content_complete": false,
+    "visual_transcribed_exercises": [
+      "ch01_exercises"
+    ]
   },
   "pde": {
     "chapters": 7,
