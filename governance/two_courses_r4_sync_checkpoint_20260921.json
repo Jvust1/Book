@@ -4,7 +4,7 @@
   "revision": "r4",
   "repository": "Jvust2/Book",
   "branch": "data/two-courses-r3-checkpoint-20260921",
-  "status": "R4_DRIVE_ARCHIVE_IN_PROGRESS_GITHUB_CHECKPOINT_CREATED",
+  "status": "R4_SYNC_COMPLETE_READBACK_VERIFIED",
   "scope": "Additive archive/governance checkpoint. Does not merge reader implementation, does not modify main, and preserves r1-r3 historical artifacts.",
   "content_status": "FA_WHOLE_BOOK_TRANSCRIPTION_DRAFT_COMPLETE_FULL_VERIFIED_CONTENT_INCOMPLETE",
   "drive_target_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
@@ -16,7 +16,8 @@
       "sha256": "ce8a166430565a1eae9a14ee2c1ca2a8456910d6f62ca892d0a79e1a84a05447",
       "classification": "NEW",
       "role": "candidate_source_and_course_data_snapshot",
-      "read_back_required": true
+      "read_back_required": false,
+      "read_back_verified": true
     },
     {
       "file_name": "Book-TwoCourses-TextData-r4.zip",
@@ -25,7 +26,28 @@
       "sha256": "32d2b3a64321813eabc0b1b1dfa695d70b387fbb1ca5bd385e702c7d82a0f826",
       "classification": "NEW",
       "role": "structured_text_json_markdown_latex_subset",
-      "read_back_required": true
+      "read_back_required": false,
+      "read_back_verified": true
+    },
+    {
+      "file_name": "Book-TwoCourses-r4-全书录入与验收说明.md",
+      "drive_file_id": "1y2PxGZ4-5fJWve2K1DlcdWDHjTGPR-_8",
+      "size_bytes": 17061,
+      "sha256": "23e99a08f6f7b108fc2d0cdc3306e52099b003b74c5ca6eb54e10f7372828327",
+      "classification": "NEW",
+      "role": "human_readable_r4_delivery_and_validation_report",
+      "read_back_required": false,
+      "read_back_verified": true
+    },
+    {
+      "file_name": "Book-TwoCourses-r4-delivery-manifest.json",
+      "drive_file_id": "1lM0ykZDcWIkWUsiHKIDjS0rTKLeyo9dB",
+      "size_bytes": 9255,
+      "sha256": "c74ebcb7ae39921bb358e40dae995bf88674da1ac60067eabb17cbe35074c6a1",
+      "classification": "NEW",
+      "role": "machine_readable_r4_delivery_sync_and_recovery_manifest",
+      "read_back_required": false,
+      "read_back_verified": true
     }
   ],
   "courses": {
@@ -43,7 +65,10 @@
     },
     "jiang_sun_functional_analysis": {
       "title": "泛函分析（第2版）",
-      "authors": ["江泽坚", "孙善利"],
+      "authors": [
+        "江泽坚",
+        "孙善利"
+      ],
       "chapters": 5,
       "numbered_sections": 29,
       "directory_entries": 44,
@@ -69,7 +94,11 @@
     "font_preference": "书宋 / ShuSong",
     "font_binary_distributed": false,
     "font_loading": "actual local font load or user-owned local import; explicit serif fallback otherwise",
-    "font_size_px": {"min": 12, "max": 72, "step": 0.5}
+    "font_size_px": {
+      "min": 12,
+      "max": 72,
+      "step": 0.5
+    }
   },
   "validation": {
     "python_passed": 497,
@@ -100,6 +129,35 @@
   "sync_policy": {
     "drive_dedupe_before_write": "No r4-named artifact existed in the target folder before upload.",
     "github_write": "Single additive governance commit on an existing non-default review branch.",
-    "idempotency_recheck_required": true
+    "idempotency_recheck_required": true,
+    "final_state": "Drive objects and GitHub artifact index reconciled; repeat runs must compare IDs/names/sizes/SHA-256 and skip identical content."
+  },
+  "sync_result": {
+    "classification_counts": {
+      "NEW": 4,
+      "CHANGED": 0,
+      "SKIP_IDENTICAL": 0,
+      "HISTORICAL_DUPLICATE_PRESERVED": 0,
+      "CONFLICT_NEEDS_REVIEW": 0
+    },
+    "drive": {
+      "new_objects": 4,
+      "in_place_updates": 1,
+      "final_object_count_r4": 4,
+      "readback_sha256_verified": 4
+    },
+    "github": {
+      "new_commits_this_sync": 3,
+      "artifact_manifest_commit": "6dd52ca22064463ce5d5f53a92d38075587640e1",
+      "pr": 33,
+      "pr_draft": true,
+      "pr_merged": false,
+      "main_mutations": 0
+    },
+    "historical_versions": "r1-r3 left untouched",
+    "next_same_input_expected": {
+      "drive_new_objects": 0,
+      "github_new_commits": 0
+    }
   }
 }
