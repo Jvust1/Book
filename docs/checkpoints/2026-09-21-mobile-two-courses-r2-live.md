@@ -30,12 +30,16 @@ Visually transcribed from the supplied source scans into LaTeX/Markdown, pending
 - ch01_s05 — 完备的距离空间
 - ch01_s06 — 列紧性
 - ch01_s07 — 赋范线性空间
+- ch01_s08 — F－空间
+- ch01_s09 — 压缩映象原理，Fréchet 导数
+- ch01_exercises — 第一章习题 1–30
 
 Current audit after ingestion:
 - numbered teaching sections: 29
-- transcribed sections: 7
-- remaining numbered sections: 22
-- normalized reader records: 783
+- transcribed numbered sections: 9
+- transcribed exercise entries: 1 (chapter 1)
+- remaining numbered sections: 20
+- normalized reader records: 1126
 - source pages retained: 247
 - full textbook content gate: INCOMPLETE
 
@@ -57,6 +61,7 @@ Missing diagrams are shown as gaps; they are not regenerated or guessed.
 
 - `python -m pytest tests_reader -q`: 18 passed
 - `python -m pytest tests app_tests -q`: 460 passed, 239 subtests passed
+- audit bug fixed: exercise entries are tracked separately and no longer inflate numbered-section transcription counts
 - reader delivery integrity: PASS
 - full content status: INCOMPLETE
 
