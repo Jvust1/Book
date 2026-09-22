@@ -41,19 +41,42 @@
     "generator_claimed_scanned_pages": 254,
     "embedded_source_filename_claim": "社会主义市场经济理论 第5版_14599815.zip",
     "visual_identity_confirmed": true,
-    "identity_verified_from_pdf_pages": [1, 3, 4],
-    "processed_pdf_page_range": [1, 23],
-    "last_processed_pdf_page": 23,
-    "next_pdf_page": 24,
-    "printed_pages_structured_range": [1, 12],
-    "body_pdf_pages_structured": [12, 23],
+    "identity_verified_from_pdf_pages": [
+      1,
+      3,
+      4
+    ],
+    "processed_pdf_page_range": [
+      1,
+      30
+    ],
+    "last_processed_pdf_page": 30,
+    "next_pdf_page": 31,
+    "printed_pages_structured_range": [
+      1,
+      19
+    ],
+    "body_pdf_pages_structured": [
+      12,
+      30
+    ],
     "chapter_1_status": "IN_PROGRESS",
-    "structured_page_records": 23,
+    "structured_page_records": 30,
     "formula_records": 1,
     "figure_records": 4,
     "table_records": 0,
-    "latest_structured_batch_path": "books/contemporary-china-economy/structured/structured_pages_0016_0023.md",
-    "latest_batch_manifest_path": "books/contemporary-china-economy/structured/batch_manifest_0016_0023.json"
+    "latest_structured_batch_path": "books/contemporary-china-economy/structured/structured_pages_0024_0030.md",
+    "latest_structured_batch_sha256": "b814d3f3ecb5e7db601a030ca355c57cfced8feda4636c134b99a61f422695a0",
+    "latest_batch_manifest_path": "books/contemporary-china-economy/structured/batch_manifest_0024_0030.json",
+    "latest_batch_manifest_sha256": "9b3bf4f490d890fb9d53a4b296e8e9dfef3a40c1d773d711e2366345827974f6",
+    "prior_structured_batches": [
+      "books/contemporary-china-economy/structured/structured_pages_0001_0015.md",
+      "books/contemporary-china-economy/structured/structured_pages_0016_0023.md"
+    ],
+    "dense_text_source_review_pending_pdf_pages": [
+      24,
+      30
+    ]
   },
   "blockers": [
     {
@@ -68,17 +91,19 @@
     },
     {
       "id": "SCALABLE_OCR_BATCH_TIMEOUT",
-      "status": "OPEN_NON_BLOCKING",
-      "evidence": "Earlier OCR batch stopped after PDF 15. This run used source-page visual transcription to advance without duplication through PDF 23."
+      "status": "MITIGATED_NON_BLOCKING",
+      "evidence": "Work is split into bounded continuation batches. The latest batch processed PDF 24-30 consecutively after reconciling a concurrent checkpoint that had already advanced to PDF 23."
     }
   ],
   "validation": {
     "draft_internal_consistency": "PASS",
     "whole_book_content": "INCOMPLETE",
-    "source_pdf_visual_checks": "PARTIAL: identity pages 1/3/4 and continuous body pages 12-23 checked; latest new pages 16-23 basic visual review PASS",
-    "latest_incremental_batch": "PASS_BASIC_SOURCE_REVIEW"
+    "source_pdf_visual_checks": "PARTIAL: identity pages 1/3/4; continuous body progress through PDF 30; latest PDF 24-30 page-layout/title spotcheck 7/7 PASS",
+    "latest_incremental_batch": "PASS_WITH_SOURCE_REVIEW_DEBT",
+    "coverage_continuity": "PASS: canonical ranges 1-15, 16-23, 24-30; no overlap in GitHub batch files",
+    "next_page_boundary": "PASS: 31"
   },
-  "next_action": "Continue from PDF page 24 (printed page 13), preserving the PDF-to-printed-page mapping. Structure the next consecutive pages and verify formulas/figures/tables against rendered source pages. Do not switch to mygpt until the whole textbook is complete and accepted.",
+  "next_action": "Continue from PDF page 31 (printed page 20), preserving the PDF-to-printed-page mapping. Structure the next consecutive pages, verify formulas/figures/tables against rendered source pages, and progressively clear dense-text source-review debt. Do not switch to mygpt until the whole textbook is complete and accepted.",
   "app_runtime_imported": false,
   "prior_draft_artifact": {
     "artifact_id": "book_economics_structured_draft_20260922",
@@ -86,37 +111,46 @@
     "sha256": "965b47e39ec0727fafa9090e9663c9bd8aef292f70d9671566834ee4adeeae36",
     "status": "active_incomplete_draft_preserved"
   },
+  "prior_drive_work_evidence": {
+    "drive_file_id": "1FMGq-1TDAhKcrPiZn7RmzafuJGf5l9w4",
+    "file_name": "Book-Contemporary-China-Economy-Batch001-p001-p012-20260922.zip",
+    "sha256": "f138603720d644381ed88a1cdd71c84a9a0f0523303b2afee16a87b02fba5ca1",
+    "classification": "PRESERVED_WORK_EVIDENCE_OVERLAPS_PRIOR_PAGES_1_4",
+    "status": "PRESERVED_NOT_OVERWRITTEN"
+  },
   "latest_incremental_batch": {
     "scope": "当代中国经济 / 社会主义市场经济理论（第五版）",
-    "pdf_pages": [16, 23],
-    "printed_pages": [5, 12],
-    "next_pdf_page": 24,
-    "github_outputs": [
-      "books/contemporary-china-economy/structured/structured_pages_0016_0023.md",
-      "books/contemporary-china-economy/structured/batch_manifest_0016_0023.json"
+    "pdf_pages": [
+      24,
+      30
     ],
-    "drive_work_evidence": {
-      "drive_file_id": "1FMGq-1TDAhKcrPiZn7RmzafuJGf5l9w4",
-      "file_name": "Book-Contemporary-China-Economy-Batch001-p001-p012-20260922.zip",
-      "sha256": "f138603720d644381ed88a1cdd71c84a9a0f0523303b2afee16a87b02fba5ca1",
-      "classification": "PRESERVED_WORK_EVIDENCE_OVERLAPS_PRIOR_PAGES_1_4",
-      "note": "Preserved rather than deleted; canonical GitHub increment starts at PDF 16 to honor the concurrently advanced checkpoint."
-    }
+    "printed_pages": [
+      13,
+      19
+    ],
+    "next_pdf_page": 31,
+    "github_outputs": [
+      "books/contemporary-china-economy/structured/structured_pages_0024_0030.md",
+      "books/contemporary-china-economy/structured/batch_manifest_0024_0030.json"
+    ],
+    "drive_new_objects": 0,
+    "drive_note": "No duplicate Drive artifact was created. The original PDF and prior work-evidence ZIP are reused/preserved."
   },
   "sync_counts": {
-    "scope": "Incremental continuation on existing non-default branch plus additive Drive work evidence",
-    "NEW": 3,
+    "scope": "PDF 24-30 continuation after concurrency reconciliation",
+    "NEW": 2,
     "CHANGED": 2,
     "SKIP_IDENTICAL": 0,
-    "HISTORICAL_DUPLICATE_PRESERVED": 1,
+    "HISTORICAL_DUPLICATE_PRESERVED": 2,
     "CONFLICT_NEEDS_REVIEW": 0,
+    "github_commits_created": 1,
     "github_new_files": 2,
     "github_changed_files": 2,
-    "github_write_pattern": "multiple non-default-branch commits because the connected contents API writes one file per commit",
-    "drive_files_created": 1,
+    "drive_files_created": 0,
     "drive_files_updated_in_place": 0,
     "direct_main_writes": 0,
     "pr_merges": 0,
-    "destructive_operations": 0
+    "destructive_operations": 0,
+    "note": "One logical Git data commit is planned: two new batch files plus two economics-current state updates. Existing Drive objects are reused."
   }
 }

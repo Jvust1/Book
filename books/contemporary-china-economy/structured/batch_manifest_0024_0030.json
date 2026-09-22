@@ -1,0 +1,70 @@
+{
+  "schema_version": "book_structured_batch_manifest_v1",
+  "course_alias": "当代中国经济",
+  "canonical_book_title": "社会主义市场经济理论（第五版）",
+  "edition": "第五版",
+  "authors_or_editors_visible": [
+    "夏永祥",
+    "张斌"
+  ],
+  "publisher": "高等教育出版社",
+  "isbn": "978-7-04-051184-0",
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_file_name": "当代中国经济（也叫社会主义市场经济理论）.pdf",
+  "source_pdf_size_bytes": 54999067,
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "physical_pdf_pages": 255,
+  "generator_claimed_scanned_pages": 254,
+  "processed_pdf_pages": [
+    24,
+    30
+  ],
+  "printed_pages": [
+    13,
+    19
+  ],
+  "next_pdf_page": 31,
+  "chapter_progress": {
+    "chapter_1": {
+      "title": "市场经济的资源配置机制",
+      "printed_pages_completed_this_batch": [
+        13,
+        19
+      ],
+      "pdf_pages_completed_this_batch": [
+        24,
+        30
+      ],
+      "cumulative_printed_pages_completed": [
+        1,
+        19
+      ],
+      "cumulative_pdf_pages_completed": [
+        12,
+        30
+      ],
+      "status": "IN_PROGRESS"
+    }
+  },
+  "figures_recovered_as_source_refs": [],
+  "formulas_structured": [],
+  "tables_structured": [],
+  "review": {
+    "page_count": 7,
+    "continuous_page_range": "PASS",
+    "layout_heading_spotcheck": "7/7 PASS",
+    "figure_table_presence_spotcheck": "7/7 PASS",
+    "dense_text_line_by_line_source_review": "PENDING",
+    "raw_ocr_retained": true,
+    "silent_correction_of_uncertain_ocr": false
+  },
+  "concurrency_reconciliation": {
+    "observed_branch_advance_to_pdf_page": 23,
+    "action": "start this batch at PDF 24; preserve prior branch work; no overlapping write"
+  },
+  "ocr_note": "Pages 24-30 were processed consecutively. Raw OCR is retained; headings/layout were checked against rendered source pages. Dense body text remains source-review debt.",
+  "structured_markdown_path": "books/contemporary-china-economy/structured/structured_pages_0024_0030.md",
+  "structured_markdown_sha256": "b814d3f3ecb5e7db601a030ca355c57cfced8feda4636c134b99a61f422695a0",
+  "completion_status": "IN_PROGRESS",
+  "whole_book_complete": false
+}
