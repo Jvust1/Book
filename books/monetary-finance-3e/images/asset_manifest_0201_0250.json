@@ -1,0 +1,85 @@
+{
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf201-250-20260923",
+  "assets": [
+    {
+      "asset_type": "table",
+      "title": "表7-1 早期中央银行典型事件时间表",
+      "path": "tables/assets/table_7-1_early_central_bank_timeline.png",
+      "source_pdf_page": 207,
+      "printed_page": 201,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "ed036b01c2008ce1e5bb59d46c1a293f614bb62b6f07effc979cf29bab099a0f",
+      "bytes": 47413,
+      "uncertain": false,
+      "table_number": "7-1",
+      "structured_table_path": "tables/table-7-1.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "表7-2 我国2020年第一季度货币供应量",
+      "path": "tables/assets/table_7-2_china_money_supply_2020q1.png",
+      "source_pdf_page": 216,
+      "printed_page": 210,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "62307d9cc7f245e989f29455b1a3af4cc675c109fd24c2fd076aa065677f0e1b",
+      "bytes": 46281,
+      "uncertain": false,
+      "table_number": "7-2",
+      "structured_table_path": "tables/table-7-2.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "表7-3 简化的货币当局资产负债表",
+      "path": "tables/assets/table_7-3_simplified_monetary_authority_balance_sheet.png",
+      "source_pdf_page": 222,
+      "printed_page": 216,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "e53ada8bc9f9d56186b31a8c587991a21c3a584eef20a2f455c077d750167254",
+      "bytes": 67991,
+      "uncertain": false,
+      "table_number": "7-3",
+      "structured_table_path": "tables/table-7-3.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "表7-4 中国人民银行2020年1~4月资产负债表",
+      "path": "tables/assets/table_7-4_pbc_balance_sheet_2020_01_04.png",
+      "source_pdf_page": 223,
+      "printed_page": 217,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "948d3dd571830b251d69a4a067791e5ac939649ad2585b6437592709d70f3bd7",
+      "bytes": 211716,
+      "uncertain": false,
+      "table_number": "7-4",
+      "structured_table_path": "tables/table-7-4.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "表8-1 中央银行资产负债简表",
+      "path": "tables/assets/table_8-1_central_bank_balance_sheet.png",
+      "source_pdf_page": 244,
+      "printed_page": 238,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "e8e4ce82dd2120518249fd2209da007680ff2472261e581130d2b6281748d3c2",
+      "bytes": 47813,
+      "uncertain": false,
+      "table_number": "8-1",
+      "structured_table_path": "tables/table-8-1.json"
+    }
+  ],
+  "structured_tables": [
+    "tables/table-7-1.json",
+    "tables/table-7-2.json",
+    "tables/table-7-3.json",
+    "tables/table-7-4.json",
+    "tables/table-8-1.json"
+  ],
+  "figures": [],
+  "source_image_assets": 5
+}
