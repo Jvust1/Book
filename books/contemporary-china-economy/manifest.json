@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "book_id": "contemporary-china-economy",
   "title": "社会主义市场经济理论（第五版）",
   "course_alias": "当代中国经济",
@@ -18,23 +18,25 @@
   "review": {
     "structured_content_complete": true,
     "structured_review_complete": false,
-    "targeted_pdf_issues_resolved": true,
+    "targeted_pdf_issues_resolved": false,
     "full_page_visual_verification": false,
     "mathematical_review_status": "NOT_APPLICABLE_OR_PENDING",
     "source_review_debt_remaining": true,
     "blocking_issue_ids": [],
-    "high_risk_issue_ids": [],
+    "high_risk_issue_ids": ["ECO-QC-OCR-0012-0015","ECO-QC-OCR-0024-0030"],
+    "medium_risk_issue_ids": ["ECO-QC-FRONTMATTER-0002-0011"],
     "resolved_issue_ids": ["ECO-QC-FULLTEXT-0231-0254","ECO-QC-OCR-0181"],
-    "remaining_review_debt_ids": ["ECO-QC-REVIEW-0001-0030","ECO-QC-REVIEW-0031-0230"],
-    "next_review_target_pdf_page": 1,
-    "review_checkpoint": "books/contemporary-china-economy/qc/full_book_structured_review_20260923.json",
-    "latest_remediation_qc": "books/contemporary-china-economy/qc/fulltext_remediation_20260923.json"
+    "remaining_review_debt_ids": ["ECO-QC-OCR-0012-0015","ECO-QC-OCR-0024-0030","ECO-QC-FRONTMATTER-0002-0011","ECO-QC-REVIEW-0031-0230"],
+    "next_review_target_pdf_page": 14,
+    "review_checkpoint": "books/contemporary-china-economy/qc/risk_review_0001_0030_20260923.json",
+    "latest_remediation_qc": "books/contemporary-china-economy/qc/fulltext_remediation_20260923.json",
+    "latest_risk_screen": "books/contemporary-china-economy/qc/risk_screen_0031_0230_20260923.json"
   },
   "whole_book_complete": false,
   "switch_to_mygpt": false,
   "latest_full_batch_archive": {"drive_file_id":"1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ","file_name":"Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip","sha256":"155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4","size_bytes":7832859,"pdf_pages":[231,255]},
-  "latest_review_archive": {"drive_file_id":"1Beq7cpUs_S1vvbKOVM8DvXQJ6M9Zjyjh","file_name":"Book-Contemporary-China-Economy-FullBook-Structured-Review-20260923.zip","sha256":"21eb70d1b68b203a23ed511e6216d8b96263d670768ace52506d38c3a5934a75","size_bytes":2051773},
+  "latest_review_archive": {"drive_file_id":"1dVIvu3nMDbLP_P_Bij9JOkVDUWoxlafF","file_name":"Book-Contemporary-China-Economy-Risk-Review-pdf001-230-20260923.zip","sha256":"3c53164b5fcaf5815f47d08c6e88ac3a375395ec808abf4a93ed4620a3bb4464","size_bytes":3724685},
   "latest_remediation_archive": {"file_name":"Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip","drive_file_id":"1P-I3jbudGQSserx3pOmD1HfJPElszwxE","sha256":"103dee2ede9ba691eb73ac7f8108c8a33ceb083ad61453c9dbd963f1214684a8","size_bytes":7023444,"folder":"Book/03_Exports","status":"ACTIVE_REMEDIATION_ARCHIVE"},
-  "next_action": "RISK_DRIVEN_REVIEW_0001_0230_EXCEPT_0181",
-  "completion_note": "PDF231–254 完整正文文字结构层和 PDF181 明显 OCR 破损已按原扫描修复，当前已知 blocking/high-risk 定点问题清零；但 PDF1–230（除 PDF181）仍有 v3 风险驱动 source-review debt，因此 structured_review_complete=false、whole_book_complete=false，暂不切换 mygpt。"
+  "next_action": "REMEDIATE_RISK_REVIEW_0014_0015_THEN_0026_0030",
+  "completion_note": "物理页首次录入已到 PDF255 末页；已知 PDF231–254 全文缺口和 PDF181 明显乱码已修复。本轮 v3 风险复核发现早期 raw OCR 仍有高风险错误：PDF12–15、PDF24–30。已对 PDF12/13/24/25 登记 28 处源扫描直核 correction，并完成 PDF31–230 自动风险筛选。全书 structured review 未闭环，暂不切换 mygpt。"
 }

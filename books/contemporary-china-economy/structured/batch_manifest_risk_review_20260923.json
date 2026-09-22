@@ -1,0 +1,12 @@
+{
+  "schema_version":"economics_review_batch_manifest_v1",
+  "book_id":"contemporary-china-economy",
+  "review_kind":"v3_risk_driven_review_plus_targeted_source_corrections",
+  "new_pdf_pages":0,
+  "review_scope_pdf_pages":[1,30],
+  "automated_screen_scope_pdf_pages":[31,230],
+  "source_verified_corrections":28,
+  "outputs":["qc/risk_review_0001_0030_20260923.json","qc/risk_review_0001_0030_20260923.md","qc/risk_screen_0031_0230_20260923.json","structured/risk_review_corrections_0001_0030_20260923.jsonl","structured/risk_review_corrections_0001_0030_20260923.md","audit/contact_001_010.jpg","audit/contact_011_020.jpg","audit/contact_021_030.jpg","source_pages/pdf_012.jpg","source_pages/pdf_013.jpg","source_pages/pdf_014.jpg","source_pages/pdf_015.jpg","source_pages/pdf_024.jpg","source_pages/pdf_025.jpg","source_pages/pdf_026.jpg","source_pages/pdf_027.jpg","source_pages/pdf_028.jpg","source_pages/pdf_029.jpg","source_pages/pdf_030.jpg"],
+  "quality":{"full_page_visual_verification":false,"structured_review_complete":false,"status":"REVIEW_IN_PROGRESS_NEW_HIGH_RISK_OCR_FINDINGS"},
+  "drive_archive":{"file_name":"Book-Contemporary-China-Economy-Risk-Review-pdf001-230-20260923.zip","drive_file_id":"1dVIvu3nMDbLP_P_Bij9JOkVDUWoxlafF","sha256":"3c53164b5fcaf5815f47d08c6e88ac3a375395ec808abf4a93ed4620a3bb4464","size_bytes":3724685,"folder":"Book/03_Exports","status":"ACTIVE_RISK_REVIEW_EVIDENCE"}
+}
