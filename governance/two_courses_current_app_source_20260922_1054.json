@@ -1,0 +1,66 @@
+{
+  "schema": "book_current_app_source_checkpoint_v1",
+  "date": "2026-09-22",
+  "generated_at": "2026-09-22T10:54:00+08:00",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "pr": 33,
+  "status": "CURRENT_APP_SOURCE_FRESHLY_REBUILT_FULL_READBACK_VERIFIED",
+  "logic_baseline": "r6-batch5",
+  "supersedes_current_pointer": "governance/two_courses_final_app_source_20260922.json",
+  "clarification": "The earlier Book-App-Final-Source-r6-batch5.zip is preserved as historical consolidated evidence. This CURRENT package is a fresh repackage of the same latest app/code/data logic plus current handoff metadata and fresh validation evidence; no newer business-code or course-data changes existed after Batch5.",
+  "artifacts": [
+    {
+      "file_name": "Book-App-Source-CURRENT-r6-20260922.zip",
+      "drive_file_id": "1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R",
+      "bytes": 70348611,
+      "sha256": "c376dd1314838a49682d56f94c6c22a20868358609f4d7c4058a80ce37be5dee",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-Source-CURRENT-r6-20260922.manifest.json",
+      "drive_file_id": "1t7w8CQfxmP4JzEurxVNpTozFfW2Q3FjA",
+      "bytes": 1135,
+      "sha256": "9bdd90e6fe9402c8f79c649704297237ffb8ab79e47f39b6f05bf4729d5b65ba",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "package": {
+    "zip_entries": 1555,
+    "internal_manifest_entries": 1554,
+    "internal_manifest_hash_errors": 0,
+    "includes_current_handoff": true,
+    "includes_fresh_validation_logs": true,
+    "recovery": "Extract this CURRENT ZIP directly. No Batch delta chain required."
+  },
+  "fresh_validation": {
+    "pytest_tests": 349,
+    "pytest_app_tests": 111,
+    "pytest_tests_reader": 130,
+    "pytest_total": 590,
+    "subtests_total": 239,
+    "integrity": "PASS",
+    "fa_source_entry_identity": "PASS",
+    "chromium_checks": 20,
+    "chromium_status": "PASS",
+    "android_gradle": "BLOCKED_BEFORE_COMPILATION_BY_DNS",
+    "android_gradle_detail": "Gradle wrapper could not resolve services.gradle.org; no compiler task was reached."
+  },
+  "boundaries": [
+    "Independent whole-book mathematical acceptance remains incomplete.",
+    "PDE complete worked solutions remain incomplete.",
+    "Android ARM64 physical-device and native ShuSong/font-size persistence acceptance remain open.",
+    "This is source, not an APK release."
+  ],
+  "github": {
+    "parent_sha": "909bd70b70f76499d7a55ac9a863ccfbdcd81aad",
+    "main_writes": 0,
+    "pr_merges": 0,
+    "deletions": 0
+  },
+  "sync": {
+    "drive_new_objects": 2,
+    "drive_in_place_updates": 0,
+    "historical_previous_final_source_preserved": true
+  }
+}

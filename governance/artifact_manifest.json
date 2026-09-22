@@ -415,6 +415,36 @@
       "purpose": "External identity and verification manifest for the consolidated final App source ZIP.",
       "status": "active",
       "verification": "Drive raw bytes read back and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_app_source_current_r6_2026_09_22",
+      "file_name": "Book-App-Source-CURRENT-r6-20260922.zip",
+      "type": "generated_current_source_snapshot",
+      "drive_file_id": "1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Source-CURRENT-r6-20260922.zip",
+      "size_bytes": 70348611,
+      "sha256": "c376dd1314838a49682d56f94c6c22a20868358609f4d7c4058a80ce37be5dee",
+      "version": "r6-current-20260922-1054",
+      "source": "fresh_repackage_of_latest_consolidated_r6_batch5_source",
+      "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+      "purpose": "Freshly rebuilt CURRENT source package from the latest consolidated r6 Batch5 app source, with current handoff metadata and fresh validation logs. App code/course-data logic remains Batch5; package metadata/validation evidence are current.",
+      "status": "active_current_app_source",
+      "verification": "Full Google Drive bytes materialized back; size/SHA-256 matched local. ZIP CRC PASS; 1555 ZIP entries; internal current source manifest self-excludes and verifies 1554/1554 files. Fresh rerun: 590 pytest +239 subtests PASS, integrity PASS, FA source identity PASS, 20 Chromium checks PASS. Android Gradle wrapper blocked before compilation by DNS resolution failure for services.gradle.org."
+    },
+    {
+      "artifact_id": "book_app_source_current_r6_manifest_2026_09_22",
+      "file_name": "Book-App-Source-CURRENT-r6-20260922.manifest.json",
+      "type": "generated_manifest",
+      "drive_file_id": "1t7w8CQfxmP4JzEurxVNpTozFfW2Q3FjA",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Source-CURRENT-r6-20260922.manifest.json",
+      "size_bytes": 1135,
+      "sha256": "9bdd90e6fe9402c8f79c649704297237ffb8ab79e47f39b6f05bf4729d5b65ba",
+      "version": "r6-current-20260922-1054",
+      "source": "fresh_delivery_manifest",
+      "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+      "purpose": "External delivery manifest for the freshly rebuilt CURRENT App source package.",
+      "status": "active",
+      "verification": "Full Google Drive bytes materialized back; size/SHA-256 matched local."
     }
   ],
   "notes": [
@@ -443,8 +473,9 @@
     "Historical r6 Batch4 recovery entry: governance/two_courses_r6_batch4_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch4 delta. 68 pages source-compared, 13 first-pass, 435 unreviewed in r6, 0 independently accepted. Batch2/3 and earlier artifacts remain historical evidence; no main write or PR merge.",
     "Current review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch5 now implements this strategy; see active_two_courses_checkpoint. Historical source ledgers remain evidence, not current completion criteria.",
     "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained.",
-    "Current final App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open."
+    "Historical consolidated App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open.",
+    "Current App source: governance/two_courses_current_app_source_20260922_1054.json. Use Drive Book-App-Source-CURRENT-r6-20260922.zip. This package was freshly rebuilt at 2026-09-22 10:54 +08:00 from the latest consolidated Batch5 app source, adds current handoff metadata and freshly rerun validation, and was fully read back from Drive. App code/course-data logic remains Batch5 because no later business-content/code changes exist."
   ],
   "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
-  "active_final_app_source_checkpoint": "governance/two_courses_final_app_source_20260922.json"
+  "active_final_app_source_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json"
 }
