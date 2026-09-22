@@ -1,156 +1,28 @@
 {
-  "schema_version": "book_economics_ingestion_checkpoint_v1",
-  "checkpoint_date": "2026-09-22",
-  "repository": "Jvust2/Book",
-  "branch": "data/economics-structure-20260922",
-  "base_commit": "409d57604d5dbd128190fc2076ba9dae35c20306",
-  "requested_scope": [
-    "货币金融学",
-    "当代中国经济"
-  ],
-  "status": "IN_PROGRESS_SOURCE_AVAILABLE",
-  "request_fulfilled": false,
+  "schema_version": "economics_ingestion_current_v4",
+  "updated_at": "2026-09-22T13:48:00Z",
+  "course_alias": "当代中国经济",
+  "book": {"canonical_title":"社会主义市场经济理论（第五版）","authors":["夏永祥","张斌"],"publisher":"高等教育出版社","isbn":"978-7-04-051184-0","source_drive_file_id":"1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC","source_pdf_sha256":"a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204","pdf_page_count":255},
+  "status": "STRUCTURING_IN_PROGRESS",
   "whole_book_complete": false,
-  "monetary_finance": {
-    "status": "TEXT_STRUCTURE_DRAFT",
-    "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
-    "source_pdf_sha256": null,
-    "source_pdf_page_count": null,
-    "saved_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
-    "chapters": 14,
-    "sections": 56,
-    "subsections": 179,
-    "exercises": 89,
-    "blocks": 5564,
-    "qc_issues": 501,
-    "simple_latex_count": 19,
-    "original_figures_recovered": 0,
-    "full_page_visual_verification": false,
-    "structured_review_complete": false
+  "structured_review_complete": false,
+  "switch_to_mygpt": false,
+  "progress": {"processed_pdf_page_range":[1,80],"last_processed_pdf_page":80,"next_pdf_page":81,"printed_pages_structured_range":[1,69],"next_printed_page":70},
+  "latest_batch": {
+    "pdf_pages":[31,80],"printed_pages":[20,69],"new_pdf_pages":50,
+    "structured_markdown":"DRIVE_ARCHIVE:structured/structured_pages_0031_0080.md",
+    "batch_manifest":"books/contemporary-china-economy/structured/batch_manifest_0031_0080.json",
+    "blocks_jsonl":"DRIVE_ARCHIVE:blocks/blocks_0031_0080.jsonl",
+    "page_map":"books/contemporary-china-economy/source/pdf_page_map_compact_0031_0080.jsonl",
+    "qc":"books/contemporary-china-economy/qc/batch_0031_0080.json",
+    "qc_report":"books/contemporary-china-economy/qc/extraction_report_0031_0080.md",
+    "verified_sparse":"books/contemporary-china-economy/structured/verified_sparse_0031_0080.md",
+    "asset_counts":{"figures":0,"tables":0,"display_equations":0},
+    "quality_status":"PASS_WITH_SOURCE_REVIEW_DEBT","full_page_visual_verification":false
   },
-  "contemporary_china_economy": {
-    "status": "STRUCTURING_IN_PROGRESS",
-    "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
-    "source_file_name": "当代中国经济（也叫社会主义市场经济理论）.pdf",
-    "canonical_book_title": "社会主义市场经济理论（第五版）",
-    "edition": "第五版",
-    "publisher": "高等教育出版社",
-    "isbn": "978-7-04-051184-0",
-    "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
-    "source_pdf_page_count": 255,
-    "generator_claimed_scanned_pages": 254,
-    "embedded_source_filename_claim": "社会主义市场经济理论 第5版_14599815.zip",
-    "visual_identity_confirmed": true,
-    "identity_verified_from_pdf_pages": [
-      1,
-      3,
-      4
-    ],
-    "processed_pdf_page_range": [
-      1,
-      30
-    ],
-    "last_processed_pdf_page": 30,
-    "next_pdf_page": 31,
-    "printed_pages_structured_range": [
-      1,
-      19
-    ],
-    "body_pdf_pages_structured": [
-      12,
-      30
-    ],
-    "chapter_1_status": "IN_PROGRESS",
-    "structured_page_records": 30,
-    "formula_records": 1,
-    "figure_records": 4,
-    "table_records": 0,
-    "latest_structured_batch_path": "books/contemporary-china-economy/structured/structured_pages_0024_0030.md",
-    "latest_structured_batch_sha256": "b814d3f3ecb5e7db601a030ca355c57cfced8feda4636c134b99a61f422695a0",
-    "latest_batch_manifest_path": "books/contemporary-china-economy/structured/batch_manifest_0024_0030.json",
-    "latest_batch_manifest_sha256": "9b3bf4f490d890fb9d53a4b296e8e9dfef3a40c1d773d711e2366345827974f6",
-    "prior_structured_batches": [
-      "books/contemporary-china-economy/structured/structured_pages_0001_0015.md",
-      "books/contemporary-china-economy/structured/structured_pages_0016_0023.md"
-    ],
-    "dense_text_source_review_pending_pdf_pages": [
-      24,
-      30
-    ]
-  },
-  "blockers": [
-    {
-      "id": "SOURCE_BYTES_UNAVAILABLE",
-      "status": "RESOLVED",
-      "evidence": "Connected Google Drive raw-file fetch succeeded; local source size 54,999,067 bytes and SHA-256 a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204."
-    },
-    {
-      "id": "SECOND_BOOK_IDENTITY_UNVERIFIED",
-      "status": "RESOLVED",
-      "evidence": "PDF cover/title/CIP pages visually confirm 社会主义市场经济理论（第五版）, 高等教育出版社, ISBN 978-7-04-051184-0; 当代中国经济 is treated as the course alias."
-    },
-    {
-      "id": "SCALABLE_OCR_BATCH_TIMEOUT",
-      "status": "MITIGATED_NON_BLOCKING",
-      "evidence": "Work is split into bounded continuation batches. The latest batch processed PDF 24-30 consecutively after reconciling a concurrent checkpoint that had already advanced to PDF 23."
-    }
-  ],
-  "validation": {
-    "draft_internal_consistency": "PASS",
-    "whole_book_content": "INCOMPLETE",
-    "source_pdf_visual_checks": "PARTIAL: identity pages 1/3/4; continuous body progress through PDF 30; latest PDF 24-30 page-layout/title spotcheck 7/7 PASS",
-    "latest_incremental_batch": "PASS_WITH_SOURCE_REVIEW_DEBT",
-    "coverage_continuity": "PASS: canonical ranges 1-15, 16-23, 24-30; no overlap in GitHub batch files",
-    "next_page_boundary": "PASS: 31"
-  },
-  "next_action": "Continue from PDF page 31 (printed page 20), preserving the PDF-to-printed-page mapping. Structure the next consecutive pages, verify formulas/figures/tables against rendered source pages, and progressively clear dense-text source-review debt. Do not switch to mygpt until the whole textbook is complete and accepted.",
-  "app_runtime_imported": false,
-  "prior_draft_artifact": {
-    "artifact_id": "book_economics_structured_draft_20260922",
-    "drive_file_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
-    "sha256": "965b47e39ec0727fafa9090e9663c9bd8aef292f70d9671566834ee4adeeae36",
-    "status": "active_incomplete_draft_preserved"
-  },
-  "prior_drive_work_evidence": {
-    "drive_file_id": "1FMGq-1TDAhKcrPiZn7RmzafuJGf5l9w4",
-    "file_name": "Book-Contemporary-China-Economy-Batch001-p001-p012-20260922.zip",
-    "sha256": "f138603720d644381ed88a1cdd71c84a9a0f0523303b2afee16a87b02fba5ca1",
-    "classification": "PRESERVED_WORK_EVIDENCE_OVERLAPS_PRIOR_PAGES_1_4",
-    "status": "PRESERVED_NOT_OVERWRITTEN"
-  },
-  "latest_incremental_batch": {
-    "scope": "当代中国经济 / 社会主义市场经济理论（第五版）",
-    "pdf_pages": [
-      24,
-      30
-    ],
-    "printed_pages": [
-      13,
-      19
-    ],
-    "next_pdf_page": 31,
-    "github_outputs": [
-      "books/contemporary-china-economy/structured/structured_pages_0024_0030.md",
-      "books/contemporary-china-economy/structured/batch_manifest_0024_0030.json"
-    ],
-    "drive_new_objects": 0,
-    "drive_note": "No duplicate Drive artifact was created. The original PDF and prior work-evidence ZIP are reused/preserved."
-  },
-  "sync_counts": {
-    "scope": "PDF 24-30 continuation after concurrency reconciliation",
-    "NEW": 2,
-    "CHANGED": 2,
-    "SKIP_IDENTICAL": 0,
-    "HISTORICAL_DUPLICATE_PRESERVED": 2,
-    "CONFLICT_NEEDS_REVIEW": 0,
-    "github_commits_created": 1,
-    "github_new_files": 2,
-    "github_changed_files": 2,
-    "drive_files_created": 0,
-    "drive_files_updated_in_place": 0,
-    "direct_main_writes": 0,
-    "pr_merges": 0,
-    "destructive_operations": 0,
-    "note": "One logical Git data commit is planned: two new batch files plus two economics-current state updates. Existing Drive objects are reused."
-  }
+  "prior_batches":[[1,15],[16,23],[24,30]],
+  "drive_archive":{"file_name":"Book-Contemporary-China-Economy-Verified-pdf031-080-20260922.zip","drive_file_id":"146KIqFeOmzjt3nGmOakRlcVqjrwLvDNr","sha256":"37777a22d225a5aa51f26c0124e9ac867a934a4cc45850085af0b4bd1e4ebaa3","folder":"Book/03_Exports","status":"ACTIVE_BATCH_ARCHIVE"},
+  "historical_artifacts_preserved":[{"file_name":"Book-Economics-Structured-DRAFT-20260922.zip","drive_file_id":"1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX","status":"HISTORICAL_CHECKPOINT"},{"file_name":"Book-Contemporary-China-Economy-Batch001-p001-p012-20260922.zip","drive_file_id":"1FMGq-1TDAhKcrPiZn7RmzafuJGf5l9w4","status":"HISTORICAL_WORK_EVIDENCE"}],
+  "quality_boundaries":{"continuous_source_read":true,"visual_layout_checked_pages":50,"direct_scan_sparse_pages_verified":[31,53,74],"dense_text_source_review_debt":true,"full_page_visual_verification":false,"note":"扫描型 PDF 无可靠文本层；稠密正文采用 OCR 辅助，不静默猜测，后续可做定点字符复核。"},
+  "next_action":"从 PDF 81 / 印刷页 70 连续处理下一批 50 个新物理页；仅全书结构化、QC、状态记录完成后切换 mygpt。"
 }

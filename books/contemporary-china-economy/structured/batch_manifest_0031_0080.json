@@ -1,0 +1,17 @@
+{
+  "schema_version": "book_batch_manifest_v2",
+  "book_id": "contemporary-china-economy",
+  "canonical_title": "社会主义市场经济理论（第五版）",
+  "course_alias": "当代中国经济",
+  "source_type": "scanned_pdf",
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "source_pdf_page_count": 255,
+  "batch": {"pdf_pages": [31,80], "printed_pages": [20,69], "new_pages": 50, "next_pdf_page": 81, "next_printed_page": 70},
+  "content_format": {"text": "markdown+jsonl", "math": "latex_when_present", "figures": "original_image_when_present", "tables": "structured+original_when_needed"},
+  "outputs": ["structured/structured_pages_0031_0080.md", "blocks/blocks_0031_0080.jsonl", "source/pdf_page_map_compact_0031_0080.jsonl", "qc/batch_0031_0080.json", "qc/extraction_report_0031_0080.md"],
+  "asset_counts": {"figures": 0, "tables": 0, "display_equations": 0, "semantic_blocks": 511},
+  "quality": {"continuous_coverage": true, "visual_layout_checked_pages": 50, "full_page_visual_verification": false, "status": "PASS_WITH_SOURCE_REVIEW_DEBT"},
+  "content_origin": "source",
+  "storage_split": {"github": "compact verified content + QC + page map + state", "drive": "full batch Markdown + full blocks JSONL + audit contact sheets", "drive_file_id": "146KIqFeOmzjt3nGmOakRlcVqjrwLvDNr", "drive_file_name": "Book-Contemporary-China-Economy-Verified-pdf031-080-20260922.zip", "drive_sha256": "37777a22d225a5aa51f26c0124e9ac867a934a4cc45850085af0b4bd1e4ebaa3"}
+}

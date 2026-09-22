@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "book_id": "contemporary-china-economy",
+  "title": "社会主义市场经济理论（第五版）",
+  "course_alias": "当代中国经济",
+  "edition": "第五版",
+  "authors": ["夏永祥", "张斌"],
+  "publisher": "高等教育出版社",
+  "isbn": "978-7-04-051184-0",
+  "language": "zh-CN",
+  "source_type": "scanned_pdf",
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "pdf_page_count": 255,
+  "printed_page_offset": -11,
+  "content_format": {"text": "markdown+jsonl", "math": "latex", "figures": "original_image", "tables": "structured+original_when_needed"},
+  "coverage": {"processed_pdf_pages": [1,80], "last_processed_pdf_page": 80, "next_pdf_page": 81, "printed_pages_structured": [1,69]},
+  "review": {"structured_review_complete": false, "targeted_pdf_issues_resolved": false, "full_page_visual_verification": false, "mathematical_review_status": "NOT_APPLICABLE_OR_PENDING"},
+  "whole_book_complete": false,
+  "latest_full_batch_archive": {"drive_file_id": "146KIqFeOmzjt3nGmOakRlcVqjrwLvDNr", "file_name": "Book-Contemporary-China-Economy-Verified-pdf031-080-20260922.zip", "sha256": "37777a22d225a5aa51f26c0124e9ac867a934a4cc45850085af0b4bd1e4ebaa3", "pdf_pages": [31,80]}
+}
