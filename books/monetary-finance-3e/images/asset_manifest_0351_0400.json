@@ -1,0 +1,14 @@
+{
+  "schema_version": "book_asset_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf351-400-20260923",
+  "assets": [
+    {"asset_id":"fig_13-1","kind":"figure","caption":"图13-1 菲利普斯曲线","source_pdf_pages":[355],"printed_pages":[349],"path":"images/ch13/fig_13-1_phillips_curve.png","sha256":"5c5aa28042d6c0ad5f5e25a888e588af751d281117a3008ef301af0a689330fe","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"},
+    {"asset_id":"fig_13-2","kind":"figure","caption":"图13-2 菲利普斯曲线与政策应用","source_pdf_pages":[355],"printed_pages":[349],"path":"images/ch13/fig_13-2_phillips_policy_application.png","sha256":"9f65756d80088120b2a363a48bd1dd015e9dd9814def01f46fb6adf205cfc4f4","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"},
+    {"asset_id":"fig_13-3","kind":"figure","caption":"图13-3 短期与长期菲利普斯曲线","source_pdf_pages":[356],"printed_pages":[350],"path":"images/ch13/fig_13-3_short_long_phillips_curves.png","sha256":"8a1327aa733a2b19480f67d0845decd17a5ff81a50eee3c27ff9475c14e77b08","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"},
+    {"asset_id":"fig_13-4","kind":"figure","caption":"图13-4 货币政策最终目标的作用过程","source_pdf_pages":[364],"printed_pages":[358],"path":"images/ch13/fig_13-4_policy_target_process.png","sha256":"c8a8caac79581fd924b8971ca43238deb38029ac987cdc665810fa87e620cbe5","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"},
+    {"asset_id":"table_13-1_p363","kind":"table_crop","caption":"表13-1首段","source_pdf_pages":[369],"printed_pages":[363],"path":"tables/assets/table_13-1_reserve_ratio_p363.png","sha256":"aa8262975c10d261ffc171e033ee9a00b2159ad8a736414ea3f64be50330987e","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"},
+    {"asset_id":"table_13-1_p364","kind":"table_crop","caption":"表13-1续表","source_pdf_pages":[370],"printed_pages":[364],"path":"tables/assets/table_13-1_reserve_ratio_p364.png","sha256":"c5451fb7b509b05ca17dfc0fba772486b3826995d568113c9a5ef3017ba9c42a","content_origin":"source","extraction":"original_pdf_render_crop","verification_status":"source_visual_confirmed"}
+  ],
+  "counts":{"figures":4,"table_crops":2,"source_image_assets":6}
+}
