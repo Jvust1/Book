@@ -1,32 +1,36 @@
 # Book：《货币金融学（第三版）》结构化当前状态
 
-- 累计连续处理：**PDF 1–200，共 200 页**；本轮新增 **PDF 151–200，共 50 个新 PDF 页**。
-- 正文映射：累计印刷页 **1–194**；下一页为 **PDF 201 / 印刷页 195**。
+- 累计连续处理：**PDF 1–250，共 250 页**；本轮新增 **PDF 201–250，共 50 个新 PDF 页**。
+- 正文映射：累计印刷页 **1–244**；下一页为 **PDF 251 / 印刷页 245**。
 - 源 PDF：430 页，SHA-256 `3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73`。
-- 本轮 50/50 页完成连续来源读取、结构/版式基础检查；Drive 累计归档已存在并复核。
-- 本轮恢复：图6-1；专栏6-1跨页营业收入结构表；表6-1；A/B银行 T 形账户序列。
-- 本轮公式：Drive 冻结包含 **28 条** source-visual-confirmed LaTeX overlay；20 个 formula-candidate 已完成视觉归类。
-- 本轮开放 QC：Drive 包记录 2 个新增疑似教材原印错误；最终高分辨率复核又新增 PDF191/印刷185 货币乘数公式疑点，GitHub 以 post-archive audit 追加记录。连同上一批 PDF125/印刷119，当前已知 OPEN source-typo 疑点共 **4** 个。
-- 跨批语义：PDF150→151、PDF200→201 的连续段落已在 GitHub 追加审计记录；PDF201只用于边界确认，不计入本轮50页。
+- 本轮 50/50 页完成连续来源读取与页面级结构/版式检查；PDF 251 仅作为 PDF250 跨批语义边界证据，不计入本轮 50 页。
+- 本轮表格：**5 张**，均从原 PDF 裁切原图并完成结构化来源复核；表7-2 将连接器初稿误写的 `货币 M` 依据原扫描修正为 `货币 M1`。
+- 本轮公式：**40 条** source-visual-confirmed LaTeX overlay；**106 个 formula-candidate** 已完成页面级视觉归类。
+- 本轮新增教材原印数学疑点：**0**；此前 **4 个 OPEN source-typo / math QC** 继续保留，不在 source 层静默改写。
+- 跨批语义：PDF200→201、PDF250→251 两处边界均已确认。
 
 ## 章节覆盖
 
-- 第5章：印刷页145–156（PDF151–162）补完本章来源页覆盖。
-- 第6章：印刷页157–194（PDF163–200）推进至 6.4.2。
+- 第6章：印刷页195–198（PDF201–204），补完本章来源页覆盖。
+- 第7章：印刷页199–221（PDF205–227），整章来源页覆盖完成。
+- 第8章：印刷页222–244（PDF228–250），推进至 8.2.4。
 
 ## 完成度边界
 
-全书仍未完成：`whole_book_complete=false`、`structured_review_complete=false`、`switch_to_invest=false`。本轮 `full_page_visual_verification=false`，因为完成的是逐页来源读取 + 版式/高风险对象基础校读，不冒充逐字符视觉验收。
+全书仍未完成：`whole_book_complete=false`、`structured_review_complete=false`、`switch_to_invest=false`。本轮 `targeted_pdf_issues_resolved_for_batch=true`，但此前 4 个 OPEN source-typo/math QC 仍保留；`full_page_visual_verification=false`，因为本轮是连续来源读取 + 全页版式检查 + 高风险公式/表格视觉核对，不冒充逐字符人工视觉验收。
 
 ## 下一步
 
-从 **PDF 201 / 印刷页 195** 连续处理下一批 **50 个新 PDF 页**。
+从 **PDF 251 / 印刷页 245** 连续处理下一批 **50 个新 PDF 页**。
 
 ## Drive 归档
 
-- `Book-Monetary-Finance-Verified-pdf001-200-20260922.zip`
-- Drive ID：`1nNSAbDorEAHXUgT8H0wJFOdkp8qBr-k1`
-- SHA-256：`975137b5e07eb7279912123df9e3e33a4d39ad437f6510e815bb2a4da8a8f015`
-- 大小：`7451154` bytes
+权威累计归档：
+
+- `Book-Monetary-Finance-Verified-pdf001-250-20260923-r2.zip`
+- Drive ID：`1IKVNzcgMJVFVgSuFAxp50kUN4ILddBC4`
+- SHA-256：`d644b704a177ad93d42433f7b9c731113f1c746d936ffc5642c455c8e4e516b9`
+- 大小：`8047015` bytes
 - 位置：`Book/03_Exports`
-- 归档在本轮 GitHub 落盘前已由并发执行路径写入；本轮检测到同名既有文件后**未重复上传、未覆盖**，而是复核其页范围和内容并复用。
+
+本轮第一次上传的 `Book-Monetary-Finance-Verified-pdf001-250-20260923.zip`（Drive ID `1y89InIzynXkDIwSYr7hlH6hnAq8rBuRx`）的数据批次已包含 PDF201–250，但根 `manifest.json` 仍残留 `source_pdf_pages=1–200` / `pdf_source_layout_status=...0200`。为避免破坏性覆盖，该对象保留并标记为 **SUPERSEDED**；修正后的 `r2` 为本轮权威归档。
