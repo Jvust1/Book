@@ -385,6 +385,36 @@
       "purpose": "external_delivery_manifest",
       "status": "active_candidate_not_independently_accepted",
       "verification": "Full remote bytes read back; size and SHA-256 matched. Structural checks are not whole-book mathematical acceptance."
+    },
+    {
+      "artifact_id": "book_app_final_source_r6_batch5_2026_09_22",
+      "file_name": "Book-App-Final-Source-r6-batch5.zip",
+      "type": "generated_final_source_candidate",
+      "drive_file_id": "1ZJh4lPEvIO-AgBEAou2VODUg99FHVzxK",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Final-Source-r6-batch5.zip",
+      "size_bytes": 70022111,
+      "sha256": "707ca7eea943db83e49f88eb391cca23c70b5f45fe9f089f7d60cd2591dc96ba",
+      "version": "r6-batch5-final-source",
+      "source": "assistant_generated_consolidated_source",
+      "related_checkpoint": "governance/two_courses_final_app_source_20260922.json",
+      "purpose": "Single self-contained final App source candidate merging first-r6 base and Batch5 cumulative delta. Includes Android, web, desktop, FastAPI/Python runtime, current two-course data, tests and verification evidence; no delta application required.",
+      "status": "active_final_source_candidate_content_review_open",
+      "verification": "Full Drive bytes read back; local SHA-256 matched. ZIP has 1540 entries; internal final source manifest lists 1539 self-excluding files and all 1539 hashes matched. Current source tree rerun: 590 pytest passed + 239 subtests; integrity PASS; FA source-entry identity PASS. Android build was not rerun because Gradle distribution download was DNS-blocked in this cloud environment."
+    },
+    {
+      "artifact_id": "book_app_final_source_r6_batch5_manifest_2026_09_22",
+      "file_name": "Book-App-Final-Source-r6-batch5.manifest.json",
+      "type": "generated_manifest",
+      "drive_file_id": "1sGpVG0eUvJpfJnfs1n7rah-gCIcJdI13",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Final-Source-r6-batch5.manifest.json",
+      "size_bytes": 1085,
+      "sha256": "6133e29cb1498c64aff10ceba3d7c01b560463f844bc66d0ab9f8a843082c9da",
+      "version": "r6-batch5-final-source",
+      "source": "assistant_generated",
+      "related_checkpoint": "governance/two_courses_final_app_source_20260922.json",
+      "purpose": "External identity and verification manifest for the consolidated final App source ZIP.",
+      "status": "active",
+      "verification": "Drive raw bytes read back and SHA-256 matched."
     }
   ],
   "notes": [
@@ -412,7 +442,9 @@
     "Historical r6 Batch3 recovery entry: governance/two_courses_r6_batch3_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch3 delta. 44 pages source-compared, 13 first-pass, 459 unreviewed in r6, 0 independently accepted. Batch2 and earlier artifacts remain historical evidence; no main write or PR merge.",
     "Historical r6 Batch4 recovery entry: governance/two_courses_r6_batch4_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch4 delta. 68 pages source-compared, 13 first-pass, 435 unreviewed in r6, 0 independently accepted. Batch2/3 and earlier artifacts remain historical evidence; no main write or PR merge.",
     "Current review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch5 now implements this strategy; see active_two_courses_checkpoint. Historical source ledgers remain evidence, not current completion criteria.",
-    "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained."
+    "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained.",
+    "Current final App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open."
   ],
-  "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json"
+  "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+  "active_final_app_source_checkpoint": "governance/two_courses_final_app_source_20260922.json"
 }

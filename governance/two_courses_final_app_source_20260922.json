@@ -1,0 +1,69 @@
+{
+  "schema": "book_final_app_source_checkpoint_v1",
+  "date": "2026-09-22",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "pr": 33,
+  "status": "FINAL_APP_SOURCE_ARCHIVED_READBACK_VERIFIED_CONTENT_REVIEW_OPEN",
+  "source_status": "COMPLETE_CONSOLIDATED_SOURCE_CANDIDATE",
+  "content_status": "INCOMPLETE_MATH_REVIEW",
+  "parent_content_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+  "artifacts": [
+    {
+      "file_name": "Book-App-Final-Source-r6-batch5.zip",
+      "drive_file_id": "1ZJh4lPEvIO-AgBEAou2VODUg99FHVzxK",
+      "bytes": 70022111,
+      "sha256": "707ca7eea943db83e49f88eb391cca23c70b5f45fe9f089f7d60cd2591dc96ba",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-Final-Source-r6-batch5.manifest.json",
+      "drive_file_id": "1sGpVG0eUvJpfJnfs1n7rah-gCIcJdI13",
+      "bytes": 1085,
+      "sha256": "6133e29cb1498c64aff10ceba3d7c01b560463f844bc66d0ab9f8a843082c9da",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "package": {
+    "zip_entries": 1540,
+    "internal_manifest_entries": 1539,
+    "internal_manifest_hash_errors": 0,
+    "recovery": "Extract this ZIP directly; no Batch2/3/4/5 delta application is required.",
+    "includes": [
+      "android-app",
+      "web frontend",
+      "FastAPI/Python runtime",
+      "desktop source",
+      "two-course current coursepacks",
+      "reader assets",
+      "tests",
+      "verification evidence",
+      "final source manifest"
+    ]
+  },
+  "current_rerun_validation": {
+    "python_tests_passed": 590,
+    "python_subtests_passed": 239,
+    "python_warnings": 4,
+    "integrity": "PASS",
+    "fa_source_entry_identity": "PASS",
+    "source_manifest_hash_check": "1539/1539 PASS",
+    "frontend_dependency_install": "NOT_RERUN: npm registry access unavailable/interrupted in current cloud environment; preserved Batch5 Chromium evidence remains in package",
+    "android_gradle_build": "NOT_RERUN: services.gradle.org DNS unavailable in current cloud environment; no compile failure observed",
+    "previous_batch5_chromium_checks": 20
+  },
+  "boundaries": [
+    "Not independent whole-book mathematical acceptance.",
+    "PDE complete worked solutions remain incomplete.",
+    "Android ARM64 physical-device and native ShuSong/font-size persistence acceptance remain open.",
+    "No APK release claim."
+  ],
+  "sync": {
+    "main_writes": 0,
+    "pr_merges": 0,
+    "deletions": 0,
+    "drive_new_objects_this_finalization": 0,
+    "drive_existing_final_source_objects_reused": 2
+  },
+  "next_step": "Use this consolidated source as the handoff source tree. Future content corrections should remain layered and additive; Android/device release work should occur on a non-default implementation branch and requires separate verification."
+}
