@@ -1,0 +1,100 @@
+{
+  "schema_version": "book_economics_ingestion_checkpoint_v1",
+  "checkpoint_date": "2026-09-22",
+  "repository": "Jvust2/Book",
+  "branch": "data/economics-structure-20260922",
+  "base_commit": "409d57604d5dbd128190fc2076ba9dae35c20306",
+  "requested_scope": [
+    "货币金融学",
+    "当代中国经济"
+  ],
+  "status": "PARTIAL_SOURCE_ACCESS_BLOCKED",
+  "request_fulfilled": false,
+  "whole_book_complete": false,
+  "monetary_finance": {
+    "status": "TEXT_STRUCTURE_DRAFT",
+    "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+    "source_pdf_sha256": null,
+    "source_pdf_page_count": null,
+    "saved_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
+    "chapters": 14,
+    "sections": 56,
+    "subsections": 179,
+    "exercises": 89,
+    "blocks": 5564,
+    "qc_issues": 501,
+    "simple_latex_count": 19,
+    "original_figures_recovered": 0,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false
+  },
+  "contemporary_china_economy": {
+    "status": "BLOCKED_SOURCE_BYTES_AND_IDENTITY",
+    "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "source_pdf_sha256": null,
+    "source_pdf_page_count": null,
+    "extracted_textbook_body_blocks": 0,
+    "embedded_source_filename_claim": "社会主义市场经济理论 第5版_14599815.zip",
+    "visual_identity_confirmed": false
+  },
+  "blockers": [
+    {
+      "id": "SOURCE_BYTES_UNAVAILABLE",
+      "status": "OPEN",
+      "evidence": "Both original-PDF download paths, including official transfer helper, returned HTTP 403."
+    },
+    {
+      "id": "SECOND_BOOK_IDENTITY_UNVERIFIED",
+      "status": "OPEN",
+      "evidence": "Drive name and internal original filename differ; no source page image available."
+    }
+  ],
+  "validation": {
+    "draft_internal_consistency": "PASS",
+    "latex_render": "19/19 PASS; syntax only",
+    "whole_book_content": "INCOMPLETE",
+    "source_pdf_visual_checks": "NOT_PERFORMED"
+  },
+  "next_action": "Obtain readable original PDFs, confirm second book identity, then complete continuous source-page ingestion and resolve missing formulas, images, tables, appendix and page provenance. Direct conversation attachments can replace the failing transfer route.",
+  "app_runtime_imported": false,
+  "sync_artifact": {
+    "artifact_id": "book_economics_structured_draft_20260922",
+    "file_name": "Book-Economics-Structured-DRAFT-20260922.zip",
+    "type": "generated_structured_source_draft",
+    "drive_file_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
+    "drive_path": "Book/03_Exports/Book-Economics-Structured-DRAFT-20260922.zip",
+    "drive_url": "https://drive.google.com/file/d/1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX/view?usp=drivesdk",
+    "size_bytes": 5147711,
+    "sha256": "965b47e39ec0727fafa9090e9663c9bd8aef292f70d9671566834ee4adeeae36",
+    "version": "draft-20260922",
+    "source": "connector_readable_text_and_source_metadata",
+    "related_checkpoint": "governance/economics_ingestion_current.json",
+    "purpose": "货币金融学14章可追溯文本结构化初稿，以及当代中国经济来源身份/访问阻塞；不是完整教材成果或App课程接入。",
+    "status": "active_incomplete_draft",
+    "library_convenience_copy_id": "libfile_afefb11604dc81918d9abe7c8ad431bf",
+    "verification": "ZIP CRC and all internal hashes PASS; 60 parser output files reproducible; original PDF bytes unavailable; all content completion gates remain false.",
+    "remote_verification": {
+      "metadata_name_size_parent": "PASS",
+      "remote_content_sha256_verified": false,
+      "reason": "Drive metadata wrapper did not return checksum fields; local ZIP and all members were verified before upload."
+    }
+  },
+  "sync_counts": {
+    "scope": "GitHub files plus Drive objects; Library convenience copy reported separately",
+    "NEW": 6,
+    "CHANGED": 3,
+    "SKIP_IDENTICAL": 0,
+    "HISTORICAL_DUPLICATE_PRESERVED": 0,
+    "CONFLICT_NEEDS_REVIEW": 0,
+    "github_commits_created": 1,
+    "github_new_files": 5,
+    "github_changed_files": 3,
+    "drive_files_created": 1,
+    "drive_files_updated_in_place": 0,
+    "library_convenience_copies_created": 1,
+    "direct_main_writes": 0,
+    "pr_merges": 0,
+    "destructive_operations": 0,
+    "note": "The exact resulting commit and PR are recorded in the PR receipt, avoiding self-referential commit hashes. The second textbook identity issue is a content blocker, not a synchronization conflict."
+  }
+}

@@ -1,3 +1,5 @@
+> 2026-09-22 经济类教材独立进度：见 [ECONOMICS_INGESTION_CURRENT.md](ECONOMICS_INGESTION_CURRENT.md) 与 `governance/economics_ingestion_current.json`。货币金融学14章56节文本初稿已归档；当代中国经济原件读取/教材身份阻塞，两书均未完成全书验收。下文历史App/Phase状态保留，不将经济类教材误计入此前PDE/FA双课程。
+
 # Book 当前状态
 
 ## Android / Windows 0.1.4 手动进度同步 — 2026-09-13
@@ -277,3 +279,4 @@ Learn presentation 只放 source refs，不复制正文。`supplementary` 与 `l
 2. 先运行真实 RED（仅记录新验收缺口），再做必要的 acceptance-level 最小修复。
 3. Task 10 GREEN 后进入 Task 11 exact-head regression、canonical-diff gate 与 PR review readiness。
 4. PR #26 仍不得自动合并；只有明确的 合并 PR #26 授权才可进入后续合并门。
+

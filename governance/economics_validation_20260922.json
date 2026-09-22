@@ -1,0 +1,133 @@
+{
+  "reproducibility": {
+    "status": "PASS",
+    "scope": "same saved input and parser, clean output directory",
+    "file_count": 60,
+    "identical_file_hashes": 60,
+    "new_remote_objects_during_repeat": 0
+  },
+  "independent-source-expectations": {
+    "schema_version": "book_independent_text_expectations_v1",
+    "source_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
+    "scope": "connector readable text only, not PDF page or mathematical verification",
+    "reviewer": "independent assistant agent with source text access",
+    "expected": {
+      "chapters": 14,
+      "sections": 56,
+      "subsections": 179,
+      "exercise_groups": 14,
+      "exercises": 89,
+      "unique_numbered_figure_mentions": 17,
+      "unique_numbered_table_mentions": 9,
+      "sidebar_labels": 47,
+      "chapter_6_appendices": 2
+    },
+    "per_chapter": {
+      "sections": [
+        6,
+        3,
+        4,
+        3,
+        6,
+        4,
+        4,
+        3,
+        3,
+        3,
+        4,
+        3,
+        6,
+        4
+      ],
+      "subsections": [
+        20,
+        13,
+        11,
+        8,
+        19,
+        14,
+        11,
+        10,
+        9,
+        12,
+        8,
+        12,
+        14,
+        18
+      ],
+      "exercises": [
+        7,
+        7,
+        7,
+        4,
+        4,
+        6,
+        7,
+        6,
+        6,
+        6,
+        9,
+        7,
+        7,
+        6
+      ]
+    },
+    "known_high_risks": [
+      "printed pages 418-423 appendix body absent; compound-interest factor tables cited but missing",
+      "no original figure image can be recovered from readable text",
+      "301 private-use characters across 102 source lines; formula fractions, subscripts and limits damaged",
+      "last exercise in multiple chapters followed by supplementary prose; must not swallow supplements into exercise",
+      "decimal numbers in prose must not be misclassified as section headings",
+      "no physical PDF page boundaries; never infer PDF offsets",
+      "sidebar markers do not establish complete sidebar body boundaries"
+    ],
+    "full_page_visual_verification": false,
+    "whole_book_complete": false
+  },
+  "independent-review": {
+    "status": "PASS_FOR_DRAFT_ONLY",
+    "issues_resolved": [
+      "source_sha256_guard",
+      "chapter_level_exercise_and_supplement_scope",
+      "exclude_whitespace_from_chapter_printed_page_ranges",
+      "ambiguous_digit_concatenated_headers_marked",
+      "retain_table_source_notes_in_readable_markdown"
+    ],
+    "source_visual_review": false,
+    "whole_book_complete": false,
+    "unresolved_source_issue_count": 501
+  },
+  "final-checks": {
+    "scope": "independent reopened-file checks of draft consistency, not PDF/source/math correctness",
+    "passed": true,
+    "checks": {
+      "source_byte_identity": true,
+      "raw_span_ids_unique": true,
+      "raw_span_partition": true,
+      "raw_span_text_matches": true,
+      "every_raw_span_used_once": true,
+      "block_ids_unique": true,
+      "no_fabricated_pdf_pages": true,
+      "all_source_blocks_pending": true,
+      "chapters": true,
+      "sections": true,
+      "subsections": true,
+      "exercises": true,
+      "exercise_number_sequence": true,
+      "table_refs_exist": true,
+      "china_no_fabricated_body": true,
+      "no_completion_claims": true,
+      "chapter_level_exercises": true,
+      "chapter_level_supplements": true
+    },
+    "blocks": 5564,
+    "raw_spans": 15672,
+    "source_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939"
+  },
+  "latex-render-check": {
+    "scope": "LaTeX syntax/render smoke check only, not source transcription or mathematical correctness",
+    "equations": 19,
+    "passed": 19,
+    "failed": []
+  }
+}

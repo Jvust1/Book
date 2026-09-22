@@ -1,0 +1,234 @@
+{
+  "schema_version": "1.0",
+  "retrieved_on": "2026-09-22",
+  "task": "Book/货币金融学与当代中国经济 来源盘点",
+  "read_only_external_actions": true,
+  "source_folder": {
+    "name": "Book",
+    "id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
+    "url": "https://drive.google.com/drive/folders/1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
+    "list_method": "google_drive_list_folder",
+    "top_k": 100,
+    "scope": "direct_children_only"
+  },
+  "exports_folder": {
+    "name": "Book/03_Exports",
+    "id": "1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+    "url": "https://drive.google.com/drive/folders/1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+    "list_method": "google_drive_list_folder",
+    "top_k": 100,
+    "scope": "direct_children_only"
+  },
+  "sources": [
+    {
+      "book_alias": "货币金融学",
+      "drive_file_name": "货币金融学第三版 (张红伟) .pdf",
+      "drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+      "drive_file_url": "https://drive.google.com/file/d/1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe/view?usp=drivesdk",
+      "mime_type": "application/pdf",
+      "size_bytes": 81807312,
+      "parent_ids": [
+        "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB"
+      ],
+      "created_time": "2026-09-21T07:50:17.347Z",
+      "modified_time": "2026-09-21T07:50:17.575Z",
+      "readable_fetch": {
+        "characters_js_utf16": 527063,
+        "local_path": "monetary-finance-3e/source/connector-readable.txt",
+        "format": "plain_text_from_connector",
+        "full_book_content_verified": false,
+        "observations": [
+          "可读内容包含14章目录、封面和版权信息。",
+          "文字显示正文至印刷417页，附录页眉至423页；这不等于真实PDF页数已验证。",
+          "存在公式扁平化/乱码、图片未提取、附录仅页眉等风险。"
+        ],
+        "saved_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
+        "saved_text_bytes": 1418616,
+        "lf_normalized_unicode_chars": 512239
+      },
+      "source_identity": {
+        "claimed_title": "货币金融学",
+        "claimed_edition": "第三版",
+        "claimed_author": "张红伟",
+        "claimed_publisher": "科学出版社",
+        "claimed_publication_date": "2021-10",
+        "claimed_isbn": "978-7-03-069842-1",
+        "basis": "connector-readable text",
+        "visual_verified": false
+      },
+      "raw_pdf_local_path": null,
+      "pdf_page_count_verified": null,
+      "structured_completion_status": "not_complete"
+    },
+    {
+      "book_alias": "当代中国经济",
+      "drive_file_name": "当代中国经济.pdf",
+      "drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+      "drive_file_url": "https://drive.google.com/file/d/1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC/view?usp=drivesdk",
+      "mime_type": "application/pdf",
+      "size_bytes": 54999067,
+      "parent_ids": [
+        "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB"
+      ],
+      "created_time": "2026-09-21T07:50:16.758Z",
+      "modified_time": "2026-09-21T07:50:16.904Z",
+      "readable_fetch": {
+        "characters_js_utf16": 998,
+        "local_path": "contemporary-china-economy/source/connector-readable.txt",
+        "format": "plain_text_from_connector",
+        "full_book_content_verified": false,
+        "contains_textbook_body": false,
+        "observations": [
+          "仅返回PDF生成说明与嵌入元数据。",
+          "embedded filename_decoded 为 社会主义市场经济理论 第5版_14599815.zip，与Drive文件名不同。",
+          "说明声称total_pages=254、pdg_main_pages_found=243，但尚未检查PDF本体。"
+        ],
+        "saved_text_sha256": "601283a59067fca80bad8ac6f2b17e3ba19b5748b08a179b7ecfcbb95ca1ed73",
+        "saved_text_bytes": 980,
+        "lf_normalized_unicode_chars": 978
+      },
+      "source_identity": {
+        "visual_verified": false,
+        "conflict_open": true,
+        "drive_title": "当代中国经济",
+        "embedded_source_name": "社会主义市场经济理论 第5版_14599815.zip",
+        "metadata_json_path": "contemporary-china-economy/source/embedded-metadata.json"
+      },
+      "raw_pdf_local_path": null,
+      "pdf_page_count_verified": null,
+      "structured_completion_status": "blocked_no_textbook_body"
+    }
+  ],
+  "instructions": {
+    "drive_file_id": "1lO0z2nOoONzUIJNhA8JZy2nqhoLvuHds",
+    "drive_file_name": "Book_扫描版PDF教材结构化处理提示词.md",
+    "drive_file_url": "https://drive.google.com/file/d/1lO0z2nOoONzUIJNhA8JZy2nqhoLvuHds/view?usp=drivesdk",
+    "mime_type": "text/markdown",
+    "size_bytes": 25833,
+    "modified_time": "2026-09-22T03:22:11.854Z",
+    "version_claim": "v3, 2026-09-22",
+    "local_path": null,
+    "key_rules": [
+      "已有结构化数据先全量自审，发现疑点后定点回PDF，不默认整书机械重扫。",
+      "首次录入仍需按页读取，不跳页、不以摘要替代正文。",
+      "公式使用LaTeX，原图裁切保留，source/correction/derived分层，保留页码溯源。"
+    ]
+  },
+  "discovery_scope": {
+    "folders": [
+      {
+        "name": "Book",
+        "id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
+        "url": "https://drive.google.com/drive/folders/1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      },
+      {
+        "name": "Book/01_Textbooks",
+        "id": "1tTDc6bC0CwMqZM3ZsvtdrFMq28hbmJXK",
+        "url": "https://drive.google.com/drive/folders/1tTDc6bC0CwMqZM3ZsvtdrFMq28hbmJXK",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      },
+      {
+        "name": "Book/02_Lectures",
+        "id": "1axnJJUGGw9svviyjqzJ2iaQuAJrfbq4l",
+        "url": "https://drive.google.com/drive/folders/1axnJJUGGw9svviyjqzJ2iaQuAJrfbq4l",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      },
+      {
+        "name": "Book/03_Exports",
+        "id": "1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+        "url": "https://drive.google.com/drive/folders/1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      },
+      {
+        "name": "Book/00_Project",
+        "id": "1mJ8XzJiJeN7_4YR9W8KaZNcLBQrQDziT",
+        "url": "https://drive.google.com/drive/folders/1mJ8XzJiJeN7_4YR9W8KaZNcLBQrQDziT",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      },
+      {
+        "name": "Book/04_Backups",
+        "id": "10Ns0yHwU2yRpu2P9BSQ2SJaTVHsW_vSX",
+        "url": "https://drive.google.com/drive/folders/10Ns0yHwU2yRpu2P9BSQ2SJaTVHsW_vSX",
+        "list_method": "google_drive_list_folder",
+        "top_k": 100,
+        "scope": "direct_children_only"
+      }
+    ],
+    "queries": [
+      {
+        "query": "货币金融学",
+        "result_summary": "原始PDF与教材处理提示词"
+      },
+      {
+        "query": "当代中国经济",
+        "result_summary": "原始PDF"
+      },
+      {
+        "query": "Book",
+        "item_type": "folder",
+        "result_summary": "Book主目录及既有App导出目录"
+      },
+      {
+        "query": "Monetary",
+        "result_summary": "空结果"
+      },
+      {
+        "query": "China",
+        "result_summary": "其他项目审计材料及无关数学PDF；未命中两书结构化成果"
+      },
+      {
+        "query": "货币",
+        "result_summary": "原始PDF与教材处理提示词"
+      },
+      {
+        "query": "当代",
+        "result_summary": "原始PDF"
+      }
+    ],
+    "existing_structured_data_for_targets_found": false,
+    "limitation": "文件夹仅列直接子项，没有递归打开所有历史App包或无关数学结构化包；未找到不等于已证明任何位置均不存在。"
+  },
+  "download_attempts": {
+    "raw_fetch": {
+      "status": "succeeded_reference_only",
+      "download_raw_file": true,
+      "include_base64": false,
+      "bytes_materialized": false
+    },
+    "direct_urllib_transfer": {
+      "status": "failed",
+      "both_files": true,
+      "http_status": 403,
+      "response_summary": "Cloudflare error code: 1010"
+    },
+    "library_prepare_materialize": {
+      "status": "succeeded_transfer_only",
+      "workspace_path_returned": false
+    },
+    "official_transfer_helper": {
+      "status": "failed",
+      "both_files": true,
+      "helper": "library_file_transfer.py materialize",
+      "http_status": 403,
+      "error": "library file transfer failed: download failed with HTTP status 403"
+    },
+    "signed_urls_or_tokens_retained": false,
+    "retry_status": "stopped"
+  },
+  "required_to_complete": [
+    "取得能本地读取的完整PDF，核对实际书名/版次/页数。",
+    "核对《货币金融学》公式、表格、图像及附录等缺口，再恢复章节与页码锚点。",
+    "确认《当代中国经济.pdf》究竟是《社会主义市场经济理论》第5版还是另一本书，再处理教材正文。"
+  ]
+}
