@@ -1,1 +1,77 @@
-{"schema_version":"book-source-verified-batch-1.0","book_id":"monetary-finance-3e","title":"货币金融学","edition":"第3版","authors":["张红伟（主编）","邓奇志（副主编）"],"publisher":"科学出版社","publication_date":"2021-10","isbn":"978-7-03-069842-1","source_type":"pdf_with_readable_text_and_scan_visual","source_drive_file_id":"1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe","source_pdf_sha256":"3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73","source_pdf_bytes":81807312,"pdf_page_count":430,"verified_source_pdf_pages":[1,400],"verified_printed_pages":[1,394],"next_source_pdf_page":401,"next_printed_page":395,"status":"IN_PROGRESS","whole_book_complete":false,"base_draft_drive_artifact_id":"1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX","base_draft_text_sha256":"a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939","content_format":{"text":"markdown+jsonl","math":"latex","figures":"original_scan_crop","tables":"structured+original_when_needed"},"drive_package_files":{"markdown":"verified/verified_pages_0351_0400.md","blocks":"blocks/verified_blocks_0351_0400.jsonl","page_map":"source/pdf_page_map_0351_0400.jsonl","qc":"qc/batch_0351_0400.json","image_manifest":"images/asset_manifest_0351_0400.json","formulas":"verified/formulas_0351_0400.jsonl","formula_candidate_resolution":"qc/formula_candidate_resolution_0351_0400.jsonl","original_image_assets":6,"structured_tables":1},"repository_files":{"batch_manifest":"batches/batch_0351_0400.json","compact_page_map":"source/pdf_page_map_compact_0351_0400.jsonl","qc":"qc/batch_0351_0400.json","qc_report":"qc/extraction_report_0351_0400.md","image_manifest":"images/asset_manifest_0351_0400.json","structured_table":"tables/table-13-1.json","current_state":"../../governance/monetary_finance_ingestion_current.json"},"completion_flags":{"structured_review_complete":false,"targeted_pdf_issues_resolved_for_batch":true,"full_page_visual_verification":false,"mathematical_review_status":"batch_source_formula_review_complete_with_open_source_typos","switch_to_invest":false},"content_origin":"source","latest_verified_batch_drive_artifact":{"file_id":"1XqOxdlTRMJT2ZBkrSH-qCIbrbIUVh-RL","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-400-20260923.zip","sha256":"a24e6cfc0222bb612ee514ebf8ee56fc0fa779e3126417cbf016c66e734849ed","size_bytes":9472898},"previous_verified_batch_drive_artifact":{"file_id":"12Mu6poJUwDfg2Yvwgm2cLcsOC4TVEvV9","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-350-20260923.zip","sha256":"33895f7607014e45155fbedf8ec970b1d412ee775691f46b75a236b7b0e2b200","size_bytes":8877286},"known_open_qc_items":5}
+{
+  "schema_version": "book-source-verified-batch-1.0",
+  "book_id": "monetary-finance-3e",
+  "title": "货币金融学",
+  "edition": "第3版",
+  "authors": ["张红伟（主编）", "邓奇志（副主编）"],
+  "publisher": "科学出版社",
+  "publication_date": "2021-10",
+  "isbn": "978-7-03-069842-1",
+  "source_type": "pdf_with_readable_text_and_scan_visual",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_bytes": 81807312,
+  "pdf_page_count": 430,
+  "verified_source_pdf_pages": [1, 430],
+  "verified_printed_pages": [1, 423],
+  "next_source_pdf_page": null,
+  "next_printed_page": null,
+  "status": "COMPLETE_STRUCTURED_REVIEW",
+  "whole_book_complete": true,
+  "base_draft_drive_artifact_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
+  "base_draft_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
+  "content_format": {
+    "text": "markdown+jsonl",
+    "math": "latex",
+    "figures": "original_scan_crop",
+    "tables": "structured+original_when_needed"
+  },
+  "drive_package_files": {
+    "markdown": "verified/verified_pages_0401_0430.md",
+    "blocks": "blocks/verified_blocks_0401_0430.jsonl",
+    "page_map": "source/pdf_page_map_0401_0430.jsonl",
+    "qc": "qc/batch_0401_0430.json",
+    "image_manifest": "images/asset_manifest_0401_0430.json",
+    "formulas": "verified/formulas_0401_0430.jsonl",
+    "formula_candidate_resolution": "qc/formula_candidate_resolution_0401_0430.jsonl",
+    "original_image_assets": 7,
+    "structured_tables": 2,
+    "final_review": "qc/final_structured_review_20260923.json"
+  },
+  "repository_files": {
+    "batch_manifest": "batches/batch_0401_0430.json",
+    "compact_page_map": "source/pdf_page_map_compact_0401_0430.json",
+    "qc": "qc/batch_0401_0430.json",
+    "image_manifest": "images/asset_manifest_0401_0430.json",
+    "structured_table_index": "tables/appendix_factor_tables_manifest_0401_0429.json",
+    "final_review": "qc/final_structured_review_20260923.json",
+    "current_state": "../../governance/monetary_finance_ingestion_current.json",
+    "handoff": "../../governance/monetary_finance_to_invest_handoff.json"
+  },
+  "completion_flags": {
+    "structured_review_complete": true,
+    "targeted_pdf_issues_resolved": true,
+    "full_page_visual_verification": false,
+    "mathematical_review_status": "source_formulas_reviewed_by_batches_with_5_classified_source_print_anomalies",
+    "switch_to_invest": true
+  },
+  "content_origin": "source",
+  "latest_verified_batch_drive_artifact": {
+    "file_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-430-final-20260923-r2.zip",
+    "sha256": "1d9ecd330aaccca6875a197a662173eedcacaf80b494288e4c837e81729f55e0",
+    "size_bytes": 12701544
+  },
+  "previous_verified_batch_drive_artifact": {
+    "file_id": "1XqOxdlTRMJT2ZBkrSH-qCIbrbIUVh-RL",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-400-20260923.zip",
+    "sha256": "a24e6cfc0222bb612ee514ebf8ee56fc0fa779e3126417cbf016c66e734849ed",
+    "size_bytes": 9472898
+  },
+  "superseded_same_run_artifact": {
+    "file_id": "1V7AiiLKGdU24LOi_f8KN24MudIh7RsnI",
+    "name": "Book-Monetary-Finance-Verified-pdf001-430-final-20260923.zip",
+    "status": "SUPERSEDED"
+  },
+  "known_open_qc_items": 5
+}

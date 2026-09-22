@@ -1,0 +1,14 @@
+{
+  "schema_version": "book_pdf_page_map_compact_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf401-430-20260923",
+  "mappings": [
+    {"source_pdf_pages": [401, 423], "printed_pages": [395, 417], "chapter_id": "ch14", "content_origin": "source", "layout_checked": true},
+    {"source_pdf_pages": [424, 426], "printed_pages": [418, 420], "chapter_id": "appendix", "table_id": "appendix_A", "content_origin": "source", "layout_checked": true, "targeted_high_resolution_visual_review": true},
+    {"source_pdf_pages": [427, 429], "printed_pages": [421, 423], "chapter_id": "appendix", "table_id": "appendix_B", "content_origin": "source", "layout_checked": true, "targeted_high_resolution_visual_review": true},
+    {"source_pdf_pages": [430, 430], "printed_pages": null, "chapter_id": "backmatter", "content_kind": "back_cover", "content_origin": "source", "layout_checked": true, "targeted_high_resolution_visual_review": true}
+  ],
+  "exact_per_page_map_in_drive_archive": "source/pdf_page_map_0401_0430.jsonl",
+  "uncertain_pages": [],
+  "next_source_pdf_page": null
+}

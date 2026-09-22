@@ -1,0 +1,33 @@
+{
+  "schema_version": "book_batch_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf401-430-20260923",
+  "source_pdf_pages": {"start": 401, "end": 430, "count": 30},
+  "printed_pages": {"start": 395, "end": 423},
+  "next_source_pdf_page": null,
+  "next_printed_page": null,
+  "semantic_blocks": 320,
+  "formula_overlays": 0,
+  "formula_candidates_resolved": 0,
+  "assets": {"figures": 0, "tables": 2, "source_image_assets": 7},
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "drive_archive": {
+    "file_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb",
+    "name": "Book-Monetary-Finance-Verified-pdf001-430-final-20260923-r2.zip",
+    "sha256": "1d9ecd330aaccca6875a197a662173eedcacaf80b494288e4c837e81729f55e0"
+  },
+  "files": {
+    "verified_markdown": "verified/verified_pages_0401_0430.md",
+    "verified_blocks": "blocks/verified_blocks_0401_0430.jsonl",
+    "page_map": "source/pdf_page_map_0401_0430.jsonl",
+    "compact_page_map_repository": "source/pdf_page_map_compact_0401_0430.json",
+    "qc": "qc/batch_0401_0430.json",
+    "image_manifest": "images/asset_manifest_0401_0430.json",
+    "structured_tables": ["tables/appendix_compound_present_value_factors.json", "tables/appendix_compound_future_value_factors.json"]
+  },
+  "whole_book_source_page_coverage_complete": true,
+  "structured_review_complete": true,
+  "switch_to_invest": true,
+  "final_structured_review": "qc/final_structured_review_20260923.json"
+}

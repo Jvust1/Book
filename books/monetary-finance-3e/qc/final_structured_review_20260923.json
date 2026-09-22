@@ -1,0 +1,36 @@
+{
+  "schema_version": "monetary_finance_whole_book_structured_review_v1",
+  "reviewed_at": "2026-09-23T03:40:00+08:00",
+  "book_id": "monetary-finance-3e",
+  "source_pdf_page_count": 430,
+  "page_map_unique_pages": 430,
+  "missing_source_pdf_pages": [],
+  "duplicate_page_map_pages": [],
+  "batch_range_results": [
+    {"start": 1, "end": 50, "ok": true},
+    {"start": 51, "end": 100, "ok": true},
+    {"start": 101, "end": 150, "ok": true},
+    {"start": 151, "end": 200, "ok": true},
+    {"start": 201, "end": 250, "ok": true},
+    {"start": 251, "end": 300, "ok": true},
+    {"start": 301, "end": 350, "ok": true},
+    {"start": 351, "end": 400, "ok": true},
+    {"start": 401, "end": 430, "ok": true}
+  ],
+  "referenced_source_assets_checked": 42,
+  "missing_referenced_assets": [],
+  "structured_table_json_files_checked": 15,
+  "known_open_source_typo_math_anomalies": 5,
+  "known_anomalies_policy": "classified source-print anomalies remain in source layer and do not get silently corrected; they are not missing/uncertain transcription blockers",
+  "full_page_visual_verification": false,
+  "targeted_pdf_issues_resolved": true,
+  "structured_review_complete": true,
+  "review_basis": [
+    "all batch page maps cover PDF 1-430 continuously",
+    "all batch JSON/QC manifests parse",
+    "all referenced source image assets in cumulative package exist",
+    "structured table JSON files parse",
+    "latest v3 policy permits structured-data self-review with targeted PDF checks instead of mechanical whole-book reinspection"
+  ],
+  "result": "PASS"
+}

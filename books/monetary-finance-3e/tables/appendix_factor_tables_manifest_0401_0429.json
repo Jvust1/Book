@@ -1,0 +1,31 @@
+{
+  "schema_version": "book_table_batch_index_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf401-430-20260923",
+  "tables": [
+    {
+      "table_id": "appendix_A",
+      "title": "附表A 复利现值系数表",
+      "formula_latex": "P/F=(1+i)^{-n}",
+      "source_pdf_pages": [424, 426],
+      "printed_pages": [418, 420],
+      "structured_file_in_drive_archive": "tables/appendix_compound_present_value_factors.json",
+      "source_image_assets": 3
+    },
+    {
+      "table_id": "appendix_B",
+      "title": "附表B 复利终值系数表",
+      "formula_latex": "F/P=(1+i)^n",
+      "source_pdf_pages": [427, 429],
+      "printed_pages": [421, 423],
+      "structured_file_in_drive_archive": "tables/appendix_compound_future_value_factors.json",
+      "source_image_assets": 3
+    }
+  ],
+  "authoritative_drive_archive": {
+    "file_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb",
+    "name": "Book-Monetary-Finance-Verified-pdf001-430-final-20260923-r2.zip",
+    "sha256": "1d9ecd330aaccca6875a197a662173eedcacaf80b494288e4c837e81729f55e0"
+  },
+  "note": "Full 30x30 factor matrices and original scan crops are stored in the Drive cumulative archive; GitHub keeps this compact audit index."
+}

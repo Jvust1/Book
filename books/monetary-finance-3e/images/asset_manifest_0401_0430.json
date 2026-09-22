@@ -1,0 +1,38 @@
+{
+  "schema_version": "book_source_asset_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf401-430-20260923",
+  "content_origin": "source",
+  "assets": [
+    {
+      "kind": "table_crop",
+      "table_id": "appendix_A",
+      "source_pdf_pages": [424, 426],
+      "count": 3,
+      "archive_paths": [
+        "tables/assets/appendix_A_p418_compound_present_value.png",
+        "tables/assets/appendix_A_p419_compound_present_value.png",
+        "tables/assets/appendix_A_p420_compound_present_value.png"
+      ]
+    },
+    {
+      "kind": "table_crop",
+      "table_id": "appendix_B",
+      "source_pdf_pages": [427, 429],
+      "count": 3,
+      "archive_paths": [
+        "tables/assets/appendix_B_p421_compound_future_value.png",
+        "tables/assets/appendix_B_p422_compound_future_value.png",
+        "tables/assets/appendix_B_p423_compound_future_value.png"
+      ]
+    },
+    {
+      "kind": "back_cover",
+      "source_pdf_pages": [430, 430],
+      "count": 1,
+      "archive_paths": ["images/backmatter/back_cover_p430.png"]
+    }
+  ],
+  "counts": {"figures": 0, "table_crops": 6, "back_cover": 1, "source_image_assets": 7},
+  "authoritative_drive_archive_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb"
+}

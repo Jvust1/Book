@@ -1,0 +1,25 @@
+{
+  "schema_version": "book_to_invest_handoff_v1",
+  "updated_at": "2026-09-23T03:40:00+08:00",
+  "book_id": "monetary-finance-3e",
+  "book_status": "COMPLETE_STRUCTURED_REVIEW",
+  "structured_review_result": "PASS",
+  "source_pdf_pages": [1, 430],
+  "printed_pages": [1, 423],
+  "full_page_visual_verification": false,
+  "known_source_print_anomalies": 5,
+  "drive_final_artifact": {
+    "file_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-430-final-20260923-r2.zip",
+    "sha256": "1d9ecd330aaccca6875a197a662173eedcacaf80b494288e4c837e81729f55e0",
+    "size_bytes": 12701544
+  },
+  "switch_to_invest": true,
+  "next_repository": "Jvust2/Invest",
+  "instruction": "Restore Invest governance from GitHub/Drive and execute the next safe unfinished item. Do not repeat monetary-finance ingestion.",
+  "superseded_same_run_artifact": {
+    "file_id": "1V7AiiLKGdU24LOi_f8KN24MudIh7RsnI",
+    "status": "SUPERSEDED",
+    "reason": "Created before same-run final structured-review flags were folded into the internal archive manifest; preserved as historical evidence."
+  }
+}

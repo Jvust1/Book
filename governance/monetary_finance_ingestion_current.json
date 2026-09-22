@@ -1,1 +1,62 @@
-{"schema_version":"book_monetary_finance_ingestion_current_v1","updated_at":"2026-09-23T02:53:18+08:00","book_id":"monetary-finance-3e","source_drive_file_id":"1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe","source_pdf_sha256":"3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73","source_pdf_page_count":430,"base_text_draft_drive_id":"1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX","status":"IN_PROGRESS","whole_book_complete":false,"processed_pdf_pages":{"start":1,"end":400,"count":400},"latest_batch_pdf_pages":{"start":351,"end":400,"count":50},"printed_pages":{"start":1,"end":394},"next_source_pdf_page":401,"next_printed_page":395,"figures_recovered_in_latest_batch":4,"formula_overlays_verified_in_latest_batch":9,"formula_candidates_resolved_in_latest_batch":9,"tables_in_latest_batch":1,"structured_review_complete":false,"targeted_pdf_issues_resolved_for_batch":true,"full_page_visual_verification":false,"switch_to_invest":false,"next_action":"Continue source verification from PDF 401 / printed page 395. Only 30 source PDF pages remain through PDF 430; after reaching the final page, perform whole-book final QC/structured review and status closure before enabling Invest handoff.","latest_batch_drive_artifact":{"file_id":"1XqOxdlTRMJT2ZBkrSH-qCIbrbIUVh-RL","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-400-20260923.zip","sha256":"a24e6cfc0222bb612ee514ebf8ee56fc0fa779e3126417cbf016c66e734849ed","size_bytes":9472898},"previous_batch_drive_artifact":{"file_id":"12Mu6poJUwDfg2Yvwgm2cLcsOC4TVEvV9","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-350-20260923.zip","sha256":"33895f7607014e45155fbedf8ec970b1d412ee775691f46b75a236b7b0e2b200","size_bytes":8877286},"quality_summary":{"connector_pdf_similarity_avg":0.933,"connector_pdf_similarity_min":0.746,"page_layout_spot_checks":50,"targeted_high_resolution_checks":16,"numbered_figures_recovered":4,"tables_source_verified":1,"table_source_image_assets":2,"formula_overlays_source_visual_confirmed":9,"formula_candidates_resolved":9,"semantic_blocks":563,"new_open_qc_items":0,"open_qc_items_known":5},"completion_boundary":"PDF 1–400 source mapping is covered; PDF 401–430 and whole-book final QC remain. Invest handoff is not active.","sync_summary":{"drive_new":1,"drive_reused_existing":0,"drive_overwrite":0,"github_pending_commit":false,"conflicts":0,"note":"New cumulative 001-400 archive was created after exact-name dedup search found no existing target; prior 001-350 archive remains preserved."}}
+{
+  "schema_version": "book_monetary_finance_ingestion_current_v1",
+  "updated_at": "2026-09-23T03:40:00+08:00",
+  "book_id": "monetary-finance-3e",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_page_count": 430,
+  "status": "COMPLETE_STRUCTURED_REVIEW",
+  "whole_book_complete": true,
+  "processed_pdf_pages": {"start": 1, "end": 430, "count": 430},
+  "latest_batch_pdf_pages": {"start": 401, "end": 430, "count": 30},
+  "printed_pages": {"start": 1, "end": 423},
+  "next_source_pdf_page": null,
+  "next_printed_page": null,
+  "tables_in_latest_batch": 2,
+  "structured_review_complete": true,
+  "targeted_pdf_issues_resolved": true,
+  "full_page_visual_verification": false,
+  "switch_to_invest": true,
+  "next_action": "Do not repeat monetary-finance source ingestion. Restore Jvust2/Invest governance and execute the next safe unfinished Invest item.",
+  "latest_batch_drive_artifact": {
+    "file_id": "1Vn_HCYOBHcW3LC7X0ar8LdnYQoZnwQxb",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-430-final-20260923-r2.zip",
+    "sha256": "1d9ecd330aaccca6875a197a662173eedcacaf80b494288e4c837e81729f55e0",
+    "size_bytes": 12701544
+  },
+  "previous_batch_drive_artifact": {
+    "file_id": "1XqOxdlTRMJT2ZBkrSH-qCIbrbIUVh-RL",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-400-20260923.zip",
+    "sha256": "a24e6cfc0222bb612ee514ebf8ee56fc0fa779e3126417cbf016c66e734849ed",
+    "size_bytes": 9472898
+  },
+  "quality_summary": {
+    "latest_batch_connector_pdf_similarity_avg": 0.952455,
+    "latest_batch_connector_pdf_similarity_min": 0.85625,
+    "page_layout_checks": 30,
+    "targeted_high_resolution_checks": 11,
+    "semantic_blocks": 320,
+    "new_open_qc_items": 0,
+    "open_qc_items_known": 5,
+    "whole_book_page_map_unique_pages": 430,
+    "whole_book_missing_pages": 0,
+    "referenced_source_assets_checked": 42,
+    "missing_referenced_assets": 0
+  },
+  "completion_boundary": "PDF 1–430 source mapping is complete; whole-book structured self-review passed; targeted PDF issues are resolved. Five classified source-print anomaly QC items remain preserved as source facts, not transcription blockers. Full-page visual verification remains false and is not claimed.",
+  "sync_summary": {
+    "drive_new": 2,
+    "drive_reused_existing": 0,
+    "drive_overwrite": 0,
+    "github_pending_commit": false,
+    "conflicts": 0,
+    "note": "The first same-run final archive is explicitly SUPERSEDED because its internal completion flags predated the same-run final review; r2 is authoritative. No overwrite or deletion was performed."
+  },
+  "superseded_same_run_artifact": {
+    "file_id": "1V7AiiLKGdU24LOi_f8KN24MudIh7RsnI",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-430-final-20260923.zip",
+    "sha256": "28f4c2b2656e4be33d59a32f304a6081d89b07a97bbf71a3308ee540f9fe294d",
+    "size_bytes": 12701369,
+    "status": "SUPERSEDED"
+  }
+}
