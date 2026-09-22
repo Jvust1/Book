@@ -14,8 +14,8 @@
   "pdf_page_count": 255,
   "printed_page_offset": -11,
   "content_format": {"text": "markdown+jsonl", "math": "latex", "figures": "original_image", "tables": "structured+original_when_needed"},
-  "coverage": {"processed_pdf_pages": [1, 180], "last_processed_pdf_page": 180, "next_pdf_page": 181, "printed_pages_structured": [1, 169]},
+  "coverage": {"processed_pdf_pages": [1,230], "last_processed_pdf_page": 230, "next_pdf_page": 231, "printed_pages_structured": [1,219]},
   "review": {"structured_review_complete": false, "targeted_pdf_issues_resolved": false, "full_page_visual_verification": false, "mathematical_review_status": "NOT_APPLICABLE_OR_PENDING"},
   "whole_book_complete": false,
-  "latest_full_batch_archive": {"drive_file_id": "1SHV_t3CnvzvJfgKDAJQ5_lWhBJ8BjcG4", "file_name": "Book-Contemporary-China-Economy-Verified-pdf131-180-20260922.zip", "sha256": "f43a4bcdb90d07234d7d246f268307c2868906692a9a9dc3a4b4365170f02514", "size_bytes": 4574070, "pdf_pages": [131, 180]}
+  "latest_full_batch_archive": {"drive_file_id": "1okIO5oU3QLVQyosWht6ni-HUYhrxabg6", "file_name": "Book-Contemporary-China-Economy-Verified-pdf181-230-20260923.zip", "sha256": "e5673b79f9254786951195c07a1149dedc86488cbb6b07fa3466ba549962a373", "size_bytes": 3533225, "pdf_pages": [181,230]}
 }

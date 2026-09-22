@@ -1,0 +1,17 @@
+{
+  "schema_version":"book_batch_manifest_v2",
+  "book_id":"contemporary-china-economy",
+  "canonical_title":"社会主义市场经济理论（第五版）",
+  "course_alias":"当代中国经济",
+  "source_type":"scanned_pdf",
+  "source_drive_file_id":"1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256":"a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "source_pdf_page_count":255,
+  "batch":{"pdf_pages":[181,230],"printed_pages":[170,219],"new_pages":50,"next_pdf_page":231,"next_printed_page":220},
+  "content_format":{"text":"markdown+jsonl","math":"latex_when_present","figures":"original_image_when_present","tables":"structured+original_when_needed"},
+  "outputs":["structured/structured_pages_0181_0230.md","structured/verified_sparse_0181_0230.md","blocks/blocks_0181_0230.jsonl","source/pdf_page_map_compact_0181_0230.jsonl","qc/batch_0181_0230.json","qc/extraction_report_0181_0230.md","tables/ch10/table_10_1.png","tables/ch10/table_10_1.json","audit/contact_0181_0190.jpg","audit/contact_0191_0200.jpg","audit/contact_0201_0210.jpg","audit/contact_0211_0220.jpg","audit/contact_0221_0230.jpg"],
+  "asset_counts":{"figures":0,"tables":1,"display_equations":0,"semantic_blocks":497},
+  "quality":{"continuous_coverage":true,"visual_layout_checked_pages":50,"full_page_visual_verification":false,"status":"PASS_WITH_SOURCE_REVIEW_DEBT"},
+  "content_origin":"source",
+  "storage_split":{"github":"batch manifest + compact QC + sparse visual verification + book/checkpoint/project state","drive":"full batch Markdown + full blocks JSONL + full page map + original table crop + audit contact sheets","drive_file_id":"1okIO5oU3QLVQyosWht6ni-HUYhrxabg6","drive_file_name":"Book-Contemporary-China-Economy-Verified-pdf181-230-20260923.zip","drive_sha256":"e5673b79f9254786951195c07a1149dedc86488cbb6b07fa3466ba549962a373","drive_size_bytes":3533225,"dedup_action":"NEW_VERIFIED_BATCH_ARCHIVE"}
+}
