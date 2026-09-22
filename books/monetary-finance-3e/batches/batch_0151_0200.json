@@ -1,0 +1,38 @@
+{
+  "schema_version": "book_batch_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf151-200-20260922",
+  "source_pdf_pages": {
+    "start": 151,
+    "end": 200,
+    "count": 50
+  },
+  "printed_pages": {
+    "start": 145,
+    "end": 194
+  },
+  "next_source_pdf_page": 201,
+  "next_printed_page": 195,
+  "semantic_blocks": 662,
+  "formula_overlays": 28,
+  "assets": {
+    "figures": 1,
+    "tables": 3,
+    "source_image_assets": 4
+  },
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "files": {
+    "verified_markdown": "verified/verified_pages_0151_0200.md",
+    "verified_blocks": "blocks/verified_blocks_0151_0200.jsonl",
+    "formulas": "verified/formulas_0151_0200.jsonl",
+    "page_map": "source/pdf_page_map_0151_0200.jsonl",
+    "qc": "qc/batch_0151_0200.json",
+    "qc_report": "qc/extraction_report_0151_0200.md",
+    "image_manifest": "images/asset_manifest_0151_0200.json",
+    "uncertain": "qc/uncertain_0151_0200.jsonl"
+  },
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "switch_to_invest": false
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "book_post_archive_audit_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf151-200-20260922",
+  "drive_archive": {
+    "file_id": "1nNSAbDorEAHXUgT8H0wJFOdkp8qBr-k1",
+    "name": "Book-Monetary-Finance-Verified-pdf001-200-20260922.zip",
+    "sha256": "975137b5e07eb7279912123df9e3e33a4d39ad437f6510e815bb2a4da8a8f015",
+    "size_bytes": 7451154
+  },
+  "reason": "final high-resolution reconciliation after cumulative archive already existed on Drive; preserve archive immutably and record additive audit in GitHub",
+  "new_open_qc_items": [
+    {
+      "source_pdf_page": 191,
+      "printed_page": 185,
+      "region": "money_multiplier_definition",
+      "type": "formula_source_consistency",
+      "source_text": "货币乘数m=（C+R）÷（C+D）",
+      "reason": "同页定义C+R为基础货币、C+D为货币供给量，并写有MS=m×B；扫描页清晰印为(C+R)/(C+D)，与同页定义方向不一致，疑似教材原印倒置。忠实保留source。",
+      "status": "OPEN_SOURCE_TYPO_SUSPECTED",
+      "content_origin": "source"
+    }
+  ],
+  "cross_batch_semantic_spans": [
+    {"block_id":"monetary-finance-3e_ch05_00380","printed_pages":[144,145],"source_pdf_pages":[150,151],"reason":"paragraph crosses prior/current batch boundary"},
+    {"block_id":"monetary-finance-3e_ch06_00467","printed_pages":[194,195],"source_pdf_pages":[200,201],"reason":"paragraph crosses current/next batch boundary; PDF201 read only as boundary context, not counted processed"}
+  ],
+  "whole_book_complete": false,
+  "switch_to_invest": false
+}

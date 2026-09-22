@@ -1,0 +1,64 @@
+{
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf151-200-20260922",
+  "assets": [
+    {
+      "asset_type": "figure",
+      "title": "图6-1 基础货币与货币供给量的关系",
+      "path": "images/ch06/fig_6-1_base_money_money_supply.png",
+      "source_pdf_page": 191,
+      "printed_page": 185,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "01f48c6bb9ec5fbf6a0720a1e2e9b9c880163f06e78515a824f9372ed560fe5f",
+      "bytes": 16842,
+      "uncertain": false,
+      "figure_number": "6-1"
+    },
+    {
+      "asset_type": "table",
+      "title": "我国商业银行业营业收入结构比较（第1页）",
+      "path": "tables/assets/table_p180_bank_revenue_structure_part1.png",
+      "source_pdf_page": 186,
+      "printed_page": 180,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "5f8c6cbbce9abd380cae02c89d670dfb2820eb918685e1de604a2fae2bab9e8e",
+      "bytes": 47681,
+      "uncertain": false,
+      "structured_table_path": "tables/table_p180_181_bank_revenue_structure.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "我国商业银行业营业收入结构比较（续表）",
+      "path": "tables/assets/table_p181_bank_revenue_structure_part2.png",
+      "source_pdf_page": 187,
+      "printed_page": 181,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "918f7a86175658180ed87c5606286a384c3b39f35b581c5bfc5d73b411c04999",
+      "bytes": 146167,
+      "uncertain": false,
+      "structured_table_path": "tables/table_p180_181_bank_revenue_structure.json"
+    },
+    {
+      "asset_type": "table",
+      "title": "表6-1 多倍存款的创造过程",
+      "path": "tables/assets/table_6-1_multiple_deposit_creation.png",
+      "source_pdf_page": 194,
+      "printed_page": 188,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "174e23318c2a96871db02be28cba5970c9e1e8fb3a410353c622382888ae65ce",
+      "bytes": 43053,
+      "uncertain": false,
+      "table_number": "6-1",
+      "structured_table_path": "tables/table-6-1.json"
+    }
+  ],
+  "structured_tables": [
+    "tables/table_p180_181_bank_revenue_structure.json",
+    "tables/table-6-1.json",
+    "tables/t_accounts_p186_187.json"
+  ]
+}

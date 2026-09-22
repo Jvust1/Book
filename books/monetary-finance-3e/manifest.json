@@ -12,44 +12,19 @@
   "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
   "source_pdf_bytes": 81807312,
   "pdf_page_count": 430,
-  "verified_source_pdf_pages": [1, 150],
-  "verified_printed_pages": [1, 144],
-  "next_source_pdf_page": 151,
-  "next_printed_page": 145,
+  "verified_source_pdf_pages": [1, 200],
+  "verified_printed_pages": [1, 194],
+  "next_source_pdf_page": 201,
+  "next_printed_page": 195,
   "status": "IN_PROGRESS",
   "whole_book_complete": false,
   "base_draft_drive_artifact_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
   "base_draft_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
   "content_format": {"text":"markdown+jsonl","math":"latex","figures":"original_scan_crop","tables":"structured+original_when_needed"},
-  "drive_package_files": {
-    "markdown": "verified/verified_pages_0101_0150.md",
-    "blocks": "blocks/verified_blocks_0101_0150.jsonl",
-    "page_map": "source/pdf_page_map_0101_0150.jsonl",
-    "qc": "qc/batch_0101_0150.json",
-    "image_manifest": "images/asset_manifest_0101_0150.json",
-    "formulas": "verified/formulas_0101_0150.jsonl",
-    "original_image_assets": 3
-  },
-  "repository_files": {
-    "batch_manifest": "batches/batch_0101_0150.json",
-    "compact_page_map": "source/pdf_page_map_compact_0101_0150.jsonl",
-    "qc": "qc/batch_0101_0150.json",
-    "qc_report": "qc/extraction_report_0101_0150.md",
-    "image_manifest": "images/asset_manifest_0101_0150.json",
-    "current_state": "../../governance/monetary_finance_ingestion_current.json"
-  },
-  "completion_flags": {"structured_review_complete":false,"targeted_pdf_issues_resolved_for_batch":false,"full_page_visual_verification":false,"mathematical_review_status":"batch_targeted_source_review_with_open_source_typo"},
+  "drive_package_files": {"markdown":"verified/verified_pages_0151_0200.md","blocks":"blocks/verified_blocks_0151_0200.jsonl","page_map":"source/pdf_page_map_0151_0200.jsonl","qc":"qc/batch_0151_0200.json","image_manifest":"images/asset_manifest_0151_0200.json","formulas":"verified/formulas_0151_0200.jsonl","original_image_assets":4},
+  "repository_files": {"batch_manifest":"batches/batch_0151_0200.json","compact_page_map":"source/pdf_page_map_compact_0151_0200.jsonl","qc":"qc/batch_0151_0200.json","qc_report":"qc/extraction_report_0151_0200.md","image_manifest":"images/asset_manifest_0151_0200.json","post_archive_audit":"qc/post_archive_audit_0151_0200.json","current_state":"../../governance/monetary_finance_ingestion_current.json"},
+  "completion_flags": {"structured_review_complete":false,"targeted_pdf_issues_resolved_for_batch":false,"full_page_visual_verification":false,"mathematical_review_status":"batch_targeted_source_review_with_open_source_typos"},
   "content_origin": "source",
-  "latest_verified_batch_drive_artifact": {
-    "file_id": "1rH0yjF1Brkc2lHmZFSwSfmt0SuLn9biE",
-    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-150-20260922.zip",
-    "sha256": "554ceee517918631a2b2cac6e76828927febbdb614923ec68a8540dcd3eaf3b1",
-    "size_bytes": 6995094
-  },
-  "previous_verified_batch_drive_artifact": {
-    "file_id": "1iC8Z8HiBejLv67-sAzmcPDo5Ncx5lSQ0",
-    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-100-20260922.zip",
-    "sha256": "1af1edb4d0ad0d58287cc363f01aa7bf1ca7be16b35b59cc7ae2ea606810c212",
-    "size_bytes": 5989927
-  }
+  "latest_verified_batch_drive_artifact": {"file_id":"1nNSAbDorEAHXUgT8H0wJFOdkp8qBr-k1","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-200-20260922.zip","sha256":"975137b5e07eb7279912123df9e3e33a4d39ad437f6510e815bb2a4da8a8f015","size_bytes":7451154},
+  "previous_verified_batch_drive_artifact": {"file_id":"1rH0yjF1Brkc2lHmZFSwSfmt0SuLn9biE","path":"/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-150-20260922.zip","sha256":"554ceee517918631a2b2cac6e76828927febbdb614923ec68a8540dcd3eaf3b1","size_bytes":6995094}
 }
