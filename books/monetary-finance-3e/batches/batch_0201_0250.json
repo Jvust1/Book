@@ -1,0 +1,42 @@
+{
+  "schema_version": "book_batch_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf201-250-20260923",
+  "source_pdf_pages": {
+    "start": 201,
+    "end": 250,
+    "count": 50
+  },
+  "printed_pages": {
+    "start": 195,
+    "end": 244
+  },
+  "next_source_pdf_page": 251,
+  "next_printed_page": 245,
+  "semantic_blocks": 723,
+  "formula_overlays": 40,
+  "formula_candidates_resolved": 106,
+  "assets": {
+    "figures": 0,
+    "tables": 5,
+    "source_image_assets": 5
+  },
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "files": {
+    "verified_markdown": "verified/verified_pages_0201_0250.md",
+    "verified_blocks": "blocks/verified_blocks_0201_0250.jsonl",
+    "formulas": "verified/formulas_0201_0250.jsonl",
+    "page_map": "source/pdf_page_map_0201_0250.jsonl",
+    "compact_page_map": "source/pdf_page_map_compact_0201_0250.jsonl",
+    "qc": "qc/batch_0201_0250.json",
+    "qc_report": "qc/extraction_report_0201_0250.md",
+    "formula_resolution": "qc/formula_candidate_resolution_0201_0250.jsonl",
+    "image_manifest": "images/asset_manifest_0201_0250.json",
+    "uncertain": "qc/uncertain_0201_0250.jsonl",
+    "cross_batch_spans": "blocks/cross_batch_source_span_updates_0201_0250.jsonl"
+  },
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "switch_to_invest": false
+}
