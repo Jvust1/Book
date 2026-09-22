@@ -1,0 +1,45 @@
+{
+  "schema_version": "book_verified_batch_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch_id": "pdf0001-0050-20260922",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_page_count": 430,
+  "source_pdf_pages": {"start": 1, "end": 50, "count": 50},
+  "printed_pages": {"start": 1, "end": 44},
+  "next_source_pdf_page": 51,
+  "next_printed_page": 45,
+  "drive_artifact": {
+    "file_id": "1OAv5MtL7DmtLNeIyqY8aKfh6oBEkoXgy",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-050-20260922.zip",
+    "filename": "Book-Monetary-Finance-Verified-pdf001-050-20260922.zip",
+    "sha256": "e67ab11ac72062eb3389b5f2ec418565c8d170b7650b26bfb6e091a00d1a055b",
+    "size_bytes": 5488874
+  },
+  "quality": {
+    "page_layout_spot_checks": 50,
+    "formula_overlays_verified": 16,
+    "numbered_figures_recovered": 2,
+    "unnumbered_source_images_recovered": 2,
+    "tables_in_batch": 0,
+    "connector_pdf_normalized_text_similarity_avg": 0.997651,
+    "connector_pdf_normalized_text_similarity_min": 0.96875,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved_for_batch": true
+  },
+  "artifact_file_count": 11,
+  "artifact_files": [
+    {"path":"blocks/verified_blocks_0001_0050.jsonl","size_bytes":1049971,"sha256":"141b13718da419ef103f0642384a0cc4347b6321e3aaa338d6ba41a2809277ee"},
+    {"path":"images/asset_manifest_0001_0050.json","size_bytes":811,"sha256":"fad0396c6524176ffcb0dc90862e9ec626006f8ced5182481d2117b7ffec638c"},
+    {"path":"images/ch01/fig_1-1_money_origin.png","size_bytes":28133,"sha256":"634b1ad13e0ff1515c5b2a96bd0f67fcf41d9982eff586a8c2c33b73c0a3a77d"},
+    {"path":"images/ch01/fig_1-2_monetary_system_types.png","size_bytes":21833,"sha256":"14ecda20e6b928d67ffe4e3550128e7f46d6429d21f8984763cc54f6be56ff3d"},
+    {"path":"images/ch02/box_2-2_bank_acceptance_bill.png","size_bytes":169471,"sha256":"bc2de03625c2cdfde5d54340904814f71d80157f9d0ba52bb4b000c31c585f93"},
+    {"path":"images/ch02/box_2-2_commercial_acceptance_bill.png","size_bytes":32719,"sha256":"3c080607118121ee0c9869ca185ef55a914829f8fb35260e3adb582037f9eeb5"},
+    {"path":"manifest.json","size_bytes":1692,"sha256":"390d5298c5ea4ab5850e339c2195744535a4203fbbb3af5a91ac2378cb84f897"},
+    {"path":"qc/batch_0001_0050.json","size_bytes":3262,"sha256":"082837608f3babe5940bf127fddc57bd7d4ad5f51b0151e23bf5b548e9ae688d"},
+    {"path":"qc/extraction_report_0001_0050.md","size_bytes":1202,"sha256":"3d6bc938f75988f75481bfef23fdc17d533ccd14bf29b877dd9d59821a76978f"},
+    {"path":"source/pdf_page_map_0001_0050.jsonl","size_bytes":27913,"sha256":"0e04ca45be85590ba1bf343960c855ed96a5758f78818c8429691a07b4b78805"},
+    {"path":"verified/verified_pages_0001_0050.md","size_bytes":179463,"sha256":"20bc4193b0bd8602b0aaa0a77d9ef0d522127d13f13798fa6646cb573181c6dd"}
+  ]
+}
