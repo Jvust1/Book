@@ -1,0 +1,26 @@
+{
+  "schema_version": "economics_fulltext_remediation_qc_v1",
+  "generated_at": "2026-09-22T22:46:41Z",
+  "book_id": "contemporary-china-economy",
+  "source_pdf": {"drive_file_id":"1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC","sha256":"a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204","pdf_page_count":255},
+  "new_pdf_pages": 0,
+  "reason_new_pages_zero": "source_pdf_end_reached; no PDF page 256 exists",
+  "remediation": {
+    "fulltext": {"issue_id":"ECO-QC-FULLTEXT-0231-0254","pages":[231,254],"status":"RESOLVED_IN_REMEDIATION_ARTIFACT","method":"PDF231-250 continuous source visual reread and full body transcription; PDF251-254 existing visual-verified questions/references revalidated unchanged","source_page_images_preserved":true},
+    "ocr_0181": {"issue_id":"ECO-QC-OCR-0181","pages":[181],"status":"RESOLVED_IN_REMEDIATION_ARTIFACT","method":"source scan targeted visual reread; corrected chapter opening and first-page body"}
+  },
+  "cross_page_semantic_objects": 13,
+  "jsonl_blocks": 297,
+  "figures": 0,
+  "tables": 0,
+  "display_equations": 0,
+  "quality_boundaries": {"full_page_visual_verification":false,"remaining_review_debt":"PDF1-230 excluding resolved PDF181 still has uncertain/OCR/source-review debt; must perform v3 risk-driven review before whole_book_complete=true"},
+  "completion_gate": {"structured_content_complete_for_blocking_last_batch":true,"targeted_high_risk_pdf181_resolved":true,"structured_review_complete":false,"whole_book_complete":false,"switch_to_mygpt":false},
+  "next_action": "RISK_DRIVEN_REVIEW_0001_0230_EXCEPT_0181",
+  "source_fidelity_notes": [
+    "PDF230→231 跨页段落已由原扫描两页定点复核并合并为单一 cross_page_paragraph 语义对象；PDF230 作为 supporting context 保留原页图。",
+    "PDF241 原书印刷文本确为“主要有以下有两大类”，按 source-fidelity 原样保留；视为原书措辞/排印异常，不静默改写。"
+  ],
+  "source_anomalies_preserved": [{"id":"ECO-SOURCE-ANOMALY-0241-001","pdf_page":241,"printed_page":230,"text":"主要有以下有两大类","classification":"source_print_wording_or_typographical_anomaly","action":"preserved_verbatim_after_visual_check"}],
+  "drive_archive": {"file_name":"Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip","drive_file_id":"1P-I3jbudGQSserx3pOmD1HfJPElszwxE","sha256":"103dee2ede9ba691eb73ac7f8108c8a33ceb083ad61453c9dbd963f1214684a8","size_bytes":7023444,"folder":"Book/03_Exports","status":"ACTIVE_REMEDIATION_ARCHIVE"}
+}

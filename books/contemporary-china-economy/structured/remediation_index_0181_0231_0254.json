@@ -1,0 +1,17 @@
+{
+  "schema_version": "economics_remediation_structured_index_v1",
+  "book_id": "contemporary-china-economy",
+  "source_pdf_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_end_reached": true,
+  "new_pdf_pages": 0,
+  "remediated_pdf_ranges": [[181,181],[231,254]],
+  "supporting_context_pdf_pages": [230],
+  "printed_page_ranges": [[170,170],[220,243]],
+  "fulltext": {"location":"DRIVE_ARCHIVE:Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip:structured/fulltext_remediation_0181_0231_0254.md","sha256":"0b25500f8cca3881e676ca24ceacd43b9aa29146c920a4ff823f5ba8b3a9b196","size_bytes":93516},
+  "blocks": {"location":"DRIVE_ARCHIVE:Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip:blocks/fulltext_remediation_0181_0231_0254.jsonl","sha256":"168d8010b0faac635495a30406516a5b6d71911d4e6cfc06057fcfb5fba97018","size_bytes":171996,"block_count":297,"cross_page_semantic_objects":13},
+  "page_map": "books/contemporary-china-economy/source/pdf_page_map_remediation_20260923.jsonl",
+  "qc": "books/contemporary-china-economy/qc/fulltext_remediation_20260923.json",
+  "resolved_issue_ids": ["ECO-QC-FULLTEXT-0231-0254","ECO-QC-OCR-0181"],
+  "source_anomalies_preserved": ["ECO-SOURCE-ANOMALY-0241-001"],
+  "drive_archive": {"file_name":"Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip","drive_file_id":"1P-I3jbudGQSserx3pOmD1HfJPElszwxE","sha256":"103dee2ede9ba691eb73ac7f8108c8a33ceb083ad61453c9dbd963f1214684a8","size_bytes":7023444}
+}
