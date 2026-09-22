@@ -1,10 +1,10 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "book_id": "contemporary-china-economy",
   "title": "社会主义市场经济理论（第五版）",
   "course_alias": "当代中国经济",
   "edition": "第五版",
-  "authors": ["夏永祥","张斌"],
+  "authors": ["夏永祥", "张斌"],
   "publisher": "高等教育出版社",
   "isbn": "978-7-04-051184-0",
   "language": "zh-CN",
@@ -14,9 +14,41 @@
   "pdf_page_count": 255,
   "printed_page_offset": -11,
   "content_format": {"text":"markdown+jsonl","math":"latex","figures":"original_image","tables":"structured+original_when_needed"},
-  "coverage": {"processed_pdf_pages":[1,255],"last_processed_pdf_page":255,"next_pdf_page":null,"printed_pages_structured":[1,243],"source_pdf_end_reached":true,"ingestion_coverage_complete":true},
-  "review": {"structured_review_complete":false,"targeted_pdf_issues_resolved":false,"full_page_visual_verification":false,"mathematical_review_status":"NOT_APPLICABLE_OR_PENDING","source_review_debt_remaining":true},
+  "coverage": {
+    "processed_pdf_pages": [1, 255],
+    "last_processed_pdf_page": 255,
+    "next_pdf_page": null,
+    "printed_pages_structured": [1, 243],
+    "source_pdf_end_reached": true,
+    "ingestion_coverage_complete": true
+  },
+  "review": {
+    "structured_content_complete": false,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved": false,
+    "full_page_visual_verification": false,
+    "mathematical_review_status": "NOT_APPLICABLE_OR_PENDING",
+    "source_review_debt_remaining": true,
+    "blocking_issue_ids": ["ECO-QC-FULLTEXT-0231-0254"],
+    "high_risk_issue_ids": ["ECO-QC-OCR-0181"],
+    "next_review_target_pdf_page": 231,
+    "review_checkpoint": "books/contemporary-china-economy/qc/full_book_structured_review_20260923.json"
+  },
   "whole_book_complete": false,
-  "latest_full_batch_archive": {"drive_file_id":"1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ","file_name":"Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip","sha256":"155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4","size_bytes":7832859,"pdf_pages":[231,255]},
-  "completion_note": "源 PDF 物理页已连续覆盖至末页，但稠密正文字符级 structured review/QC 尚未完成，因此 whole_book_complete 仍为 false，暂不切换 mygpt。"
+  "switch_to_mygpt": false,
+  "latest_full_batch_archive": {
+    "drive_file_id": "1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ",
+    "file_name": "Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip",
+    "sha256": "155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4",
+    "size_bytes": 7832859,
+    "pdf_pages": [231, 255]
+  },
+  "latest_review_archive": {
+    "drive_file_id": "1Beq7cpUs_S1vvbKOVM8DvXQJ6M9Zjyjh",
+    "file_name": "Book-Contemporary-China-Economy-FullBook-Structured-Review-20260923.zip",
+    "sha256": "21eb70d1b68b203a23ed511e6216d8b96263d670768ace52506d38c3a5934a75",
+    "size_bytes": 2051773
+  },
+  "next_action": "REMEDIATE_FULLTEXT_0231_0254",
+  "completion_note": "源 PDF 物理页已连续覆盖至末页，但本轮全书审计发现 PDF 231–254 的文字结构层主要为标题/条目骨架，未完整录入原扫描中的稠密正文；另有 PDF181 明显 OCR 破损。因此 structured_content_complete=false、whole_book_complete=false，暂不切换 mygpt。"
 }
