@@ -445,6 +445,21 @@
       "purpose": "External delivery manifest for the freshly rebuilt CURRENT App source package.",
       "status": "active",
       "verification": "Full Google Drive bytes materialized back; size/SHA-256 matched local."
+    },
+    {
+      "artifact_id": "book_pdf_structuring_policy_v3_2026_09_22",
+      "file_name": "Book_扫描版PDF教材结构化处理提示词.md",
+      "type": "governance_policy",
+      "drive_file_id": "1lO0z2nOoONzUIJNhA8JZy2nqhoLvuHds",
+      "drive_path": "Book/Book_扫描版PDF教材结构化处理提示词.md",
+      "size_bytes": 25833,
+      "sha256": "78d0958a76461842f8c1b36390894ca4c9ee9a7b1b8507b8c5a8f806dd305217",
+      "version": "v3-20260922",
+      "source": "user_directed_policy_update",
+      "related_checkpoint": "governance/two_courses_r6_review_strategy_v3_20260922.json",
+      "purpose": "Current Book scanned-PDF structuring/review policy: first-time extraction remains page-based; review of existing structured data is structured-data-first with risk-triggered PDF spot checks.",
+      "status": "active_policy",
+      "verification": "Updated in place on Drive, preserving the same file ID; full remote bytes read back; size/SHA-256 matched local."
     }
   ],
   "notes": [
@@ -471,11 +486,13 @@
     "Historical r6 Batch2 recovery entry: governance/two_courses_r6_batch2_checkpoint_20260921.json. Recover original r6 source ZIP plus byte-deduplicated batch2 delta. 27 pages source-compared, 13 first-pass, 476 unreviewed in r6, 0 independently accepted. First-r6 and prior artifacts remain historical evidence; no main or PR merge.",
     "Historical r6 Batch3 recovery entry: governance/two_courses_r6_batch3_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch3 delta. 44 pages source-compared, 13 first-pass, 459 unreviewed in r6, 0 independently accepted. Batch2 and earlier artifacts remain historical evidence; no main write or PR merge.",
     "Historical r6 Batch4 recovery entry: governance/two_courses_r6_batch4_checkpoint_20260921.json. Recover immutable first-r6 source ZIP plus cumulative Batch4 delta. 68 pages source-compared, 13 first-pass, 435 unreviewed in r6, 0 independently accepted. Batch2/3 and earlier artifacts remain historical evidence; no main write or PR merge.",
-    "Current review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch5 now implements this strategy; see active_two_courses_checkpoint. Historical source ledgers remain evidence, not current completion criteria.",
+    "Historical review strategy: governance/two_courses_r6_review_strategy_v2_20260921.json. Structured-data self-check is primary; PDF is spot-check evidence only. Preserve source, store corrections separately, keep AI-derived study content separate. Batch5 now implements this strategy; see active_two_courses_checkpoint. Historical source ledgers remain evidence, not current completion criteria.",
     "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained.",
     "Historical consolidated App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open.",
-    "Current App source: governance/two_courses_current_app_source_20260922_1054.json. Use Drive Book-App-Source-CURRENT-r6-20260922.zip. This package was freshly rebuilt at 2026-09-22 10:54 +08:00 from the latest consolidated Batch5 app source, adds current handoff metadata and freshly rerun validation, and was fully read back from Drive. App code/course-data logic remains Batch5 because no later business-content/code changes exist."
+    "Current App source: governance/two_courses_current_app_source_20260922_1054.json. Use Drive Book-App-Source-CURRENT-r6-20260922.zip. This package was freshly rebuilt at 2026-09-22 10:54 +08:00 from the latest consolidated Batch5 app source, adds current handoff metadata and freshly rerun validation, and was fully read back from Drive. App code/course-data logic remains Batch5 because no later business-content/code changes exist.",
+    "Current review strategy: governance/two_courses_r6_review_strategy_v3_20260922.json. For existing structured textbook data, perform a full structured-data review first and open PDF pages only for uncertainty, suspected omissions/transcription errors, cross-page ambiguity, figure/table/layout issues, or source-provenance conflicts. The scanned page remains the authority for what the book printed when source form must be confirmed. First-time extraction from a scanned PDF still requires continuous source-page processing. Source/correction/derived layers remain separate."
   ],
   "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
-  "active_final_app_source_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json"
+  "active_final_app_source_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+  "active_two_courses_review_strategy": "governance/two_courses_r6_review_strategy_v3_20260922.json"
 }
