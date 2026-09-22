@@ -1,66 +1,87 @@
 {
-  "schema": "book_current_app_source_checkpoint_v1",
-  "date": "2026-09-22",
-  "generated_at": "2026-09-22T10:54:00+08:00",
+  "schema": "book_app_current_source_checkpoint_v2",
+  "generated_at": "2026-09-22T19:45:00+08:00",
   "repository": "Jvust2/Book",
   "branch": "data/two-courses-r3-checkpoint-20260921",
   "pr": 33,
-  "status": "CURRENT_APP_SOURCE_FRESHLY_REBUILT_FULL_READBACK_VERIFIED",
-  "logic_baseline": "r6-batch5",
-  "supersedes_current_pointer": "governance/two_courses_final_app_source_20260922.json",
-  "clarification": "The earlier Book-App-Final-Source-r6-batch5.zip is preserved as historical consolidated evidence. This CURRENT package is a fresh repackage of the same latest app/code/data logic plus current handoff metadata and fresh validation evidence; no newer business-code or course-data changes existed after Batch5.",
+  "status": "CURRENT_SOURCE_AND_APK_SYNCED_READBACK_VERIFIED",
+  "content_baseline": "r6-batch5",
+  "ui_revision": "continuous_dense_no_inline_provenance",
+  "reader_ui": {
+    "learn_layout": "continuous_dense_stream",
+    "learn_records_per_page": 80,
+    "inline_source_id_page_pdf_labels": "HIDDEN_IN_NORMAL_LEARN_VIEW",
+    "provenance_data": "PRESERVED",
+    "source_evidence_in_preview_review_practice": "PRESERVED"
+  },
   "artifacts": [
     {
       "file_name": "Book-App-Source-CURRENT-r6-20260922.zip",
       "drive_file_id": "1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R",
-      "bytes": 70348611,
-      "sha256": "c376dd1314838a49682d56f94c6c22a20868358609f4d7c4058a80ce37be5dee",
-      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+      "bytes": 70090018,
+      "sha256": "19315e8aeebe2db5cf2f4b55e0a38f550967966af106491dfef67212b430adc1",
+      "zip_entries": 1555,
+      "internal_manifest_entries": 1554,
+      "verification": "FULL_REMOTE_BYTES_SHA256_MATCH + ZIP_CRC_PASS + 1554/1554 internal hash PASS"
     },
     {
       "file_name": "Book-App-Source-CURRENT-r6-20260922.manifest.json",
       "drive_file_id": "1t7w8CQfxmP4JzEurxVNpTozFfW2Q3FjA",
-      "bytes": 1135,
-      "sha256": "9bdd90e6fe9402c8f79c649704297237ffb8ab79e47f39b6f05bf4729d5b65ba",
-      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+      "bytes": 1264,
+      "sha256": "1f0291d2b6a9f5d8822978befda2f3d6fa4709ca320ccb08b7a19ad269460c10",
+      "verification": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk",
+      "drive_file_id": "1lQv8fhx3JIvxy4v8WnHdJUYDImsEMY-Z",
+      "bytes": 99320092,
+      "sha256": "012527c4d3e1d24ce3560394f44ededfd046e25f0d63356aaa844926543a8208",
+      "verification": "FULL_REMOTE_BYTES_SHA256_MATCH + ZIP_CRC_PASS + APK v2 RSA signature/content digest PASS"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.manifest.json",
+      "drive_file_id": "1Q334Ge9YLcCe28l8HVq4U71QMROqD5bm",
+      "bytes": 1296,
+      "sha256": "538ed983d497d9aa1d4bf3172ca087e5baa2af33088d0d5fa6e8350a863d2a43",
+      "verification": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.sha256",
+      "drive_file_id": "1G0QTXwIprOoQ2PvmAN2ZSg1-mHKWl3Xn",
+      "bytes": 97,
+      "sha256": "48de0dce65738f8f4719877e1c2d7222eb2dd3a8d8317779d89865c4254c2dd4",
+      "verification": "FULL_REMOTE_BYTES_SHA256_MATCH"
     }
   ],
-  "package": {
-    "zip_entries": 1555,
-    "internal_manifest_entries": 1554,
-    "internal_manifest_hash_errors": 0,
-    "includes_current_handoff": true,
-    "includes_fresh_validation_logs": true,
-    "recovery": "Extract this CURRENT ZIP directly. No Batch delta chain required."
-  },
-  "fresh_validation": {
-    "pytest_tests": 349,
-    "pytest_app_tests": 111,
-    "pytest_tests_reader": 130,
-    "pytest_total": 590,
-    "subtests_total": 239,
-    "integrity": "PASS",
-    "fa_source_entry_identity": "PASS",
+  "validation": {
+    "tests": 349,
+    "app_tests": 111,
+    "tests_reader": 130,
+    "total_tests": 590,
+    "subtests": 239,
+    "status": "PASS",
     "chromium_checks": 20,
     "chromium_status": "PASS",
-    "android_gradle": "BLOCKED_BEFORE_COMPILATION_BY_DNS",
-    "android_gradle_detail": "Gradle wrapper could not resolve services.gradle.org; no compiler task was reached."
+    "apk_zip": "PASS",
+    "apk_v2_signature": "PASS",
+    "apk_v2_content_digest": "PASS"
   },
+  "apk_build_method": {
+    "clean_gradle_build": false,
+    "method": "offline_repack_current_r6_python_reader_coursepack_assets_into_verified_0.1.4_android_chaquopy_shell_then_resign",
+    "reason": "Current environment could not reliably perform the full Gradle dependency build; the APK is explicitly recorded as a repack, not a clean rebuild."
+  },
+  "unchanged_content_artifacts": [
+    "Book-TwoCourses-r6-batch5-Delta.zip",
+    "Book-TwoCourses-TextData-r6-batch5.zip",
+    "Book-TwoCourses-r6-batch5-全量检查与内容补全说明.md",
+    "Book-TwoCourses-r6-batch5-delivery-manifest.json"
+  ],
   "boundaries": [
     "Independent whole-book mathematical acceptance remains incomplete.",
     "PDE complete worked solutions remain incomplete.",
-    "Android ARM64 physical-device and native ShuSong/font-size persistence acceptance remain open.",
-    "This is source, not an APK release."
+    "Android ARM64 physical-device and native ShuSong/font-size persistence acceptance remain open."
   ],
-  "github": {
-    "parent_sha": "909bd70b70f76499d7a55ac9a863ccfbdcd81aad",
-    "main_writes": 0,
-    "pr_merges": 0,
-    "deletions": 0
-  },
-  "sync": {
-    "drive_new_objects": 2,
-    "drive_in_place_updates": 0,
-    "historical_previous_final_source_preserved": true
-  }
+  "main_writes": 0,
+  "pr_merges": 0
 }

@@ -392,14 +392,14 @@
       "type": "generated_final_source_candidate",
       "drive_file_id": "1ZJh4lPEvIO-AgBEAou2VODUg99FHVzxK",
       "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Final-Source-r6-batch5.zip",
-      "size_bytes": 70022111,
-      "sha256": "707ca7eea943db83e49f88eb391cca23c70b5f45fe9f089f7d60cd2591dc96ba",
-      "version": "r6-batch5-final-source",
+      "size_bytes": 69764534,
+      "sha256": "e337db07efb71a037d3988f18dd959983838c76b7cc546a9fe416745bf415fa4",
+      "version": "r6-batch5-final-source-ui2",
       "source": "assistant_generated_consolidated_source",
       "related_checkpoint": "governance/two_courses_final_app_source_20260922.json",
-      "purpose": "Single self-contained final App source candidate merging first-r6 base and Batch5 cumulative delta. Includes Android, web, desktop, FastAPI/Python runtime, current two-course data, tests and verification evidence; no delta application required.",
+      "purpose": "Single self-contained r6 Batch5 App source candidate, now including the continuous high-density Learn UI and hidden inline provenance labels while retaining provenance data.",
       "status": "active_final_source_candidate_content_review_open",
-      "verification": "Full Drive bytes read back; local SHA-256 matched. ZIP has 1540 entries; internal final source manifest lists 1539 self-excluding files and all 1539 hashes matched. Current source tree rerun: 590 pytest passed + 239 subtests; integrity PASS; FA source-entry identity PASS. Android build was not rerun because Gradle distribution download was DNS-blocked in this cloud environment."
+      "verification": "Full Drive bytes read back; SHA-256 matched. ZIP 1540 entries/CRC PASS; internal final manifest 1539/1539 PASS; 590 tests +239 subtests and 20 Chromium checks PASS."
     },
     {
       "artifact_id": "book_app_final_source_r6_batch5_manifest_2026_09_22",
@@ -407,14 +407,14 @@
       "type": "generated_manifest",
       "drive_file_id": "1sGpVG0eUvJpfJnfs1n7rah-gCIcJdI13",
       "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Final-Source-r6-batch5.manifest.json",
-      "size_bytes": 1085,
-      "sha256": "6133e29cb1498c64aff10ceba3d7c01b560463f844bc66d0ab9f8a843082c9da",
-      "version": "r6-batch5-final-source",
+      "size_bytes": 1425,
+      "sha256": "6a2db11126e6e27a13f7f19fa98e043cf74d630765371e53987d25ec1529a6f7",
+      "version": "r6-batch5-final-source-ui2",
       "source": "assistant_generated",
       "related_checkpoint": "governance/two_courses_final_app_source_20260922.json",
-      "purpose": "External identity and verification manifest for the consolidated final App source ZIP.",
+      "purpose": "External identity and verification manifest for the updated consolidated final App source ZIP.",
       "status": "active",
-      "verification": "Drive raw bytes read back and SHA-256 matched."
+      "verification": "Full Drive raw bytes read back and SHA-256 matched."
     },
     {
       "artifact_id": "book_app_source_current_r6_2026_09_22",
@@ -422,14 +422,14 @@
       "type": "generated_current_source_snapshot",
       "drive_file_id": "1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R",
       "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Source-CURRENT-r6-20260922.zip",
-      "size_bytes": 70348611,
-      "sha256": "c376dd1314838a49682d56f94c6c22a20868358609f4d7c4058a80ce37be5dee",
-      "version": "r6-current-20260922-1054",
+      "size_bytes": 70090018,
+      "sha256": "19315e8aeebe2db5cf2f4b55e0a38f550967966af106491dfef67212b430adc1",
+      "version": "r6-current-20260922-1945-ui2",
       "source": "fresh_repackage_of_latest_consolidated_r6_batch5_source",
       "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
-      "purpose": "Freshly rebuilt CURRENT source package from the latest consolidated r6 Batch5 app source, with current handoff metadata and fresh validation logs. App code/course-data logic remains Batch5; package metadata/validation evidence are current.",
+      "purpose": "Current self-contained source handoff with continuous high-density Learn UI, hidden inline provenance labels, current handoff metadata and updated browser test logic.",
       "status": "active_current_app_source",
-      "verification": "Full Google Drive bytes materialized back; size/SHA-256 matched local. ZIP CRC PASS; 1555 ZIP entries; internal current source manifest self-excludes and verifies 1554/1554 files. Fresh rerun: 590 pytest +239 subtests PASS, integrity PASS, FA source identity PASS, 20 Chromium checks PASS. Android Gradle wrapper blocked before compilation by DNS resolution failure for services.gradle.org."
+      "verification": "Full Drive bytes read back; SHA-256 matched. ZIP CRC PASS; 1555 entries; internal current manifest 1554/1554 PASS; 590 tests +239 subtests and 20 Chromium checks PASS."
     },
     {
       "artifact_id": "book_app_source_current_r6_manifest_2026_09_22",
@@ -437,14 +437,14 @@
       "type": "generated_manifest",
       "drive_file_id": "1t7w8CQfxmP4JzEurxVNpTozFfW2Q3FjA",
       "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-Source-CURRENT-r6-20260922.manifest.json",
-      "size_bytes": 1135,
-      "sha256": "9bdd90e6fe9402c8f79c649704297237ffb8ab79e47f39b6f05bf4729d5b65ba",
-      "version": "r6-current-20260922-1054",
+      "size_bytes": 1264,
+      "sha256": "1f0291d2b6a9f5d8822978befda2f3d6fa4709ca320ccb08b7a19ad269460c10",
+      "version": "r6-current-20260922-1945-ui2",
       "source": "fresh_delivery_manifest",
       "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
-      "purpose": "External delivery manifest for the freshly rebuilt CURRENT App source package.",
+      "purpose": "External delivery manifest for the refreshed CURRENT App source package.",
       "status": "active",
-      "verification": "Full Google Drive bytes materialized back; size/SHA-256 matched local."
+      "verification": "Full Drive raw bytes read back and SHA-256 matched."
     },
     {
       "artifact_id": "book_pdf_structuring_policy_v3_2026_09_22",
@@ -460,6 +460,51 @@
       "purpose": "Current Book scanned-PDF structuring/review policy: first-time extraction remains page-based; review of existing structured data is structured-data-first with risk-triggered PDF spot checks.",
       "status": "active_policy",
       "verification": "Updated in place on Drive, preserving the same file ID; full remote bytes read back; size/SHA-256 matched local."
+    },
+    {
+      "artifact_id": "book_app_current_apk_r6_batch5_2026_09_22",
+      "file_name": "Book-App-CURRENT-r6-batch5.apk",
+      "type": "generated_android_apk",
+      "drive_file_id": "1lQv8fhx3JIvxy4v8WnHdJUYDImsEMY-Z",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-CURRENT-r6-batch5.apk",
+      "size_bytes": 99320092,
+      "sha256": "012527c4d3e1d24ce3560394f44ededfd046e25f0d63356aaa844926543a8208",
+      "version": "r6-batch5-current-apk-ui2",
+      "source": "offline_repack_from_verified_android_shell_with_current_r6_assets",
+      "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+      "purpose": "Installable current Android debug APK with continuous high-density Learn UI and inline source labels hidden from normal reading while provenance remains in data.",
+      "status": "active_current_installable_debug_apk",
+      "verification": "Full Drive bytes read back; SHA-256 matched; ZIP CRC PASS; APK Signature Scheme v2 RSA signature and content digest PASS. Not a clean Gradle rebuild."
+    },
+    {
+      "artifact_id": "book_app_current_apk_r6_batch5_manifest_2026_09_22",
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.manifest.json",
+      "type": "generated_manifest",
+      "drive_file_id": "1Q334Ge9YLcCe28l8HVq4U71QMROqD5bm",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-CURRENT-r6-batch5.apk.manifest.json",
+      "size_bytes": 1296,
+      "sha256": "538ed983d497d9aa1d4bf3172ca087e5baa2af33088d0d5fa6e8350a863d2a43",
+      "version": "r6-batch5-current-apk-ui2",
+      "source": "assistant_generated",
+      "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+      "purpose": "Build-method, signature, UI and validation manifest for the current APK.",
+      "status": "active",
+      "verification": "Full Drive raw bytes read back and SHA-256 matched."
+    },
+    {
+      "artifact_id": "book_app_current_apk_r6_batch5_sha256_2026_09_22",
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.sha256",
+      "type": "checksum",
+      "drive_file_id": "1G0QTXwIprOoQ2PvmAN2ZSg1-mHKWl3Xn",
+      "drive_path": "Book/03_Exports/Book-Mobile-TwoCourses-0.1.5-dev-r1-20260921/Book-App-CURRENT-r6-batch5.apk.sha256",
+      "size_bytes": 97,
+      "sha256": "48de0dce65738f8f4719877e1c2d7222eb2dd3a8d8317779d89865c4254c2dd4",
+      "version": "r6-batch5-current-apk-ui2",
+      "source": "assistant_generated",
+      "related_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
+      "purpose": "SHA-256 checksum text for the current APK.",
+      "status": "active",
+      "verification": "Full Drive raw bytes read back and SHA-256 matched."
     }
   ],
   "notes": [
@@ -490,9 +535,11 @@
     "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained.",
     "Historical consolidated App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open.",
     "Current App source: governance/two_courses_current_app_source_20260922_1054.json. Use Drive Book-App-Source-CURRENT-r6-20260922.zip. This package was freshly rebuilt at 2026-09-22 10:54 +08:00 from the latest consolidated Batch5 app source, adds current handoff metadata and freshly rerun validation, and was fully read back from Drive. App code/course-data logic remains Batch5 because no later business-content/code changes exist.",
-    "Current review strategy: governance/two_courses_r6_review_strategy_v3_20260922.json. For existing structured textbook data, perform a full structured-data review first and open PDF pages only for uncertainty, suspected omissions/transcription errors, cross-page ambiguity, figure/table/layout issues, or source-provenance conflicts. The scanned page remains the authority for what the book printed when source form must be confirmed. First-time extraction from a scanned PDF still requires continuous source-page processing. Source/correction/derived layers remain separate."
+    "Current review strategy: governance/two_courses_r6_review_strategy_v3_20260922.json. For existing structured textbook data, perform a full structured-data review first and open PDF pages only for uncertainty, suspected omissions/transcription errors, cross-page ambiguity, figure/table/layout issues, or source-provenance conflicts. The scanned page remains the authority for what the book printed when source form must be confirmed. First-time extraction from a scanned PDF still requires continuous source-page processing. Source/correction/derived layers remain separate.",
+    "2026-09-22 UI/APK refresh: CURRENT and final source ZIPs were updated in place after the Learn view was changed to a continuous high-density stream and inline source/page/PDF labels were hidden from normal reading without deleting provenance data. A current installable APK plus manifest/checksum were added and fully read back. Batch5 content-data artifacts are unchanged."
   ],
   "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
   "active_final_app_source_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
-  "active_two_courses_review_strategy": "governance/two_courses_r6_review_strategy_v3_20260922.json"
+  "active_two_courses_review_strategy": "governance/two_courses_r6_review_strategy_v3_20260922.json",
+  "active_current_apk_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json"
 }
