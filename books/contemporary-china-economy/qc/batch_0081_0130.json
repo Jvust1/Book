@@ -1,0 +1,23 @@
+{
+  "schema_version": "book_ingestion_qc_v1",
+  "book_id": "contemporary-china-economy",
+  "batch_pdf_pages": [81,130],
+  "page_count": 50,
+  "printed_pages": [70,119],
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "continuous_coverage": true,
+  "visual_layout_checked_pages": 50,
+  "direct_scan_verified_sparse_pages": [101,115],
+  "direct_scan_transition_heading_pages": [102,116,128],
+  "figures_detected": 0,
+  "tables_detected": 0,
+  "display_equations_detected": 0,
+  "full_page_visual_verification": false,
+  "structured_review_complete": false,
+  "status": "PASS_WITH_SOURCE_REVIEW_DEBT",
+  "known_limitations": ["扫描 PDF 无可靠文本层，正文依赖中文 OCR 辅助转录。","稠密正文未完成逐字符视觉验收；OCR 错字、标点、专名、数字仍可能存在。","全批已逐页通过 contact sheet 做版式/标题/图表存在性基础检查；章末稀疏页与章节转换页另做原页定点核对。","本批页面级视觉检查未见需单独裁切的编号图、数据表或独立显示公式。"],
+  "checked_pdf_pages": [81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130],
+  "page_status_default": "PASS_WITH_SOURCE_REVIEW_DEBT",
+  "page_exceptions": {"direct_scan_sparse_content_verified":[101,115],"direct_scan_transition_heading_verified":[102,116,128]}
+}
