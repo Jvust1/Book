@@ -8,7 +8,7 @@
     "货币金融学",
     "当代中国经济"
   ],
-  "status": "PARTIAL_SOURCE_ACCESS_BLOCKED",
+  "status": "IN_PROGRESS_SOURCE_AVAILABLE",
   "request_fulfilled": false,
   "whole_book_complete": false,
   "monetary_finance": {
@@ -29,33 +29,72 @@
     "structured_review_complete": false
   },
   "contemporary_china_economy": {
-    "status": "BLOCKED_SOURCE_BYTES_AND_IDENTITY",
+    "status": "STRUCTURING_IN_PROGRESS",
     "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
-    "source_pdf_sha256": null,
-    "source_pdf_page_count": null,
-    "extracted_textbook_body_blocks": 0,
+    "source_file_name": "当代中国经济（也叫社会主义市场经济理论）.pdf",
+    "canonical_book_title": "社会主义市场经济理论（第五版）",
+    "edition": "第五版",
+    "publisher": "高等教育出版社",
+    "isbn": "978-7-04-051184-0",
+    "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "source_pdf_page_count": 255,
+    "generator_claimed_scanned_pages": 254,
     "embedded_source_filename_claim": "社会主义市场经济理论 第5版_14599815.zip",
-    "visual_identity_confirmed": false
+    "visual_identity_confirmed": true,
+    "identity_verified_from_pdf_pages": [
+      1,
+      3,
+      4
+    ],
+    "processed_pdf_page_range": [
+      1,
+      15
+    ],
+    "last_processed_pdf_page": 15,
+    "next_pdf_page": 16,
+    "printed_pages_structured_range": [
+      1,
+      4
+    ],
+    "body_pdf_pages_structured": [
+      12,
+      15
+    ],
+    "chapter_1_status": "IN_PROGRESS",
+    "structured_page_records": 15,
+    "formula_records": 1,
+    "figure_records": 1,
+    "table_records": 0,
+    "structured_batch_path": "books/contemporary-china-economy/structured/structured_pages_0001_0015.md",
+    "structured_batch_sha256": "e50be0b9e8aabf9afea4d0de8cdf24ad31b6ee21eefe9b4438f16370d571005f",
+    "batch_manifest_path": "books/contemporary-china-economy/structured/batch_manifest_0001_0015.json",
+    "batch_manifest_sha256": "4f7b9778656b9d4d1f26e6b498f5a61872aa15fdc4bd8a6a1a868a428101102c"
   },
   "blockers": [
     {
       "id": "SOURCE_BYTES_UNAVAILABLE",
-      "status": "OPEN",
-      "evidence": "Both original-PDF download paths, including official transfer helper, returned HTTP 403."
+      "status": "RESOLVED",
+      "evidence": "Connected Google Drive raw-file fetch succeeded for 1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC; local source size 54,999,067 bytes and SHA-256 a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204."
     },
     {
       "id": "SECOND_BOOK_IDENTITY_UNVERIFIED",
-      "status": "OPEN",
-      "evidence": "Drive name and internal original filename differ; no source page image available."
+      "status": "RESOLVED",
+      "evidence": "PDF cover/title/CIP pages visually confirm 社会主义市场经济理论（第五版）, 高等教育出版社, ISBN 978-7-04-051184-0. 当代中国经济 is treated as the course alias."
+    },
+    {
+      "id": "SCALABLE_OCR_BATCH_TIMEOUT",
+      "status": "OPEN_NON_BLOCKING",
+      "evidence": "A single OCR batch targeting PDF pages 1-50 timed out after 15 completed page delimiters. Pages 1-15 were retained; continuation must start at PDF page 16 without duplicating them."
     }
   ],
   "validation": {
     "draft_internal_consistency": "PASS",
     "latex_render": "19/19 PASS; syntax only",
     "whole_book_content": "INCOMPLETE",
-    "source_pdf_visual_checks": "NOT_PERFORMED"
+    "source_pdf_visual_checks": "PARTIAL: identity pages 1/3/4 and body pages 12-15 visually checked",
+    "latest_incremental_batch": "PASS_WITH_SOURCE_REVIEW_DEBT"
   },
-  "next_action": "Obtain readable original PDFs, confirm second book identity, then complete continuous source-page ingestion and resolve missing formulas, images, tables, appendix and page provenance. Direct conversation attachments can replace the failing transfer route.",
+  "next_action": "Continue from PDF page 16 (printed page 5), preserving the PDF-to-printed-page mapping. Structure the next consecutive pages, retain uncertain OCR as source-review debt, verify formulas/figures/tables against rendered source pages, and do not switch to mygpt until the whole textbook is complete and accepted.",
   "app_runtime_imported": false,
   "sync_artifact": {
     "artifact_id": "book_economics_structured_draft_20260922",
@@ -69,32 +108,54 @@
     "version": "draft-20260922",
     "source": "connector_readable_text_and_source_metadata",
     "related_checkpoint": "governance/economics_ingestion_current.json",
-    "purpose": "货币金融学14章可追溯文本结构化初稿，以及当代中国经济来源身份/访问阻塞；不是完整教材成果或App课程接入。",
+    "purpose": "货币金融学14章可追溯文本结构化初稿，以及当代中国经济来源身份/访问阻塞的历史草稿包；当前当代中国经济已取得源PDF，增量结构化状态以 GitHub 当前检查点为准。",
     "status": "active_incomplete_draft",
     "library_convenience_copy_id": "libfile_afefb11604dc81918d9abe7c8ad431bf",
-    "verification": "ZIP CRC and all internal hashes PASS; 60 parser output files reproducible; original PDF bytes unavailable; all content completion gates remain false.",
+    "verification": "ZIP CRC and all internal hashes PASS; original draft preserved. Current source-PDF continuation is tracked separately in GitHub.",
     "remote_verification": {
       "metadata_name_size_parent": "PASS",
       "remote_content_sha256_verified": false,
       "reason": "Drive metadata wrapper did not return checksum fields; local ZIP and all members were verified before upload."
     }
   },
+  "latest_incremental_batch": {
+    "scope": "当代中国经济 / 社会主义市场经济理论（第五版）",
+    "pdf_pages": [
+      1,
+      15
+    ],
+    "body_pdf_pages": [
+      12,
+      15
+    ],
+    "printed_pages": [
+      1,
+      4
+    ],
+    "next_pdf_page": 16,
+    "github_outputs": [
+      "books/contemporary-china-economy/structured/structured_pages_0001_0015.md",
+      "books/contemporary-china-economy/structured/batch_manifest_0001_0015.json"
+    ],
+    "drive_new_objects": 0,
+    "drive_note": "No duplicate checkpoint package was created; the original source PDF remains the Drive authority and the prior draft ZIP remains preserved."
+  },
   "sync_counts": {
-    "scope": "GitHub files plus Drive objects; Library convenience copy reported separately",
-    "NEW": 6,
-    "CHANGED": 3,
+    "scope": "Incremental economics continuation on existing non-default branch; Drive source reused",
+    "NEW": 2,
+    "CHANGED": 2,
     "SKIP_IDENTICAL": 0,
-    "HISTORICAL_DUPLICATE_PRESERVED": 0,
+    "HISTORICAL_DUPLICATE_PRESERVED": 1,
     "CONFLICT_NEEDS_REVIEW": 0,
     "github_commits_created": 1,
-    "github_new_files": 5,
-    "github_changed_files": 3,
-    "drive_files_created": 1,
+    "github_new_files": 2,
+    "github_changed_files": 2,
+    "drive_files_created": 0,
     "drive_files_updated_in_place": 0,
-    "library_convenience_copies_created": 1,
+    "library_convenience_copies_created": 0,
     "direct_main_writes": 0,
     "pr_merges": 0,
     "destructive_operations": 0,
-    "note": "The exact resulting commit and PR are recorded in the PR receipt, avoiding self-referential commit hashes. The second textbook identity issue is a content blocker, not a synchronization conflict."
+    "note": "This checkpoint records one logical GitHub commit on data/economics-structure-20260922. Existing Drive source and prior draft ZIP were reused; no duplicate Drive object was created."
   }
 }
