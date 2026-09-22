@@ -1,0 +1,29 @@
+{
+  "schema_version": "book_monetary_finance_ingestion_current_v1",
+  "updated_at": "2026-09-22T20:27:51+08:00",
+  "book_id": "monetary-finance-3e",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_page_count": 430,
+  "base_text_draft_drive_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
+  "status": "IN_PROGRESS",
+  "whole_book_complete": false,
+  "processed_pdf_pages": {"start":1,"end":50,"count":50},
+  "printed_pages": {"start":1,"end":44},
+  "next_source_pdf_page": 51,
+  "next_printed_page": 45,
+  "figures_recovered_in_batch": 4,
+  "formula_overlays_verified_in_batch": 16,
+  "tables_in_batch": 0,
+  "structured_review_complete": false,
+  "targeted_pdf_issues_resolved_for_batch": true,
+  "full_page_visual_verification": false,
+  "switch_to_invest": false,
+  "next_action": "Continue source verification from PDF 51 / printed page 45 for the next 50 new PDF pages.",
+  "batch_drive_artifact": {
+    "file_id": "1OAv5MtL7DmtLNeIyqY8aKfh6oBEkoXgy",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-050-20260922.zip",
+    "sha256": "e67ab11ac72062eb3389b5f2ec418565c8d170b7650b26bfb6e091a00d1a055b",
+    "size_bytes": 5488874
+  }
+}
