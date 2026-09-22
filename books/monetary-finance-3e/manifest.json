@@ -1,0 +1,58 @@
+{
+  "schema_version": "book-source-verified-batch-1.0",
+  "book_id": "monetary-finance-3e",
+  "title": "货币金融学",
+  "edition": "第3版",
+  "authors": [
+    "张红伟（主编）",
+    "邓奇志（副主编）"
+  ],
+  "publisher": "科学出版社",
+  "publication_date": "2021-10",
+  "isbn": "978-7-03-069842-1",
+  "source_type": "pdf_with_readable_text_and_scan_visual",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_bytes": 81807312,
+  "pdf_page_count": 430,
+  "verified_source_pdf_pages": [
+    1,
+    50
+  ],
+  "verified_printed_pages": [
+    1,
+    44
+  ],
+  "next_source_pdf_page": 51,
+  "next_printed_page": 45,
+  "status": "IN_PROGRESS",
+  "whole_book_complete": false,
+  "base_draft_drive_artifact_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
+  "base_draft_text_sha256": "a9a7a6566e5be116278643cdf8ba70403b4138c5b338b9974206541fb7395939",
+  "content_format": {
+    "text": "markdown+jsonl",
+    "math": "latex",
+    "figures": "original_scan_crop",
+    "tables": "structured+original_when_needed"
+  },
+  "batch_files": {
+    "markdown": "verified/verified_pages_0001_0050.md",
+    "blocks": "blocks/verified_blocks_0001_0050.jsonl",
+    "page_map": "source/pdf_page_map_0001_0050.jsonl",
+    "qc": "qc/batch_0001_0050.json",
+    "image_manifest": "images/asset_manifest_0001_0050.json"
+  },
+  "completion_flags": {
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved_for_batch": true,
+    "full_page_visual_verification": false,
+    "mathematical_review_status": "batch_targeted_source_review"
+  },
+  "content_origin": "source",
+  "latest_verified_batch_drive_artifact": {
+    "file_id": "1OAv5MtL7DmtLNeIyqY8aKfh6oBEkoXgy",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-050-20260922.zip",
+    "sha256": "e67ab11ac72062eb3389b5f2ec418565c8d170b7650b26bfb6e091a00d1a055b",
+    "size_bytes": 5488874
+  }
+}
