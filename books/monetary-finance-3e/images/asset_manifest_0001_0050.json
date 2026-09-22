@@ -1,0 +1,26 @@
+{
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf001-050-20260922",
+  "assets": [
+    {
+      "path": "images/ch01/fig_1-1_money_origin.png",
+      "sha256": "634b1ad13e0ff1515c5b2a96bd0f67fcf41d9982eff586a8c2c33b73c0a3a77d",
+      "bytes": 28133
+    },
+    {
+      "path": "images/ch01/fig_1-2_monetary_system_types.png",
+      "sha256": "14ecda20e6b928d67ffe4e3550128e7f46d6429d21f8984763cc54f6be56ff3d",
+      "bytes": 21833
+    },
+    {
+      "path": "images/ch02/box_2-2_bank_acceptance_bill.png",
+      "sha256": "bc2de03625c2cdfde5d54340904814f71d80157f9d0ba52bb4b000c31c585f93",
+      "bytes": 169471
+    },
+    {
+      "path": "images/ch02/box_2-2_commercial_acceptance_bill.png",
+      "sha256": "3c080607118121ee0c9869ca185ef55a914829f8fb35260e3adb582037f9eeb5",
+      "bytes": 32719
+    }
+  ]
+}
