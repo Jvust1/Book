@@ -1,0 +1,48 @@
+{
+  "schema_version": "monetary_finance_pdf_verification_batch_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf001-050-20260922",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_bytes": 81807312,
+  "source_pdf_page_count": 430,
+  "processed_pdf_pages": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],
+  "processed_page_count": 50,
+  "printed_pages_verified": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44],
+  "next_source_pdf_page": 51,
+  "next_printed_page": 45,
+  "whole_book_complete": false,
+  "existing_text_draft_blocks": 5564,
+  "verified_overlay_blocks": 572,
+  "connector_text_alignment_min": 0.96875,
+  "connector_text_alignment_avg": 0.997651,
+  "formula_overlays_source_visual_confirmed": 16,
+  "numbered_figures_recovered": 2,
+  "unnumbered_source_images_recovered": 2,
+  "tables_in_batch": 0,
+  "full_page_visual_verification": false,
+  "structured_review_complete": false,
+  "targeted_pdf_issues_resolved_for_batch": true,
+  "page_layout_spot_checks": 50,
+  "targeted_high_resolution_checks": [11,13,14,21,31,32,49],
+  "remaining_global_debt": [
+    "PDF 51–430 未建立本轮物理页来源核对映射",
+    "后续章节图表/复杂公式/附录仍需按批核对",
+    "全书 structured_review_complete 仍为 false"
+  ],
+  "lowest_similarity_pages": [
+    {"source_pdf_page":49,"printed_page":43,"ratio":0.96875},
+    {"source_pdf_page":32,"printed_page":26,"ratio":0.972603},
+    {"source_pdf_page":38,"printed_page":32,"ratio":0.987483},
+    {"source_pdf_page":7,"printed_page":1,"ratio":0.988432},
+    {"source_pdf_page":30,"printed_page":24,"ratio":0.994737},
+    {"source_pdf_page":45,"printed_page":39,"ratio":0.995885},
+    {"source_pdf_page":28,"printed_page":22,"ratio":0.995915},
+    {"source_pdf_page":26,"printed_page":20,"ratio":0.995948}
+  ],
+  "notes": [
+    "连接器初稿与 PDF 文本层在正文 PDF7–50 的字符序列高度一致；差异主要来自浮动“学习目标/知识点摘要/专栏”标签位置、脚注序号布局以及 PDF32 公式私用字体字符。",
+    "PDF32 的公式依据扫描页视觉内容恢复 LaTeX；未用模型常识猜补。",
+    "PDF49 的两张票据样式从原扫描页裁切，作为 source 图像资产保存。"
+  ]
+}
