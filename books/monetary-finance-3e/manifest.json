@@ -15,14 +15,8 @@
   "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
   "source_pdf_bytes": 81807312,
   "pdf_page_count": 430,
-  "verified_source_pdf_pages": [
-    1,
-    50
-  ],
-  "verified_printed_pages": [
-    1,
-    44
-  ],
+  "verified_source_pdf_pages": [1, 50],
+  "verified_printed_pages": [1, 44],
   "next_source_pdf_page": 51,
   "next_printed_page": 45,
   "status": "IN_PROGRESS",
@@ -35,12 +29,21 @@
     "figures": "original_scan_crop",
     "tables": "structured+original_when_needed"
   },
-  "batch_files": {
+  "drive_package_files": {
     "markdown": "verified/verified_pages_0001_0050.md",
     "blocks": "blocks/verified_blocks_0001_0050.jsonl",
     "page_map": "source/pdf_page_map_0001_0050.jsonl",
     "qc": "qc/batch_0001_0050.json",
-    "image_manifest": "images/asset_manifest_0001_0050.json"
+    "image_manifest": "images/asset_manifest_0001_0050.json",
+    "original_image_assets": 4
+  },
+  "repository_files": {
+    "batch_manifest": "batches/batch_0001_0050.json",
+    "compact_page_map": "source/pdf_page_map_compact_0001_0050.jsonl",
+    "qc": "qc/batch_0001_0050.json",
+    "qc_report": "qc/extraction_report_0001_0050.md",
+    "image_manifest": "images/asset_manifest_0001_0050.json",
+    "current_state": "../../governance/monetary_finance_ingestion_current.json"
   },
   "completion_flags": {
     "structured_review_complete": false,
