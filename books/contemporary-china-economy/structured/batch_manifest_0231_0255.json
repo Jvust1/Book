@@ -1,0 +1,40 @@
+{
+  "schema_version": "book_batch_manifest_v2",
+  "book_id": "contemporary-china-economy",
+  "canonical_title": "社会主义市场经济理论（第五版）",
+  "course_alias": "当代中国经济",
+  "source_type": "scanned_pdf",
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "source_pdf_page_count": 255,
+  "batch": {
+    "pdf_pages": [231,255],
+    "printed_pages": [220,243],
+    "new_pages": 25,
+    "book_content_pages": 24,
+    "packaging_metadata_pages": 1,
+    "next_pdf_page": null,
+    "next_printed_page": null
+  },
+  "content_format": {
+    "text": "markdown+jsonl",
+    "math": "latex_when_present",
+    "figures": "original_image_when_present",
+    "tables": "structured+original_when_needed",
+    "source_page_fidelity": "full_page_jpeg_from_original_pdf"
+  },
+  "outputs": ["structured/structured_pages_0231_0255.md","blocks/blocks_0231_0255.jsonl","source/pdf_page_map_compact_0231_0255.jsonl","qc/batch_0231_0255.json","qc/extraction_report_0231_0255.md","source_pages/pdf_231.jpg","source_pages/pdf_232.jpg","source_pages/pdf_233.jpg","source_pages/pdf_234.jpg","source_pages/pdf_235.jpg","source_pages/pdf_236.jpg","source_pages/pdf_237.jpg","source_pages/pdf_238.jpg","source_pages/pdf_239.jpg","source_pages/pdf_240.jpg","source_pages/pdf_241.jpg","source_pages/pdf_242.jpg","source_pages/pdf_243.jpg","source_pages/pdf_244.jpg","source_pages/pdf_245.jpg","source_pages/pdf_246.jpg","source_pages/pdf_247.jpg","source_pages/pdf_248.jpg","source_pages/pdf_249.jpg","source_pages/pdf_250.jpg","source_pages/pdf_251.jpg","source_pages/pdf_252.jpg","source_pages/pdf_253.jpg","source_pages/pdf_254.jpg","source_pages/pdf_255.jpg","audit/contact_231_235.jpg","audit/contact_236_240.jpg","audit/contact_241_245.jpg","audit/contact_246_250.jpg","audit/contact_251_255.jpg","structured/verified_sparse_0231_0255.md"],
+  "asset_counts": {"figures":0,"tables":0,"display_equations":0,"semantic_blocks":190},
+  "quality": {"continuous_coverage":true,"visual_layout_checked_pages":25,"full_page_visual_verification":false,"status":"PASS_WITH_SOURCE_REVIEW_DEBT"},
+  "content_origin": "source",
+  "completion_gate": {"source_pdf_end_reached":true,"whole_book_ingestion_coverage_complete":true,"structured_review_complete":false,"switch_to_mygpt":false},
+  "storage_split": {
+    "github": "batch manifest + compact QC + sparse visual verification + book/checkpoint/current status",
+    "drive": "full batch Markdown + blocks JSONL + page map + 25 source-page images + 5 contact sheets",
+    "drive_file_id": "1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ",
+    "drive_file_name": "Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip",
+    "drive_sha256": "155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4",
+    "drive_size_bytes": 7832859,
+    "dedup_action": "NEW_VERIFIED_BATCH_ARCHIVE"
+  }
+}
