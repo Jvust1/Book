@@ -1,0 +1,17 @@
+{
+  "schema_version": "book_batch_manifest_v2",
+  "book_id": "contemporary-china-economy",
+  "canonical_title": "社会主义市场经济理论（第五版）",
+  "course_alias": "当代中国经济",
+  "source_type": "scanned_pdf",
+  "source_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+  "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "source_pdf_page_count": 255,
+  "batch": {"pdf_pages": [131,180], "printed_pages": [120,169], "new_pages": 50, "next_pdf_page": 181, "next_printed_page": 170},
+  "content_format": {"text": "markdown+jsonl", "math": "latex_when_present", "figures": "original_image_when_present", "tables": "structured+original_when_needed"},
+  "outputs": ["structured/structured_pages_0131_0180.md", "blocks/blocks_0131_0180.jsonl", "source/pdf_page_map_compact_0131_0180.jsonl", "qc/batch_0131_0180.json", "qc/extraction_report_0131_0180.md", "images/ch08/fig_008_social_safety_system.png", "tables/ch08/table_8_1.png", "tables/ch08/table_8_2.png", "tables/ch08/table_8_3.png", "tables/ch08/table_8_4.png"],
+  "asset_counts": {"figures": 1, "tables": 4, "display_equations": 0, "semantic_blocks": 517},
+  "quality": {"continuous_coverage": true, "visual_layout_checked_pages": 50, "full_page_visual_verification": false, "status": "PASS_WITH_SOURCE_REVIEW_DEBT"},
+  "content_origin": "source",
+  "storage_split": {"github": "batch manifest + compact QC + sparse visual verification + book/checkpoint state", "drive": "full batch Markdown + full blocks JSONL + full page map + original figure/table crops + audit contact sheets", "drive_file_id": "1SHV_t3CnvzvJfgKDAJQ5_lWhBJ8BjcG4", "drive_file_name": "Book-Contemporary-China-Economy-Verified-pdf131-180-20260922.zip", "drive_sha256": "f43a4bcdb90d07234d7d246f268307c2868906692a9a9dc3a4b4365170f02514", "drive_size_bytes": 4574070, "dedup_action": "REUSED_EXISTING_VERIFIED_BATCH_ARCHIVE"}
+}
