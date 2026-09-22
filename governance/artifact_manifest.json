@@ -460,6 +460,27 @@
       "purpose": "Current Book scanned-PDF structuring/review policy: first-time extraction remains page-based; review of existing structured data is structured-data-first with risk-triggered PDF spot checks.",
       "status": "active_policy",
       "verification": "Updated in place on Drive, preserving the same file ID; full remote bytes read back; size/SHA-256 matched local."
+    },
+    {
+      "artifact_id": "book_economics_structured_draft_20260922",
+      "file_name": "Book-Economics-Structured-DRAFT-20260922.zip",
+      "type": "generated_structured_source_draft",
+      "drive_file_id": "1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX",
+      "drive_path": "Book/03_Exports/Book-Economics-Structured-DRAFT-20260922.zip",
+      "drive_url": "https://drive.google.com/file/d/1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX/view?usp=drivesdk",
+      "size_bytes": 5147711,
+      "sha256": "965b47e39ec0727fafa9090e9663c9bd8aef292f70d9671566834ee4adeeae36",
+      "version": "draft-20260922",
+      "source": "connector_readable_text_and_source_metadata",
+      "related_checkpoint": "governance/economics_ingestion_current.json",
+      "purpose": "货币金融学14章可追溯文本结构化初稿，以及当代中国经济来源身份/访问阻塞；不是完整教材成果或App课程接入。",
+      "status": "active_incomplete_draft",
+      "library_convenience_copy_id": "libfile_afefb11604dc81918d9abe7c8ad431bf",
+      "verification": "ZIP CRC and all internal hashes PASS; 60 parser output files reproducible; original PDF bytes unavailable; all content completion gates remain false.",
+      "remote_verification": {
+        "metadata_name_size_parent": "PASS",
+        "remote_content_sha256_verified": false
+      }
     }
   ],
   "notes": [
@@ -490,9 +511,11 @@
     "Current recovery entry: governance/two_courses_r6_batch5_checkpoint_20260922.json. Use immutable first-r6 source ZIP plus cumulative Batch5 Delta; standalone Batch5 TextData is a current text snapshot, not an app. 9355 records structurally checked, 13 corrections (11 HIGH and 2 MEDIUM), 62 four-mode teaching routes, 80 new FA reference derivation drafts (110 total). Full mathematical review, PDE solutions and Android acceptance remain open. All prior artifacts retained.",
     "Historical consolidated App source: governance/two_courses_final_app_source_20260922.json. Use Drive Book-App-Final-Source-r6-batch5.zip directly; no Batch2-5 delta chain is required. This is the consolidated App source candidate, while full independent mathematical review, complete PDE solutions and Android physical-device acceptance remain open.",
     "Current App source: governance/two_courses_current_app_source_20260922_1054.json. Use Drive Book-App-Source-CURRENT-r6-20260922.zip. This package was freshly rebuilt at 2026-09-22 10:54 +08:00 from the latest consolidated Batch5 app source, adds current handoff metadata and freshly rerun validation, and was fully read back from Drive. App code/course-data logic remains Batch5 because no later business-content/code changes exist.",
-    "Current review strategy: governance/two_courses_r6_review_strategy_v3_20260922.json. For existing structured textbook data, perform a full structured-data review first and open PDF pages only for uncertainty, suspected omissions/transcription errors, cross-page ambiguity, figure/table/layout issues, or source-provenance conflicts. The scanned page remains the authority for what the book printed when source form must be confirmed. First-time extraction from a scanned PDF still requires continuous source-page processing. Source/correction/derived layers remain separate."
+    "Current review strategy: governance/two_courses_r6_review_strategy_v3_20260922.json. For existing structured textbook data, perform a full structured-data review first and open PDF pages only for uncertainty, suspected omissions/transcription errors, cross-page ambiguity, figure/table/layout issues, or source-provenance conflicts. The scanned page remains the authority for what the book printed when source form must be confirmed. First-time extraction from a scanned PDF still requires continuous source-page processing. Source/correction/derived layers remain separate.",
+    "2026-09-22 Economics textbooks: source-text draft only; original PDF download HTTP403 and second-book identity mismatch remain OPEN. This is independent from prior PDE/FA r6 courses."
   ],
   "active_two_courses_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
   "active_final_app_source_checkpoint": "governance/two_courses_current_app_source_20260922_1054.json",
-  "active_two_courses_review_strategy": "governance/two_courses_r6_review_strategy_v3_20260922.json"
+  "active_two_courses_review_strategy": "governance/two_courses_r6_review_strategy_v3_20260922.json",
+  "active_economics_ingestion_checkpoint": "governance/economics_ingestion_current.json"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-09-13",
+  "updated_date": "2026-09-22",
   "repository": "Jvust2/Book",
   "default_branch": "main",
   "active_branch": "design/phase-1h-learning-slices-20260830",
@@ -187,7 +187,7 @@
     "documentation": "android-app/README.md",
     "checkpoint": "docs/ANDROID_0_1_3.md",
     "physical_device_recording": "NOT_TESTED",
-      "next_step": "Review PR #29 and test microphone/background behavior on ARM64 hardware; merge requires explicit PR authorization."
+    "next_step": "Review PR #29 and test microphone/background behavior on ARM64 hardware; merge requires explicit PR authorization."
   },
   "windows_delivery": {
     "version": "0.1.3",
@@ -215,5 +215,13 @@
     "windows_exe_sha256": "8D00950F324ACA0E9089F8E543C06F920C0F02DBF3FE725A6F8ED3A15677F751",
     "desktop_packaged_library": "PASS",
     "desktop_sync_smoke": "PASS_WITH_SYSTEM_EDGE_AND_ISOLATED_DATA"
+  },
+  "economics_ingestion": {
+    "branch": "data/economics-structure-20260922",
+    "status": "PARTIAL_SOURCE_ACCESS_BLOCKED",
+    "checkpoint": "governance/economics_ingestion_current.json",
+    "artifact_id": "book_economics_structured_draft_20260922",
+    "app_runtime_imported": false,
+    "next_step": "Obtain readable original PDFs, confirm second book identity, then complete continuous source-page ingestion and resolve missing formulas, images, tables, appendix and page provenance. Direct conversation attachments can replace the failing transfer route."
   }
 }
