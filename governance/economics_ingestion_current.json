@@ -1,16 +1,78 @@
 {
-  "schema_version": "economics_ingestion_current_v8",
-  "updated_at": "2026-09-22T18:50:00Z",
+  "schema_version": "economics_ingestion_current_v9",
+  "updated_at": "2026-09-22T19:45:00Z",
   "course_alias": "当代中国经济",
-  "book": {"canonical_title":"社会主义市场经济理论（第五版）","authors":["夏永祥","张斌"],"publisher":"高等教育出版社","isbn":"978-7-04-051184-0","source_drive_file_id":"1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC","source_pdf_sha256":"a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204","pdf_page_count":255},
-  "status": "SOURCE_INGESTION_COVERAGE_COMPLETE_REVIEW_PENDING",
+  "book": {
+    "canonical_title":"社会主义市场经济理论（第五版）",
+    "authors":["夏永祥","张斌"],
+    "publisher":"高等教育出版社",
+    "isbn":"978-7-04-051184-0",
+    "source_drive_file_id":"1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "source_pdf_sha256":"a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "pdf_page_count":255
+  },
+  "status": "REVIEW_BLOCKED_BY_INCOMPLETE_FULLTEXT_LAST_BATCH",
   "whole_book_complete": false,
+  "structured_content_complete": false,
   "structured_review_complete": false,
+  "targeted_pdf_issues_resolved": false,
   "switch_to_mygpt": false,
-  "progress": {"processed_pdf_page_range":[1,255],"last_processed_pdf_page":255,"next_pdf_page":null,"printed_pages_structured_range":[1,243],"next_printed_page":null,"source_pdf_end_reached":true,"ingestion_coverage_complete":true},
-  "latest_batch": {"pdf_pages":[231,255],"printed_pages":[220,243],"new_pdf_pages":25,"book_content_pages":24,"packaging_metadata_pages":1,"structured_markdown":"DRIVE_ARCHIVE:structured/structured_pages_0231_0255.md","batch_manifest":"books/contemporary-china-economy/structured/batch_manifest_0231_0255.json","blocks_jsonl":"DRIVE_ARCHIVE:blocks/blocks_0231_0255.jsonl","page_map":"DRIVE_ARCHIVE:source/pdf_page_map_compact_0231_0255.jsonl","qc":"books/contemporary-china-economy/qc/batch_0231_0255.json","qc_report":"books/contemporary-china-economy/qc/extraction_report_0231_0255.md","verified_sparse":"books/contemporary-china-economy/structured/verified_sparse_0231_0255.md","asset_counts":{"figures":0,"tables":0,"display_equations":0},"semantic_blocks":190,"quality_status":"PASS_WITH_SOURCE_REVIEW_DEBT","full_page_visual_verification":false,"cross_page_semantics":"章节/小节连续关系已定位；稠密正文字符级复核债务保留，不静默猜测。"},
+  "progress": {
+    "processed_pdf_page_range":[1,255],
+    "last_processed_pdf_page":255,
+    "next_pdf_page":null,
+    "printed_pages_structured_range":[1,243],
+    "next_printed_page":null,
+    "source_pdf_end_reached":true,
+    "ingestion_coverage_complete":true,
+    "next_review_target_pdf_page":231
+  },
+  "latest_batch": {
+    "pdf_pages":[231,255],
+    "printed_pages":[220,243],
+    "new_pdf_pages":25,
+    "book_content_pages":24,
+    "packaging_metadata_pages":1,
+    "structured_markdown":"DRIVE_ARCHIVE:structured/structured_pages_0231_0255.md",
+    "batch_manifest":"books/contemporary-china-economy/structured/batch_manifest_0231_0255.json",
+    "blocks_jsonl":"DRIVE_ARCHIVE:blocks/blocks_0231_0255.jsonl",
+    "page_map":"DRIVE_ARCHIVE:source/pdf_page_map_compact_0231_0255.jsonl",
+    "qc":"books/contemporary-china-economy/qc/batch_0231_0255.json",
+    "qc_report":"books/contemporary-china-economy/qc/extraction_report_0231_0255.md",
+    "verified_sparse":"books/contemporary-china-economy/structured/verified_sparse_0231_0255.md",
+    "asset_counts":{"figures":0,"tables":0,"display_equations":0},
+    "semantic_blocks":190,
+    "quality_status":"PASS_WITH_SOURCE_REVIEW_DEBT",
+    "full_page_visual_verification":false
+  },
   "prior_batches": [[1,15],[16,23],[24,30],[31,80],[81,130],[131,180],[181,230]],
-  "drive_archive": {"file_name":"Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip","drive_file_id":"1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ","sha256":"155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4","size_bytes":7832859,"folder":"Book/03_Exports","status":"ACTIVE_BATCH_ARCHIVE","dedup_action":"NEW_VERIFIED_BATCH_ARCHIVE"},
-  "quality_boundaries": {"continuous_source_read":true,"visual_layout_checked_pages":25,"direct_scan_sparse_pages_verified":[231,251,255],"direct_scan_transition_heading_pages":[232,239,246,247,250,252],"direct_scan_reference_pages":[252,253,254],"dense_text_source_review_debt":true,"full_page_visual_verification":false,"note":"PDF 231–254 为扫描教材页，逐页视觉读取并保存 source-page fidelity；PDF 255 为打包元数据。稠密正文字符级 structured review 尚未完成。"},
-  "next_action": "不再重复做 1–255 页的首次录入。进入全书 structured review/QC 收尾：按 v3 规则先对既有结构化数据做自审，定位高风险/不确定项，再回原 PDF 定点复核；只有 structured_review_complete、targeted_pdf_issues_resolved 与项目状态记录全部通过后，才将 whole_book_complete=true 并切换 mygpt。"
+  "drive_archive": {
+    "file_name":"Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip",
+    "drive_file_id":"1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ",
+    "sha256":"155f6a606f580576a88ea98569ffd1f664012dfc9b44a3ea3ecf1f71247126c4",
+    "size_bytes":7832859,
+    "folder":"Book/03_Exports",
+    "status":"ACTIVE_BATCH_ARCHIVE"
+  },
+  "full_book_review": {
+    "checkpoint":"books/contemporary-china-economy/qc/full_book_structured_review_20260923.json",
+    "report":"books/contemporary-china-economy/qc/full_book_structured_review_20260923.md",
+    "drive_archive": {
+      "file_name":"Book-Contemporary-China-Economy-FullBook-Structured-Review-20260923.zip",
+      "drive_file_id":"1Beq7cpUs_S1vvbKOVM8DvXQJ6M9Zjyjh",
+      "sha256":"21eb70d1b68b203a23ed511e6216d8b96263d670768ace52506d38c3a5934a75",
+      "size_bytes":2051773
+    },
+    "blocking_issue_ids":["ECO-QC-FULLTEXT-0231-0254"],
+    "high_risk_issue_ids":["ECO-QC-OCR-0181"]
+  },
+  "quality_boundaries": {
+    "continuous_source_read":true,
+    "source_pdf_end_reached":true,
+    "ingestion_coverage_complete":true,
+    "dense_text_source_review_debt":true,
+    "full_page_visual_verification":false,
+    "note":"全书审计确认物理页覆盖完整，但 PDF231–254 当前文字结构层是稀疏结构骨架而非完整正文；PDF181 另有明显 OCR 破损。不能把覆盖到末页等同于结构化完成。"
+  },
+  "next_action": "REMEDIATE_FULLTEXT_0231_0254：从 PDF231 开始连续补齐至 PDF254 的完整正文文字结构层；随后修复 PDF181，并按 v3 对 PDF1–230 的 uncertain/OCR debt 做风险驱动复核。全部完成门槛通过前不得切换 mygpt。"
 }
