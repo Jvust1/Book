@@ -1,0 +1,16 @@
+{
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf051-100-20260922",
+  "drive_artifact_file_id": "1iC8Z8HiBejLv67-sAzmcPDo5Ncx5lSQ0",
+  "assets": [
+    {"figure_number":"2-1","title":"图 2-1 货币需求不受利率影响时的挤出效应","path":"images/ch02/fig_2-1_crowding_out_vertical_lm.png","source_pdf_page":53,"printed_page":47,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"0de13b7e5bbd5a8f03af2d0255c82ce7e9629068944764236bae5b0766ce4659","bytes":26305,"uncertain":false},
+    {"figure_number":"2-2","title":"图 2-2 货币需求受到利率影响时的挤出效应","path":"images/ch02/fig_2-2_crowding_out_sloped_lm.png","source_pdf_page":53,"printed_page":47,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"f8b00d7036435ebe869abec85222f71d93ba4f9c2c47b3681b99e6ccd2f0b2f2","bytes":29756,"uncertain":false},
+    {"figure_number":"3-1","title":"图 3-1 投资意愿提高","path":"images/ch03/fig_3-1_investment_willingness.png","source_pdf_page":80,"printed_page":74,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"bbd818a2df9893644434566239a06000ab60078c53b51ea0b26f7f5dc0bde0af","bytes":22033,"uncertain":false},
+    {"figure_number":"3-2","title":"图 3-2 储蓄意愿提高","path":"images/ch03/fig_3-2_saving_willingness.png","source_pdf_page":80,"printed_page":74,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"1a42e32504803d0be262517dd66e0d0c37fd204d40a83b457ea5067144ad204d","bytes":20149,"uncertain":false},
+    {"figure_number":"3-3","title":"图 3-3 凯恩斯的货币供求均衡与均衡利率的决定","path":"images/ch03/fig_3-3_keynes_money_market_equilibrium.png","source_pdf_page":81,"printed_page":75,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"300abc02c5d40c78a42d7d170eb732312835142c5b8f4f87e9bc0b3dd214114d","bytes":27883,"uncertain":false},
+    {"figure_number":"3-4","title":"图 3-4 通货膨胀预期与利率的关系（一）","path":"images/ch03/fig_3-4_inflation_expectation_interest_rate_1.png","source_pdf_page":82,"printed_page":76,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"8fc7c37707e5b05e80524852f25659941d0965bd3c7f10ecd38cb8023a6e3f05","bytes":28073,"uncertain":false},
+    {"figure_number":"3-5","title":"图 3-5 IS-LM 框架下均衡利率的决定","path":"images/ch03/fig_3-5_is_lm_equilibrium_interest_rate.png","source_pdf_page":83,"printed_page":77,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"357fd81522f05fff9b610168a70696f1534c6bbb15eab62e2f8725024820c479","bytes":21061,"uncertain":false},
+    {"figure_number":"3-6","title":"图 3-6 通货膨胀预期与利率的关系（二）","path":"images/ch03/fig_3-6_inflation_expectation_interest_rate_2.png","source_pdf_page":84,"printed_page":78,"content_origin":"source","crop_method":"source_pdf_clip_no_redraw","sha256":"a4d75a85aac2fec28a810ff9562bed58c3af19022c1c00754d4cb487e2cafce2","bytes":35628,"uncertain":false}
+  ],
+  "table_asset": {"table_number":"3-1","title":"表3-1 可贷资金的供给和需要量","path":"tables/assets/table_3-1_loanable_funds_supply_demand.png","source_pdf_page":81,"printed_page":75,"content_origin":"source"}
+}

@@ -1,29 +1,33 @@
 # Book：《货币金融学（第三版）》结构化当前状态
 
-- 实际连续处理：**50 个新 PDF 页（1–50）**。
-- 正文映射：PDF 7–50 ↔ 印刷页 1–44；下一页为 **PDF 51 / 印刷页 45**。
+- 累计连续处理：**PDF 1–100，共 100 页**；本轮新增 **PDF 51–100，共 50 个新 PDF 页**。
+- 正文映射：累计印刷页 **1–94**；下一页为 **PDF 101 / 印刷页 95**。
 - 源 PDF：430 页，SHA-256 `3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73`。
-- 既有连接器初稿与 PDF7–50 文本层归一化字符序列平均相似度 **0.9977**，最低 **0.9688**。
-- 50/50 页完成结构/版式基础 spot-check；高风险页 11、13、14、21、31、32、49 做高分辨率定点核对。
-- 恢复原图：图1-1、图1-2，以及专栏2-2两张票据样式，共 4 个图像资产。
-- 公式：16 个原有公式/公式候选得到扫描页来源确认并保存 LaTeX/LaTeX 片段；其中 PDF32 的私用字体乱码公式已按页面视觉恢复。
-- 本批没有编号表格。
+- 本轮 50/50 页完成连续来源读取、结构/版式基础检查；连接器初稿与 PDF51–100 文本层归一化字符序列平均相似度 **0.998741**，最低 **0.991696**。
+- 本轮恢复原图：图2-1、图2-2、图3-1～图3-6，共 **8 个编号图像资产**；全部直接从原 PDF 裁切。
+- 本轮表格：**表3-1** 已结构化并保存原始扫描截图。
+- 本轮公式：**41 条来源公式/表达式**建立 LaTeX visual overlay；**82 个 formula-candidate** 已视觉归类/合并或判定为非公式误报。
+- 跨批语义：修复 1 个跨 PDF50→51 的连续段落来源跨度。
+
+## 章节覆盖
+
+- 第2章：本轮补完印刷页45–60（PDF51–66），与上一批合并后来源页覆盖完整。
+- 第3章：印刷页61–93（PDF67–99）本轮完成全章来源页覆盖。
+- 第4章：已进入印刷页94（PDF100）。
 
 ## 完成度边界
 
-本批只把 **PDF 1–50** 的来源页映射和高风险对象闭环，不将全书标记完成。`full_page_visual_verification=false`（没有逐字视觉重读每个字符）；`targeted_pdf_issues_resolved_for_batch=true`；全书 `structured_review_complete=false`。
+全书仍未完成：`whole_book_complete=false`、`structured_review_complete=false`、`switch_to_invest=false`。本轮 `full_page_visual_verification=false`，因为完成的是逐页来源读取 + 版式/高风险对象基础校读，不冒充逐字符视觉验收。
 
 ## 下一步
 
-从 **PDF 51 / 印刷页 45** 连续处理下一批 50 个新 PDF 页。
+从 **PDF 101 / 印刷页 95** 连续处理下一批 **50 个新 PDF 页**。
 
-Drive 源文件 ID：`1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe`。既有全书文本初稿包 Drive ID：`1Xpn8TJhsMN6aRwJkUTttir36cuGU47eX`。
+## Drive 归档
 
-## 本批 Drive 归档
-
-- `Book-Monetary-Finance-Verified-pdf001-050-20260922.zip`
-- Drive ID：`1OAv5MtL7DmtLNeIyqY8aKfh6oBEkoXgy`
-- SHA-256：`e67ab11ac72062eb3389b5f2ec418565c8d170b7650b26bfb6e091a00d1a055b`
-- 大小：`5488874` bytes
+- `Book-Monetary-Finance-Verified-pdf001-100-20260922.zip`
+- Drive ID：`1iC8Z8HiBejLv67-sAzmcPDo5Ncx5lSQ0`
+- SHA-256：`1af1edb4d0ad0d58287cc363f01aa7bf1ca7be16b35b59cc7ae2ea606810c212`
+- 大小：`5989927` bytes
 - 位置：`Book/03_Exports`
-- GitHub 只保存当前状态、批次清单、页码映射与 QC；完整 Markdown / JSONL / 原图资产保存在该 Drive 归档中，避免在仓库重复存放大体积生成物。
+- 该包为累计 PDF1–100 归档；GitHub 仅保存状态、批次清单、紧凑页码映射和 QC，避免重复存储大体积 Markdown/JSONL/原图。

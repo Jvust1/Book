@@ -1,0 +1,40 @@
+{
+  "schema_version": "book_verified_batch_manifest_v1",
+  "book_id": "monetary-finance-3e",
+  "batch_id": "pdf0051-0100-20260922",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_page_count": 430,
+  "source_pdf_pages": {"start": 51, "end": 100, "count": 50},
+  "printed_pages": {"start": 45, "end": 94},
+  "cumulative_processed_pdf_pages": {"start": 1, "end": 100, "count": 100},
+  "cumulative_printed_pages": {"start": 1, "end": 94},
+  "next_source_pdf_page": 101,
+  "next_printed_page": 95,
+  "drive_artifact": {
+    "file_id": "1iC8Z8HiBejLv67-sAzmcPDo5Ncx5lSQ0",
+    "path": "/Google Drive/Book/03_Exports/Book-Monetary-Finance-Verified-pdf001-100-20260922.zip",
+    "filename": "Book-Monetary-Finance-Verified-pdf001-100-20260922.zip",
+    "sha256": "1af1edb4d0ad0d58287cc363f01aa7bf1ca7be16b35b59cc7ae2ea606810c212",
+    "size_bytes": 5989927,
+    "artifact_scope": "cumulative_pdf001_0100"
+  },
+  "quality": {
+    "page_layout_spot_checks": 50,
+    "formula_overlays_verified": 41,
+    "formula_candidates_resolved": 82,
+    "numbered_figures_recovered": 8,
+    "tables_in_batch": 1,
+    "cross_batch_semantic_spans_corrected": 1,
+    "connector_pdf_normalized_text_similarity_avg": 0.998741,
+    "connector_pdf_normalized_text_similarity_min": 0.991696,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved_for_batch": true
+  },
+  "artifact_changed_file_count": 21,
+  "notes": [
+    "GitHub stores current state, batch metadata, compact page map and QC; cumulative Markdown/JSONL/source image/table assets are in Drive artifact.",
+    "No main-branch write and no PR merge performed."
+  ]
+}
