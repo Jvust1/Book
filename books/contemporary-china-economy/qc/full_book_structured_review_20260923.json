@@ -1,0 +1,85 @@
+{
+  "schema_version": "economics_fullbook_structured_review_v1",
+  "generated_at": "2026-09-22T19:45:00Z",
+  "book_id": "contemporary-china-economy",
+  "course_alias": "当代中国经济",
+  "source": {
+    "drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "pdf_page_count_confirmed": 255,
+    "printed_textbook_pages": [1, 243],
+    "packaging_metadata_pdf_page": 255
+  },
+  "scope": {
+    "first_pass_physical_page_coverage": [1, 255],
+    "new_pdf_pages_this_review_run": 0,
+    "source_end_reached": true,
+    "review_kind": "whole_book_structured_artifact_audit_plus_targeted_source_visual_checks"
+  },
+  "status": {
+    "ingestion_coverage_complete": true,
+    "structured_content_complete": false,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved": false,
+    "full_page_visual_verification": false,
+    "whole_book_complete": false,
+    "switch_to_mygpt": false
+  },
+  "batch_metrics": [
+    {"batch":"0031_0080","block_count":511,"page_min":31,"page_max":80,"page_count":50,"mean_cjk_chars_per_page":1158.2,"median_cjk_chars_per_page":1248.0},
+    {"batch":"0081_0130","block_count":483,"page_min":81,"page_max":130,"page_count":50,"mean_cjk_chars_per_page":1258.9,"median_cjk_chars_per_page":1307.0},
+    {"batch":"0131_0180","block_count":517,"page_min":130,"page_max":180,"page_count":51,"mean_cjk_chars_per_page":1216.8,"median_cjk_chars_per_page":1251},
+    {"batch":"0181_0230","block_count":497,"page_min":181,"page_max":230,"page_count":50,"mean_cjk_chars_per_page":1572.1,"median_cjk_chars_per_page":1482.5},
+    {"batch":"0231_0255","block_count":190,"page_min":231,"page_max":255,"page_count":25,"mean_cjk_chars_per_page":145.1,"median_cjk_chars_per_page":77}
+  ],
+  "blocking_findings": [
+    {
+      "id": "ECO-QC-FULLTEXT-0231-0254",
+      "severity": "BLOCKING",
+      "category": "missing_dense_body_transcription",
+      "pdf_pages": [231, 254],
+      "description": "PDF 231–254 的当前结构化 Markdown/blocks 主要记录标题、条目、思考题、参考文献等结构与少量明确文字；原扫描页仍含大量连续正文，但正文未完整进入文字结构层。该状态不满足首次录入‘不得漏正文/不得以摘要或骨架替代正文’的规范。",
+      "resolution_required": "从原 PDF/已有 source-page fidelity 图连续补录 PDF 231–254 全部正文；保持页码、层级、跨页语义、source/AI 分层和不确定性标记。"
+    },
+    {
+      "id": "ECO-QC-OCR-0181",
+      "severity": "HIGH",
+      "category": "ocr_corruption",
+      "pdf_pages": [181],
+      "description": "PDF 181 的结构化 blocks 中存在明显乱码/OCR 破损片段，而原扫描页标题与正文清晰可读。",
+      "resolution_required": "对 PDF 181 做原扫描定点复核并修正错误文字，不静默猜测。"
+    }
+  ],
+  "non_blocking_review_debt": [
+    {"id":"ECO-QC-REVIEW-0001-0030","pdf_pages":[1,30],"description":"早期批次保留 raw OCR/已知 source-review debt，需按 v3 自审后定点回源。"},
+    {"id":"ECO-QC-REVIEW-0031-0230","pdf_pages":[31,230],"description":"各批 QC 均保留 source-review debt；应对 uncertain blocks、专名、数字、引文、跨页连续对象做风险驱动复核。"},
+    {"id":"ECO-QC-INDEX-0131-0255","pdf_pages":[131,255],"description":"后续批次 page map 已存在于 Drive 归档，但 GitHub source/ 只保留到 0081–0130；不是数据丢失，但项目索引/恢复性可进一步统一。"},
+    {"id":"ECO-QC-PROJECT-STATE-STALE","description":"governance/project_state.json 的 economics_ingestion 摘要仍为 PARTIAL_SOURCE_ACCESS_BLOCKED，与当前已到源 PDF 末页的专用 checkpoint 不一致；为避免影响主应用治理，本轮不大范围重写该文件，需在项目治理审计中统一。"}
+  ],
+  "targeted_visual_checks": [
+    {"pdf_page":181,"result":"原扫描清晰显示‘第9章 经济增长与经济发展’及正文；证明当前 blocks 的开头乱码需要修复。"},
+    {"pdf_page":231,"result":"印刷页220，第10章章末结语、重点概念、思考题；当前结构层捕获题目与概念但漏掉页首正文段。"},
+    {"pdf_page":232,"result":"印刷页221，第11章起始页含章节导语、第一节、一/（一）及多段稠密正文；当前结构层仅保留标题骨架。"},
+    {"pdf_page":233,"result":"印刷页222，经济全球化概念续文与成因条目包含多段正文；当前结构层仅保留小标题/条目骨架。"},
+    {"pdf_page":254,"result":"纳入末尾参考文献/正文尾段核验样本。"},
+    {"pdf_page":255,"result":"PDF 打包元数据页，非教材印刷正文。"}
+  ],
+  "review_archive": {
+    "file_name": "Book-Contemporary-China-Economy-FullBook-Structured-Review-20260923.zip",
+    "drive_file_id": "1Beq7cpUs_S1vvbKOVM8DvXQJ6M9Zjyjh",
+    "sha256": "21eb70d1b68b203a23ed511e6216d8b96263d670768ace52506d38c3a5934a75",
+    "size_bytes": 2051773
+  },
+  "next_action": {
+    "mode": "REMEDIATE_FULLTEXT_0231_0254",
+    "next_unprocessed_pdf_page": null,
+    "next_review_target_pdf_page": 231,
+    "priority_order": [
+      "补齐 PDF 231–254 全文文字结构层",
+      "修复 PDF181 明显 OCR 破损",
+      "风险驱动复核 PDF1–230 uncertain/OCR debt",
+      "统一 page-map/manifest/index 与状态记录",
+      "满足全部完成门槛后才切换 mygpt"
+    ]
+  }
+}
