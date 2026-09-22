@@ -1,0 +1,45 @@
+{
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf101-150-20260922",
+  "assets": [
+    {
+      "asset_type": "figure",
+      "title": "图 5-1 银行同业拆借业务流程",
+      "path": "images/ch05/fig_5-1_bank_interbank_lending_flow.png",
+      "source_pdf_page": 131,
+      "printed_page": 125,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "9a47154cdf64cf034e368258c8ecc9dbda571bb90801b920177eb0f8c49c384c",
+      "bytes": 53987,
+      "uncertain": false,
+      "figure_number": "5-1"
+    },
+    {
+      "asset_type": "figure",
+      "title": "国库券利率及通货膨胀率（1973年1月至2010年1月）",
+      "path": "images/ch05/fig_p129_tbill_rate_inflation_1973_2010.png",
+      "source_pdf_page": 135,
+      "printed_page": 129,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "1cdfafc57841159a1b0e110b7909c25b3d18b6bdf0cfb56899671fa1c5386cf4",
+      "bytes": 133249,
+      "uncertain": false,
+      "figure_number": null
+    },
+    {
+      "asset_type": "table",
+      "title": "3月美股三大指数收盘涨跌数据",
+      "path": "tables/assets/table_p120_us_stock_march_2020.png",
+      "source_pdf_page": 126,
+      "printed_page": 120,
+      "content_origin": "source",
+      "crop_method": "source_pdf_clip_no_redraw",
+      "sha256": "c88da88ec839c8927404837c1a1fbe39ff7818bca753b7da3f1eac6d5ecf81b2",
+      "bytes": 616364,
+      "uncertain": false,
+      "structured_table_path": "tables/table_p120_us_stock_march_2020.json"
+    }
+  ]
+}

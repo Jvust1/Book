@@ -1,0 +1,58 @@
+{
+  "schema_version": "monetary_finance_pdf_verification_batch_v1",
+  "book_id": "monetary-finance-3e",
+  "batch": "pdf101-150-20260922",
+  "source_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+  "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+  "source_pdf_bytes": 81807312,
+  "source_pdf_page_count": 430,
+  "processed_pdf_pages": [101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150],
+  "processed_page_count": 50,
+  "printed_pages_verified": [95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144],
+  "next_source_pdf_page": 151,
+  "next_printed_page": 145,
+  "whole_book_complete": false,
+  "base_semantic_blocks_covered": 628,
+  "block_type_counts": {"page_header":50,"whitespace":50,"paragraph":368,"subsection_title":22,"numbered_heading":50,"reference":11,"column_marker":11,"section_title":7,"minor_heading":10,"note":9,"exercise_group":1,"exercise":4,"supplement_title":1,"chapter_title":1,"layout_label":2,"equation_candidate":26,"layout_separator":4,"figure":2,"table":1},
+  "connector_text_alignment_min": 0.992462,
+  "connector_text_alignment_avg": 0.998696,
+  "formula_overlays_source_visual_confirmed": 13,
+  "formula_candidates_resolved": 26,
+  "numbered_figures_recovered": 1,
+  "unnumbered_figures_recovered": 1,
+  "tables_in_batch": 1,
+  "cross_batch_semantic_spans_corrected": 0,
+  "full_page_visual_verification": false,
+  "structured_review_complete": false,
+  "targeted_pdf_issues_resolved_for_batch": false,
+  "page_layout_spot_checks": 50,
+  "targeted_high_resolution_checks": [124,125,126,131,133,135,139],
+  "chapter_coverage": [
+    {"chapter_id":"ch04","printed_pages":[95,115],"source_pdf_pages":[101,121],"coverage_role":"finishes_source_page_coverage_for_ch04"},
+    {"chapter_id":"ch05","printed_pages":[116,144],"source_pdf_pages":[122,150],"coverage_role":"chapter_partial_through_5.5.1"}
+  ],
+  "remaining_global_debt": [
+    "PDF 151–430 尚未完成物理页来源核对映射",
+    "后续章节图表/复杂公式/附录仍需按批核对",
+    "PDF125/印刷119平均收益率示例存在疑似教材原印数值/分母不自洽，已保留 source 并进入 QC",
+    "全书 structured_review_complete 仍为 false"
+  ],
+  "lowest_similarity_pages": [
+    {"source_pdf_page":126,"printed_page":120,"ratio":0.992462},
+    {"source_pdf_page":148,"printed_page":142,"ratio":0.997},
+    {"source_pdf_page":144,"printed_page":138,"ratio":0.997194},
+    {"source_pdf_page":138,"printed_page":132,"ratio":0.997227},
+    {"source_pdf_page":112,"printed_page":106,"ratio":0.99725},
+    {"source_pdf_page":116,"printed_page":110,"ratio":0.997273},
+    {"source_pdf_page":134,"printed_page":128,"ratio":0.997297},
+    {"source_pdf_page":140,"printed_page":134,"ratio":0.997427},
+    {"source_pdf_page":124,"printed_page":118,"ratio":0.997438},
+    {"source_pdf_page":142,"printed_page":136,"ratio":0.997438}
+  ],
+  "notes": [
+    "本批 PDF101–150 与连接器结构化初稿按印刷页锚点逐页对齐；50/50 页面完成连续来源读取与整批版式视觉检查。",
+    "26 个 formula-candidate 均完成视觉归类；13 条来源公式/表达式建立 LaTeX overlay。",
+    "恢复图5-1、国库券利率与通胀率统计图、3月美股三大指数涨跌表，均来自原 PDF 裁切，无 AI 重绘。",
+    "full_page_visual_verification=false：本批完成逐页来源读取+版式检查+高风险对象定点核对，不声称逐字符人工视觉复核。"
+  ]
+}
