@@ -1,0 +1,34 @@
+{"pdf_page":30,"printed_page":11,"id":"fe10-p030-f1","latex":"C_a=\\max(aS_0-K,0),\\qquad C_b=\\max(bS_0-K,0)","context":"两状态期权到期价值","verified":"visual_source_scan"}
+{"pdf_page":30,"printed_page":11,"id":"fe10-p030-f2","latex":"-S_0+xC_0=-aS_0+xC_a,\\qquad -S_0+xC_0=-bS_0+xC_b","context":"卖空股票与买入期权的完全对冲方程","verified":"visual_source_scan"}
+{"pdf_page":30,"printed_page":11,"id":"fe10-p030-f3","latex":"C_0=\\frac{C_a-C_b+aC_b-bC_a}{a-b}","context":"期权当前价格","verified":"visual_source_scan"}
+{"pdf_page":31,"printed_page":12,"id":"fe10-p031-f1","latex":"y+zaS_0=C_a,\\qquad y+zbS_0=C_b","context":"银行存款+股票复制","verified":"visual_source_scan"}
+{"pdf_page":31,"printed_page":12,"id":"fe10-p031-f2","latex":"z=\\frac{C_a-C_b}{S_0(a-b)},\\qquad y=\\frac{aC_b-bC_a}{a-b},\\qquad C_0=y+zS_0=\\frac{C_a-C_b+aC_b-bC_a}{a-b}","context":"复制组合解","verified":"visual_source_scan"}
+{"pdf_page":31,"printed_page":12,"id":"fe10-p031-f3","latex":"aq+(1-q)b=1,\\qquad q=\\frac{1-b}{a-b}","context":"等价概率","verified":"visual_source_scan"}
+{"pdf_page":31,"printed_page":12,"id":"fe10-p031-f4","latex":"C_0=qC_a+(1-q)C_b=\\frac{C_a-C_b+aC_b-bC_a}{a-b}","context":"风险中性概率下的期权均值","verified":"visual_source_scan"}
+{"pdf_page":33,"printed_page":14,"id":"fe10-p033-f1","latex":"U(c_0;c_a,c_b)=u(c_0)+pu(c_a)+(1-p)u(c_b)","context":"投资-消费总效用","verified":"visual_source_scan"}
+{"pdf_page":33,"printed_page":14,"id":"fe10-p033-f2","latex":"c_0=e_0-x_d-S_0x_s,\\quad c_a=e_a+x_d+aS_0x_s,\\quad c_b=e_b+x_d+bS_0x_s","context":"消费预算约束","verified":"visual_source_scan"}
+{"pdf_page":33,"printed_page":14,"id":"fe10-p033-f3","latex":"\\max\\ U(c_0;c_a,c_b)=u(c_0)+pu(c_a)+(1-p)u(c_b)\\quad\\text{s.t.}\\quad c_0\\ge0,\\ c_a\\ge0,\\ c_b\\ge0","context":"最优投资-消费问题","verified":"visual_source_scan"}
+{"pdf_page":34,"printed_page":15,"id":"fe10-p034-f1","latex":"u\\'(\\bar c_0)=pu\\'(\\bar c_a)+(1-p)u\\'(\\bar c_b)","context":"对 x_d 的一阶条件","verified":"visual_source_scan"}
+{"pdf_page":34,"printed_page":15,"id":"fe10-p034-f2","latex":"S_0u\\'(\\bar c_0)=aS_0pu\\'(\\bar c_a)+bS_0(1-p)u\\'(\\bar c_b)","context":"对 x_s 的一阶条件","verified":"visual_source_scan"}
+{"pdf_page":34,"printed_page":15,"id":"fe10-p034-f3","latex":"1=p\\frac{u\\'(\\bar c_a)}{u\\'(\\bar c_0)}+(1-p)\\frac{u\\'(\\bar c_b)}{u\\'(\\bar c_0)}","context":"边际效用折现关系","verified":"visual_source_scan"}
+{"pdf_page":34,"printed_page":15,"id":"fe10-p034-f4","latex":"1=ap\\frac{u\\'(\\bar c_a)}{u\\'(\\bar c_0)}+b(1-p)\\frac{u\\'(\\bar c_b)}{u\\'(\\bar c_0)}","context":"边际效用折现关系","verified":"visual_source_scan"}
+{"pdf_page":34,"printed_page":15,"id":"fe10-p034-f5","latex":"q=p\\frac{u\\'(\\bar c_a)}{u\\'(\\bar c_0)},\\qquad 1-q=(1-p)\\frac{u\\'(\\bar c_b)}{u\\'(\\bar c_0)}","context":"等价概率测度与边际效用","verified":"visual_source_scan"}
+{"pdf_page":42,"printed_page":23,"id":"fe10-p042-f1","number":"2.1","latex":"\\theta\\cdot x=\\theta_1x_1+\\theta_2x_2+\\cdots+\\theta_Kx_K","context":"证券组合未来价值","verified":"visual_source_scan"}
+{"pdf_page":43,"printed_page":24,"id":"fe10-p043-f1","latex":"p(\\lambda y)=\\lambda p(y),\\quad \\lambda>0","context":"正齐次定价法则","verified":"visual_source_scan"}
+{"pdf_page":43,"printed_page":24,"id":"fe10-p043-f2","latex":"p(\\lambda y)=\\lambda p(y),\\quad \\lambda\\in\\mathbb{R}","context":"齐次定价法则","verified":"visual_source_scan"}
+{"pdf_page":43,"printed_page":24,"id":"fe10-p043-f3","latex":"p(\\lambda y+\\mu z)=\\lambda p(y)+\\mu p(z)","context":"线性定价法则","verified":"visual_source_scan"}
+{"pdf_page":43,"printed_page":24,"id":"fe10-p043-f4","latex":"p(y)=ay","context":"实数模型中的线性定价函数","verified":"visual_source_scan"}
+{"pdf_page":44,"printed_page":25,"id":"fe10-p044-f1","latex":"r_\\theta=\\frac{\\theta\\cdot x}{p(\\theta\\cdot x)}","context":"组合总收益率","verified":"visual_source_scan"}
+{"pdf_page":44,"printed_page":25,"id":"fe10-p044-f2","latex":"r_\\theta^{\\prime}=\\frac{\\theta\\cdot x-p(\\theta\\cdot x)}{p(\\theta\\cdot x)}=r_\\theta-1","context":"净收益率","verified":"visual_source_scan"}
+{"pdf_page":45,"printed_page":26,"id":"fe10-p045-f1","latex":"r_{\\lambda\\theta}=\\frac{\\lambda\\theta\\cdot x}{p(\\lambda\\theta\\cdot x)}=\\frac{\\lambda\\theta\\cdot x}{\\lambda p(\\theta\\cdot x)}=r_\\theta","context":"正倍数组合收益率不变","verified":"visual_source_scan"}
+{"pdf_page":45,"printed_page":26,"id":"fe10-p045-f2","latex":"p(r_\\theta)=p\\!\\left(\\frac{\\theta\\cdot x}{p(\\theta\\cdot x)}\\right)=1","context":"收益率对应当前价值为1","verified":"visual_source_scan"}
+{"pdf_page":45,"printed_page":26,"id":"fe10-p045-f3","latex":"r_f=\\frac{1}{p(1)}","context":"无风险总利率","verified":"visual_source_scan"}
+{"pdf_page":45,"printed_page":26,"id":"fe10-p045-f4","latex":"r_i=\\frac{x_i}{p(x_i)}=\\frac{x_i}{x_i p(1)}=\\frac1{p(1)}=r_f","context":"任意非零无风险证券收益率相同","verified":"visual_source_scan"}
+{"pdf_page":47,"printed_page":28,"id":"fe10-p047-f1","latex":"\\theta\\cdot x=\\theta_1x_1+\\theta_2x_2+\\cdots+\\theta_Kx_K","context":"随机未来价值","verified":"visual_source_scan"}
+{"pdf_page":47,"printed_page":28,"id":"fe10-p047-f2","latex":"\\mathcal H=\\{y\\mid \\exists\\theta\\in\\mathbb R^K,\\ y=\\theta\\cdot x\\}","context":"可交易未定权益空间","verified":"visual_source_scan"}
+{"pdf_page":47,"printed_page":28,"id":"fe10-p047-f3","latex":"p(\\lambda y+\\mu z)=\\lambda p(y)+\\mu p(z)","context":"随机未定权益上的线性定价","verified":"visual_source_scan"}
+{"pdf_page":49,"printed_page":30,"id":"fe10-p049-f1","latex":"\\operatorname{Cov}[y,z]=E[(y-E[y])(z-E[z])]=E[yz]-E[y]E[z]","context":"协方差","verified":"visual_source_scan"}
+{"pdf_page":49,"printed_page":30,"id":"fe10-p049-f2","latex":"\\operatorname{Var}[y]=E[(y-E[y])^2]=E[y^2]-E[y]^2","context":"方差","verified":"visual_source_scan"}
+{"pdf_page":49,"printed_page":30,"id":"fe10-p049-f3","latex":"\\operatorname{Cov}[y,z]^2\\le \\operatorname{Var}[y]\\operatorname{Var}[z]","context":"柯西不等式（协方差形式）","verified":"visual_source_scan"}
+{"pdf_page":50,"printed_page":31,"id":"fe10-p050-f1","latex":"\\langle y,z\\rangle=E[yz]","context":"未定权益空间内积","verified":"visual_source_scan"}
+{"pdf_page":50,"printed_page":31,"id":"fe10-p050-f2","latex":"p(y)=E[my]","context":"定理2.2：随机折现因子表示","verified":"visual_source_scan"}

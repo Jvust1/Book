@@ -1,0 +1,40 @@
+{
+  "schema_version": "book_ingestion_batch_manifest_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "batch_id": "pdf0001-0050-20260923",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "source_pdf_pages": {"start":1,"end":50,"count":50},
+  "printed_page_coverage": {"introduction":[1,11],"lecture_body":[1,31]},
+  "next_source_pdf_page": 51,
+  "quality": {
+    "visual_page_layout_checks": 50,
+    "formula_records_visual_verified": 34,
+    "semantic_figures_recovered": 0,
+    "tables_in_batch": 0,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false,
+    "basic_proofreading_complete": true
+  },
+  "drive_artifact": {
+    "drive_file_id": "1gafL4Uq37xtawUl63dO056G-ChajJwNF",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf001-050-20260923.zip",
+    "sha256": "119f76bf365311edd064be6a573008942be60b6be3e03bab805d00d100564ed3",
+    "size_bytes": 135818
+  },
+  "drive_full_artifact_contents": [
+    "verified/structured_pages_0001_0050.md",
+    "blocks/blocks_0001_0050.jsonl",
+    "source/pdf_page_map_0001_0050.jsonl",
+    "qc/uncertain_0001_0050.jsonl",
+    "images/asset_manifest_0001_0050.json",
+    "tables/table_manifest_0001_0050.json"
+  ],
+  "github_compact_artifacts": [
+    "source/pdf_page_map_compact_0001_0050.jsonl",
+    "verified/formulas_0001_0050.jsonl",
+    "qc/batch_0001_0050.json",
+    "qc/extraction_report_0001_0050.md"
+  ]
+}

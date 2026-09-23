@@ -1,0 +1,39 @@
+{
+  "schema_version": "book-source-ingestion-1.1",
+  "book_id": "financial-economics-ten-lectures",
+  "title": "金融经济学十讲",
+  "title_en": "Ten Lectures on Financial Economics",
+  "authors": ["史树中"],
+  "publisher": ["格致出版社", "上海人民出版社"],
+  "publication_date": "2011-11",
+  "edition": "第1版",
+  "isbn": "978-7-5432-2022-5",
+  "source_type": "scanned_pdf_no_text_layer",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_bytes": 63920851,
+  "pdf_page_count": 278,
+  "ingested_source_pdf_pages": [1, 50],
+  "next_source_pdf_page": 51,
+  "status": "INGESTION_IN_PROGRESS",
+  "whole_book_complete": false,
+  "content_format": {"text":"markdown+jsonl","math":"latex","figures":"original_scan_crop_only","tables":"structured+original_when_needed"},
+  "storage_split": {
+    "github_compact": ["batches/batch_0001_0050.json","source/pdf_page_map_compact_0001_0050.jsonl","verified/formulas_0001_0050.jsonl","qc/batch_0001_0050.json","qc/extraction_report_0001_0050.md"],
+    "drive_full_batch": ["verified/structured_pages_0001_0050.md","blocks/blocks_0001_0050.jsonl","source/pdf_page_map_0001_0050.jsonl","qc/uncertain_0001_0050.jsonl","images/asset_manifest_0001_0050.json","tables/table_manifest_0001_0050.json"]
+  },
+  "completion_flags": {
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved": false,
+    "full_page_visual_verification": false,
+    "mathematical_review_status": "batch_0001_0050_key_formulas_visual_verified_remaining_inline_math_open",
+    "switch_to_invest": false
+  },
+  "content_origin": "source",
+  "latest_batch_drive_artifact": {
+    "drive_file_id": "1gafL4Uq37xtawUl63dO056G-ChajJwNF",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf001-050-20260923.zip",
+    "sha256": "119f76bf365311edd064be6a573008942be60b6be3e03bab805d00d100564ed3",
+    "size_bytes": 135818
+  }
+}

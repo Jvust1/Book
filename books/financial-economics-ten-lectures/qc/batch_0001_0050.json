@@ -1,0 +1,22 @@
+{
+  "schema_version": "book_ingestion_qc_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "batch": "pdf0001-0050-20260923",
+  "source_pdf_pages": {"start":1,"end":50,"count":50},
+  "visual_page_layout_checks": 50,
+  "formula_records_visual_verified": 34,
+  "semantic_figures_detected": 0,
+  "tables_detected": 0,
+  "basic_proofreading_complete": true,
+  "full_page_visual_verification": false,
+  "character_level_final_review": false,
+  "structured_review_complete": false,
+  "open_page_qc_count": 46,
+  "specific_qc_items": [
+    {"id":"FE10-QC-TOC-0016-0019","pdf_pages":[16,17,18,19],"type":"toc_character_cleanup","risk":"MEDIUM","status":"OPEN","note":"目录小字号与点线/页码 OCR 噪声较多，结构边界已恢复，需后续定点逐项字符核对。"},
+    {"id":"FE10-QC-INTRO-0005-0015","pdf_pages":[5,6,7,8,9,10,11,12,13,14,15],"type":"historical_names_and_citations","risk":"MEDIUM","status":"OPEN","note":"代引言中的人名、年份、外文文献和脚注需后续定点专名校对。"},
+    {"id":"FE10-QC-FORMULA-0029-0050","pdf_pages":[30,31,33,34,42,43,44,45,47,49,50],"type":"formula_visual_review","risk":"MEDIUM","status":"PARTIAL","note":"已将关键公式视觉核实并 LaTeX 化；其余行内数学符号仍需后续按风险定点复核。"}
+  ],
+  "next_pdf_page": 51,
+  "method_note": "扫描版无文本层；逐页渲染并视觉检查版式/结构，OCR 仅作为正文转写辅助。公式和标题疑点以扫描图像定点核实。"
+}

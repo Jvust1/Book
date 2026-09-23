@@ -1,0 +1,20 @@
+{
+  "schema_version": "book_checkpoint_v1.4",
+  "book_id": "financial-economics-ten-lectures",
+  "title": "金融经济学十讲",
+  "branch": "data/financial-economics-ten-lectures-structure-20260923",
+  "status": "PDF_0001_0050_COMPLETE_BASIC_QC",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "completed_pdf_range": [1,50],
+  "last_completed_pdf_page": 50,
+  "next_pdf_page": 51,
+  "continuous_coverage": true,
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "open_qc": ["FE10-QC-TOC-0016-0019","FE10-QC-INTRO-0005-0015","FE10-QC-FORMULA-0029-0050"],
+  "drive_artifact": {"drive_file_id":"1gafL4Uq37xtawUl63dO056G-ChajJwNF","file_name":"Book-Financial-Economics-Ten-Lectures-pdf001-050-20260923.zip","sha256":"119f76bf365311edd064be6a573008942be60b6be3e03bab805d00d100564ed3","size_bytes":135818},
+  "next_action": "CONTINUE_FIRST_INGEST_FROM_PDF_0051",
+  "updated_at": "2026-09-23T07:45:00Z"
+}
