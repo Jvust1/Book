@@ -11,3 +11,6 @@ Book 运行目录必须来自固定 SHA 的 r6 归档；旧 Book `app/` 不是 r
 保持 main 不动、PR 不自动合并、原 PR #5/#6 冲突不自动解决。禁止付费 provider、ChatContextVault 读取、笔记/作答导出、StudyRecord 写入/迁移、生产多用户传输、未授权 Android/overlay 扩展。Book 原 H3b/B4b/B5、Lecture、multi-book consumer migration、持久化答案和每个 PR merge 的独立门禁仍有效；mygpt 继续安静陪伴默认、优先结构化感知、截图仅显式授权、Shadow 默认关闭。
 
 原 project_state / Current State / Handoff 的精确 blobs 已另存 `governance/history/`、`docs/history/`；处理任何旧工作流时必须读取这些历史入口并重新核验其 live 分支，不能把本桥接检查点当成旧发布全量重验。原 `governance/pending_sync.json` 未被清空；本桥接成果同步无新增阻塞，既有 non-blocking 债务仍待独立证据。
+
+
+最新 Book UI 状态修复：`114be2a40f9e3ef364aca2e02492361ebf46e4b6`。多内容层 record 不再自动选最后一层；分享必须先明确选层并完成预览。run 35834149129 的 68 Python + 18 projection Node + 1 DOM state regression 通过，但真实浏览器仍未验收。新增增量恢复包 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`；先前 v1 包保持历史身份。

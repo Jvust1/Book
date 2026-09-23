@@ -25,3 +25,14 @@ Book artifact 10736546209 的 SHA-256 为 `4214e74934bf6aaf63fc0e9e862c35ea750bc
 两份新增量 ZIP 分别归入 Book 与 mygpt 既有 Generated 目录。完整 SHA、Drive ID、内部成员数与整包回读校验记录在 `governance/book_selection_bridge_artifact_manifest_20260923.json`；旧 manifest 通过 includes 保留，旧 artifact 不重复上传。包内 CHECKPOINT.md 保存更详细的验证、错误及重现说明。
 
 状态同步将 pre-bridge 三份入口按完全相同的 Git blob 保存在 history，新入口只描述当前评审分支；不会覆盖历史证据或取消任何旧门禁。后续修改必须沿普通分支/审阅流程进行，不直接写 main，不自动合并。
+
+
+## BRIDGE-E002 — 明确内容层选择回归
+
+提交 `114be2a40f9e3ef364aca2e02492361ebf46e4b6` 修复多内容层 record 被默认选中最后一层的问题：现在存在多层时插入显式占位项，未选层前不生成 payload/hash，分享保持禁用；选择具体层后只更新预览，仍不会自动发出 `/select` 授权。单层 record 保留直接预选。
+
+GitHub Actions run 35834149129 / artifact 10738114864 在精确提交上通过：68 Python、18 projection Node、1 新 DOM state regression；CI artifact SHA-256 `26e7027f0697acccf8e8d50724ad1ec7bc9a9b3e3923eb8f57885f20d1c63b8e`。它验证状态机行为，不是 Chromium/Android 实测。
+
+新增量归档 `Book-reader-grant-bridge-v1.1-20260923.zip` 保存到 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`，103,218 bytes，SHA-256 `506ba0a1f259431fed59358bcfb7ccb44c3ddee31c681c890a492b6e1054079a`；重新下载后整包 SHA、CRC 和 6/6 自排除 manifest 成员均一致。旧 v1 包不覆盖。
+
+当前 r6 数据源身份没有变化，仍是 Drive `1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R` / SHA-256 `19315e8aeebe2db5cf2f4b55e0a38f550967966af106491dfef67212b430adc1`。下一步仍需在允许 localhost 的真实浏览器中验证这一显式选层流程、失效/取消/撤销竞态和移动布局，再做独立审阅。

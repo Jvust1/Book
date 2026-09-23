@@ -5,7 +5,7 @@
   "default_branch": "main",
   "active_branch": "feat/reader-grant-bridge-20260923",
   "phase": "SCOPED_R6_READONLY_BOOK_BRIDGE",
-  "status": "ARCHIVE_BOOK_HTTP_TESTMODEL_ACCEPTED_BROWSER_AND_REVIEW_PENDING",
+  "status": "ARCHIVE_BOOK_HTTP_TESTMODEL_ACCEPTED_UI_LAYER_STATE_REGRESSION_PASS_BROWSER_PENDING",
   "security_status": "REGISTERED_PROTECTED_REVIEW_BRANCH",
   "scope_note": "Current state of this isolated review branch only. Legacy product workstreams, frozen invariants and independent human gates are preserved and not superseded or activated by this bridge.",
   "drive": {
@@ -44,7 +44,7 @@
     "Independent code review and Android identity/IPC/physical-device validation pending.",
     "Existing mygpt PR #5/#6 integration conflict remains unresolved."
   ],
-  "next_step": "Run exact Book PR #37 plus mygpt PR #7 in an authorized browser runtime with localhost access; verify explicit selection, layer/raw-display switching, navigation/visibility/expiry invalidation, cancellation/revocation races, mobile layout, and zero external requests/StudyRecord writes; then obtain independent review. No Android/paid provider activation or automatic PR merge.",
+  "next_step": "Run exact Book PR #37 plus mygpt PR #7 in an authorized browser runtime with localhost access; verify the new explicit multi-layer source choice in a real browser together with navigation/visibility/expiry invalidation, cancellation/revocation races, mobile layout, and zero external requests/StudyRecord writes; then obtain independent review. No Android/paid provider activation or automatic PR merge.",
   "boundaries": {
     "main_write": false,
     "auto_merge": false,
@@ -96,5 +96,16 @@
     "decision_ledger": "docs/DECISION_LEDGER.md",
     "evaluation_ledger": "docs/EVALUATION_LEDGER.md",
     "active_decision_and_evaluation_checkpoint": "docs/BOOK_SELECTION_BRIDGE_CHECKPOINT_20260923.md"
+  },
+  "ui_state_regression": {
+    "commit": "114be2a40f9e3ef364aca2e02492361ebf46e4b6",
+    "ci_run": 35834149129,
+    "ci_artifact": 10738114864,
+    "ci_artifact_sha256": "26e7027f0697acccf8e8d50724ad1ec7bc9a9b3e3923eb8f57885f20d1c63b8e",
+    "python_passed": 68,
+    "projection_node_passed": 18,
+    "ui_state_node_passed": 1,
+    "browser_e2e": "NOT_ACCEPTED",
+    "change": "Multi-layer records require an explicit source-layer choice before sharing; preview performs zero select grants."
   }
 }

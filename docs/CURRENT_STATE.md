@@ -1,6 +1,6 @@
 # Book 当前状态 · 2026-09-23 只读选段桥候选
 
-当前分支 `feat/reader-grant-bridge-20260923`，PR #37，Draft / Open / 未合并。此入口只更新本评审分支的 Book × mygpt 工作流，不替代其他分支的实时状态。原状态、原 Handoff 已按完全相同的 Git blob 保存在 `history/`，原安全规则、独立 Human Gate、不可变证据和 pending_sync 均继续有效。
+当前分支 `feat/reader-grant-bridge-20260923`，PR #37，Draft / Open / 未合并。最新运行代码 head `114be2a40f9e3ef364aca2e02492361ebf46e4b6`。此入口只更新本评审分支的 Book × mygpt 工作流，不替代其他分支的实时状态。原状态、原 Handoff 已按完全相同的 Git blob 保存在 `history/`，原安全规则、独立 Human Gate、不可变证据和 pending_sync 均继续有效。
 
 ## 已经完成
 
@@ -11,6 +11,10 @@
 - 实际 r6：95 小节，19,174 个 JS/Python 投影向量，0 差异；17,330 个有效正文、1,844 个预期空正文拒绝。不是全书数学正确性验收。
 - 实际 HTTP：56 项通过，5 种实际选段路径通过 TestModel，付费模型调用 0。
 - 两仓发布代码已从 CI 源归档回读一致；两个新 Drive 增量包均已完成整包及内部 manifest 校验。
+
+## 后续 UI 状态修复
+
+多内容层记录现在默认不选层：必须用户明确选择原文/补录/AI 校正中的一个具体层并核对预览后，分享按钮才会启用；单层记录仍可直接预选。预览阶段不会产生 `/select` 授权请求。Book CI run 35834149129：68 Python、18 投影 Node、1 项 DOM 状态回归均通过。该 DOM 测试不是实际浏览器验收。新增 v1.1 增量归档已保存到 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`，旧 v1 证据保留不覆盖。
 
 ## 未完成与下一步
 
