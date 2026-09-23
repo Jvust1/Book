@@ -1,0 +1,66 @@
+{
+  "schema_version": "economics_frontmatter_review_v1",
+  "book_id": "contemporary-china-economy",
+  "course_alias": "当代中国经济",
+  "created_at": "2026-09-23T03:27:00Z",
+  "source": {
+    "drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "pdf_page_count": 255
+  },
+  "review_scope": {
+    "pdf_pages": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "direct_source_pages_checked": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "source_normalized_text_pages": [3, 4, 5, 6, 7, 8, 9, 10, 11],
+    "publisher_catalog_page": 2,
+    "new_pdf_pages": 0,
+    "phase": "B_RISK_DRIVEN_STRUCTURED_REVIEW"
+  },
+  "resolved_issue": {
+    "issue_id": "ECO-QC-FRONTMATTER-0002-0011",
+    "previous_status": "OPEN_LAYOUT_TRIAGED_TEXT_REVIEW_PENDING",
+    "status": "RESOLVED_SOURCE_NORMALIZED",
+    "severity": "MEDIUM",
+    "resolution": "PDF2–11 已逐页直接回原扫描。PDF3–11 的教材身份、内容提要、版权/CIP、反盗版声明、第五版前言、第一版前言与两页目录已建立 source-normalized 记录；PDF2 确认为出版社同系列教材广告，已核实本书条目及 ISBN/定价，非教材正文的其余广告条目保留原扫描，不再作为正文复核债务。",
+    "artifact": "books/contemporary-china-economy/structured/frontmatter_source_normalized_0002_0011_20260923.md"
+  },
+  "informational_items": [
+    {
+      "issue_id": "ECO-QC-FRONTMATTER-CATALOG-0002",
+      "status": "NON_BLOCKING_SOURCE_RETAINED",
+      "pdf_page": 2,
+      "reason": "出版社同系列教材广告，不属于本书正文、前言、目录或版权事实；原扫描完整保留，与本书相关的书名、主编、ISBN 和定价已经核实。"
+    }
+  ],
+  "verified_identity": {
+    "title": "社会主义市场经济理论（第五版）",
+    "authors": ["夏永祥", "张斌"],
+    "publisher": "高等教育出版社",
+    "isbn": "978-7-04-051184-0",
+    "edition": "第五版",
+    "publication_date": "2019-01",
+    "price_cny": 35.0,
+    "cip_number": "中国版本图书馆CIP数据核字（2019）第000791号"
+  },
+  "page_mapping_checks": {
+    "pdf_10": "目录第1页",
+    "pdf_11": "目录第2页",
+    "pdf_12": "正文印刷页1",
+    "body_mapping": "printed_page = pdf_page - 11",
+    "status": "SOURCE_VERIFIED"
+  },
+  "quality_boundaries": {
+    "raw_ocr_history_preserved": true,
+    "source_vs_ai_separated": true,
+    "full_page_visual_verification": false,
+    "catalog_full_list_transcribed": false,
+    "catalog_full_list_required_for_textbook_body_fidelity": false,
+    "note": "本轮只关闭前置页 source-review debt，不声称全书逐页逐字视觉验收，也不把非教材正文广告清单伪装成教材正文。"
+  },
+  "remaining_review_debt_ids": ["ECO-QC-REVIEW-0031-0230"],
+  "next_source_review_priority": [169, 125, 150, 38, 171, 170, 226, 136, 217, 216, 43, 87],
+  "next_review_target_pdf_page": 169,
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "switch_to_novel": false
+}
