@@ -1,0 +1,16 @@
+{
+  "schema_version": "economics_handoff_checkpoint_v1",
+  "generated_at": "2026-09-23T08:28:14Z",
+  "book_id": "contemporary-china-economy",
+  "checkpoint_type": "POST_COMPLETION_HANDOFF_TARGET_UPDATE",
+  "branch": "data/economics-structure-20260922",
+  "prior_completion_checkpoint": "governance/checkpoints/economics_structured_review_complete_20260923.json",
+  "whole_book_complete": true,
+  "structured_review_complete": true,
+  "content_or_qc_changes_this_run": 0,
+  "handoff_reason": "Latest explicit user direction replaces the post-completion Novel target with Live; historical completion evidence is preserved unchanged.",
+  "previous_target_repo": "Jvust1/Novel",
+  "target_repo": "Jvust2/Live",
+  "next_action": "RECOVER_LIVE_GOVERNANCE_AND_ADVANCE",
+  "status": "READY_TO_ADVANCE_LIVE"
+}

@@ -1,6 +1,6 @@
 {
-  "schema_version": "economics_ingestion_current_v17",
-  "updated_at": "2026-09-23T06:31:30Z",
+  "schema_version": "economics_ingestion_current_v18",
+  "updated_at": "2026-09-23T08:28:14Z",
   "book_id": "contemporary-china-economy",
   "canonical_title": "社会主义市场经济理论（第五版）",
   "course_alias": "当代中国经济",
@@ -37,7 +37,9 @@
   },
   "final_closure_artifact": "books/contemporary-china-economy/qc/final_structured_review_closure_20260923.json",
   "checkpoint": "governance/checkpoints/economics_structured_review_complete_20260923.json",
-  "switch_to_novel": true,
-  "next_repo": "Jvust1/Novel",
-  "next_action": "RECOVER_NOVEL_GOVERNANCE_AND_ADVANCE"
+  "handoff_checkpoint": "governance/checkpoints/economics_handoff_live_20260923.json",
+  "switch_to_novel": false,
+  "switch_to_live": true,
+  "next_repo": "Jvust2/Live",
+  "next_action": "RECOVER_LIVE_GOVERNANCE_AND_ADVANCE"
 }

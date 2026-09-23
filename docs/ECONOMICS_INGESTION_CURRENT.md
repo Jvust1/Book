@@ -14,11 +14,11 @@
 - `source_review_debt_remaining = false`
 - `full_page_visual_verification = false`：本项目没有声称逐页逐字符做了全书穷尽式视觉验收。
 
-## 本轮最终结构复核
+## 最终结构复核
 
-本轮按 v3 风险驱动策略做最终闭环：先审计批次连续性、页码/印刷页映射、结构/QC/修正 overlay、跨页对象、图表登记、风险筛选和治理状态；只有已有证据触发疑点时才回原 PDF。此前 p31–230 已完成 200 页确定性风险筛选，最高风险的 12 个非资产候选页（169、125、150、38、171、170、226、136、217、216、43、87）均已定点回源并完成 correction overlay。p181 与 p231–254 的高风险正文也已完成 remediation。
+最终闭环按 v3 风险驱动策略完成：先审计批次连续性、页码/印刷页映射、结构/QC/修正 overlay、跨页对象、图表登记、风险筛选和治理状态；只有已有证据触发疑点时才回原 PDF。此前 p31–230 已完成 200 页确定性风险筛选，最高风险的 12 个非资产候选页（169、125、150、38、171、170、226、136、217、216、43、87）均已定点回源并完成 correction overlay。p181 与 p231–254 的高风险正文也已完成 remediation。
 
-风险筛选剩余的 227、174、41、124、164、105、207、182 仅为较低层级 heuristic triage 信号；结合各批次已完成的逐页版式/标题/图表存在性检查、连续覆盖和无新增结构性异常，本轮将其归类为信息性候选，不作为需要再次打开源页的实际错误。该判定不等同于“这些页逐字符视觉核验完毕”。
+风险筛选剩余的 227、174、41、124、164、105、207、182 仅为较低层级 heuristic triage 信号；结合各批次已完成的逐页版式/标题/图表存在性检查、连续覆盖和无新增结构性异常，将其归类为信息性候选，不作为需要再次打开源页的实际错误。该判定不等同于“这些页逐字符视觉核验完毕”。
 
 累计 source-verified correction overlay 为 253 条。原始 OCR/扫描证据未覆盖，所有修正保持 source / correction / derived 分层。PDF226 与 PDF241 的原书异常字样继续按“原样保留、非阻塞”处理。
 
@@ -39,8 +39,9 @@
 - `books/contemporary-china-economy/qc/final_structured_review_closure_20260923.json`
 - `governance/economics_ingestion_current.json`
 - `governance/checkpoints/economics_structured_review_complete_20260923.json`
+- `governance/checkpoints/economics_handoff_live_20260923.json`
 - Drive：完整末批、风险复核与 fulltext remediation 归档继续作为大型/长期证据；本轮没有制造重复 ZIP。
 
 ## 下一步
 
-《当代中国经济》不再重复处理。后续轮次切换到 `Jvust1/Novel`：先恢复 Novel 的治理、Current State/project_state、North Star、Architecture Invariants、长期计划、Decision Ledger、artifact manifest、pending_sync、Pre-flight、分支/PR/CI，再选择下一个未完成且可安全执行事项推进。
+《当代中国经济》不再重复处理。按用户最新明确指令，后续轮次切换到 `Jvust2/Live`，不再进入 Novel：先恢复 Live 的 SECURITY_POLICY、AGENTS、project_state、Current State、North Star、Architecture Invariants、长期计划、Decision/Evaluation Ledger、artifact manifest、pending_sync、Pre-flight、分支/PR/CI，再选择下一个未完成且可安全执行事项推进。若 Live 的业务流程仍未定义，则不得凭空补业务能力，只推进可确定的治理、验证、同步与低风险基础设施工作。
