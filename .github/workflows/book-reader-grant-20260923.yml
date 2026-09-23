@@ -1,0 +1,56 @@
+name: Book reader grant candidate
+on:
+  push:
+    branches: [feat/reader-grant-bridge-20260923]
+    paths:
+      - 'integrations/mygpt_selection/**'
+      - '.github/workflows/book-reader-grant-20260923.yml'
+permissions:
+  contents: read
+concurrency:
+  group: book-reader-grant-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  isolated:
+    if: github.repository == 'Jvust2/Book'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.13'
+      - name: Isolated Python and Node tests (synthetic data only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/book-grant-evidence"
+          python -m venv "$RUNNER_TEMP/book-grant-venv"
+          PY="$RUNNER_TEMP/book-grant-venv/bin/python"
+          "$PY" -m pip install --only-binary=:all: --require-hashes -r integrations/mygpt_selection/requirements-test-linux.lock
+          "$PY" -m pip check
+          export PYTHONPATH="$GITHUB_WORKSPACE/integrations/mygpt_selection"
+          "$PY" -m pytest -c /dev/null --confcutdir=integrations/mygpt_selection integrations/mygpt_selection/tests -q --junitxml="$RUNNER_TEMP/book-grant-evidence/python.xml" | tee "$RUNNER_TEMP/book-grant-evidence/python.txt"
+          "$PY" -c 'import os, pathlib, xml.etree.ElementTree as E; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"book-grant-evidence/python.xml"; c=list(E.parse(p).getroot().iter("testcase")); assert len(c)>=68 and all(all(t.find(x) is None for x in ("failure","error","skipped")) for t in c), "missing, skipped or failed Book tests"'
+          node --version | tee "$RUNNER_TEMP/book-grant-evidence/node-version.txt"
+          node --test integrations/mygpt_selection/tests/projection.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/node.txt"
+          node --check integrations/mygpt_selection/book_mygpt_selection/web/bridge.js
+          node --check integrations/mygpt_selection/book_mygpt_selection/web/projection.js
+          "$PY" -m compileall -q integrations/mygpt_selection
+          git rev-parse HEAD > "$RUNNER_TEMP/book-grant-evidence/source-commit.txt"
+          git rev-parse HEAD:integrations/mygpt_selection > "$RUNNER_TEMP/book-grant-evidence/integration-tree.txt"
+          git archive --format=zip --output="$RUNNER_TEMP/book-grant-evidence/integration-source.zip" HEAD integrations/mygpt_selection .github/workflows/book-reader-grant-20260923.yml
+      - name: Preserve isolated evidence (no corpus or credentials)
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: book-reader-grant-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/book-grant-evidence/
+          if-no-files-found: error
+          retention-days: 3
