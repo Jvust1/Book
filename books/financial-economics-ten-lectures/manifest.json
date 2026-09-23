@@ -13,8 +13,8 @@
   "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
   "source_pdf_bytes": 63920851,
   "pdf_page_count": 278,
-  "ingested_source_pdf_pages": [1, 100],
-  "next_source_pdf_page": 101,
+  "ingested_source_pdf_pages": [1, 150],
+  "next_source_pdf_page": 151,
   "status": "INGESTION_IN_PROGRESS",
   "whole_book_complete": false,
   "content_format": {
@@ -34,7 +34,12 @@
       "source/pdf_page_map_compact_0051_0100.jsonl",
       "verified/formulas_0051_0100.jsonl",
       "qc/batch_0051_0100.json",
-      "qc/extraction_report_0051_0100.md"
+      "qc/extraction_report_0051_0100.md",
+      "batches/batch_0101_0150.json",
+      "source/pdf_page_map_compact_0101_0150.jsonl",
+      "verified/formulas_0101_0150.jsonl",
+      "qc/batch_0101_0150.json",
+      "qc/extraction_report_0101_0150.md"
     ],
     "drive_full_batch": [
       "pdf0001-0050/verified/structured_pages_0001_0050.md",
@@ -53,7 +58,15 @@
       "pdf0051-0100/images/fig_4_1_pdf090.png",
       "pdf0051-0100/images/fig_4_2_pdf093.png",
       "pdf0051-0100/images/fig_4_3_pdf096.png",
-      "pdf0051-0100/tables/table_manifest_0051_0100.json"
+      "pdf0051-0100/tables/table_manifest_0051_0100.json",
+      "pdf0101-0150/verified/structured_pages_0101_0150.md",
+      "pdf0101-0150/blocks/blocks_0101_0150.jsonl",
+      "pdf0101-0150/source/pdf_page_map_0101_0150.jsonl",
+      "pdf0101-0150/qc/uncertain_0101_0150.jsonl",
+      "pdf0101-0150/images/asset_manifest_0101_0150.json",
+      "pdf0101-0150/images/fig_4A_1_pdf113.png",
+      "pdf0101-0150/images/fig_4A_2_pdf114.png",
+      "pdf0101-0150/tables/table_manifest_0101_0150.json"
     ]
   },
   "open_qc": [
@@ -63,21 +76,27 @@
     "FE10-QC-OCR-0051-0068",
     "FE10-QC-APPENDIX-0070-0074",
     "FE10-QC-TAX-0076-0082",
-    "FE10-QC-MATRIX-0086-0100"
+    "FE10-QC-MATRIX-0086-0100",
+    "FE10-QC-HILBERT-0103-0107",
+    "FE10-QC-KKT-0108-0119",
+    "FE10-QC-APT-0121-0128",
+    "FE10-QC-FTAP-0130-0140",
+    "FE10-QC-CONVEX-0144",
+    "FE10-QC-UTILITY-0147-0150"
   ],
   "completion_flags": {
     "structured_review_complete": false,
     "targeted_pdf_issues_resolved": false,
     "full_page_visual_verification": false,
     "full_character_visual_verification": false,
-    "mathematical_review_status": "batches_0001_0100_key_formulas_visual_verified_remaining_inline_math_and_open_qc_pending",
+    "mathematical_review_status": "batches_0001_0150_key_formulas_visual_verified_remaining_inline_math_and_open_qc_pending",
     "switch_to_invest": false
   },
   "content_origin": "source",
   "latest_batch_drive_artifact": {
-    "drive_file_id": "1z1lsHzerbRHLdgDZMeUXAuMvbQWKKilm",
-    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf051-100-20260923.zip",
-    "sha256": "23a7852457bf990451c14499c022dfc9f6c9e8e08e8614e5ae6faa88be0b8c16",
-    "size_bytes": 253239
+    "drive_file_id": "1DaAHZuDJaedA78cOcowXo6ftquNWLMr-",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf101-150-20260923.zip",
+    "sha256": "80ceb347dc77f5a5597b10742a9e2b0b2beec3192406bb1177f3929641d9774f",
+    "size_bytes": 175352
   }
 }
