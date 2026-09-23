@@ -40,6 +40,7 @@ jobs:
           "$PY" -c 'import os, pathlib, xml.etree.ElementTree as E; p=pathlib.Path(os.environ["RUNNER_TEMP"])/"book-grant-evidence/python.xml"; c=list(E.parse(p).getroot().iter("testcase")); assert len(c)>=68 and all(all(t.find(x) is None for x in ("failure","error","skipped")) for t in c), "missing, skipped or failed Book tests"'
           node --version | tee "$RUNNER_TEMP/book-grant-evidence/node-version.txt"
           node --test integrations/mygpt_selection/tests/projection.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/node.txt"
+          node --test integrations/mygpt_selection/tests/bridge-ui-state.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/bridge-ui-state.txt"
           node --check integrations/mygpt_selection/book_mygpt_selection/web/bridge.js
           node --check integrations/mygpt_selection/book_mygpt_selection/web/projection.js
           "$PY" -m compileall -q integrations/mygpt_selection

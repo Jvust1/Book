@@ -76,7 +76,8 @@
     const saved=context;invalidate('重新选择');context=saved;
     const r=context.section.records.find(x=>x.id===id);if(!r)throw new Error('RECORD_NOT_FOUND');
     const options=P.choices(context.course,context.section,r);layer.replaceChildren();
-    for(const [i,opt] of options.entries()){const o=element('option',opt.label);o.value=String(i);layer.append(o);}layer.value=String(options.length-1);representation.value='display';
+    if(options.length>1){const placeholder=element('option','请选择要交给 mygpt 的内容层…');placeholder.value='';layer.append(placeholder);}
+    for(const [i,opt] of options.entries()){const o=element('option',opt.label);o.value=String(i);layer.append(o);}layer.value=options.length===1?'0':'';representation.value='display';
     draft={base:base(id),options,payload:null,hash:null};panel.hidden=false;await refreshDraft();panel.scrollIntoView({block:'nearest'});layer.focus({preventScroll:true});
   }
   async function chooseDerived(g,portion){
@@ -89,6 +90,10 @@
     const saved=draft,ctx=context;generation++;const gen=generation;ticket=null;saved.hash=null;reply.hidden=true;
     if(pending)await cancel();
     if(connected)request('clear',{sequence:++sequence,request_id:uid()},{keepalive:true}).catch(()=>{});
+    if(saved.options.length>1&&layer.value===''){
+      saved.payload=null;preview.textContent='请选择具体来源层并核对预览；确认前不会共享。';
+      say('多种来源层均可用。请先明确选择一层，再核对内容。');update();return;
+    }
     const opt=saved.options[Number(layer.value)];const selected={...saved.base,layer:opt.layer,layer_id:opt.layer_id,representation:representation.value};
     update();const payload=await P.project(ctx.course,ctx.section,selected);const hash=await P.digest(payload);
     if(gen!==generation||draft!==saved)return;
