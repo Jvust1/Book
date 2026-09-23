@@ -1,0 +1,79 @@
+{
+  "schema_version": "book_ingestion_batch_manifest_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "batch_id": "pdf0101-0150-20260923",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "source_pdf_pages": {
+    "start": 101,
+    "end": 150,
+    "count": 50
+  },
+  "printed_page_coverage": {
+    "lecture_body": [
+      82,
+      131
+    ]
+  },
+  "section_coverage": [
+    {
+      "pdf_pages": [101, 111],
+      "scope": "Lecture 4 sections 4.5 continuation, 4.6, 4.7"
+    },
+    {
+      "pdf_pages": [112, 119],
+      "scope": "Lecture 4 exercises and appendices 1-2"
+    },
+    {
+      "pdf_pages": [120, 144],
+      "scope": "Lecture 5 sections 5.1-5.8, exercises, Mathematical Prerequisites III"
+    },
+    {
+      "pdf_pages": [145, 150],
+      "scope": "Lecture 6 introduction, 6.1 and 6.2 continuation"
+    }
+  ],
+  "next_source_pdf_page": 151,
+  "quality": {
+    "visual_page_layout_checks": 50,
+    "source_blocks": 869,
+    "formula_records_visual_verified": 61,
+    "semantic_figures_recovered": 2,
+    "tables_in_batch": 2,
+    "full_page_visual_verification": false,
+    "full_character_visual_verification": false,
+    "structured_review_complete": false,
+    "basic_proofreading_complete": true
+  },
+  "open_qc": [
+    "FE10-QC-HILBERT-0103-0107",
+    "FE10-QC-KKT-0108-0119",
+    "FE10-QC-APT-0121-0128",
+    "FE10-QC-FTAP-0130-0140",
+    "FE10-QC-CONVEX-0144",
+    "FE10-QC-UTILITY-0147-0150"
+  ],
+  "drive_artifact": {
+    "drive_file_id": "1DaAHZuDJaedA78cOcowXo6ftquNWLMr-",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf101-150-20260923.zip",
+    "sha256": "80ceb347dc77f5a5597b10742a9e2b0b2beec3192406bb1177f3929641d9774f",
+    "size_bytes": 175352
+  },
+  "drive_full_artifact_contents": [
+    "verified/structured_pages_0101_0150.md",
+    "blocks/blocks_0101_0150.jsonl",
+    "source/pdf_page_map_0101_0150.jsonl",
+    "qc/uncertain_0101_0150.jsonl",
+    "images/asset_manifest_0101_0150.json",
+    "images/fig_4A_1_pdf113.png",
+    "images/fig_4A_2_pdf114.png",
+    "tables/table_manifest_0101_0150.json"
+  ],
+  "github_compact_artifacts": [
+    "source/pdf_page_map_compact_0101_0150.jsonl",
+    "verified/formulas_0101_0150.jsonl",
+    "qc/batch_0101_0150.json",
+    "qc/extraction_report_0101_0150.md"
+  ]
+}
