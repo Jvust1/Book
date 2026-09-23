@@ -4,13 +4,13 @@
   "title": "金融经济学十讲",
   "branch": "data/financial-economics-ten-lectures-structure-20260923",
   "stage": "INITIAL_INGESTION",
-  "status": "PDF_0001_0100_COMPLETE_BASIC_QC",
+  "status": "PDF_0001_0150_COMPLETE_BASIC_QC",
   "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
   "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
   "source_pdf_page_count": 278,
-  "completed_pdf_range": [1, 100],
-  "next_pdf_page": 101,
-  "cumulative_new_pages": 100,
+  "completed_pdf_range": [1, 150],
+  "next_pdf_page": 151,
+  "cumulative_new_pages": 150,
   "structured_review_complete": false,
   "whole_book_complete": false,
   "switch_to_invest": false,
@@ -21,14 +21,20 @@
     "FE10-QC-OCR-0051-0068",
     "FE10-QC-APPENDIX-0070-0074",
     "FE10-QC-TAX-0076-0082",
-    "FE10-QC-MATRIX-0086-0100"
+    "FE10-QC-MATRIX-0086-0100",
+    "FE10-QC-HILBERT-0103-0107",
+    "FE10-QC-KKT-0108-0119",
+    "FE10-QC-APT-0121-0128",
+    "FE10-QC-FTAP-0130-0140",
+    "FE10-QC-CONVEX-0144",
+    "FE10-QC-UTILITY-0147-0150"
   ],
-  "next_step": "Continue initial ingestion from physical PDF page 101 for the next 50 new pages, unless source end or hard blocker is reached.",
+  "next_step": "Continue initial ingestion from physical PDF page 151 for the next 50 new pages, unless source end or hard blocker is reached.",
   "latest_drive_artifact": {
-    "drive_file_id": "1z1lsHzerbRHLdgDZMeUXAuMvbQWKKilm",
-    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf051-100-20260923.zip",
-    "sha256": "23a7852457bf990451c14499c022dfc9f6c9e8e08e8614e5ae6faa88be0b8c16",
-    "size_bytes": 253239
+    "drive_file_id": "1DaAHZuDJaedA78cOcowXo6ftquNWLMr-",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf101-150-20260923.zip",
+    "sha256": "80ceb347dc77f5a5597b10742a9e2b0b2beec3192406bb1177f3929641d9774f",
+    "size_bytes": 175352
   },
-  "latest_checkpoint": "governance/checkpoints/financial_economics_ten_lectures_0051_0100_20260923.json"
+  "latest_checkpoint": "governance/checkpoints/financial_economics_ten_lectures_0101_0150_20260923.json"
 }
