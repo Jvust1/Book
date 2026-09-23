@@ -1,12 +1,92 @@
 {
-  "schema_version":"economics_review_batch_manifest_v1",
-  "book_id":"contemporary-china-economy",
-  "review_kind":"v3_risk_driven_review_plus_targeted_source_corrections",
-  "new_pdf_pages":0,
-  "review_scope_pdf_pages":[1,30],
-  "automated_screen_scope_pdf_pages":[31,230],
-  "source_verified_corrections":28,
-  "outputs":["qc/risk_review_0001_0030_20260923.json","qc/risk_review_0001_0030_20260923.md","qc/risk_screen_0031_0230_20260923.json","structured/risk_review_corrections_0001_0030_20260923.jsonl","structured/risk_review_corrections_0001_0030_20260923.md","audit/contact_001_010.jpg","audit/contact_011_020.jpg","audit/contact_021_030.jpg","source_pages/pdf_012.jpg","source_pages/pdf_013.jpg","source_pages/pdf_014.jpg","source_pages/pdf_015.jpg","source_pages/pdf_024.jpg","source_pages/pdf_025.jpg","source_pages/pdf_026.jpg","source_pages/pdf_027.jpg","source_pages/pdf_028.jpg","source_pages/pdf_029.jpg","source_pages/pdf_030.jpg"],
-  "quality":{"full_page_visual_verification":false,"structured_review_complete":false,"status":"REVIEW_IN_PROGRESS_NEW_HIGH_RISK_OCR_FINDINGS"},
-  "drive_archive":{"file_name":"Book-Contemporary-China-Economy-Risk-Review-pdf001-230-20260923.zip","drive_file_id":"1dVIvu3nMDbLP_P_Bij9JOkVDUWoxlafF","sha256":"3c53164b5fcaf5815f47d08c6e88ac3a375395ec808abf4a93ed4620a3bb4464","size_bytes":3724685,"folder":"Book/03_Exports","status":"ACTIVE_RISK_REVIEW_EVIDENCE"}
+  "schema_version": "economics_review_batch_manifest_v2",
+  "generated_at": "2026-09-23T02:15:56Z",
+  "book_id": "contemporary-china-economy",
+  "review_kind": "v3_risk_review_source_normalization_remediation",
+  "new_pdf_pages": 0,
+  "source_end_already_reached": true,
+  "direct_source_remediation_pdf_pages": [
+    14,
+    15,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "cumulative_direct_source_correction_pages": [
+    12,
+    13,
+    14,
+    15,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "source_verified_correction_count": 111,
+  "resolved_issue_ids": [
+    "ECO-QC-OCR-0012-0015",
+    "ECO-QC-OCR-0024-0030"
+  ],
+  "remaining_open_issue_ids": [
+    "ECO-QC-FRONTMATTER-0002-0011",
+    "ECO-QC-REVIEW-0031-0230"
+  ],
+  "frontmatter_layout_triage_pages": [
+    2,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "quality": {
+    "raw_ocr_history_preserved": true,
+    "corrections_layered_not_overwritten": true,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved": false,
+    "whole_book_complete": false,
+    "switch_to_mygpt": false,
+    "switch_to_novel": false,
+    "post_completion_target_repo": "Jvust1/Novel"
+  },
+  "outputs": [
+    "qc/risk_review_0001_0030_20260923.json",
+    "qc/risk_review_0001_0030_20260923.md",
+    "structured/risk_review_corrections_0001_0030_20260923.jsonl",
+    "structured/risk_review_remediation_index_20260923.json",
+    "audit/frontmatter_contact_pdf002_005_011.jpg",
+    "source_pages/pdf_014.jpg",
+    "source_pages/pdf_015.jpg",
+    "source_pages/pdf_026.jpg",
+    "source_pages/pdf_027.jpg",
+    "source_pages/pdf_028.jpg",
+    "source_pages/pdf_029.jpg",
+    "source_pages/pdf_030.jpg"
+  ],
+  "next_action": "FRONTMATTER_SOURCE_REVIEW_0002_0005_0011_THEN_TARGETED_RISK_SCREEN_0031_0230",
+  "synced_to_github_at": "2026-09-23T02:42:17Z",
+  "drive_archive": {
+    "file_name": "Book-Contemporary-China-Economy-Risk-Review-Remediation-pdf014-015-026-030-20260923.zip",
+    "drive_file_id": "1_mnPqTL4BbaKbhoN9Anejtc6qrkrnJ2g",
+    "sha256": "73d43bb969477527d1b124c512e6ab82e7e62104b9cc8ad8357e3f8f1af73dca",
+    "size_bytes": 2416239,
+    "folder": "Book/03_Exports",
+    "status": "ACTIVE_RISK_REVIEW_REMEDIATION_EVIDENCE",
+    "created_at": "2026-09-23T02:19:08.952Z"
+  },
+  "github_correction_storage": {
+    "base_layer_count": 28,
+    "base_layer_path": "structured/risk_review_corrections_0001_0030_20260923.jsonl",
+    "remediation_delta_count": 83,
+    "remediation_index_path": "structured/risk_review_remediation_index_20260923.json",
+    "full_111_record_layer_in_drive_archive": true
+  }
 }

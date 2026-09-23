@@ -1,0 +1,79 @@
+{
+  "schema_version": "economics_risk_review_remediation_index_v1",
+  "generated_at": "2026-09-23T02:42:17Z",
+  "book_id": "contemporary-china-economy",
+  "source_pdf": {
+    "drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "pdf_page_count": 255
+  },
+  "base_github_correction_layer": {
+    "path": "books/contemporary-china-economy/structured/risk_review_corrections_0001_0030_20260923.jsonl",
+    "correction_count": 28,
+    "pages": [
+      12,
+      13,
+      24,
+      25
+    ],
+    "note": "Retained unchanged as the first source-verified correction layer; historical provenance is not overwritten."
+  },
+  "remediation_delta": {
+    "correction_count": 83,
+    "pages": [
+      14,
+      15,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "correction_count_by_page": {
+      "14": 23,
+      "15": 4,
+      "26": 17,
+      "27": 14,
+      "28": 8,
+      "29": 6,
+      "30": 11
+    },
+    "category_counts": {
+      "body_ocr": 48,
+      "enumeration_ocr": 16,
+      "heading_ocr": 6,
+      "body_ocr_corruption": 2,
+      "formula_variable_ocr": 2,
+      "body_ocr_omission": 2,
+      "figure_reference_ocr": 1,
+      "figure_caption_ocr": 1,
+      "cross_page_ocr_omission": 1,
+      "title_ocr": 1,
+      "cross_page_or_paragraph_ocr_omission": 1,
+      "quote_ocr": 1,
+      "proper_name_ocr": 1
+    },
+    "verification": "DIRECT_SCAN_VISUAL_VERIFIED",
+    "content_origin": "source_correction",
+    "full_records_location": "Drive archive internal file structured/risk_review_corrections_0001_0030_20260923.jsonl"
+  },
+  "cumulative_source_verified_corrections": 111,
+  "resolved_issue_ids": [
+    "ECO-QC-OCR-0012-0015",
+    "ECO-QC-OCR-0024-0030"
+  ],
+  "drive_archive": {
+    "file_name": "Book-Contemporary-China-Economy-Risk-Review-Remediation-pdf014-015-026-030-20260923.zip",
+    "drive_file_id": "1_mnPqTL4BbaKbhoN9Anejtc6qrkrnJ2g",
+    "sha256": "73d43bb969477527d1b124c512e6ab82e7e62104b9cc8ad8357e3f8f1af73dca",
+    "size_bytes": 2416239,
+    "folder": "Book/03_Exports",
+    "created_at": "2026-09-23T02:19:08.952Z"
+  },
+  "quality_boundaries": {
+    "raw_ocr_history_preserved": true,
+    "corrections_layered_not_overwritten": true,
+    "full_page_visual_verification": false,
+    "structured_review_complete": false
+  }
+}

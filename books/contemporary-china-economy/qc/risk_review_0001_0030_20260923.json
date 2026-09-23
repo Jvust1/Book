@@ -1,6 +1,6 @@
 {
-  "schema_version": "economics_risk_review_v1",
-  "generated_at": "2026-09-22T23:40:00Z",
+  "schema_version": "economics_risk_review_v2",
+  "generated_at": "2026-09-23T02:15:56Z",
   "book_id": "contemporary-china-economy",
   "course_alias": "当代中国经济",
   "source": {
@@ -11,20 +11,144 @@
   "run_scope": {
     "new_pdf_pages": 0,
     "source_end_already_reached": true,
-    "risk_review_pdf_pages": [1, 30],
-    "automated_screen_pdf_pages": [31, 230],
-    "direct_source_pages_checked": [12, 13, 14, 15, 24, 25, 26, 27, 28, 29, 30],
-    "contact_sheet_pages": [1, 30]
+    "risk_review_pdf_pages": [
+      1,
+      30
+    ],
+    "automated_screen_pdf_pages": [
+      31,
+      230
+    ],
+    "direct_source_pages_checked": [
+      12,
+      13,
+      14,
+      15,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "contact_sheet_pages": [
+      1,
+      30
+    ],
+    "frontmatter_layout_triage_pages": [
+      2,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
   },
   "findings": [
-    {"id":"ECO-QC-OCR-0012-0015","severity":"HIGH","status":"OPEN_PARTIALLY_REMEDIATED","pdf_pages":[12,15],"description":"Early Chapter 1 raw OCR contains multiple meaning-bearing and proper-name errors despite historical spot-check status. Direct source checks confirmed high-confidence corrections on PDF12-13; PDF14-15 still require normalized source correction review."},
-    {"id":"ECO-QC-OCR-0024-0030","severity":"HIGH","status":"OPEN_PARTIALLY_REMEDIATED","pdf_pages":[24,30],"description":"Historical raw OCR retains meaning-bearing character/enumeration errors. Direct source checks confirmed corrections on PDF24-25; PDF26-30 remain in source-review debt."},
-    {"id":"ECO-QC-FRONTMATTER-0002-0011","severity":"MEDIUM","status":"OPEN","pdf_pages":[2,11],"description":"Front matter/prefaces/TOC include raw OCR-marked source-review debt. Contact-sheet structure is consistent, but this run did not perform full character normalization."},
-    {"id":"ECO-QC-REVIEW-0016-0023","severity":"INFO","status":"REVIEWED_NO_NEW_BLOCKER","pdf_pages":[16,23],"description":"Existing batch states manual visual normalization 8/8 PASS with original figure evidence; no conflicting risk signal discovered in this review."},
-    {"id":"ECO-QC-AUTO-SCREEN-0031-0230","severity":"INFO","status":"TRIAGED_PENDING_SOURCE_CHECKS","pdf_pages":[31,230],"description":"All existing blocks were deterministically screened to prioritize suspicious OCR pages; candidates are triage only, not source-verified errors.","priority_pages":[169,125,150,38,171,170,226,136,217,216,43,87]}
+    {
+      "id": "ECO-QC-OCR-0012-0015",
+      "severity": "HIGH",
+      "status": "RESOLVED_SOURCE_NORMALIZED",
+      "pdf_pages": [
+        12,
+        15
+      ],
+      "description": "Direct source checks now cover PDF12–15. Meaning-bearing OCR, proper-name/enumeration, formula-variable, figure-caption and page-start continuation defects are recorded as source-normalized correction overlays; raw OCR provenance is preserved.",
+      "resolved_at": "2026-09-23T02:15:56Z"
+    },
+    {
+      "id": "ECO-QC-OCR-0024-0030",
+      "severity": "HIGH",
+      "status": "RESOLVED_SOURCE_NORMALIZED",
+      "pdf_pages": [
+        24,
+        30
+      ],
+      "description": "Direct source checks now cover PDF24–30. Meaning-bearing OCR, enumeration/heading defects and a severe PDF27 paragraph corruption are recorded as source-normalized correction overlays; raw OCR provenance is preserved.",
+      "resolved_at": "2026-09-23T02:15:56Z"
+    },
+    {
+      "id": "ECO-QC-FRONTMATTER-0002-0011",
+      "severity": "MEDIUM",
+      "status": "OPEN_LAYOUT_TRIAGED_TEXT_REVIEW_PENDING",
+      "pdf_pages": [
+        2,
+        11
+      ],
+      "description": "PDF2 and PDF5–11 were visually re-triaged for page identity/layout this run. Front-matter/preface/TOC raw OCR character-level normalization is still pending and remains medium-priority review debt."
+    },
+    {
+      "id": "ECO-QC-REVIEW-0016-0023",
+      "severity": "INFO",
+      "status": "REVIEWED_NO_NEW_BLOCKER",
+      "pdf_pages": [
+        16,
+        23
+      ],
+      "description": "Existing batch states manual visual normalization 8/8 PASS with original figure evidence; no conflicting risk signal discovered in this review."
+    },
+    {
+      "id": "ECO-QC-AUTO-SCREEN-0031-0230",
+      "severity": "INFO",
+      "status": "TRIAGED_PENDING_SOURCE_CHECKS",
+      "pdf_pages": [
+        31,
+        230
+      ],
+      "description": "All existing blocks were deterministically screened to prioritize suspicious OCR pages; candidates are triage only, not source-verified errors.",
+      "priority_pages": [
+        169,
+        125,
+        150,
+        38,
+        171,
+        170,
+        226,
+        136,
+        217,
+        216,
+        43,
+        87
+      ]
+    }
   ],
-  "source_verified_correction_count": 28,
-  "source_verified_correction_pages": [12,13,24,25],
-  "completion": {"structured_content_complete":true,"structured_review_complete":false,"targeted_pdf_issues_resolved":false,"full_page_visual_verification":false,"whole_book_complete":false,"switch_to_mygpt":false},
-  "next_action": "Finish source-normalized remediation for PDF14-15 and PDF26-30; review front matter OCR debt; then use risk_screen_0031_0230 top candidates for targeted source checks before final full-book structured review."
+  "source_verified_correction_count": 111,
+  "source_verified_correction_pages": [
+    12,
+    13,
+    14,
+    15,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+  ],
+  "completion": {
+    "structured_content_complete": true,
+    "structured_review_complete": false,
+    "targeted_pdf_issues_resolved": false,
+    "full_page_visual_verification": false,
+    "whole_book_complete": false,
+    "switch_to_mygpt": false,
+    "switch_to_novel": false,
+    "post_completion_target_repo": "Jvust1/Novel",
+    "transition_note": "mygpt is no longer the post-completion target; Novel is the configured successor after whole-book closure."
+  },
+  "next_action": "Review/normalize remaining front-matter OCR debt at PDF2 and PDF5–11; then perform targeted source checks for the highest-priority non-known-figure candidates in risk_screen_0031_0230_20260923.json. Only after all OPEN review debt is resolved or explicitly classified may the final whole-book structured review close.",
+  "synced_to_github_at": "2026-09-23T02:42:17Z",
+  "drive_evidence_archive": {
+    "file_name": "Book-Contemporary-China-Economy-Risk-Review-Remediation-pdf014-015-026-030-20260923.zip",
+    "drive_file_id": "1_mnPqTL4BbaKbhoN9Anejtc6qrkrnJ2g",
+    "sha256": "73d43bb969477527d1b124c512e6ab82e7e62104b9cc8ad8357e3f8f1af73dca",
+    "size_bytes": 2416239,
+    "folder": "Book/03_Exports",
+    "status": "ACTIVE_RISK_REVIEW_REMEDIATION_EVIDENCE",
+    "created_at": "2026-09-23T02:19:08.952Z"
+  }
 }
