@@ -1,46 +1,63 @@
 # Book：当代中国经济结构化当前状态
 
-更新时间：2026-09-23T05:43:00Z。状态：**源 PDF 首次录入已到 PDF255 末页；本轮继续阶段 B 风险驱动复核，完成 PDF38、PDF136、PDF170、PDF171 的独立整页定点回原扫描，下一目标推进到 PDF226。structured review 仍未最终闭环，因此暂不切换 Novel。**
+更新时间：2026-09-23T05:55:00Z。状态：**源 PDF 首次录入已到 PDF255；阶段 B 本轮完成此前显式剩余优先候选 PDF226、217、216、43、87 的独立整页回源，优先队列已经清空。现在进入 final whole-book structured review / QC / state closure，尚未达到切换 Novel 的完成门槛。**
 
 ## 当前权威进度
 
-- 教材：**《社会主义市场经济理论（第五版）》**，夏永祥、张斌，高等教育出版社，ISBN `978-7-04-051184-0`。
-- 源 PDF：255 个物理页；正文印刷页 1–243；首次结构化覆盖 **PDF1–255**。
-- `source_pdf_end_reached=true`、`ingestion_coverage_complete=true`、`structured_content_complete=true`。
-- 当前处于阶段 B 风险驱动复核；本轮新增物理页 **0**，这不是失败，也不再使用“50 个新页”作为成功条件。
-- 当前 `structured_review_complete=false`、`targeted_pdf_issues_resolved=false`、`whole_book_complete=false`。
-- 完成后的切换目标：**`Jvust1/Novel`**；当前 `switch_to_novel=false`。
+- 教材：**《社会主义市场经济理论（第五版）》**，夏永祥、张斌，高等教育出版社。
+- 源 PDF：255 个物理页；首次结构化覆盖 **PDF1–255**。
+- `source_pdf_end_reached=true`
+- `ingestion_coverage_complete=true`
+- `structured_content_complete=true`
+- `structured_review_complete=false`
+- `targeted_pdf_issues_resolved=false`
+- `whole_book_complete=false`
+- `full_page_visual_verification=false`
+- 完成后的后继仓库：**`Jvust1/Novel`**；当前 `switch_to_novel=false`。
 
-## 本轮已闭环：PDF38 / 136 / 170 / 171
+## 本轮阶段 B 定点复核
 
-依据 `risk_screen_0031_0230_20260923.json` 的剩余优先序列，本轮直接回原扫描完成 4 个候选整页复核；风险分数仅用于排队，不作为错误证据。
-
-- **PDF38（印刷页27）**：修正第二节标题、垄断/储蓄/收入/大萧条等意义字符 OCR，并恢复“凯恩斯的三大心理规律和国家干预政策”的小节结构。PDF39 只用于确认页末跨页句续接，不计为独立候选闭环。
-- **PDF136（印刷页125）**：在历史章末 sparse 核对基础上补做整页风险复核，修正股权分置段、枚举、`逐步削弱`、`融资平台`、正文/“重点概念”粘连及第 6 题 `弊端` 等；保留原扫描可见但语感异常的 source wording，不静默改写原书。
-- **PDF170（印刷页159）**：此前只作为 PDF169 跨页上下文；本轮首次独立整页闭环。恢复社会保险法跨页条目、①/②枚举、2012/2013 段落、第二节标题及新农保/新农合/优抚安置原文。
-- **PDF171（印刷页160）**：修正页眉页码和社会救助/福利高价值术语，核对 `摘帽的右派分子、刑事罪犯家属`、`社会赞助`、`退休金`、`多渠道`、`特殊教育学校`、`过渡性福利措施`，并恢复页末句界。
-
-本轮新增 **32 条** source-verified correction overlay；累计 correction records **179 条**。历史 raw OCR 不覆盖，所有修正继续分层保存。
-
-## 仍 OPEN
-
-`ECO-QC-REVIEW-0031-0230` 仍未整体闭环。当前剩余优先序列：
+按上一 checkpoint 唯一剩余优先序列完成：
 
 `226 → 217 → 216 → 43 → 87`
 
-下一复核页：**PDF226**。
+直接整页回源页：**PDF226、217、216、43、87**。  
+跨页上下文页：PDF225、218、215、44、86、88（只作上下文，不计独立候选闭环）。
 
-`full_page_visual_verification=false`：只对风险触发页做定点 source review，不冒充整书逐页逐字视觉验收。
+本轮新增 **74 条** source-verified correction overlay，累计 **253 条**。典型闭环包括：
 
-## Drive 状态
+- PDF43：恢复 `垄断 / 寡头垄断`、20%/80%、①②③及章节/小节标题；
+- PDF87：恢复 `私有制 / 私有性 / 盈亏 / 弊小 / 剥削` 与 ①②③④，清除页眉粘连并核实 PDF86→87→88 跨页语义；
+- PDF216：恢复“工业化战略与道路”、工业化模式枚举、马克思引文“肮脏”及脚注；
+- PDF217：恢复计划经济工业化模式 ①–⑥、`传入 / 10% / 奠定 / 48.2% / 弊病`；
+- PDF226：恢复城市化段落数字/引号/术语与国家统计局脚注 URL。
 
-本轮新增成果为轻量 correction/QC/checkpoint/状态文本；原扫描 PDF 与既有 verified batch archive 已足以提供可追溯源证据，因此遵守 artifact dedup 策略，**不制造新的重复 Drive ZIP**。既有 `Book/03_Exports` 批次与复核归档继续保留。
+PDF226 原扫描可见“**50万到20万的城市43个**”。该区间次序从语义上可疑，但来源视觉明确，因此登记 `ECO-SOURCE-ANOMALY-0226-001`，**保留原印刷，不静默猜改**。
 
-## 完成条件与后继项目
+## 当前 OPEN
 
-只有剩余 targeted source checks 全部闭环、final whole-book structured review/QC/state closure 通过，并明确写入：
+显式优先 source-check 候选：**0**。
+
+仍保留 `ECO-QC-REVIEW-0031-0230`，因为还需要执行最终结构化全量审计，确认：
+
+- correction overlay 与原 blocks 的适用关系；
+- 页码/印刷页/章节映射；
+- 跨页对象与标题边界；
+- 图表引用；
+- lower-tier heuristic 候选是否能纯结构化判定为非阻塞，或是否会触发新的定点回源；
+- manifest / checkpoint / Current State 一致性。
+
+因此本轮**不**把 `targeted_pdf_issues_resolved`、`structured_review_complete` 或 `whole_book_complete` 提前设为 true。
+
+## Drive
+
+本轮新增成果均为轻量 JSONL / QC / checkpoint / 状态文本，GitHub 已足以长期保存；遵守 artifact dedup，不新建重复 ZIP。原扫描 PDF 与已存在的 verified batch archive 继续作为来源证据。
+
+## 下一步
+
+执行 `FINAL_WHOLE_BOOK_STRUCTURED_REVIEW_QC_STATE_CLOSURE`。只有最终审计通过，并明确写入：
 
 - `whole_book_complete=true`
 - `structured_review_complete=true`
 
-之后才停止《当代中国经济》并切换到 **`Jvust1/Novel`**。当前仍不切换。
+之后才停止本教材并切换到 **`Jvust1/Novel`**。
