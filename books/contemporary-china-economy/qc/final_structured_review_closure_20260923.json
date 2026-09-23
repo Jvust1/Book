@@ -1,0 +1,69 @@
+{
+  "schema_version": "economics_final_structured_review_closure_v1",
+  "generated_at": "2026-09-23T06:31:30Z",
+  "book_id": "contemporary-china-economy",
+  "canonical_title": "社会主义市场经济理论（第五版）",
+  "course_alias": "当代中国经济",
+  "phase": "B_FINAL_STRUCTURED_REVIEW_CLOSURE",
+  "new_pdf_pages_this_run": 0,
+  "source": {
+    "drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "pdf_page_count": 255,
+    "sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "source_pdf_end_reached": true
+  },
+  "review_method": {
+    "policy": "data-first v3 structured review; source PDF reopened only for triggered doubts",
+    "full_page_visual_verification": false,
+    "no_claim": "This closure does not claim exhaustive character-by-character visual verification of every page."
+  },
+  "coverage_audit": {
+    "batch_ranges": [[1,15],[16,23],[24,30],[31,80],[81,130],[131,180],[181,230],[231,255]],
+    "continuous_no_gap_no_overlap": true,
+    "processed_pdf_pages": [1,255],
+    "body_printed_mapping": {"pdf_first_body":12,"printed_first":1,"pdf_last_body":254,"printed_last":243,"offset":-11},
+    "pdf255_role": "packaging_metadata"
+  },
+  "closure_evidence": {
+    "frontmatter_source_review": "PASS",
+    "early_ocr_source_review": "PASS",
+    "risk_screen_0031_0230_pages": 200,
+    "direct_source_reviewed_priority_pages": [169,125,150,38,171,170,226,136,217,216,43,87],
+    "remaining_direct_source_priority_pages": [],
+    "lower_tier_heuristic_only_pages": [227,174,41,124,164,105,207,182],
+    "lower_tier_classification": "INFORMATIONAL_TRIAGE_ONLY_NO_STRUCTURAL_TRIGGER_REQUIRING_SOURCE_REOPEN",
+    "p181_targeted_remediation": "PASS",
+    "p231_0254_fulltext_remediation": "PASS",
+    "source_verified_correction_records": 253,
+    "cross_page_objects_from_fulltext_remediation": 13,
+    "original_assets": "PASS_REFERENCED_AND_PRESERVED_IN_VERIFIED_DRIVE_ARCHIVES"
+  },
+  "issue_closure": {
+    "resolved_issue_ids": ["ECO-QC-OCR-0012-0015","ECO-QC-OCR-0024-0030","ECO-QC-FRONTMATTER-0002-0011","ECO-QC-OCR-0181","ECO-QC-FULLTEXT-0231-0254","ECO-QC-REVIEW-0031-0230"],
+    "informational_non_blocking": ["ECO-QC-AUTO-SCREEN-0031-0230","ECO-QC-FRONTMATTER-CATALOG-0002","ECO-SOURCE-ANOMALY-0226-001","ECO-SOURCE-ANOMALY-0241-001"],
+    "open_blocking": [],
+    "open_high": [],
+    "open_medium": []
+  },
+  "completion": {
+    "structured_content_complete": true,
+    "structured_review_complete": true,
+    "targeted_pdf_issues_resolved": true,
+    "source_review_debt_remaining": false,
+    "whole_book_complete": true,
+    "full_page_visual_verification": false,
+    "mathematical_review_status": "FORMULA_STRUCTURE_REVIEW_COMPLETE_NO_OPEN_MATH_QC",
+    "switch_to_novel": true
+  },
+  "drive_evidence": {
+    "latest_full_batch_archive": {"file_id":"1m_tpYe41Rv8KXuZ9F-5UfnsVhiwWXIhZ","name":"Book-Contemporary-China-Economy-Verified-pdf231-255-20260923.zip"},
+    "fulltext_remediation_archive": {"file_id":"1P-I3jbudGQSserx3pOmD1HfJPElszwxE","name":"Book-Contemporary-China-Economy-Fulltext-Remediation-pdf231-254-plus181-20260923.zip"},
+    "risk_review_archive": {"file_id":"1dVIvu3nMDbLP_P_Bij9JOkVDUWoxlafF","name":"Book-Contemporary-China-Economy-Risk-Review-pdf001-230-20260923.zip"}
+  },
+  "boundary_notes": [
+    "Heuristic triage signals are not treated as proof of source error; lower-tier untriggered candidates remain informational.",
+    "Raw OCR/source evidence and source anomalies remain preserved; corrections are layered rather than overwriting provenance.",
+    "Source anomalies at PDF226 and PDF241 are preserved as printed and are non-blocking."
+  ],
+  "next_action": "RECOVER_NOVEL_GOVERNANCE_AND_ADVANCE"
+}
