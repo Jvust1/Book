@@ -41,6 +41,7 @@ jobs:
           node --version | tee "$RUNNER_TEMP/book-grant-evidence/node-version.txt"
           node --test integrations/mygpt_selection/tests/projection.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/node.txt"
           node --test integrations/mygpt_selection/tests/bridge-ui-state.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/bridge-ui-state.txt"
+          node --test integrations/mygpt_selection/tests/bridge-clear-budget.test.cjs | tee "$RUNNER_TEMP/book-grant-evidence/bridge-clear-budget.txt"
           node --check integrations/mygpt_selection/book_mygpt_selection/web/bridge.js
           node --check integrations/mygpt_selection/book_mygpt_selection/web/projection.js
           "$PY" -m compileall -q integrations/mygpt_selection

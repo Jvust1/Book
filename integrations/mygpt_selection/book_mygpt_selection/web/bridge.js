@@ -35,10 +35,12 @@
     finally{connecting=false;update();}
   }
   function invalidate(reason){
-    generation++;draft=null;ticket=null;sharing=null;
+    const mustClear=connected&&(!!ticket||!!sharing&&!sharing.superseded);
+    if(sharing)sharing.superseded=true;
+    generation++;draft=null;ticket=null;
     if(['navigation','leave','页面离开'].includes(reason)){context=null;decorate();}panel.hidden=true;reply.hidden=true;reply.textContent='';
     if(pending){const current=pending;pending=null;current.controller.abort();if(connected)request('cancel',{request_id:current.id},{keepalive:true}).catch(()=>{});}
-    if(connected){const seq=++sequence;request('clear',{sequence:seq,request_id:uid()},{keepalive:true}).catch(error=>{if(connected&&seq===sequence)fail(error);});}
+    if(mustClear){const seq=++sequence;request('clear',{sequence:seq,request_id:uid()},{keepalive:true}).catch(error=>{if(connected&&seq===sequence)fail(error);});}
     if(connected)say('选段已失效：'+reason+'。需要重新选择并确认。');update();
   }
   async function revoke(){
@@ -87,9 +89,11 @@
   }
   async function refreshDraft(){
     if(!draft)return;
+    const mustClear=connected&&(!!ticket||!!sharing&&!sharing.superseded);
+    if(sharing)sharing.superseded=true;
     const saved=draft,ctx=context;generation++;const gen=generation;ticket=null;saved.hash=null;reply.hidden=true;
     if(pending)await cancel();
-    if(connected)request('clear',{sequence:++sequence,request_id:uid()},{keepalive:true}).catch(()=>{});
+    if(mustClear)request('clear',{sequence:++sequence,request_id:uid()},{keepalive:true}).catch(()=>{});
     if(saved.options.length>1&&layer.value===''){
       saved.payload=null;preview.textContent='请选择具体来源层并核对预览；确认前不会共享。';
       say('多种来源层均可用。请先明确选择一层，再核对内容。');update();return;
@@ -102,9 +106,9 @@
   }
   async function share(){
     if(!connected||!draft?.hash||sharing||ticket||pending)return;const gen=generation,saved=draft;const seq=++sequence;
-    const operation={gen,seq};sharing=operation;update();
+    const operation={gen,seq,superseded:false};sharing=operation;update();
     try{const result=await request('select',{selection:saved.payload.selection,expected_sha256:saved.hash,sequence:seq,request_id:uid()});
-      if(gen!==generation||draft!==saved)return;ticket=result;say('选段身份已核验，当前层级：'+saved.options[Number(layer.value)].label+'。只有点击测试解释才调用 TestModel。');}
+      if(gen!==generation||draft!==saved||operation.superseded)return;ticket=result;say('选段身份已核验，当前层级：'+saved.options[Number(layer.value)].label+'。只有点击测试解释才调用 TestModel。');}
     finally{if(sharing===operation)sharing=null;update();}
   }
   async function explain(){
