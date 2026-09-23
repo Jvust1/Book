@@ -1,129 +1,59 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-09-13",
+  "updated_date": "2026-09-23",
   "repository": "Jvust2/Book",
   "default_branch": "main",
-  "active_branch": "design/phase-1h-learning-slices-20260830",
-  "phase": "PHASE_1H_IMPLEMENTATION",
-  "status": "TASK11_COMPLETE_REVIEW_READY",
-  "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
-  "latest_implementation_change_head": "9fce2c794559ff8c1bfdd0beda8f1848f189b0e3",
-  "last_verified_implementation_head": "9fce2c794559ff8c1bfdd0beda8f1848f189b0e3",
+  "active_branch": "feat/reader-grant-bridge-20260923",
+  "phase": "SCOPED_R6_READONLY_BOOK_BRIDGE",
+  "status": "ARCHIVE_BOOK_HTTP_TESTMODEL_ACCEPTED_BROWSER_AND_REVIEW_PENDING",
+  "security_status": "REGISTERED_PROTECTED_REVIEW_BRANCH",
+  "scope_note": "Current state of this isolated review branch only. Legacy product workstreams, frozen invariants and independent human gates are preserved and not superseded or activated by this bridge.",
+  "drive": {
+    "folder_name": "Book",
+    "folder_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB"
+  },
   "current_pr": {
-    "number": 26,
+    "number": 37,
     "state": "OPEN",
     "draft": true,
     "merged": false,
-    "mergeable": true,
-    "base_branch": "main",
-    "head_branch": "design/phase-1h-learning-slices-20260830"
+    "base_branch": "data/two-courses-r3-checkpoint-20260921"
   },
-  "approved_dependency_sequence": [
-    "H0",
-    "H1",
-    "H2",
-    "H3a",
-    "H4a",
-    "Phase 1H"
+  "bridge_checkpoint": "docs/BOOK_SELECTION_BRIDGE_CHECKPOINT_20260923.md",
+  "bridge_state": "governance/book_selection_bridge_checkpoint_20260923.json",
+  "artifact_manifest": "governance/book_selection_bridge_artifact_manifest_20260923.json",
+  "legacy_artifact_manifest": "governance/artifact_manifest.json",
+  "pending_sync": {
+    "blocking_count": 0,
+    "source": "governance/pending_sync.json",
+    "bridge_artifact_blocking_count": 0,
+    "note": "Existing unrelated non-blocking items are not resolved or discarded by this checkpoint."
+  },
+  "historical_state": {
+    "source_commit": "7283f2eef7610d67c6b92b2ef7c513e1225ad957",
+    "project_state": "governance/history/project_state_before_book_bridge_20260923.json",
+    "project_state_blob": "3cc0a24361b486f4a7d7f3d36f6708d0777fed5f",
+    "current_state": "docs/history/CURRENT_STATE_before_book_bridge_20260923.md",
+    "current_state_blob": "ac51a1509eccc22e6f63f9949409b6a9826c34d1",
+    "handoff": "docs/history/HANDOFF_before_book_bridge_20260923.md",
+    "handoff_blob": "6539c89be2b593df9ed206fc0c85e9f830316b01",
+    "preservation": "Exact pre-change Git blobs retained, not rewritten summaries. Read for every unrelated workstream or inherited gate."
+  },
+  "blocking_items": [
+    "Browser UI acceptance blocked by managed navigation policy in this environment; no bypass attempted.",
+    "Independent code review and Android identity/IPC/physical-device validation pending.",
+    "Existing mygpt PR #5/#6 integration conflict remains unresolved."
   ],
-  "transition_stages": {
-    "H0": {
-      "status": "COMPLETE_MERGED",
-      "merged_pr": 18,
-      "reviewed_head": "56c289ccdb5bd692efcbd642dfd9267278f5e5af",
-      "merge_commit": "3dcc600c2c8a39e1ffc41c07fbf290adfba5035c"
-    },
-    "H1": {
-      "status": "COMPLETE_MERGED",
-      "merged_pr": 19,
-      "reviewed_head": "a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2",
-      "merge_commit": "7e54e87b9674455e9f3d275016313f6c9e2487ac"
-    },
-    "H2": {
-      "status": "COMPLETE_MERGED",
-      "merged_pr": 20,
-      "reviewed_head": "66ac966c5dfe59ebeea82b168b2ee67fc85f9474",
-      "merge_commit": "410cede92bcc0783e4fca9b02faec79e5fe77112"
-    },
-    "H3a": {
-      "status": "COMPLETE_MERGED",
-      "merged_pr": 21,
-      "reviewed_head": "1ed4fc6574417b56b4342ae639f81a69dd842c6b",
-      "merge_commit": "f69166568839b7038b0f0472baefcee34299fa17"
-    },
-    "H4a": {
-      "status": "COMPLETE_MERGED",
-      "merged_pr": 23,
-      "reviewed_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
-      "merge_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
-      "public_search_behavior": "EXACT_ONLY_UNCHANGED",
-      "evidence_classification": "FTS_EVIDENCE_NOT_PROMISING",
-      "golden_query_set": {
-        "dataset_id": "functional_analysis_h4a_v1",
-        "query_count": 25,
-        "canonical_sha256": "0d40322830b37e272207bddeb5fb7d6f7ec0bde46997f9a66de32004eca19047"
-      }
-    }
-  },
-  "phase_1h": {
-    "status": "IMPLEMENTATION_IN_PROGRESS",
-    "design": "docs/superpowers/specs/2026-08-30-phase-1h-learning-slices-design.md",
-    "implementation_plan": "docs/superpowers/plans/2026-08-30-phase-1h-learning-slices.md",
-    "pr": 26,
-    "schema_version": "learning_slice_v1",
-    "task_status": {
-      "1": "COMPLETE",
-      "2": "COMPLETE",
-      "3": "COMPLETE",
-      "4": "COMPLETE",
-      "5": "COMPLETE",
-      "6": "COMPLETE",
-      "7": "COMPLETE",
-      "8": "COMPLETE",
-      "9": "COMPLETE",
-      "10": "COMPLETE",
-      "11": "COMPLETE"
-    },
-    "task7_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task7-practice-ui.md",
-    "task7_checkpoint_commit": "3896b0bc096df14f58c761034a48640040939d1b",
-    "task8_red_test_commit": "4b03a40398dbbe23c3fe57f5750299f27b5c5e0e",
-    "last_exact_green": {
-      "head": "74c2e00b0e279b4cd3096783741ee0aada5a6b6c",
-      "runtime_reference_run": 33304524899,
-      "book_app_ui_run": 33304524902,
-      "web_tests": "87/87 PASS",
-      "typecheck": "PASS",
-      "production_build": "PASS",
-      "chromium": "12/12 PASS"
-    },
-    "task8_green_implementation_commit": "7a29a74cf97ea593de17edc8a14ef2b1989bd564",
-    "task8_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task8-learn-grouping.md",
-    "task9_ui_implementation_commit": "5a64e7b58d9d97af81de8dd5564306124af54f21",
-    "task9_checkpoint": "docs/superpowers/checkpoints/2026-08-30-phase-1h-task9-learn-ui.md",
-    "task10_acceptance_commit": "9fce2c794559ff8c1bfdd0beda8f1848f189b0e3",
-    "task10_acceptance": {
-      "isolation": "PASS",
-      "golden_runtime_api": "PASS",
-      "chromium": "PASS",
-      "viewport_390x844": "PASS"
-    },
-    "task11_exact_head": {
-      "head": "9fce2c794559ff8c1bfdd0beda8f1848f189b0e3",
-      "protected_area_diff": "EMPTY",
-      "github_checks": "PASS",
-      "review_status": "READY_PENDING_PR_REVIEW"
-    }
-  },
-  "golden_course": {
-    "course_id": "functional_analysis_course",
-    "book_id": "stein_shakarchi_functional_analysis_2011",
-    "chapter_count": 8,
-    "section_count": 132,
-    "search_record_count": 1493,
-    "pdf_page_count": 442,
-    "printed_final_page": 423,
-    "structured_status": "STRUCTURED_COMPLETE",
-    "runtime_status": "READY"
+  "next_step": "Run exact Book PR #37 plus mygpt PR #7 in an authorized browser runtime with localhost access; verify explicit selection, layer/raw-display switching, navigation/visibility/expiry invalidation, cancellation/revocation races, mobile layout, and zero external requests/StudyRecord writes; then obtain independent review. No Android/paid provider activation or automatic PR merge.",
+  "boundaries": {
+    "main_write": false,
+    "auto_merge": false,
+    "studyrecord_write": false,
+    "notes_or_answers_export": false,
+    "chatcontextvault_access": false,
+    "paid_model_calls": 0,
+    "browser_policy_changed": false,
+    "legacy_simulated_protocols_unchanged": true
   },
   "frozen_invariants": {
     "public_search_qa": "EXACT_ONLY_UNCHANGED",
@@ -151,69 +81,20 @@
     "StudyRecord book-version migration",
     "multi-book Runtime consumer migration",
     "Lecture authority",
-    "PR #26 merge"
+    "durable per-question answer storage",
+    "PR #26 merge",
+    "Any other PR-specific merge"
   ],
   "governance": {
-    "global_entry": "Google Drive / 全项目",
-    "security_policy": "SECURITY_POLICY.md",
     "agent_entry": "AGENTS.md",
+    "security_policy": "SECURITY_POLICY.md",
     "north_star": "docs/PROJECT_NORTH_STAR.md",
     "architecture_invariants": "docs/ARCHITECTURE_INVARIANTS.md",
     "current_state": "docs/CURRENT_STATE.md",
+    "handoff": "docs/HANDOFF.md",
+    "preflight": "docs/PRE_FLIGHT_CHECKLIST.md",
     "decision_ledger": "docs/DECISION_LEDGER.md",
     "evaluation_ledger": "docs/EVALUATION_LEDGER.md",
-    "handoff": "docs/HANDOFF.md",
-    "roadmap": "docs/ROADMAP.md",
-    "preflight": "docs/PRE_FLIGHT_CHECKLIST.md",
-    "artifact_manifest": "governance/artifact_manifest.json",
-    "pending_sync": "governance/pending_sync.json"
-  },
-  "pending_sync": {
-    "blocking_count": 0,
-    "source": "governance/pending_sync.json",
-    "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
-  },
-  "blocking_items": [],
-  "next_step": "Review PR #26 at exact head 9fce2c794559ff8c1bfdd0beda8f1848f189b0e3. The App implementation is review-ready; structured textbook ingestion remains deferred. Do not merge without explicit PR-specific authorization.",
-  "android_delivery": {
-    "version": "0.1.3",
-    "version_code": 4,
-    "branch": "build/book-app-android-apk-20260913",
-    "pr": 29,
-    "status": "BUILT_VERIFIED_SIMULATOR",
-    "release_manifest": "governance/android_0_1_3_release.json",
-    "source_snapshot_commit": "7273b5d741ae7528d1a966ee9be7f313c7d2f0d5",
-    "notes": "LaTeX/Markdown display, responsive design, native foreground recording and legacy recording export. No new structured textbook data or AI provider.",
-    "documentation": "android-app/README.md",
-    "checkpoint": "docs/ANDROID_0_1_3.md",
-    "physical_device_recording": "NOT_TESTED",
-      "next_step": "Review PR #29 and test microphone/background behavior on ARM64 hardware; merge requires explicit PR authorization."
-  },
-  "windows_delivery": {
-    "version": "0.1.3",
-    "platform": "windows-x64",
-    "status": "BUILT_VERIFIED",
-    "source_snapshot_commit": "bff0b45",
-    "release_manifest": "governance/windows_0_1_3_release.json",
-    "documentation": "docs/WINDOWS_0_1_3.md",
-    "desktop_recording": "DISABLED_USE_ANDROID",
-    "study_progress_sync": "DEVICE_LOCAL_NO_AUTHENTICATED_SYNC_SERVICE",
-    "artifact_sha256": "57DCB774866DF185B6A5790B340CE3282000E1D86D83BBD5E11EBD92402A80E8"
-  },
-  "book_0_1_4_delivery": {
-    "version": "0.1.4",
-    "branch": "build/book-app-android-apk-20260913",
-    "status": "BUILT_VERIFIED",
-    "release_manifest": "governance/book_0_1_4_release.json",
-    "source_snapshot_commit": "07b28d3",
-    "manual_sync_schema": "book_study_sync_v1",
-    "desktop_recording": "DISABLED_USE_ANDROID",
-    "documentation": "docs/BOOK_0_1_4.md",
-    "drive_folder_url": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW",
-    "release_revision": 2,
-    "android_apk_sha256": "3516D50C56242F263C98B8957A8F53786154098F3B957CACB3347436AB3689DE",
-    "windows_exe_sha256": "8D00950F324ACA0E9089F8E543C06F920C0F02DBF3FE725A6F8ED3A15677F751",
-    "desktop_packaged_library": "PASS",
-    "desktop_sync_smoke": "PASS_WITH_SYSTEM_EDGE_AND_ISOLATED_DATA"
+    "active_decision_and_evaluation_checkpoint": "docs/BOOK_SELECTION_BRIDGE_CHECKPOINT_20260923.md"
   }
 }

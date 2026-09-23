@@ -1,0 +1,42 @@
+{
+  "schema_version": "scoped_artifact_manifest_v1",
+  "updated_date": "2026-09-23",
+  "repository": "Jvust2/Book",
+  "includes": [
+    {
+      "path": "governance/artifact_manifest.json",
+      "scope": "All previously registered artifacts; existing registry and files remain unchanged."
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_id": "Book-reader-grant-bridge-v1-20260923",
+      "file_name": "Book-reader-grant-bridge-v1-20260923.zip",
+      "drive_file_id": "16Z7pHnZ7I08A1eUBIAQXRWCxoTwlD7ah",
+      "drive_parent_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+      "sha256": "ff0818be6376bb4b533393e690629c21ed1c377983fc74a6bd635b011524d202",
+      "size_bytes": 103581,
+      "zip_members": 36,
+      "indexed_members": 35,
+      "related_implementation_commit": "bf7aa490639bc2b2fcf382623b915d54f6cecf07",
+      "pr": 37,
+      "status": "ARCHIVED_REVIEW_CANDIDATE",
+      "verification": "Drive metadata and complete re-downloaded ZIP SHA-256, CRC, exact member count and every self-excluded manifest member verified.",
+      "contains": "Delta source, reproducible tests, raw first-failure/final evidence, checkpoint and internal manifest.",
+      "excludes": [
+        "raw Book corpus",
+        "fonts",
+        "credentials",
+        "private notes/answers",
+        "venv",
+        "dependency wheels",
+        "cache",
+        "duplicate Jonah atlas"
+      ]
+    }
+  ],
+  "pending_sync": {
+    "blocking_count": 0,
+    "scope": "this bridge artifact only; old pending_sync.json items retain their existing status"
+  }
+}
