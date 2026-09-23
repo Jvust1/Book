@@ -14,3 +14,6 @@ Book 运行目录必须来自固定 SHA 的 r6 归档；旧 Book `app/` 不是 r
 
 
 最新 Book UI 状态修复：`114be2a40f9e3ef364aca2e02492361ebf46e4b6`。多内容层 record 不再自动选最后一层；分享必须先明确选层并完成预览。run 35834149129 的 68 Python + 18 projection Node + 1 DOM state regression 通过，但真实浏览器仍未验收。新增增量恢复包 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`；先前 v1 包保持历史身份。
+
+
+最新浏览器证据：`Book-reader-grant-browser-shim-v1.2-20260923.zip`，Drive `1l1XxGbVqS5__4RhSYevhTnNT5JT3ijs9`，SHA-256 `71b10b3127eb60a61681d96a9712c17758ddf7eb3f00bf09a6bdb3f75d6834ba`。Chromium UI + 真实后端 shim 21+5 checks 通过；直连 127.0.0.1/localhost 仍被管理策略阻止。不得把 shim 通过写成 direct-localhost 通过。当前优先做独立审阅；可直连 localhost 的环境到位后再复验，不自动推进 Android/真实 provider/merge。

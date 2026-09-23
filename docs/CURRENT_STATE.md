@@ -16,11 +16,19 @@
 
 多内容层记录现在默认不选层：必须用户明确选择原文/补录/AI 校正中的一个具体层并核对预览后，分享按钮才会启用；单层记录仍可直接预选。预览阶段不会产生 `/select` 授权请求。Book CI run 35834149129：68 Python、18 投影 Node、1 项 DOM 状态回归均通过。该 DOM 测试不是实际浏览器验收。新增 v1.1 增量归档已保存到 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`，旧 v1 证据保留不覆盖。
 
+## Chromium UI + 真实后端 shim 验收
+
+在不修改浏览器管理策略的前提下，系统 Chromium 直连 `127.0.0.1` 与 `localhost` 都仍返回 `ERR_BLOCKED_BY_ADMINISTRATOR`。为继续验证 UI，本轮使用明确的 Playwright binding 传输 shim：真实 Chromium 运行精确 Reader/Bridge JS，所有应用 fetch 由测试 harness 转发到真实 Book 127.0.0.1 服务；Book Authority、r6 源文件、mygpt BookReceiver 与实际 Pydantic AI TestModel 均不替换。
+
+主 UI **21/21** 通过：真实 raw/display 切换、多层显式选层、预览零授权、分享、实际 TestModel 回复、MathJax、导航失效、取消迟到回复、隐藏失效、撤销、移动/桌面布局、零页面/console error。额外时序 **5/5** 通过：切模式失效、翻组失效、1 秒真实短租约先可用后过期。由于测试文档是 null origin，localStorage/history、randomUUID/WebCrypto 使用了明确测试替身，因此这仍不能冒充“浏览器直连 localhost 已通过”。
+
+v1.2 证据归档：Drive `1l1XxGbVqS5__4RhSYevhTnNT5JT3ijs9`，1,673,673 bytes，SHA-256 `71b10b3127eb60a61681d96a9712c17758ddf7eb3f00bf09a6bdb3f75d6834ba`；整包、CRC 与 17/17 内部 manifest 已重新下载验证。旧 v1/v1.1 均保留。
+
 ## 未完成与下一步
 
 托管浏览器以 `ERR_BLOCKED_BY_ADMINISTRATOR` 阻止 localhost 导航，未更改或绕过策略，因此 UI 端到端验收仍未完成。Android APK 身份、IPC/overlay、真机软键盘、真实教学模型、生产多用户安全和独立审阅未验收。旧 mygpt PR #5/#6 整合冲突未处理。
 
-唯一下一步：在允许 localhost 的受信任浏览器环境，对两个 PR 的精确实现做完整 UI 验收与独立审阅；不自动合并、不启用付费模型、不修改学习记录。
+下一步优先做独立代码审阅；当存在允许直连 localhost 的受信任浏览器运行环境时，再用同一流程去掉传输/storage/WebCrypto 测试替身复验。Android、真实教学模型和 PR 合并仍不自动启动。
 
 ## 恢复入口
 

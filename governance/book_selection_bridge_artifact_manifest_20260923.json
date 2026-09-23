@@ -61,6 +61,31 @@
         "dependency wheels",
         "cache"
       ]
+    },
+    {
+      "artifact_id": "Book-reader-grant-browser-shim-v1.2-20260923",
+      "file_name": "Book-reader-grant-browser-shim-v1.2-20260923.zip",
+      "drive_file_id": "1l1XxGbVqS5__4RhSYevhTnNT5JT3ijs9",
+      "drive_parent_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+      "sha256": "71b10b3127eb60a61681d96a9712c17758ddf7eb3f00bf09a6bdb3f75d6834ba",
+      "size_bytes": 1673673,
+      "zip_members": 18,
+      "indexed_members": 17,
+      "related_runtime_commit": "114be2a40f9e3ef364aca2e02492361ebf46e4b6",
+      "mygpt_runtime_commit": "fa9f17a0eb4fb015d76b419865f1b49a2d325f0e",
+      "predecessor_artifact_id": "Book-reader-grant-bridge-v1.1-20260923",
+      "status": "ARCHIVED_BROWSER_SHIM_EVIDENCE",
+      "verification": "Drive re-download matches SHA-256; ZIP CRC passed; all 17 self-excluded manifest members match size and SHA-256.",
+      "scope": "21 real-Chromium UI checks plus 5 timing/invalidation checks using exact Reader/Bridge JS and real Book/mygpt/TestModel backend through an explicit Playwright binding transport shim. Direct browser localhost remained blocked by policy.",
+      "exclusions": [
+        "raw Book corpus",
+        "fonts",
+        "credentials",
+        "private notes/answers",
+        "venv",
+        "dependency wheels",
+        "cache"
+      ]
     }
   ],
   "pending_sync": {

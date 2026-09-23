@@ -36,3 +36,14 @@ GitHub Actions run 35834149129 / artifact 10738114864 在精确提交上通过�
 新增量归档 `Book-reader-grant-bridge-v1.1-20260923.zip` 保存到 Drive `1T_PGQxLQJgaq5BkYzlO_tAC1SXr1_arz`，103,218 bytes，SHA-256 `506ba0a1f259431fed59358bcfb7ccb44c3ddee31c681c890a492b6e1054079a`；重新下载后整包 SHA、CRC 和 6/6 自排除 manifest 成员均一致。旧 v1 包不覆盖。
 
 当前 r6 数据源身份没有变化，仍是 Drive `1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R` / SHA-256 `19315e8aeebe2db5cf2f4b55e0a38f550967966af106491dfef67212b430adc1`。下一步仍需在允许 localhost 的真实浏览器中验证这一显式选层流程、失效/取消/撤销竞态和移动布局，再做独立审阅。
+
+
+## BRIDGE-E003 — Chromium UI + 真实后端 shim
+
+重新恢复冻结 r6 ZIP 与 mygpt 精确 CI 源码，39-wheel hash lock 离线安装通过；随后重新得到 68 Python、18 projection Node、1 DOM state、19,174/19,174 conformance、56 HTTP / 5 actual TestModel / 0 paid calls 的既有结果。
+
+系统 Chromium 直接访问 `http://127.0.0.1:<port>/reader/` 和 `http://localhost:<port>/reader/` 均返回 `ERR_BLOCKED_BY_ADMINISTRATOR`；未改变或绕过管理策略。替代验证使用真实 Chromium 加显式 Playwright binding：精确 Reader/Bridge JS 在浏览器执行，fetch 由 harness 转发到真实 127.0.0.1 Book 服务；Book Authority、源文件、mygpt receiver/TestModel 都是真实实现。null-origin 文档缺失的 localStorage/history、randomUUID 与 WebCrypto 只在 harness 中明确替身。
+
+主 UI 21/21：目录和只读提示、无自动授权、真实 raw/display 差异、真实多层 record 未选层禁分享、明确 AI 校正预览、预览零 grant、一次 share grant、实际 TestModel 回复、0 paid、MathJax、导航失效、取消迟到回复、visibility 失效、revoke、移动/桌面边界、0 native browser network、0 page error、0 console error。额外 5/5：mode/page-group 失效、短租约初始可解释、1 秒真实租约过期失效、0 page error。
+
+证据包 Drive `1l1XxGbVqS5__4RhSYevhTnNT5JT3ijs9`，1,673,673 bytes，SHA-256 `71b10b3127eb60a61681d96a9712c17758ddf7eb3f00bf09a6bdb3f75d6834ba`；18 ZIP members / 17 indexed members，Drive 回下载后 SHA、CRC、17/17 member hashes 一致。此证据提升 UI/时序可信度，但 **direct browser → localhost 仍 NOT ACCEPTED**。
