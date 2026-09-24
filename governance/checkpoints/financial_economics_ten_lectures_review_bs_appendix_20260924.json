@@ -1,0 +1,21 @@
+{
+  "schema_version": "book_review_checkpoint_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "checkpoint_id": "financial_economics_ten_lectures_review_bs_appendix_20260924",
+  "stage": "STRUCTURED_REVIEW",
+  "initial_ingestion_complete": true,
+  "completed_pdf_range": [1,278],
+  "targeted_review_pdf_range": [247,251],
+  "resolved_qc_this_round": ["FE10-QC-BS-APPENDIX-0247-0250","FE10-QC-BS-APPENDIX-0251"],
+  "corrections_this_round": ["FE10-CORR-10.36-PDF250-20260924"],
+  "open_qc_count": 29,
+  "next_review_target": "FE10-QC-BS-RATES-0236-0247",
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "switch_to_invest": false,
+  "evidence": {
+    "targeted_review": "books/financial-economics-ten-lectures/qc/targeted_review_bs_appendix_pdf0247_0251_20260924.json",
+    "correction": "books/financial-economics-ten-lectures/corrections/formula_10_36_pdf250_20260924.json",
+    "source_pdf_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e"
+  }
+}
