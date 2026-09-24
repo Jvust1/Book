@@ -1,0 +1,34 @@
+{
+  "schema_version": "book_correction_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "correction_id": "FE10-CORR-10.36-PDF250-20260924",
+  "source_page": {
+    "pdf_page": 250,
+    "printed_page": 231,
+    "formula_number": "10.36"
+  },
+  "source_layer": {
+    "literal_latex": "\\frac{\\sigma}{a\\sqrt2}\\bigl(v+q\\sqrt{2s}\\bigr)=\\log\\!\\left(\\frac xK\\right)+\\left(r-\\frac{\\sigma^2}{2}\\right)(T-t)+q\\sigma\\sqrt{t-T}",
+    "evidence": "Original scanned PDF page 250 visually inspected at high resolution; the radical in the final term reads t-T.",
+    "status": "SOURCE_LITERAL_CONFIRMED"
+  },
+  "prior_compact_record": {
+    "path": "books/financial-economics-ten-lectures/verified/formulas_0201_0250.jsonl",
+    "formula_number": "10.36",
+    "stored_latex": "\\frac{\\sigma}{a\\sqrt2}\\bigl(v+q\\sqrt{2s}\\bigr)=\\log\\!\\left(\\frac xK\\right)+\\left(r-\\frac{\\sigma^2}{2}\\right)(T-t)+q\\sigma\\sqrt{T-t}",
+    "issue": "The stored formula is mathematically normalized but was labeled origin=source; it is not a literal transcription of the scan at formula (10.36).",
+    "handling": "Do not overwrite historical source provenance silently; this correction record supersedes the source attribution for formula (10.36)."
+  },
+  "correction_layer": {
+    "normalized_latex": "\\frac{\\sigma}{a\\sqrt2}\\bigl(v+q\\sqrt{2s}\\bigr)=\\log\\!\\left(\\frac xK\\right)+\\left(r-\\frac{\\sigma^2}{2}\\right)(T-t)+q\\sigma\\sqrt{T-t}",
+    "reason": "For t<T, sqrt(t-T) is inconsistent with s(t)=a^2(T-t) in (10.22), the substitution in (10.34), and the immediately following derivation (10.37)-(10.41), all of which use sqrt(T-t).",
+    "classification": "SOURCE_TYPO_NORMALIZATION",
+    "origin": "correction",
+    "blocking": false,
+    "status": "RESOLVED_WITH_LAYERED_CORRECTION"
+  },
+  "derived_layer": {
+    "interpretation": "Use sqrt(T-t) for mathematical derivation and downstream structured use while retaining the literal source reading above.",
+    "origin": "derived"
+  }
+}
