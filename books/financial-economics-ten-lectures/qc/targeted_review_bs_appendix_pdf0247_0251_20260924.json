@@ -1,0 +1,29 @@
+{
+  "schema_version": "book_targeted_review_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "review_id": "FE10-REVIEW-BS-APPENDIX-0247-0251-20260924",
+  "review_mode": "v3_risk_driven_targeted_pdf_review",
+  "source_pdf_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "pdf_pages_reviewed": [247,248,249,250,251],
+  "printed_pages_reviewed": [228,229,230,231,232],
+  "scope": {
+    "topic": "Black-Scholes PDE solution appendix and terminal definitions",
+    "formula_range": "10.11-10.44",
+    "method": "Review existing compact formula records first, then visually inspect only the targeted source pages."
+  },
+  "results": {
+    "formula_records_checked": "10.11-10.44",
+    "formula_records_consistent_except": ["10.36"],
+    "formula_10_36": "Literal scan has sqrt(t-T); normalized mathematical reading is sqrt(T-t). Layered correction recorded separately.",
+    "cross_page_semantics": "PASS: PDF250 derivation continues coherently to PDF251 definitions (10.42)-(10.44).",
+    "page_mapping": "PASS: PDF247-251 maps to printed 228-232.",
+    "figures_tables": "No figure/table remediation required in this targeted range."
+  },
+  "resolved_qc": ["FE10-QC-BS-APPENDIX-0247-0250","FE10-QC-BS-APPENDIX-0251"],
+  "new_blocking_qc": [],
+  "nonblocking_corrections": ["FE10-CORR-10.36-PDF250-20260924"],
+  "remaining_open_qc_count": 29,
+  "next_review_target": "FE10-QC-BS-RATES-0236-0247",
+  "structured_review_complete": false,
+  "whole_book_complete": false
+}
