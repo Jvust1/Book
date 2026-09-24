@@ -1,0 +1,23 @@
+{
+  "schema_version": "economics_handoff_checkpoint_v1",
+  "generated_at": "2026-09-24T12:31:00Z",
+  "book_id": "contemporary-china-economy",
+  "branch": "data/economics-structure-20260922",
+  "handoff_reason": "USER_REDIRECT_AFTER_CONFIRMED_TEXTBOOK_COMPLETION",
+  "source_pdf_page_count": 255,
+  "processed_pdf_pages": [1,255],
+  "whole_book_complete": true,
+  "structured_review_complete": true,
+  "targeted_pdf_issues_resolved": true,
+  "source_review_debt_remaining": false,
+  "remaining_blocking_issues": [],
+  "remaining_high_issues": [],
+  "remaining_medium_issues": [],
+  "informational_non_blocking": ["ECO-QC-AUTO-SCREEN-0031-0230","ECO-QC-FRONTMATTER-CATALOG-0002","ECO-SOURCE-ANOMALY-0226-001","ECO-SOURCE-ANOMALY-0241-001"],
+  "previous_handoff_target": "Jvust2/Live",
+  "superseded_checkpoint": "governance/checkpoints/economics_handoff_live_20260923.json",
+  "next_repo": "Jvust2/Invest",
+  "next_action": "RECOVER_INVEST_GOVERNANCE_AND_ADVANCE",
+  "destructive_changes": false,
+  "main_modified": false
+}

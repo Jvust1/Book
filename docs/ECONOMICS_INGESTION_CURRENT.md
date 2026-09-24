@@ -39,9 +39,9 @@
 - `books/contemporary-china-economy/qc/final_structured_review_closure_20260923.json`
 - `governance/economics_ingestion_current.json`
 - `governance/checkpoints/economics_structured_review_complete_20260923.json`
-- `governance/checkpoints/economics_handoff_live_20260923.json`
-- Drive：完整末批、风险复核与 fulltext remediation 归档继续作为大型/长期证据；本轮没有制造重复 ZIP。
+- `governance/checkpoints/economics_handoff_invest_20260924.json`
+- Drive：完整末批、风险复核与 fulltext remediation 归档继续作为大型/长期证据；本轮不制造重复 ZIP。
 
 ## 下一步
 
-《当代中国经济》不再重复处理。按用户最新明确指令，后续轮次切换到 `Jvust2/Live`，不再进入 Novel：先恢复 Live 的 SECURITY_POLICY、AGENTS、project_state、Current State、North Star、Architecture Invariants、长期计划、Decision/Evaluation Ledger、artifact manifest、pending_sync、Pre-flight、分支/PR/CI，再选择下一个未完成且可安全执行事项推进。若 Live 的业务流程仍未定义，则不得凭空补业务能力，只推进可确定的治理、验证、同步与低风险基础设施工作。
+《当代中国经济》不再重复处理。按用户最新明确指令，后续轮次切换到 `Jvust2/Invest`，不再进入 Novel 或 Live：先恢复 Invest 的 SECURITY_POLICY、AGENTS、project_state、Current State、North Star、Architecture Invariants、长期计划、Decision/Evaluation Ledger、artifact manifest、pending_sync、Pre-flight、分支/PR/CI，再选择下一个未完成且可安全执行事项推进。若缺少合法、真实、已授权的市场数据，不得伪造真实回测、holdout 或 forward-paper 结果；优先推进不依赖真实数据的安全工程、验证、治理、测试、数据契约和 fail-closed 工作，并记录真实阻塞。
