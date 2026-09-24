@@ -74,6 +74,26 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "book-structured-repair-20260924-r1",
+      "file_name": "Book_结构化数据修订包_20260924.zip",
+      "type": "generated",
+      "version": "r1",
+      "source": "assistant_generated_source_verified_repairs",
+      "drive_path": "Book/03_Exports",
+      "storage_format": "multipart",
+      "drive_parts_manifest_id": "1RxV0P7GfK0Lvz7cIWZud_LevzppbLV2b",
+      "drive_parts_manifest_sha256": "4cefe512f15947318f3f7cb2859fb2f6fa4dff300374f1d98d93e5f03b124ae1",
+      "size_bytes": 231547882,
+      "sha256": "c7afb8e26078b635d78c78882cace9284e1cb839f0e4c6f9e5b84264a207c2ee",
+      "status": "active_review_candidate",
+      "checkpoint": "governance/structured_data_repair_current.json",
+      "verification": "All eight remote parts read back, independently hashed, reassembled and full SHA-256 matched.",
+      "text_core_drive_id": "182Qtw0tc0ba-J9p3miAoMYcW7TxdvwnG",
+      "text_core_sha256": "e58224ae333228d29e89c88bb84279d3db780060b9f97f699d905804dbef729f",
+      "report_drive_id": "104GQ0TMB914FM9-URbHEdSZvrQNxeVNX",
+      "purpose": "Corrected seven-book reading data with preserved raw provenance, original images, targeted mathematical proofs and reproducible validation. Not whole-book independent acceptance or an App release."
     }
   ],
   "notes": [

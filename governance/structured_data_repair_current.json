@@ -1,0 +1,127 @@
+{
+  "schema_version": "book_structured_repair_checkpoint_v1",
+  "artifact_id": "book-structured-repair-20260924-r1",
+  "batch_date": "2026-09-24",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "base_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+  "status": "KNOWN_ERRORS_FIXED_FULL_DATA_ARCHIVED_REVIEW_PENDING",
+  "source_heads": {
+    "monetary_finance": "ad5492be8fcddc430d7e8f402a109cebc299147b",
+    "contemporary_china_economy": "3942be608147427c63701688305fa499f6062481",
+    "financial_economics": "b0acf685c191e730e4dd8cc555e22aae21efc6f3",
+    "two_courses": "7283f2eef7610d67c6b92b2ef7c513e1225ad957",
+    "golden": "c06a7f1853c86983db7c0286d779d4646a7ac2e3"
+  },
+  "source_export": {
+    "workflow_commit": "c77e867e70139215ab0746798035f53aa5ff41ff",
+    "run_id": 36020433917,
+    "artifact_id": 10816003919,
+    "status": "SUCCESS",
+    "fixed_text_files": 187,
+    "inner_zip_sha256": "01ff40a21aaaa17b6f150d47c8bcdf2cff5dc6e0fd246efd368143fa505632af",
+    "note": "Export success is not final repair acceptance."
+  },
+  "delivery": {
+    "drive_folder_id": "1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+    "full_archive": {
+      "name": "Book_结构化数据修订包_20260924.zip",
+      "size_bytes": 231547882,
+      "sha256": "c7afb8e26078b635d78c78882cace9284e1cb839f0e4c6f9e5b84264a207c2ee",
+      "files": 4006,
+      "storage": "EIGHT_VERIFIED_MULTIPART_FILES",
+      "parts_manifest_drive_id": "1RxV0P7GfK0Lvz7cIWZud_LevzppbLV2b",
+      "parts_manifest_name": "Book_结构化数据修订包_20260924.parts.v3.json",
+      "parts_manifest_sha256": "4cefe512f15947318f3f7cb2859fb2f6fa4dff300374f1d98d93e5f03b124ae1",
+      "verification": "ALL_EIGHT_REMOTE_PARTS_REASSEMBLED_SHA256_MATCH"
+    },
+    "text_core": {
+      "drive_file_id": "182Qtw0tc0ba-J9p3miAoMYcW7TxdvwnG",
+      "name": "Book_结构化数据修订_文本与复现核心_20260924.zip",
+      "size_bytes": 13380843,
+      "sha256": "e58224ae333228d29e89c88bb84279d3db780060b9f97f699d905804dbef729f",
+      "scope": "TEXT_AND_REPRODUCTION_CORE_NOT_SELF_CONTAINED_IMAGE_BUNDLE",
+      "external_images": 1253,
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    "report": {
+      "drive_file_id": "104GQ0TMB914FM9-URbHEdSZvrQNxeVNX",
+      "name": "Book_结构化数据修订报告_20260924.md",
+      "size_bytes": 10651,
+      "sha256": "250e736b7a9c8719b898745ce507eeb31b14590cb720becbee43475fc91833f6",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    }
+  },
+  "scope": {
+    "books": 7,
+    "records": 26195,
+    "page_maps": 2343,
+    "original_input_archives": 23,
+    "original_inputs_changed": 0,
+    "main_writes": 0,
+    "pr_merges": 0,
+    "app_installed_or_replaced": false,
+    "all_books_independently_accepted": false
+  },
+  "audit": {
+    "items": 16,
+    "confirmed_error_items_fixed": 10,
+    "integration_or_dependency_items_fixed": 3,
+    "acceptance_gap_contained_not_fulltext_accepted": 1,
+    "review_debt_categories_remaining": 2,
+    "closure": "governance/structured_data_repair_audit_closure_20260924.json"
+  },
+  "validation": {
+    "independent_data_checks": {
+      "passed": 95,
+      "failed": 0
+    },
+    "asset_reference_checks": 5483,
+    "normalized_mathjax": {
+      "passed": 16832,
+      "total": 16832
+    },
+    "original_mathjax_all_layers": {
+      "passed": 17248,
+      "total": 17248
+    },
+    "previous_math_regression_executed_cases": 157,
+    "topology": {
+      "candidates": 3375,
+      "valid_neighborhood_bases": 1797,
+      "topologies": 29
+    },
+    "bessel": {
+      "finite_integral_cases": 6,
+      "truncated_infinite_integral_cases": 5,
+      "rigorous_tail_bound_claimed": false
+    },
+    "deterministic_rebuild": {
+      "runs": 2,
+      "files_each": 3956,
+      "hash_differences": 0
+    },
+    "portable_manifest_checks": {
+      "files": 4005,
+      "books": 7,
+      "status": "PASS"
+    },
+    "final_head_remote_ci": "NOT_CLAIMED",
+    "independent_whole_book_proof_acceptance": false
+  },
+  "remaining_content_work": [
+    "Public-finance remaining OCR prose and tables require source review.",
+    "Financial-economics remaining OCR is an auxiliary layer, not accepted source prose.",
+    "110 functional-analysis reference derivations and whole-book mathematical arguments require independent acceptance; PDE full worked solutions remain incomplete."
+  ],
+  "transport": {
+    "full_upload_and_large_first_part_attempts": "FAILED_OR_TIMED_OUT_THEN_RECONCILED",
+    "recovered_via": "Twelve-MiB quarters for the missing first segment; existing verified parts02-05 reused.",
+    "obsolete_manifests_preserved": [
+      "1aQ-C2jy9ZOoOtvsDriIP47KUKXNqy3Mp",
+      "1OEKgwJ1LVYwnHXOcY8QVrIyMCXvC4G0G"
+    ],
+    "current_transport_debt": 0
+  },
+  "next_step": "Review this correction artifact and its exact diff. Use the v3 parts manifest or standalone text core; never revive old completion flags. Do not merge without explicit PR-specific authorization."
+}
