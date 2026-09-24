@@ -4,7 +4,7 @@
   "title": "金融经济学十讲",
   "branch": "data/financial-economics-ten-lectures-structure-20260923",
   "stage": "STRUCTURED_REVIEW",
-  "status": "PDF_0001_0278_INITIAL_INGEST_COMPLETE_REVIEW_PENDING",
+  "status": "PDF_0001_0278_INITIAL_INGEST_COMPLETE_REVIEW_IN_PROGRESS",
   "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
   "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
   "source_pdf_page_count": 278,
@@ -15,8 +15,15 @@
   "structured_review_complete": false,
   "whole_book_complete": false,
   "switch_to_invest": false,
-  "open_qc": ["FE10-QC-TOC-0016-0019","FE10-QC-INTRO-0005-0015","FE10-QC-FORMULA-0029-0050","FE10-QC-OCR-0051-0068","FE10-QC-APPENDIX-0070-0074","FE10-QC-TAX-0076-0082","FE10-QC-MATRIX-0086-0100","FE10-QC-HILBERT-0103-0107","FE10-QC-KKT-0108-0119","FE10-QC-APT-0121-0128","FE10-QC-FTAP-0130-0140","FE10-QC-CONVEX-0144","FE10-QC-UTILITY-0147-0150","FE10-QC-VNM-0151-0161","FE10-QC-STOCHDOM-0162-0166","FE10-QC-GE-0167-0174","FE10-QC-CAPM-0175-0181","FE10-QC-APT-0182-0186","FE10-QC-BS-0187-0195","FE10-QC-DYNAMIC-0196-0200","FE10-QC-DYNAMIC-0201-0202","FE10-QC-LINEARPRICING-0203-0208","FE10-QC-EMH-0209-0225","FE10-QC-BROWNIAN-0226-0235","FE10-QC-BS-RATES-0236-0247","FE10-QC-BS-APPENDIX-0247-0250","FE10-QC-BS-APPENDIX-0251","FE10-QC-CONCLUSION-0252-0260","FE10-QC-POSTSCRIPT-0261-0268","FE10-QC-REFERENCES-0269-0277","FE10-QC-PROVENANCE-0278"],
-  "next_step": "Enter v3 risk-driven structured review: audit compact/full structured data and QC first; open only targeted source pages for unresolved high-risk formula/proper-name/date/bibliography issues. Do not switch to Invest until both completion flags are true.",
+  "open_qc": ["FE10-QC-TOC-0016-0019","FE10-QC-INTRO-0005-0015","FE10-QC-FORMULA-0029-0050","FE10-QC-OCR-0051-0068","FE10-QC-APPENDIX-0070-0074","FE10-QC-TAX-0076-0082","FE10-QC-MATRIX-0086-0100","FE10-QC-HILBERT-0103-0107","FE10-QC-KKT-0108-0119","FE10-QC-APT-0121-0128","FE10-QC-FTAP-0130-0140","FE10-QC-CONVEX-0144","FE10-QC-UTILITY-0147-0150","FE10-QC-VNM-0151-0161","FE10-QC-STOCHDOM-0162-0166","FE10-QC-GE-0167-0174","FE10-QC-CAPM-0175-0181","FE10-QC-APT-0182-0186","FE10-QC-BS-0187-0195","FE10-QC-DYNAMIC-0196-0200","FE10-QC-DYNAMIC-0201-0202","FE10-QC-LINEARPRICING-0203-0208","FE10-QC-EMH-0209-0225","FE10-QC-BROWNIAN-0226-0235","FE10-QC-BS-RATES-0236-0247","FE10-QC-CONCLUSION-0252-0260","FE10-QC-POSTSCRIPT-0261-0268","FE10-QC-REFERENCES-0269-0277","FE10-QC-PROVENANCE-0278"],
+  "review_progress": {
+    "resolved_qc_total_this_review": 2,
+    "latest_resolved": ["FE10-QC-BS-APPENDIX-0247-0250","FE10-QC-BS-APPENDIX-0251"],
+    "latest_targeted_pdf_pages": [247,251],
+    "latest_correction": "FE10-CORR-10.36-PDF250-20260924",
+    "remaining_open_qc_count": 29
+  },
+  "next_step": "Continue v3 risk-driven structured review with FE10-QC-BS-RATES-0236-0247, auditing existing structured/formula records first and opening only targeted source pages. Do not switch to Invest until both completion flags are true.",
   "latest_drive_artifact": {"drive_file_id":"1gbrdef6aH4U-S5TAREcB7EoUB6B4mBZV","file_name":"Book-Financial-Economics-Ten-Lectures-pdf251-278-20260924.zip","sha256":"0b24bd3e12ea5e5019856da0acfe9d6292293617c30bbb33361940aa9b494762","size_bytes":92213},
-  "latest_checkpoint": "governance/checkpoints/financial_economics_ten_lectures_0251_0278_20260924.json"
+  "latest_checkpoint": "governance/checkpoints/financial_economics_ten_lectures_review_bs_appendix_20260924.json"
 }
