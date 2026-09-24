@@ -1,0 +1,39 @@
+{
+  "schema_version": "book_ingestion_batch_manifest_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "batch_id": "pdf0201-0250-20260924",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "source_pdf_pages": {"start": 201, "end": 250, "count": 50},
+  "printed_page_coverage": {"lecture_body": [182, 231]},
+  "section_coverage": [
+    {"pdf_pages":[201,207],"scope":"Lecture 8 sections 8.5 continuation through 8.6"},
+    {"pdf_pages":[208,209],"scope":"Lecture 8 exercises"},
+    {"pdf_pages":[210,223],"scope":"Lecture 9 sections 9.1-9.5 and exercises"},
+    {"pdf_pages":[224,225],"scope":"Lecture 9 appendix: current status of the efficient market hypothesis"},
+    {"pdf_pages":[226,247],"scope":"Lecture 10 sections 10.1-10.5 and exercises"},
+    {"pdf_pages":[247,250],"scope":"Lecture 10 appendix: solution of the Black-Scholes equation (continues on PDF 251)"}
+  ],
+  "next_source_pdf_page": 251,
+  "quality": {
+    "visual_page_layout_checks": 50,
+    "source_blocks": 559,
+    "formula_records_visual_verified": 48,
+    "semantic_figures_recovered": 0,
+    "tables_in_batch": 0,
+    "full_page_visual_verification": false,
+    "full_character_visual_verification": false,
+    "structured_review_complete": false,
+    "basic_proofreading_complete": true
+  },
+  "open_qc": ["FE10-QC-DYNAMIC-0201-0202","FE10-QC-LINEARPRICING-0203-0208","FE10-QC-EMH-0209-0225","FE10-QC-BROWNIAN-0226-0235","FE10-QC-BS-RATES-0236-0247","FE10-QC-BS-APPENDIX-0247-0250"],
+  "drive_artifact": {
+    "drive_file_id": "12A-mB8byfvHh0-DWkTJCkD8Jd1TwNqaK",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf201-250-20260924.zip",
+    "sha256": "d66bff7d36a28d2af12ef47bec0c85edf54ae545a060f7b99eca65be2f4683f8",
+    "size_bytes": 128569
+  },
+  "drive_full_artifact_contents": ["verified/structured_pages_0201_0250.md","blocks/blocks_0201_0250.jsonl","source/pdf_page_map_0201_0250.jsonl","qc/uncertain_0201_0250.jsonl","qc/extraction_report_0201_0250.md","images/asset_manifest_0201_0250.json","tables/table_manifest_0201_0250.json","verified/formulas_0201_0250.jsonl"],
+  "github_compact_artifacts": ["source/pdf_page_map_compact_0201_0250.jsonl","verified/formulas_0201_0250.jsonl","qc/batch_0201_0250.json","qc/extraction_report_0201_0250.md"]
+}
