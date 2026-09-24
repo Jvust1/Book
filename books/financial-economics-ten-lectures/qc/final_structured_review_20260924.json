@@ -1,0 +1,234 @@
+{
+  "schema_version": "book_final_structured_review_closure_v1",
+  "review_date": "2026-09-24",
+  "book_id": "financial-economics-ten-lectures",
+  "title": "金融经济学十讲",
+  "phase": "B_FINAL_STRUCTURED_REVIEW_CLOSURE",
+  "branch": "data/financial-economics-ten-lectures-structure-20260923",
+  "new_pdf_pages_this_run": 0,
+  "policy": {
+    "drive_policy_file_id": "1lO0z2nOoONzUIJNhA8JZy2nqhoLvuHds",
+    "mode": "v3 data-first risk-driven structured review; reopen source PDF only for triggered uncertainty/high-risk evidence",
+    "source_authority": "original scanned PDF",
+    "provenance_rule": "source / correction / derived remain separate; no silent source overwrite"
+  },
+  "source": {
+    "drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+    "pdf_page_count": 278,
+    "sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+    "size_bytes": 63920851,
+    "source_pdf_end_reached": true,
+    "printed_page_last": 258,
+    "provenance_wrapper_pdf_page": 278
+  },
+  "structured_data_audit": {
+    "physical_page_map": {
+      "expected": [
+        1,
+        278
+      ],
+      "observed_count": 278,
+      "continuous_no_gap_no_overlap": true
+    },
+    "source_block_objects": 3635,
+    "source_block_page_coverage": {
+      "count": 278,
+      "missing_pages": []
+    },
+    "verified_formula_records": 253,
+    "original_scan_figure_crops": 12,
+    "structured_tables": 2,
+    "batch_archives_verified": 6,
+    "content_origin_check": "PASS: audited block records remain source-layer; correction/derived evidence is separate"
+  },
+  "drive_integrity": [
+    {
+      "range": [
+        1,
+        50
+      ],
+      "file_id": "1gafL4Uq37xtawUl63dO056G-ChajJwNF",
+      "sha256": "119f76bf365311edd064be6a573008942be60b6be3e03bab805d00d100564ed3",
+      "size_bytes": 135818,
+      "status": "PASS"
+    },
+    {
+      "range": [
+        51,
+        100
+      ],
+      "file_id": "1z1lsHzerbRHLdgDZMeUXAuMvbQWKKilm",
+      "sha256": "23a7852457bf990451c14499c022dfc9f6c9e8e08e8614e5ae6faa88be0b8c16",
+      "size_bytes": 253239,
+      "status": "PASS"
+    },
+    {
+      "range": [
+        101,
+        150
+      ],
+      "file_id": "1DaAHZuDJaedA78cOcowXo6ftquNWLMr-",
+      "sha256": "80ceb347dc77f5a5597b10742a9e2b0b2beec3192406bb1177f3929641d9774f",
+      "size_bytes": 175352,
+      "status": "PASS"
+    },
+    {
+      "range": [
+        151,
+        200
+      ],
+      "file_id": "1rJr6rHSN9KXuYG1VqxtiPu1NIePHow13",
+      "sha256": "63b2c1eed18580359ee7662b2a1a339b538dff6f04705adc16fa05bccfbb5f2c",
+      "size_bytes": 454916,
+      "status": "PASS"
+    },
+    {
+      "range": [
+        201,
+        250
+      ],
+      "file_id": "12A-mB8byfvHh0-DWkTJCkD8Jd1TwNqaK",
+      "sha256": "d66bff7d36a28d2af12ef47bec0c85edf54ae545a060f7b99eca65be2f4683f8",
+      "size_bytes": 128569,
+      "status": "PASS"
+    },
+    {
+      "range": [
+        251,
+        278
+      ],
+      "file_id": "1gbrdef6aH4U-S5TAREcB7EoUB6B4mBZV",
+      "sha256": "0b24bd3e12ea5e5019856da0acfe9d6292293617c30bbb33361940aa9b494762",
+      "size_bytes": 92213,
+      "status": "PASS"
+    }
+  ],
+  "review_evidence": {
+    "structured_first": true,
+    "targeted_source_pages_visually_inspected_this_closure": [
+      5,
+      6,
+      16,
+      17,
+      18,
+      19,
+      103,
+      110,
+      121,
+      130,
+      144,
+      151,
+      162,
+      175,
+      187,
+      201,
+      209,
+      226,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      252,
+      253,
+      254,
+      261,
+      269,
+      270,
+      276,
+      277,
+      278
+    ],
+    "prior_targeted_source_pages_retained": [
+      247,
+      248,
+      249,
+      250,
+      251
+    ],
+    "prior_formula_correction": "FE10-CORR-10.36-PDF250-20260924",
+    "bs_rates_result": "PASS: PDF236-247 continuous-time Black-Scholes/hedging/term-structure boundary and formulas 10.7-10.10 reviewed against scan; no new blocking contradiction found.",
+    "toc_result": "PASS: PDF16-19 lecture/section hierarchy and printed-page anchors checked against source scan.",
+    "conclusion_postscript_references_result": "PASS_RISK_DRIVEN: section boundaries, chronology/bibliographic layout, and end-of-book mapping checked; no structural/source-provenance trigger requiring broader rescan.",
+    "provenance_result": "PASS: PDF278 is an archive-generator provenance wrapper, not a printed textbook page; printed mapping ends PDF277 -> printed 258."
+  },
+  "issue_closure": {
+    "previously_resolved": [
+      "FE10-QC-BS-APPENDIX-0247-0250",
+      "FE10-QC-BS-APPENDIX-0251"
+    ],
+    "resolved_this_round": [
+      "FE10-QC-TOC-0016-0019",
+      "FE10-QC-INTRO-0005-0015",
+      "FE10-QC-FORMULA-0029-0050",
+      "FE10-QC-OCR-0051-0068",
+      "FE10-QC-APPENDIX-0070-0074",
+      "FE10-QC-TAX-0076-0082",
+      "FE10-QC-MATRIX-0086-0100",
+      "FE10-QC-HILBERT-0103-0107",
+      "FE10-QC-KKT-0108-0119",
+      "FE10-QC-APT-0121-0128",
+      "FE10-QC-FTAP-0130-0140",
+      "FE10-QC-CONVEX-0144",
+      "FE10-QC-UTILITY-0147-0150",
+      "FE10-QC-VNM-0151-0161",
+      "FE10-QC-STOCHDOM-0162-0166",
+      "FE10-QC-GE-0167-0174",
+      "FE10-QC-CAPM-0175-0181",
+      "FE10-QC-APT-0182-0186",
+      "FE10-QC-BS-0187-0195",
+      "FE10-QC-DYNAMIC-0196-0200",
+      "FE10-QC-DYNAMIC-0201-0202",
+      "FE10-QC-LINEARPRICING-0203-0208",
+      "FE10-QC-EMH-0209-0225",
+      "FE10-QC-BROWNIAN-0226-0235",
+      "FE10-QC-BS-RATES-0236-0247",
+      "FE10-QC-CONCLUSION-0252-0260",
+      "FE10-QC-POSTSCRIPT-0261-0268",
+      "FE10-QC-REFERENCES-0269-0277",
+      "FE10-QC-PROVENANCE-0278"
+    ],
+    "resolved_named_qc_total": 31,
+    "remaining_actionable_open_qc": [],
+    "open_blocking": [],
+    "open_high": [],
+    "open_medium": [],
+    "informational_non_blocking": [
+      {
+        "id": "FE10-INFO-OCR-AUXILIARY-LAYER",
+        "status": "INFORMATIONAL_NON_BLOCKING",
+        "note": "Historical Markdown/JSONL body text remains explicitly OCR-assisted source transcription. Risk-driven structured review did not convert this into an exhaustive character-by-character visual edition; original scans remain authoritative for exact wording."
+      },
+      {
+        "id": "FE10-INFO-FULL-CHAR-VISUAL-NOT-CLAIMED",
+        "status": "INFORMATIONAL_NON_BLOCKING",
+        "note": "full_character_visual_verification=false by design under v3 review. This is a scope boundary, not an unresolved triggered source issue."
+      }
+    ]
+  },
+  "completion": {
+    "initial_ingestion_complete": true,
+    "structured_content_complete": true,
+    "structured_review_complete": true,
+    "targeted_pdf_issues_resolved": true,
+    "actionable_source_review_debt_remaining": false,
+    "whole_book_complete": true,
+    "full_page_visual_verification": false,
+    "full_character_visual_verification": false,
+    "mathematical_review_status": "RISK_DRIVEN_STRUCTURED_REVIEW_COMPLETE_NO_BLOCKING_MATH_QC; VERIFIED_FORMULA_LEDGER_253_PLUS_LAYERED_10_36_SOURCE_TYPO_CORRECTION",
+    "switch_to_invest": true
+  },
+  "boundary_notes": [
+    "Completion means v3 risk-driven structured review closure, not exhaustive re-keying or character-by-character visual verification of every scan.",
+    "The source scan remains canonical whenever OCR-assisted transcription disagrees with the printed page.",
+    "Formula (10.36) source typo evidence and normalized mathematical correction remain layered separately."
+  ],
+  "next_action": "RESTORE_INVEST_GOVERNANCE_FROM_GITHUB_AND_DRIVE_THEN_ADVANCE_NEXT_SAFE_UNFINISHED_ITEM"
+}
