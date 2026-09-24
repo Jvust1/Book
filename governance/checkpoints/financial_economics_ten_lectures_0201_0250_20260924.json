@@ -1,0 +1,22 @@
+{
+  "schema_version": "book_checkpoint_v1.4",
+  "book_id": "financial-economics-ten-lectures",
+  "title": "金融经济学十讲",
+  "branch": "data/financial-economics-ten-lectures-structure-20260923",
+  "status": "PDF_0001_0250_COMPLETE_BASIC_QC",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "completed_pdf_range": [1,250],
+  "last_completed_pdf_page": 250,
+  "next_pdf_page": 251,
+  "continuous_coverage": true,
+  "cumulative_new_pages": 250,
+  "whole_book_complete": false,
+  "structured_review_complete": false,
+  "open_qc": ["FE10-QC-TOC-0016-0019","FE10-QC-INTRO-0005-0015","FE10-QC-FORMULA-0029-0050","FE10-QC-OCR-0051-0068","FE10-QC-APPENDIX-0070-0074","FE10-QC-TAX-0076-0082","FE10-QC-MATRIX-0086-0100","FE10-QC-HILBERT-0103-0107","FE10-QC-KKT-0108-0119","FE10-QC-APT-0121-0128","FE10-QC-FTAP-0130-0140","FE10-QC-CONVEX-0144","FE10-QC-UTILITY-0147-0150","FE10-QC-VNM-0151-0161","FE10-QC-STOCHDOM-0162-0166","FE10-QC-GE-0167-0174","FE10-QC-CAPM-0175-0181","FE10-QC-APT-0182-0186","FE10-QC-BS-0187-0195","FE10-QC-DYNAMIC-0196-0200","FE10-QC-DYNAMIC-0201-0202","FE10-QC-LINEARPRICING-0203-0208","FE10-QC-EMH-0209-0225","FE10-QC-BROWNIAN-0226-0235","FE10-QC-BS-RATES-0236-0247","FE10-QC-BS-APPENDIX-0247-0250"],
+  "drive_artifact": {"drive_file_id":"12A-mB8byfvHh0-DWkTJCkD8Jd1TwNqaK","file_name":"Book-Financial-Economics-Ten-Lectures-pdf201-250-20260924.zip","sha256":"d66bff7d36a28d2af12ef47bec0c85edf54ae545a060f7b99eca65be2f4683f8","size_bytes":128569},
+  "next_action": "CONTINUE_FIRST_INGEST_FROM_PDF_0251_THROUGH_SOURCE_END_0278",
+  "cross_page_carry": "PDF250 appendix derivation continues on PDF251",
+  "updated_at": "2026-09-24T11:36:00Z"
+}
