@@ -2,23 +2,14 @@
   "schema_version": "book_batch_qc_v1",
   "book_id": "financial-economics-ten-lectures",
   "batch_id": "pdf0251-0278-20260924",
-  "source_pdf_pages": {
-    "start": 251,
-    "end": 278,
-    "count": 28
-  },
+  "source_pdf_pages": {"start":251,"end":278,"count":28},
   "visual_page_layout_checks": 28,
   "body_transcription": "OCR_ASSISTED_WITH_FULL_PAGE_VISUAL_LAYOUT_REVIEW",
   "formula_records_visual_verified": 3,
   "figures_original_scan_crops": 0,
   "tables": 0,
-  "open_qc": [
-    "FE10-QC-BS-APPENDIX-0251",
-    "FE10-QC-CONCLUSION-0252-0260",
-    "FE10-QC-POSTSCRIPT-0261-0268",
-    "FE10-QC-REFERENCES-0269-0277",
-    "FE10-QC-PROVENANCE-0278"
-  ],
+  "open_qc": ["FE10-QC-CONCLUSION-0252-0260","FE10-QC-POSTSCRIPT-0261-0268","FE10-QC-REFERENCES-0269-0277","FE10-QC-PROVENANCE-0278"],
+  "resolved_qc": [{"id":"FE10-QC-BS-APPENDIX-0251","status":"CLOSED","evidence":"qc/targeted_review_bs_appendix_pdf0247_0251_20260924.json"}],
   "basic_proofreading_complete": true,
   "full_character_visual_verification": false,
   "structured_review_complete": false,
