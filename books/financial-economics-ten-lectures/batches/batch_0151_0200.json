@@ -1,0 +1,42 @@
+{
+  "schema_version": "book_ingestion_batch_manifest_v1",
+  "book_id": "financial-economics-ten-lectures",
+  "batch_id": "pdf0151-0200-20260924",
+  "source_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+  "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+  "source_pdf_page_count": 278,
+  "source_pdf_pages": {
+    "start": 151,
+    "end": 200,
+    "count": 50
+  },
+  "printed_page_coverage": {
+    "lecture_body": [132,181]
+  },
+  "section_coverage": [
+    {"pdf_pages":[151,166],"scope":"Lecture 6 sections 6.2 continuation through 6.6 and exercises"},
+    {"pdf_pages":[167,186],"scope":"Lecture 7 sections 7.1-7.5 and exercises"},
+    {"pdf_pages":[187,200],"scope":"Lecture 8 introduction and sections 8.1-8.5 continuation"}
+  ],
+  "next_source_pdf_page": 201,
+  "quality": {
+    "visual_page_layout_checks": 50,
+    "source_blocks": 969,
+    "formula_records_visual_verified": 51,
+    "semantic_figures_recovered": 5,
+    "tables_in_batch": 0,
+    "full_page_visual_verification": false,
+    "full_character_visual_verification": false,
+    "structured_review_complete": false,
+    "basic_proofreading_complete": true
+  },
+  "open_qc": ["FE10-QC-VNM-0151-0161","FE10-QC-STOCHDOM-0162-0166","FE10-QC-GE-0167-0174","FE10-QC-CAPM-0175-0181","FE10-QC-APT-0182-0186","FE10-QC-BS-0187-0195","FE10-QC-DYNAMIC-0196-0200"],
+  "drive_artifact": {
+    "drive_file_id": "1rJr6rHSN9KXuYG1VqxtiPu1NIePHow13",
+    "file_name": "Book-Financial-Economics-Ten-Lectures-pdf151-200-20260924-r2.zip",
+    "sha256": "63b2c1eed18580359ee7662b2a1a339b538dff6f04705adc16fa05bccfbb5f2c",
+    "size_bytes": 454916
+  },
+  "drive_full_artifact_contents": ["verified/structured_pages_0151_0200.md","blocks/blocks_0151_0200.jsonl","source/pdf_page_map_0151_0200.jsonl","qc/uncertain_0151_0200.jsonl","images/asset_manifest_0151_0200.json","images/fig_6_1_pdf157.png","images/fig_6_2_pdf158.png","images/fig_8_1_pdf188.png","images/fig_8_2_pdf191.png","images/fig_8_3_pdf192.png","tables/table_manifest_0151_0200.json"],
+  "github_compact_artifacts": ["source/pdf_page_map_compact_0151_0200.jsonl","verified/formulas_0151_0200.jsonl","qc/batch_0151_0200.json","qc/extraction_report_0151_0200.md"]
+}
