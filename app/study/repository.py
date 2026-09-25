@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import sqlite3
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
@@ -350,6 +350,19 @@ class StudyRecordRepository:
                     incoming_updated = self._parse_timestamp(incoming.updated_at)
                     if existing_updated >= incoming_updated:
                         continue
+                # Activity queries sort timestamp text. Use the same UTC encoding as
+                # local writes so offsets, Z suffixes and fractions sort by instant.
+                incoming = replace(
+                    incoming,
+                    started_at=self._parse_timestamp(incoming.started_at).isoformat(),
+                    last_studied_at=self._parse_timestamp(incoming.last_studied_at).isoformat(),
+                    completed_at=(
+                        None if incoming.completed_at is None
+                        else self._parse_timestamp(incoming.completed_at).isoformat()
+                    ),
+                    created_at=self._parse_timestamp(incoming.created_at).isoformat(),
+                    updated_at=self._parse_timestamp(incoming.updated_at).isoformat(),
+                )
                 if row is None:
                     connection.execute(
                         """
