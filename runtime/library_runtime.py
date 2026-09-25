@@ -223,7 +223,10 @@ class LibraryRuntime:
 
             resolved_path = self._resolve_course_path(str(entry.path))
             try:
-                course = CourseRuntime.open(resolved_path)
+                course = CourseRuntime.open(
+                    resolved_path,
+                    repository_root=self.repository_root,
+                )
             except CourseRuntimeError as exc:
                 raise LibraryRuntimeBlockedError(
                     entry.course_id,

@@ -11,6 +11,8 @@ import type {
   SourceResponse,
   StudyRecord,
   StudyRecordListResponse,
+  StudyExportResponse,
+  StudyImportResponse,
 } from './types'
 
 const GENERIC_ERROR_MESSAGE = '请求失败，请稍后重试'
@@ -134,6 +136,18 @@ export const bookApi = {
 
   getRecentStudy(): Promise<StudyRecord | null> {
     return request<StudyRecord | null>('/api/study/recent')
+  },
+
+  exportStudy(): Promise<StudyExportResponse> {
+    return request<StudyExportResponse>('/api/study/export')
+  },
+
+  importStudy(payload: StudyExportResponse): Promise<StudyImportResponse> {
+    return request<StudyImportResponse>('/api/study/import', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
   },
 
   searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {

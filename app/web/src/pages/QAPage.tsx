@@ -14,6 +14,7 @@ import {
   saveQASessionState,
 } from '../state/qaSessionState'
 import type { QASessionMessage } from '../state/qaSessionState'
+import { RichText } from '../components/RichText'
 
 const qaErrorMessage = (error: unknown): string =>
   error instanceof ApiError ? error.message : '教材问答失败，请稍后重试'
@@ -245,7 +246,7 @@ export function QAPage() {
               return (
                 <article className="learning-card qa-question-card" key={message.id}>
                   <p className="eyebrow">你的问题</p>
-                  <p className="learning-content">{message.content}</p>
+                  <RichText content={message.content} />
                 </article>
               )
             }
@@ -262,7 +263,7 @@ export function QAPage() {
                   )}
                   <p>{scopeLabel(response)}</p>
                   {style ? <p>回答方式：{style}</p> : null}
-                  <p className="learning-content">{message.content}</p>
+                  <RichText content={message.content} />
                 </section>
 
                 {response.citations.length > 0 ? (

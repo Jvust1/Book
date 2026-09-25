@@ -311,6 +311,87 @@ class StudyRecordRepository:
             connection.close()
         return tuple(self._record_from_row(row) for row in rows)
 
+    def list_all_records(self) -> tuple[StudyRecord, ...]:
+        """Return every active local record for manual cross-device export."""
+        profile_id = self.get_profile_id()
+        connection = self._connect()
+        try:
+            rows = connection.execute(
+                """
+                SELECT * FROM study_records
+                WHERE profile_id = ? AND deleted_at IS NULL
+                ORDER BY updated_at DESC, last_studied_at DESC
+                """,
+                (profile_id,),
+            ).fetchall()
+        except sqlite3.Error as exc:
+            raise StudyRecordRepositoryError(
+                "Unable to list local study records"
+            ) from exc
+        finally:
+            connection.close()
+        return tuple(self._record_from_row(row) for row in rows)
+
+    def merge_records(self, records: tuple[StudyRecord, ...]) -> int:
+        """Merge an exported snapshot, keeping the newest record per logical key."""
+        profile_id = self.get_profile_id()
+        imported = 0
+        connection = self._connect()
+        try:
+            connection.execute("BEGIN IMMEDIATE")
+            for incoming in records:
+                if incoming.deleted_at is not None:
+                    continue
+                row = self._select_logical_record(
+                    connection, profile_id, incoming.course_id, incoming.section_id, incoming.mode
+                )
+                if row is not None:
+                    existing_updated = self._parse_timestamp(str(row["updated_at"]))
+                    incoming_updated = self._parse_timestamp(incoming.updated_at)
+                    if existing_updated >= incoming_updated:
+                        continue
+                if row is None:
+                    connection.execute(
+                        """
+                        INSERT INTO study_records (
+                            study_record_id, profile_id, course_id, book_id, section_id, mode,
+                            status, progress, started_at, last_studied_at, completed_at,
+                            created_at, updated_at, revision, deleted_at, sync_status
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, 'local')
+                        """,
+                        (
+                            self._new_uuid(), profile_id, incoming.course_id, incoming.book_id,
+                            incoming.section_id, incoming.mode, incoming.status, incoming.progress,
+                            incoming.started_at, incoming.last_studied_at, incoming.completed_at,
+                            incoming.created_at, incoming.updated_at, max(1, incoming.revision),
+                        ),
+                    )
+                else:
+                    connection.execute(
+                        """
+                        UPDATE study_records SET book_id = ?, status = ?, progress = ?,
+                            started_at = ?, last_studied_at = ?, completed_at = ?,
+                            created_at = ?, updated_at = ?, revision = ?, deleted_at = NULL
+                        WHERE study_record_id = ?
+                        """,
+                        (
+                            incoming.book_id, incoming.status, incoming.progress, incoming.started_at,
+                            incoming.last_studied_at, incoming.completed_at, incoming.created_at,
+                            incoming.updated_at, max(1, incoming.revision), str(row["study_record_id"]),
+                        ),
+                    )
+                imported += 1
+            connection.commit()
+            return imported
+        except StudyRecordRepositoryError:
+            connection.rollback()
+            raise
+        except sqlite3.Error as exc:
+            connection.rollback()
+            raise StudyRecordRepositoryError("Unable to merge imported study records") from exc
+        finally:
+            connection.close()
+
     def get_recent_record(self) -> StudyRecord | None:
         profile_id = self.get_profile_id()
         connection = self._connect()
@@ -487,6 +568,13 @@ class StudyRecordRepository:
         if value.tzinfo is None:
             value = value.replace(tzinfo=timezone.utc)
         return value.astimezone(timezone.utc).isoformat()
+
+    @staticmethod
+    def _parse_timestamp(value: str) -> datetime:
+        timestamp = datetime.fromisoformat(value)
+        if timestamp.tzinfo is None:
+            timestamp = timestamp.replace(tzinfo=timezone.utc)
+        return timestamp.astimezone(timezone.utc)
 
     @staticmethod
     def _validate_profile_id(profile_id: str) -> str:

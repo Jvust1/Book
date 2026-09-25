@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictStr
 
 
 LearningMode = Literal["preview", "learn", "review", "practice"]
@@ -281,14 +281,47 @@ class StudyRecordListResponse(BaseModel):
     records: list[StudyRecordResponse]
 
 
+class StudySyncRecord(BaseModel):
+    course_id: str
+    book_id: str
+    section_id: str
+    mode: LearningMode
+    status: Literal["in_progress", "completed"]
+    progress: Literal[0, 100]
+    started_at: str
+    last_studied_at: str
+    completed_at: str | None
+    created_at: str
+    updated_at: str
+    revision: int = Field(ge=1)
+    deleted_at: str | None = None
+
+
+class StudyExportResponse(BaseModel):
+    schema_version: Literal["book_study_sync_v1"]
+    exported_at: str
+    records: list[StudySyncRecord]
+
+
+class StudyImportRequest(BaseModel):
+    schema_version: Literal["book_study_sync_v1"]
+    records: list[StudySyncRecord]
+
+
+class StudyImportResponse(BaseModel):
+    imported_count: int
+    skipped_count: int
+    total_count: int
+
+
 class QAHistoryMessageDTO(BaseModel):
     role: Literal["user", "assistant"]
-    content: str
+    content: StrictStr
 
 
 class QARequest(BaseModel):
-    question: str
-    section_id: str | None = None
+    question: StrictStr
+    section_id: StrictStr | None = None
     history: list[QAHistoryMessageDTO] = Field(default_factory=list)
 
 

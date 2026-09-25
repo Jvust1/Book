@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Book 学习</string>
+    <string name="starting">正在启动 Book 学习…</string>
+    <string name="startup_failed">启动失败，点击重试</string>
+    <string name="startup_timeout">启动超时，点击重试</string>
+    <string name="page_failed">页面加载失败，点击重试</string>
+    <string name="page_unavailable">页面暂不可用，点击重试</string>
+    <string name="browser_missing">没有可打开链接的浏览器</string>
+</resources>

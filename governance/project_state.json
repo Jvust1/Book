@@ -174,5 +174,46 @@
     "note": "Existing external source snapshots and Functional Analysis Drive SHA-256 remain non-blocking and are not claimed complete by this checkpoint."
   },
   "blocking_items": [],
-  "next_step": "Review PR #26 at exact head 9fce2c794559ff8c1bfdd0beda8f1848f189b0e3. The App implementation is review-ready; structured textbook ingestion remains deferred. Do not merge without explicit PR-specific authorization."
+  "next_step": "Review PR #26 at exact head 9fce2c794559ff8c1bfdd0beda8f1848f189b0e3. The App implementation is review-ready; structured textbook ingestion remains deferred. Do not merge without explicit PR-specific authorization.",
+  "android_delivery": {
+    "version": "0.1.3",
+    "version_code": 4,
+    "branch": "build/book-app-android-apk-20260913",
+    "pr": 29,
+    "status": "BUILT_VERIFIED_SIMULATOR",
+    "release_manifest": "governance/android_0_1_3_release.json",
+    "source_snapshot_commit": "7273b5d741ae7528d1a966ee9be7f313c7d2f0d5",
+    "notes": "LaTeX/Markdown display, responsive design, native foreground recording and legacy recording export. No new structured textbook data or AI provider.",
+    "documentation": "android-app/README.md",
+    "checkpoint": "docs/ANDROID_0_1_3.md",
+    "physical_device_recording": "NOT_TESTED",
+      "next_step": "Review PR #29 and test microphone/background behavior on ARM64 hardware; merge requires explicit PR authorization."
+  },
+  "windows_delivery": {
+    "version": "0.1.3",
+    "platform": "windows-x64",
+    "status": "BUILT_VERIFIED",
+    "source_snapshot_commit": "bff0b45",
+    "release_manifest": "governance/windows_0_1_3_release.json",
+    "documentation": "docs/WINDOWS_0_1_3.md",
+    "desktop_recording": "DISABLED_USE_ANDROID",
+    "study_progress_sync": "DEVICE_LOCAL_NO_AUTHENTICATED_SYNC_SERVICE",
+    "artifact_sha256": "57DCB774866DF185B6A5790B340CE3282000E1D86D83BBD5E11EBD92402A80E8"
+  },
+  "book_0_1_4_delivery": {
+    "version": "0.1.4",
+    "branch": "build/book-app-android-apk-20260913",
+    "status": "BUILT_VERIFIED",
+    "release_manifest": "governance/book_0_1_4_release.json",
+    "source_snapshot_commit": "07b28d3",
+    "manual_sync_schema": "book_study_sync_v1",
+    "desktop_recording": "DISABLED_USE_ANDROID",
+    "documentation": "docs/BOOK_0_1_4.md",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1pxlUCYDQFmw-2yrBS7gZX_L6lSqxBskW",
+    "release_revision": 2,
+    "android_apk_sha256": "3516D50C56242F263C98B8957A8F53786154098F3B957CACB3347436AB3689DE",
+    "windows_exe_sha256": "8D00950F324ACA0E9089F8E543C06F920C0F02DBF3FE725A6F8ED3A15677F751",
+    "desktop_packaged_library": "PASS",
+    "desktop_sync_smoke": "PASS_WITH_SYSTEM_EDGE_AND_ISOLATED_DATA"
+  }
 }

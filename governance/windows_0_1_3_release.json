@@ -1,0 +1,38 @@
+{
+  "version": "0.1.3",
+  "platform": "windows-x64",
+  "source_commit": "bff0b45",
+  "artifacts": [
+    {
+      "file": "Book-0.1.3-Windows-x64.exe",
+      "bytes": 31442884,
+      "sha256": "57DCB774866DF185B6A5790B340CE3282000E1D86D83BBD5E11EBD92402A80E8"
+    },
+    {
+      "file": "Book-Desktop-0.1.3-source.zip",
+      "bytes": 1353849,
+      "sha256": "9EDC25248EB36A870A5D769547CC2B0030972D87A0AEE0BB9ED51CD27EDD1157"
+    }
+  ],
+  "validation": {
+    "frontend_typecheck": "PASS",
+    "frontend_tests": "98 passed across 19 files",
+    "desktop_vite_build": "PASS",
+    "pyinstaller_single_file": "PASS",
+    "packaged_self_test": "PASS"
+  },
+  "recording": {
+    "desktop_microphone": "DISABLED",
+    "android_microphone": "UNCHANGED_AND_SUPPORTED"
+  },
+  "synchronization": {
+    "textbook_source": "same 0.1.3 release source as Android",
+    "study_progress": "device_local",
+    "automatic_cross_device_sync": "NOT_ENABLED_NO_AUTHENTICATED_SYNC_SERVICE"
+  },
+  "limits": [
+    "Unsigned sideload EXE; WebView2 Runtime required",
+    "No model/API or cloud upload",
+    "Physical Windows microphone validation not applicable because desktop recording is disabled"
+  ]
+}

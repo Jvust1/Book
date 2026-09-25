@@ -5,6 +5,7 @@ import type {
   SourceRef,
 } from '../api/types'
 import { SourceLink } from './SourceLink'
+import { FormulaBlock, RichText } from './RichText'
 
 const MISSING_CONTENT = '本段中文学习内容暂未提供'
 const UNAVAILABLE = '学习内容暂不可用'
@@ -151,7 +152,7 @@ export function PreviewLearningSlice({
 
       {renderReferenceSection('核心定义', presentation.core_definitions)}
       {renderReferenceSection('核心公式', presentation.core_formulas, (item) =>
-        item.formula ? <div className="formula-block">{item.formula}</div> : null,
+        item.formula ? <FormulaBlock formula={item.formula} /> : null,
       )}
       {renderReferenceSection('教材图示', presentation.key_figures)}
 
@@ -183,9 +184,9 @@ export function PreviewLearningSlice({
                   </div>
                   {expanded ? (
                     normalizedType === 'formula' && item.formula ? (
-                      <div className="formula-block">{revealed}</div>
+                      <FormulaBlock formula={revealed} />
                     ) : (
-                      <p className="learning-content">{revealed}</p>
+                      <RichText content={revealed} />
                     )
                   ) : null}
                 </article>

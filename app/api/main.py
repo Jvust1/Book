@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
+from datetime import datetime, timezone
 
 from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -26,6 +27,7 @@ from .errors import (
     InvalidModeError,
     InvalidQAQuestionError,
     InvalidSearchQueryError,
+    InvalidStudySyncError,
     QAProviderInvalidResponseError,
     QAProviderUnconfiguredError,
 )
@@ -41,6 +43,10 @@ from .models import (
     SourceResponse,
     StudyRecordListResponse,
     StudyRecordResponse,
+    StudyExportResponse,
+    StudyImportRequest,
+    StudyImportResponse,
+    StudySyncRecord,
 )
 from .qa_provider_factory import QAProviderConfigurationError, provider_from_environment
 from .service import BookAppService
@@ -60,6 +66,26 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+
+def _validate_model(model_type: type[QARequest], payload: object) -> QARequest:
+    """Validate request DTOs across Pydantic v1 and v2 runtimes.
+
+    The Android build uses Pydantic v1 because Chaquopy does not provide the
+    native ``pydantic-core`` wheel required by Pydantic v2. Desktop installs
+    continue to use the v2 API when available.
+    """
+
+    if not isinstance(payload, dict):
+        raise ValueError("QA request must be a JSON object")
+    history = payload.get("history", [])
+    if not isinstance(history, list) or any(not isinstance(row, dict) for row in history):
+        raise ValueError("QA history must be a list of JSON objects")
+
+    validator = getattr(model_type, "model_validate", None)
+    if validator is not None:
+        return validator(payload)
+    return model_type.parse_obj(payload)
 
 
 @lru_cache(maxsize=1)
@@ -124,6 +150,13 @@ async def handle_invalid_search_query(
 @app.exception_handler(InvalidQAQuestionError)
 async def handle_invalid_qa_question(
     _request: Request, error: InvalidQAQuestionError
+) -> JSONResponse:
+    return _error_response(error, 400)
+
+
+@app.exception_handler(InvalidStudySyncError)
+async def handle_invalid_study_sync(
+    _request: Request, error: InvalidStudySyncError
 ) -> JSONResponse:
     return _error_response(error, 400)
 
@@ -216,7 +249,7 @@ async def qa(
     service: BookAppService = Depends(get_service),
 ) -> QAResponse:
     try:
-        payload = QARequest.model_validate(await request.json())
+        payload = _validate_model(QARequest, await request.json())
     except (ValueError, TypeError, ValidationError) as exc:
         raise InvalidQAQuestionError(
             code="invalid_qa_question",
@@ -358,6 +391,94 @@ def recent_study(
 ) -> StudyRecordResponse | None:
     record = service.recent()
     return None if record is None else _study_record_response(record)
+
+
+def _study_sync_record(record: StudyRecord) -> StudySyncRecord:
+    return StudySyncRecord(
+        course_id=record.course_id,
+        book_id=record.book_id,
+        section_id=record.section_id,
+        mode=record.mode,
+        status=record.status,
+        progress=record.progress,
+        started_at=record.started_at,
+        last_studied_at=record.last_studied_at,
+        completed_at=record.completed_at,
+        created_at=record.created_at,
+        updated_at=record.updated_at,
+        revision=record.revision,
+        deleted_at=record.deleted_at,
+    )
+
+
+@app.get("/api/study/export", response_model=StudyExportResponse)
+def export_study(repository: StudyRecordRepository = Depends(get_study_repository)) -> StudyExportResponse:
+    return StudyExportResponse(
+        schema_version="book_study_sync_v1",
+        exported_at=datetime.now(timezone.utc).isoformat(),
+        records=[_study_sync_record(record) for record in repository.list_all_records()],
+    )
+
+
+@app.post("/api/study/import", response_model=StudyImportResponse)
+async def import_study(
+    request: Request,
+    repository: StudyRecordRepository = Depends(get_study_repository),
+    service: BookAppService = Depends(get_service),
+) -> StudyImportResponse:
+    try:
+        raw_payload = await request.json()
+        validator = getattr(StudyImportRequest, "model_validate", None)
+        payload = validator(raw_payload) if validator else StudyImportRequest.parse_obj(raw_payload)
+        if len(payload.records) > 10000:
+            raise ValueError("Too many study records")
+        for row in payload.records:
+            section = service.section(row.course_id, row.section_id)
+            if section.book_id != row.book_id:
+                raise ValueError("Study record book does not match the canonical section")
+            if (row.status == "completed") != (row.progress == 100):
+                raise ValueError("Study status and progress do not match")
+            if (row.status == "completed") != (row.completed_at is not None):
+                raise ValueError("Study completion timestamp does not match status")
+            for value in (row.started_at, row.last_studied_at, row.created_at, row.updated_at):
+                parsed = datetime.fromisoformat(value)
+                if parsed.tzinfo is None:
+                    raise ValueError("Study timestamps must include a timezone")
+            if row.completed_at is not None and datetime.fromisoformat(row.completed_at).tzinfo is None:
+                raise ValueError("Completion timestamp must include a timezone")
+    except (AppNotFoundError, ValueError, TypeError, ValidationError) as exc:
+        raise InvalidStudySyncError(
+            code="invalid_study_sync",
+            user_message="学习进度文件无效或版本不兼容",
+            detail="Invalid manual study sync package",
+        ) from exc
+    records = tuple(
+        StudyRecord(
+            study_record_id="",
+            profile_id="",
+            course_id=row.course_id,
+            book_id=row.book_id,
+            section_id=row.section_id,
+            mode=row.mode,
+            status=row.status,
+            progress=row.progress,
+            started_at=row.started_at,
+            last_studied_at=row.last_studied_at,
+            completed_at=row.completed_at,
+            created_at=row.created_at,
+            updated_at=row.updated_at,
+            revision=row.revision,
+            deleted_at=row.deleted_at,
+            sync_status="local",
+        )
+        for row in payload.records
+    )
+    imported = repository.merge_records(records)
+    return StudyImportResponse(
+        imported_count=imported,
+        skipped_count=len(records) - imported,
+        total_count=len(records),
+    )
 
 
 @app.get(

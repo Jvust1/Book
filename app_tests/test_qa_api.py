@@ -154,6 +154,13 @@ class BookAppQAApiTests(unittest.TestCase):
 
     def test_blank_missing_malformed_json_and_malformed_history_are_stable_400(self) -> None:
         cases = [
+            self.post([["question", SUFFICIENT_QA_QUESTION]]),
+            self.post({"question": 42}),
+            self.post({"question": SUFFICIENT_QA_QUESTION, "section_id": 42}),
+            self.post({
+                "question": SUFFICIENT_QA_QUESTION,
+                "history": [[["role", "user"], ["content", "text"]]],
+            }),
             self.post({"question": "   "}),
             self.client.post(f"/api/courses/{COURSE_ID}/qa", json={}),
             self.post(

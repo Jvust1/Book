@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -29,21 +30,27 @@ class BookRuntimeTests(unittest.TestCase):
         self.assertIsNotNone(runtime.search_index_path)
 
     def test_functional_analysis_search_rebuild_matches_final_audit(self) -> None:
-        root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
-        if not root.exists():
+        source_root = Path(__file__).resolve().parents[1] / "books" / "functional-analysis"
+        if not source_root.exists():
             self.skipTest("repository fixture not present")
 
-        _, report = fa_search_recovery.recover_search_index(root)
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp) / "functional-analysis"
+            shutil.copytree(source_root, root)
+            _, report = fa_search_recovery.recover_search_index(root)
 
-        self.assertEqual(report["pre_tail_unique_count"], 1396)
-        self.assertEqual(report["record_count"], 1493)
-        self.assertEqual(report["legacy_complete_normalized_count"], 7)
-        self.assertEqual(report["legacy_complete_collision_count"], 6)
-        self.assertEqual(report["v05_frontmatter_added"], 5)
-        self.assertEqual(set(report["v05_frontmatter_excluded"]), {"series_page", "copyright"})
-        self.assertTrue(report["all_unique"])
-        self.assertEqual(report["without_source_anchor"], [])
-        self.assertTrue(report["promotable_by_count_and_anchor"])
+            self.assertEqual(report["pre_tail_unique_count"], 1396)
+            self.assertEqual(report["record_count"], 1493)
+            self.assertEqual(report["legacy_complete_normalized_count"], 7)
+            self.assertEqual(report["legacy_complete_collision_count"], 6)
+            self.assertEqual(report["v05_frontmatter_added"], 5)
+            self.assertEqual(
+                set(report["v05_frontmatter_excluded"]),
+                {"series_page", "copyright"},
+            )
+            self.assertTrue(report["all_unique"])
+            self.assertEqual(report["without_source_anchor"], [])
+            self.assertTrue(report["promotable_by_count_and_anchor"])
 
     def test_v036_index_tail_falls_back_to_completed_learning_layer(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

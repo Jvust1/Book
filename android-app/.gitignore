@@ -1,0 +1,6 @@
+**/build/
+**/.gradle/
+**/__pycache__/
+/.idea/
+/local.properties
+*.iml

@@ -1,5 +1,19 @@
 # Book 当前状态
 
+## Android / Windows 0.1.4 手动进度同步 — 2026-09-13
+
+两端新增统一的 `book_study_sync_v1` JSON 导出/导入入口，不依赖微云、GitHub、账号或 API。导入按“小节 + 学习模式”的更新时间合并，重复导入安全；同步包不包含录音和教材文件。详见 [手动同步说明](MANUAL_PROGRESS_SYNC.md)。
+
+2026-09-15 发布修订 2 修复 Windows 单文件 EXE 内教材根目录识别；打包版教材 API、Edge 同步端到端测试与独立测试数据库均已通过。Android 包已从同一修复源码重建。
+
+## Windows 0.1.3 桌面版交付 — 2026-09-13
+
+已新增 Windows x64 单文件桌面壳，打包本地 FastAPI、React/KaTeX 页面和 Functional Analysis 教材资源。桌面端不申请麦克风，录音入口明确引导到 Android；教材内容和页面代码与 Android 0.1.3 同源。学习进度仍按设备保存在 `%LOCALAPPDATA%\\BookApp`，本次无云端/API，因此暂不声称手机与电脑自动同步。构建与校验记录见 [Windows 交付记录](WINDOWS_0_1_3.md) 和 [桌面构建说明](../desktop-app/README.md)。
+
+## Android 0.1.3 交付补充 — 2026-09-13
+
+当前 Android 工作分支为 `build/book-app-android-apk-20260913`，PR #29 仍未合并。0.1.3 增加离线 LaTeX/Markdown 公式显示、统一手机页面，以及 Android 前台服务录音（暂停/继续、锁屏、播放、导出、分享和中断恢复）。未扩展教材结构化数据，也未配置模型/API。功能、测试与实机验证边界见 [Android 交付记录](ANDROID_0_1_3.md) 和 [使用说明](../android-app/README.md)。下面保留 Phase 1H 的既有状态记录。
+
 ## 当前权威覆盖 — 2026-09-13
 
 Phase 1H App 功能已在 PR #26 的 exact head `9fce2c794559ff8c1bfdd0beda8f1848f189b0e3` 完成并通过远端 CI。现有 App 范围包括教材浏览、Library/Course/Chapter/Section 导航、Preview/Learn/Review/Practice 四种学习切片、精确搜索、教材证据问答和 SQLite StudyRecord；Task 10 隔离/Golden/Chromium 验收与 Task 11 exact-head 回归均已完成。`books/functional-analysis/**`、`courses/**`、Search/QA Exact-only 行为和 StudyRecord 语义均未改动。结构化教材导入与新增教材注册暂缓，不属于本次 App 完成范围。PR #26 保持未合并，等待审阅。

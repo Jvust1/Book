@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
+import { FormulaBlock, RichText } from '../components/RichText'
 import { loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
@@ -129,10 +130,8 @@ export function SourcePage() {
         {source.source_batch ? <p>来源批次：{source.source_batch}</p> : null}
       </div>
 
-      {source.formula ? <div className="formula-block">{source.formula}</div> : null}
-      <p className="learning-content">
-        {source.content_zh || '本段中文学习内容暂未提供'}
-      </p>
+      {source.formula ? <FormulaBlock formula={source.formula} /> : null}
+      <RichText content={source.content_zh || '本段中文学习内容暂未提供'} />
 
       <section className="source-context" aria-label="来源上下文">
         {source.context_before.map((item) => (
