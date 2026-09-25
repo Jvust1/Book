@@ -1,0 +1,212 @@
+{
+  "schema": "book_two_courses_r6_batch5_checkpoint_v1",
+  "date": "2026-09-22",
+  "project": "Jvust2/Book",
+  "stage": "R6_BATCH5_STRUCTURED_REVIEW_AND_DERIVATIONS",
+  "status": "ARCHIVED_FULL_READBACK_VERIFIED_CONTENT_REVIEW_OPEN",
+  "strategy": "governance/two_courses_r6_review_strategy_v2_20260921.json",
+  "previous_data_checkpoint": "governance/two_courses_r6_batch4_checkpoint_20260921.json",
+  "full_verified_content": "INCOMPLETE",
+  "github": {
+    "branch": "data/two-courses-r3-checkpoint-20260921",
+    "pr": 33,
+    "draft": true,
+    "merged": false,
+    "parent_sha": "8c5b7692036323edd1b1f60053176f7abf18b39b",
+    "main_sha_observed": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+    "scope": "Archive, recovery, decision and artifact indexes only; reader runtime is in Drive candidate and NOT integrated into main/Phase1H.",
+    "main_writes": 0
+  },
+  "drive_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+  "artifacts": [
+    {
+      "file_name": "Book-TwoCourses-r6-batch5-Delta.zip",
+      "drive_file_id": "1e8u1x_FYfu37-AZyB28NX9XdOdA55zHm",
+      "bytes": 3429340,
+      "sha256": "b23e6c5defe8eff4a0b54daceb6073be5cee41fdad01e5052de1f02a4d83b323",
+      "role": "cumulative_source_delta",
+      "classification": "NEW",
+      "remote_status": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-TextData-r6-batch5.zip",
+      "drive_file_id": "1HYBhWNYmjlZKvW5lT_g2_3caCM6GAFTG",
+      "bytes": 3509920,
+      "sha256": "0e4ad8d48166a735779fee16bd3116f6db8bf448b93e798b83703ef7108af432",
+      "role": "consolidated_text_snapshot_no_images_no_app",
+      "classification": "NEW",
+      "remote_status": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r6-batch5-全量检查与内容补全说明.md",
+      "drive_file_id": "1h8EXfvwkTlHFaWWmtSUHwOl5QOj-NPmg",
+      "bytes": 11493,
+      "sha256": "18f5aaddc48e78bc7012fde1e04a858743a62c1a168c4a98b0d48b85d3deaaa4",
+      "role": "human_readable_delivery_and_boundaries",
+      "classification": "NEW",
+      "remote_status": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r6-batch5-delivery-manifest.json",
+      "drive_file_id": "1KhA10Z0n7UeDzNdGlSo6XVq8UHI0nf-U",
+      "bytes": 10442,
+      "sha256": "342de83313cf3cc98067e790d9496610bc72b1f5b6c22c1af2f86ae8b63bdd89",
+      "role": "external_delivery_manifest",
+      "classification": "NEW",
+      "remote_status": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "base_archive": {
+    "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+    "drive_file_id": "1df-aInQnvsh25kKuPftv9z3bhsCbVDNZ",
+    "bytes": 68110384,
+    "sha256": "4f739cf2f637e7735338db2484a5d2a69bc65496ef07b9c5849ddcd4033222de",
+    "reuploaded": false
+  },
+  "recovery": {
+    "entry": "docs/TWO_COURSES_R6_BATCH5_20260922.md inside candidate",
+    "method": "Immutable first-r6 Source ZIP plus cumulative Batch5 Delta ZIP; no Batch2-4 chain required.",
+    "output": "New nonexistent directory only. Existing worktree and old notes must not be overwritten.",
+    "delta_files": 232,
+    "all_candidate_files_compared": 1535,
+    "source_inventory_entries_rehashed": 1534,
+    "restored_integrity": "PASS",
+    "restored_fa_source_identity": "PASS",
+    "textdata_files": 211,
+    "textdata_inventory_entries_rehashed": 210,
+    "source_images_reuploaded": 0,
+    "original_pdfs_reuploaded": 0
+  },
+  "courses": [
+    {
+      "course_id": "partial_differential_equations",
+      "book_version_id": "mathematical_physics_equations_4e@dd824886902c6082",
+      "records": 3790,
+      "original_formula_segments": 6903,
+      "directory_entries": 51,
+      "numbered_teaching_sections": 33,
+      "practice_source_groups": 194,
+      "groups_are_not_individual_question_count": true,
+      "review_source_groups": 124,
+      "new_review_groups": 9,
+      "new_worked_solutions": 0
+    },
+    {
+      "course_id": "jiang_sun_functional_analysis",
+      "book_version_id": "functional_analysis_2e_jiang_sun@146e613d41bdc0b4",
+      "records": 5565,
+      "original_formula_segments": 9342,
+      "directory_entries": 44,
+      "numbered_teaching_sections": 29,
+      "original_questions": 110,
+      "reference_derivation_drafts_total": 110,
+      "new_reference_derivation_drafts": 80,
+      "new_drafts_by_chapter": {
+        "ch02": 16,
+        "ch03": 30,
+        "ch04": 30,
+        "ch05": 4
+      },
+      "official_answers": false,
+      "independently_accepted_answers": 0
+    }
+  ],
+  "scan": {
+    "structured_records": 9355,
+    "source_formula_segments": 16245,
+    "directory_entries": 95,
+    "source_groups_checked": 3655,
+    "teaching_sections_with_four_mode_study_routes": 62,
+    "heuristic_review_candidates": 48,
+    "heuristics_are_confirmed_errors": false,
+    "semantic_scope": "13 correction targets and 7 explicit review decisions; not all 9355 mathematical arguments",
+    "source_content_hashes_preserved": 9355
+  },
+  "corrections": {
+    "total": 13,
+    "high_preferred": 11,
+    "medium_annotation_only": 2,
+    "independent_acceptance": "PENDING",
+    "original_source_unchanged": true,
+    "applied_guard": "source signature + evidence status + unique high-confidence target; original/reason expandable"
+  },
+  "other_decisions": {
+    "total": 7,
+    "explained_or_false_positive": 5,
+    "open": 2
+  },
+  "validation": {
+    "python_tests": 590,
+    "python_subtests": 239,
+    "warnings": 4,
+    "math_syntax_passed": 17248,
+    "math_syntax_total": 17248,
+    "formula_layers": {
+      "original_source": 16245,
+      "derived": 944,
+      "previous_source_completion": 17,
+      "previous_source_layout": 1,
+      "correction_related": 41
+    },
+    "scoped_math_executed_checks": 13,
+    "scoped_math_executed_cases": 157,
+    "analytic_argument_records_not_executed_proofs": 6,
+    "real_chromium_checks": 20,
+    "browser_scope": "Actual Chromium + reader.js + offline MathJax + FastAPI/SQLite bridge. localStorage/history doubles; not native storage, full live navigation or Android.",
+    "integrity": "PASS",
+    "complete_gate_exit": 2,
+    "independent_mathematical_acceptance": false,
+    "apply_runs": 2,
+    "apply_files_hash_identical": 685,
+    "protected_golden_and_historical_source_files_unchanged": 186,
+    "golden_books_courses_unchanged": 129,
+    "source_records_hash_preserved": 9355,
+    "old_30_fa_guides_unchanged": true,
+    "repeated_zip_byte_identical": true,
+    "no_new_apk": true
+  },
+  "display": {
+    "four_modes": [
+      "preview",
+      "learn",
+      "review",
+      "practice"
+    ],
+    "font_size_px": {
+      "min": 12,
+      "max": 72,
+      "step": "any decimal"
+    },
+    "math": "offline MathJax 3.2.1 SVG",
+    "shusong": "Actual local load or user-owned import; explicit fallback",
+    "font_binaries_distributed": 0,
+    "native_font_persistence": "NOT_VERIFIED"
+  },
+  "remaining_work": [
+    "No independent whole-book mathematical acceptance; structural checks do not prove all statements.",
+    "48 heuristic items require semantic classification; 2 explicit source mathematical questions remain open.",
+    "All 110 FA reference derivation drafts, including new 80, require independent proof review.",
+    "PDE complete worked solutions remain incomplete; 194 is a source-group count.",
+    "Reader runtime is archived, not integrated into main; Android/ARM64/native storage/font persistence not tested; no APK."
+  ],
+  "next_step": "Semantically classify 48 heuristic findings and inspect high-value theorem/proof assumptions; independently review new 80 FA derivations and extend PDE worked solutions. Use PDF only for targeted source ambiguity, not a mandatory page sweep.",
+  "sync": {
+    "file_scope_classification": {
+      "NEW": 6,
+      "CHANGED": 1,
+      "SKIP_IDENTICAL": 0,
+      "HISTORICAL_DUPLICATE_PRESERVED": 0,
+      "CONFLICT_NEEDS_REVIEW": 0
+    },
+    "file_scope": "4 new Drive files + 2 new GitHub files + 1 changed GitHub manifest; PR metadata excluded from file counts.",
+    "drive_created": 4,
+    "drive_updated_in_place": 0,
+    "github_logical_commits": 1,
+    "readback_hash_matches": 4,
+    "existing_drive_objects_preserved": 24,
+    "deletions": 0,
+    "pr_merges": 0,
+    "old_notes_migrated": false,
+    "repeat_policy": "Reconcile hashes and skip identical inputs; do not claim read-only observation is a cloud-write idempotency stress test."
+  }
+}

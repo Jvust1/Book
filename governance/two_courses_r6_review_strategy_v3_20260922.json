@@ -1,0 +1,72 @@
+{
+  "schema": "book_two_courses_r6_review_strategy_v3_checkpoint_v1",
+  "project": "Jvust2/Book",
+  "date": "2026-09-22",
+  "stage": "R6_REVIEW_STRATEGY_V3_HYBRID",
+  "status": "ACTIVE",
+  "supersedes_active_strategy": "governance/two_courses_r6_review_strategy_v2_20260921.json",
+  "root_drive_policy": {
+    "file_name": "Book_扫描版PDF教材结构化处理提示词.md",
+    "drive_file_id": "1lO0z2nOoONzUIJNhA8JZy2nqhoLvuHds",
+    "size_bytes": 25833,
+    "sha256": "78d0958a76461842f8c1b36390894ca4c9ee9a7b1b8507b8c5a8f806dd305217",
+    "update_mode": "IN_PLACE_PRESERVED_ID",
+    "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+  },
+  "user_decision": "Review existing structured data first. Use PDF only when the structured data review cannot confidently resolve an issue; avoid full-book mechanical PDF comparison.",
+  "workflow": {
+    "first_time_scanned_pdf_extraction": {
+      "method": "CONTINUOUS_SOURCE_PAGE_PROCESSING",
+      "requires_all_source_pages_processed": true,
+      "purpose": "Build the initial faithful structured source without skipping pages."
+    },
+    "existing_structured_data_review": {
+      "primary_method": "FULL_STRUCTURED_DATA_REVIEW",
+      "mandatory_full_pdf_page_sweep": false,
+      "pdf_role": "RISK_TRIGGERED_SPOT_CHECK",
+      "order": [
+        "Run full structural, formula, logical, numbering, cross-page, source-span, figure/table-reference and provenance checks on structured data.",
+        "Classify findings by confidence and risk.",
+        "Open only the necessary PDF page(s), plus adjacent pages when needed, for unresolved source ambiguity.",
+        "For mathematical correctness, use internal derivation/consistency, counterexamples, symbolic or numerical checks; use external authoritative references only when needed.",
+        "Preserve source; store corrections and AI-derived study content in separate layers."
+      ]
+    }
+  },
+  "pdf_spot_check_triggers": [
+    "ambiguous character, sign, subscript, superscript, prime or Greek letter",
+    "suspected OCR/transcription omission or summarized passage",
+    "cross-page paragraph/formula/proof/example/exercise boundary ambiguity",
+    "figure/table/caption/layout relationship not reconstructible from structured data",
+    "PDF-page/printed-page/chapter/source identity conflict",
+    "need to distinguish a textbook printing issue from an ingestion error"
+  ],
+  "source_authority": {
+    "rule": "When confirming what the printed source says, scanned page visual evidence outranks PDF text layer and model inference.",
+    "limitation": "Printed source form is not by itself proof of mathematical correctness.",
+    "no_implication_of_full_sweep": true
+  },
+  "completion_metrics": {
+    "structured_review_complete": "All structured records and relationships in scope have passed the defined structured-data review.",
+    "targeted_pdf_issues_resolved": "Every PDF-triggered issue is either resolved with page evidence or explicitly left OPEN.",
+    "full_page_visual_verification": "True only if an actual full page-by-page visual verification was performed; never inferred from structured review.",
+    "mathematical_review_status": "Tracked separately from source fidelity and from full-page visual verification."
+  },
+  "data_layers": {
+    "source": "Immutable textbook-source representation/provenance.",
+    "correction": "Traceable corrected_text/corrected_latex/reason/confidence/evidence; never silently overwrite source.",
+    "derived": "AI preview/review/practice hints and derivations; clearly non-source and non-official unless separately accepted."
+  },
+  "current_project_effect": {
+    "app_or_course_data_changed": false,
+    "current_app_source_repackage_required": false,
+    "batch5_data_checkpoint_unchanged": true,
+    "historical_page_review_ledger_preserved": true,
+    "future_progress_metric": "structured findings resolved + targeted PDF issues resolved + mathematical review status; not pages mechanically reopened"
+  },
+  "safety": {
+    "main_writes": 0,
+    "pr_merge": 0,
+    "destructive_operations": 0
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "book_final_app_source_checkpoint_v2",
+  "date": "2026-09-22",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "pr": 33,
+  "status": "FINAL_APP_SOURCE_AND_CURRENT_APK_ARCHIVED_READBACK_VERIFIED_CONTENT_REVIEW_OPEN",
+  "source_status": "COMPLETE_CONSOLIDATED_SOURCE_CANDIDATE_UPDATED_UI",
+  "content_status": "INCOMPLETE_MATH_REVIEW",
+  "parent_content_checkpoint": "governance/two_courses_r6_batch5_checkpoint_20260922.json",
+  "artifacts": [
+    {
+      "file_name": "Book-App-Final-Source-r6-batch5.zip",
+      "drive_file_id": "1ZJh4lPEvIO-AgBEAou2VODUg99FHVzxK",
+      "bytes": 69764534,
+      "sha256": "e337db07efb71a037d3988f18dd959983838c76b7cc546a9fe416745bf415fa4",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-Final-Source-r6-batch5.manifest.json",
+      "drive_file_id": "1sGpVG0eUvJpfJnfs1n7rah-gCIcJdI13",
+      "bytes": 1425,
+      "sha256": "6a2db11126e6e27a13f7f19fa98e043cf74d630765371e53987d25ec1529a6f7",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk",
+      "drive_file_id": "1lQv8fhx3JIvxy4v8WnHdJUYDImsEMY-Z",
+      "bytes": 99320092,
+      "sha256": "012527c4d3e1d24ce3560394f44ededfd046e25f0d63356aaa844926543a8208",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.manifest.json",
+      "drive_file_id": "1Q334Ge9YLcCe28l8HVq4U71QMROqD5bm",
+      "bytes": 1296,
+      "sha256": "538ed983d497d9aa1d4bf3172ca087e5baa2af33088d0d5fa6e8350a863d2a43",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-App-CURRENT-r6-batch5.apk.sha256",
+      "drive_file_id": "1G0QTXwIprOoQ2PvmAN2ZSg1-mHKWl3Xn",
+      "bytes": 97,
+      "sha256": "48de0dce65738f8f4719877e1c2d7222eb2dd3a8d8317779d89865c4254c2dd4",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "package": {
+    "zip_entries": 1540,
+    "internal_manifest_entries": 1539,
+    "internal_manifest_hash_errors": 0,
+    "recovery": "Extract this ZIP directly; no Batch2/3/4/5 delta application is required.",
+    "includes": [
+      "android-app",
+      "web frontend",
+      "FastAPI/Python runtime",
+      "desktop source",
+      "two-course current coursepacks",
+      "reader assets",
+      "tests",
+      "verification evidence",
+      "final source manifest"
+    ],
+    "reader_ui": {
+      "learn_layout": "continuous_dense_stream",
+      "learn_records_per_page": 80,
+      "inline_provenance_in_learn": "HIDDEN_BY_DEFAULT",
+      "provenance_data": "PRESERVED"
+    }
+  },
+  "current_rerun_validation": {
+    "python_tests_passed": 590,
+    "python_subtests_passed": 239,
+    "tests_breakdown": {
+      "tests": 349,
+      "app_tests": 111,
+      "tests_reader": 130
+    },
+    "python_warnings": 4,
+    "chromium_checks": 20,
+    "chromium_status": "PASS",
+    "source_manifest_hash_check": "1539/1539 PASS",
+    "apk_zip": "PASS",
+    "apk_signature_scheme_v2_rsa": "PASS",
+    "apk_v2_content_digest": "PASS",
+    "android_clean_gradle_build": "NOT_PERFORMED: current APK is an offline resource repack using the previously verified Android/Chaquopy shell"
+  },
+  "boundaries": [
+    "Not independent whole-book mathematical acceptance.",
+    "PDE complete worked solutions remain incomplete.",
+    "Android ARM64 physical-device and native ShuSong/font-size persistence acceptance remain open.",
+    "The current APK is an offline resource repack/resign, not a clean Gradle build from this updated source tree."
+  ],
+  "sync": {
+    "main_writes": 0,
+    "pr_merges": 0,
+    "deletions": 0,
+    "drive_updated_in_place": [
+      "Book-App-Source-CURRENT-r6-20260922.zip",
+      "Book-App-Source-CURRENT-r6-20260922.manifest.json",
+      "Book-App-Final-Source-r6-batch5.zip",
+      "Book-App-Final-Source-r6-batch5.manifest.json"
+    ],
+    "drive_new_objects": [
+      "Book-App-CURRENT-r6-batch5.apk",
+      "Book-App-CURRENT-r6-batch5.apk.manifest.json",
+      "Book-App-CURRENT-r6-batch5.apk.sha256"
+    ]
+  },
+  "next_step": "Use the refreshed CURRENT source ZIP and current APK as the handoff artifacts. Continue content review separately; future Android release work should perform a clean Gradle build when dependency/network access is available and then run ARM64 physical-device acceptance.",
+  "updated_at": "2026-09-22T19:45:00+08:00"
+}

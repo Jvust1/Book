@@ -1,0 +1,171 @@
+{
+  "schema": "book_two_courses_r6_batch3_checkpoint_v1",
+  "project": "Jvust2/Book",
+  "date": "2026-09-21",
+  "stage": "R6_BATCH3_SOURCE_REVIEW_CONTINUATION",
+  "status": "RECOVERABLE_CANDIDATE_WHOLE_BOOK_REVIEW_INCOMPLETE",
+  "base_checkpoint": "governance/two_courses_r6_first_checkpoint_20260921.json",
+  "previous_checkpoint": "governance/two_courses_r6_batch2_checkpoint_20260921.json",
+  "github": {
+    "branch": "data/two-courses-r3-checkpoint-20260921",
+    "pr": 33,
+    "draft": true,
+    "merged": false,
+    "parent_sha": "a16ff4c9f20a83902a3b45fb023d8339e21bd2e3",
+    "main_sha_observed": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+    "main_writes": 0,
+    "scope": "Archive/governance index only; reader runtime recovered from immutable first-r6 ZIP plus cumulative batch3 delta, not integrated into main."
+  },
+  "artifact": {
+    "file_name": "Book-TwoCourses-r6-batch3-Delta.zip",
+    "drive_file_id": "1HVwEddwQII_V5fhh7_j7OQx4DzoV4fFR",
+    "drive_parent_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+    "size_bytes": 424420,
+    "sha256": "5e608fd2f1454cbada37b74e16704c1e51fbdd8b7787be25646604d6bce1f4f7",
+    "delta_manifest_sha256": "1598d537866bfa143f153917f35603ebd38b51b9852f39efbbb64e37f197ee59",
+    "verification": "Full remote bytes downloaded; size, SHA-256 and ZIP CRC matched. Restore into a new directory matched all 59 cumulative delta files and integrity audit."
+  },
+  "base_archive": {
+    "drive_file_id": "1df-aInQnvsh25kKuPftv9z3bhsCbVDNZ",
+    "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r6-Source.zip",
+    "sha256": "4f739cf2f637e7735338db2484a5d2a69bc65496ef07b9c5849ddcd4033222de",
+    "size_bytes": 68110384,
+    "reuploaded": false
+  },
+  "previous_batch2": {
+    "drive_file_id": "1F5iBXMPtLDJuwqnRM1fDC45hvKRK9FUQ",
+    "preserved": true,
+    "required_for_batch3_recovery": false
+  },
+  "actual_source_comparison": {
+    "new_pages": 17,
+    "partial_differential_equations": {
+      "pdf_pages": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "next_pdf_page": 33
+    },
+    "jiang_sun_functional_analysis": {
+      "pdf_pages": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "next_body_pdf_page": 22,
+      "front_pages_still_unreviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "method": "Original full-page visual comparison against anchored source records and source boundaries.",
+    "independent_acceptance": "PENDING",
+    "whole_page_math_verified": false
+  },
+  "cumulative_r6_review": {
+    "total_source_pages": 516,
+    "first_pass_transcribed_pages": 13,
+    "source_comparison_pages": 44,
+    "pages_not_reviewed_in_r6": 459,
+    "independently_accepted_pages": 0,
+    "ledger": "content_sources/source_review_r6_batch3/page_review_ledger.json"
+  },
+  "content_changes": [
+    "No newly confirmed textbook raw/text/LaTeX transcription error was found on the 17 Batch3 pages; source text/formulas were not rewritten.",
+    "Added two explicit PDE cross-page sentence-continuity links for PDF25→26 and PDF26→27 without changing source record IDs/text/formulas.",
+    "Added four PDE source-backed concept groups for preview/review, ten PDE exercise process hints, and twelve FA study prompts; all are labeled assistant-authored study assistance, not textbook source or official solutions.",
+    "Corrected stale governance metadata: FA source_text_entry_complete remains false after Batch2 found a summarized proof; page anchors and structured records are not treated as full-verbatim completeness."
+  ],
+  "source_versions": {
+    "partial_differential_equations": "mathematical_physics_equations_4e@9d1376a2c3161e68",
+    "jiang_sun_functional_analysis": "functional_analysis_2e_jiang_sun@deb75b5c6db9a4f6"
+  },
+  "original_source_counts": {
+    "pde_records": 3790,
+    "fa_records": 5565,
+    "pde_original_formula_slots": 6903,
+    "fa_original_formula_slots": 9342,
+    "protected_legacy_source_record_hashes": {
+      "pde": 3629,
+      "fa": 5565
+    },
+    "new_record_ids": 0
+  },
+  "validation": {
+    "python_tests": 546,
+    "python_subtests": 239,
+    "warnings": 4,
+    "test_split": {
+      "tests": 349,
+      "app_tests": 111,
+      "tests_reader": 86
+    },
+    "math_syntax": {
+      "passed": 16709,
+      "total": 16709,
+      "not_mathematical_acceptance": true
+    },
+    "targeted_real_chromium_inmemory_checks": 10,
+    "chromium_scope": "Actual Chromium DOM + reader.js + offline MathJax + FastAPI TestClient bridge; managed navigation remains blocked and was not bypassed; no native-storage/Android claim.",
+    "integrity": "PASS",
+    "source_entry_identity": "PASS",
+    "whole_book_completeness": "INCOMPLETE",
+    "complete_gate_exit": 2,
+    "repeat_application": {
+      "actual_runs": 2,
+      "files_compared": 675,
+      "hashes_identical": true
+    },
+    "restored_candidate": {
+      "delta_files": 59,
+      "file_identity": true,
+      "integrity": "PASS"
+    },
+    "protected_golden_files_unchanged": 129,
+    "android_apk_arm64_device": "NOT_RUN",
+    "font_binary_bundled": false
+  },
+  "dedup": {
+    "candidate_files": {
+      "NEW": 35,
+      "CHANGED": 24,
+      "SKIP_IDENTICAL": 1391,
+      "HISTORICAL_DUPLICATE_PRESERVED": 0,
+      "CONFLICT_NEEDS_REVIEW": 0
+    },
+    "drive_created": 1,
+    "drive_updated": 0,
+    "deletions": 0,
+    "original_source_pdfs_and_page_images_reused": true
+  },
+  "remaining": [
+    "459 pages have not yet received r6 page-by-page source comparison; 13 first-pass pages still need subsequent comparison; all 516 remain independently unaccepted.",
+    "Continue looking for summarized or omitted passages, formulas, figures and exercises; source-page anchors are insufficient evidence of verbatim completeness.",
+    "Independent mathematical review remains open for known flags and AI annotations.",
+    "Complete worked solutions remain incomplete: FA 80 questions still have no derived guide; PDE process hints are not solutions.",
+    "Android/ARM64, real-network and native ShuSong/settings-persistence acceptance remain open; no new APK."
+  ],
+  "recovery": {
+    "readme": "docs/TWO_COURSES_R6_BATCH3_20260921.md",
+    "base_plus_delta": "Use immutable first-r6 Source ZIP plus Book-TwoCourses-r6-batch3-Delta.zip. Batch3 delta is cumulative relative to the first-r6 base; Batch2 delta is historical evidence and not required.",
+    "output_requirement": "Recover to a new nonexistent directory; validate before/after hashes; do not overlay an existing worktree.",
+    "old_notes": "Preserved under original version keys; no automatic migration."
+  }
+}

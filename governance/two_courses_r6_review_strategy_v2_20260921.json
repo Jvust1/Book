@@ -1,0 +1,89 @@
+{
+  "schema": "book_two_courses_r6_review_strategy_v2_checkpoint_v1",
+  "project": "Jvust2/Book",
+  "date": "2026-09-21",
+  "stage": "R6_REVIEW_STRATEGY_V2",
+  "status": "ACTIVE_FOR_SUBSEQUENT_BATCHES",
+  "parent_data_checkpoint": "governance/two_courses_r6_batch4_checkpoint_20260921.json",
+  "data_recovery_entry_unchanged": true,
+  "strategy": {
+    "primary_method": "STRUCTURED_DATA_SELF_CHECK",
+    "pdf_role": "SPOT_CHECK_ONLY",
+    "mathematical_correctness_priority": true,
+    "source_preservation_required": true,
+    "correction_layer_required": true,
+    "derived_learning_layer_separate": true,
+    "external_authority_use": "VERIFY_WHEN_NEEDED_AND_LABEL_SEPARATELY",
+    "no_silent_source_overwrite": true
+  },
+  "layers": {
+    "source": "Preserve textbook-source raw/text/LaTeX/page/record identity.",
+    "correction": "Store corrected_text/corrected_latex/reason/confidence/evidence without overwriting source.",
+    "derived": "Keep preview/review/practice hints and AI derivations explicitly separate from source/corrections."
+  },
+  "confidence_policy": {
+    "HIGH": "May be preferred in learning display when strong internal/symbolic/numeric/source evidence converges; source remains expandable.",
+    "MEDIUM": "Candidate correction only; do not silently promote to default textbook text.",
+    "LOW_OPEN": "Record issue and evidence gap; do not correct."
+  },
+  "checks": [
+    "LaTeX syntax/renderability and symbol consistency",
+    "definition/theorem/proof logical consistency",
+    "index/subscript/summation/integral/boundary consistency",
+    "simple special-value/counterexample/numeric checks",
+    "cross-record and cross-section terminology consistency",
+    "chapter/section/example/exercise numbering and boundary completeness",
+    "cross-page continuations, duplicate/summarized/missing passages",
+    "four-mode coverage and source/derived layer separation"
+  ],
+  "pdf_spot_check_triggers": [
+    "ambiguous glyph/sign/subscript/prime",
+    "suspected OCR or transcription omission",
+    "need to distinguish textbook printing from ingestion error",
+    "figure/table/layout relationship",
+    "page/chapter/source-boundary provenance"
+  ],
+  "completion_policy_change": {
+    "full_page_pdf_comparison_required": false,
+    "page_comparison_ledger_retained_as_evidence": true,
+    "completion_focus": [
+      "all structured records pass syntax/structural integrity checks",
+      "high-value definitions/theorems/formulas/proofs/examples/exercises receive systematic consistency scans",
+      "all HIGH-confidence issues have traceable corrections",
+      "MEDIUM/LOW issues remain explicitly open",
+      "preview/learn/review/practice coverage is structurally complete",
+      "solution completeness is tracked separately from textbook-structure completeness",
+      "Android/device/font persistence remains release acceptance, not textbook-math completion"
+    ]
+  },
+  "next_execution": {
+    "label": "R6_BATCH5_AUTOMATED_CONSISTENCY_SCAN",
+    "pde_records": 3790,
+    "pde_source_formula_segments": 6903,
+    "fa_records": 5565,
+    "fa_source_formula_segments": 9342,
+    "order": [
+      "scan PDE structured data",
+      "scan FA structured data",
+      "prioritize definitions/theorems/proofs/examples/exercises and known flags",
+      "write correction/issue ledger",
+      "spot-check PDF only where ambiguity remains",
+      "propagate validated corrections/notes into four learning modes"
+    ]
+  },
+  "drive_artifact": {
+    "file_name": "Book-TwoCourses-r6-ReviewStrategy-v2-20260921.md",
+    "drive_file_id": "1_jR_7PLVbNkLRkUnKsui7fxt8ZS976q4",
+    "size_bytes": 7103,
+    "sha256": "23974bc12619c492615217e369dfca910981f7769bab6d8f3828b2016502e96c",
+    "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+  },
+  "github": {
+    "branch": "data/two-courses-r3-checkpoint-20260921",
+    "pr": 33,
+    "pr_draft": true,
+    "pr_merged": false,
+    "main_writes": 0,
+    "destructive_operations": 0
+  }
+}

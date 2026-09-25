@@ -1,0 +1,173 @@
+{
+  "schema": "book_two_courses_source_supplement_checkpoint_v1",
+  "date": "2026-09-21",
+  "revision": "r5",
+  "repository": "Jvust2/Book",
+  "branch": "data/two-courses-r3-checkpoint-20260921",
+  "base_head": "ee781454f018ba4782d23a153ea2fd7723464d49",
+  "pr": 33,
+  "status": "R5_ARTIFACTS_ARCHIVED_READBACK_VERIFIED_WHOLE_BOOK_REVIEW_OPEN",
+  "scope": "Archive and source-recovery checkpoint only; candidate reader implementation is inside the Drive source archive, not imported into main or PR29 by this commit.",
+  "entry": "DELIVERY_README_zh.md inside the r5 source archive",
+  "parent_archive": {
+    "drive_file_id": "1HXHnBCSvCQMZOAgFJegrLmvwl5-FIXKb",
+    "sha256": "ce8a166430565a1eae9a14ee2c1ca2a8456910d6f62ca892d0a79e1a84a05447",
+    "bytes": 31422750,
+    "preserved": true
+  },
+  "drive_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+  "artifacts": [
+    {
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r5-Source.zip",
+      "drive_file_id": "1qbkO2Da6-lbsyXpWVb1yWIatta-maFeb",
+      "bytes": 66596053,
+      "sha256": "5ef09f0ed7f104d87a45644b401cfa21e2a1a8fc33f07e73306b94f922738842",
+      "files": 1335,
+      "role": "candidate_source_data_original_page_images_and_verification",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-TextData-r5.zip",
+      "drive_file_id": "1zbzdVCoHXFquBX7bInrkhHx5NhNHKAUW",
+      "bytes": 1846712,
+      "sha256": "8575e50c0e9ab3b3580ea8b189a86cfbeda60b2d1e7356c0dedc7b2758eff31c",
+      "files": 161,
+      "role": "text_json_markdown_latex_subset_without_images_or_runnable_app",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r5-原图补齐与定点校读说明.md",
+      "drive_file_id": "1tYDcBF1nM3Q7dHUXidIqHshlVzhLlyiv",
+      "bytes": 22290,
+      "sha256": "c0d68249416a07f884b2e562d30c843e021e5b48e42839abd6ff7a7d0b305162",
+      "role": "human_readable_source_mapping_review_scope_and_remaining_work",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "file_name": "Book-TwoCourses-r5-delivery-manifest.json",
+      "drive_file_id": "19S1YSBesCEUpvGrhx8We5JxJG9kJKhiP",
+      "bytes": 8468,
+      "sha256": "b6b0b1894873b0644c4ab15a55ea28290daf51871e4cbf4c100d11895f8e7b5e",
+      "role": "external_artifact_manifest_no_self_referential_archive_hash",
+      "readback": "FULL_REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "sources_reused": [
+    {
+      "file_name": "数学物理方程 第4版 15304180.pdf",
+      "drive_file_id": "1JN-6cXSC0j4remyUpKR_wRmtMD99nEvB",
+      "bytes": 41723682,
+      "sha256": "0398ca63ce6e594da3e1e7a29035f0b81b4e547b303046df487e52c79b1814fc",
+      "pdf_pages": 269,
+      "reuploaded": false
+    },
+    {
+      "file_name": "泛函分析(第2版) (江泽坚, 孙善利) .pdf",
+      "drive_file_id": "1zqTkWK-XY2Li_WTWql4k7hVacP9qiplM",
+      "bytes": 7420638,
+      "sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1",
+      "pdf_pages": 247,
+      "reuploaded": false
+    }
+  ],
+  "pde": {
+    "course_id": "partial_differential_equations",
+    "book_version_id": "mathematical_physics_equations_4e@d9252fdc0fd2c3ea",
+    "chapters": 7,
+    "numbered_sections": 33,
+    "directory_entries": 42,
+    "records": 3629,
+    "original_records_preserved": 3449,
+    "new_records": 180,
+    "source_formula_segments": 6900,
+    "new_formula_segments": 190,
+    "review_source_groups": 95,
+    "practice_source_groups": 194,
+    "practice_count_is_individual_question_count": false,
+    "recovered_original_figures": 23,
+    "previous_available_figures_preserved": 20,
+    "registered_missing_images": 0,
+    "source_pages": 269,
+    "source_page_storage": "original embedded JPEG bytes, not regenerated pages",
+    "printed_footer_labels_visually_checked": 256,
+    "numeric_page_mapping": "PDF12-267 correspond to printed1-256; old chapter-local source_pdf_page preserved, full_source_pdf_page added",
+    "record_anchor_scope": "Existing printed record anchors carried forward; not a claim that every record was independently page-checked",
+    "new_entries": [
+      {"id": "book_introduction", "pdf_pages": [12], "printed_pages": [1], "records": 6},
+      {"id": "appendix_special_functions", "pdf_pages": [259,260,261,262,263,264,265,266,267], "printed_pages": [248,249,250,251,252,253,254,255,256], "records": 174}
+    ],
+    "new_transcription_review": "PENDING_INDEPENDENT_REVIEW",
+    "image_only_front_back_pdf_ranges": [[1,11],[268,269]],
+    "image_only_front_back_pages": 13,
+    "source_checked_formula_slots": 28,
+    "formula_review_scope": "26 old render candidates plus 2 additional escapes. Exactly named slots only, not whole records/proofs.",
+    "source_order_error": "ch05-examp-2 part1 corrected in explicit display overlay from p,rho,e to rho,p,e as printed; original raw/LaTeX retained",
+    "appendix_source_ambiguities": 6,
+    "whole_book_independent_review": "PENDING"
+  },
+  "functional_analysis": {
+    "course_id": "jiang_sun_functional_analysis",
+    "book_version_id": "functional_analysis_2e_jiang_sun@a43a305ed7c76f87",
+    "records": 5565,
+    "source_formula_segments": 9342,
+    "original_questions": 110,
+    "flagged_passages_rechecked": 11,
+    "recheck_scope": "Printed forms observed against actual source pages; mathematical issues remain open",
+    "original_transcription_changes": 0,
+    "whole_book_independent_review": "PENDING"
+  },
+  "learning_modes": ["preview", "learn", "review", "practice"],
+  "display": {
+    "math": "offline MathJax3.2.1 SVG from preserved LaTeX",
+    "font_size_px": {"min": 12, "max": 72, "step": 0.5},
+    "font": "Actual local ShuSong or user-owned local import; explicit serif fallback",
+    "font_binaries_distributed": 0,
+    "source_navigation": "Per-record full PDF page; full-book page selector includes untranscribed front/back pages",
+    "native_font_persistence_verified": false
+  },
+  "validation": {
+    "scope": "Local archived candidate, not GitHub CI of this governance-only commit",
+    "python_passed": 508,
+    "python_subtests_passed": 239,
+    "python_warnings": 4,
+    "math_syntax_svg_passed": 16674,
+    "math_syntax_svg_total": 16674,
+    "math_correctness_proved": false,
+    "browser_inmemory_testclient_checks": 38,
+    "network_or_android_e2e": false,
+    "crop_pixel_equality": "23/23 PASS",
+    "source_zip_inventory_entries_hash_verified": 1334,
+    "source_zip_crc": "PASS",
+    "protected_legacy_files_unchanged": 254,
+    "original_pde_raw_and_latex_records_unchanged": 3449,
+    "original_fa_raw_and_latex_records_unchanged": 5565,
+    "consecutive_apply_runs": 2,
+    "coursepack_files_hash_identical_across_runs": 662,
+    "fa_source_entry_coverage": "44 entries / 247 pages / 110 questions PASS; not independent proofreading",
+    "data_integrity": "PASS",
+    "full_content": "INCOMPLETE",
+    "require_complete_exit": 2,
+    "android_build": "NOT_RUN_R5",
+    "physical_device": "NOT_TESTED"
+  },
+  "remaining_work": [
+    "Transcribe the 13 explicitly image-only PDE front/back pages; retain original source evidence.",
+    "Independently review new introduction/appendix transcription and all whole-book PDE/FA text, formulas, proofs and question coverage.",
+    "Resolve original-print mathematical issues separately without silently replacing textbook facts.",
+    "Retain 30 existing AI-derived FA first-chapter reference solutions as non-official and pending review; the other 80 FA answers and missing PDE answers remain unavailable.",
+    "Review/import archived reader implementation into a non-default implementation branch; no automatic merge or main update.",
+    "Validate network/Android/ARM64 and native font/settings persistence before any release claim."
+  ],
+  "sync": {
+    "drive_new_objects": 4,
+    "drive_in_place_updates": 0,
+    "original_source_ids_reused": 2,
+    "payload_and_manifest_full_readback_hash_matches": 4,
+    "old_archives_preserved": "r1-r4",
+    "main_writes": 0,
+    "pr_merges": 0,
+    "destructive_operations": 0,
+    "notes_migrated": false,
+    "repeat_policy": "Compare artifact identities and bytes; same verified artifacts must be reused rather than uploaded again."
+  }
+}

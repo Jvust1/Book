@@ -1,0 +1,160 @@
+{
+  "schema_version": "book_two_courses_archive_checkpoint_v1",
+  "date": "2026-09-21",
+  "revision": "r3",
+  "repository": "Jvust2/Book",
+  "scope": "Archive recovery checkpoint only. Reader candidate code and data are in the verified Drive artifacts, not imported by this governance commit.",
+  "status": "FIRST_CHAPTER_TRANSCRIBED_FOUR_MODE_ENHANCEMENTS_CONTENT_COMPLETION_OPEN",
+  "git_base": {
+    "branch": "build/book-app-android-apk-20260913",
+    "head": "c80b6aaf90947b5f43e7df67d4a8b1c7b58fc674",
+    "pr": 29,
+    "pr_merged_at_verification": false,
+    "app_source_archive_commit": "07b28d3b8541daa25b99937ece136dca32812506",
+    "candidate_source_integrated": false
+  },
+  "parent_archive": {
+    "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r2-Source.zip",
+    "drive_file_id": "12HCrrsTsoHqto0aKN1ZUwhZVBV68A36T",
+    "bytes": 29927150,
+    "sha256": "5ba2a3dfa0ad322cf250a5f7e2ff3ce3e0815cceff4bbb252dfb045f0f392da5",
+    "preserved": true
+  },
+  "drive_folder_id": "1-lENYa3768x3cYSqCkQGwisyUm8CSqmT",
+  "artifacts": [
+    {
+      "file_name": "Book-Mobile-TwoCourses-0.1.5-dev-r3-Source.zip",
+      "drive_file_id": "1GJo85dpEhSb-H2Vmk8lQ-FCY1YRj8xSx",
+      "bytes": 30009097,
+      "sha256": "a4b8cc80afea99c7c4dfd3f3388838589136ad99fa4b1d564e060a40c42188e5",
+      "role": "candidate_source_and_available_data_not_complete_textbook",
+      "verification": "Uploaded; complete remote ZIP fetched back; byte count and SHA-256 matched.",
+      "entry": "Book-Mobile-TwoCourses-0.1.5-dev-r3-Source/DELIVERY_README_zh.md"
+    },
+    {
+      "file_name": "Book-TwoCourses-TextData-r3.zip",
+      "drive_file_id": "1NF9O0s2u2av4ZPLkLXj8JBsSSu-sXkit",
+      "bytes": 974131,
+      "sha256": "fd026415e24c67f97f8015d1b8efb47eb18456ad09c5c7db4b0bd31343cf64e4",
+      "role": "text_data_subset_without_images_or_runnable_app",
+      "verification": "Uploaded; complete remote ZIP fetched back; byte count and SHA-256 matched."
+    },
+    {
+      "file_name": "Book-TwoCourses-r3-进度与使用说明.md",
+      "drive_file_id": "1dwlJEO8b_DM1dEg-3esD70I36fRY5N_d",
+      "bytes": 11761,
+      "sha256": "50aac163386e8a5f54be6a07a5297c83f08f9fba50755325e32d0f76bb20d044",
+      "role": "human_readable_delivery_status",
+      "verification": "Local hash recorded; upload succeeded and readable remote content returned. No independent remote byte-hash claim."
+    }
+  ],
+  "courses": {
+    "partial_differential_equations": {
+      "title": "数学物理方程（第四版）",
+      "book_version_id": "mathematical_physics_equations_4e@bf3ed99d748bcf11",
+      "chapters": 7,
+      "numbered_sections": 33,
+      "reading_entries_including_introductions": 40,
+      "records": 3449,
+      "source_formula_segments": 6710,
+      "review_source_groups": 95,
+      "practice_source_groups": 194,
+      "practice_count_is_individual_question_count": false,
+      "figures_available": 20,
+      "figures_missing": 23,
+      "missing_figures_by_chapter": {"2": 1, "3": 3, "5": 10, "7": 9},
+      "source_records_changed": false,
+      "display_only_corrections_pending_mathematical_review": 26,
+      "full_content_complete": false
+    },
+    "jiang_sun_functional_analysis": {
+      "title": "泛函分析（第2版）",
+      "authors": ["江泽坚", "孙善利"],
+      "book_version_id": "functional_analysis_2e_jiang_sun@992508ce7cdd8ec2",
+      "chapters": 5,
+      "numbered_sections": 29,
+      "directory_entries_including_exercises_and_extras": 44,
+      "source_pages": 247,
+      "records_before": 158,
+      "records_after": 975,
+      "records_added": 817,
+      "source_formula_segments": 2300,
+      "transcribed_numbered_sections": ["ch01_s01", "ch01_s02", "ch01_s03", "ch01_s04", "ch01_s05", "ch01_s06", "ch01_s07", "ch01_s08", "ch01_s09"],
+      "transcribed_exercise_sections": ["ch01_exercises"],
+      "transcribed_chapter_one_questions": 30,
+      "remaining_numbered_sections": 20,
+      "chapter_one_pdf_pages": [8, 53],
+      "chapter_one_printed_pages": [1, 46],
+      "independent_transcription_review": "PENDING",
+      "full_content_complete": false,
+      "explicit_metadata_corrections": [
+        "r2 ch01_s03 contained 25 partial records but manifest reported zero; reconciled to actual completed transcription count.",
+        "PDF39 heading is starred section 8, F-空间; preserved original metadata bytes and recorded a separate display-title correction from F*-空间 plus section_starred."
+      ]
+    }
+  },
+  "learning_modes": {
+    "preview": "Source-backed outline, typed object links and complete inline/display formula directory for available transcribed content.",
+    "learn": "Ordered source text, definitions, theorems, proofs, examples, formulas, images and page/source identifiers; long content paginated without omission.",
+    "review": "Knowledge/proof/example and formula recall filters; retained proof continuations; local answer and self-assessment persistence.",
+    "practice": "Complete source question groups and continuations; direct links to 30 chapter-one FA questions; LaTeX answers; separately labeled optional hints and derived proofs."
+  },
+  "derived_learning_guidance": {
+    "count": 30,
+    "formula_segments": 432,
+    "origin": "AI-derived from chapter-one textbook material",
+    "textbook_official_answers": false,
+    "independent_review": "PENDING",
+    "source_layer_unchanged": true
+  },
+  "display": {
+    "math": "Preserved LaTeX with offline MathJax 3.2.1 SVG; headings, inline and display formulas supported.",
+    "font_preference": "ShuSong / 书宋",
+    "font_loading": "Attempt actual local FontFace load; otherwise accept user-owned local font import. Explicitly identify serif fallback when unavailable.",
+    "font_binaries_distributed": 0,
+    "font_size_px": {"min": 12, "max": 72, "step": 0.5},
+    "math_glyphs_forced_to_chinese_font": false,
+    "native_font_persistence_verified": false
+  },
+  "validation": {
+    "evidence_directory_in_source_zip": "verification/two_courses_r3/",
+    "python": {"passed": 487, "subtests_passed": 239, "warnings": 4},
+    "formula_syntax_svg_render": {"total": 9442, "passed": 9442, "source": 9010, "derived": 432, "mathematical_correctness_verified": false},
+    "chromium_inmemory": {"checks_passed": 25, "scope": "In-memory DOM and math with explicit FastAPI TestClient bridge; not network end-to-end or Android."},
+    "legacy_protected_files_unchanged": 217,
+    "original_pde_jsonl_records_identical": 2992,
+    "original_fa_geometry_metadata_identical": true,
+    "data_integrity": "PASS",
+    "require_complete_exit_code": 2,
+    "full_content": "INCOMPLETE",
+    "network_browser_navigation": "BLOCKED_BY_ADMINISTRATOR; policy unchanged; failure log retained",
+    "android_build": "NOT_RUN_THIS_REVISION",
+    "physical_device": "NOT_TESTED",
+    "apks_created": 0
+  },
+  "pending_sync": [
+    {
+      "item": "Import and independently review the archived reader implementation on an appropriate non-default implementation branch.",
+      "blocking": false,
+      "status": "PENDING",
+      "qualification": "Not blocking archive recovery or further source transcription; blocks any claim that this candidate is integrated into repository runtime/main."
+    }
+  ],
+  "next_data_entry": "jiang_sun_functional_analysis/ch02_s01",
+  "remaining_work": [
+    "Transcribe remaining 20 FA numbered sections, chapters 2-5 exercises, appendix and other supplementary entries from the provided source pages.",
+    "Independently proofread chapter-one text/formulas and all 30 clearly labeled derived reference solutions.",
+    "Obtain 23 missing PDE original figures from an authorized source; do not fabricate substitutes.",
+    "Complete source mathematical review and remaining source-grounded practice explanation layers.",
+    "Verify native font/settings persistence, real network browser behavior and Android build/ARM64 device behavior."
+  ],
+  "safety": {
+    "direct_main_writes": 0,
+    "pr_merges": 0,
+    "destructive_operations": 0,
+    "old_archives_preserved": true,
+    "legacy_study_record_schema_changed": false,
+    "notes_version_policy": "Existing notes retained under original content-version keys; no silent migration.",
+    "paid_model_calls": 0
+  }
+}
