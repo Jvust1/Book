@@ -1,3 +1,13 @@
+## 六本教材结构化数据完善 r2（2026-09-25）
+
+在 r1 已知错误修订之上新增 `book-six-textbooks-enhancement-20260925-r2`。本层覆盖六本中文教材，共 24,702 条记录 / 1,901 个 PDF 页映射；统一生成记录级/页级质量门、23,380 条检索索引和严格 QA 证据模式。它是 r1 的增量文本/质量层，不复制未变化的大批原图，不覆盖 source_text/source_record。
+
+《公共财政概论》新增 5 张高风险数值表逐格回原扫描页重录；连同 r1 的表13-1，共 6 张来源核验数值表。4 张具有明确比率关系的表完成 160 个派生比率复算，全部在教材显示精度舍入范围内。仍有 66 个未回源表格分片候选，明确保持 C_MACHINE_DRAFT / review required。
+
+《金融经济学十讲》在 26 个来源页上完成 42 条记录的定点视觉修正，针对“鞅/鞅测度/鞅性质”等系统 OCR 污染的残留热点已为 0；PDF219 的异常被正确判为 σ-域记号污染而非“鞅”错字。42 条只升级为 targeted-source-corrected，周边 OCR 未被冒充全文验收。
+
+Drive r2 ZIP=`1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG`，SHA-256=`0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983`；报告=`1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt`。恢复入口：`governance/structured_data_enhancement_r2_current.json`。本次不修改 main、不导入 Runtime、不替换 APK、不自动合并 PR #38。
+
 # Book 当前状态
 
 ## 结构化成果当前入口：book-results-sync-20260925

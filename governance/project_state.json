@@ -207,5 +207,32 @@
     "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json",
     "delivery_receipt_artifact_id": "book-structured-repair-delivery-receipt-20260924",
     "audit_artifact_id": "book-structured-audit-20260924"
+  },
+  "structured_data_enhancement_r2": {
+    "status": "DELIVERED_VERIFIED_REVIEW_PENDING",
+    "artifact_id": "book-six-textbooks-enhancement-20260925-r2",
+    "base_artifact_id": "book-structured-repair-20260924-r1",
+    "scope_books": 6,
+    "records": 24702,
+    "pdf_page_maps": 1901,
+    "search_index_records": 23380,
+    "public_finance_source_verified_numeric_tables": 6,
+    "public_finance_new_full_table_retranscriptions": 5,
+    "financial_economics_targeted_source_corrected_records": 42,
+    "financial_economics_source_evidence_pages": 26,
+    "financial_economics_martingale_variant_hotspots_remaining": 0,
+    "public_finance_unverified_table_part_candidates_remaining": 66,
+    "r2_validation": {
+      "passed": 58,
+      "failed": 0,
+      "package_manifest_files_verified": 2203
+    },
+    "drive_artifact_id": "1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG",
+    "drive_report_id": "1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt",
+    "all_books_independently_accepted": false,
+    "app_or_runtime_migrated": false,
+    "main_unchanged": true,
+    "checkpoint": "governance/structured_data_enhancement_r2_current.json",
+    "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance without weakening quality gates. Do not merge PR #38 without explicit authorization."
   }
 }

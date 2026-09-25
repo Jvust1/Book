@@ -1,3 +1,13 @@
+## Six-textbook structured-data r2 handoff — 2026-09-25
+
+For the six Chinese textbooks, the newest data overlay is `book-six-textbooks-enhancement-20260925-r2`, based on immutable r1. Read `governance/structured_data_enhancement_r2_current.json` first, then the r1 repair checkpoint. r2 preserves all r1 source_text/source_record identities and adds quality/search/QA gates rather than silently replacing raw provenance.
+
+Public Finance: five additional numeric tables were fully re-transcribed from source scans; together with r1 table 13-1 there are six source-verified numeric tables. Four ratio tables passed 160 arithmetic consistency comparisons. Sixty-six table-part candidates remain explicitly unverified, not confirmed errors.
+
+Financial Economics: 42 records across 26 source pages received bounded visual corrections. The martingale-variant OCR hotspot scan is now zero. Page 219 was adjudicated as sigma-field notation corruption, not a martingale substitution. Targeted corrections do not confer full-block OCR acceptance.
+
+Drive overlay ZIP ID `1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG`, SHA-256 `0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983`; report ID `1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt`. Keep PR #38 Draft/Open/Unmerged unless explicitly authorized to merge. No Runtime/App migration occurred.
+
 # Book Handoff
 
 ## Structured-data handoff: book-results-sync-20260925

@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-09-25",
   "project": {
     "repository": "Jvust1/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -136,6 +136,37 @@
       "status": "archived_delivery_receipt",
       "verification": "Existing Drive object reused; fresh remote bytes read back and SHA-256 matched.",
       "purpose": "Immutable original repair receipt with eight parts, source commits, old validation and transport provenance; not a new test run."
+    },
+    {
+      "artifact_id": "book-six-textbooks-enhancement-20260925-r2",
+      "file_name": "Book_六本教材结构化数据完善_r2_20260925.zip",
+      "type": "generated",
+      "version": "r2",
+      "source": "assistant_generated_source_verified_enhancement",
+      "drive_file_id": "1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG",
+      "drive_path": "Book/03_Exports/Book_六本教材结构化数据完善_r2_20260925.zip",
+      "size_bytes": 19275031,
+      "sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983",
+      "base_artifact_id": "book-structured-repair-20260924-r1",
+      "base_full_archive_sha256": "c7afb8e26078b635d78c78882cace9284e1cb839f0e4c6f9e5b84264a207c2ee",
+      "status": "active_review_candidate",
+      "overlay_requires_base_r1_image_assets": true,
+      "verification": "Drive bytes read back with matching SHA-256; ZIP CRC passed; extracted verify_r2.py checked 2,203 manifest-listed files with 0 failures.",
+      "purpose": "Six-Chinese-textbook r2 text/table/quality enhancement: five additional Public Finance source-retranscribed numeric tables, systematic targeted Financial Economics OCR corrections, unified quality/search/QA gates. Does not claim whole-book independent acceptance."
+    },
+    {
+      "artifact_id": "book-six-textbooks-enhancement-r2-report-20260925",
+      "file_name": "Book_六本教材结构化数据完善_r2_报告_20260925.md",
+      "type": "generated",
+      "version": "r2-report",
+      "source": "assistant_generated",
+      "drive_file_id": "1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt",
+      "drive_path": "Book/03_Exports/Book_六本教材结构化数据完善_r2_报告_20260925.md",
+      "size_bytes": 8730,
+      "sha256": "a20459065b722e6a97f21dc6ad196159e300f7a40f45b4719d8f83a51e4c736f",
+      "status": "active_report",
+      "verification": "Drive bytes read back with matching SHA-256.",
+      "purpose": "Detailed scope, quality tiers, Public Finance table verification, Financial Economics targeted corrections, validation and remaining review boundaries for r2."
     }
   ],
   "notes": [
@@ -143,5 +174,6 @@
     "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
     "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
   ],
-  "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json"
+  "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json",
+  "structured_data_enhancement_current": "governance/structured_data_enhancement_r2_current.json"
 }
