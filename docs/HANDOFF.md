@@ -1,4 +1,24 @@
+## Six-textbook structured-data r2 handoff — 2026-09-25
+
+For the six Chinese textbooks, the newest data overlay is `book-six-textbooks-enhancement-20260925-r2`, based on immutable r1. Read `governance/structured_data_enhancement_r2_current.json` first, then the r1 repair checkpoint. r2 preserves all r1 source_text/source_record identities and adds quality/search/QA gates rather than silently replacing raw provenance.
+
+Public Finance: five additional numeric tables were fully re-transcribed from source scans; together with r1 table 13-1 there are six source-verified numeric tables. Four ratio tables passed 160 arithmetic consistency comparisons. Sixty-six table-part candidates remain explicitly unverified, not confirmed errors.
+
+Financial Economics: 42 records across 26 source pages received bounded visual corrections. The martingale-variant OCR hotspot scan is now zero. Page 219 was adjudicated as sigma-field notation corruption, not a martingale substitution. Targeted corrections do not confer full-block OCR acceptance.
+
+Drive overlay ZIP ID `1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG`, SHA-256 `0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983`; report ID `1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt`. Keep PR #38 Draft/Open/Unmerged unless explicitly authorized to merge. No Runtime/App migration occurred.
+
 # Book Handoff
+
+## Structured-data handoff: book-results-sync-20260925
+
+For the seven-book audit/repair task, restore `fix/structured-data-audit-20260924` / Draft PR #38, then read `governance/structured_data_results_sync_20260925.json`. The immutable content checkpoint is `54b5ddc0eb5ba9cfaa370233a588614b86fd6c02`; subsequent sync metadata does not create a new textbook version or merge the branch.
+
+Read the original audit together with `governance/structured_data_repair_audit_closure_20260924.json`; do not reopen already repaired findings merely because the historical audit retains them. The artifact manifest now identifies the audit ZIP/report and the original repair delivery receipt. Complete images/data use the eight parts in the v3 manifest; the text core intentionally excludes images. The pinned GitHub correction-source ZIP is already contained in the repair packages and needs no duplicate upload.
+
+Current work is review of this data candidate and remaining source/math acceptance, not automatic App import. Public-finance remaining prose/tables, financial-economics remaining OCR and 110 draft derivations remain unaccepted where previously marked. Keep raw/correction/AI layers separate. Do not merge PR #38 without explicit authorization.
+
+The engineering narrative below remains a historical checkpoint; do not mistake its old H4a-next wording for the current data task. The observed integrated main is `2675d2cecab63b28b6ab81a4554e9b7f010afd72`; its machine state and separately maintained engineering branches remain authoritative and unchanged by this sync.
 
 Updated: 2026-08-29
 

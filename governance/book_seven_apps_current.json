@@ -1,0 +1,85 @@
+{
+  "schema": "book_seven_apps_checkpoint_v1",
+  "date": "2026-09-25",
+  "version": "1.0.0-rc1",
+  "status": "BINARIES_BUILT_INTEGRATION_PASS_DEVICE_ACCEPTANCE_PENDING",
+  "user_request": "直接拿来用放进软件，给我Book的最终手机app和电脑app",
+  "repository": "Jvust2/Book",
+  "data_baseline": "20260924 full repair plus 20260925 r2 enhancement; immutable sources not rewritten",
+  "content": {
+    "books": 7,
+    "canonical_records": 26195,
+    "page_mappings": 2343,
+    "unique_images": 1153,
+    "supplemental_formula_records": 253,
+    "structured_tables": 69,
+    "golden_chinese_learning_batches": 43,
+    "bundle_sha256": "b3f7303c51a6d40ee334fa5b8d37ec57be0ea383c3ef7a2fac813084dfbbada5"
+  },
+  "features": ["preview/learn/review/practice", "offline MathJax SVG", "formula and table ledgers", "cross-record exercise context", "notes/bookmarks/answers/self-assessment", "12–72px reading", "native personal state", "non-destructive backup merge", "on-demand raw provenance"],
+  "android": {
+    "file_name": "Book-1.0.0-rc1-Android.apk",
+    "bytes": 226467398,
+    "sha256": "32cc203885f63089e038aedb3b0eae277a0f9e1bdca38242963bf29f4691fbe8",
+    "app_id": "com.jvust.book.r7x",
+    "version_code": 10001,
+    "min_api": 24,
+    "target_api": 35,
+    "abis": ["arm64-v8a", "x86_64"],
+    "build_method": "ARCHIVED_R6_SHELL_RESOURCE_REPACK_NOT_CLEAN_GRADLE",
+    "old_apk_drive_id": "1lQv8fhx3JIvxy4v8WnHdJUYDImsEMY-Z",
+    "old_apk_sha256": "012527c4d3e1d24ce3560394f44ededfd046e25f0d63356aaa844926543a8208",
+    "signing_certificate_sha256": "3538143d52348a6f818fe95b19e8ecf101bcf15944c370547ea088a834192c72",
+    "signature": "APK_V2_RSA2048_VERIFIED",
+    "managed_release_signing_key": false,
+    "private_key_in_source_or_drive": false,
+    "native_device_tested": false,
+    "old_app_replaced": false
+  },
+  "windows": {
+    "file_name": "Book-1.0.0-rc1-Windows-x64.exe",
+    "bytes": 194614272,
+    "sha256": "9eb2fed58bf4db5a17f78eb6e86713f59eb873e31a95d231ba67b0c39b826ec1",
+    "format": "PE32+ x64 GUI",
+    "implementation": "Go standard-library loopback service plus installed Microsoft Edge app window",
+    "authenticode_signed": false,
+    "native_windows_tested": false,
+    "same_code_final_linux_backend_tested": true
+  },
+  "source": {
+    "full_archive": "Book-1.0.0-rc1-Source-and-Tests.zip",
+    "bytes": 189813426,
+    "sha256": "71fbcd414aa9a651ad8401ef36d77660b446867406c6526512475a1202bcf169",
+    "full_archive_drive_status": "UPLOAD_FAILED_CHAT_ATTACHMENT_AVAILABLE",
+    "code_core_archive": "Book-1.0.0-rc1-Code-Core.zip",
+    "code_core_bytes": 1562662,
+    "code_core_sha256": "00cb95738fce0a0394b49ccee4837a56768779b4783243a81f6e7506229ee7cd",
+    "code_core_drive_id": "1pELl_qfZCR-_arO-BqFxCLZQmKObROGz",
+    "code_core_is_complete_app": false,
+    "restore": "Read CODE_CORE_README.md. Restore canonical data from structured_data_repair_current.json and structured_data_enhancement_r2_current.json, and archived r6 source Drive 1UiVow02Huh3r8qKBH8v4bL3D9OfkQ8_R. Run prepare_corpus.py then pack_web.py. Existing original sources are preserved."
+  },
+  "verification": {
+    "application_checks": {"passed": 77, "failed": 0},
+    "final_package_checks": {"passed": 16, "failed": 0},
+    "r2_archive_file_hash_checks": {"passed": 2203, "failed": 0},
+    "android_windows_content_match": true,
+    "content_file_byte_comparisons": 1177,
+    "apk_signature_digest_crc_dex_checks": "PASS",
+    "personal_state_restart": "PASS_ON_FINAL_GO_LINUX_BINARY",
+    "ui_method": "Chromium DOM plus live HTTP backend bridge; managed browser loopback policy not modified",
+    "native_picker_tested": false,
+    "report_drive_id": "1RyZoqLSFqilZBFEkBYs821u_Vk7vFn1C"
+  },
+  "archive": {
+    "folder_id": "1w4ixWohXgqFO239BccBAtqLuZzxHKKmR",
+    "status": "PARTIAL_CODE_CORE_AND_DOCS_ARCHIVED_LARGE_FILES_PENDING",
+    "guide_drive_id": "13dNIuQnREkQ54MKDdvEF_eFsa9uOfW_Q",
+    "failure": "Native upload could not register local file reference; Drive Library uploads and one retry failed for APK, EXE and full source ZIP. Small code core and docs uploaded and list/readback metadata verified. Do not claim binaries are on Drive."
+  },
+  "pending_sync": [
+    {"item": "APK, EXE and complete source archive", "status": "PENDING_LARGE_FILE_ARCHIVE", "blocking": true, "scope": "Archive-complete release gate and disaster recovery; not current attached app usage", "action": "Reuse exact byte/hash identities, do not regenerate or upload duplicate successfully archived small artifacts"}
+  ],
+  "remaining_gates": ["Android real-device install/start/read/store/file-picker tests", "Windows real-host Edge window and storage tests", "managed signing identity before promising in-place future updates", "remaining textbook source/table/math independent acceptance"],
+  "limitations": ["not clean Gradle build", "not device-certified final production release", "no automatic cloud synchronization", "no automatic legacy personal-data migration", "no bundled font binaries", "English Golden is structured index plus archived Chinese learning layer, not new literal English full-text transcription"],
+  "safety": {"main_writes": 0, "pr_merges": 0, "old_artifacts_overwritten": 0, "personal_data_bundled": false}
+}

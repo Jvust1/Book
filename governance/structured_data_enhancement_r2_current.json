@@ -1,0 +1,101 @@
+{
+  "schema_version": "book_structured_data_enhancement_v2",
+  "artifact_id": "book-six-textbooks-enhancement-20260925-r2",
+  "date": "2026-09-25",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "base_r1": {
+    "artifact_id": "book-structured-repair-20260924-r1",
+    "full_archive_sha256": "c7afb8e26078b635d78c78882cace9284e1cb839f0e4c6f9e5b84264a207c2ee",
+    "image_assets_reused": true,
+    "source_identity_preserved": true
+  },
+  "scope": {
+    "books": 6,
+    "records": 24702,
+    "pdf_page_maps": 1901,
+    "search_rows": 23380,
+    "source_verified_assertion_records": 12
+  },
+  "public_finance": {
+    "source_verified_numeric_tables": [
+      "table_3_3",
+      "table_4_1",
+      "table_9_2",
+      "table_10_2",
+      "table_10_3",
+      "table_13_1"
+    ],
+    "new_full_table_source_retranscriptions": 5,
+    "arithmetic_consistency_comparisons": 160,
+    "arithmetic_consistency_status": "PASS_WITHIN_DISPLAYED_ROUNDING_PRECISION",
+    "remaining_unverified_table_part_candidates": 66,
+    "remaining_candidate_status": "CANDIDATE_NOT_CONFIRMED_ERROR"
+  },
+  "financial_economics": {
+    "targeted_source_corrected_records": 42,
+    "source_evidence_pages": 26,
+    "martingale_variant_hotspots_remaining": 0,
+    "sigma_field_false_positive_adjudicated_pdf_page": 219,
+    "whole_book_character_level_acceptance": false
+  },
+  "quality": {
+    "tiers": [
+      "A_SOURCE_VERIFIED",
+      "B_SOURCE_GROUNDED",
+      "B_STRUCTURED_REVIEWED",
+      "B_TARGETED_SOURCE_CORRECTED",
+      "C_MACHINE_DRAFT",
+      "D_METADATA_OR_INDEX"
+    ],
+    "search_index": "search/six_books_search_index.jsonl",
+    "record_quality": "quality/six_books_record_quality.jsonl",
+    "remaining_hotspots": "quality/remaining_hotspots.jsonl",
+    "qa_source_verified_assertions": "qa/six_books_source_verified_assertions.jsonl"
+  },
+  "validation": {
+    "r2_checks": {
+      "passed": 58,
+      "failed": 0
+    },
+    "extracted_manifest_files_checked": 2203,
+    "extracted_manifest_files_failed": 0,
+    "drive_readback_sha256_match": true,
+    "math_or_app_tests_rerun": false,
+    "whole_book_independent_acceptance": false
+  },
+  "delivery": {
+    "overlay_zip": {
+      "drive_file_id": "1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG",
+      "file_name": "Book_六本教材结构化数据完善_r2_20260925.zip",
+      "size_bytes": 19275031,
+      "sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983"
+    },
+    "report": {
+      "drive_file_id": "1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt",
+      "file_name": "Book_六本教材结构化数据完善_r2_报告_20260925.md",
+      "size_bytes": 8730,
+      "sha256": "a20459065b722e6a97f21dc6ad196159e300f7a40f45b4719d8f83a51e4c736f"
+    }
+  },
+  "safety": {
+    "main_writes": 0,
+    "pr_merges": 0,
+    "deletions": 0,
+    "force_pushes": 0,
+    "app_replacements": 0
+  },
+  "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance; preserve quality gates and r1 provenance.",
+  "sync": {
+    "status": "SYNCED_CURRENT",
+    "drive_receipt_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
+    "drive_receipt_sha256": "86b8b43bf30b31631175f386279c8f55201ddf1369366adda991a44ae46a1533",
+    "drive_current_doc_id": "1S3xZNiViiVLh2B9Zf1BgzjmiQ8UBaYScscSh_A-XwQM",
+    "drive_current_doc_revision": "ANLCKQkfchAM_6RHEiDtFYZICreHpkKEsji33qMIXhmVxXUHi2xBs9nBpO7jtp7LYOEkxYhSrIYMhqQIVfNoTm9FT9fsW5yEIx_9o25xDDY",
+    "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json",
+    "r2_zip_reuploaded": false,
+    "r2_report_reuploaded": false,
+    "main_writes": 0,
+    "pr_merges": 0
+  }
+}

@@ -1,4 +1,24 @@
+## 六本教材结构化数据完善 r2（2026-09-25）
+
+在 r1 已知错误修订之上新增 `book-six-textbooks-enhancement-20260925-r2`。本层覆盖六本中文教材，共 24,702 条记录 / 1,901 个 PDF 页映射；统一生成记录级/页级质量门、23,380 条检索索引和严格 QA 证据模式。它是 r1 的增量文本/质量层，不复制未变化的大批原图，不覆盖 source_text/source_record。
+
+《公共财政概论》新增 5 张高风险数值表逐格回原扫描页重录；连同 r1 的表13-1，共 6 张来源核验数值表。4 张具有明确比率关系的表完成 160 个派生比率复算，全部在教材显示精度舍入范围内。仍有 66 个未回源表格分片候选，明确保持 C_MACHINE_DRAFT / review required。
+
+《金融经济学十讲》在 26 个来源页上完成 42 条记录的定点视觉修正，针对“鞅/鞅测度/鞅性质”等系统 OCR 污染的残留热点已为 0；PDF219 的异常被正确判为 σ-域记号污染而非“鞅”错字。42 条只升级为 targeted-source-corrected，周边 OCR 未被冒充全文验收。
+
+Drive r2 ZIP=`1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG`，SHA-256=`0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983`；报告=`1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt`。恢复入口：`governance/structured_data_enhancement_r2_current.json`。本次不修改 main、不导入 Runtime、不替换 APK、不自动合并 PR #38。
+
 # Book 当前状态
+
+## 结构化成果当前入口：book-results-sync-20260925
+
+本节是独立数据线的恢复入口，不表示已合并到 main。仓库为 `Jvust2/Book`；修订分支 `fix/structured-data-audit-20260924`，PR #38 保持 Draft / Open / Unmerged。数据修订身份为 `book-structured-repair-20260924-r1`，内容检查点提交为 `54b5ddc0eb5ba9cfaa370233a588614b86fd6c02`。
+
+先读 `governance/structured_data_results_sync_20260925.json`，再读 `governance/structured_data_repair_current.json` 和 `docs/STRUCTURED_DATA_REPAIR_20260924.md`。审计原包、原审计报告和修订交付回执均已登记在 artifact_manifest；完整修订包继续复用 Drive 的八个分片及 v3 清单，禁止重复上传或改写旧证据。
+
+已知错误修订与全文独立验收分开：7 本教材、26,195 条记录、2,343 条页映射属于已交付数据范围；公共财政其他正文/表格、金融经济学其余 OCR、110 份参考推导及数学全书论证仍有独立验收工作。此次同步未重新执行数学/应用测试、未替换 APK、未迁移 Runtime。
+
+下方工程叙述保留原历史日期，不作为本数据线下一步；工程阶段以当前 GitHub 机器状态及各自分支为准。本同步观察到 main 为 `2675d2cecab63b28b6ab81a4554e9b7f010afd72`，未修改 main 或其他开发分支。
 
 更新时间：2026-08-29
 

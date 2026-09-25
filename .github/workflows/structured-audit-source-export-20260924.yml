@@ -1,0 +1,91 @@
+name: Book pinned audit source export
+on:
+  push:
+    branches: [fix/structured-data-audit-20260924]
+    paths: ['.github/workflows/structured-audit-source-export-20260924.yml']
+permissions:
+  contents: read
+concurrency:
+  group: book-audit-source-export-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  export:
+    if: github.repository == 'Jvust2/Book'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: 2675d2cecab63b28b6ab81a4554e9b7f010afd72
+          path: pinned/main
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ad5492be8fcddc430d7e8f402a109cebc299147b
+          path: pinned/mf
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: 3942be608147427c63701688305fa499f6062481
+          path: pinned/cce
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: b0acf685c191e730e4dd8cc555e22aae21efc6f3
+          path: pinned/fe
+          persist-credentials: false
+      - name: Export allowlisted tracked text without executing project code
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, zipfile
+          roots = {
+            'main': ('2675d2cecab63b28b6ab81a4554e9b7f010afd72', ('AGENTS.md', 'SECURITY_POLICY.md', 'docs/', 'governance/')),
+            'mf': ('ad5492be8fcddc430d7e8f402a109cebc299147b', ('books/monetary-finance-3e/', 'governance/monetary_finance')),
+            'cce': ('3942be608147427c63701688305fa499f6062481', ('books/contemporary-china-economy/', 'governance/economics')),
+            'fe': ('b0acf685c191e730e4dd8cc555e22aae21efc6f3', ('books/financial-economics-ten-lectures/', 'governance/financial_economics')),
+          }
+          output = pathlib.Path(os.environ['RUNNER_TEMP']) / 'book-audit-fixed-inputs'
+          output.mkdir(exist_ok=False)
+          archive = output / 'Book-GitHub-Pinned-Correction-Sources-20260924.zip'
+          inventory = []
+          with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+            for alias, (sha, prefixes) in roots.items():
+              repo = pathlib.Path('pinned') / alias
+              def git(*args):
+                return subprocess.check_output(['git', '-C', str(repo), *args])
+              assert git('rev-parse', 'HEAD').decode().strip() == sha
+              for entry in sorted(git('ls-tree', '-rz', 'HEAD').split(b'\0')):
+                if not entry:
+                  continue
+                meta, path_bytes = entry.split(b'\t', 1)
+                mode, kind, blob = meta.decode().split()
+                path = path_bytes.decode('utf-8')
+                if not path.startswith(prefixes) or pathlib.PurePosixPath(path).suffix not in {'.md', '.json', '.jsonl', '.txt'}:
+                  continue
+                if mode != '100644' or kind != 'blob' or '..' in pathlib.PurePosixPath(path).parts:
+                  raise ValueError('Unsupported tracked file identity: ' + path)
+                data = git('show', sha + ':' + path)
+                if len(data) > 4_000_000:
+                  raise ValueError('Unexpectedly large text: ' + path)
+                data.decode('utf-8')
+                name = alias + '/' + path
+                zi = zipfile.ZipInfo(name, date_time=(2026,9,24,0,0,0))
+                zi.compress_type = zipfile.ZIP_DEFLATED
+                zi.external_attr = 0o100644 << 16
+                z.writestr(zi, data)
+                inventory.append({'path': name, 'source_commit': sha, 'git_blob_sha': blob, 'sha256': hashlib.sha256(data).hexdigest(), 'size_bytes': len(data)})
+            zi = zipfile.ZipInfo('source_inventory.json', date_time=(2026,9,24,0,0,0))
+            zi.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(zi, json.dumps({'repository':'Jvust2/Book','files':inventory}, ensure_ascii=False, indent=2).encode('utf-8') + b'\n')
+          (output / 'SHA256SUMS.txt').write_text(hashlib.sha256(archive.read_bytes()).hexdigest() + '  ' + archive.name + '\n')
+          print('Exported', len(inventory), 'fixed-source text files; no source mutations, no credentials, no font files.')
+          PY
+      - name: Temporary private repository transport
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: book-audit-pinned-sources-${{ github.sha }}
+          path: ${{ runner.temp }}/book-audit-fixed-inputs/
+          if-no-files-found: error
+          retention-days: 3
