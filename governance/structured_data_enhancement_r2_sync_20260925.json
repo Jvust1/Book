@@ -1,0 +1,61 @@
+{
+  "schema_version": "book_structured_data_enhancement_sync_v1",
+  "sync_id": "book-six-textbooks-r2-sync-20260925",
+  "artifact_id": "book-six-textbooks-enhancement-20260925-r2",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "pr_number": 38,
+  "parent_head": "0f8c5727798c4793be8a96b2aae91d8451c0be75",
+  "status": "SYNCED_CURRENT",
+  "drive": {
+    "folder_id": "1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+    "overlay_zip": {
+      "file_id": "1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG",
+      "size_bytes": 19275031,
+      "sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983",
+      "classification": "SKIP_IDENTICAL_EXISTING"
+    },
+    "report": {
+      "file_id": "1GrX4UWAchfjdFt6nB2FeR0lVzAG5cxTt",
+      "size_bytes": 8730,
+      "sha256": "a20459065b722e6a97f21dc6ad196159e300f7a40f45b4719d8f83a51e4c736f",
+      "classification": "SKIP_IDENTICAL_EXISTING"
+    },
+    "receipt": {
+      "file_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
+      "size_bytes": 3341,
+      "sha256": "86b8b43bf30b31631175f386279c8f55201ddf1369366adda991a44ae46a1533",
+      "classification": "NEW",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    "current_doc": {
+      "file_id": "1S3xZNiViiVLh2B9Zf1BgzjmiQ8UBaYScscSh_A-XwQM",
+      "revision_after_update": "ANLCKQkfchAM_6RHEiDtFYZICreHpkKEsji33qMIXhmVxXUHi2xBs9nBpO7jtp7LYOEkxYhSrIYMhqQIVfNoTm9FT9fsW5yEIx_9o25xDDY",
+      "classification": "CHANGED_IN_PLACE",
+      "r2_entry_verified": true
+    }
+  },
+  "r2_validation": {
+    "checks_passed": 58,
+    "checks_failed": 0,
+    "package_manifest_files_checked": 2203,
+    "package_manifest_files_failed": 0
+  },
+  "content_boundary": {
+    "books": 6,
+    "records": 24702,
+    "pdf_page_maps": 1901,
+    "search_index_records": 23380,
+    "public_finance_remaining_unverified_table_part_candidates": 66,
+    "all_books_independently_accepted": false
+  },
+  "safety": {
+    "main_writes": 0,
+    "pr_merges": 0,
+    "deletions": 0,
+    "force_pushes": 0,
+    "runtime_or_app_migrations": 0,
+    "apk_replacements": 0
+  },
+  "next_step": "Continue source review of the remaining Public Finance table candidates and independent math/full-text acceptance. Do not merge PR #38 without explicit authorization."
+}

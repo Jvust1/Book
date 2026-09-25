@@ -85,5 +85,17 @@
     "force_pushes": 0,
     "app_replacements": 0
   },
-  "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance; preserve quality gates and r1 provenance."
+  "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance; preserve quality gates and r1 provenance.",
+  "sync": {
+    "status": "SYNCED_CURRENT",
+    "drive_receipt_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
+    "drive_receipt_sha256": "86b8b43bf30b31631175f386279c8f55201ddf1369366adda991a44ae46a1533",
+    "drive_current_doc_id": "1S3xZNiViiVLh2B9Zf1BgzjmiQ8UBaYScscSh_A-XwQM",
+    "drive_current_doc_revision": "ANLCKQkfchAM_6RHEiDtFYZICreHpkKEsji33qMIXhmVxXUHi2xBs9nBpO7jtp7LYOEkxYhSrIYMhqQIVfNoTm9FT9fsW5yEIx_9o25xDDY",
+    "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json",
+    "r2_zip_reuploaded": false,
+    "r2_report_reuploaded": false,
+    "main_writes": 0,
+    "pr_merges": 0
+  }
 }

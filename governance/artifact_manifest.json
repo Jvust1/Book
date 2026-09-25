@@ -167,6 +167,20 @@
       "status": "active_report",
       "verification": "Drive bytes read back with matching SHA-256.",
       "purpose": "Detailed scope, quality tiers, Public Finance table verification, Financial Economics targeted corrections, validation and remaining review boundaries for r2."
+    },
+    {
+      "artifact_id": "book-six-textbooks-r2-sync-receipt-20260925",
+      "file_name": "Book_六本教材r2_同步回执_20260925.json",
+      "type": "generated",
+      "version": "r2-sync-receipt",
+      "source": "assistant_generated",
+      "drive_file_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
+      "drive_path": "Book/03_Exports/Book_六本教材r2_同步回执_20260925.json",
+      "size_bytes": 3341,
+      "sha256": "86b8b43bf30b31631175f386279c8f55201ddf1369366adda991a44ae46a1533",
+      "status": "active_sync_receipt",
+      "verification": "Drive bytes read back and SHA-256 matched after upload.",
+      "purpose": "Final r2 synchronization receipt: confirms reuse of existing r2 ZIP/report, current Drive status update, safety counts, and remaining acceptance boundaries."
     }
   ],
   "notes": [
@@ -175,5 +189,6 @@
     "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
   ],
   "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json",
-  "structured_data_enhancement_current": "governance/structured_data_enhancement_r2_current.json"
+  "structured_data_enhancement_current": "governance/structured_data_enhancement_r2_current.json",
+  "structured_data_enhancement_r2_sync": "governance/structured_data_enhancement_r2_sync_20260925.json"
 }

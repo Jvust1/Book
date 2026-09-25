@@ -233,6 +233,9 @@
     "app_or_runtime_migrated": false,
     "main_unchanged": true,
     "checkpoint": "governance/structured_data_enhancement_r2_current.json",
-    "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance without weakening quality gates. Do not merge PR #38 without explicit authorization."
+    "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance without weakening quality gates. Do not merge PR #38 without explicit authorization.",
+    "sync_status": "SYNCED_CURRENT",
+    "sync_receipt_drive_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
+    "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json"
   }
 }
