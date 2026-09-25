@@ -1,0 +1,81 @@
+{
+  "schema_version": "book_source_candidate_v2",
+  "date": "2026-09-21",
+  "candidate": "mobile-two-courses-0.1.5-dev-r2",
+  "status": "CONTENT_TRANSCRIPTION_IN_PROGRESS",
+  "repository": "Jvust2/Book",
+  "branch": "feature/mobile-two-courses-content-r2-20260921",
+  "base_checkpoint_commit": "f8ba02e03594718278036d43dc4929e923f17333",
+  "recovery_source": {
+    "name": "Book-Mobile-TwoCourses-0.1.5-dev-r1-Source.zip",
+    "drive_file_id": "1LeVVIqmMpYT1X2nXKgYMztL-f8f74pAY",
+    "sha256": "4443b513e700875c5799dac7c12edcc94c084b9bf0e7d9104128a8840e69ac46",
+    "immutable_history": true
+  },
+  "functional_analysis": {
+    "source_pages_present": 247,
+    "chapters": 5,
+    "numbered_sections": 29,
+    "transcribed_sections": [
+      "ch01_s01",
+      "ch01_s02",
+      "ch01_s03",
+      "ch01_s04"
+    ],
+    "remaining_numbered_sections": 25,
+    "generated_records": 333,
+    "review_source_groups": 34,
+    "practice_source_groups": 0,
+    "newly_transcribed": [
+      {
+        "id": "ch01_s03",
+        "title": "距离空间，距离线性空间",
+        "source_pages": [
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "sha256": "cae28243da9cccca3e5716f176fa694814086b7ac8ab44d5365519bb7f806afb",
+        "status": "visual_transcription_pending_independent_review"
+      },
+      {
+        "id": "ch01_s04",
+        "title": "距离空间中的拓扑，可分空间",
+        "source_pages": [
+          19,
+          20,
+          21
+        ],
+        "sha256": "e60accd94852fd08228d995fa4bb1b5342a01c380db906e45c32212a3347f0c0",
+        "status": "visual_transcription_pending_independent_review"
+      }
+    ],
+    "independent_proofreading_complete": false
+  },
+  "partial_differential_equations": {
+    "chapters": 7,
+    "numbered_sections": 33,
+    "normalized_records": 3449,
+    "review_source_groups": 95,
+    "practice_source_groups": 194,
+    "original_images_missing": 23,
+    "presentation_corrections_not_independently_verified": 26
+  },
+  "validation": {
+    "python_tests": "480 passed; 239 subtests passed",
+    "reader_tests": "20 passed",
+    "chromium_inmemory": "21 checks PASS",
+    "javascript_syntax": "PASS",
+    "integrity_gate": "PASS",
+    "complete_content_gate": "EXPECTED_REJECTION_EXIT_2",
+    "live_browser_e2e": "NOT_RUN_IN_THIS_CHECKPOINT",
+    "android_build": "NOT_RUN_IN_THIS_CHECKPOINT",
+    "physical_phone": "NOT_RUN"
+  },
+  "release_gate": "CLOSED_INCOMPLETE_CONTENT_AND_ANDROID_ACCEPTANCE",
+  "next_step": "Continue source-grounded transcription with ch01_s05 (完备的距离空间) and keep independent proofreading of ch01_s01–ch01_s04 open."
+}
