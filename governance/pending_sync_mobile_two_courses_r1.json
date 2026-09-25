@@ -1,0 +1,27 @@
+{
+  "schema_version": "book_candidate_pending_v1",
+  "candidate": "mobile-two-courses-0.1.5-dev-r1",
+  "source_archive_persistent": true,
+  "items": [
+    {
+      "id": "application_source_git_integration",
+      "status": "PENDING",
+      "blocking_for_release": true,
+      "blocking_for_source_transcription": false,
+      "reason": "This Git change is a recovery checkpoint, not the application implementation. The full tested candidate code/data are archived at the recorded Drive ID and hash.",
+      "next_action": "Restore the verified candidate, review the actual application diff, and publish on a non-default implementation branch without replacing unrelated current files."
+    },
+    {
+      "id": "fa_text_and_pde_original_images",
+      "status": "PENDING_CONTENT",
+      "blocking_for_complete_release": true,
+      "reason": "FA has 27 numbered sections plus exercises awaiting transcription; PDE has 23 absent original images and formulas needing independent source review."
+    },
+    {
+      "id": "android_build_and_device_acceptance",
+      "status": "BLOCKED_ENVIRONMENT",
+      "blocking_for_release": true,
+      "reason": "npm/Gradle dependency DNS failed; no Android SDK/physical device was available. Prior APK evidence cannot validate this source."
+    }
+  ]
+}
