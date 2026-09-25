@@ -94,11 +94,54 @@
       "text_core_sha256": "e58224ae333228d29e89c88bb84279d3db780060b9f97f699d905804dbef729f",
       "report_drive_id": "104GQ0TMB914FM9-URbHEdSZvrQNxeVNX",
       "purpose": "Corrected seven-book reading data with preserved raw provenance, original images, targeted mathematical proofs and reproducible validation. Not whole-book independent acceptance or an App release."
+    },
+    {
+      "artifact_id": "book-structured-audit-20260924",
+      "file_name": "Book_结构化数据审计_20260924.zip",
+      "type": "generated",
+      "version": "audit-r1",
+      "source": "assistant_generated_read_only_audit",
+      "drive_file_id": "1fUWgAG4Y0M3xbi4GBkyyxr2WRZ2Tkuxq",
+      "drive_path": "Book/03_Exports/Book_结构化数据审计_20260924.zip",
+      "size_bytes": 802290,
+      "sha256": "475bdc71c392dd28d3fe2074bca18bdea580dba7b7f1c47f60a4aca6acdf83f4",
+      "status": "archived_audit_evidence",
+      "verification": "Fresh remote bytes read back and SHA-256 matched during book-results-sync-20260925.",
+      "purpose": "Original pre-repair audit, issue list, scripts and source evidence; retain historical findings, read repair closure for current status."
+    },
+    {
+      "artifact_id": "book-structured-audit-report-20260924",
+      "file_name": "Book_结构化数据审计报告_20260924.md",
+      "type": "generated",
+      "version": "audit-r1",
+      "source": "assistant_generated_read_only_audit",
+      "drive_file_id": "1d4qgfVLL-P8ITNsnCI0A4tjMaxjlUdzg",
+      "drive_path": "Book/03_Exports/Book_结构化数据审计报告_20260924.md",
+      "size_bytes": 20864,
+      "sha256": "4c11f8715ebf79dcec314e0fb5aa6f4e037bcb0b4a347f374cfba2b866d70e51",
+      "status": "archived_audit_evidence",
+      "verification": "Fresh remote bytes read back and SHA-256 matched during book-results-sync-20260925.",
+      "purpose": "Readable original audit report; also included in the audit ZIP."
+    },
+    {
+      "artifact_id": "book-structured-repair-delivery-receipt-20260924",
+      "file_name": "Book_结构化数据修订_交付回执_20260924.json",
+      "type": "generated",
+      "version": "repair-r1-receipt",
+      "source": "assistant_generated",
+      "drive_file_id": "18VSE_zkYvSEykmoiubg9LDu0N4YME89G",
+      "drive_path": "Book/03_Exports/Book_结构化数据修订_交付回执_20260924.json",
+      "size_bytes": 11889,
+      "sha256": "b2036888f86708b6cf57254e44cfdef119ae6cf0e27f3d111b7042062bb7abbe",
+      "status": "archived_delivery_receipt",
+      "verification": "Existing Drive object reused; fresh remote bytes read back and SHA-256 matched.",
+      "purpose": "Immutable original repair receipt with eight parts, source commits, old validation and transport provenance; not a new test run."
     }
   ],
   "notes": [
     "This initial manifest deliberately lists only artifacts/areas directly reconciled during the 2026-08-28 governance checkpoint.",
     "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
     "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
-  ]
+  ],
+  "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json"
 }

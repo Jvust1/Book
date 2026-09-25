@@ -1,5 +1,15 @@
 # Book Handoff
 
+## Structured-data handoff: book-results-sync-20260925
+
+For the seven-book audit/repair task, restore `fix/structured-data-audit-20260924` / Draft PR #38, then read `governance/structured_data_results_sync_20260925.json`. The immutable content checkpoint is `54b5ddc0eb5ba9cfaa370233a588614b86fd6c02`; subsequent sync metadata does not create a new textbook version or merge the branch.
+
+Read the original audit together with `governance/structured_data_repair_audit_closure_20260924.json`; do not reopen already repaired findings merely because the historical audit retains them. The artifact manifest now identifies the audit ZIP/report and the original repair delivery receipt. Complete images/data use the eight parts in the v3 manifest; the text core intentionally excludes images. The pinned GitHub correction-source ZIP is already contained in the repair packages and needs no duplicate upload.
+
+Current work is review of this data candidate and remaining source/math acceptance, not automatic App import. Public-finance remaining prose/tables, financial-economics remaining OCR and 110 draft derivations remain unaccepted where previously marked. Keep raw/correction/AI layers separate. Do not merge PR #38 without explicit authorization.
+
+The engineering narrative below remains a historical checkpoint; do not mistake its old H4a-next wording for the current data task. The observed integrated main is `2675d2cecab63b28b6ab81a4554e9b7f010afd72`; its machine state and separately maintained engineering branches remain authoritative and unchanged by this sync.
+
 Updated: 2026-08-29
 
 ## Start here

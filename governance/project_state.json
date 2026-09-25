@@ -203,6 +203,9 @@
     "engineering_phase_unchanged": true,
     "main_and_existing_data_branches_unchanged": true,
     "all_books_independently_accepted": false,
-    "next_step": "Review the archived repair view; follow the checkpoint for remaining content-review debt. No automatic PR merge or App migration."
+    "next_step": "Review the archived repair view; follow the checkpoint for remaining content-review debt. No automatic PR merge or App migration.",
+    "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json",
+    "delivery_receipt_artifact_id": "book-structured-repair-delivery-receipt-20260924",
+    "audit_artifact_id": "book-structured-audit-20260924"
   }
 }

@@ -1,5 +1,15 @@
 # Book 当前状态
 
+## 结构化成果当前入口：book-results-sync-20260925
+
+本节是独立数据线的恢复入口，不表示已合并到 main。仓库为 `Jvust2/Book`；修订分支 `fix/structured-data-audit-20260924`，PR #38 保持 Draft / Open / Unmerged。数据修订身份为 `book-structured-repair-20260924-r1`，内容检查点提交为 `54b5ddc0eb5ba9cfaa370233a588614b86fd6c02`。
+
+先读 `governance/structured_data_results_sync_20260925.json`，再读 `governance/structured_data_repair_current.json` 和 `docs/STRUCTURED_DATA_REPAIR_20260924.md`。审计原包、原审计报告和修订交付回执均已登记在 artifact_manifest；完整修订包继续复用 Drive 的八个分片及 v3 清单，禁止重复上传或改写旧证据。
+
+已知错误修订与全文独立验收分开：7 本教材、26,195 条记录、2,343 条页映射属于已交付数据范围；公共财政其他正文/表格、金融经济学其余 OCR、110 份参考推导及数学全书论证仍有独立验收工作。此次同步未重新执行数学/应用测试、未替换 APK、未迁移 Runtime。
+
+下方工程叙述保留原历史日期，不作为本数据线下一步；工程阶段以当前 GitHub 机器状态及各自分支为准。本同步观察到 main 为 `2675d2cecab63b28b6ab81a4554e9b7f010afd72`，未修改 main 或其他开发分支。
+
 更新时间：2026-08-29
 
 > 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 与 H0/H1/H2/H3a 均已通过独立 PR 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。

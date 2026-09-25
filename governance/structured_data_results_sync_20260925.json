@@ -1,0 +1,201 @@
+{
+  "schema_version": "book_artifact_reconciliation_v1",
+  "sync_id": "book-results-sync-20260925",
+  "date_basis": "2026-09-25 UTC; 20260924 remains the original content batch identity.",
+  "repository": "Jvust2/Book",
+  "scope": "This conversation: seven-book structured audit, repair and delivery evidence. No unrelated projects or historical branches merged.",
+  "branch": "fix/structured-data-audit-20260924",
+  "pr_number": 38,
+  "base_commit": "54b5ddc0eb5ba9cfaa370233a588614b86fd6c02",
+  "observed_main_commit": "2675d2cecab63b28b6ab81a4554e9b7f010afd72",
+  "artifact_id": "book-structured-repair-20260924-r1",
+  "artifact_bytes_changed": false,
+  "reconciliation_status": "PASS",
+  "new_drive_artifacts": [
+    {
+      "artifact_id": "book-structured-audit-20260924",
+      "file_name": "Book_结构化数据审计_20260924.zip",
+      "type": "generated",
+      "version": "audit-r1",
+      "source": "assistant_generated_read_only_audit",
+      "drive_file_id": "1fUWgAG4Y0M3xbi4GBkyyxr2WRZ2Tkuxq",
+      "drive_path": "Book/03_Exports/Book_结构化数据审计_20260924.zip",
+      "size_bytes": 802290,
+      "sha256": "475bdc71c392dd28d3fe2074bca18bdea580dba7b7f1c47f60a4aca6acdf83f4",
+      "status": "archived_audit_evidence",
+      "verification": "Fresh remote bytes read back and SHA-256 matched during book-results-sync-20260925.",
+      "purpose": "Original pre-repair audit, issue list, scripts and source evidence; retain historical findings, read repair closure for current status."
+    },
+    {
+      "artifact_id": "book-structured-audit-report-20260924",
+      "file_name": "Book_结构化数据审计报告_20260924.md",
+      "type": "generated",
+      "version": "audit-r1",
+      "source": "assistant_generated_read_only_audit",
+      "drive_file_id": "1d4qgfVLL-P8ITNsnCI0A4tjMaxjlUdzg",
+      "drive_path": "Book/03_Exports/Book_结构化数据审计报告_20260924.md",
+      "size_bytes": 20864,
+      "sha256": "4c11f8715ebf79dcec314e0fb5aa6f4e037bcb0b4a347f374cfba2b866d70e51",
+      "status": "archived_audit_evidence",
+      "verification": "Fresh remote bytes read back and SHA-256 matched during book-results-sync-20260925.",
+      "purpose": "Readable original audit report; also included in the audit ZIP."
+    }
+  ],
+  "existing_receipt": {
+    "artifact_id": "book-structured-repair-delivery-receipt-20260924",
+    "file_name": "Book_结构化数据修订_交付回执_20260924.json",
+    "type": "generated",
+    "version": "repair-r1-receipt",
+    "source": "assistant_generated",
+    "drive_file_id": "18VSE_zkYvSEykmoiubg9LDu0N4YME89G",
+    "drive_path": "Book/03_Exports/Book_结构化数据修订_交付回执_20260924.json",
+    "size_bytes": 11889,
+    "sha256": "b2036888f86708b6cf57254e44cfdef119ae6cf0e27f3d111b7042062bb7abbe",
+    "status": "archived_delivery_receipt",
+    "verification": "Existing Drive object reused; fresh remote bytes read back and SHA-256 matched.",
+    "purpose": "Immutable original repair receipt with eight parts, source commits, old validation and transport provenance; not a new test run."
+  },
+  "reused_drive_delivery": {
+    "drive_folder_id": "1UaXuzk-2oXpAy-IzgfqJKa3S3_lzWQ0T",
+    "full_archive": {
+      "name": "Book_结构化数据修订包_20260924.zip",
+      "size_bytes": 231547882,
+      "sha256": "c7afb8e26078b635d78c78882cace9284e1cb839f0e4c6f9e5b84264a207c2ee",
+      "files": 4006,
+      "storage": "EIGHT_VERIFIED_MULTIPART_FILES",
+      "parts_manifest_drive_id": "1RxV0P7GfK0Lvz7cIWZud_LevzppbLV2b",
+      "parts_manifest_name": "Book_结构化数据修订包_20260924.parts.v3.json",
+      "parts_manifest_sha256": "4cefe512f15947318f3f7cb2859fb2f6fa4dff300374f1d98d93e5f03b124ae1",
+      "verification": "ALL_EIGHT_REMOTE_PARTS_REASSEMBLED_SHA256_MATCH"
+    },
+    "text_core": {
+      "drive_file_id": "182Qtw0tc0ba-J9p3miAoMYcW7TxdvwnG",
+      "name": "Book_结构化数据修订_文本与复现核心_20260924.zip",
+      "size_bytes": 13380843,
+      "sha256": "e58224ae333228d29e89c88bb84279d3db780060b9f97f699d905804dbef729f",
+      "scope": "TEXT_AND_REPRODUCTION_CORE_NOT_SELF_CONTAINED_IMAGE_BUNDLE",
+      "external_images": 1253,
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    "report": {
+      "drive_file_id": "104GQ0TMB914FM9-URbHEdSZvrQNxeVNX",
+      "name": "Book_结构化数据修订报告_20260924.md",
+      "size_bytes": 10651,
+      "sha256": "250e736b7a9c8719b898745ce507eeb31b14590cb720becbee43475fc91833f6",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    }
+  },
+  "reused_binary_parts": [
+    {
+      "order": 1,
+      "name": "Book_结构化数据修订包_20260924.zip.part01q1",
+      "drive_file_id": "1BHDyY5teJ2XavNpDDX_HQMCUOJA8t0WR",
+      "size_bytes": 12582912,
+      "sha256": "8a877764cb1542266348e5e2591c8bdf7ec3585df7fc28b4b9de8446b89ddc36",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 2,
+      "name": "Book_结构化数据修订包_20260924.zip.part01q2",
+      "drive_file_id": "1nGuiWE4hrxCblMwcy5HSy1CReFjU5Oxs",
+      "size_bytes": 12582912,
+      "sha256": "6c9b1271fc829b069a146aab5b01567bbe7c85787ad500583b1afb725b55dd8b",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 3,
+      "name": "Book_结构化数据修订包_20260924.zip.part01q3",
+      "drive_file_id": "1QRRYiL-5ymR-FRuoZTt4QVGKpR0fpzRy",
+      "size_bytes": 12582912,
+      "sha256": "ab08604fb283d075b860a747e9f5b7aead84e9e464096a9b6aea26f2059d3d8b",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 4,
+      "name": "Book_结构化数据修订包_20260924.zip.part01q4",
+      "drive_file_id": "1Pdss-SoXV44WHqCM6yYVS5SKsafJ7MO5",
+      "size_bytes": 12582912,
+      "sha256": "db6ed98350cc43d2eea5a96ef973c402d2e32cb5e0fd9a972441771c23d7ba84",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 5,
+      "name": "Book_结构化数据修订包_20260924.zip.part02",
+      "drive_file_id": "1UCEodbA1_YRymfIVJ8wFLf5FIweZPDjj",
+      "size_bytes": 50331648,
+      "sha256": "f586470ec6f33e0f42a507b8d16144228ee3cf177e2cb5ae902a825539df7bd8",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 6,
+      "name": "Book_结构化数据修订包_20260924.zip.part03",
+      "drive_file_id": "1TaubTboZIyw9SmOhM-9vmW5TZfq9uVUE",
+      "size_bytes": 50331648,
+      "sha256": "33d37ce4efe2711ed06ee6b4851f1243ba0486f4b4a3f95cf5620fac26c4b1ed",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 7,
+      "name": "Book_结构化数据修订包_20260924.zip.part04",
+      "drive_file_id": "18-_mKdq4_LL-PorWyvXxywZdC12LKOMQ",
+      "size_bytes": 50331648,
+      "sha256": "fd4e0524fac220a5d0a079dcea018d9f3b1013428082fc69cbeae6b27d96faaa",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    },
+    {
+      "order": 8,
+      "name": "Book_结构化数据修订包_20260924.zip.part05",
+      "drive_file_id": "1qjRJxhqCbNpW5UyNIKaqRpNcbl5CTzUo",
+      "size_bytes": 30221290,
+      "sha256": "b183cfa2c02d64c24e4fe7a52852696f9888dd51a842954c79dd95a91e7a985a",
+      "verification": "REMOTE_BYTES_SHA256_MATCH"
+    }
+  ],
+  "verification": {
+    "fresh_remote_readbacks": [
+      "audit ZIP",
+      "audit report",
+      "original repair receipt",
+      "v3 parts manifest"
+    ],
+    "local_full_archive_member_hashes": {
+      "passed": 4005,
+      "failed": 0
+    },
+    "local_text_core_member_hashes": {
+      "passed": 2754,
+      "failed": 0
+    },
+    "pinned_github_files_hash_verified": 187,
+    "large_parts": "Fresh metadata identity reconciliation plus local rehash of prior verified remote bytes; no new live checksum or full remote download claimed.",
+    "math_tests_rerun": false,
+    "app_tests_rerun": false,
+    "source_export_zip": "Already embedded in both repair distributions; do not create another cloud copy."
+  },
+  "sync_plan": {
+    "github_new_files": 1,
+    "github_changed_files": 5,
+    "github_logical_commits": 1,
+    "drive_new_audit_files": 2,
+    "drive_new_final_receipt": 1,
+    "drive_existing_current_doc_update": 1,
+    "drive_skip_identical_active_objects": 12,
+    "historical_transport_manifests_preserved": 2,
+    "planned_pr_update": "Append an idempotent sync section to PR #38; keep Draft/Open/Unmerged.",
+    "publication_followup": "Final sync receipt records actual commit, readback and second reconciliation; this artifact does not preclaim them."
+  },
+  "preserved_historical_manifests": [
+    "1aQ-C2jy9ZOoOtvsDriIP47KUKXNqy3Mp",
+    "1OEKgwJ1LVYwnHXOcY8QVrIyMCXvC4G0G"
+  ],
+  "current_doc_id": "1S3xZNiViiVLh2B9Zf1BgzjmiQ8UBaYScscSh_A-XwQM",
+  "scope_blocking_sync_items": 0,
+  "unrelated_pending_sync": "Existing non-blocking obligations in governance/pending_sync.json remain untouched.",
+  "all_books_independently_accepted": false,
+  "remaining_content_work": [
+    "Public-finance remaining OCR prose and tables require source review.",
+    "Financial-economics remaining OCR is an auxiliary layer, not accepted source prose.",
+    "110 functional-analysis reference derivations and whole-book mathematical arguments require independent acceptance; PDE full worked solutions remain incomplete."
+  ],
+  "next_step": "Review the current repair candidate and continue source/math acceptance; no automatic PR merge or installed App replacement."
+}
