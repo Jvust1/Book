@@ -97,5 +97,11 @@
     "r2_report_reuploaded": false,
     "main_writes": 0,
     "pr_merges": 0
+  },
+  "release_gate_successor": {
+    "artifact_id": "book-seven-textbooks-release-safety-20260926-r3",
+    "checkpoint": "governance/book_final_r3_current.json",
+    "status": "CONTENT_RELEASE_GATE_COMPLETE",
+    "note": "r2 remains immutable evidence. r3 closes release blockers by provenance-safe demotion/exclusion; it does not claim character-level OCR or independent mathematical expert acceptance."
   }
 }
