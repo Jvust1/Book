@@ -1,0 +1,47 @@
+name: Book Kolibri fixed-commit source snapshot
+
+on:
+  push:
+    branches: [fix/structured-data-audit-20260924]
+    paths:
+      - '.github/workflows/external-source-snapshot-kolibri-20260926.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GIT_LFS_SKIP_SMUDGE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: learningequality/kolibri
+          ref: 109027298ce03d1b97c56e569e02fe05a4f59b2d
+          path: src
+          fetch-depth: 1
+          persist-credentials: false
+          lfs: false
+          submodules: false
+      - name: Verify exact commit and build source ZIP with LFS pointers
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git -C src rev-parse HEAD)"
+          test "$actual" = "109027298ce03d1b97c56e569e02fe05a4f59b2d"
+          mkdir -p out
+          name="learningequality-kolibri-109027298ce03d1b97c56e569e02fe05a4f59b2d.zip"
+          git -C src archive --format=zip HEAD -o "../out/$name"
+          sha256sum "out/$name" > "out/$name.sha256"
+          printf '%s\n' "learningequality/kolibri 109027298ce03d1b97c56e569e02fe05a4f59b2d" > out/SOURCE.txt
+          printf '%s\n' "Snapshot contains repository Git object bytes; Git LFS paths are archived as tracked pointer blobs, not resolved LFS payloads." > out/LFS_NOTE.txt
+          unzip -t "out/$name" >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: book-source-learningequality-kolibri-109027298ce03d1b97c56e569e02fe05a4f59b2d
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
