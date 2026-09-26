@@ -1,0 +1,84 @@
+{
+  "schema_version": "book_release_safety_r3_checkpoint_v1",
+  "artifact_id": "book-seven-textbooks-release-safety-20260926-r3",
+  "date": "2026-09-26",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "status": "CONTENT_RELEASE_SAFE_BLOCKERS_ZERO_USER_DEVICE_ACCEPTANCE_PENDING",
+  "base_layers": [
+    "book-structured-repair-20260924-r1",
+    "book-six-textbooks-enhancement-20260925-r2"
+  ],
+  "scope": {
+    "books_total": 7,
+    "canonical_records_total": 26195,
+    "chinese_overlay_records": 24702,
+    "source_page_maps_total": 2343,
+    "image_assets_total": 1153
+  },
+  "closure": {
+    "public_finance_candidates_resolved": 66,
+    "public_finance_machine_table_image_only": 59,
+    "public_finance_visual_source_transcriptions": 7,
+    "financial_economics_machine_ocr_auxiliary_records": 3591,
+    "financial_economics_ocr_authoritative_for_automated_qa": false,
+    "math_source_release_gate": "PASS_WITH_DERIVED_EXCLUDED",
+    "blocking_content_review_remaining": 0
+  },
+  "non_claims": [
+    "financial-economics full-character OCR human acceptance",
+    "whole-book independent mathematical proof truth audit",
+    "AI/reference derivations as textbook standard answers"
+  ],
+  "validation": {
+    "r3_content_checks_passed": 38,
+    "r3_content_checks_failed": 0,
+    "windows_rc4_learning_state_passed": 29,
+    "windows_rc4_go_backend_passed": 15,
+    "windows_rc4_go_race_subset_passed": 14,
+    "windows_rc4_chromium_workflow_passed": 42,
+    "windows_rc4_release_safety_ui_passed": 4,
+    "windows_rc4_final_delivery_checks_passed": 31
+  },
+  "windows_rc4": {
+    "version": "1.0.0-rc4",
+    "build_id": "20260926-windows-study-r4",
+    "exe": {
+      "file_name": "Book-1.0.0-rc4-Windows-x64.exe",
+      "size_bytes": 195388416,
+      "sha256": "4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983"
+    },
+    "portable_zip": {
+      "file_name": "Book-1.0.0-rc4-Windows-Portable.zip",
+      "size_bytes": 191107482,
+      "sha256": "645d39204a41411267eba8f82cafe6bec02ab0fa2ab4424119f6efb2440adfc5"
+    },
+    "source_tests_zip": {
+      "file_name": "Book-1.0.0-rc4-Windows-Source-and-Tests.zip",
+      "size_bytes": 189886639,
+      "sha256": "d27f90f62d89f17778d6dfc628a70ff3963a4e33782e4d517d2e97cfa314b91e"
+    }
+  },
+  "drive_delivery": {
+    "folder_id": "1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ",
+    "folder_path": "Book/03_Exports/Book-Final-r3-rc4-20260926",
+    "quality_zip_file_id": "1E79tC1WhwhfrTG9iXtfV7weXJLGhGT8N",
+    "final_content_report_file_id": "1Sz3J8dDg0vWZiZlRKpfArDn812VEinZp",
+    "delivery_report_file_id": "1q9xmAinUhZ23ftSvRzed5a1_gvOQ4kcg",
+    "usage_file_id": "1Jn4IRpYhETadGAgU8-7HLyHijSKZOfEV",
+    "release_manifest_file_id": "1sKh4EIVyglNLM2-QKm-AvQ5RGH01JcSR",
+    "sha256s_file_id": "1Rzn9xy2cuDeEYWgwc5n1XpR_altuMoZW",
+    "readback_verification_file_id": "1GOaSnWpiEclMW2Iut2SiLU7Id2xZ062B",
+    "split_root_folder_id": "1PwTI0dev7c5dT-rc_XgPS97Jh3cBWGGb",
+    "split_manifest_file_id": "1dIPuR4qz_Z78Ew9lYYaBBfddodGOgO-L",
+    "reconstruction_readme_file_id": "1SEGmS7ZusfqtAGON6wC_DKQdcYIoCWq_",
+    "large_file_parts": 9,
+    "remote_readback_sha256_verified": true
+  },
+  "remaining_external_acceptance": [
+    "user Windows device install/start/permissions/manual-interaction acceptance"
+  ],
+  "main_modified": false,
+  "automatic_merge": false,
+  "review_pr": 38
+}
