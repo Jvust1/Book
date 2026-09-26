@@ -1,3 +1,13 @@
+## 2026-09-26 六本教材逐章 LaTeX / PDF 交付
+
+- 新成果集：`book-six-textbooks-chapter-latex-20260926`；恢复入口：`governance/book_six_textbooks_chapter_latex_20260926.json`。
+- 范围：前六本中文教材，61 个正文章节/讲 + 6 份附属资料，共 67 份 PDF、1,469 页；24,702 条结构化记录全部唯一分配。
+- 排版：A4；正文沿用本项目 12px≈9pt 约定；实际中文字体为 `Noto Serif CJK SC`，属于宋体替代，未嵌入真正书宋；LaTeX 源码保留可替换字体设置。
+- 验证：67/67 两遍 XeLaTeX 成功，1,469/1,469 页栅格化；文本越出物理页面 0，缺字警告 0，横/纵 overfull 0；8 个 Drive ZIP 全部回读，SHA-256 8/8 匹配。
+- Drive：`Book/03_Exports/Book-SixTextbooks-Chapter-LaTeX-20260926`，folder ID `1TxF-jkLN0wRo8z0EKN9aBk2Q0jUgL8yB`。
+- 内容边界继承 r3：金融经济学普通 OCR 仍为辅助层；公共财政未核定机器表格不升级为事实；AI/reference derivation 和新编答案未加入；本成果是排印交付，不是新的逐字出版级校勘。
+- main 未修改，PR #38 仍 Draft/Open/Unmerged。
+
 ## 2026-09-26 Book 七书最终内容质量层 r3 / Windows rc4
 
 - **内容发布阻塞项：0。** 新检查点：`governance/book_final_r3_current.json`；报告：`docs/BOOK_FINAL_CONTENT_REPORT_20260926.md`。
