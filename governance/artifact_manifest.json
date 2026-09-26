@@ -14,12 +14,12 @@
       "drive_file_id": "1hHxBrwUdHzGideWJV24coQUCdPJRkCwf",
       "drive_path": "Book/01_Textbooks/Functional_Analysis_split20_23parts.zip",
       "size_bytes": 9982095,
-      "sha256": null,
+      "sha256": "32fd47545b1a8086adcf44a7805c673a7414bbfcbfced1f637c0872b5efad41b",
       "version": "source_bundle_current_known",
       "source": "user_project_drive",
       "purpose": "Raw/recovery source bundle for the Functional Analysis textbook inputs.",
-      "status": "active_unhashed",
-      "verification": "Drive ID + name + size verified; SHA-256 pending in governance/pending_sync.json"
+      "status": "active_verified",
+      "verification": "Existing Drive object downloaded without replacement; SHA-256 computed and ZIP integrity passed on 2026-09-26."
     },
     {
       "artifact_id": "external_references_root",
@@ -57,8 +57,8 @@
       "version": "v1",
       "source": "assistant_generated_structure",
       "purpose": "Exact-commit source archives; currently empty/pending.",
-      "status": "active_empty_pending_sync",
-      "verification": "Drive folder identity read back; archive files not yet present"
+      "status": "active_populated_verified",
+      "verification": "Seven fixed-commit Git source ZIP snapshots archived and rematerialized from Drive; all SHA-256 and ZIP integrity checks passed. Manifest Drive ID 19FmweMfPJqmq2BBOgXUWUpWtvMYExks5; readback receipt 1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV."
     },
     {
       "artifact_id": "book_app_source_foundation_a_7c053ab_2026_08_28",
@@ -292,6 +292,70 @@
       "status": "ARCHIVED_VERIFIED_USER_DEVICE_ACCEPTANCE_PENDING",
       "purpose": "Seven-book Windows learning app rc4 with preview/learn/review/practice and r3 release-safety policy.",
       "verification": "31 final delivery checks PASS / 0 FAIL; 9 Drive parts rematerialized and recombined originals hash-matched."
+    },
+    {
+      "artifact_id": "book-external-source-snapshots-20260926",
+      "file_name": "SOURCE_SNAPSHOTS_MANIFEST_20260926.json",
+      "type": "reference_source_snapshot_set",
+      "version": "20260926",
+      "source": "github_actions_exact_commit_git_archive",
+      "drive_folder_id": "1SFx65_RCKkNiQ-Vwb6dVNCrMGFff-kCK",
+      "drive_manifest_id": "19FmweMfPJqmq2BBOgXUWUpWtvMYExks5",
+      "drive_readback_receipt_id": "1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV",
+      "status": "verified_complete",
+      "verification": "All seven Drive snapshots rematerialized and matched expected SHA-256; each ZIP passed integrity test.",
+      "artifacts": [
+        {
+          "repository": "learningequality/kolibri",
+          "commit": "109027298ce03d1b97c56e569e02fe05a4f59b2d",
+          "drive_file_id": "12cv_4qVQ_6m47P-SFrwjHiqQ42fm9YTA",
+          "size_bytes": 17032927,
+          "sha256": "117ab10e34da8e0a788abe5c1d8a53f94d27bf82d2e87a535ec8683cbb91e4ff",
+          "lfs_note": "tracked pointer blobs archived; resolved LFS payloads not included"
+        },
+        {
+          "repository": "learningequality/ricecooker",
+          "commit": "a18a29cbb6d1f91b41097f9024e1e4276a4e9719",
+          "drive_file_id": "1-uOnWwOjNf8kQvXp2qmKcpF5ji9IJ6Re",
+          "size_bytes": 14949909,
+          "sha256": "d4206e0c200ad11c27079d73a809938c2d1cb538e4f502a25b95890c7f4e181d"
+        },
+        {
+          "repository": "h5p/h5p-php-library",
+          "commit": "cb64a1f3884408487c3178e31fc140f5d45ca165",
+          "drive_file_id": "1egw0yrmHb6c5g0iUX5aOrZH9bhEjF3Bo",
+          "size_bytes": 1385539,
+          "sha256": "5304a6016ac05b793bc92b47db3c4489e9565279b38d4b493fbba500c9094862"
+        },
+        {
+          "repository": "openedx/openedx-platform",
+          "commit": "bae59d903571d65cd4a72578030b4cf69a4e985b",
+          "drive_file_id": "1etUB6FS1c75ITO8espGtgYtP8qrOXnzs",
+          "size_bytes": 66565832,
+          "sha256": "cda1cee4b5a03a9f270b16ba0ae880b65fefba236e87113636c7cbc292b2b3f2"
+        },
+        {
+          "repository": "openedx/openedx-demo-course",
+          "commit": "494507ef4ba434e3be3f3f2133dbc8b8a6387cd0",
+          "drive_file_id": "111IE18Ju6oIIXS-PV96ppXMMEVXOEsf1",
+          "size_bytes": 32512669,
+          "sha256": "1fca6e1d690cef3b618cd7f1b0ed2037538438ffc17edead2444d7d3cb94a76c"
+        },
+        {
+          "repository": "simonw/sqlite-utils",
+          "commit": "56dd09702fdb9e899f577ffd51693c1f2176cb08",
+          "drive_file_id": "1GlA3qsT7-x8WOVjkqYFKF3SJCNlr_GVg",
+          "size_bytes": 358213,
+          "sha256": "919c8c194d5857035ee23322633aa97bb03092dbd805ff5f1a7cc93952da4eb7"
+        },
+        {
+          "repository": "simonw/datasette",
+          "commit": "0337fba234bf574629d56be631468ea060495fa0",
+          "drive_file_id": "1PECU-wpRwZFtqD4st2JTW007oI1eygo6",
+          "size_bytes": 1186735,
+          "sha256": "d4d08ee7b5a4179dabfe19244d99306833f3f597382db4c819c5f9b8b826d793"
+        }
+      ]
     }
   ],
   "notes": [
