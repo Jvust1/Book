@@ -239,24 +239,38 @@
     "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json"
   },
   "windows_app_delivery": {
-    "state": "WINDOWS_RC3_DELIVERED_VERIFIED_USER_DEVICE_PENDING",
-    "version": "1.0.0-rc3",
-    "build_id": "20260925-windows-study-r3",
-    "scope": "seven-book Windows learning app with preview/review/practice workflows",
+    "state": "WINDOWS_RC4_DELIVERED_VERIFIED_USER_DEVICE_PENDING",
+    "version": "1.0.0-rc4",
+    "build_id": "20260926-windows-study-r4",
+    "supersedes": "1.0.0-rc3",
+    "scope": "seven-book Windows learning app with preview/learn/review/practice and r3 release-safety policy",
     "canonical_records": 26195,
     "source_page_maps": 2343,
     "image_assets": 1153,
     "textbook_question_groups": 562,
     "source_recall_selftest_groups": 5176,
-    "incomplete_question_indexes_excluded_from_answer_queue": 268,
+    "content_blockers_remaining": 0,
     "windows_exe": {
-      "file": "Book-1.0.0-rc3-Windows-x64.exe",
-      "bytes": 195373056,
-      "sha256": "6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88",
+      "file": "Book-1.0.0-rc4-Windows-x64.exe",
+      "bytes": 195388416,
+      "sha256": "4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983",
       "pe": "PE32+ x86_64 GUI"
     },
-    "content_zip_sha256": "6c2306673a8b0a0377269b3df30f20290e90d07fd94503d6bd16e56f1a6081c4",
+    "portable_zip": {
+      "file": "Book-1.0.0-rc4-Windows-Portable.zip",
+      "bytes": 191107482,
+      "sha256": "645d39204a41411267eba8f82cafe6bec02ab0fa2ab4424119f6efb2440adfc5"
+    },
+    "source_tests_zip": {
+      "file": "Book-1.0.0-rc4-Windows-Source-and-Tests.zip",
+      "bytes": 189886639,
+      "sha256": "d27f90f62d89f17778d6dfc628a70ff3963a4e33782e4d517d2e97cfa314b91e"
+    },
     "verification": {
+      "r3_content_checks": {
+        "passed": 38,
+        "failed": 0
+      },
       "javascript_learning_state_tests": {
         "passed": 29,
         "failed": 0
@@ -273,44 +287,58 @@
         "passed": 42,
         "failed": 0
       },
+      "release_safety_ui": {
+        "passed": 4,
+        "failed": 0
+      },
       "final_delivery_checks": {
-        "passed": 28,
+        "passed": 31,
         "failed": 0
       }
     },
     "drive_archive": {
-      "folder_id": "1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8",
-      "folder_path": "Book/03_Exports/Book-Windows-rc3-20260926",
-      "uploaded": {
-        "verification_zip": "1JKbfLFUoaHq_JHzR7iEmdkAZ0bgSNDrT",
-        "report_md": "1ZA-OpAAxkB1AxSi7C2l1yETdqrvh-wqE",
-        "usage_md": "1wKjDRPzhXpteozW6zinXN0PXRuREqwu3",
-        "sha256s": "170Ll-j52_6HrqJmrs09qTqVtiZcvSfiP"
-      },
+      "folder_id": "1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ",
+      "folder_path": "Book/03_Exports/Book-Final-r3-rc4-20260926",
+      "quality_zip_id": "1E79tC1WhwhfrTG9iXtfV7weXJLGhGT8N",
+      "content_report_id": "1Sz3J8dDg0vWZiZlRKpfArDn812VEinZp",
+      "delivery_report_id": "1q9xmAinUhZ23ftSvRzed5a1_gvOQ4kcg",
+      "usage_id": "1Jn4IRpYhETadGAgU8-7HLyHijSKZOfEV",
+      "release_manifest_id": "1sKh4EIVyglNLM2-QKm-AvQ5RGH01JcSR",
+      "sha256s_id": "1Rzn9xy2cuDeEYWgwc5n1XpR_altuMoZW",
+      "split_root_id": "1PwTI0dev7c5dT-rc_XgPS97Jh3cBWGGb",
+      "split_manifest_id": "1dIPuR4qz_Z78Ew9lYYaBBfddodGOgO-L",
+      "reconstruction_readme_id": "1SEGmS7ZusfqtAGON6wC_DKQdcYIoCWq_",
+      "readback_verification_id": "1GOaSnWpiEclMW2Iut2SiLU7Id2xZ062B",
       "large_binary_upload_status": "COMPLETED_AS_64MIB_SPLIT_ARCHIVE_REMOTE_HASH_VERIFIED",
-      "large_binaries_remaining": [],
-      "split_archive": {
-        "root_folder_id": "1Gc2ZYo4d_V4rRHv5r9ol-9bNpm5pzVib",
-        "manifest_file_id": "1ql40B0em9aazPUc_Gd61vcucnD_oKNV_",
-        "reconstruction_readme_file_id": "1Kx2F7Da-LJJEzab35ikpwKr77oitZVhs",
-        "chunk_size_bytes": 67108864,
-        "parts": 9,
-        "remote_readback_verified": true,
-        "verification": "All 9 Drive parts rematerialized; each part SHA-256 matched manifest; recombined EXE/ZIP SHA-256 matched originals.",
-        "originals": {
-          "Book-1.0.0-rc3-Windows-x64.exe": "6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88",
-          "Book-1.0.0-rc3-Windows-Portable.zip": "809cf740743438da313c50d7f2f09ea2165e47fa1bf2a248f6b740ecfaee28b4",
-          "Book-1.0.0-rc3-Windows-Source-and-Tests.zip": "d4be54bec9e532a7d88c0aef7a357a77095a816c5e51ab7ff83face794cea1f2"
-        }
-      }
+      "split_parts": 9,
+      "remote_readback_verified": true,
+      "large_binaries_remaining": []
     },
     "main_modified": false,
     "automatic_merge": false,
     "user_device_acceptance": false,
-    "remaining_content_review": [
-      "Public Finance remaining table candidates",
-      "Financial Economics remaining general OCR review",
-      "mathematical proof/derivation independent acceptance"
+    "remaining_external_acceptance": [
+      "user Windows device install/start/manual interaction acceptance"
+    ],
+    "claims_not_made": [
+      "full-character OCR acceptance",
+      "whole-book independent mathematical proof truth audit",
+      "AI-derived answers as textbook standard answers"
     ]
+  },
+  "structured_data_release_safety_r3": {
+    "status": "CONTENT_RELEASE_GATE_COMPLETE",
+    "artifact_id": "book-seven-textbooks-release-safety-20260926-r3",
+    "checkpoint": "governance/book_final_r3_current.json",
+    "report": "docs/BOOK_FINAL_CONTENT_REPORT_20260926.md",
+    "content_blockers_remaining": 0,
+    "public_finance_table_candidates_closed": 66,
+    "financial_economics_ocr_auxiliary_nonblocking": 3591,
+    "mathematics_release_gate": "PASS_WITH_DERIVED_EXCLUDED",
+    "whole_book_mathematical_acceptance": false,
+    "all_books_release_safe_under_r6_policy": true,
+    "all_books_independently_expert_accepted": false,
+    "main_unchanged": true,
+    "review_pr": 38
   }
 }
