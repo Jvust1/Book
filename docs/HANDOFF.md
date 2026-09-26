@@ -3,7 +3,7 @@
 - Windows 交付版本：`1.0.0-rc3`；EXE SHA-256 `6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88`。
 - 当前 App 学习内容：预习 / 学习 / 复习 / 刷题；7 本教材，26,195 条规范记录。
 - Drive rc3 目录：`Book/03_Exports/Book-Windows-rc3-20260926`，folder ID `1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8`。
-- 已归档：验证记录、交付检查报告、使用说明、SHA256SUMS。三个大文件上传失败两次，必须视为未同步到 Drive，不得虚报完成。
+- 已归档：验证记录、交付检查报告、使用说明、SHA256SUMS。三个大文件使用 64 MiB 无损分片归档在 `large-files-split`；9 个分片已从 Drive 回读并逐片校验 SHA-256，重组后的 EXE/两个 ZIP 也与原始 SHA-256 完全一致。
 - 数据修订仍在 `fix/structured-data-audit-20260924` / Draft PR #38；不自动合并、不改 main。
 - 用户本人 Windows 真机验收与剩余内容级终验仍待完成。
 
