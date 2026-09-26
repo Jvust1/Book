@@ -1,3 +1,15 @@
+## 2026-09-26 六本教材逐章排印接手点
+
+- 当前逐章排印检查点：`governance/book_six_textbooks_chapter_latex_20260926.json`。
+- Drive：`Book/03_Exports/Book-SixTextbooks-Chapter-LaTeX-20260926`，folder ID `1TxF-jkLN0wRo8z0EKN9aBk2Q0jUgL8yB`。
+- 交付：61 个正文章节/讲 + 6 份附属资料 = 67 份 PDF / 1,469 页；另有完整 LaTeX 源码与配图包。
+- 聚合 PDF ZIP SHA-256：`9f4c55cd50d0e3a6df2a434a9547e5ee2f6ccad7817f7cae6e76617ae670755b`。
+- LaTeX 源码包 SHA-256：`9ad946275d62ff7d467f1b214c096f487b10c555896160d44d848e45f5f0e7a8`。
+- 8 个 ZIP 已从 Drive 重新 materialize，SHA-256 8/8 匹配。
+- 字体真实状态：9pt 正文，`Noto Serif CJK SC` 宋体替代；真正书宋未随包分发。
+- 不把本排印成果解释为全文逐字人工校勘或全书数学专家审稿。
+- main 未修改；PR #38 不自动合并。
+
 ## 2026-09-26 Book 最终接手点：r3 / rc4
 
 - 当前内容质量层：`book-seven-textbooks-release-safety-20260926-r3`；内容 blocker = 0。
