@@ -6,7 +6,7 @@ Book 七书 Windows 学习版已完成 rc3 交付。预习、复习、刷题三�
 
 测试：JavaScript 学习状态 29 PASS；Go 后端 15 PASS；Go race 子集 14 PASS；Chromium 操作回归 42 PASS；最终交付检查 28 PASS，均 0 FAIL。Windows EXE 为 `Book-1.0.0-rc3-Windows-x64.exe`，195,373,056 bytes，SHA-256 `6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88`。尚未在用户本人 Windows 设备验收，因此保留 rc3。
 
-Drive 已建立 `Book/03_Exports/Book-Windows-rc3-20260926`（folder ID `1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8`），验证记录、检查报告、使用说明与 SHA256SUMS 已上传并读回。EXE、便携包、源码测试包因 Drive 大文件上传连续两次失败，未冒充已归档；原对话/Library 交付副本仍保留。没有修改 main，没有自动合并 PR #38。
+Drive 已建立 `Book/03_Exports/Book-Windows-rc3-20260926`（folder ID `1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8`）。验证记录、检查报告、使用说明与 SHA256SUMS 已上传并读回。EXE、便携包、源码测试包因单文件上传限制改为 64 MiB 无损分片，保存于 `large-files-split`（folder ID `1Gc2ZYo4d_V4rRHv5r9ol-9bNpm5pzVib`）；9 个分片均已从 Drive 回读，逐片 SHA-256 匹配清单，三组重组后原文件 SHA-256 也全部匹配，故大文件 Drive 归档已闭环。没有修改 main，没有自动合并 PR #38。
 
 内容终验边界不变：公共财政剩余表格候选、金融经济学一般 OCR、数学证明/推导独立终验仍未因 App 打包而自动完成。
 
