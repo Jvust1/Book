@@ -1,3 +1,13 @@
+## 2026-09-26 Book 最终接手点：r3 / rc4
+
+- 当前内容质量层：`book-seven-textbooks-release-safety-20260926-r3`；内容 blocker = 0。
+- 首读：`governance/book_final_r3_current.json` → `docs/BOOK_FINAL_CONTENT_REPORT_20260926.md` → `governance/book_rc4_release_manifest.json`。
+- Windows 当前交付：`1.0.0-rc4`；EXE SHA-256 `4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983`。
+- Drive 当前交付目录：`Book/03_Exports/Book-Final-r3-rc4-20260926`，folder ID `1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ`；大文件 9 分片已完成远端回读与重组哈希校验。
+- 内容边界：普通 OCR、出版级逐字校勘、全书数学专家审稿、AI 推导标准答案化均**未被虚假升级**；它们是可选增强，不再是 r6 来源安全发布 blocker。
+- 唯一产品外部验收：用户本人 Windows 安装/启动/交互组合验收。
+- PR #38 继续 Draft/Open/Unmerged；禁止自动合并，main 未修改。
+
 ## 2026-09-26 最新 Book App 接手点
 
 - Windows 交付版本：`1.0.0-rc3`；EXE SHA-256 `6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88`。
