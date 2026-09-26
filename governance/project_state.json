@@ -190,7 +190,9 @@
   "external_reference_review": {
     "status": "SOURCE_LEVEL_REVIEW_COMPLETE",
     "record": "docs/references/2026-08-28-course-package-open-source-comparison.md",
-    "snapshot_sync_status": "PENDING_NON_BLOCKING"
+    "snapshot_sync_status": "COMPLETE_VERIFIED_20260926",
+    "snapshot_manifest_drive_id": "19FmweMfPJqmq2BBOgXUWUpWtvMYExks5",
+    "snapshot_readback_drive_id": "1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV"
   },
   "blocking_items": [],
   "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval.",
@@ -206,7 +208,8 @@
     "next_step": "Review the archived repair view; follow the checkpoint for remaining content-review debt. No automatic PR merge or App migration.",
     "results_sync_checkpoint": "governance/structured_data_results_sync_20260925.json",
     "delivery_receipt_artifact_id": "book-structured-repair-delivery-receipt-20260924",
-    "audit_artifact_id": "book-structured-audit-20260924"
+    "audit_artifact_id": "book-structured-audit-20260924",
+    "superseded_for_release_by": "book-seven-textbooks-release-safety-20260926-r3"
   },
   "structured_data_enhancement_r2": {
     "status": "DELIVERED_VERIFIED_REVIEW_PENDING",
@@ -236,7 +239,8 @@
     "next_step": "Continue bounded source review of the remaining Public Finance table candidates and independent math/full-text acceptance without weakening quality gates. Do not merge PR #38 without explicit authorization.",
     "sync_status": "SYNCED_CURRENT",
     "sync_receipt_drive_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
-    "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json"
+    "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json",
+    "superseded_for_release_by": "book-seven-textbooks-release-safety-20260926-r3"
   },
   "windows_app_delivery": {
     "state": "WINDOWS_RC4_DELIVERED_VERIFIED_USER_DEVICE_PENDING",
@@ -340,5 +344,13 @@
     "all_books_independently_expert_accepted": false,
     "main_unchanged": true,
     "review_pr": 38
-  }
+  },
+  "pending_sync_summary": {
+    "blocking_count": 0,
+    "open_count": 0,
+    "resolved_or_historical_count": 4,
+    "source": "governance/pending_sync.json",
+    "verified_at": "2026-09-26"
+  },
+  "current_release_next_step": "Only user-owned Windows device install/start/permissions/manual-interaction acceptance remains for rc4. Separately gated long-term engineering roadmap work remains future scope and is not a release blocker."
 }
