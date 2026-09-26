@@ -242,6 +242,56 @@
           }
         ]
       }
+    },
+    {
+      "artifact_id": "book-seven-textbooks-release-safety-20260926-r3",
+      "file_name": "Book-七本教材最终质量层-r3-20260926.zip",
+      "type": "generated_release_quality_layer",
+      "version": "r3",
+      "source": "assistant_generated_from_r1_r2_preserving_provenance",
+      "drive_file_id": "1E79tC1WhwhfrTG9iXtfV7weXJLGhGT8N",
+      "drive_path": "Book/03_Exports/Book-Final-r3-rc4-20260926/Book-七本教材最终质量层-r3-20260926.zip",
+      "size_bytes": 19670473,
+      "sha256": "ab17004e94173baf89e7de8b10670f7ba71c811fcfcac96771ef44f6d08d496d",
+      "status": "CONTENT_RELEASE_GATE_COMPLETE",
+      "purpose": "Final conservative release-safety layer closing content blockers without upgrading auxiliary OCR, machine table cells, or AI derivations to textbook fact.",
+      "verification": "38 PASS / 0 FAIL; Drive upload recorded."
+    },
+    {
+      "artifact_id": "book-windows-rc4-delivery-20260926",
+      "file_name": "Book-Final-r3-rc4-20260926",
+      "type": "generated_release_set",
+      "version": "1.0.0-rc4",
+      "source": "assistant_generated_verified_delivery",
+      "drive_folder_id": "1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ",
+      "drive_path": "Book/03_Exports/Book-Final-r3-rc4-20260926",
+      "windows_exe": {
+        "file_name": "Book-1.0.0-rc4-Windows-x64.exe",
+        "size_bytes": 195388416,
+        "sha256": "4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983"
+      },
+      "portable_zip": {
+        "file_name": "Book-1.0.0-rc4-Windows-Portable.zip",
+        "size_bytes": 191107482,
+        "sha256": "645d39204a41411267eba8f82cafe6bec02ab0fa2ab4424119f6efb2440adfc5"
+      },
+      "source_tests_zip": {
+        "file_name": "Book-1.0.0-rc4-Windows-Source-and-Tests.zip",
+        "size_bytes": 189886639,
+        "sha256": "d27f90f62d89f17778d6dfc628a70ff3963a4e33782e4d517d2e97cfa314b91e"
+      },
+      "split_archive": {
+        "root_folder_id": "1PwTI0dev7c5dT-rc_XgPS97Jh3cBWGGb",
+        "manifest_file_id": "1dIPuR4qz_Z78Ew9lYYaBBfddodGOgO-L",
+        "reconstruction_readme_file_id": "1SEGmS7ZusfqtAGON6wC_DKQdcYIoCWq_",
+        "readback_verification_file_id": "1GOaSnWpiEclMW2Iut2SiLU7Id2xZ062B",
+        "part_count": 9,
+        "chunk_size_bytes": 67108864,
+        "remote_readback_sha256_verified": true
+      },
+      "status": "ARCHIVED_VERIFIED_USER_DEVICE_ACCEPTANCE_PENDING",
+      "purpose": "Seven-book Windows learning app rc4 with preview/learn/review/practice and r3 release-safety policy.",
+      "verification": "31 final delivery checks PASS / 0 FAIL; 9 Drive parts rematerialized and recombined originals hash-matched."
     }
   ],
   "notes": [
