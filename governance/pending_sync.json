@@ -1,34 +1,52 @@
 {
   "schema_version": "book_pending_sync_v1",
-  "updated_date": "2026-08-29",
+  "updated_date": "2026-09-26",
   "blocking_count": 0,
   "items": [
     {
       "pending_id": "external_reference_source_snapshots_2026_08_28",
       "blocking": false,
-      "status": "PENDING",
+      "status": "RESOLVED_20260926",
       "scope": "Book/00_Project/External_References/Snapshots",
       "reason": "Five third-party repositories entered real source-level study. Exact-commit ZIP snapshots are required by the all-project v2 source-snapshot policy, but the current connector does not expose source-archive bytes and Book access to the known ncmcm-ci self-hosted runner cannot be verified.",
       "references": [
-        {"repository": "learningequality/kolibri", "commit": "109027298ce03d1b97c56e569e02fe05a4f59b2d"},
-        {"repository": "learningequality/ricecooker", "commit": "a18a29cbb6d1f91b41097f9024e1e4276a4e9719"},
-        {"repository": "h5p/h5p-php-library", "commit": "cb64a1f3884408487c3178e31fc140f5d45ca165"},
-        {"repository": "openedx/openedx-platform", "commit": "bae59d903571d65cd4a72578030b4cf69a4e985b"},
-        {"repository": "openedx/openedx-demo-course", "commit": "494507ef4ba434e3be3f3f2133dbc8b8a6387cd0"}
+        {
+          "repository": "learningequality/kolibri",
+          "commit": "109027298ce03d1b97c56e569e02fe05a4f59b2d"
+        },
+        {
+          "repository": "learningequality/ricecooker",
+          "commit": "a18a29cbb6d1f91b41097f9024e1e4276a4e9719"
+        },
+        {
+          "repository": "h5p/h5p-php-library",
+          "commit": "cb64a1f3884408487c3178e31fc140f5d45ca165"
+        },
+        {
+          "repository": "openedx/openedx-platform",
+          "commit": "bae59d903571d65cd4a72578030b4cf69a4e985b"
+        },
+        {
+          "repository": "openedx/openedx-demo-course",
+          "commit": "494507ef4ba434e3be3f3f2133dbc8b8a6387cd0"
+        }
       ],
-      "resolution": "Prefer a trusted Book-accessible self-hosted runner: exact commit archive -> SHA-256/bytes/manifest -> short-lived Actions artifact -> Drive -> read-back -> update manifest/index. If unavailable, use a documented safe alternate path.",
-      "blocks_next_step": false
+      "resolution": "All five exact-commit Git source snapshots were exported in GitHub Actions, uploaded to Drive External_References/Snapshots, rematerialized from Drive, ZIP-tested, and SHA-256 matched. Shared manifest Drive ID 19FmweMfPJqmq2BBOgXUWUpWtvMYExks5; readback receipt 1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV. Kolibri LFS paths are preserved as tracked pointer blobs, not resolved LFS payloads.",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-26"
     },
     {
       "pending_id": "functional_analysis_drive_source_sha256",
       "blocking": false,
-      "status": "PENDING",
+      "status": "RESOLVED_20260926",
       "scope": "Book/01_Textbooks/Functional_Analysis_split20_23parts.zip",
       "drive_file_id": "1hHxBrwUdHzGideWJV24coQUCdPJRkCwf",
       "size_bytes": 9982095,
       "reason": "Drive ID and size are verified, but the available normalized metadata response did not expose a SHA-256 checksum. Foundation A consumes canonical GitHub structured assets, so this does not block the next phase.",
-      "resolution": "At a suitable artifact checkpoint, obtain or compute SHA-256 without replacing the Drive object, then update governance/artifact_manifest.json.",
-      "blocks_next_step": false
+      "resolution": "Downloaded the existing Drive object without replacement, computed SHA-256 32fd47545b1a8086adcf44a7805c673a7414bbfcbfced1f637c0872b5efad41b, and verified ZIP integrity with no compressed-data errors.",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-26",
+      "sha256": "32fd47545b1a8086adcf44a7805c673a7414bbfcbfced1f637c0872b5efad41b"
     },
     {
       "pending_id": "foundation_a_post_merge_narrative_sync_2026_08_29",
@@ -42,7 +60,7 @@
     {
       "pending_id": "h4a_external_reference_source_snapshots_2026_08_29",
       "blocking": false,
-      "status": "PENDING",
+      "status": "RESOLVED_20260926",
       "scope": "Book/00_Project/External_References/Snapshots",
       "reason": "H4a entered real source-level study of sqlite-utils and Datasette at fixed commits; exact source snapshots are required by the all-project source-snapshot policy but are not yet archived through the available connector path.",
       "references": [
@@ -57,8 +75,9 @@
           "license": "Apache-2.0"
         }
       ],
-      "resolution": "Archive exact-commit source ZIPs to the existing External_References/Snapshots area with SHA-256/read-back when a trusted Book-accessible transfer path is available; preserve prior snapshots and do not overwrite them.",
-      "blocks_next_step": false
+      "resolution": "sqlite-utils and Datasette exact-commit Git archives were exported by GitHub Actions, uploaded to Drive External_References/Snapshots, rematerialized, ZIP-tested, and SHA-256 matched. Shared manifest Drive ID 19FmweMfPJqmq2BBOgXUWUpWtvMYExks5; readback receipt 1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV.",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-26"
     }
   ]
 }
