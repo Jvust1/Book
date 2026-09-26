@@ -1,8 +1,8 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-25",
+  "updated_date": "2026-09-26",
   "project": {
-    "repository": "Jvust1/Book",
+    "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
     "drive_root_name": "Book"
   },
@@ -181,6 +181,46 @@
       "status": "active_sync_receipt",
       "verification": "Drive bytes read back and SHA-256 matched after upload.",
       "purpose": "Final r2 synchronization receipt: confirms reuse of existing r2 ZIP/report, current Drive status update, safety counts, and remaining acceptance boundaries."
+    },
+    {
+      "artifact_id": "book-windows-rc3-delivery-20260926",
+      "file_name": "Book-Windows-rc3-20260926",
+      "type": "generated_release_set",
+      "version": "1.0.0-rc3",
+      "source": "assistant_generated_verified_delivery",
+      "drive_folder_id": "1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8",
+      "drive_path": "Book/03_Exports/Book-Windows-rc3-20260926",
+      "windows_exe": {
+        "file_name": "Book-1.0.0-rc3-Windows-x64.exe",
+        "size_bytes": 195373056,
+        "sha256": "6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88"
+      },
+      "uploaded_files": [
+        {
+          "file_name": "Book-Windows-验证记录.zip",
+          "drive_file_id": "1JKbfLFUoaHq_JHzR7iEmdkAZ0bgSNDrT"
+        },
+        {
+          "file_name": "交付检查报告.md",
+          "drive_file_id": "1ZA-OpAAxkB1AxSi7C2l1yETdqrvh-wqE"
+        },
+        {
+          "file_name": "使用说明.md",
+          "drive_file_id": "1wKjDRPzhXpteozW6zinXN0PXRuREqwu3"
+        },
+        {
+          "file_name": "SHA256SUMS.txt",
+          "drive_file_id": "170Ll-j52_6HrqJmrs09qTqVtiZcvSfiP"
+        }
+      ],
+      "pending_large_files": [
+        "Book-1.0.0-rc3-Windows-x64.exe",
+        "Book-1.0.0-rc3-Windows-Portable.zip",
+        "Book-1.0.0-rc3-Windows-Source-and-Tests.zip"
+      ],
+      "status": "partial_drive_archive_large_files_upload_failed_after_single_retry",
+      "verification": "App/source checks passed as recorded in delivery report; Drive metadata confirmed only for uploaded small artifacts.",
+      "purpose": "Windows seven-book learning app rc3 delivery with completed preview/review/practice workflows and verification evidence."
     }
   ],
   "notes": [
