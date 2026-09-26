@@ -1,0 +1,138 @@
+{
+  "schema_version": "book_six_textbooks_chapter_latex_v1",
+  "date": "2026-09-26",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "artifact_id": "book-six-textbooks-chapter-latex-20260926",
+  "status": "DELIVERED_DRIVE_READBACK_SHA256_VERIFIED",
+  "source_quality_layer": "book-seven-textbooks-release-safety-20260926-r3",
+  "scope": {
+    "books": 6,
+    "body_chapters_or_lectures": 61,
+    "accessory_pdf_sets": 6,
+    "pdf_files_total": 67,
+    "rendered_pages_total": 1469,
+    "structured_records_assigned": 24702
+  },
+  "typography": {
+    "requested": "6号书宋体 LaTeX",
+    "actual_body_size": "9 PDF pt / TeX 9bp, following prior 12px≈9pt project convention",
+    "actual_cjk_font": "Noto Serif CJK SC",
+    "true_shusong_embedded": false,
+    "note": "Source TeX keeps font configuration replaceable for a locally licensed Shusong font."
+  },
+  "validation": {
+    "xelatex_two_pass_success": "67/67",
+    "rasterized_pages": "1469/1469",
+    "text_outside_page": 0,
+    "missing_glyph_warnings": 0,
+    "overfull_horizontal": 0,
+    "overfull_vertical": 0,
+    "record_assignment": "24702/24702 unique",
+    "file_and_image_reference_checks": 193,
+    "drive_zip_readback_sha256": "8/8 PASS"
+  },
+  "source_boundaries": [
+    "Financial Economics ordinary OCR remains auxiliary/non-authoritative.",
+    "Unverified Public Finance machine table cells are not promoted; source images remain authoritative.",
+    "AI/reference derivations and newly generated textbook answers are excluded.",
+    "286 unsafe private/control characters are visibly encoded as [U+codepoint], not guessed.",
+    "This is a layout/export artifact, not a new publication-grade proofreading or whole-book math truth audit."
+  ],
+  "drive": {
+    "folder_id": "1TxF-jkLN0wRo8z0EKN9aBk2Q0jUgL8yB",
+    "folder_path": "Book/03_Exports/Book-SixTextbooks-Chapter-LaTeX-20260926",
+    "files": [
+      {
+        "name": "01_泛函分析_江泽坚孙善利_逐章PDF.zip",
+        "id": "1VaalN11GfSzv3vMCtZA8V4xbbGthet0s",
+        "bytes": 1761546,
+        "sha256": "238e7dcc631228abb246314d075e1f41f9d047b929c24b7782e3ae36a8a45e1a"
+      },
+      {
+        "name": "02_数学物理方程_逐章PDF.zip",
+        "id": "19mqAycsxZjGdByIBIu9bvJHKERYaJeG_",
+        "bytes": 3819240,
+        "sha256": "b231b191c750d03e016c2c89d59696a5f41dd852951c3bc01e05acd3215adead"
+      },
+      {
+        "name": "03_金融经济学十讲_逐章PDF.zip",
+        "id": "1u2WVY8dVCkj4x8KJ54csC2mEk4H5PWxz",
+        "bytes": 4289033,
+        "sha256": "d540624712bd1cafa3387be64658df6440f3e1c0a2f6a8ae2f6a7be3dee8cb61"
+      },
+      {
+        "name": "04_公共财政概论_逐章PDF.zip",
+        "id": "1BI89FlvLfn7BZdNJU5YBS4PdpXHwmDQQ",
+        "bytes": 26381709,
+        "sha256": "af8bb1cb386657b2b3573123f3ac23301c3af2d2b2515e8ac72b5ce327289047"
+      },
+      {
+        "name": "05_当代中国经济_逐章PDF.zip",
+        "id": "1UJ2lyr4d7pVCu0mdiVk6Y9geZTY1ZgRj",
+        "bytes": 6241913,
+        "sha256": "d39daba7bdbf9d233ff0da91d83dab3d88f628b6056a3e57676be42577815296"
+      },
+      {
+        "name": "06_货币金融学_逐章PDF.zip",
+        "id": "15SCjKd4XgBMSJHONmRe-zb6hgU7Raxvx",
+        "bytes": 11097831,
+        "sha256": "7adea0efbf37bca2ef6831ac7b3cdfceca8f39a9e968fc52f40d717003b34705"
+      },
+      {
+        "name": "Book_六本教材_全部61章及附属资料_PDF.zip",
+        "id": "1qnIm52JxTB2ezBAzhUI_2MG_ND8bcFxC",
+        "bytes": 53619737,
+        "sha256": "9f4c55cd50d0e3a6df2a434a9547e5ee2f6ccad7817f7cae6e76617ae670755b"
+      },
+      {
+        "name": "Book_六本教材_LaTeX源码与配图.zip",
+        "id": "13iQl7ZMUynZdV7n_NiTti_-kEhmaQ5GK",
+        "bytes": 32648260,
+        "sha256": "9ad946275d62ff7d467f1b214c096f487b10c555896160d44d848e45f5f0e7a8"
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "id": "1NDf0eX3AHwMRdJQKX41Nd6LFigA4bPyU"
+      },
+      {
+        "name": "章节目录.md",
+        "id": "1SdrK7edkxQ6ZiHa2ippTwcdi55EvBJ7k"
+      },
+      {
+        "name": "生成与检查报告.md",
+        "id": "1Z6Jj5ErlHXUYdddHLTWB7F6n4VE3ccrm"
+      }
+    ],
+    "readback_verified": true
+  },
+  "book_breakdown": [
+    {
+      "book": "泛函分析（第2版，江泽坚/孙善利）",
+      "chapters": 5
+    },
+    {
+      "book": "数学物理方程（第4版）",
+      "chapters": 7
+    },
+    {
+      "book": "金融经济学十讲",
+      "chapters": 10
+    },
+    {
+      "book": "公共财政概论（第2版）",
+      "chapters": 14
+    },
+    {
+      "book": "当代中国经济（课程名；来源教材《社会主义市场经济理论》第5版）",
+      "chapters": 11
+    },
+    {
+      "book": "货币金融学（第3版）",
+      "chapters": 14
+    }
+  ],
+  "main_modified": false,
+  "automatic_merge": false,
+  "review_pr": 38
+}
