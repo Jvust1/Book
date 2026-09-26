@@ -1,3 +1,12 @@
+## 2026-09-26 最新 Book App 接手点
+
+- Windows 交付版本：`1.0.0-rc3`；EXE SHA-256 `6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88`。
+- 当前 App 学习内容：预习 / 学习 / 复习 / 刷题；7 本教材，26,195 条规范记录。
+- Drive rc3 目录：`Book/03_Exports/Book-Windows-rc3-20260926`，folder ID `1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8`。
+- 已归档：验证记录、交付检查报告、使用说明、SHA256SUMS。三个大文件上传失败两次，必须视为未同步到 Drive，不得虚报完成。
+- 数据修订仍在 `fix/structured-data-audit-20260924` / Draft PR #38；不自动合并、不改 main。
+- 用户本人 Windows 真机验收与剩余内容级终验仍待完成。
+
 ## Six-textbook structured-data r2 handoff — 2026-09-25
 
 For the six Chinese textbooks, the newest data overlay is `book-six-textbooks-enhancement-20260925-r2`, based on immutable r1. Read `governance/structured_data_enhancement_r2_current.json` first, then the r1 repair checkpoint. r2 preserves all r1 source_text/source_record identities and adds quality/search/QA gates rather than silently replacing raw provenance.
