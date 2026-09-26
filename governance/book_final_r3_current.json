@@ -1,0 +1,125 @@
+{
+  "schema_version": "book_final_release_safety_v1",
+  "artifact_id": "book-seven-textbooks-release-safety-20260926-r3",
+  "date": "2026-09-26",
+  "repository": "Jvust2/Book",
+  "branch": "fix/structured-data-audit-20260924",
+  "parent_layers": [
+    "book-structured-repair-20260924-r1",
+    "book-six-textbooks-enhancement-20260925-r2"
+  ],
+  "status": "CONTENT_RELEASE_GATE_COMPLETE_EXTERNAL_DEVICE_ACCEPTANCE_PENDING",
+  "scope": {
+    "books": 7,
+    "canonical_records": 26195,
+    "source_page_maps": 2343,
+    "image_assets": 1153,
+    "textbook_question_groups": 562,
+    "source_recall_selftest_groups": 5176
+  },
+  "closure": {
+    "content_blockers_remaining": 0,
+    "public_finance": {
+      "prior_candidates": 66,
+      "visual_source_transcriptions": 7,
+      "machine_layout_drafts_demoted_to_source_image_only": 59,
+      "numeric_use_eligible": 0,
+      "authoritative_for_automated_qa": 0
+    },
+    "financial_economics": {
+      "records": 3635,
+      "source_verified": 2,
+      "targeted_source_corrected": 42,
+      "machine_ocr_auxiliary": 3591,
+      "auxiliary_authoritative_for_automated_qa": false,
+      "structural_scan_failures": 0
+    },
+    "mathematics": {
+      "release_gate": "PASS_WITH_DERIVED_EXCLUDED",
+      "whole_book_mathematical_acceptance": false,
+      "reference_derivations_independently_accepted": 0,
+      "ai_derived_answers_are_textbook_answers": false
+    }
+  },
+  "validation": {
+    "r3_content_checks": {
+      "passed": 38,
+      "failed": 0
+    },
+    "study_engine": {
+      "passed": 29,
+      "failed": 0
+    },
+    "go_backend": {
+      "passed": 15,
+      "failed": 0
+    },
+    "go_race_subset": {
+      "passed": 14,
+      "failed": 0
+    },
+    "chromium_workflow": {
+      "passed": 42,
+      "failed": 0
+    },
+    "release_safety_ui": {
+      "passed": 4,
+      "failed": 0
+    },
+    "final_release": {
+      "passed": 31,
+      "failed": 0
+    }
+  },
+  "windows_release": {
+    "version": "1.0.0-rc4",
+    "build": "20260926-windows-study-r4",
+    "exe": {
+      "file": "Book-1.0.0-rc4-Windows-x64.exe",
+      "bytes": 195388416,
+      "sha256": "4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983"
+    },
+    "portable": {
+      "file": "Book-1.0.0-rc4-Windows-Portable.zip",
+      "bytes": 191107482,
+      "sha256": "645d39204a41411267eba8f82cafe6bec02ab0fa2ab4424119f6efb2440adfc5"
+    },
+    "source_tests": {
+      "file": "Book-1.0.0-rc4-Windows-Source-and-Tests.zip",
+      "bytes": 189886639,
+      "sha256": "d27f90f62d89f17778d6dfc628a70ff3963a4e33782e4d517d2e97cfa314b91e"
+    }
+  },
+  "drive": {
+    "folder_id": "1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ",
+    "folder_path": "Book/03_Exports/Book-Final-r3-rc4-20260926",
+    "quality_zip": {
+      "id": "1E79tC1WhwhfrTG9iXtfV7weXJLGhGT8N",
+      "sha256": "ab17004e94173baf89e7de8b10670f7ba71c811fcfcac96771ef44f6d08d496d"
+    },
+    "content_report_id": "1Sz3J8dDg0vWZiZlRKpfArDn812VEinZp",
+    "delivery_report_id": "1q9xmAinUhZ23ftSvRzed5a1_gvOQ4kcg",
+    "usage_id": "1Jn4IRpYhETadGAgU8-7HLyHijSKZOfEV",
+    "release_manifest_id": "1sKh4EIVyglNLM2-QKm-AvQ5RGH01JcSR",
+    "sha256s_id": "1Rzn9xy2cuDeEYWgwc5n1XpR_altuMoZW",
+    "split_root_id": "1PwTI0dev7c5dT-rc_XgPS97Jh3cBWGGb",
+    "split_manifest_id": "1dIPuR4qz_Z78Ew9lYYaBBfddodGOgO-L",
+    "reconstruction_readme_id": "1SEGmS7ZusfqtAGON6wC_DKQdcYIoCWq_",
+    "readback_verification_id": "1GOaSnWpiEclMW2Iut2SiLU7Id2xZ062B",
+    "split_parts": 9,
+    "remote_readback_verified": true
+  },
+  "claims_not_made": [
+    "financial-economics machine OCR is fully character-by-character human accepted",
+    "all textbook prose is publication-grade proofread",
+    "all mathematical proofs have independent expert truth acceptance",
+    "AI-derived/reference derivations are textbook standard answers",
+    "user's own Windows device has completed install/start/manual acceptance"
+  ],
+  "remaining_external_acceptance": [
+    "user Windows device install/start/manual interaction acceptance"
+  ],
+  "main_modified": false,
+  "automatic_merge": false,
+  "review_pr": 38
+}
