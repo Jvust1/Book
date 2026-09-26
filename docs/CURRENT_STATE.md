@@ -1,3 +1,16 @@
+## 2026-09-26 Book 七书最终内容质量层 r3 / Windows rc4
+
+- **内容发布阻塞项：0。** 新检查点：`governance/book_final_r3_current.json`；报告：`docs/BOOK_FINAL_CONTENT_REPORT_20260926.md`。
+- 公共财政 r2 剩余 66 个表格候选全部收口：7 个来源视觉转录保留为 source-grounded 阅读层；59 个机器布局/单元格草稿降为 `source_image_only_table`。66/66 均不具有自动数值 QA 权限。
+- 金融经济学 3,591 条普通 OCR 明确为辅助来源层，只用于检索/定位；原页及 42 条定点修正承担更高来源权威。结构异常扫描 0。
+- 两门数学教材发布门为 `PASS_WITH_DERIVED_EXCLUDED`：作者有意省略证明与 AI/reference derivation 不再阻塞结构化发布，但 `whole_book_mathematical_acceptance=false`，AI 推导不冒充教材标准答案。
+- r3 自动内容门：38 PASS / 0 FAIL。
+- Windows `1.0.0-rc4`：学习状态 29 PASS、Go 15 PASS、race 14 PASS、Chromium 42 PASS、发布安全 UI 4 PASS、最终交付 31 PASS，均 0 FAIL。
+- rc4 EXE SHA-256：`4297b2c20c8d5db1ada2adb313f2961d70ad7cdd03b1e5298f3271b44a413983`。
+- Drive：`Book/03_Exports/Book-Final-r3-rc4-20260926`（folder `1Esll-k8m1pHzuSRxvREXK4a-meJpTsTQ`）。三个大文件以 64 MiB 分片归档，9 个分片已从 Drive 重新读回，逐片与重组后原文件 SHA-256 全部匹配。
+- 仍保留的边界是更高等级学术验收与用户本人 Windows 真机验收；这些不是当前 r6 内容发布 blocker。
+- PR #38 保持 Draft/Open/Unmerged；没有修改 main。
+
 ## Book Windows rc3 最终交付（2026-09-26 同步）
 
 Book 七书 Windows 学习版已完成 rc3 交付。预习、复习、刷题三板块已补齐到当前可用范围：预习包含每节清单、问题/笔记与来源入口；复习支持来源回忆、自评、到期/薄弱/未自评筛选；刷题支持教材题、来源自测、顺序/随机练习、暂停续练、作答历史与错题重练。生成学习提示保存在独立学习投影，不回写教材原文。
