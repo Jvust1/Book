@@ -1,6 +1,6 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-08-30",
+  "updated_date": "2026-09-26",
   "repository": "Jvust2/Book",
   "default_branch": "main",
   "active_branch": "chore/h4a-post-merge-state-20260830",
@@ -237,5 +237,70 @@
     "sync_status": "SYNCED_CURRENT",
     "sync_receipt_drive_id": "1kFXsC4vwlm3d54BX4SManeXan-ca7xDu",
     "sync_checkpoint": "governance/structured_data_enhancement_r2_sync_20260925.json"
+  },
+  "windows_app_delivery": {
+    "state": "WINDOWS_RC3_DELIVERED_VERIFIED_USER_DEVICE_PENDING",
+    "version": "1.0.0-rc3",
+    "build_id": "20260925-windows-study-r3",
+    "scope": "seven-book Windows learning app with preview/review/practice workflows",
+    "canonical_records": 26195,
+    "source_page_maps": 2343,
+    "image_assets": 1153,
+    "textbook_question_groups": 562,
+    "source_recall_selftest_groups": 5176,
+    "incomplete_question_indexes_excluded_from_answer_queue": 268,
+    "windows_exe": {
+      "file": "Book-1.0.0-rc3-Windows-x64.exe",
+      "bytes": 195373056,
+      "sha256": "6a3f6804c0ed4e561f9a714afb73dc0d1149dad77bb327b60b2ea6d4a6008a88",
+      "pe": "PE32+ x86_64 GUI"
+    },
+    "content_zip_sha256": "6c2306673a8b0a0377269b3df30f20290e90d07fd94503d6bd16e56f1a6081c4",
+    "verification": {
+      "javascript_learning_state_tests": {
+        "passed": 29,
+        "failed": 0
+      },
+      "go_backend_tests": {
+        "passed": 15,
+        "failed": 0
+      },
+      "go_race_subset": {
+        "passed": 14,
+        "failed": 0
+      },
+      "chromium_action_regression": {
+        "passed": 42,
+        "failed": 0
+      },
+      "final_delivery_checks": {
+        "passed": 28,
+        "failed": 0
+      }
+    },
+    "drive_archive": {
+      "folder_id": "1X9s88Z9BYBpxeyJv8iuXr9Vzs9eqZ3d8",
+      "folder_path": "Book/03_Exports/Book-Windows-rc3-20260926",
+      "uploaded": {
+        "verification_zip": "1JKbfLFUoaHq_JHzR7iEmdkAZ0bgSNDrT",
+        "report_md": "1ZA-OpAAxkB1AxSi7C2l1yETdqrvh-wqE",
+        "usage_md": "1wKjDRPzhXpteozW6zinXN0PXRuREqwu3",
+        "sha256s": "170Ll-j52_6HrqJmrs09qTqVtiZcvSfiP"
+      },
+      "large_binary_upload_status": "FAILED_AFTER_SINGLE_RETRY",
+      "large_binaries_remaining": [
+        "Book-1.0.0-rc3-Windows-x64.exe",
+        "Book-1.0.0-rc3-Windows-Portable.zip",
+        "Book-1.0.0-rc3-Windows-Source-and-Tests.zip"
+      ]
+    },
+    "main_modified": false,
+    "automatic_merge": false,
+    "user_device_acceptance": false,
+    "remaining_content_review": [
+      "Public Finance remaining table candidates",
+      "Financial Economics remaining general OCR review",
+      "mathematical proof/derivation independent acceptance"
+    ]
   }
 }
