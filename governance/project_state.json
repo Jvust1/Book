@@ -352,5 +352,21 @@
     "source": "governance/pending_sync.json",
     "verified_at": "2026-09-26"
   },
-  "current_release_next_step": "Only user-owned Windows device install/start/permissions/manual-interaction acceptance remains for rc4. Separately gated long-term engineering roadmap work remains future scope and is not a release blocker."
+  "current_release_next_step": "Only user-owned Windows device install/start/permissions/manual-interaction acceptance remains for rc4. Separately gated long-term engineering roadmap work remains future scope and is not a release blocker.",
+  "six_textbooks_chapter_latex_delivery": {
+    "status": "DELIVERED_DRIVE_READBACK_SHA256_VERIFIED",
+    "checkpoint": "governance/book_six_textbooks_chapter_latex_20260926.json",
+    "books": 6,
+    "chapters_or_lectures": 61,
+    "pdf_files": 67,
+    "pages": 1469,
+    "records": 24702,
+    "drive_folder_id": "1TxF-jkLN0wRo8z0EKN9aBk2Q0jUgL8yB",
+    "aggregate_pdf_zip_sha256": "9f4c55cd50d0e3a6df2a434a9547e5ee2f6ccad7817f7cae6e76617ae670755b",
+    "latex_source_zip_sha256": "9ad946275d62ff7d467f1b214c096f487b10c555896160d44d848e45f5f0e7a8",
+    "true_shusong_embedded": false,
+    "actual_cjk_font": "Noto Serif CJK SC",
+    "drive_readback_zip_hashes": "8/8 PASS",
+    "main_unchanged": true
+  }
 }
