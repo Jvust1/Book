@@ -1,0 +1,69 @@
+name: Book external fixed-commit source snapshots
+
+on:
+  push:
+    branches: [fix/structured-data-audit-20260924]
+    paths:
+      - '.github/workflows/external-source-snapshots-20260926.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  snapshot:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: learningequality-kolibri
+            repository: learningequality/kolibri
+            commit: 109027298ce03d1b97c56e569e02fe05a4f59b2d
+          - slug: learningequality-ricecooker
+            repository: learningequality/ricecooker
+            commit: a18a29cbb6d1f91b41097f9024e1e4276a4e9719
+          - slug: h5p-h5p-php-library
+            repository: h5p/h5p-php-library
+            commit: cb64a1f3884408487c3178e31fc140f5d45ca165
+          - slug: openedx-openedx-platform
+            repository: openedx/openedx-platform
+            commit: bae59d903571d65cd4a72578030b4cf69a4e985b
+          - slug: openedx-openedx-demo-course
+            repository: openedx/openedx-demo-course
+            commit: 494507ef4ba434e3be3f3f2133dbc8b8a6387cd0
+          - slug: simonw-sqlite-utils
+            repository: simonw/sqlite-utils
+            commit: 56dd09702fdb9e899f577ffd51693c1f2176cb08
+          - slug: simonw-datasette
+            repository: simonw/datasette
+            commit: 0337fba234bf574629d56be631468ea060495fa0
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ matrix.commit }}
+          path: src
+          fetch-depth: 1
+          persist-credentials: false
+          lfs: false
+          submodules: false
+      - name: Verify exact commit and build source ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git -C src rev-parse HEAD)"
+          test "$actual" = "${{ matrix.commit }}"
+          mkdir -p out
+          name="${{ matrix.slug }}-${{ matrix.commit }}.zip"
+          git -C src archive --format=zip HEAD -o "../out/$name"
+          sha256sum "out/$name" > "out/$name.sha256"
+          printf '%s\n' "${{ matrix.repository }} ${{ matrix.commit }}" > "out/SOURCE.txt"
+          unzip -t "out/$name" >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: book-source-${{ matrix.slug }}-${{ matrix.commit }}
+          path: out/
+          if-no-files-found: error
+          retention-days: 3
