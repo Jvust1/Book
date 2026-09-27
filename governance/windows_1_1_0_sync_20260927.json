@@ -1,0 +1,12 @@
+{
+  "schema": "book_windows_1_1_0_sync_v1",
+  "date": "2026-09-27",
+  "branch": "feat/windows-continuous-reader-20260927",
+  "drive_folder_id": "19bTC_WCTjWD7fdtYcDb6Y9PogSaT0XUX",
+  "new_drive_objects": 10,
+  "remote_readback": "PASS_9_OF_9_LARGE_PARTS_SHA256",
+  "split_manifest_drive_id": "1FP-ZRD3K91OCyPWYzHegHTmcT_t7HCWv",
+  "destructive_operations": 0,
+  "main_changed": false,
+  "automatic_merge": false
+}

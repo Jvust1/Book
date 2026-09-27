@@ -40,3 +40,13 @@ python tools/restore_book_windows_1_0.py --baseline rc4-source.zip --delta Book-
 升级前在旧版导出备份并保存退出，再运行新版。目标Windows x64且已有Edge，不需Python/Node/API Key。未分发字体。7书26195记录、845目录、89主题、269精编知识点、178配套题不变；全书精讲、全部原题已解和独立学术验收仍未完成。
 
 保持独立Draft PR，不自动合并，不修改main或旧发布分支。后续不要重新把默认阅读改回折叠卡片；练习工作台始终是可选入口。
+
+## 2026-09-27 全成果同步
+
+1.1.0 的大文件 Drive 归档已经补齐：完整 EXE、Portable ZIP、完整源码 ZIP 均拆成三个不超过 64 MiB 的恢复分片。9 个分片已从 Drive 完整回读，大小与 SHA-256 逐项一致。分片清单 Drive ID：`1FP-ZRD3K91OCyPWYzHegHTmcT_t7HCWv`。
+
+- EXE parts: `17EDymuAPM4S7fFXqElW4xsUBFzC-emeS`, `1BT7nzFqMk4ULRiidSNEq_cG0EtIhmb0X`, `1WbJVEp9r7Y3CJKfdP6z23le0PEoKCG4X`。
+- Portable parts: `1KOJgjq-SNoYXAtIQ6FQzbos35NyFbrAt`, `1_Q0CA4DH5PNzAFCfKWlA0KqhfWdUlSx0`, `1r919mCT5Lrurlw9XVdVw_deiM2r1kJgW`。
+- Full source parts: `1fmr1m6efwLmQ3HJYQXP99_V34VxvksNB`, `1EQAftD5XD4p-oWCt0ZtEgacGz_TSaSRL`, `1S6NTGslKTf0GWULmYhcIsxunldEpvD4_`。
+
+Drive 单文件 EXE 仍不声明存在；对话附件继续提供完整单文件下载。历史 rc4/rc5/1.0 归档不覆盖、不删除。
