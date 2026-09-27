@@ -166,7 +166,8 @@
         ]
       }
     },
-    "large_artifact_remote_readback": "PASS 9/9 parts exact size and SHA-256"
+    "large_artifact_remote_readback": "PASS 9/9 parts exact size and SHA-256",
+    "final_sync_receipt_id": "11e7TlcVnmbDPLeW_tfHwF_ciX_x6ZJ-T"
   },
   "main_changed": false,
   "automatic_merge": false,
@@ -175,11 +176,11 @@
   "final_sync": {
     "status": "SYNCED_CURRENT",
     "date": "2026-09-27",
-    "drive_new_objects": 10,
+    "drive_new_objects": 11,
     "github_commit_pending": true,
     "destructive_operations": 0,
     "categories": {
-      "NEW": 10,
+      "NEW": 11,
       "CHANGED": 3,
       "SKIP_IDENTICAL": "existing source delta, reports, delivery manifest, usage, readback and prior sync receipt",
       "HISTORICAL_DUPLICATE_PRESERVED": "all rc4, rc5 and 1.0 archives preserved",
