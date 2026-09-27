@@ -1,11 +1,11 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-09-26",
-  "repository": "Jvust2/Book",
+  "updated_date": "2026-09-27",
+  "repository": "Jvust/Book",
   "default_branch": "main",
-  "active_branch": "chore/h4a-post-merge-state-20260830",
-  "phase": "PHASE_1H_PREPARATION",
-  "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
+  "active_branch": "feat/learning-system-r2-20260927",
+  "phase": "LEARNING_SYSTEM_EXPANSION",
+  "status": "LEARNING_R2_SOURCE_IMPLEMENTED_NATIVE_AND_BROWSER_VALIDATION_PENDING",
   "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
   "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
@@ -195,7 +195,7 @@
     "snapshot_readback_drive_id": "1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV"
   },
   "blocking_items": [],
-  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval.",
+  "next_step": "Run Chromium/MathJax exam acceptance and Go/Windows build for learning r2; continue chapter-specific authored content and independently review reference answers. Do not claim a released rc6 EXE.",
   "structured_data_remediation": {
     "status": "KNOWN_ERRORS_FIXED_FULL_DATA_ARCHIVED_REVIEW_PENDING",
     "batch_date": "2026-09-24",
@@ -352,7 +352,7 @@
     "source": "governance/pending_sync.json",
     "verified_at": "2026-09-26"
   },
-  "current_release_next_step": "Only user-owned Windows device install/start/permissions/manual-interaction acceptance remains for rc4. Separately gated long-term engineering roadmap work remains future scope and is not a release blocker.",
+  "current_release_next_step": "Run Chromium/MathJax exam acceptance and Go/Windows build for learning r2; continue chapter-specific authored content and independently review reference answers. Do not claim a released rc6 EXE.",
   "six_textbooks_chapter_latex_delivery": {
     "status": "DELIVERED_DRIVE_READBACK_SHA256_VERIFIED",
     "checkpoint": "governance/book_six_textbooks_chapter_latex_20260926.json",
@@ -368,5 +368,17 @@
     "actual_cjk_font": "Noto Serif CJK SC",
     "drive_readback_zip_hashes": "8/8 PASS",
     "main_unchanged": true
+  },
+  "legacy_integrated_engineering_state": {
+    "phase": "PHASE_1H_PREPARATION",
+    "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
+    "active_branch": "chore/h4a-post-merge-state-20260830",
+    "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
+  },
+  "learning_system_r2": {
+    "checkpoint": "governance/book_learning_r2_20260927.json",
+    "version": "1.0.0-rc6-dev",
+    "new_windows_executable_built": false,
+    "whole_book_teaching_complete": false
   }
 }

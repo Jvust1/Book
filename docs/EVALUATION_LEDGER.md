@@ -177,3 +177,7 @@ Conclusion: the inert v1 Concept/ConceptAlignment contract, deterministic canoni
 ## Next evaluation
 
 H4a is the next approved stage. Its evaluation must remain shadow-only: measure FTS5/BM25 retrieval coverage/ranking against the existing Exact baseline through the shared H2 Retrieval boundary without changing public Search/QA behavior. The H4a gate must define deterministic datasets/queries, comparison metrics, provenance checks, failure semantics and exact-head regression evidence before any later activation proposal. `H3b`, `B4b`, `B5`, and StudyRecord book-version migration remain separate human gates.
+
+
+## E-013 — Learning r2 bounded source checkpoint (2026-09-27)
+Node 56/56 PASS (45 state/selection + 11 production renderer/action contracts executed in VM); Python 8/8 PASS; projection integrity PASS; 1175 source/study/media hashes unchanged. Delta restoration verified 1295 result files; Drive download SHA-256 matches 40b9eef76a44645a81c368d56e777dbf189f8f14784d3ef4f176aef3933bdd26. No Go build, real Chromium/MathJax layout, Windows host or independent expert acceptance in this checkpoint. Source provenance and exact artifact identity: governance/book_learning_r2_20260927.json.

@@ -1,0 +1,11 @@
+const test=require('node:test'),a=require('node:assert/strict');
+const E=require('../web/exam-engine.js'),ST=require('../web/study-engine.js');
+const qs=[{id:'a',section:'s1',chapter_ids:['c1'],origin:'authored_worked_problem',steps:['x','y'],answer:'z'},{id:'b',section:'s2',chapter_ids:['c2'],origin:'textbook_question',worked_solution:{steps:['x','y'],answer:'z'}},{id:'no-answer',chapter_ids:['c1'],origin:'textbook_question'},{id:'index',chapter_ids:['c1'],origin:'index_lookup'}];
+test('chapter tests only include answer-ready questions in the actual chapter',()=>a.deepEqual(E.select(qs,{},'book','chapter','c2',10,100).map(x=>x.id),['b']));
+test('wrong cycle includes wrong and needs-review, never unseen or unrelated books',()=>a.deepEqual(E.select(qs,{'book::a':{rating:1},'other::b':{rating:0}},'book','wrong','',10,100).map(x=>x.id),['a']));
+test('quick drill prioritises weak then due then unseen',()=>a.deepEqual(E.select(qs,{'book::b':{rating:0}},'book','quick','',10,100).map(x=>x.id),['b','a']));
+test('exam hides answers until submission; drafts are frozen at submission',()=>{let s=E.create(['a','b'],'id',1000,'chapter','c1',10);a.equal(E.canReveal(s),false);s.drafts.a='work';E.submit(s,2000);a.equal(E.canReveal(s),true);a.equal(s.submitted_answers.a,'work');a.equal(s.unanswered,1);a.equal(s.status,'active');E.submit(s,3000);a.equal(s.submitted_at,2000)});
+test('deadline survives pause and reload',()=>{let s=E.create(['a'],'id',1000,'chapter','c1',1);s.status='paused';a.equal(E.expired(JSON.parse(JSON.stringify(s)),61000),true)});
+test('quick and wrong modes retain immediate feedback',()=>a.equal(E.canReveal(E.create(['a'],'id',0,'quick','',10)),true));
+test('learning sessions retain existing backup merge and validation contract',()=>{let state={schema:'book-personal-state-v1',settings:{},books:{},notes:{},bookmarks:{},cards:{}};ST.personalBook(state,'book').sessions.practice=E.create(['a'],'id',0,'chapter','c1',5);ST.validate(state);a.deepEqual(ST.merge(state,state),state)});
+test('invalid modes, empty queues and non-finite limits fail closed',()=>{a.throws(()=>E.create([],'id',0,'chapter','',10));a.throws(()=>E.select(qs,{},'b','fake','',10,0));a.throws(()=>E.create(['a'],'id',0,'chapter','',NaN))});
