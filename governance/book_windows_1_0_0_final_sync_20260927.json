@@ -1,0 +1,50 @@
+{
+  "schema": "book_windows_final_sync_v1",
+  "date": "2026-09-27",
+  "release": "Book 1.0.0 Windows x64 teaching-r2",
+  "github_branch": "release/windows-1.0.0-teaching-r2-20260927",
+  "github_pr": 41,
+  "exe": {
+    "bytes": 195595776,
+    "sha256": "73e1e436bea295d93b892122ba7db1033e1e20653873be0f229bbe4c4d56dad5"
+  },
+  "coverage": {
+    "books": 7,
+    "topics": 89,
+    "review_points": 269,
+    "worked_questions": 178
+  },
+  "recheck": {
+    "javascript": "56/56",
+    "content_assertions": "1150/1150",
+    "go": "15/15",
+    "go_race_subset": "14/14",
+    "teaching_ui": "21/21",
+    "release_ui": "99/99",
+    "learning_flow": "42/42",
+    "source_safety": "4/4",
+    "pe_same_source": "32/32"
+  },
+  "drive": {
+    "folder_id": "1oHTT6KPsvEqj4fmLt1KJX4-ltqTot4ry",
+    "final_verification_zip_id": "1JzThBv8tBVKoeuFnxaFFJpRl-c7UzWUW",
+    "final_sync_receipt_id": "1iUHPryAjTQhU1kTm5TrIU4nTZPrgMeF8",
+    "single_exe_upload": "FAILED_PROVIDER_UPLOAD",
+    "verified_parts": [
+      "1mrbhNxjqX4w_Q4TA3A4PVGx0U7xzP-Gk",
+      "1WRd9fcHQaYVEzS7dmTzRc9yca-aeT-0t",
+      "1rgeHCScwhF3bdKRb5Ttjv4RN61ChFe6S"
+    ]
+  },
+  "sync_counts": {
+    "new_drive_objects": 2,
+    "changed_github_files": 4,
+    "drive_in_place_updates": 0,
+    "destructive_operations": 0
+  },
+  "limits": [
+    "Windows real-device launch/Edge/font acceptance remains external",
+    "EXE unsigned",
+    "academic whole-book completion remains false"
+  ]
+}

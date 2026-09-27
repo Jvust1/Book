@@ -52,3 +52,12 @@ The managed browser blocks direct loopback navigation. Real Chromium tests use e
 Windows x64 with an existing Edge installation is the intended target. EXE is unsigned, cross-compiled and not run on a Windows host in this session. End users need no Python/Node/API key. No font binaries, secrets or user notes are redistributed. Private textbook materials remain for authorized personal use.
 
 No automatic merge, main mutation, old artifact deletion or real personal learning-data mutation.
+
+
+## Final sync — 2026-09-27
+
+The post-packaging independent recheck is recorded as PASS within the stated scope: the delivered EXE hash remains `73e1e436bea295d93b892122ba7db1033e1e20653873be0f229bbe4c4d56dad5`; Portable and source ZIP CRC/identity checks remain valid; JS 56/56, content 1150/1150, Go 15/15, race subset 14/14, teaching UI 21/21, release UI 99/99, learning-flow regression 42/42, source-safety 4/4, and PE/same-source checks 32/32 were revalidated.
+
+Drive final verification ZIP: `1JzThBv8tBVKoeuFnxaFFJpRl-c7UzWUW`. Final sync receipt: `1iUHPryAjTQhU1kTm5TrIU4nTZPrgMeF8`.
+
+A complete single EXE Drive upload was attempted through both container upload and current-conversation attachment-reference upload paths; the provider rejected both. No false Drive EXE URL is recorded. The three existing Drive EXE parts remain fully read-back/hash-verified, while the complete single EXE remains the conversation delivery artifact. No main merge, historical deletion, or user-data mutation occurred.
