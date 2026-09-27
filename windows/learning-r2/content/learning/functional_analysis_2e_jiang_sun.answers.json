@@ -1,0 +1,112 @@
+[
+  {
+    "question_id": "group-ch01_exercises-v-0004",
+    "hint": "用分配律把同一项写成它自身加另一项，再利用加法逆元。",
+    "steps": [
+      "从数的零元与分配律出发，",
+      "$0x=(0+0)x=0x+0x.$",
+      "两边加上向量 $0x$ 的加法逆元，得到 $0x=\\theta$。其次，",
+      "$x+(-1)x=(1-1)x=0x=\\theta,$",
+      "由加法逆元的唯一性可知 $(-1)x=-x$。最后，",
+      "$\\alpha\\theta=\\alpha(\\theta+\\theta)=\\alpha\\theta+\\alpha\\theta,$",
+      "再消去一项，得 $\\alpha\\theta=\\theta$。这里的标量零 $0$ 与向量零 $\\theta$ 是不同类型的对象。"
+    ],
+    "answer": "$0x=\\theta,\\ (-1)x=-x,\\ \\alpha\\theta=\\theta$。",
+    "method": [
+      "先从分配律构造等式",
+      "用加法逆元消去重复项",
+      "区分标量零和向量零"
+    ],
+    "pitfall": "区分标量零和向量零",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  },
+  {
+    "question_id": "group-ch01_exercises-v-0006",
+    "hint": "分别加上 $-x$、乘以 $\\alpha^{-1}$，最后使用习题1。",
+    "steps": [
+      "由 $x+y=x+z$，两边加 $-x$，利用结合律及零向量性质得到 $y=z$。",
+      "若 $\\alpha x=\\alpha y$ 且 $\\alpha\\ne0$，两边数乘 $\\alpha^{-1}$，得 $x=y$。",
+      "若 $\\alpha x=\\beta x$，则 $(\\alpha-\\beta)x=\\theta$。假如 $\\alpha\\ne\\beta$，同样乘 $(\\alpha-\\beta)^{-1}$ 得 $x=\\theta$，与条件矛盾。因此 $\\alpha=\\beta$。",
+      "注意：第二条中的非零标量、第三条中的非零向量，分别是能够消去的必要条件。"
+    ],
+    "answer": "三条消去律均成立，非零条件不能省略。",
+    "method": [
+      "根据被消去对象选择加法逆元或非零标量的倒数",
+      "第三条用反证法",
+      "每一步保留非零条件"
+    ],
+    "pitfall": "每一步保留非零条件",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  },
+  {
+    "question_id": "group-ch01_exercises-v-0010",
+    "hint": "把定义中的无穷和分成有限头部和与序列无关的小尾部。",
+    "steps": [
+      "按书中 $(s)$ 的距离，写 $x_n=(\\xi_j^{(n)})_{j\\ge1}$、$x_0=(\\xi_j^{(0)})_{j\\ge1}$：",
+      "$d(x_n,x_0)=\\sum_{j=1}^\\infty 2^{-j}\\frac{|\\xi_j^{(n)}-\\xi_j^{(0)}|}{1+|\\xi_j^{(n)}-\\xi_j^{(0)}|}.$",
+      "给定 $\\varepsilon>0$，先取 $J$ 使 $\\sum_{j>J}2^{-j}<\\varepsilon/2$。每一分式小于等于1，所以整个尾部统一小于 $\\varepsilon/2$。",
+      "由于前 $J$ 个坐标分别收敛，有限和也收敛到零。因此存在 $N$，当 $n\\ge N$ 时，头部小于 $\\varepsilon/2$。相加得 $d(x_n,x_0)<\\varepsilon$。关键是先固定有限头部，再选择足够大的 $n$，不交换未经证明的无穷求和与极限。"
+    ],
+    "answer": "逐坐标收敛推出给定乘积距离 $d$ 下的收敛。",
+    "method": [
+      "先控制与序列无关的几何级数尾部",
+      "固定有限头部后用逐坐标收敛",
+      "最后合并两个误差界"
+    ],
+    "pitfall": "最后合并两个误差界",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  },
+  {
+    "question_id": "group-ch01_exercises-v-0011",
+    "hint": "不能只用有限支撑序列；收敛序列的极限可能非零。使用“最终常值”的有理序列。",
+    "steps": [
+      "在实数情形，令 $D$ 为所有前有限项是有理数、之后恒等于某个有理数的序列。复数情形把有理数换为 $\\mathbb Q+i\\mathbb Q$。$D$ 是可数个有限笛卡尔积的并，故可数，且 $D\\subset(c)$。",
+      "给定 $x=(\\xi_j)\\in(c)$，设 $\\xi_j\\to L$。先选 $N$，使 $j>N$ 时 $|\\xi_j-L|<\\varepsilon/3$；再取有理（或有理复）数 $q$，使 $|q-L|<\\varepsilon/3$。分别取前 $N$ 项的有理近似 $q_j$，误差小于 $\\varepsilon$。",
+      "令 $y=(q_1,\\ldots,q_N,q,q,\\ldots)\\in D$。前 $N$ 项与尾部的误差均小于 $\\varepsilon$，所以 $\\|x-y\\|_\\infty<\\varepsilon$。因此 $D$ 在 $(c)$ 中稠密，$(c)$ 可分。"
+    ],
+    "answer": "赋上确界范数的收敛序列空间 $(c)$ 可分。",
+    "method": [
+      "构造最终常值的有理序列集合",
+      "证明该集合可数",
+      "分别估计有限头部与收敛尾部的上确界误差"
+    ],
+    "pitfall": "分别估计有限头部与收敛尾部的上确界误差",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  },
+  {
+    "question_id": "group-ch01_exercises-v-0012",
+    "hint": "先证明距离函数的四点估计。",
+    "steps": [
+      "两次使用三角不等式得",
+      "$d(x_n,y_n)\\le d(x_n,x_m)+d(x_m,y_m)+d(y_m,y_n).$",
+      "交换 $m,n$ 后相减，得到",
+      "$|d(x_n,y_n)-d(x_m,y_m)|\\le d(x_n,x_m)+d(y_n,y_m).$",
+      "当 $m,n$ 足够大时，右侧两项各小于 $\\varepsilon/2$，于是左侧小于 $\\varepsilon$。这正是数列 $d(x_n,y_n)$ 的 Cauchy 条件，不需要假设原空间完备。"
+    ],
+    "answer": "$\\{d(x_n,y_n)\\}$ 为实数Cauchy列，无须假设 $X$ 完备。",
+    "method": [
+      "用两次三角不等式建立四点估计",
+      "交换指标得到绝对值估计",
+      "用两个Cauchy条件控制右侧"
+    ],
+    "pitfall": "用两个Cauchy条件控制右侧",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  },
+  {
+    "question_id": "group-ch01_exercises-v-0013",
+    "hint": "Cauchy 条件控制尾部；前面的有限项用一个最大值吸收。",
+    "steps": [
+      "取 $N$，使 $n\\ge N$ 时 $d(x_n,x_N)<1$。设",
+      "$R=1+\\max\\{1,d(x_1,x_N),\\ldots,d(x_{N-1},x_N)\\}.$",
+      "则对全部 $n$ 都有 $d(x_n,x_N)<R$，所以序列各点组成的集合包含于开球 $B(x_N,R)$，即有界。额外加1保证使用的是严格开球包含关系。"
+    ],
+    "answer": "任意距离空间中的Cauchy序列有界。",
+    "method": [
+      "用Cauchy条件把尾部放进一个球",
+      "用有限最大值吸收前面项",
+      "半径留正余量确保开球包含"
+    ],
+    "pitfall": "半径留正余量确保开球包含",
+    "review_status": "REFERENCE_RESTRUCTURED_NOT_INDEPENDENT_EXPERT_ACCEPTED"
+  }
+]

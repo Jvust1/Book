@@ -22,3 +22,7 @@ Detailed Foundation A design authority:
 - `docs/superpowers/specs/2026-08-28-foundation-a-course-package-design.md`
 - `docs/superpowers/plans/2026-08-28-foundation-a-course-package.md`
 - `docs/references/2026-08-28-course-package-open-source-comparison.md`
+
+
+## D-012 — 学习系统扩展（2026-09-27）
+用户明确要求章节预习、全目录知识树、原题解答与方法总结、四类考试学习入口。沿用 rc5 七书源码，来源数据只读、附加层单独版本化。考试为本机自评学习，不宣称监考或自动成绩；真题频率与建议重点分离。目录归属不明者显式保留，不按页码猜测。新工作保存在独立分支与可验证增量，不自动合并 main 或 PR #38/#39。

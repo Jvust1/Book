@@ -1,0 +1,71 @@
+{
+  "schema": "book-learning-checkpoint-v1",
+  "date": "2026-09-27",
+  "repository": "Jvust/Book",
+  "branch": "feat/learning-system-r2-20260927",
+  "baseline_commit": "437cf6ea045b68b2b64fc5b2f62003c04662018c",
+  "build": "20260927-learning-r2-dev",
+  "version": "1.0.0-rc6-dev",
+  "status": "SOURCE_IMPLEMENTED_TARGETED_TESTS_PASS_BROWSER_AND_NATIVE_BUILD_PENDING",
+  "coverage": {
+    "books": 7,
+    "teaching_units": 42,
+    "review_points": 128,
+    "worked_supplementary_problems": 76,
+    "authored_directory_entries": 79,
+    "directory_tree_entries": 845,
+    "tree_entries_with_source_records": 719,
+    "original_questions_with_solution_and_method": 10,
+    "new_original_reference_answers": 4,
+    "restructured_existing_reference_answers": 6,
+    "independent_expert_review": false,
+    "whole_book_teaching_complete": false,
+    "all_original_exercises_solved": false,
+    "exam_frequency_evidence_count": 0
+  },
+  "validation": {
+    "node_state_and_engine_tests": 45,
+    "node_production_renderer_action_contract_tests": 11,
+    "python_content_contract_tests": 8,
+    "source_projection_integrity": "PASS",
+    "immutable_source_study_media_hashes": 1175,
+    "changed_source_study_media_files": 0,
+    "restored_result_files_verified": 1295,
+    "chromium_run": false,
+    "go_build_run": false,
+    "windows_host_tested": false,
+    "new_executable_built": false
+  },
+  "delivery": {
+    "file": "Book-Learning-r2-Dev-Delta.zip",
+    "bytes": 502693,
+    "sha256": "40b9eef76a44645a81c368d56e777dbf189f8f14784d3ef4f176aef3933bdd26",
+    "changed_files": 50,
+    "new_files": 25,
+    "modified_files": 25,
+    "reused_files": 1245,
+    "result_files": 1295,
+    "drive_folder_id": "1OAxbXvgZqh4thh8lIoNt1_9l_Q0kM-jd",
+    "drive_file_id": "1SmW-3bIIlJibmBe97xjY5FtwAFzObJ3V",
+    "recovery": "Verified rc5 source directory + this delta; new directory only",
+    "restore_script": "windows/learning-r2/tools/apply_learning_delta.py",
+    "drive_remote_readback_sha256_verified": true
+  },
+  "main_modified": false,
+  "automatic_merge": false,
+  "remaining": [
+    "Real Chromium layout, MathJax and exam end-to-end acceptance",
+    "Go build and Windows native-host acceptance",
+    "Complete chapter-specific authored previews and reference solutions",
+    "Independent subject review",
+    "Verify remaining unresolved chapter placement without guessing"
+  ],
+  "source_debt": {
+    "unmapped_directory_entries": {
+      "contemporary-china-economy": 27,
+      "financial-economics-ten-lectures": 93,
+      "stein_shakarchi_functional_analysis_2011": 57
+    },
+    "note": "Includes front/back matter, indexes and unresolved placement; not equivalent to missing body chapters."
+  }
+}
