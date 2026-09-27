@@ -1,0 +1,195 @@
+{
+  "schema": "book-windows-delivery-checkpoint-v2",
+  "date": "2026-09-27",
+  "repository": "Jvust/Book",
+  "baseline_commit": "437cf6ea045b68b2b64fc5b2f62003c04662018c",
+  "version": "1.0.0",
+  "build": "20260927-windows-1.0.0-teaching-r2",
+  "status": "BUILT_TESTED_BYTE_REPRODUCIBLE_WINDOWS_HOST_PENDING",
+  "implementation_kind": "artifact-backed-seven-book-windows-app",
+  "coverage": {
+    "books": 7,
+    "authored_topics": 89,
+    "review_points": 269,
+    "worked_supplementary_questions": 178,
+    "added_topics_since_rc5": 55,
+    "added_review_points_since_rc5": 165,
+    "added_worked_questions_since_rc5": 110,
+    "source_records": 26195,
+    "directory_entries": 845,
+    "mapped_directory_entries": 167,
+    "whole_book_authored_complete": false,
+    "all_original_questions_solved": false,
+    "independent_expert_acceptance": false,
+    "per_book": [
+      {
+        "book_id": "mathematical_physics_equations_4e",
+        "topics": 22,
+        "review_points": 67,
+        "worked_questions": 44
+      },
+      {
+        "book_id": "functional_analysis_2e_jiang_sun",
+        "topics": 26,
+        "review_points": 78,
+        "worked_questions": 52
+      },
+      {
+        "book_id": "monetary-finance-3e",
+        "topics": 11,
+        "review_points": 34,
+        "worked_questions": 22
+      },
+      {
+        "book_id": "public_finance_intro_2e_2024",
+        "topics": 8,
+        "review_points": 24,
+        "worked_questions": 16
+      },
+      {
+        "book_id": "contemporary-china-economy",
+        "topics": 6,
+        "review_points": 18,
+        "worked_questions": 12
+      },
+      {
+        "book_id": "financial-economics-ten-lectures",
+        "topics": 9,
+        "review_points": 27,
+        "worked_questions": 18
+      },
+      {
+        "book_id": "stein_shakarchi_functional_analysis_2011",
+        "topics": 7,
+        "review_points": 21,
+        "worked_questions": 14
+      }
+    ]
+  },
+  "validation": {
+    "javascript_tests": {
+      "passed": 56,
+      "failed": 0
+    },
+    "content_assertions": {
+      "passed": 1150,
+      "failed": 0,
+      "included_example_checks": 146
+    },
+    "go_tests": {
+      "passed": 15,
+      "failed": 0
+    },
+    "go_race_subset": {
+      "passed": 14,
+      "failed": 0,
+      "excluded": "TestEmbeddedBundle; separately passed ordinary Go and full payload hash checks"
+    },
+    "teaching_ui_checks": {
+      "passed": 21,
+      "failed": 0
+    },
+    "release_ui_checks": {
+      "passed": 99,
+      "failed": 0
+    },
+    "legacy_ui_checks": {
+      "passed": 42,
+      "failed": 0
+    },
+    "source_safety_ui_checks": {
+      "passed": 4,
+      "failed": 0
+    },
+    "pe_and_same_source_linux_checks": {
+      "passed": 32,
+      "failed": 0
+    },
+    "projection_integrity": {
+      "passed": true,
+      "issues": 0
+    },
+    "archive_checks": {
+      "passed": 6,
+      "failed": 0
+    },
+    "immutable_source_files_byte_equal": 1175,
+    "restored_source_files_verified": 1306,
+    "fresh_restored_source_rebuild_exe_byte_identical": true,
+    "github_ci_result": "NOT_CLAIMED",
+    "browser_method": "Actual Chromium with exact packaged resources and same-source Linux Go backend through explicit test-only fetch bridge; managed browser direct loopback navigation is blocked.",
+    "windows_native_host_tested": false,
+    "mathematical_scope": "146 exact example checks inside content assertions; not proof-assistant or independent expert acceptance. TeX render success is not mathematical truth certification."
+  },
+  "windows_executable": {
+    "file": "Book-1.0.0-Windows-x64.exe",
+    "bytes": 195595776,
+    "sha256": "73e1e436bea295d93b892122ba7db1033e1e20653873be0f229bbe4c4d56dad5",
+    "payload_sha256": "eca30ee9e3bd93f7f67e14d0e8212d4f7812edf0c1815baf505197ad418e6a74",
+    "format": "PE32+ GUI x86_64",
+    "toolchain": "Go 1.23.2 linux/amd64 cross-compile windows/amd64",
+    "code_signed": false,
+    "user_delivery": "complete single EXE and Portable ZIP; no end-user manual reconstruction required",
+    "drive_direct_upload_status": "FAILED_PROVIDER_UPLOAD_VIA_CONTAINER_AND_CONVERSATION_ATTACHMENT_REFERENCE",
+    "drive_backup": "three 64MiB-or-smaller parts, all fully downloaded and SHA256 verified",
+    "drive_part_ids_in_order": [
+      "1mrbhNxjqX4w_Q4TA3A4PVGx0U7xzP-Gk",
+      "1WRd9fcHQaYVEzS7dmTzRc9yca-aeT-0t",
+      "1rgeHCScwhF3bdKRb5Ttjv4RN61ChFe6S"
+    ]
+  },
+  "portable_zip": {
+    "file": "Book-1.0.0-Windows-Portable.zip",
+    "bytes": 191314279,
+    "sha256": "ee3090fc747ff3307255f7c50ab67771c67006b9e52617e429b4a34b82ee5636",
+    "exact_executable_inside_verified": true
+  },
+  "source_recovery": {
+    "complete_source_file": "Book-1.0.0-Source-and-Tests.zip",
+    "complete_source_bytes": 192677902,
+    "complete_source_sha256": "d0f3a9290ee901f7d9b4f6d93849c3ff64ae01da6e23d53f15429a265855c765",
+    "baseline_sha256": "d27f90f62d89f17778d6dfc628a70ff3963a4e33782e4d517d2e97cfa314b91e",
+    "baseline_drive_part_ids_in_order": [
+      "1EFcVikOiCioCsQn6c4iK3jlZVpuocfV3",
+      "1x95j6Zs4FJAdLYyFpvzNKs10CcdpcDZ7",
+      "1yrq9RpQv8uNivev09NL7ZdJHNaMm-RRT"
+    ],
+    "delta_file": "Book-1.0.0-Source-Delta.zip",
+    "delta_drive_id": "1CjhCMB_J725bceG1RzNeVXts9ZLC1Psx",
+    "delta_bytes": 3566850,
+    "delta_sha256": "e201b6e6eabefec90559e2ca5ce5f094dae1e222b4e978eaf2215a05f3670b03",
+    "cumulative_from": "rc4; no intermediate rc5 delta needed",
+    "reused_files": 1192,
+    "new_or_changed_files": 114,
+    "restored_files": 1306,
+    "restore_tool": "tools/restore_book_windows_1_0.py",
+    "complete_source_storage": "verified existing rc4 baseline plus verified cumulative delta; full source ZIP also delivered in conversation",
+    "source_tree_imported_entirely_into_git": false
+  },
+  "drive": {
+    "folder_id": "1oHTT6KPsvEqj4fmLt1KJX4-ltqTot4ry",
+    "folder_path": "Book/03_Exports/Book-Windows-1.0.0-Teaching-r2-20260927",
+    "reports_zip_id": "13RXbDf4aiVlUmaEco7Pubr-NqwsvB8ce",
+    "reports_zip_sha256": "a8d9ad892c3558ccd2179dc6b608ed7e91c4524891f1e96e60ddecaf4e32bc03",
+    "delivery_manifest_id": "1A26PbjKl_GoOF3dZvzcwFF4AMwS40kOD",
+    "binary_backup_manifest_id": "13kJNw3PgVM4HVqN5O8o_g3KqXiW_BmbX",
+    "readback_verification_id": "1jCYF_f9cHBy500EdqmfsujQRaf-2C3LU",
+    "full_remote_byte_readback": "PASS: binary parts, recombined EXE, delta ZIP and report ZIP",
+    "final_verification_zip_id": "1JzThBv8tBVKoeuFnxaFFJpRl-c7UzWUW",
+    "final_sync_receipt_id": "1iUHPryAjTQhU1kTm5TrIU4nTZPrgMeF8",
+    "single_exe_drive_object_available": false
+  },
+  "main_changed": false,
+  "automatic_merge": false,
+  "personal_data_modified": false,
+  "next_step": "User Windows/Edge/font/device acceptance and independent content review; keep expanding actual teaching content without relabelling original unsolved textbook questions as solved.",
+  "final_sync": {
+    "status": "COMPLETE_WITH_SINGLE_EXE_DRIVE_UPLOAD_LIMITATION",
+    "final_recheck": "PASS_WITH_STATED_SCOPE",
+    "final_exe_sha256": "73e1e436bea295d93b892122ba7db1033e1e20653873be0f229bbe4c4d56dad5",
+    "drive_folder_id": "1oHTT6KPsvEqj4fmLt1KJX4-ltqTot4ry",
+    "final_verification_zip_id": "1JzThBv8tBVKoeuFnxaFFJpRl-c7UzWUW",
+    "final_sync_receipt_id": "1iUHPryAjTQhU1kTm5TrIU4nTZPrgMeF8",
+    "destructive_operations": 0
+  }
+}

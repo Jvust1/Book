@@ -1,0 +1,19 @@
+{
+  "schema": "book-current-windows-release-v1",
+  "version": "1.0.0",
+  "build": "20260927-windows-1.0.0-teaching-r2",
+  "checkpoint": "governance/book_windows_1_0_0_20260927.json",
+  "documentation": "docs/BOOK_WINDOWS_1_0_0.md",
+  "scope": "artifact-backed seven-book Windows application, not the legacy main/app architecture roadmap",
+  "supersedes_for_windows_delivery": "1.0.0-rc5",
+  "windows_native_host_tested": false,
+  "academic_whole_book_complete": false,
+  "final_sync": {
+    "status": "SYNCED_FINAL_CHECKS_RECORDED",
+    "date": "2026-09-27",
+    "receipt": "governance/book_windows_1_0_0_final_sync_20260927.json",
+    "drive_final_verification_id": "1JzThBv8tBVKoeuFnxaFFJpRl-c7UzWUW",
+    "drive_final_sync_receipt_id": "1iUHPryAjTQhU1kTm5TrIU4nTZPrgMeF8",
+    "single_exe_drive_upload": "FAILED_PROVIDER_UPLOAD; verified 3-part Drive backup remains authoritative"
+  }
+}
