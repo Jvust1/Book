@@ -17,3 +17,11 @@
 7. 完成后必须报告 `NEW / CHANGED / SKIP_IDENTICAL / HISTORICAL_DUPLICATE_PRESERVED / CONFLICT_NEEDS_REVIEW` 计数，以及 GitHub commit、Drive 新建/原位更新数量。
 8. 同样输入连续执行两次，第二次必须产生 **0 个 GitHub 新提交、0 个 Drive 新对象**；否则同步不具备幂等性。
 9. 不得因内容重复而自动删除 frozen evidence、历史运行结果或快照。
+
+## Current Windows delivery — 2026-09-27
+
+For the artifact-backed seven-book Windows application, read `governance/CURRENT_WINDOWS_RELEASE.json` and its checkpoint before the older rc4 `windows_app_delivery` narrative in `governance/project_state.json`. This release pointer supersedes only the Windows delivery status, not the separate main-branch architecture roadmap.
+
+Current software: 1.0.0, build `20260927-windows-1.0.0-teaching-r2`. There are 89 authored themes, 269 review points and 178 original worked supplementary questions; whole-book authored completion and independent expert acceptance remain false. Windows EXE is cross-compiled and byte-reproducible, not Windows-host accepted.
+
+Restore complete source from the verified rc4 archive plus the cumulative 1.0.0 delta identified in the checkpoint. The small `windows/teaching-r2` file is a tested code snapshot, not a complete source import or activation into legacy main/app. Preserve all existing main, rc4, rc5 and personal data unless separately authorized.
