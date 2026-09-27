@@ -1,0 +1,66 @@
+{
+  "schema": "book-learning-checkpoint-v1",
+  "date": "2026-09-27",
+  "repository": "Jvust/Book",
+  "branch": "feat/learning-system-r2-20260927",
+  "baseline_commit": "437cf6ea045b68b2b64fc5b2f62003c04662018c",
+  "source_parent": "d6fda7e8a876b3b71d04bc2617aa62e0af6b53ec",
+  "build": "20260927-learning-r2b-dev",
+  "version": "1.0.0-rc6-dev-r2b",
+  "status": "SOURCE_IMPLEMENTED_TARGETED_TESTS_PASS_BROWSER_AND_NATIVE_BUILD_PENDING",
+  "coverage": {
+    "books": 7,
+    "teaching_units": 42,
+    "review_points": 128,
+    "worked_supplementary_problems": 76,
+    "authored_directory_entries": 79,
+    "directory_tree_entries": 845,
+    "tree_entries_with_source_records": 719,
+    "original_questions_with_solution_and_method": 13,
+    "new_original_reference_answers_r2b": 3,
+    "independent_expert_review": false,
+    "whole_book_teaching_complete": false,
+    "all_original_exercises_solved": false,
+    "exam_frequency_evidence_count": 0
+  },
+  "validation": {
+    "node_tests": 56,
+    "node_tests_passed": 56,
+    "python_content_contract_tests": 8,
+    "python_content_contract_tests_passed": 8,
+    "source_projection_integrity": "PASS",
+    "source_projection_records": 26195,
+    "source_projection_sections": 845,
+    "source_projection_media": 1153,
+    "immutable_source_study_media_hashes": 1175,
+    "changed_source_study_media_files": 0,
+    "restored_result_files_verified": 1298,
+    "chromium_run": false,
+    "go_build_run": false,
+    "windows_host_tested": false,
+    "new_executable_built": false
+  },
+  "delivery": {
+    "file": "Book-Learning-r2b-Dev-Delta.zip",
+    "bytes": 570107,
+    "sha256": "a985d5d091edbcf3fe795ccc6c1c63097d2c430bb494c7b96281f394cf824f76",
+    "drive_folder_id": "1OAxbXvgZqh4thh8lIoNt1_9l_Q0kM-jd",
+    "drive_file_id": "1wIJAPySZdAWa3SXfA2yrq6dlTSXeBHh-",
+    "drive_remote_readback_sha256_verified": true,
+    "restoration": "Verified rc5 source plus r2b delta into a new directory; baseline unchanged."
+  },
+  "historical": {
+    "r2_checkpoint": "governance/book_learning_r2_20260927.json",
+    "r2_drive_file_id": "1SmW-3bIIlJibmBe97xjY5FtwAFzObJ3V",
+    "r2_preserved": true
+  },
+  "main_modified": false,
+  "automatic_merge": false,
+  "remaining": [
+    "Real Chromium layout, MathJax and exam end-to-end acceptance",
+    "Go build and Windows native-host acceptance",
+    "Independent subject review of all 13 reference solutions",
+    "Complete chapter-specific authored previews and reference solutions",
+    "Verify unresolved chapter placement without guessing"
+  ]
+}

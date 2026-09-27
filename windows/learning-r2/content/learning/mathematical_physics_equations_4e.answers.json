@@ -1,0 +1,55 @@
+[
+  {
+    "question_id": "group-ch01-sec-1-ex-8",
+    "hint": "令 ξ=x−at 或 ξ=x+at，分别计算复合函数的 t、x 二阶导数。",
+    "steps": [
+      "设 u(x,t)=F(ξ)，ξ=x−at。由链式法则，u_t=−aF′(ξ)，u_tt=a²F″(ξ)；u_x=F′(ξ)，u_xx=F″(ξ)。因此 u_tt−a²u_xx=0。",
+      "设 u(x,t)=G(η)，η=x+at。则 u_t=aG′(η)，u_tt=a²G″(η)；u_x=G′(η)，u_xx=G″(η)。同样有 u_tt−a²u_xx=0。",
+      "两种行波分别满足弦振动方程；这一结论只用到 F、G 的二阶连续可导性，不要求它们具有特定函数形式。"
+    ],
+    "answer": "F(x−at) 与 G(x+at) 都满足 u_tt−a²u_xx=0。",
+    "method": [
+      "先引入单一复合变量",
+      "按链式法则逐次求导",
+      "代回微分算子并比较系数"
+    ],
+    "pitfall": "右行波和左行波的一阶时间导数符号相反，但二阶导数都带 a²。",
+    "review_status": "AI_REFERENCE_PENDING_EXPERT_REVIEW"
+  },
+  {
+    "question_id": "group-ch01-sec-1-ex-11",
+    "hint": "记 L=∂_t²−∂_x²；对两种组合分别展开 L，并使用 Lu=0 及其导数。",
+    "steps": [
+      "对第一项，L(xu_x)=x(Lu)_x−2u_xx，L(tu_t)=t(Lu)_t+2u_tt。故 L(xu_x+tu_t)=x(Lu)_x+t(Lu)_t+2(u_tt−u_xx)=0。",
+      "记 v=u_x²+u_t²。展开可得 Lv=2(u_xt²−u_tx²)+2u_x(u_xtt−u_xxx)+2u_t(u_ttt−u_txx)+2(u_tt²−u_xx²)。",
+      "由 u 的三阶连续偏导数可交换混合求导，所以 u_xt=u_tx；对 Lu=0 分别求 x、t 导数，得 u_xtt−u_xxx=0 与 u_ttt−u_txx=0；又 u_tt=u_xx。因此 Lv=0。"
+    ],
+    "answer": "在题设正则性条件下，xu_x+tu_t 与 u_x²+u_t² 都满足同一齐次波动方程。",
+    "method": [
+      "把方程写成线性微分算子 Lu=0",
+      "用乘积法则完整展开",
+      "逐项用原方程、导数方程和混合偏导交换化简"
+    ],
+    "pitfall": "验证平方组合时，必须保留乘积求导产生的全部交叉项；仅说“由 Lu=0 显然”不足以完成证明。",
+    "review_status": "AI_REFERENCE_PENDING_EXPERT_REVIEW"
+  },
+  {
+    "question_id": "group-ch02-ex-2-3",
+    "hint": "两端绝热对应零通量边界；用 Neumann 余弦特征函数展开初始温度。",
+    "steps": [
+      "令热扩散系数为 κ>0，方程写作 u_t=κu_xx，边界为 u_x(0,t)=u_x(l,t)=0。相应空间特征函数为 1 与 cos(nπx/l)，特征值为 (nπ/l)²。",
+      "把初温展开成余弦级数：a₀=(1/l)∫₀ˡf(x)dx，aₙ=(2/l)∫₀ˡf(x)cos(nπx/l)dx（n≥1）。每个非恒定模态按 e^(−κ(nπ/l)²t) 衰减。",
+      "于是 u(x,t)=a₀+Σ_{n≥1}aₙe^(−κ(nπ/l)²t)cos(nπx/l)。对平方可积初值，该表达按相应 Fourier 意义成立；若 f 满足更强光滑条件，也可按通常意义理解。",
+      "若 f(x)=u₀ 为常数，则所有 n≥1 的余弦系数为零，a₀=u₀，故 u(x,t)=u₀。也可直接代回方程和边界、初值验证。"
+    ],
+    "answer": "绝热两端时，温度由初始余弦模态组成；平均温度保持不变，其余模态指数衰减。常数初温对应纯零模态，因此温度始终为 u₀。",
+    "method": [
+      "由物理边界条件写出 Neumann 条件",
+      "分离变量求余弦特征模态",
+      "展开初值并逐模态演化",
+      "用正交性单独检查常数情形"
+    ],
+    "pitfall": "绝热端点给出 u_x=0，不是 u=0；因此特征展开应使用余弦模态，并包含不衰减的常数项。",
+    "review_status": "AI_REFERENCE_PENDING_EXPERT_REVIEW"
+  }
+]

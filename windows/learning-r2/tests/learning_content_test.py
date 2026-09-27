@@ -36,7 +36,9 @@ class Content(unittest.TestCase):
     self.assertEqual([r['record_id'] for r in w['source_refs']],qs[qid]['record_ids'])
     for ref in w['source_refs']:self.assertEqual(ref['pdf_pages'],by[ref['record_id']].get('source_pdf_pages',[]))
     for rid in w.get('support_record_ids',[]):self.assertIn(rid,by)
-  self.assertEqual(count,10)
+  self.assertEqual(count,13)
+  math=json.loads((DATA/'mathematical_physics_equations_4e.learning.json').read_text())
+  self.assertTrue({'group-ch01-sec-1-ex-8','group-ch01-sec-1-ex-11','group-ch02-ex-2-3'}.issubset(set(math['original_answers'])))
  def test_no_frequency_or_whole_book_claim(self):
   for m in CAT['books']:
    d=json.loads((DATA/(m['id']+'.learning.json')).read_text());self.assertFalse(d['coverage']['whole_book_authored_complete']);self.assertEqual(d['coverage']['exam_frequency_evidence_count'],0)

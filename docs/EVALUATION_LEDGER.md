@@ -181,3 +181,7 @@ H4a is the next approved stage. Its evaluation must remain shadow-only: measure 
 
 ## E-013 — Learning r2 bounded source checkpoint (2026-09-27)
 Node 56/56 PASS (45 state/selection + 11 production renderer/action contracts executed in VM); Python 8/8 PASS; projection integrity PASS; 1175 source/study/media hashes unchanged. Delta restoration verified 1295 result files; Drive download SHA-256 matches 40b9eef76a44645a81c368d56e777dbf189f8f14784d3ef4f176aef3933bdd26. No Go build, real Chromium/MathJax layout, Windows host or independent expert acceptance in this checkpoint. Source provenance and exact artifact identity: governance/book_learning_r2_20260927.json.
+
+## E-014 — Learning r2b reference-solution increment (2026-09-27)
+
+Node 56/56 PASS; Python content contracts 8/8 PASS; source projection integrity PASS (26,195 records, 845 sections, 1,153 media items). Clean rc5 plus r2b delta restored and verified 1,298 files; all 1,175 source/study/media baseline hashes remain unchanged. Three additional source-linked reference solutions bring the original-question total to 13. Drive readback size and SHA-256 match the local r2b archive. No Go build, real Chromium/MathJax layout, Windows host acceptance, or independent expert review has been completed. Checkpoint: governance/book_learning_r2b_20260927.json.

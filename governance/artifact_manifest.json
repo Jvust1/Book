@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-26",
+  "updated_date": "2026-09-27",
   "project": {
     "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -445,6 +445,21 @@
           "id": "1Z6Jj5ErlHXUYdddHLTWB7F6n4VE3ccrm"
         }
       ]
+    },
+    {
+      "artifact_id": "book_learning_r2b_dev_delta_20260927",
+      "file_name": "Book-Learning-r2b-Dev-Delta.zip",
+      "type": "generated_source_delta",
+      "drive_file_id": "1wIJAPySZdAWa3SXfA2yrq6dlTSXeBHh-",
+      "drive_folder_id": "1OAxbXvgZqh4thh8lIoNt1_9l_Q0kM-jd",
+      "drive_path": "Book/03_Exports/Book-Learning-r2-Dev-20260927/Book-Learning-r2b-Dev-Delta.zip",
+      "size_bytes": 570107,
+      "sha256": "a985d5d091edbcf3fe795ccc6c1c63097d2c430bb494c7b96281f394cf824f76",
+      "version": "r2b",
+      "source": "assistant_generated",
+      "purpose": "Append three source-linked reference solutions and r2b checkpoint without replacing the preserved r2 delivery.",
+      "status": "verified_complete",
+      "verification": "Drive metadata and raw download matched filename, parent folder, 570107 bytes, and local SHA-256 a985d5d091edbcf3fe795ccc6c1c63097d2c430bb494c7b96281f394cf824f76 on 2026-09-27."
     }
   ],
   "notes": [

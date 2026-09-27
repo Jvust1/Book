@@ -5,7 +5,7 @@
   "default_branch": "main",
   "active_branch": "feat/learning-system-r2-20260927",
   "phase": "LEARNING_SYSTEM_EXPANSION",
-  "status": "LEARNING_R2_SOURCE_IMPLEMENTED_NATIVE_AND_BROWSER_VALIDATION_PENDING",
+  "status": "LEARNING_R2B_SOURCE_CHECKPOINT_NATIVE_AND_BROWSER_VALIDATION_PENDING",
   "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
   "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
@@ -195,7 +195,7 @@
     "snapshot_readback_drive_id": "1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV"
   },
   "blocking_items": [],
-  "next_step": "Run Chromium/MathJax exam acceptance and Go/Windows build for learning r2; continue chapter-specific authored content and independently review reference answers. Do not claim a released rc6 EXE.",
+  "next_step": "Complete real Chromium/MathJax exam acceptance and Go/Windows build for learning r2b; independently review the 13 methodified original reference solutions; continue chapter-specific authored content and verify unresolved chapter placement. Keep the PR in draft until these gates are addressed.",
   "structured_data_remediation": {
     "status": "KNOWN_ERRORS_FIXED_FULL_DATA_ARCHIVED_REVIEW_PENDING",
     "batch_date": "2026-09-24",
@@ -378,6 +378,18 @@
   "learning_system_r2": {
     "checkpoint": "governance/book_learning_r2_20260927.json",
     "version": "1.0.0-rc6-dev",
+    "new_windows_executable_built": false,
+    "whole_book_teaching_complete": false
+  },
+  "learning_system_r2b": {
+    "checkpoint": "governance/book_learning_r2b_20260927.json",
+    "version": "1.0.0-rc6-dev-r2b",
+    "build": "20260927-learning-r2b-dev",
+    "drive_artifact": "Book-Learning-r2b-Dev-Delta.zip",
+    "drive_file_id": "1wIJAPySZdAWa3SXfA2yrq6dlTSXeBHh-",
+    "source_commit_parent": "d6fda7e8a876b3b71d04bc2617aa62e0af6b53ec",
+    "original_questions_with_solution_and_method": 13,
+    "verified_restored_result_files": 1298,
     "new_windows_executable_built": false,
     "whole_book_teaching_complete": false
   }
