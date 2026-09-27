@@ -18,10 +18,12 @@
 8. 同样输入连续执行两次，第二次必须产生 **0 个 GitHub 新提交、0 个 Drive 新对象**；否则同步不具备幂等性。
 9. 不得因内容重复而自动删除 frozen evidence、历史运行结果或快照。
 
-## Current Windows delivery — 2026-09-27
+## Current Windows delivery — continuous reading 1.1.0
 
-For the artifact-backed seven-book Windows application, read `governance/CURRENT_WINDOWS_RELEASE.json` and its checkpoint before the older rc4 `windows_app_delivery` narrative in `governance/project_state.json`. This release pointer supersedes only the Windows delivery status, not the separate main-branch architecture roadmap.
+For the artifact-backed seven-book Windows app, read `governance/CURRENT_WINDOWS_RELEASE.json` and its checkpoint before older rc4/rc5/1.0 narratives in project_state or historical docs. This pointer supersedes only Windows delivery, not the separate main-branch architecture roadmap.
 
-Current software: 1.0.0, build `20260927-windows-1.0.0-teaching-r2`. There are 89 authored themes, 269 review points and 178 original worked supplementary questions; whole-book authored completion and independent expert acceptance remain false. Windows EXE is cross-compiled and byte-reproducible, not Windows-host accepted.
+Current software: 1.1.0, build `20260927-windows-1.1.0-continuous-r1`. The user's current product requirement is PDF-like continuous reading: preview, learn, review and worked solutions appear directly; TOC only scrolls. Individual practice is optional. Do not revert the default to collapsed cards or click-pagination.
 
-Restore complete source from the verified rc4 archive plus the cumulative 1.0.0 delta identified in the checkpoint. The small `windows/teaching-r2` file is a tested code snapshot, not a complete source import or activation into legacy main/app. Preserve all existing main, rc4, rc5 and personal data unless separately authorized.
+Content is unchanged: 89 authored themes,269 review points,178 original worked supplementary questions. Whole-book authored completion, all original exercises solved and independent expert acceptance remain false. The Windows EXE is cross-compiled, tested within stated scope and byte-reproducible; Windows-host acceptance is pending.
+
+Restore all1353 source files from verified rc4 plus the cumulative1.1 delta identified in the checkpoint, with no intermediate delta needed. Small files under windows/ are tested snapshots, not full application imports into main/app. Preserve main, all prior releases and personal data. No automatic merge.
