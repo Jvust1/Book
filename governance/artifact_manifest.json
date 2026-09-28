@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-27",
+  "updated_date": "2026-09-28",
   "project": {
     "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -460,6 +460,94 @@
       "purpose": "Append three source-linked reference solutions and r2b checkpoint without replacing the preserved r2 delivery.",
       "status": "verified_complete",
       "verification": "Drive metadata and raw download matched filename, parent folder, 570107 bytes, and local SHA-256 a985d5d091edbcf3fe795ccc6c1c63097d2c430bb494c7b96281f394cf824f76 on 2026-09-27."
+    },
+    {
+      "artifact_id": "book-five-learning-pdf-sets-20260928",
+      "type": "generated_learning_pdf_release_set",
+      "version": "20260928",
+      "source": "structured_book_data_with_source_grounded_generation",
+      "status": "VERIFIED_COMPLETE",
+      "purpose": "Five textbook preview/review/practice PDF sets generated to the current independent-review standard.",
+      "scope": {
+        "books": 5,
+        "pdf_files": 233
+      },
+      "verification": "All five ZIPs pass integrity checks; 233/233 PDF manifest/checksum entries match; full-book PDFs page-rendered without clipping/black blocks/render failures.",
+      "books": [
+        {
+          "name": "数学物理方程（第四版）",
+          "drive_folder_id": "196MH8AHjQOtTalhgrKP_2VMAOSw1KqC6",
+          "zip_id": "1Q0jHrrysurYT0GSTwWh669gEGQU1bEXr",
+          "zip_sha256": "c82799260cb63b3faa24c708bd5a147a15e1c2d90208a10338b21bdf902e0ea8",
+          "pdf_files": 29,
+          "full_book_pages": 65
+        },
+        {
+          "name": "金融经济学十讲",
+          "drive_folder_id": "10KzI_4xgu01rFijl01Bzz5jJQLYPaqV0",
+          "zip_id": "1TtB2nghNlhkYGjzBMBit2frfW8_a1wbE",
+          "zip_sha256": "c9adc2a3e2b83614766066aa424a411906adcd44243bedb8b30fe377045033b2",
+          "pdf_files": 41,
+          "full_book_pages": 53
+        },
+        {
+          "name": "公共财政概论（第二版）",
+          "drive_folder_id": "1wv-9hKjMNeCS9bCIjRFFYfDkjSoouqmH",
+          "zip_id": "1wGeoxDiD3YiCZ9njuasIKyrlL-P_5vrW",
+          "zip_sha256": "50354eb7d7e84c24fe819b3f2687bad627236d317700e7582626c7a9159cf95a",
+          "pdf_files": 61,
+          "full_book_pages": 104
+        },
+        {
+          "name": "当代中国经济（源教材：社会主义市场经济理论·第五版）",
+          "drive_folder_id": "1VbS-yb1O7SaiuZvVehIoS1UMvEpAo3A6",
+          "zip_id": "1OJpcoTDXsRFMCfzTRTMfh80cPUqAFl11",
+          "zip_sha256": "46e6a9c3ae2adf9580993d42c73f91b01078236630deb7e9b29193bc558f2192",
+          "pdf_files": 45,
+          "full_book_pages": 127
+        },
+        {
+          "name": "货币金融学（第三版）",
+          "drive_folder_id": "1aMmq_Wk80l2rV1lK6HesBnCSeFR62Pi_",
+          "zip_id": "1wCUsBysVrZ1aM2GbyaqNqjX9CR0PL3zh",
+          "zip_sha256": "b4186cc81a2336a8738a37868fed56de826f9f7e0c35782a6b16acb43d713de0",
+          "pdf_files": 57,
+          "full_book_pages": 78
+        }
+      ]
+    },
+    {
+      "artifact_id": "github-20-books-structured-20260928",
+      "type": "external_book_structured_dataset_set",
+      "version": "20260928",
+      "source": "Drive Github frozen batch manifest",
+      "drive_root_folder_id": "1WElGOEmXrGmbDvcn0O9vasmn1C5a9rzh",
+      "frozen_manifest_drive_id": "1cU90dyTkht3RbiylRcKUaWORYuIjqkgI",
+      "status": "VERIFIED_COMPLETE_WITH_SOURCE_WARNINGS",
+      "scope": {
+        "books": 20,
+        "ordinals": "1-20",
+        "missing": 0,
+        "duplicates": 0
+      },
+      "verification": "20/20 source archive member paths, sizes, and SHA-256 values match frozen manifest; required structured artifact set present for all 20; 6 PASS / 14 PASS_WITH_WARNINGS / 0 FAIL.",
+      "batch_folder_ids": {
+        "07:00": "1hfre646_bWKzmaepHgwI8X65AaeYKCQj",
+        "07:30": "1VNSdqkK63CL3KrmcFCT2Z0h_3TFTktSI",
+        "08:00": "177jOdwEg1pKU3-nVBBU1YhA6MFpbrmp5",
+        "08:30": "1GidzLSQ8ThHEywDkkJf0PLf8nknfXklU",
+        "09:00": "1mFfjB0rrvTK9PD53dQYph5DbxJweLJgL"
+      }
+    },
+    {
+      "artifact_id": "book-full-deliverable-audit-20260928",
+      "file_name": "governance/full_audit_20260928.md",
+      "type": "governance_audit_record",
+      "version": "20260928",
+      "source": "assistant_verified_drive_and_package_readback",
+      "status": "VERIFIED_COMPLETE",
+      "purpose": "Full audit of five learning-PDF sets and twenty external-book structured datasets after scheduled gap closure.",
+      "verification": "Drive read-back, ZIP integrity, PDF rendering, manifest/checksum, frozen-source identity, and directory-level delivery completeness checked."
     }
   ],
   "notes": [
