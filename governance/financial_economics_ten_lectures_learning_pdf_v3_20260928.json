@@ -29,8 +29,8 @@
     "pdf_files_total": 41,
     "preview_pages": 19,
     "review_pages": 67,
-    "practice_pages": 53,
-    "full_combined_pages": 139,
+    "practice_pages": 35,
+    "full_combined_pages": 121,
     "textbook_exercises": 95,
     "ai_study_reference_solutions": 95,
     "ai_authored_replacement_questions": 0,
@@ -54,12 +54,12 @@
     "review_folder_id": "13jFvor10T63lPCpk5ezRfNzhyZQqP3qZ",
     "practice_folder_id": "1oA0szpD09N6k53WHM1LSLt0itpKcQOlM",
     "lecture_combined_folder_id": "1eE6g8AVtTVdtOzVuE2Dz1s7b4QX0hNWL",
-    "full_pdf_id": "1up5ddsNEhclQFWi2j6wabtE6KZ_cc886",
-    "zip_id": "1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv",
-    "manifest_id": "1mGFoDnhTE390shkaJEispTQS_DwiycQg",
-    "checksums_id": "1Guzv0AStv6dcAyc0he9wCvTfyTckluhq",
-    "report_id": "1mNl-ak9G_puoLRVYRkLYSQ_fQEkrYKVd",
-    "readme_id": "1OEQBCskUMcqUhm98daBRmc6E8wVpUIZI",
+    "full_pdf_id": "1znT3VMsOG-iE9bLAOV6h8Yib3Jpmc30p",
+    "zip_id": "17N3AK4vT_29RrXbhyjuhP92P8mZAIJXb",
+    "manifest_id": "1zfe97x-tBhQHHDrcdrfZ7mkIXm1Q5A5K",
+    "checksums_id": "1vFaqGcxtBuZdL-5_rT8pcaJyhSXlaLzl",
+    "report_id": "1Rfq1dHQC8Co9A-jEF9ZUHx_lsayx3RcQ",
+    "readme_id": "15SEwfeOJzZsR0Wwkc6SKpkbh2WDaCuh4",
     "directory_counts": {
       "preview": 10,
       "review": 10,
@@ -68,8 +68,8 @@
     }
   },
   "hashes": {
-    "full_pdf_sha256": "0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723",
-    "zip_sha256": "f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f",
+    "full_pdf_sha256": "cd18a7b598f816fb3e124505d02da4f4f3f81741a1b4e22807a9b30f6101a534",
+    "zip_sha256": "d8ff5361e2f4d89ffb91dabfd29aa41920c377cbc2a6211b5f9a547bba4f594a",
     "drive_readback_full_pdf_sha256_match": true,
     "drive_readback_zip_sha256_match": true,
     "zip_integrity": "PASS"
@@ -79,18 +79,32 @@
     "missing_character_warnings": 0,
     "overfull_warnings": 0,
     "tex_errors": 0,
-    "full_combined_pages_rendered": 139,
+    "underfull_warnings_nonblocking": 4,
+    "full_combined_pages_rendered": 121,
     "a4_fail_pages": 0,
     "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
     "render_black_or_extreme_pages": 0,
+    "render_visual_layout_issues": 0,
     "exercise_solution_coverage": "95/95",
-    "manifest_file_hash_mismatches": 0
+    "question_heading_coverage": "95/95",
+    "old_generic_answer_template_markers": 0,
+    "manifest_pdf_hash_mismatches": 0,
+    "checksum_mismatches": 0,
+    "drive_directory_counts": {
+      "preview": 10,
+      "review": 10,
+      "practice": 10,
+      "lecture_combined": 10
+    },
+    "drive_duplicate_named_files": 0
   },
   "content_contract": {
     "preview": "10-20分钟快速章节地图",
     "review": "按10讲真实小节充分展开；覆盖定义、模型假设、核心命题、已核验公式、推导/机制、经济含义、易错点和闭卷自测；可脱离教材使用",
     "practice": "95道正式题目仅来自教材思考与练习；0道AI自拟题替代",
-    "answers": "95/95配AI学习参考解答；非教材/出版社官方答案",
+    "answers": "95/95均为逐题直接AI学习参考解答；旧通用模板答案已清零；非教材/出版社官方答案",
     "ocr_boundary": "普通正文仍是OCR辅助层；与原扫描冲突时以原扫描和定点修订为准",
     "formula_boundary": "253条已核验公式优先；公式10.36保留源书sqrt(t-T)排印错误provenance，派生学习层使用数学一致的sqrt(T-t)",
     "independent_financial_math_expert_review": false
@@ -102,5 +116,5 @@
     "commercial_shusong_claim": false
   },
   "main_modified": false,
-  "next_step": "继续按同一v3标准重做剩余教材；95份AI学习参考解答仍可做独立金融数学专家逐题终审。"
+  "next_step": "继续按同一v3标准重做剩余教材；95份逐题AI学习参考解答仍可做独立金融数学专家终审。"
 }
