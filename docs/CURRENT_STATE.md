@@ -1,3 +1,15 @@
+## 2026-09-28 《数学物理方程（第四版）》学习 PDF v3
+
+- 恢复入口：`governance/math_physics_equations_learning_pdf_v3_20260928.json`。
+- 按最新统一标准重做 7 章“预习 / 复习 / 刷题”：预习为 10-20 分钟快速章节地图；复习以完整独立应试为目标；刷题正式题目只使用结构化数据中的教材习题来源组。
+- 当前结构化题库共 **194 个教材习题来源组**（48 / 33 / 46 / 24 / 23 / 8 / 12；来源组可包含多个分问，不冒称 194 道独立题），194/194 均有 AI 学习参考解答；明确不冒充教材或出版社官方答案。
+- 复习使用当前结构化层的 **124 个复习来源组**，并补充来源已支持的系统知识链；第 6 章广义函数/基本解与第 7 章差分/有限元/稳定性/CFL 已补厚，不再仅为提纲。
+- 交付：21 份单项 PDF + 7 份章节合订 + 1 份全书合订，共 **29 份 PDF**；全书合订 **215 页**。
+- 校验：21 份基础 PDF 共 215 页和全书合订 215 页均完成栅格化检查；A4 异常 0、空白页 0、replacement/NUL 0、Missing Character 0、Overfull 0、黑页/渲染失败 0。
+- Drive：`Book/03_Exports/Book-MathPhysics-LearningPDF-v3-20260928`，folder ID `1-7Kv5sNUCMCwZP4gmU0PITdtUDg58TlM`；ZIP ID `1tPK_0PjSmW1GOK-mVlzQfFccCGPsctAw`，SHA-256 `2022fdd27643e58f809db3b74113be6b9dfe856ed689fcf207923cdbff2334eb`；全书 PDF ID `1DeJJtBPs9-zDcsxoOn-9gh_-5AmWdm47`，SHA-256 `a43456d0f414f9d5a0dbd60e70bff82002082fe058ec0325a68b38872e1b48f3`；Drive 回读哈希均匹配。
+- 内容边界：194 组 AI 学习参考解答尚未声明独立数学专家逐题终审；中文字体为 Noto Serif CJK SC 的书宋风格替代，不声称嵌入商业书宋。
+- `main` 未修改。
+
 ## 2026-09-28 江泽坚 / 孙善利《泛函分析（第2版）》学习 PDF v3
 
 - 恢复入口：`governance/functional_analysis_jiang_sun_learning_pdf_v3_20260928.json`。
