@@ -1,0 +1,103 @@
+{
+  "schema_version": "book_six_textbooks_v4_final_audit",
+  "updated_date": "2026-09-28",
+  "status": "PASS",
+  "scope": {
+    "books": 6,
+    "formal_pdfs": 254,
+    "full_combined_pages": 1568
+  },
+  "books": [
+    {
+      "title": "当代中国经济",
+      "full_pages": 290,
+      "total_pdfs": 45,
+      "solution_coverage": "75/75",
+      "drive_folder_id": "1h31h5UpmsIEihWz5Rw3cyUIqHHcKH05X",
+      "full_pdf_id": "1IieThSycafBq55M56-YTOJ6yybChhO7Q",
+      "full_pdf_sha256": "4e2581b8536914af979462f044a63847d3b22e943358bd5946c5a89225dd33a1",
+      "drive_subfolder_counts": "11/11/11/11"
+    },
+    {
+      "title": "泛函分析（第2版）",
+      "full_pages": 309,
+      "total_pdfs": 21,
+      "solution_coverage": "110/110",
+      "drive_folder_id": "1JJN-fXHbpfhG8_VK72DQqNOYQyMIyAsa",
+      "full_pdf_id": "1zkMKxBeRAgMDTx-L2xsouuatZyHigCvj",
+      "full_pdf_sha256": "c22a99b59fa73acce9413e88248b6ec4e604442efe06dd3c672ba6e303e79851",
+      "drive_subfolder_counts": "5/5/5/5"
+    },
+    {
+      "title": "数学物理方程（第四版）",
+      "full_pages": 249,
+      "total_pdfs": 29,
+      "solution_coverage": "194/194",
+      "drive_folder_id": "1ApvIzZdnaFbI0tjCPVAMwbSZ_flYUArB",
+      "full_pdf_id": "1GhyoYnVVu_H3zYVysSepvyH1NiG-7W2I",
+      "full_pdf_sha256": "96864c26fc723e2ffc7ab1e864f03c16b3abc5bfe34739aa641d5d29d2fad268",
+      "drive_subfolder_counts": "7/7/7/7"
+    },
+    {
+      "title": "货币金融学（第三版）",
+      "full_pages": 284,
+      "total_pdfs": 57,
+      "solution_coverage": "89/89",
+      "drive_folder_id": "1Rh_S1jZ8j-2F_f4rJ7sQMK4h0lX1Qyqb",
+      "full_pdf_id": "1Q2tZFiaGjNKy24SCaZLhvynIUjJZjm_0",
+      "full_pdf_sha256": "1d596490785b6419ec8990039a7ffaae58e1bb7015dc509fe360958926f956a6",
+      "drive_subfolder_counts": "14/14/14/14"
+    },
+    {
+      "title": "公共财政概论（第二版）",
+      "full_pages": 287,
+      "total_pdfs": 61,
+      "solution_coverage": "77/77",
+      "drive_folder_id": "1QC-B01Pap-fdQPeE6HJIGMJ4V5Rd8uuc",
+      "full_pdf_id": "1cMPHSgNY1w9q6VFhEt1hTVRDCIngy9Sv",
+      "full_pdf_sha256": "560c891dc1fe1852a317631963ae3404897937b90277fa099d4f2338667e8c3f",
+      "drive_subfolder_counts": "15/15/15/15",
+      "zip_delivery": "2 raw-byte split parts; rejoin SHA256 5b346d65b616405c4f42383d90da966be3fcb4033d4b13a49107a5da2dd90bf5"
+    },
+    {
+      "title": "金融经济学十讲",
+      "full_pages": 149,
+      "total_pdfs": 41,
+      "solution_coverage": "95/95",
+      "drive_folder_id": "1vQBoUgYp-CUj4Zpp8-M6n-2ssMEhxxi1",
+      "full_pdf_id": "1-qYvIJ4krC_BL3ROmyBoDBthqGnhvVzj",
+      "full_pdf_sha256": "52fddda6e81956b7bf2de9cc963aa1a00e5afcc060cac54f1bc466efcfc56de9",
+      "drive_subfolder_counts": "10/10/10/10"
+    }
+  ],
+  "drive_byte_readback": {
+    "all_six_full_pdfs_sha256_match": true
+  },
+  "five_book_bundle": {
+    "mode": "5 raw-byte split parts",
+    "rejoin_sha256": "b6799b19788e544ad6ff2b39620e0c7e0ae22b12528f4847c43d05b17828663c",
+    "zip_integrity": "PASS"
+  },
+  "qa": {
+    "visual_flags": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "pagination_orphan_flags": 0
+  },
+  "metadata_correction": {
+    "local_complete_cloud_sync": "COMPLETE",
+    "package_internal_sync_status_note": "Five v4 package-internal manifests retain pre-upload sync_status snapshots by design to preserve published ZIP bytes/SHA-256; this audit supersedes those sync-state fields.",
+    "historical_render_count_note": "FA/MP package manifests contain stale intermediate rendered_full_pages fields (306/241) alongside authoritative full_rendered_pages 309/249; authoritative QA/checkpoints use 309/249."
+  },
+  "nonblocking_boundaries": [
+    "Functional Analysis chapter 4 review has PDF text reading-order variation; visible content retained.",
+    "Mathematical Physics has 4 PDF native math-text extraction symbol differences; visible formulas retained.",
+    "Financial Economics lecture 4 review has one PDF text-extraction parenthesis difference; visible formula retained.",
+    "File/layout QA does not equal independent expert audit of legacy OCR text or AI study-reference answer correctness."
+  ],
+  "drive_audit_report_id": "1eVyw2xT_9zIGuTKOTvpRZLLqAahES8z4",
+  "drive_audit_report_sha256": "69150ef575f9b081cde5a3c981c3ac7d85e5cc77d1dee4a22a2b76d85c353d53",
+  "main_modified": false
+}
