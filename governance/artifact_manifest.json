@@ -752,6 +752,48 @@
         "independent financial-mathematics expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-contemporary-china-economy-learning-pdf-v3-20260928",
+      "file_name": "当代中国经济_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3-final",
+      "source": "contemporary-china-economy structured r2 + source reading layer",
+      "drive_folder_id": "1DBEvctC2KOpaKmwPgM0e0w-o3T4IZxCg",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v3-FINAL-20260928",
+      "drive_file_id": "12-HC6dcwFWtLO1csBPcnzHbCyp2nRKzg",
+      "size_bytes": 21557353,
+      "sha256": "d4322e4f81c7fc1573e2272d18323f6f2b33c3bc61e0e659e617b9a4ba5e0858",
+      "full_pdf": {
+        "drive_file_id": "1doxbUo56cq4I513jl2aXnBPBRZk3GqyX",
+        "pages": 249,
+        "bytes": 7854277,
+        "sha256": "d3f808279314ef1dac4a736b5dd21346acc5d99a678c7baf835b6a6b8e0b81c1"
+      },
+      "scope": {
+        "chapters": 11,
+        "preview_pdfs": 11,
+        "review_pdfs": 11,
+        "practice_pdfs": 11,
+        "chapter_combined_pdfs": 11,
+        "pdf_files_total": 45,
+        "preview_pages": 22,
+        "review_pages": 145,
+        "practice_pages": 82,
+        "textbook_chapter_end_questions": 75,
+        "ai_study_reference_solutions": 75,
+        "ai_authored_practice_questions": 0
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "Authoritative FINAL release: 45 PDFs; full combined 249 pages fully rendered with 0 visual issues; 75/75 confirmed chapter-end thought questions with explicitly labeled AI study reference answers;正文 records mis-typed as exercise excluded; Drive FINAL ZIP/PDF readback size and SHA-256 matched; ZIP integrity PASS.",
+      "currentness_boundary": "Textbook-period content only; current/recent/policy-stage statements are not represented as 2026-current facts.",
+      "claims_not_made": [
+        "AI study reference answers are textbook/publisher official answers",
+        "all records typed exercise are actual textbook exercises",
+        "2026 current China economic policy facts are sourced by this textbook",
+        "independent China-economy expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
