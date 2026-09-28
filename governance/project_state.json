@@ -1,6 +1,6 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-09-27",
+  "updated_date": "2026-09-28",
   "repository": "Jvust/Book",
   "default_branch": "main",
   "active_branch": "feat/learning-system-r2-20260927",
@@ -392,5 +392,23 @@
     "verified_restored_result_files": 1298,
     "new_windows_executable_built": false,
     "whole_book_teaching_complete": false
+  },
+  "scheduled_deliverables_20260928": {
+    "checkpoint": "governance/results_update_20260928.json",
+    "audit": "governance/full_audit_20260928.md",
+    "status": "ALL_SCHEDULED_DELIVERABLES_SYNCED_AND_AUDITED",
+    "learning_pdf_files": 233,
+    "learning_pdf_books": 5,
+    "github_external_books_structured": 20,
+    "github_external_books_missing": 0,
+    "github_external_books_duplicates": 0,
+    "source_identity_sha256_matches": 20,
+    "validation": {
+      "pass": 6,
+      "pass_with_warnings": 14,
+      "fail": 0
+    },
+    "main_unchanged": true,
+    "next_step": "Continue source-grounded proofreading and independent expert acceptance for recorded warnings; do not silently rewrite source facts."
   }
 }
