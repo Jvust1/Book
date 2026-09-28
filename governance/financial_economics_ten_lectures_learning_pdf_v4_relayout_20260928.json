@@ -1,0 +1,71 @@
+{
+  "schema_version": "book_learning_pdf_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "book": {
+    "slug": "financial_economics_ten_lectures",
+    "title": "金融经济学十讲"
+  },
+  "status": "LAYOUT_REBUILT_FINAL_QA_PASS",
+  "scope": {
+    "units": 10,
+    "individual_pdfs": 30,
+    "chapter_pdfs": 10,
+    "total_pdfs": 41,
+    "pages_by_mode": {
+      "preview": 20,
+      "review": 83,
+      "practice": 46
+    },
+    "full_pages": 149,
+    "exercise_units": 95,
+    "solution_coverage": "95/95"
+  },
+  "drive": {
+    "folder_id": "1vQBoUgYp-CUj4Zpp8-M6n-2ssMEhxxi1",
+    "path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v4-RELAYOUT-20260928",
+    "full_pdf_id": "1-qYvIJ4krC_BL3ROmyBoDBthqGnhvVzj",
+    "zip_id": "1gSrdxc0ZesY8vrxpbK293Pr7X0rTwQp-",
+    "preview_folder_id": "17B3iVHBWGCxJwoT7dQr0_7YUFhGTX7Oo",
+    "review_folder_id": "1VnEECI4HtSyEzU_PvTXrhyouQf7mMd3a",
+    "practice_folder_id": "1DoPWbCW4wSQhNA-RyUKvFFZ5KlX5L-Z1",
+    "chapter_folder_id": "1NWbrBJ8Lu49HOluztbr28R--nOQL5ag0"
+  },
+  "hashes": {
+    "full_pdf": "52fddda6e81956b7bf2de9cc963aa1a00e5afcc060cac54f1bc466efcfc56de9",
+    "zip": "b002557a4385b028fd9a2256adb18da792eff26bd3c35f9dd72b0c658a05976e"
+  },
+  "sizes": {
+    "full_pdf": 15818255,
+    "zip": 39982858
+  },
+  "validation": {
+    "visual_flags": 0,
+    "a4_fail": 0,
+    "blank": 0,
+    "replacement": 0,
+    "nul": 0,
+    "pagination_orphans": 0,
+    "text_frequency_exact_files": "29/30",
+    "note": "第4讲复习有1个PDF文本提取括号差异；矢量公式逐页对照可见内容未缺失。"
+  },
+  "layout": {
+    "page": "A4",
+    "left_right_mm": 20,
+    "top_mm": 19,
+    "bottom_mm": 18,
+    "body_size_pt": 9,
+    "actual_body_baseline_spacing_pt": 17.8,
+    "first_page_running_header": false,
+    "original_questions": "浅灰题目框",
+    "answers": "独立标签",
+    "heading_orphan_check": "PASS"
+  },
+  "content_boundary": {
+    "relayout_only": true,
+    "source_content_silently_corrected": false,
+    "academic_content_acceptance": false,
+    "legacy_ocr_and_ai_answer_correctness_not_reaudited": true
+  },
+  "supersedes": "v3 layout release; v3 remains historical",
+  "main_modified": false
+}
