@@ -1,3 +1,15 @@
+## 2026-09-28 《货币金融学（第三版）》学习 PDF v3
+
+- 恢复入口：`governance/monetary_finance_learning_pdf_v3_20260928.json`。
+- 按最新统一标准重做 14 章“预习 / 复习 / 刷题”：预习用于 10-20 分钟快速建立章节骨架；复习按教材实际一级节/二级节重组为可独立使用的完整讲义；刷题正式题目只使用结构化数据中的教材章末思考题。
+- 结构化题库共 **89 道教材思考题**，按章为 7 / 7 / 7 / 4 / 4 / 6 / 7 / 6 / 6 / 6 / 9 / 7 / 7 / 6；89/89 均有明确标识的 AI 学习参考解答，**0 道 AI 自拟题替代教材题**。
+- 复习共 **132 页**，预习 40 页，刷题 83 页；14 份章节合订 + 1 份全书合订，最终共 **57 份 PDF**，全书合订 **255 页**。
+- 校验：PDF 全部可打开；A4 异常 0、空白页 0、replacement/NUL 0、Missing Character 0、Overfull 0；全书 255 页完成渲染检查。Drive 四个子目录均为 14/14，补传过程中产生的 2 个同名重复文件已清除。
+- Drive：`Book/03_Exports/Book-MonetaryFinance-LearningPDF-v3-20260928`，folder ID `1IyVrLgc457rhb2eNFg6xnfLWv4UtV34B`；ZIP ID `15zY4B7RVMA6Sf5VmU-GhzYEO6Yo2bHdl`，SHA-256 `1fb94174c2d8bf0baf764c32663cd10112aa22724be746d58e6d7161da7f9b7e`；全书 PDF ID `1bH5kmOohctA1_TgS3qooXuGpiuO22QNv`，SHA-256 `750a7a5413d89e0386013e10ec1cba08bd0cd41272dffed005a479a06217e3b6`；Drive 回读哈希均匹配，ZIP 解压测试 PASS。
+- 时效边界：教材中要求“当前 / 当今 / 如今 / 联系实际”的题，本版严格按教材编写期与结构化来源回答，不把教材历史口径冒充 2026 年现实政策事实。
+- 内容边界：89 份 AI 学习参考解答尚未声明独立金融/货币理论专家逐题终审；中文字体为 Noto Serif CJK SC 的书宋风格替代，不声称嵌入商业书宋。
+- `main` 未修改。
+
 ## 2026-09-28 《数学物理方程（第四版）》学习 PDF v3
 
 - 恢复入口：`governance/math_physics_equations_learning_pdf_v3_20260928.json`。
