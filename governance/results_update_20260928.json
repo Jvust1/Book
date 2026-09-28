@@ -1,0 +1,114 @@
+{
+  "schema_version": "book_results_update_20260928_v1",
+  "updated_date": "2026-09-28",
+  "branch": "feat/gap-closure-20260928",
+  "status": "ALL_SCHEDULED_DELIVERABLES_SYNCED_AND_AUDITED",
+  "main_modified": false,
+  "audit": "governance/full_audit_20260928.md",
+  "gap_closure": "governance/gap_closure_20260928.md",
+  "learning_pdf_sets": [
+    {
+      "book": "数学物理方程（第四版）",
+      "units": 7,
+      "pdf_files": 29,
+      "full_book_pages": 65,
+      "drive_folder_id": "196MH8AHjQOtTalhgrKP_2VMAOSw1KqC6",
+      "zip_id": "1Q0jHrrysurYT0GSTwWh669gEGQU1bEXr",
+      "zip_sha256": "c82799260cb63b3faa24c708bd5a147a15e1c2d90208a10338b21bdf902e0ea8",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "book": "金融经济学十讲",
+      "units": 10,
+      "pdf_files": 41,
+      "full_book_pages": 53,
+      "drive_folder_id": "10KzI_4xgu01rFijl01Bzz5jJQLYPaqV0",
+      "zip_id": "1TtB2nghNlhkYGjzBMBit2frfW8_a1wbE",
+      "zip_sha256": "c9adc2a3e2b83614766066aa424a411906adcd44243bedb8b30fe377045033b2",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "book": "公共财政概论（第二版）",
+      "units": 15,
+      "pdf_files": 61,
+      "full_book_pages": 104,
+      "drive_folder_id": "1wv-9hKjMNeCS9bCIjRFFYfDkjSoouqmH",
+      "zip_id": "1wGeoxDiD3YiCZ9njuasIKyrlL-P_5vrW",
+      "zip_sha256": "50354eb7d7e84c24fe819b3f2687bad627236d317700e7582626c7a9159cf95a",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "book": "当代中国经济（源教材：社会主义市场经济理论·第五版）",
+      "units": 11,
+      "pdf_files": 45,
+      "full_book_pages": 127,
+      "drive_folder_id": "1VbS-yb1O7SaiuZvVehIoS1UMvEpAo3A6",
+      "zip_id": "1OJpcoTDXsRFMCfzTRTMfh80cPUqAFl11",
+      "zip_sha256": "46e6a9c3ae2adf9580993d42c73f91b01078236630deb7e9b29193bc558f2192",
+      "status": "VERIFIED_COMPLETE"
+    },
+    {
+      "book": "货币金融学（第三版）",
+      "units": 14,
+      "pdf_files": 57,
+      "full_book_pages": 78,
+      "drive_folder_id": "1aMmq_Wk80l2rV1lK6HesBnCSeFR62Pi_",
+      "zip_id": "1wCUsBysVrZ1aM2GbyaqNqjX9CR0PL3zh",
+      "zip_sha256": "b4186cc81a2336a8738a37868fed56de826f9f7e0c35782a6b16acb43d713de0",
+      "status": "VERIFIED_COMPLETE"
+    }
+  ],
+  "totals": {
+    "learning_pdf_files": 233
+  },
+  "github_books_structured": {
+    "frozen_manifest_drive_id": "1cU90dyTkht3RbiylRcKUaWORYuIjqkgI",
+    "root_folder_id": "1WElGOEmXrGmbDvcn0O9vasmn1C5a9rzh",
+    "books": 20,
+    "ordinals": "1-20",
+    "missing": 0,
+    "duplicates": 0,
+    "source_identity_sha256_matches": 20,
+    "validation": {
+      "pass": 6,
+      "pass_with_warnings": 14,
+      "fail": 0
+    },
+    "batches": [
+      {
+        "time": "07:00",
+        "ordinals": "1-4",
+        "folder_id": "1hfre646_bWKzmaepHgwI8X65AaeYKCQj"
+      },
+      {
+        "time": "07:30",
+        "ordinals": "5-8",
+        "folder_id": "1VNSdqkK63CL3KrmcFCT2Z0h_3TFTktSI"
+      },
+      {
+        "time": "08:00",
+        "ordinals": "9-12",
+        "folder_id": "177jOdwEg1pKU3-nVBBU1YhA6MFpbrmp5"
+      },
+      {
+        "time": "08:30",
+        "ordinals": "13-16",
+        "folder_id": "1GidzLSQ8ThHEywDkkJf0PLf8nknfXklU"
+      },
+      {
+        "time": "09:00",
+        "ordinals": "17-20",
+        "folder_id": "1mFfjB0rrvTK9PD53dQYph5DbxJweLJgL"
+      }
+    ],
+    "status": "VERIFIED_COMPLETE_WITH_SOURCE_WARNINGS"
+  },
+  "remaining_boundaries": [
+    "source-edition/language differences recorded for some external books",
+    "some source PDFs have limited/no embedded outline and use layout-derived hierarchy",
+    "EPUB pagination is not fabricated",
+    "public-finance/contemporary-China inherited OCR/source-text issues remain source-review debt, not delivery gaps",
+    "independent expert mathematical/full-text acceptance remains separate from delivery integrity"
+  ],
+  "next_step": "Continue source-grounded proofreading and independent expert acceptance where warnings remain; do not rewrite source facts silently. Keep main unchanged until review/merge is explicitly requested."
+}
