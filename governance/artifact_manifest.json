@@ -553,6 +553,41 @@
         "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
         "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
       }
+    },
+    {
+      "artifact_id": "book-functional-analysis-jiang-sun-learning-pdf-v3-20260928",
+      "file_name": "泛函分析_江泽坚孙善利_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3",
+      "source": "functional_analysis_2e_jiang_sun structured V2 + Book r2 normalized records + source-grounded learning layer",
+      "drive_folder_id": "1DjwG0n0yp6r6m5jegzF7_V37ZUBWTvQG",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis2-LearningPDF-v3-20260928",
+      "drive_file_id": "1QiW3a9MkI9_SMuQ3tooQ9YGKOH1fGqXn",
+      "size_bytes": 9536231,
+      "sha256": "c5ef9ed3dc0102d860f7953186f0d6ab500d4c38e7cc3385dc9cf54f24b48e8d",
+      "full_pdf": {
+        "drive_file_id": "1gQw8Ax2BPPHB4bUTFmbFCGW6aJ5yN2n0",
+        "pages": 265,
+        "bytes": 3235396,
+        "sha256": "37c7d807bf92025223801b3c65f4296485f1239583ef540c43230734196beb94"
+      },
+      "scope": {
+        "chapters": 5,
+        "preview_pdfs": 5,
+        "review_pdfs": 5,
+        "practice_pdfs": 5,
+        "chapter_combined_pdfs": 5,
+        "pdf_files_total": 21,
+        "textbook_original_exercises": 110,
+        "ai_study_reference_solutions": 110
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "15 individual PDFs / 265 pages rendered and checked; full combined 265 pages re-rendered; 110/110 textbook exercises and 110/110 AI study reference solutions present; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "claims_not_made": [
+        "AI study reference solutions are textbook/publisher official answers",
+        "independent mathematical expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
