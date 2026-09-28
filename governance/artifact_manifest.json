@@ -666,6 +666,48 @@
         "independent finance/monetary theory expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-public-finance-learning-pdf-v3-20260928",
+      "file_name": "公共财政概论（第二版）_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3",
+      "source": "public_finance_intro_2e_2024 structured r2 + source-grounded learning layer",
+      "drive_folder_id": "12PHKz_KWn2-1tcb1J166teTcv6YBFQuX",
+      "drive_path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v3-20260928",
+      "drive_file_id": "1vPEi9121wM2mTRdSX_Gu7RmZMs2FJrPj",
+      "size_bytes": 29973787,
+      "sha256": "54ee28cf66ba2d3ba6da43e5f0ea340e53a024174822386fcaa942a416b1b553",
+      "full_pdf": {
+        "drive_file_id": "11bgbC-BSSpuw21SI6lC8wgizC8aO7hSw",
+        "pages": 256,
+        "bytes": 9953794,
+        "sha256": "ffb863ac0f66fb37137e10c7aee3da2dc75d1d06a73157885c2006fa6e31cca4"
+      },
+      "scope": {
+        "units": 15,
+        "chapters_excluding_intro": 14,
+        "preview_pdfs": 15,
+        "review_pdfs": 15,
+        "practice_pdfs": 15,
+        "chapter_combined_pdfs": 15,
+        "pdf_files_total": 61,
+        "preview_pages": 33,
+        "review_pages": 146,
+        "practice_pages": 77,
+        "textbook_exercises": 77,
+        "ai_study_reference_solutions": 77,
+        "ai_authored_practice_questions": 0
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "45 base PDFs / 256 pages compiled; full combined 256 pages fully re-rendered; 77/77 textbook thought questions have explicitly labeled AI study reference answers; obvious non-semantic OCR control noise filtered only in the derived learning layer; Drive subfolders 15/15/15/15; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "currentness_boundary": "Questions asking 当前/近年来/未来五年/联系现实 are answered only from 2024 textbook-period structured sources and are not represented as 2026-current facts or predictions.",
+      "claims_not_made": [
+        "AI study reference answers are textbook/publisher official answers",
+        "2026 current fiscal facts are sourced by the textbook",
+        "independent public-finance expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
