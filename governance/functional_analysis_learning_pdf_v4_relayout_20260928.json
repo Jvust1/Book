@@ -1,0 +1,71 @@
+{
+  "schema_version": "book_learning_pdf_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "book": {
+    "slug": "functional_analysis",
+    "title": "泛函分析（第2版）"
+  },
+  "status": "LAYOUT_REBUILT_FINAL_QA_PASS",
+  "scope": {
+    "units": 5,
+    "individual_pdfs": 15,
+    "chapter_pdfs": 5,
+    "total_pdfs": 21,
+    "pages_by_mode": {
+      "preview": 20,
+      "review": 238,
+      "practice": 51
+    },
+    "full_pages": 309,
+    "exercise_units": 110,
+    "solution_coverage": "110/110"
+  },
+  "drive": {
+    "folder_id": "1JJN-fXHbpfhG8_VK72DQqNOYQyMIyAsa",
+    "path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v4-RELAYOUT-20260928",
+    "full_pdf_id": "1zkMKxBeRAgMDTx-L2xsouuatZyHigCvj",
+    "zip_id": "19BQahgNdRNQL9KL6jw2nXyJNlY_Z03QY",
+    "preview_folder_id": "1cQgO4hTT6RcfPe8kg1yg8c8jW325SkWn",
+    "review_folder_id": "1v_P8uHbC_TSqXAf-lRZrEu2Iif2PXUCU",
+    "practice_folder_id": "150vP6LlMETxCzmkVEauwJF29Ir4gVM5P",
+    "chapter_folder_id": "1xLBYHBnc0PTDz3bJ-GQ9VGHfrio97e-S"
+  },
+  "hashes": {
+    "full_pdf": "c22a99b59fa73acce9413e88248b6ec4e604442efe06dd3c672ba6e303e79851",
+    "zip": "fcdbeda6ba1fc6cd110c5b3a501483779bfedaaa526ba261217a3c3468312471"
+  },
+  "sizes": {
+    "full_pdf": 22261893,
+    "zip": 54004714
+  },
+  "validation": {
+    "visual_flags": 0,
+    "a4_fail": 0,
+    "blank": 0,
+    "replacement": 0,
+    "nul": 0,
+    "pagination_orphans": 0,
+    "text_frequency_exact_files": "15/15",
+    "note": "第4章复习存在PDF文本读取顺序差异；可见内容未丢失。"
+  },
+  "layout": {
+    "page": "A4",
+    "left_right_mm": 20,
+    "top_mm": 19,
+    "bottom_mm": 18,
+    "body_size_pt": 9,
+    "actual_body_baseline_spacing_pt": 17.8,
+    "first_page_running_header": false,
+    "original_questions": "浅灰题目框",
+    "answers": "独立标签",
+    "heading_orphan_check": "PASS"
+  },
+  "content_boundary": {
+    "relayout_only": true,
+    "source_content_silently_corrected": false,
+    "academic_content_acceptance": false,
+    "legacy_ocr_and_ai_answer_correctness_not_reaudited": true
+  },
+  "supersedes": "v3 layout release; v3 remains historical",
+  "main_modified": false
+}
