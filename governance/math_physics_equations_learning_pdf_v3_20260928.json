@@ -1,0 +1,131 @@
+{
+  "schema_version": "book_mathphys_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "mathematical_physics_equations_4e",
+    "title": "数学物理方程",
+    "edition": "第四版"
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "source_pdf_drive_file_id": "1JN-6cXSC0j4remyUpKR_wRmtMD99nEvB",
+    "source_pdf_sha256": "0398ca63ce6e594da3e1e7a29035f0b81b4e547b303046df487e52c79b1814fc",
+    "structured_r2_drive_file_id": "1eKimb6q3BhCIOeTOtThdWSqQZFs35bwG",
+    "structured_r2_sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983"
+  },
+  "scope": {
+    "chapters": 7,
+    "preview_pdfs": 7,
+    "review_pdfs": 7,
+    "practice_pdfs": 7,
+    "chapter_combined_pdfs": 7,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 29,
+    "base_pdf_pages": 215,
+    "full_combined_pages": 215,
+    "review_source_groups": 124,
+    "textbook_exercise_source_groups": 194,
+    "ai_study_reference_solutions": 194,
+    "exercise_groups_by_chapter": {
+      "1": 48,
+      "2": 33,
+      "3": 46,
+      "4": 24,
+      "5": 23,
+      "6": 8,
+      "7": 12
+    }
+  },
+  "pages_by_chapter": {
+    "1": {
+      "preview": 3,
+      "review": 26,
+      "practice": 24,
+      "combined": 53
+    },
+    "2": {
+      "preview": 2,
+      "review": 11,
+      "practice": 15,
+      "combined": 28
+    },
+    "3": {
+      "preview": 2,
+      "review": 15,
+      "practice": 27,
+      "combined": 44
+    },
+    "4": {
+      "preview": 2,
+      "review": 11,
+      "practice": 15,
+      "combined": 28
+    },
+    "5": {
+      "preview": 2,
+      "review": 11,
+      "practice": 16,
+      "combined": 29
+    },
+    "6": {
+      "preview": 2,
+      "review": 8,
+      "practice": 6,
+      "combined": 16
+    },
+    "7": {
+      "preview": 2,
+      "review": 8,
+      "practice": 7,
+      "combined": 17
+    }
+  },
+  "drive": {
+    "folder_id": "1-7Kv5sNUCMCwZP4gmU0PITdtUDg58TlM",
+    "path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v3-20260928",
+    "preview_folder_id": "1xKCV2kZNhR5kvfWM3Q8GDlZyQLtQSizn",
+    "review_folder_id": "1jCBgf9WHbOZs9vOG-dCoEtv0cWDgzRGf",
+    "practice_folder_id": "1YFoPuwZCG8g-iQJbw45TvnQ8l__0ErGE",
+    "chapter_combined_folder_id": "1iu_Z7BUBpd6qWDtSzCk1a3FwZGYMxqA3",
+    "full_pdf_id": "1DeJJtBPs9-zDcsxoOn-9gh_-5AmWdm47",
+    "zip_id": "1tPK_0PjSmW1GOK-mVlzQfFccCGPsctAw",
+    "manifest_id": "1J33OGW5U4SXCoAwYyRHsgxvRFlzmZDOI",
+    "checksums_id": "1vHTvZy8Tc8r1GH2aGYBWfvXSGrh1_5PF",
+    "report_id": "137dUO6-YRocXrLCWovH2fZ2WVrCSlUzI"
+  },
+  "hashes": {
+    "full_pdf_sha256": "a43456d0f414f9d5a0dbd60e70bff82002082fe058ec0325a68b38872e1b48f3",
+    "zip_sha256": "2022fdd27643e58f809db3b74113be6b9dfe856ed689fcf207923cdbff2334eb",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "individual_base_pages_rendered": 215,
+    "full_combined_pages_rendered": 215,
+    "all_pdf_openable": true,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "render_black_pages": 0,
+    "exercise_group_solution_coverage": "194/194"
+  },
+  "content_contract": {
+    "preview": "10-20分钟建立章节骨架，可独立阅读",
+    "review": "完整独立复习；来源定义、定理、证明/推导、例题、124个复习来源组重组；第6/7章已补充来源支持的系统知识链",
+    "practice": "正式题目只使用结构化数据中的教材习题来源组；保留多分问",
+    "answers": "AI学习参考解答，非教材/出版社官方答案",
+    "independent_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "继续按同一标准重做其余教材；数学物理方程194组AI学习参考解答仍需独立数学专家逐题终审。"
+}
