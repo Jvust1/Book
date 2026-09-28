@@ -1,6 +1,6 @@
 {
   "schema_version": "book_pending_sync_v1",
-  "updated_date": "2026-09-26",
+  "updated_date": "2026-09-28",
   "blocking_count": 0,
   "items": [
     {
@@ -78,6 +78,18 @@
       "resolution": "sqlite-utils and Datasette exact-commit Git archives were exported by GitHub Actions, uploaded to Drive External_References/Snapshots, rematerialized, ZIP-tested, and SHA-256 matched. Shared manifest Drive ID 19FmweMfPJqmq2BBOgXUWUpWtvMYExks5; readback receipt 1iqs4jp5-BW5dxX1qOus-Lf7D3IJRXOjV.",
       "blocks_next_step": false,
       "resolved_at": "2026-09-26"
+    },
+    {
+      "pending_id": "scheduled_deliverables_20260928_sync",
+      "blocking": false,
+      "status": "RESOLVED_20260928",
+      "scope": "Book learning PDFs + Github/Structured_Books_20260928",
+      "reason": "Scheduled 02:00-09:00 deliverables required final gap closure, directory normalization, audit, and GitHub/Drive state synchronization.",
+      "resolution": "Five learning-PDF sets (233 PDFs) and 20 external-book structured datasets were audited; missing 07:30 batch and directory-level exposure gaps were repaired; Drive sync receipt recorded.",
+      "receipt_drive_file_id": "1dfu6KEe-hOiNfvs9gm8Ga2sPf5Z36ohI",
+      "receipt_sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-28"
     }
   ]
 }
