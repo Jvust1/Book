@@ -1,0 +1,27 @@
+{
+  "schema": "book-windows-document-release-v1",
+  "date": "2026-09-28",
+  "version": "1.2.0",
+  "build": "20260928-windows-1.2.0-document-r1",
+  "status": "BUILT_AND_SCOPE_TESTED_WINDOWS_HOST_ACCEPTANCE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "base_github_commit": "8467f2d75e0d09a259fb1ae516781a426a061efc",
+  "base_source": {"name": "Book-1.1.0-Source-and-Tests.zip", "bytes": 194335339, "sha256": "05da19bfc77461bbcc7e5b6e2506229617e90fb5183d8a051c6826e0863b4e40"},
+  "implementation": "artifact-backed Go/JavaScript Windows application; full implementation, content assets and tests are in the hash-locked source archive below",
+  "entrypoint": "document-reader.html",
+  "coverage": {"new_reader_books": 6, "old_workspace_books_retained": 7, "main_chapters": 61, "learning_documents": 67, "preview_review_practice_documents": 186, "total_documents": 253, "document_blocks": 51175, "textbook_question_source_groups": 640, "ai_answer_labels": 640, "learning_tex_occurrences": 16923, "unique_tex_expressions": 8400, "tex_render_errors": 0},
+  "source_contract": {"learning": "Book_六本教材_全部61章及附属资料_PDF.zip and matching LaTeX/images", "preview_review_practice": "approved v3 bundles for five books; contemporary-china-economy v4", "academic_content_regenerated": false, "original_workspace_source_records_preserved": 26195},
+  "features": ["A4 automatic pagination", "continuous reflow", "12-72px live font sizing", "line spacing and margins", "local font import without redistributing fonts", "source-faithful vector math", "local notes/highlights/bookmarks", "protected personal edited copies", "per-question drafts and self-rating", "current-document search", "PDF reference links", "current-layout PDF printing", "CAS autosave and backup/recovery", "old seven-book workspace retained"],
+  "artifacts": {
+    "exe": {"name": "Book-1.2.0-Windows-x64.exe", "bytes": 407367680, "sha256": "875ac00edc9d52c3980f77e19a1700e95302945b59c78db71e41aeac01797af6", "drive_part_ids_ordered": ["1ukrNLDCzZv_yZrHA6TPCAzS1ShjuSMNk", "1PA0cphmng4TUp9uWlwzc-l10mzyMkqc3", "1KKbNq0N6VWGQuLdNDlpwxCmLOj8Hu7Ui", "17ELeACe7FtRBt8Qxn3skQ_y5va0YZ42I", "1K3ncLH5UkD5STvzKnhK342iiVX_gsGR7", "18TDqMc7iCkw33LIWT2XNmFRA0JxLR0ds", "1ilHmiASMIq9NtzOelsbdjKKbk15NfsIC"]},
+    "portable": {"name": "Book-1.2.0-Windows-Portable.zip", "bytes": 400091840, "sha256": "e63098ff6fef521b9c8c93c52bef4321fee361fa0d498b881952071beecc6744", "delivery": "complete conversation download; not archived again in Drive because EXE and source are separately archived"},
+    "source": {"name": "Book-1.2.0-Source-and-Tests.zip", "bytes": 414513559, "sha256": "3a1a755609fda969a687e9123f6b0cce8e0c81c15019f7cd8e12a56c7bac6e7f", "manifest_entries": 29300, "excludes": ["desktop/content.zip", "executables", "font binaries", "private user state", "Python caches"], "drive_part_ids_ordered": ["11FEIWdmyr-fGynwhnAN0hbU04F47B5WS", "1GCMsmBB0-wGugS5zELfHtuQEcNe7_p2w", "1G31iOo0Qn-0BLx2VSZ-hk5i_ukUiB-3o", "1O5A5BIrklAgGAI2QUdkmWtw9dNuwbwwn", "1Te8OG2CCddHufwdk8-joyhTDIsOO3VeL", "1Ocx6-MG5qXdRCZr6kYcvqAdP9tlado1E", "1dEMFLqm5tJz69j0zTZAusHle1GlNCDIJ"]},
+    "payload": {"files_excluding_manifest": 29092, "bytes": 401134238, "sha256": "23869960230d50876002bd1cf1afb85123a750d978237e5be2957ed0bb2d2e5c"}
+  },
+  "drive": {"folder_id": "1un8oDpsd2j0bRNnyB-EhEPwd1Thj6RTm", "path": "Book/03_Exports/Book-Windows-1.2.0-DocumentReader-20260928", "parts_manifest_id": "17I9yHMcF2vM6HiwOdsuR0pL022QD_bbK", "readme_id": "1vJljPdygWOCmjLdoQKKn8M0GBnthRahY", "verification_report_id": "1BGwE0DzKwR6fbah62XaJeqwf-vIJwthV", "whole_manifest_id": "1kmPqs_5WmAZeq1xduKFLftRc5x30tFtr", "sha256_list_id": "1TRGaus238BsU767mwbQkoAp0dzEOgfcP", "reassemble_script_id": "1R19v9eT4uLJ0t2LZsvS8vNDjWBiBH8BS", "readback": "21 direct files listed after uploads; all 14 part names and sizes confirmed; local split reconstruction matches both whole-file hashes", "large_whole_upload": "failed; replaced by verified 64MiB part archive", "raw_remote_bytes_downloaded_again": false},
+  "validation": {"content_assertions": 88178, "node_tests": 87, "go_tests": 15, "document_ui_checks": 95, "persistence_and_protocol_checks": 13, "final_packaged_checks": 18, "zip_crc": "PASS", "native_embedded_hash_check": "PASS", "windows_cross_compile": "PASS", "windows_pe": "PE32+ x86-64 GUI", "browser_method": "real Chromium DOM, production assets and real Go APIs through an explicitly declared test transport bridge because managed policy blocks loopback navigation", "managed_policy_changed": false, "windows_host_executed": false, "direct_browser_navigation_csp_acceptance": false, "native_windows_fonts_and_print_dialogs": false, "code_signed": false, "independent_academic_review": false},
+  "limitations": ["Browser reflow preserves content and PDF-derived style, not identical XeLaTeX line/page breaks", "Personal text editing is not full Word/DOCX compatibility; math/images are protected objects", "PDF-only mathematical fragments are vector-preserved, not guessed editable LaTeX", "Existing OCR and AI answer academic boundaries remain", "All 253 documents were statically verified, but not every font/size/document combination was visually inspected"],
+  "main_changed": false,
+  "automatic_merge": false,
+  "next_step": "Windows real-device acceptance of Edge launch, local fonts, original workspace and print dialogs; do not label this unexecuted gate as passed."
+}
