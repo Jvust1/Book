@@ -511,5 +511,37 @@
     "source_currentness_boundary": "2024教材时期，不冒充2026现实事实或政策预测",
     "independent_expert_review": false,
     "main_unchanged": true
+  },
+  "financial_economics_ten_lectures_learning_pdf_v3": {
+    "checkpoint": "governance/financial_economics_ten_lectures_learning_pdf_v3_20260928.json",
+    "status": "DELIVERED_VERIFIED",
+    "book_id": "financial-economics-ten-lectures",
+    "lectures": 10,
+    "structured_source_blocks": 3635,
+    "verified_formula_records": 253,
+    "textbook_exercises": 95,
+    "ai_study_reference_solutions": 95,
+    "ai_authored_replacement_questions": 0,
+    "pdf_files_total": 41,
+    "preview_pages": 19,
+    "review_pages": 67,
+    "practice_pages": 53,
+    "full_combined_pages": 139,
+    "drive_folder_id": "1yFtJe00-C0vZvwaUSYyURqJ1UZ1pN2Q5",
+    "zip_drive_id": "1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv",
+    "zip_sha256": "f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f",
+    "full_pdf_drive_id": "1up5ddsNEhclQFWi2j6wabtE6KZ_cc886",
+    "full_pdf_sha256": "0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723",
+    "drive_readback_verified": true,
+    "drive_directory_counts": {
+      "preview": 10,
+      "review": 10,
+      "practice": 10,
+      "lecture_combined": 10
+    },
+    "formula_10_36_source_typo_layered": true,
+    "full_character_visual_verification_of_source": false,
+    "independent_financial_math_expert_review": false,
+    "main_unchanged": true
   }
 }
