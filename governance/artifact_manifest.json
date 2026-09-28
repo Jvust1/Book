@@ -708,6 +708,48 @@
         "independent public-finance expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-financial-economics-ten-lectures-learning-pdf-v3-20260928",
+      "file_name": "金融经济学十讲_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3",
+      "source": "financial-economics-ten-lectures structured source + verified formula ledger + source-grounded learning layer",
+      "drive_folder_id": "1yFtJe00-C0vZvwaUSYyURqJ1UZ1pN2Q5",
+      "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v3-20260928",
+      "drive_file_id": "1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv",
+      "size_bytes": 13583844,
+      "sha256": "f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f",
+      "full_pdf": {
+        "drive_file_id": "1up5ddsNEhclQFWi2j6wabtE6KZ_cc886",
+        "pages": 139,
+        "bytes": 4777027,
+        "sha256": "0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723"
+      },
+      "scope": {
+        "lectures": 10,
+        "preview_pdfs": 10,
+        "review_pdfs": 10,
+        "practice_pdfs": 10,
+        "lecture_combined_pdfs": 10,
+        "pdf_files_total": 41,
+        "preview_pages": 19,
+        "review_pages": 67,
+        "practice_pages": 53,
+        "textbook_exercises": 95,
+        "ai_study_reference_solutions": 95,
+        "ai_authored_replacement_questions": 0,
+        "verified_formula_records": 253
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "30 base PDFs plus 10 lecture-combined PDFs and 1 full-book PDF; 95/95 textbook exercises have explicitly labeled AI study reference answers; Missing Character/Overfull/TeX errors all 0; manifest file hash mismatches 0; full-book 139 pages re-rendered with no A4/blank/black-page anomalies; Drive subfolders 10/10/10/10; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "source_boundary": "Historical body transcription remains OCR-assisted; original scan is authoritative on conflict. 253 formula records are source-verified. Formula 10.36 source typo provenance is retained and normalized only in derived learning material.",
+      "claims_not_made": [
+        "AI study reference answers are textbook/publisher official answers",
+        "full source OCR is character-by-character human verified",
+        "independent financial-mathematics expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
