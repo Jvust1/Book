@@ -1,0 +1,114 @@
+{
+  "schema_version": "book_public_finance_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "public_finance_intro_2e_2024",
+    "title": "公共财政概论",
+    "edition": "第二版",
+    "publication_year": 2024
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "source_pdf_drive_file_id": "1KWkj_WYTFPOyeEFXHkDWmCY-Q82ntmFv",
+    "source_pdf_bytes": 103232029,
+    "source_pdf_sha256": "c76a6dbb109d8aadb6f340243dd123e34a8514d5017b62bc6d531d60faf53c23",
+    "structured_layer": "Book_六本教材结构化数据完善_r2_20260925",
+    "structured_zip_sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983",
+    "structured_records": 3985,
+    "source_pages": 422,
+    "record_content_sha256": "7a3bd857dd7829f621a5ab6c84f60a8f89667ea9bcff92c3f38f0248df629a62"
+  },
+  "scope": {
+    "units": 15,
+    "chapters_excluding_intro": 14,
+    "preview_pdfs": 15,
+    "review_pdfs": 15,
+    "practice_pdfs": 15,
+    "chapter_combined_pdfs": 15,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 61,
+    "preview_pages": 33,
+    "review_pages": 146,
+    "practice_pages": 77,
+    "full_combined_pages": 256,
+    "textbook_exercises": 77,
+    "ai_study_reference_solutions": 77,
+    "ai_authored_practice_questions": 0,
+    "exercise_counts_by_unit": {
+      "intro": 4,
+      "ch01": 5,
+      "ch02": 5,
+      "ch03": 5,
+      "ch04": 5,
+      "ch05": 5,
+      "ch06": 5,
+      "ch07": 5,
+      "ch08": 5,
+      "ch09": 6,
+      "ch10": 6,
+      "ch11": 5,
+      "ch12": 5,
+      "ch13": 6,
+      "ch14": 5
+    }
+  },
+  "drive": {
+    "folder_id": "12PHKz_KWn2-1tcb1J166teTcv6YBFQuX",
+    "path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v3-20260928",
+    "preview_folder_id": "18_xocRt0DMOpmpJIQLnc0sDDpa5OoVYM",
+    "review_folder_id": "1AnjqdGLuPteSnCN9lV7mB-fFX_Ub_Jh-",
+    "practice_folder_id": "1jaSeHUDmEgn9lEVMTXNaFQ6u97tIu2Wz",
+    "chapter_combined_folder_id": "1nFvE1_8AjreuSTLyfTzMxEjAGW5-wD5h",
+    "full_pdf_id": "11bgbC-BSSpuw21SI6lC8wgizC8aO7hSw",
+    "zip_id": "1vPEi9121wM2mTRdSX_Gu7RmZMs2FJrPj",
+    "manifest_id": "1PrFsLgSXwUYeH9eG0Tq3NapCTD3N49KI",
+    "checksums_id": "1x--CvwfgG1Gjh-FqWgCb3o3oulXCxGKr",
+    "report_id": "1s3PoWS1QDOsA72m0x3lB_Qg0a1PPrDDK",
+    "readme_id": "1oaodDqHcqKFDp3JVmHHMVMbf1PAXLOTR",
+    "directory_counts": {
+      "preview": 15,
+      "review": 15,
+      "practice": 15,
+      "chapter_combined": 15
+    }
+  },
+  "hashes": {
+    "full_pdf_sha256": "ffb863ac0f66fb37137e10c7aee3da2dc75d1d06a73157885c2006fa6e31cca4",
+    "zip_sha256": "54ee28cf66ba2d3ba6da43e5f0ea340e53a024174822386fcaa942a416b1b553",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "base_pdfs": 45,
+    "full_combined_pages_rendered": 256,
+    "all_pdf_openable": true,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "tex_errors": 0,
+    "visual_render_issues": 0,
+    "practice_solution_coverage": "77/77",
+    "obvious_ocr_control_noise_filtered": true
+  },
+  "content_contract": {
+    "preview": "10-20分钟建立学习单元骨架；可独立阅读",
+    "review": "完整独立复习；按教材真实结构重组概念、机制、分类、财政工具、制度与来源期数据；不依赖教材定位",
+    "practice": "正式题目只使用结构化数据中的教材思考题，0道AI自拟题替代",
+    "answers": "77/77配AI学习参考解答；非教材/出版社官方答案",
+    "source_boundary": "明显不可可靠解释的OCR控制符/乱码在派生层过滤，不改原结构化事实层；来源不足不猜测",
+    "currentness_boundary": "当前/近年来/未来五年/联系现实等题严格按2024版教材来源口径，不冒充2026最新财政事实或政策预测",
+    "independent_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px≈9pt约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "继续按同一v3标准重做剩余教材；77道AI学习参考解答仍可做独立财政学专家逐题终审。"
+}
