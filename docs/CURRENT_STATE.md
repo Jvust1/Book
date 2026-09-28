@@ -1,3 +1,16 @@
+## 2026-09-28 《当代中国经济／社会主义市场经济理论（第五版）》学习 PDF v3 FINAL
+
+- 恢复入口：`governance/contemporary_china_economy_learning_pdf_v3_20260928.json`。
+- 最终权威 Drive 目录：`Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v3-FINAL-20260928`，folder ID `1DBEvctC2KOpaKmwPgM0e0w-o3T4IZxCg`。
+- 11 章；预习 11 份（22 页）、复习 11 份（**145 页**）、刷题 11 份（82 页）、章节合订 11 份、全书合订 1 份；共 **45 份 PDF**，全书合订 **249 页**。
+- 结构化 `records.jsonl` 中存在正文编号项误标为 `exercise` 的情况，因此题库没有按 type=exercise 机械收录；按目录与 reading 章末“思考题”页复核后，正式题库为 **75 道章末思考题**，分章 7 / 6 / 6 / 7 / 6 / 5 / 8 / 8 / 7 / 6 / 9。75/75 均有明确标识的 AI 学习参考解答，0 道 AI 自拟题替代。
+- 第 1 章 records 正文层较薄，使用同一结构化包中的 reading 全页文本补足；其他章节采用 records + reading 双层来源。派生层只过滤明显 OCR 控制符/乱码，不改原结构化记录。
+- 校验：249/249 页完成全量渲染；A4 异常 0、空白页 0、replacement/NUL 0、Missing Character 0、Overfull 0、TeX error 0、视觉异常 0。
+- FINAL ZIP ID `12-HC6dcwFWtLO1csBPcnzHbCyp2nRKzg`，SHA-256 `d4322e4f81c7fc1573e2272d18323f6f2b33c3bc61e0e659e617b9a4ba5e0858`；FINAL 全书 PDF ID `1doxbUo56cq4I513jl2aXnBPBRZk3GqyX`，SHA-256 `d3f808279314ef1dac4a736b5dd21346acc5d99a678c7baf835b6a6b8e0b81c1`；Drive 回读哈希一致，ZIP integrity PASS。
+- 时效边界：教材中的“当前 / 最近几年 / 改革开放以来 / 科学发展观 / 五大发展理念 / 一带一路”等内容按教材时期处理，不冒充 2026 年最新事实或政策判断。
+- AI 学习参考解答尚未声明独立中国经济/市场经济理论专家逐题终审；中文字体为 Noto Serif CJK SC 的书宋风格替代，不声称嵌入商业书宋。
+- `main` 未修改。
+
 ## 2026-09-28 《金融经济学十讲》学习 PDF v3
 
 - 恢复入口：`governance/financial_economics_ten_lectures_learning_pdf_v3_20260928.json`。
