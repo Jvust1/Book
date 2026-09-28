@@ -1,0 +1,106 @@
+{
+  "schema_version": "book_financial_economics_ten_lectures_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "financial-economics-ten-lectures",
+    "title": "金融经济学十讲",
+    "author": "史树中",
+    "edition": "第1版",
+    "publication_date": "2011-11",
+    "isbn": "978-7-5432-2022-5"
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "source_pdf_drive_file_id": "1gVQbXk7X7IKhFd6vgAtH88tQBOKPya5e",
+    "source_pdf_pages": 278,
+    "source_pdf_bytes": 63920851,
+    "source_pdf_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+    "structured_source_blocks": 3635,
+    "verified_formula_records": 253,
+    "source_authority": "original scanned PDF when OCR conflicts"
+  },
+  "scope": {
+    "lectures": 10,
+    "preview_pdfs": 10,
+    "review_pdfs": 10,
+    "practice_pdfs": 10,
+    "lecture_combined_pdfs": 10,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 41,
+    "preview_pages": 19,
+    "review_pages": 67,
+    "practice_pages": 53,
+    "full_combined_pages": 139,
+    "textbook_exercises": 95,
+    "ai_study_reference_solutions": 95,
+    "ai_authored_replacement_questions": 0,
+    "exercise_counts_by_lecture": {
+      "1": 5,
+      "2": 18,
+      "3": 7,
+      "4": 13,
+      "5": 10,
+      "6": 9,
+      "7": 6,
+      "8": 14,
+      "9": 6,
+      "10": 7
+    }
+  },
+  "drive": {
+    "folder_id": "1yFtJe00-C0vZvwaUSYyURqJ1UZ1pN2Q5",
+    "path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v3-20260928",
+    "preview_folder_id": "14YnPOfAkDD7uAbiBwsDLoCiqPy9gRFTN",
+    "review_folder_id": "13jFvor10T63lPCpk5ezRfNzhyZQqP3qZ",
+    "practice_folder_id": "1oA0szpD09N6k53WHM1LSLt0itpKcQOlM",
+    "lecture_combined_folder_id": "1eE6g8AVtTVdtOzVuE2Dz1s7b4QX0hNWL",
+    "full_pdf_id": "1up5ddsNEhclQFWi2j6wabtE6KZ_cc886",
+    "zip_id": "1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv",
+    "manifest_id": "1mGFoDnhTE390shkaJEispTQS_DwiycQg",
+    "checksums_id": "1Guzv0AStv6dcAyc0he9wCvTfyTckluhq",
+    "report_id": "1mNl-ak9G_puoLRVYRkLYSQ_fQEkrYKVd",
+    "readme_id": "1OEQBCskUMcqUhm98daBRmc6E8wVpUIZI",
+    "directory_counts": {
+      "preview": 10,
+      "review": 10,
+      "practice": 10,
+      "lecture_combined": 10
+    }
+  },
+  "hashes": {
+    "full_pdf_sha256": "0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723",
+    "zip_sha256": "f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "base_pdf_sets_compiled": true,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "tex_errors": 0,
+    "full_combined_pages_rendered": 139,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "render_black_or_extreme_pages": 0,
+    "exercise_solution_coverage": "95/95",
+    "manifest_file_hash_mismatches": 0
+  },
+  "content_contract": {
+    "preview": "10-20分钟快速章节地图",
+    "review": "按10讲真实小节充分展开；覆盖定义、模型假设、核心命题、已核验公式、推导/机制、经济含义、易错点和闭卷自测；可脱离教材使用",
+    "practice": "95道正式题目仅来自教材思考与练习；0道AI自拟题替代",
+    "answers": "95/95配AI学习参考解答；非教材/出版社官方答案",
+    "ocr_boundary": "普通正文仍是OCR辅助层；与原扫描冲突时以原扫描和定点修订为准",
+    "formula_boundary": "253条已核验公式优先；公式10.36保留源书sqrt(t-T)排印错误provenance，派生学习层使用数学一致的sqrt(T-t)",
+    "independent_financial_math_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px≈9pt约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "继续按同一v3标准重做剩余教材；95份AI学习参考解答仍可做独立金融数学专家逐题终审。"
+}
