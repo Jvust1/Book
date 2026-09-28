@@ -547,7 +547,12 @@
       "source": "assistant_verified_drive_and_package_readback",
       "status": "VERIFIED_COMPLETE",
       "purpose": "Full audit of five learning-PDF sets and twenty external-book structured datasets after scheduled gap closure.",
-      "verification": "Drive read-back, ZIP integrity, PDF rendering, manifest/checksum, frozen-source identity, and directory-level delivery completeness checked."
+      "verification": "Drive read-back, ZIP integrity, PDF rendering, manifest/checksum, frozen-source identity, and directory-level delivery completeness checked.",
+      "drive_sync_receipt": {
+        "drive_file_id": "1dfu6KEe-hOiNfvs9gm8Ga2sPf5Z36ohI",
+        "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
+        "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
+      }
     }
   ],
   "notes": [
