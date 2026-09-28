@@ -1,0 +1,71 @@
+{
+  "schema_version": "book_learning_pdf_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "book": {
+    "slug": "monetary_finance",
+    "title": "货币金融学（第三版）"
+  },
+  "status": "LAYOUT_REBUILT_FINAL_QA_PASS",
+  "scope": {
+    "units": 14,
+    "individual_pdfs": 42,
+    "chapter_pdfs": 14,
+    "total_pdfs": 57,
+    "pages_by_mode": {
+      "preview": 45,
+      "review": 148,
+      "practice": 91
+    },
+    "full_pages": 284,
+    "exercise_units": 89,
+    "solution_coverage": "89/89"
+  },
+  "drive": {
+    "folder_id": "1Rh_S1jZ8j-2F_f4rJ7sQMK4h0lX1Qyqb",
+    "path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v4-RELAYOUT-20260928",
+    "full_pdf_id": "1Q2tZFiaGjNKy24SCaZLhvynIUjJZjm_0",
+    "zip_id": "1mSFFAY6f8eD6n_NxY4UQEhqh92ZZC3iC",
+    "preview_folder_id": "1WUBrHTkdrTfVmLt9VsKNe846IfMdgf01",
+    "review_folder_id": "1bzwhC2u_Rygifl0VmEAoe2tySq7P6bAd",
+    "practice_folder_id": "1C2Z3UnhmfNow54jdyU7koXJIRD13DKTo",
+    "chapter_folder_id": "1cWOYKAfL6svHdvylm17vWhvNLPF_rZ0G"
+  },
+  "hashes": {
+    "full_pdf": "1d596490785b6419ec8990039a7ffaae58e1bb7015dc509fe360958926f956a6",
+    "zip": "8ad44ac207a167d212b1f5f29445794c6e5c4f97ac75065ff172de5093b7ddf0"
+  },
+  "sizes": {
+    "full_pdf": 39378266,
+    "zip": 102234834
+  },
+  "validation": {
+    "visual_flags": 0,
+    "a4_fail": 0,
+    "blank": 0,
+    "replacement": 0,
+    "nul": 0,
+    "pagination_orphans": 0,
+    "text_frequency_exact_files": "42/42",
+    "note": "重排前后文本频次与文本流保持检查全部一致。"
+  },
+  "layout": {
+    "page": "A4",
+    "left_right_mm": 20,
+    "top_mm": 19,
+    "bottom_mm": 18,
+    "body_size_pt": 9,
+    "actual_body_baseline_spacing_pt": 17.8,
+    "first_page_running_header": false,
+    "original_questions": "浅灰题目框",
+    "answers": "独立标签",
+    "heading_orphan_check": "PASS"
+  },
+  "content_boundary": {
+    "relayout_only": true,
+    "source_content_silently_corrected": false,
+    "academic_content_acceptance": false,
+    "legacy_ocr_and_ai_answer_correctness_not_reaudited": true
+  },
+  "supersedes": "v3 layout release; v3 remains historical",
+  "main_modified": false
+}
