@@ -1,0 +1,71 @@
+{
+  "schema_version": "book_learning_pdf_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "book": {
+    "slug": "mathematical_physics_equations",
+    "title": "数学物理方程（第四版）"
+  },
+  "status": "LAYOUT_REBUILT_FINAL_QA_PASS",
+  "scope": {
+    "units": 7,
+    "individual_pdfs": 21,
+    "chapter_pdfs": 7,
+    "total_pdfs": 29,
+    "pages_by_mode": {
+      "preview": 16,
+      "review": 98,
+      "practice": 135
+    },
+    "full_pages": 249,
+    "exercise_units": 194,
+    "solution_coverage": "194/194"
+  },
+  "drive": {
+    "folder_id": "1ApvIzZdnaFbI0tjCPVAMwbSZ_flYUArB",
+    "path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v4-RELAYOUT-20260928",
+    "full_pdf_id": "1GhyoYnVVu_H3zYVysSepvyH1NiG-7W2I",
+    "zip_id": "1QTmgwNEePWok2XsbuSwWIhomCkL0KKB5",
+    "preview_folder_id": "1mrkk6CpFNGYq2HMZvEV_9DAM5KfCYT89",
+    "review_folder_id": "1xLwCXQmg6FFKC5mmAitVrZSEfIM5g1cI",
+    "practice_folder_id": "1-SiE2uTU-ZrsJFOJm_VS9unXHcs3Q1gy",
+    "chapter_folder_id": "1qwg4YfunMNpy1Jw8lIh5mijsKCH4QTtM"
+  },
+  "hashes": {
+    "full_pdf": "96864c26fc723e2ffc7ab1e864f03c16b3abc5bfe34739aa641d5d29d2fad268",
+    "zip": "b6042fb39214b2578cdcc7312e1655849398cb52e9c5086b11593a4a6bc50a65"
+  },
+  "sizes": {
+    "full_pdf": 19686006,
+    "zip": 49219940
+  },
+  "validation": {
+    "visual_flags": 0,
+    "a4_fail": 0,
+    "blank": 0,
+    "replacement": 0,
+    "nul": 0,
+    "pagination_orphans": 0,
+    "text_frequency_exact_files": "17/21",
+    "note": "4个刷题PDF存在PDF原生数学文本提取符号差异；逐页图像核对公式可见内容未缺失。"
+  },
+  "layout": {
+    "page": "A4",
+    "left_right_mm": 20,
+    "top_mm": 19,
+    "bottom_mm": 18,
+    "body_size_pt": 9,
+    "actual_body_baseline_spacing_pt": 17.8,
+    "first_page_running_header": false,
+    "original_questions": "浅灰题目框",
+    "answers": "独立标签",
+    "heading_orphan_check": "PASS"
+  },
+  "content_boundary": {
+    "relayout_only": true,
+    "source_content_silently_corrected": false,
+    "academic_content_acceptance": false,
+    "legacy_ocr_and_ai_answer_correctness_not_reaudited": true
+  },
+  "supersedes": "v3 layout release; v3 remains historical",
+  "main_modified": false
+}
