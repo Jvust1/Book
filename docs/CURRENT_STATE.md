@@ -1,3 +1,21 @@
+## 2026-09-28 五本教材学习 PDF v4 统一重排（当前权威）
+
+- 总恢复入口：`governance/five_textbooks_v4_relayout_20260928.json`。
+- 本轮覆盖：泛函分析（第2版）、数学物理方程（第四版）、货币金融学（第三版）、公共财政概论（第二版）、金融经济学十讲。
+- 统一版式：A4；正文 9pt（Book 六号≈12px 约定）；实际基线间距约 17.8pt；左右 20mm、上 19mm、下 18mm；首页取消重复页眉；教材原题使用浅灰框；AI 学习参考解答独立标签；标题页尾孤立检查通过。
+- 五本合计 **209 份正式 PDF**、全书合订 **1278 页**，题/解答覆盖：泛函分析 110/110、数学物理方程 194/194、货币金融学 89/89、公共财政概论 77/77、金融经济学十讲 95/95。
+- 全量 QA：五本全书均逐页栅格化；视觉异常 0、A4 异常 0、空白页 0、replacement/NUL 0、页尾孤立标题/题号 0。最终 QA 报告 Drive ID `15Cxs2tCK4sSdAIVAccNxZyAMDq4V3YQI`，版式样张 ID `1Y-DDVgoC-Y4BxPPPiGN8Luzn3tQn9_8q`。
+- 当前权威 Drive 目录：
+  - 泛函分析：`Book-FunctionalAnalysis-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1JJN-fXHbpfhG8_VK72DQqNOYQyMIyAsa`，全书 309 页。
+  - 数学物理方程：`Book-MathPhysics-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1ApvIzZdnaFbI0tjCPVAMwbSZ_flYUArB`，全书 249 页。
+  - 货币金融学：`Book-MonetaryFinance-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1Rh_S1jZ8j-2F_f4rJ7sQMK4h0lX1Qyqb`，全书 284 页。
+  - 公共财政概论：`Book-PublicFinance-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1QC-B01Pap-fdQPeE6HJIGMJ4V5Rd8uuc`，全书 287 页。单一 105MB ZIP 被 Drive 上传接口拒绝两次，已按原字节无损切为 2 卷上传，并记录原 ZIP SHA-256 `5b346d65b616405c4f42383d90da966be3fcb4033d4b13a49107a5da2dd90bf5`。
+  - 金融经济学十讲：`Book-FinancialEconomicsTenLectures-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1vQBoUgYp-CUj4Zpp8-M6n-2ssMEhxxi1`，全书 149 页。
+- 五本统一大包本地 SHA-256 为 `b6799b19788e544ad6ff2b39620e0c7e0ae22b12528f4847c43d05b17828663c`；343MB 单一 ZIP 被 Drive 接口拒绝，已无损切为 5 卷上传到 `Book-v4-Relayout-QA-20260928`，可按说明拼回同一 ZIP。
+- 边界：本轮是版式与文件完整性升级，不把旧 v3 OCR 文本错误或 AI 参考答案静默改写成“已专家校订”；数学类少数 PDF 存在文本提取层符号/顺序差异，但已逐页图像核对可见公式未缺失。
+- v3 保留为历史版本；以上五本 v4 现为当前权威交付。
+- `main` 未修改。
+
 ## 2026-09-28 《当代中国经济》学习 PDF v4 重排版（当前权威）
 
 - 恢复入口：`governance/contemporary_china_economy_learning_pdf_v4_relayout_20260928.json`。
