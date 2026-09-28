@@ -1,0 +1,93 @@
+{
+  "schema_version": "book_five_textbooks_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "status": "DELIVERED_VERIFIED_LAYOUT_REBUILD",
+  "scope": {
+    "books": 5,
+    "formal_pdfs": 209,
+    "full_combined_pages": 1278,
+    "exercise_solution_pairs": 565
+  },
+  "qa": {
+    "full_books_fully_rendered": true,
+    "visual_flags": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "pagination_orphan_flags": 0,
+    "qa_report_sha256": "45d2c52d70a1df72723ddbb2c2369272956f2fe8d3f119d37653c4b5d2b956fe"
+  },
+  "books": [
+    {
+      "title": "泛函分析（第2版）",
+      "checkpoint": "governance/functional_analysis_learning_pdf_v4_relayout_20260928.json",
+      "drive_folder_id": "1JJN-fXHbpfhG8_VK72DQqNOYQyMIyAsa",
+      "full_pages": 309,
+      "total_pdfs": 21,
+      "solution_coverage": "110/110"
+    },
+    {
+      "title": "数学物理方程（第四版）",
+      "checkpoint": "governance/mathematical_physics_equations_learning_pdf_v4_relayout_20260928.json",
+      "drive_folder_id": "1ApvIzZdnaFbI0tjCPVAMwbSZ_flYUArB",
+      "full_pages": 249,
+      "total_pdfs": 29,
+      "solution_coverage": "194/194"
+    },
+    {
+      "title": "货币金融学（第三版）",
+      "checkpoint": "governance/monetary_finance_learning_pdf_v4_relayout_20260928.json",
+      "drive_folder_id": "1Rh_S1jZ8j-2F_f4rJ7sQMK4h0lX1Qyqb",
+      "full_pages": 284,
+      "total_pdfs": 57,
+      "solution_coverage": "89/89"
+    },
+    {
+      "title": "公共财政概论（第二版）",
+      "checkpoint": "governance/public_finance_learning_pdf_v4_relayout_20260928.json",
+      "drive_folder_id": "1QC-B01Pap-fdQPeE6HJIGMJ4V5Rd8uuc",
+      "full_pages": 287,
+      "total_pdfs": 61,
+      "solution_coverage": "77/77"
+    },
+    {
+      "title": "金融经济学十讲",
+      "checkpoint": "governance/financial_economics_ten_lectures_learning_pdf_v4_relayout_20260928.json",
+      "drive_folder_id": "1vQBoUgYp-CUj4Zpp8-M6n-2ssMEhxxi1",
+      "full_pages": 149,
+      "total_pdfs": 41,
+      "solution_coverage": "95/95"
+    }
+  ],
+  "drive_qa": {
+    "folder_id": "1xG5TKDQjpw91-WMRm3enueFsCJFL9kL7",
+    "qa_report_id": "15Cxs2tCK4sSdAIVAccNxZyAMDq4V3YQI",
+    "sample_pdf_id": "1Y-DDVgoC-Y4BxPPPiGN8Luzn3tQn9_8q",
+    "combined_zip_local_sha256": "b6799b19788e544ad6ff2b39620e0c7e0ae22b12528f4847c43d05b17828663c",
+    "combined_zip_parts": [
+      {
+        "id": "15E7PiunWNZULJG8BFwBA870kUi1AQOTp",
+        "name": "五本教材_统一重排v4_20260928.zip.part00"
+      },
+      {
+        "id": "1BJES-BUWXaRwgNz3uzBsOzB4-w7eP8mB",
+        "name": "五本教材_统一重排v4_20260928.zip.part01"
+      },
+      {
+        "id": "1sMF2JFSiKEYWt6HVDlYffjIhFNzvZayW",
+        "name": "五本教材_统一重排v4_20260928.zip.part02"
+      },
+      {
+        "id": "1BZxmPU4zjpqKBGeo8fZsAy_i2sIzCUKO",
+        "name": "五本教材_统一重排v4_20260928.zip.part03"
+      },
+      {
+        "id": "1Xyll05bxZuwkOZE8eYqRuWnuCvsPg4TW",
+        "name": "五本教材_统一重排v4_20260928.zip.part04"
+      }
+    ]
+  },
+  "content_boundary": "排版与文件完整性QA；原v3遗留OCR文本错误与AI答案学科质量未做静默改写。",
+  "main_modified": false
+}
