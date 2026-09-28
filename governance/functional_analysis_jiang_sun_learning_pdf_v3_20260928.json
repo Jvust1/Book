@@ -1,0 +1,89 @@
+{
+  "schema_version": "book_functional_analysis_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "functional_analysis_2e_jiang_sun",
+    "title": "泛函分析",
+    "edition": "第2版",
+    "authors": [
+      "江泽坚",
+      "孙善利"
+    ],
+    "publisher": "高等教育出版社"
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "structured_v2_drive_file_id": "1NblcrHjMGl7fN_vJxAk9IeKRGPCDC-_l",
+    "source_pdf_drive_file_id": "1KvpnDy7__2DCUYM65TrFHaondfoN3ciu",
+    "source_pdf_sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1"
+  },
+  "scope": {
+    "chapters": 5,
+    "preview_pdfs": 5,
+    "review_pdfs": 5,
+    "practice_pdfs": 5,
+    "chapter_combined_pdfs": 5,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 21,
+    "preview_pages": 19,
+    "review_pages": 205,
+    "practice_pages": 41,
+    "full_combined_pages": 265,
+    "textbook_original_exercises": 110,
+    "ai_study_reference_solutions": 110
+  },
+  "exercise_counts_by_chapter": {
+    "1": 30,
+    "2": 16,
+    "3": 30,
+    "4": 30,
+    "5": 4
+  },
+  "drive": {
+    "folder_id": "1DjwG0n0yp6r6m5jegzF7_V37ZUBWTvQG",
+    "path": "Book/03_Exports/Book-FunctionalAnalysis2-LearningPDF-v3-20260928",
+    "preview_folder_id": "1U3TF1UdFSiq641FpYurfeJHJzlP0XbOI",
+    "review_folder_id": "1GMCVtO8uNNfs85ubuFrP2B5mrvlCgX3k",
+    "practice_folder_id": "1M5vplOte6fnHUGH-MhZzFRICicbZqyyS",
+    "chapter_combined_folder_id": "1cIlpwJdabNHgvFAsL1CeBWSd4MW5IX5d",
+    "full_pdf_id": "1gQw8Ax2BPPHB4bUTFmbFCGW6aJ5yN2n0",
+    "zip_id": "1QiW3a9MkI9_SMuQ3tooQ9YGKOH1fGqXn",
+    "manifest_id": "1ToxSNljbOeYg1ohDU_W_JylSzzdXWXOg",
+    "checksums_id": "1FJjDWCW8On1sN1s20hJfEPlol63wpexG",
+    "report_id": "1xvrq9dLleA0rMusiOEgg8sf_VDmLLkOY"
+  },
+  "hashes": {
+    "full_pdf_sha256": "37c7d807bf92025223801b3c65f4296485f1239583ef540c43230734196beb94",
+    "zip_sha256": "c5ef9ed3dc0102d860f7953186f0d6ab500d4c38e7cc3385dc9cf54f24b48e8d",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "base_pdfs_rendered_pages": 265,
+    "full_combined_rendered_pages": 265,
+    "a4": "PASS",
+    "blank_pages": 0,
+    "replacement_or_nul_pages": 0,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "render_health_issues": 0,
+    "textbook_exercise_presence": "110/110",
+    "solution_presence": "110/110"
+  },
+  "content_contract": {
+    "preview": "独立快速预习；10-20分钟建立章节骨架",
+    "review": "完整独立复习；完整性优先，不依赖教材定位信息使用",
+    "practice": "正式题目只使用当前结构化数据中的教材原题",
+    "answers": "AI学习参考解答，非教材/出版社官方答案",
+    "independent_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "对110道AI学习参考解答进行独立数学专家逐题终审，并将同一新版式/内容标准推广到其余教材。"
+}
