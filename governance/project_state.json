@@ -431,5 +431,24 @@
     "drive_readback_verified": true,
     "independent_expert_review": false,
     "main_unchanged": true
+  },
+  "mathematical_physics_equations_learning_pdf_v3": {
+    "checkpoint": "governance/math_physics_equations_learning_pdf_v3_20260928.json",
+    "status": "DELIVERED_VERIFIED",
+    "book_id": "mathematical_physics_equations_4e",
+    "chapters": 7,
+    "review_source_groups": 124,
+    "textbook_exercise_source_groups": 194,
+    "ai_study_reference_solutions": 194,
+    "pdf_files_total": 29,
+    "full_combined_pages": 215,
+    "drive_folder_id": "1-7Kv5sNUCMCwZP4gmU0PITdtUDg58TlM",
+    "zip_drive_id": "1tPK_0PjSmW1GOK-mVlzQfFccCGPsctAw",
+    "zip_sha256": "2022fdd27643e58f809db3b74113be6b9dfe856ed689fcf207923cdbff2334eb",
+    "full_pdf_drive_id": "1DeJJtBPs9-zDcsxoOn-9gh_-5AmWdm47",
+    "full_pdf_sha256": "a43456d0f414f9d5a0dbd60e70bff82002082fe058ec0325a68b38872e1b48f3",
+    "drive_readback_verified": true,
+    "independent_expert_review": false,
+    "main_unchanged": true
   }
 }
