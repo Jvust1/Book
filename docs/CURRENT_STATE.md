@@ -1,3 +1,16 @@
+## 2026-09-28 《公共财政概论（第二版）》学习 PDF v3
+
+- 恢复入口：`governance/public_finance_learning_pdf_v3_20260928.json`。
+- 按最新统一标准重做“绪论 + 14章”的预习 / 复习 / 刷题：预习用于 10-20 分钟建立章节地图；复习按教材真实小节重组为可独立使用的完整讲义；刷题正式题目只采用结构化数据中的教材思考题。
+- 结构化题库共 **77 道教材思考题**，按单元为 4 / 5 / 5 / 5 / 5 / 5 / 5 / 5 / 5 / 6 / 6 / 5 / 5 / 6 / 5；77/77 均有明确标识的 AI 学习参考解答，**0 道 AI 自拟题替代教材题**。
+- 复习共 **146 页**，预习 33 页，刷题 77 页；15 份章节/单元合订 + 1 份全书合订，最终共 **61 份 PDF**，全书合订 **256 页**。
+- 对 15 个容易由通用检索带来偏题的答案做了专项来源定向修正；明显不可可靠解释的 OCR 控制符/乱码只在派生学习层过滤，原结构化事实层未改。
+- 校验：45 份基础 PDF 全部编译通过；Missing Character 0、Overfull 0、TeX error 0；全书 256 页全部栅格化检查，A4 异常 0、空白页 0、replacement/NUL 0、黑页/明显渲染异常 0。
+- Drive：`Book/03_Exports/Book-PublicFinance-LearningPDF-v3-20260928`，folder ID `12PHKz_KWn2-1tcb1J166teTcv6YBFQuX`；四个子目录均 15/15。ZIP ID `1vPEi9121wM2mTRdSX_Gu7RmZMs2FJrPj`，SHA-256 `54ee28cf66ba2d3ba6da43e5f0ea340e53a024174822386fcaa942a416b1b553`；全书 PDF ID `11bgbC-BSSpuw21SI6lC8wgizC8aO7hSw`，SHA-256 `ffb863ac0f66fb37137e10c7aee3da2dc75d1d06a73157885c2006fa6e31cca4`；Drive 回读哈希匹配，ZIP 解压测试 PASS。
+- 时效边界：“当前 / 近年来 / 未来五年 / 联系现实”等题严格按 2024 年版教材来源口径回答，不冒充 2026 年最新财政事实或政策预测。
+- 内容边界：77 份 AI 学习参考解答尚未声明独立财政学专家逐题终审；中文字体为 Noto Serif CJK SC 的书宋风格替代，不声称嵌入商业书宋。
+- `main` 未修改。
+
 ## 2026-09-28 《货币金融学（第三版）》学习 PDF v3
 
 - 恢复入口：`governance/monetary_finance_learning_pdf_v3_20260928.json`。
