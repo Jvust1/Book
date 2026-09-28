@@ -1,3 +1,14 @@
+## 2026-09-28 江泽坚 / 孙善利《泛函分析（第2版）》学习 PDF v3
+
+- 恢复入口：`governance/functional_analysis_jiang_sun_learning_pdf_v3_20260928.json`。
+- 按最新统一标准重做 5 章“预习 / 复习 / 刷题”：预习保持快速独立章节地图；复习以完整性优先并可脱离教材独立应试；刷题正式题目只使用结构化数据中的教材原题。
+- 5 章共 110 道教材原题（30 / 16 / 30 / 30 / 4），110/110 均有完整 AI 学习参考解答，明确不冒充教材或出版社官方答案。
+- 交付：15 份单项 PDF + 5 份章节合订 + 1 份全书合订，共 21 份 PDF；预习 19 页、复习 205 页、刷题 41 页，全书合订 265 页。
+- PDF 校验：基础 265 页和全书合订 265 页均完成渲染检查；A4、空白页、替换字符、缺字、Overfull、黑页/渲染异常均 0。
+- Drive：`Book/03_Exports/Book-FunctionalAnalysis2-LearningPDF-v3-20260928`，folder ID `1DjwG0n0yp6r6m5jegzF7_V37ZUBWTvQG`；ZIP ID `1QiW3a9MkI9_SMuQ3tooQ9YGKOH1fGqXn`，SHA-256 `c5ef9ed3dc0102d860f7953186f0d6ab500d4c38e7cc3385dc9cf54f24b48e8d`；Drive 回读哈希匹配。
+- 内容边界：AI 学习参考解答尚未声明独立数学专家逐题终审；中文字体为 Noto Serif CJK SC 的书宋风格替代，不声称嵌入商业书宋。
+- `main` 未修改。
+
 ## 2026-09-28 定时成果全量同步与审计
 
 - 恢复入口：`governance/results_update_20260928.json`；全量审计：`governance/full_audit_20260928.md`；缺口闭环：`governance/gap_closure_20260928.md`。
