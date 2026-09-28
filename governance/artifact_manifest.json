@@ -829,6 +829,219 @@
         "2026 current policy facts sourced by textbook",
         "commercial Shusong embedded"
       ]
+    },
+    {
+      "artifact_id": "book-functional-analysis-learning-pdf-v4-relayout-20260928",
+      "file_name": "泛函分析_江泽坚孙善利_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3 content layer; layout rebuild only",
+      "drive_folder_id": "1JJN-fXHbpfhG8_VK72DQqNOYQyMIyAsa",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": "19BQahgNdRNQL9KL6jw2nXyJNlY_Z03QY",
+      "size_bytes": 54004714,
+      "sha256": "fcdbeda6ba1fc6cd110c5b3a501483779bfedaaa526ba261217a3c3468312471",
+      "full_pdf": {
+        "drive_file_id": "1zkMKxBeRAgMDTx-L2xsouuatZyHigCvj",
+        "pages": 309,
+        "bytes": 22261893,
+        "sha256": "c22a99b59fa73acce9413e88248b6ec4e604442efe06dd3c672ba6e303e79851"
+      },
+      "scope": {
+        "units": 5,
+        "total_pdfs": 21,
+        "preview_pages": 20,
+        "review_pages": 238,
+        "practice_pages": 51,
+        "exercise_units": 110,
+        "solution_coverage": "110/110"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Full 309-page raster QA; visual/A4/blank/replacement/NUL/orphan flags 0; Drive directory counts 5/5/5/5; ZIP and full PDF uploaded."
+    },
+    {
+      "artifact_id": "book-math-physics-equations-learning-pdf-v4-relayout-20260928",
+      "file_name": "数学物理方程（第四版）_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3 content layer; layout rebuild only",
+      "drive_folder_id": "1ApvIzZdnaFbI0tjCPVAMwbSZ_flYUArB",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": "1QTmgwNEePWok2XsbuSwWIhomCkL0KKB5",
+      "size_bytes": 49219940,
+      "sha256": "b6042fb39214b2578cdcc7312e1655849398cb52e9c5086b11593a4a6bc50a65",
+      "full_pdf": {
+        "drive_file_id": "1GhyoYnVVu_H3zYVysSepvyH1NiG-7W2I",
+        "pages": 249,
+        "bytes": 19686006,
+        "sha256": "96864c26fc723e2ffc7ab1e864f03c16b3abc5bfe34739aa641d5d29d2fad268"
+      },
+      "scope": {
+        "units": 7,
+        "total_pdfs": 29,
+        "preview_pages": 16,
+        "review_pages": 98,
+        "practice_pages": 135,
+        "exercise_units": 194,
+        "solution_coverage": "194/194"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Full 249-page raster QA; visual/A4/blank/replacement/NUL/orphan flags 0; Drive directory counts 7/7/7/7; 4 PDF text-extraction symbol differences noted, visible formulas preserved."
+    },
+    {
+      "artifact_id": "book-monetary-finance-learning-pdf-v4-relayout-20260928",
+      "file_name": "货币金融学（第三版）_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3 content layer; layout rebuild only",
+      "drive_folder_id": "1Rh_S1jZ8j-2F_f4rJ7sQMK4h0lX1Qyqb",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": "1mSFFAY6f8eD6n_NxY4UQEhqh92ZZC3iC",
+      "size_bytes": 102234834,
+      "sha256": "8ad44ac207a167d212b1f5f29445794c6e5c4f97ac75065ff172de5093b7ddf0",
+      "full_pdf": {
+        "drive_file_id": "1Q2tZFiaGjNKy24SCaZLhvynIUjJZjm_0",
+        "pages": 284,
+        "bytes": 39378266,
+        "sha256": "1d596490785b6419ec8990039a7ffaae58e1bb7015dc509fe360958926f956a6"
+      },
+      "scope": {
+        "units": 14,
+        "total_pdfs": 57,
+        "preview_pages": 45,
+        "review_pages": 148,
+        "practice_pages": 91,
+        "exercise_units": 89,
+        "solution_coverage": "89/89"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Full 284-page raster QA; visual/A4/blank/replacement/NUL/orphan flags 0; Drive directory counts 14/14/14/14; text preservation checks exact."
+    },
+    {
+      "artifact_id": "book-public-finance-learning-pdf-v4-relayout-20260928",
+      "file_name": "公共财政概论（第二版）_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3 content layer; layout rebuild only",
+      "drive_folder_id": "1QC-B01Pap-fdQPeE6HJIGMJ4V5Rd8uuc",
+      "drive_path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": null,
+      "size_bytes": 109584202,
+      "sha256": "5b346d65b616405c4f42383d90da966be3fcb4033d4b13a49107a5da2dd90bf5",
+      "zip_delivery": {
+        "mode": "raw_byte_split",
+        "parts": [
+          {
+            "drive_file_id": "1j_zFEWN5rLCHWuemRey-IZaBRMoPmEAs",
+            "name": "公共财政概论（第二版）_预习复习刷题_重排版_v4_20260928.zip.part00",
+            "size": 57671680,
+            "sha256": "f40874fdd2325868e14a86d8bd08ee8da035b9f61e4f5fae26a9d7e506a321b6"
+          },
+          {
+            "drive_file_id": "1jg1Y2bzCcdzdwsof3YAUP5hvqZ2fiRnU",
+            "name": "公共财政概论（第二版）_预习复习刷题_重排版_v4_20260928.zip.part01",
+            "size": 51912522,
+            "sha256": "74587439ca9c44910fdcc4f07cfb9838dce916d9faab75a6fcc2f4ced5020e21"
+          }
+        ]
+      },
+      "full_pdf": {
+        "drive_file_id": "1cMPHSgNY1w9q6VFhEt1hTVRDCIngy9Sv",
+        "pages": 287,
+        "bytes": 41783141,
+        "sha256": "560c891dc1fe1852a317631963ae3404897937b90277fa099d4f2338667e8c3f"
+      },
+      "scope": {
+        "units": 15,
+        "total_pdfs": 61,
+        "preview_pages": 35,
+        "review_pages": 166,
+        "practice_pages": 86,
+        "exercise_units": 77,
+        "solution_coverage": "77/77"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Full 287-page raster QA; visual/A4/blank/replacement/NUL/orphan flags 0; Drive directory counts 15/15/15/15; single ZIP upload failed twice and exact bytes are preserved as two Drive parts."
+    },
+    {
+      "artifact_id": "book-financial-economics-ten-lectures-learning-pdf-v4-relayout-20260928",
+      "file_name": "金融经济学十讲_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3 content layer; layout rebuild only",
+      "drive_folder_id": "1vQBoUgYp-CUj4Zpp8-M6n-2ssMEhxxi1",
+      "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": "1gSrdxc0ZesY8vrxpbK293Pr7X0rTwQp-",
+      "size_bytes": 39982858,
+      "sha256": "b002557a4385b028fd9a2256adb18da792eff26bd3c35f9dd72b0c658a05976e",
+      "full_pdf": {
+        "drive_file_id": "1-qYvIJ4krC_BL3ROmyBoDBthqGnhvVzj",
+        "pages": 149,
+        "bytes": 15818255,
+        "sha256": "52fddda6e81956b7bf2de9cc963aa1a00e5afcc060cac54f1bc466efcfc56de9"
+      },
+      "scope": {
+        "units": 10,
+        "total_pdfs": 41,
+        "preview_pages": 20,
+        "review_pages": 83,
+        "practice_pages": 46,
+        "exercise_units": 95,
+        "solution_coverage": "95/95"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Full 149-page raster QA; visual/A4/blank/replacement/NUL/orphan flags 0; Drive directory counts 10/10/10/10; one PDF text-extraction parenthesis difference noted, visible formula preserved."
+    },
+    {
+      "artifact_id": "book-five-textbooks-v4-relayout-qa-20260928",
+      "file_name": "五本教材_统一重排v4_20260928.zip",
+      "type": "qa_and_aggregate_release",
+      "version": "v4-relayout",
+      "drive_folder_id": "1xG5TKDQjpw91-WMRm3enueFsCJFL9kL7",
+      "drive_path": "Book/03_Exports/Book-v4-Relayout-QA-20260928",
+      "drive_file_id": null,
+      "size_bytes": 358736398,
+      "sha256": "b6799b19788e544ad6ff2b39620e0c7e0ae22b12528f4847c43d05b17828663c",
+      "zip_delivery": {
+        "mode": "raw_byte_split",
+        "parts": [
+          {
+            "drive_file_id": "15E7PiunWNZULJG8BFwBA870kUi1AQOTp",
+            "name": "五本教材_统一重排v4_20260928.zip.part00"
+          },
+          {
+            "drive_file_id": "1BJES-BUWXaRwgNz3uzBsOzB4-w7eP8mB",
+            "name": "五本教材_统一重排v4_20260928.zip.part01"
+          },
+          {
+            "drive_file_id": "1sMF2JFSiKEYWt6HVDlYffjIhFNzvZayW",
+            "name": "五本教材_统一重排v4_20260928.zip.part02"
+          },
+          {
+            "drive_file_id": "1BZxmPU4zjpqKBGeo8fZsAy_i2sIzCUKO",
+            "name": "五本教材_统一重排v4_20260928.zip.part03"
+          },
+          {
+            "drive_file_id": "1Xyll05bxZuwkOZE8eYqRuWnuCvsPg4TW",
+            "name": "五本教材_统一重排v4_20260928.zip.part04"
+          }
+        ]
+      },
+      "qa_report": {
+        "drive_file_id": "15Cxs2tCK4sSdAIVAccNxZyAMDq4V3YQI",
+        "sha256": "45d2c52d70a1df72723ddbb2c2369272956f2fe8d3f119d37653c4b5d2b956fe"
+      },
+      "sample_pdf": {
+        "drive_file_id": "1Y-DDVgoC-Y4BxPPPiGN8Luzn3tQn9_8q",
+        "sha256": "570e0e1cf3cc5d138a8e63873cc797dc77db66af1829cf0cec709db5f88534d8"
+      },
+      "scope": {
+        "books": 5,
+        "formal_pdfs": 209,
+        "full_combined_pages": 1278
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Five-book QA aggregate; full-book visual flags 0; combined ZIP exact bytes uploaded as five parts after single-upload failure."
     }
   ],
   "notes": [
