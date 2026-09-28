@@ -1,3 +1,16 @@
+## 2026-09-28 《金融经济学十讲》学习 PDF v3
+
+- 恢复入口：`governance/financial_economics_ten_lectures_learning_pdf_v3_20260928.json`。
+- 按统一 v3 标准重做 10 讲“预习 / 复习 / 刷题”：预习为 10-20 分钟快速章节地图；复习按教材真实小节充分展开；刷题正式题目只使用教材“思考与练习”。
+- 结构化来源：278 个 PDF 页、3,635 个 source blocks、253 条回原扫描页核验的公式记录。普通正文仍为 OCR 辅助层；与扫描冲突时原扫描页和定点修订优先。
+- 教材原题共 **95 道**，按讲为 5 / 18 / 7 / 13 / 10 / 9 / 6 / 14 / 6 / 7；95/95 均有明确标识的 AI 学习参考解答，**0 道 AI 自拟题替代教材题**。
+- 复习已从旧简版大幅扩充：预习 19 页、复习 **67 页**、刷题 53 页；10 份讲次合订 + 1 份全书合订，最终共 **41 份 PDF**，全书合订 **139 页**。
+- 数学/公式边界：关键公式优先使用 253 条 verified formula ledger；公式 (10.36) 的源书 `sqrt(t-T)` 排印错误保留 provenance，派生学习层使用数学一致的 `sqrt(T-t)`，不静默覆盖来源。
+- 校验：Missing Character 0、Overfull 0、TeX error 0；manifest 逐文件哈希不一致 0；全书 139 页重新逐页栅格化检查，A4 异常 0、空白页 0、黑页/极端渲染异常 0。
+- Drive：`Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v3-20260928`，folder ID `1yFtJe00-C0vZvwaUSYyURqJ1UZ1pN2Q5`；四个子目录均 10/10。ZIP ID `1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv`，SHA-256 `f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f`；全书 PDF ID `1up5ddsNEhclQFWi2j6wabtE6KZ_cc886`，SHA-256 `0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723`；Drive 回读哈希均匹配，ZIP integrity PASS。
+- 内容边界：95 份 AI 学习参考解答尚未声明独立金融数学专家逐题终审；不声称普通 OCR 已完成全书逐字符人工重录；中文字体为 Noto Serif CJK SC 的书宋风格替代。
+- `main` 未修改。
+
 ## 2026-09-28 《公共财政概论（第二版）》学习 PDF v3
 
 - 恢复入口：`governance/public_finance_learning_pdf_v3_20260928.json`。
