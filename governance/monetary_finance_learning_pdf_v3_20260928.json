@@ -1,0 +1,109 @@
+{
+  "schema_version": "book_monetary_finance_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "monetary-finance-3e",
+    "title": "货币金融学",
+    "edition": "第三版",
+    "editor": "张红伟主编"
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "source_pdf_drive_file_id": "1srItqoKhUwPQBFNG6b3EIfTtb79hmZYe",
+    "source_pdf_file": "货币金融学第三版 (张红伟) .pdf",
+    "source_pdf_bytes": 81807312,
+    "source_pdf_sha256": "3273c38c85ee5f0a6b4a4a74b511e41cda10a51b0160723efdbbf0c72f9ecc73",
+    "structured_layer": "Book_六本教材结构化数据完善_r2_20260925",
+    "structured_zip_sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983",
+    "structured_records": 5434,
+    "source_pages": 430
+  },
+  "scope": {
+    "chapters": 14,
+    "preview_pdfs": 14,
+    "review_pdfs": 14,
+    "practice_pdfs": 14,
+    "chapter_combined_pdfs": 14,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 57,
+    "preview_pages": 40,
+    "review_pages": 132,
+    "practice_pages": 83,
+    "base_pdf_pages": 255,
+    "full_combined_pages": 255,
+    "textbook_exercises": 89,
+    "ai_study_reference_solutions": 89,
+    "exercise_counts_by_chapter": {
+      "1": 7,
+      "2": 7,
+      "3": 7,
+      "4": 4,
+      "5": 4,
+      "6": 6,
+      "7": 7,
+      "8": 6,
+      "9": 6,
+      "10": 6,
+      "11": 9,
+      "12": 7,
+      "13": 7,
+      "14": 6
+    }
+  },
+  "drive": {
+    "folder_id": "1IyVrLgc457rhb2eNFg6xnfLWv4UtV34B",
+    "path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v3-20260928",
+    "preview_folder_id": "1K3vbYtU-pO71ILdjIl-Oo0YchMhJurm0",
+    "review_folder_id": "16BgNMWAaXMuPhKDMJW_bdPzu6MnJGNkv",
+    "practice_folder_id": "1hb0XAQ7pZ5aXw160HVXmlNeyMXSJqUXl",
+    "chapter_combined_folder_id": "1KNA4nhl30a2ulKr7M02zwy9WIBOzzt-j",
+    "full_pdf_id": "1bH5kmOohctA1_TgS3qooXuGpiuO22QNv",
+    "zip_id": "15zY4B7RVMA6Sf5VmU-GhzYEO6Yo2bHdl",
+    "manifest_id": "1IaEw8xo9PuGWTdgfS-BF7Q0jF8LfKNxL",
+    "checksums_id": "1pk_cQ0lSichUiYeFXx9cgm2YGuIh5wtj",
+    "report_id": "1x7lGoltJlKv-Euy4Cd2TzappSKyyUZ_n",
+    "readme_id": "1nUHs2JN_fhGvFgap4CXf2SKcZDTiam1Q"
+  },
+  "hashes": {
+    "full_pdf_sha256": "750a7a5413d89e0386013e10ec1cba08bd0cd41272dffed005a479a06217e3b6",
+    "zip_sha256": "1fb94174c2d8bf0baf764c32663cd10112aa22724be746d58e6d7161da7f9b7e",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "all_pdf_openable": true,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "compile_missing_character_warnings": 0,
+    "compile_overfull_warnings": 0,
+    "full_combined_pages_rendered": 255,
+    "practice_solution_coverage": "89/89",
+    "ai_authored_practice_questions": 0,
+    "drive_folder_counts": {
+      "preview": 14,
+      "review": 14,
+      "practice": 14,
+      "chapter_combined": 14
+    },
+    "duplicate_files_after_cleanup": 0
+  },
+  "content_contract": {
+    "preview": "10-20分钟建立章节骨架；可独立阅读",
+    "review": "完整独立复习；按教材实际一级节/二级节重组定义、分类、机制、公式、制度与历史口径；不依赖页码/record ID/回教材查看",
+    "practice": "正式题目仅使用结构化数据中的教材章末思考题；0道AI自拟题替代教材题",
+    "answers": "89/89 教材思考题配 AI 学习参考解答；非教材/出版社官方答案",
+    "currentness_boundary": "涉及当前/当今/如今/联系实际的题，严格按教材编写期与结构化来源回答，不冒充2026现实政策事实",
+    "independent_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px≈9pt约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "继续按同一v3标准重做其余教材；货币金融学89道AI学习参考解答仍可做独立金融/货币理论专家终审。"
+}
