@@ -415,5 +415,21 @@
       "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
       "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
     }
+  },
+  "functional_analysis_jiang_sun_learning_pdf_v3": {
+    "checkpoint": "governance/functional_analysis_jiang_sun_learning_pdf_v3_20260928.json",
+    "status": "DELIVERED_VERIFIED",
+    "book_id": "functional_analysis_2e_jiang_sun",
+    "chapters": 5,
+    "textbook_original_exercises": 110,
+    "ai_study_reference_solutions": 110,
+    "pdf_files_total": 21,
+    "full_combined_pages": 265,
+    "drive_folder_id": "1DjwG0n0yp6r6m5jegzF7_V37ZUBWTvQG",
+    "zip_drive_id": "1QiW3a9MkI9_SMuQ3tooQ9YGKOH1fGqXn",
+    "zip_sha256": "c5ef9ed3dc0102d860f7953186f0d6ab500d4c38e7cc3385dc9cf54f24b48e8d",
+    "drive_readback_verified": true,
+    "independent_expert_review": false,
+    "main_unchanged": true
   }
 }
