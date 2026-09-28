@@ -1,0 +1,98 @@
+{
+  "schema_version": "book_contemporary_china_economy_learning_pdf_v4_relayout",
+  "updated_date": "2026-09-28",
+  "status": "DELIVERED_VERIFIED_LAYOUT_REBUILD",
+  "supersedes": "governance/contemporary_china_economy_learning_pdf_v3_20260928.json",
+  "book": {
+    "book_id": "contemporary-china-economy",
+    "display_title": "当代中国经济",
+    "source_title": "社会主义市场经济理论（第五版）",
+    "chapters": 11
+  },
+  "scope": {
+    "preview_pdfs": 11,
+    "review_pdfs": 11,
+    "practice_pdfs": 11,
+    "chapter_combined_pdfs": 11,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 45,
+    "preview_pages": 23,
+    "review_pages": 171,
+    "practice_pages": 96,
+    "full_combined_pages": 290,
+    "textbook_chapter_end_questions": 75,
+    "ai_study_reference_solutions": 75,
+    "ai_authored_practice_questions": 0,
+    "question_counts_by_chapter": {
+      "1": 7,
+      "2": 6,
+      "3": 6,
+      "4": 7,
+      "5": 6,
+      "6": 5,
+      "7": 8,
+      "8": 8,
+      "9": 7,
+      "10": 6,
+      "11": 9
+    }
+  },
+  "layout": {
+    "paper": "A4",
+    "body_size": "9pt（Book 六号≈12px约定）",
+    "body_leading": "14pt",
+    "margins": "top 19mm / bottom 18mm / left-right 20mm",
+    "first_page": "no running header",
+    "running_header": "当代中国经济 / 第N章·模式",
+    "long_paragraphs": "仅在原标点/短语边界拆段，不做事实重写",
+    "practice": "教材原题浅灰框 + AI参考解答独立标签",
+    "heading_keep_with_next": true
+  },
+  "validation": {
+    "full_rendered_pages": 290,
+    "visual_issues": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "tex_errors": 0,
+    "practice_solution_coverage": "75/75",
+    "zip_integrity": "PASS"
+  },
+  "drive": {
+    "folder_id": "1h31h5UpmsIEihWz5Rw3cyUIqHHcKH05X",
+    "path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v4-RELAYOUT-20260928",
+    "preview_folder_id": "1juAracv_rcxuH3HqYlPd_voVvASg39u7",
+    "review_folder_id": "1QG0_EDk613UrkTV53NE0ijD0kI4adOEv",
+    "practice_folder_id": "1a0eADTV25kztCbQHNhevk3mB8FjzSWBL",
+    "chapter_combined_folder_id": "1wXtUicFawUVxrEB8BF8FH5hapjCzXsAs",
+    "full_pdf_id": "1IieThSycafBq55M56-YTOJ6yybChhO7Q",
+    "zip_id": "1d3rfQsM1spuO9V5_JpJxj028IIr-adlc",
+    "manifest_id": "1dkSP074QN7g-aLqx6_MDu8hD85g4FmYY",
+    "checksums_id": "1P0zjWQ73CQXhhOnhsolz0yDQFkNC5BnG",
+    "report_id": "1DIxssW6vofn7KJ3uiOJ5tDQuBrq2Ovtm",
+    "readme_id": "1X-5rZ6HsTXO6Ecn-sMMxOEiPRDlgqcNX",
+    "directory_counts": {
+      "preview": 11,
+      "review": 11,
+      "practice": 11,
+      "chapter_combined": 11
+    }
+  },
+  "hashes": {
+    "full_pdf_sha256": "4e2581b8536914af979462f044a63847d3b22e943358bd5946c5a89225dd33a1",
+    "zip_sha256": "fe57ff2fe77da1fb937e60b1d8f8a2f90bb47aca6bf41a036f0db2b4a3ef0296",
+    "drive_readback_full_pdf_match": true,
+    "drive_readback_zip_match": true
+  },
+  "content_boundary": {
+    "question_set_changed": false,
+    "answer_set_changed": false,
+    "currentness_boundary": "教材时期，不冒充2026最新事实或政策判断",
+    "visible_ocr_control_artifacts_filtered_only": true,
+    "independent_expert_review": false
+  },
+  "main_modified": false
+}
