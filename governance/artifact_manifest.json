@@ -588,6 +588,43 @@
         "independent mathematical expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-math-physics-equations-learning-pdf-v3-20260928",
+      "file_name": "数学物理方程（第四版）_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3",
+      "source": "mathematical_physics_equations_4e structured r2 + source-grounded learning layer",
+      "drive_folder_id": "1-7Kv5sNUCMCwZP4gmU0PITdtUDg58TlM",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v3-20260928",
+      "drive_file_id": "1tPK_0PjSmW1GOK-mVlzQfFccCGPsctAw",
+      "size_bytes": 11961434,
+      "sha256": "2022fdd27643e58f809db3b74113be6b9dfe856ed689fcf207923cdbff2334eb",
+      "full_pdf": {
+        "drive_file_id": "1DeJJtBPs9-zDcsxoOn-9gh_-5AmWdm47",
+        "pages": 215,
+        "bytes": 4029071,
+        "sha256": "a43456d0f414f9d5a0dbd60e70bff82002082fe058ec0325a68b38872e1b48f3"
+      },
+      "scope": {
+        "chapters": 7,
+        "preview_pdfs": 7,
+        "review_pdfs": 7,
+        "practice_pdfs": 7,
+        "chapter_combined_pdfs": 7,
+        "pdf_files_total": 29,
+        "review_source_groups": 124,
+        "textbook_exercise_source_groups": 194,
+        "ai_study_reference_solutions": 194
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "21 individual PDFs / 215 pages compiled and rendered; full combined 215 pages re-rendered; 194/194 textbook exercise source groups have explicitly labeled AI study reference solutions; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "claims_not_made": [
+        "194 source groups are exactly 194 independent textbook questions",
+        "AI study reference solutions are textbook/publisher official answers",
+        "independent mathematical expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
