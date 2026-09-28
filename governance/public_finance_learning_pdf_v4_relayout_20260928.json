@@ -1,0 +1,85 @@
+{
+  "schema_version": "book_learning_pdf_v4_relayout_checkpoint",
+  "updated_date": "2026-09-28",
+  "book": {
+    "slug": "public_finance",
+    "title": "公共财政概论（第二版）"
+  },
+  "status": "LAYOUT_REBUILT_FINAL_QA_PASS",
+  "scope": {
+    "units": 15,
+    "individual_pdfs": 45,
+    "chapter_pdfs": 15,
+    "total_pdfs": 61,
+    "pages_by_mode": {
+      "preview": 35,
+      "review": 166,
+      "practice": 86
+    },
+    "full_pages": 287,
+    "exercise_units": 77,
+    "solution_coverage": "77/77"
+  },
+  "drive": {
+    "folder_id": "1QC-B01Pap-fdQPeE6HJIGMJ4V5Rd8uuc",
+    "path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v4-RELAYOUT-20260928",
+    "full_pdf_id": "1cMPHSgNY1w9q6VFhEt1hTVRDCIngy9Sv",
+    "zip_single_upload": false,
+    "zip_parts": [
+      {
+        "id": "1j_zFEWN5rLCHWuemRey-IZaBRMoPmEAs",
+        "name": "公共财政概论（第二版）_预习复习刷题_重排版_v4_20260928.zip.part00",
+        "size": 57671680,
+        "sha256": "f40874fdd2325868e14a86d8bd08ee8da035b9f61e4f5fae26a9d7e506a321b6"
+      },
+      {
+        "id": "1jg1Y2bzCcdzdwsof3YAUP5hvqZ2fiRnU",
+        "name": "公共财政概论（第二版）_预习复习刷题_重排版_v4_20260928.zip.part01",
+        "size": 51912522,
+        "sha256": "74587439ca9c44910fdcc4f07cfb9838dce916d9faab75a6fcc2f4ced5020e21"
+      }
+    ],
+    "preview_folder_id": "1d-ve7UhCKA3c0Usuw7qSh-Odg4Bnp-p_",
+    "review_folder_id": "1yc2_cNpbeTD2re5sqYhJ0AJcorjLeYhg",
+    "practice_folder_id": "1gl2IRZIN13PX45UCRWq58SsnM3Ou_eYh",
+    "chapter_folder_id": "1R44ashwhJOmRKGrmOr6xGiqlkBQmFBNw"
+  },
+  "hashes": {
+    "full_pdf": "560c891dc1fe1852a317631963ae3404897937b90277fa099d4f2338667e8c3f",
+    "zip_local": "5b346d65b616405c4f42383d90da966be3fcb4033d4b13a49107a5da2dd90bf5"
+  },
+  "sizes": {
+    "full_pdf": 41783141,
+    "zip_local": 109584202
+  },
+  "validation": {
+    "visual_flags": 0,
+    "a4_fail": 0,
+    "blank": 0,
+    "replacement": 0,
+    "nul": 0,
+    "pagination_orphans": 0,
+    "text_frequency_exact_files": "45/45",
+    "note": "单一ZIP因Drive接口上传失败，原ZIP按字节分2卷上传，可无损拼回并校验原SHA-256。"
+  },
+  "layout": {
+    "page": "A4",
+    "left_right_mm": 20,
+    "top_mm": 19,
+    "bottom_mm": 18,
+    "body_size_pt": 9,
+    "actual_body_baseline_spacing_pt": 17.8,
+    "first_page_running_header": false,
+    "original_questions": "浅灰题目框",
+    "answers": "独立标签",
+    "heading_orphan_check": "PASS"
+  },
+  "content_boundary": {
+    "relayout_only": true,
+    "source_content_silently_corrected": false,
+    "academic_content_acceptance": false,
+    "legacy_ocr_and_ai_answer_correctness_not_reaudited": true
+  },
+  "supersedes": "v3 layout release; v3 remains historical",
+  "main_modified": false
+}
