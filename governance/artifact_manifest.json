@@ -625,6 +625,47 @@
         "independent mathematical expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-monetary-finance-learning-pdf-v3-20260928",
+      "file_name": "货币金融学（第三版）_预习复习刷题_完整学习版_v3_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v3",
+      "source": "monetary-finance-3e structured r2 + source-grounded learning layer",
+      "drive_folder_id": "1IyVrLgc457rhb2eNFg6xnfLWv4UtV34B",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v3-20260928",
+      "drive_file_id": "15zY4B7RVMA6Sf5VmU-GhzYEO6Yo2bHdl",
+      "size_bytes": 29344056,
+      "sha256": "1fb94174c2d8bf0baf764c32663cd10112aa22724be746d58e6d7161da7f9b7e",
+      "full_pdf": {
+        "drive_file_id": "1bH5kmOohctA1_TgS3qooXuGpiuO22QNv",
+        "pages": 255,
+        "bytes": 9805353,
+        "sha256": "750a7a5413d89e0386013e10ec1cba08bd0cd41272dffed005a479a06217e3b6"
+      },
+      "scope": {
+        "chapters": 14,
+        "preview_pdfs": 14,
+        "review_pdfs": 14,
+        "practice_pdfs": 14,
+        "chapter_combined_pdfs": 14,
+        "pdf_files_total": 57,
+        "preview_pages": 40,
+        "review_pages": 132,
+        "practice_pages": 83,
+        "textbook_exercises": 89,
+        "ai_study_reference_solutions": 89,
+        "ai_authored_practice_questions": 0
+      },
+      "status": "VERIFIED_COMPLETE",
+      "verification": "42 base PDFs / 255 pages compiled and checked; full combined 255 pages rendered; 89/89 textbook chapter-end questions have explicitly labeled AI study reference answers; Drive subfolders are 14/14/14/14 after duplicate cleanup; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "currentness_boundary": "Questions asking 当前/当今/如今/联系实际 are answered only from textbook-period structured sources and are not represented as 2026-current facts.",
+      "claims_not_made": [
+        "AI study reference answers are textbook/publisher official answers",
+        "2026 current policy facts are sourced by the textbook",
+        "independent finance/monetary theory expert acceptance",
+        "commercial Shusong font embedded"
+      ]
     }
   ],
   "notes": [
