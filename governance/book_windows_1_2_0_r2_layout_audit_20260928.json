@@ -1,0 +1,73 @@
+{
+  "schema": "book-windows-layout-audit-v1",
+  "date": "2026-09-28",
+  "version": "1.2.0",
+  "build": "20260928-windows-1.2.0-document-r2-layoutfix",
+  "status": "LAYOUT_AUDITED_AND_PATCHED_WINDOWS_HOST_ACCEPTANCE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "supersedes_build": "20260928-windows-1.2.0-document-r1",
+  "audit": {
+    "documents_total": 253,
+    "default_layout": {
+      "text_mismatch": 0,
+      "a4_body_overflow_documents": 0,
+      "overlap_documents": 0,
+      "empty_page_documents": 0,
+      "true_h1_h6_orphan_heading_documents": 0,
+      "javascript_errors": 0
+    },
+    "stress": {
+      "cases": 30,
+      "font_px": 72,
+      "line_height": 2.6,
+      "margin_mm": 30,
+      "text_loss": 0,
+      "actual_a4_body_overflow": 0,
+      "overlaps": 0,
+      "empty_pages": 0,
+      "auto_fitted_oversize_formula_or_media": 17
+    }
+  },
+  "fixes": [
+    "True H1-H6 headings keep enough following content and do not strand at A4 page bottom.",
+    "Indivisible tall formulas/figures are fitted using the actual remaining A4 body height before text-size fallback.",
+    "Long content blocks may break anywhere when necessary; document blocks have min-width:0."
+  ],
+  "validation": {
+    "go_tests": "PASS",
+    "embedded_self_check": "PASS",
+    "embedded_files": 29092,
+    "payload_sha256": "dc22489dff9590c920c8b51915e526a5e82a29a94f20fe94134f6b95c2cde21f",
+    "exe": {
+      "file": "Book-1.2.0-r2-Windows-x64.exe",
+      "bytes": 407367680,
+      "sha256": "224ab86d1d1e752ea299e09a017871751b2bbb3389406fad2cc666cf2990cad4",
+      "format": "PE32+ x86-64 GUI"
+    }
+  },
+  "drive": {
+    "folder_id": "1Pn4_IDbzNFAlV5QMN8sFU-FSnaV8FEt6",
+    "path": "Book/03_Exports/Book-Windows-1.2.0-r2-LayoutFix-20260928",
+    "part_ids_ordered": [
+      "1C8aTUFVxmWmqvrYZhSfyzlpFq3e4lWPq",
+      "1O9oeShye7XUxiAtcTr-BLWjt3VE-4e-g",
+      "1Si8GxEu3cXJpyhUwB0swEhC_txI0T1Cj",
+      "1LGwbVK67aFFfegxVW9XZ1lpI6rQtmrYB",
+      "1c2sbdEHnpbG5rM3Q6AVWiTSIfMQEms89",
+      "18CCDOHv-W4AEFte4Q6NMNqP2xlcRszmz",
+      "15c7AF5gDhodgg3G5xSnOlx-TOhn4bDSD"
+    ],
+    "parts_manifest_id": "1g65C8xBG7VxdRxKzbiBNj8S6OeW_OnKN",
+    "source_patch_id": "1-7Rdv92RauxIzUil6bL7YK1LjVNsdNE-",
+    "layout_report_id": "1Df6gPuxuzB41RvF01r40tiFTymxK6zEr",
+    "self_check_id": "1jDj2jB9M-6dItSATWyh5leRrpRrjiEk1",
+    "readback": "11 files; all seven EXE part names and sizes verified"
+  },
+  "limitations": [
+    "Full automated layout audit is DOM/Chromium based; not every one of 253 documents was manually viewed page-by-page.",
+    "Real Windows host launch, native font behavior, print dialog and DPI-specific acceptance remain unexecuted.",
+    "No commercial Shusong font is bundled."
+  ],
+  "main_changed": false,
+  "automatic_merge": false
+}
