@@ -794,6 +794,41 @@
         "independent China-economy expert acceptance",
         "commercial Shusong font embedded"
       ]
+    },
+    {
+      "artifact_id": "book-contemporary-china-economy-learning-pdf-v4-relayout-20260928",
+      "file_name": "当代中国经济_预习复习刷题_重排版_v4_20260928.zip",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v4-relayout",
+      "source": "v3-final content layer; layout rebuild",
+      "drive_folder_id": "1h31h5UpmsIEihWz5Rw3cyUIqHHcKH05X",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v4-RELAYOUT-20260928",
+      "drive_file_id": "1d3rfQsM1spuO9V5_JpJxj028IIr-adlc",
+      "size_bytes": 24630140,
+      "sha256": "fe57ff2fe77da1fb937e60b1d8f8a2f90bb47aca6bf41a036f0db2b4a3ef0296",
+      "full_pdf": {
+        "drive_file_id": "1IieThSycafBq55M56-YTOJ6yybChhO7Q",
+        "pages": 290,
+        "bytes": 8265132,
+        "sha256": "4e2581b8536914af979462f044a63847d3b22e943358bd5946c5a89225dd33a1"
+      },
+      "scope": {
+        "chapters": 11,
+        "pdf_files_total": 45,
+        "preview_pages": 23,
+        "review_pages": 171,
+        "practice_pages": 96,
+        "textbook_questions": 75,
+        "ai_reference_solutions": 75
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "290/290 pages fully rendered; visual/A4/blank/replacement/NUL/Missing Character/Overfull/TeX issues all 0; Drive readback matched; ZIP integrity PASS.",
+      "claims_not_made": [
+        "content rewritten beyond layout cleanup",
+        "AI answers are publisher official",
+        "2026 current policy facts sourced by textbook",
+        "commercial Shusong embedded"
+      ]
     }
   ],
   "notes": [
