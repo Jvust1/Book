@@ -1,0 +1,80 @@
+{
+  "schema": "book_windows_v4_final_release_v1",
+  "date": "2026-09-28",
+  "version": "1.2.1-v4-final",
+  "status": "BUILT_ARCHIVED_AND_STATE_SYNCED_WINDOWS_HOST_ACCEPTANCE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "supersedes": "1.2.0-r2-layoutfix",
+  "content_contract": {
+    "books": 6,
+    "main_chapters": 61,
+    "learning_documents": 67,
+    "preview_review_practice_documents": 186,
+    "total_documents": 253,
+    "preview_review_practice_basis": "all six books latest v4 PDF sets",
+    "learning_basis": "Book_六本教材_全部61章及附属资料_PDF + matching structured/LaTeX learning content",
+    "targeted_content_corrections": [
+      "Monetary Finance chapter 1 question about whether money must be a commodity: answer rewritten to directly distinguish commodity money from modern credit money.",
+      "Monetary Finance barter relative-price count: study correction distinguishes n(n-1)/2 unordered pairs, n(n-1) directed quotes, and n-1 prices under a chosen numeraire while preserving source provenance."
+    ],
+    "academic_acceptance": "TARGETED_CORRECTIONS_APPLIED_FULL_INDEPENDENT_EXPERT_REVIEW_NOT_COMPLETE"
+  },
+  "executable": {
+    "file": "Book-1.2.1-v4-Final-Windows-x64.exe",
+    "bytes": 493526016,
+    "sha256": "77564eca00c8a8e1d0aa9e0719b96970303d7e223e6d5efd5f7eab2bbe531947",
+    "format": "PE32+ x86-64 GUI",
+    "drive_parts": 8
+  },
+  "content_payload": {
+    "file": "Book-1.2.1-v4-Final-content.zip",
+    "bytes": 570902147,
+    "sha256": "82024ea6429ab6dc7f1097c1bc638ae6ada9d795c881463ce8dd6f74027f93c5",
+    "drive_parts": 9
+  },
+  "source_patch": {
+    "file": "Book-1.2.1-v4-Final-SourcePatch.zip",
+    "bytes": 11835323,
+    "sha256": "94323e0560cdba8f30bea5abd2887b27f46012dca9b26e6f58881da7fdbd5190",
+    "base_source_file": "Book-1.2.0-Source-and-Tests.zip",
+    "base_source_sha256": "3a1a755609fda969a687e9123f6b0cce8e0c81c15019f7cd8e12a56c7bac6e7f",
+    "changed_or_new_files": 269
+  },
+  "drive": {
+    "folder_id": "1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD",
+    "path": "Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928",
+    "direct_file_count_before_receipt": 23,
+    "readback": "Folder listed after upload; all 8 EXE parts and all 9 content payload parts match expected names and byte sizes.",
+    "parts_manifest_id": "1y5BvAckON83mfH2vYhgbhU1ub2_cF19t",
+    "reassemble_script_id": "1I8awuXiof02rUMN_h8XpqZXAy0iX-if6",
+    "source_patch_id": "1ekeJpTY0B0joy10pHVx6kkp4I_Kzg6xW",
+    "sha256_file_id": "16ClpegJTD2_fIsMEG2M9jhhI1OfiepUS",
+    "readme_id": "1o0PUisB6BuRNXVPCHRBaxNZ81jn-4G1d",
+    "content_review_checkpoint_id": "1bTyG4M3QSf6iSbre_ksvn_c1DbRbH-Pw"
+  },
+  "validation": {
+    "embedded_resources": 29093,
+    "content_zip_crc": "PASS",
+    "go_tests": "PASS",
+    "windows_cross_compile": "PASS",
+    "executable_embedded_payload_match": "PASS",
+    "six_v4_layout_sets": "REUSED_EXISTING_AUTHORITATIVE_DRIVE_ARTIFACTS",
+    "windows_real_device_acceptance": false,
+    "full_independent_academic_review": false,
+    "code_signed": false
+  },
+  "sync_policy": {
+    "drive_new_objects": 24,
+    "drive_changed_objects": 0,
+    "drive_reused_existing_authoritative_sets": 8,
+    "github_logical_commit_count": 1,
+    "main_modified": false,
+    "automatic_merge": false
+  },
+  "limitations": [
+    "Windows real-device Edge/DPI/font/print acceptance has not been executed on the user's machine.",
+    "The six v4 PDF sets passed layout/file QA, but v4 itself does not imply full academic correctness.",
+    "Only confirmed targeted content defects were corrected in this build; 640 AI learning reference answers are not claimed to have full independent expert review.",
+    "No commercial Shusong font binary is redistributed."
+  ]
+}

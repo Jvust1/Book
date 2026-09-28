@@ -90,6 +90,16 @@
       "receipt_sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc",
       "blocks_next_step": false,
       "resolved_at": "2026-09-28"
+    },
+    {
+      "pending_id": "book_windows_1_2_1_v4_final_sync",
+      "blocking": false,
+      "status": "RESOLVED_20260928",
+      "scope": "Book Windows 1.2.1 v4 Final executable/content/source-patch release",
+      "reason": "Final v4-based Windows build required Drive archive and GitHub restore-state synchronization.",
+      "resolution": "Release archived at Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928 (folder 1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD); EXE/content payload split archives, source patch, manifest, reassembly script, usage notes and hashes are present. GitHub restore checkpoint records exact hashes and remaining acceptance boundaries.",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-28"
     }
   ]
 }

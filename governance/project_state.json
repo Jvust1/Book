@@ -588,5 +588,22 @@
     "zip_sha256": "fe57ff2fe77da1fb937e60b1d8f8a2f90bb47aca6bf41a036f0db2b4a3ef0296",
     "visual_render_issues": 0,
     "main_unchanged": true
+  },
+  "windows_v4_final_release": {
+    "version": "1.2.1-v4-final",
+    "status": "BUILT_ARCHIVED_AND_STATE_SYNCED_WINDOWS_HOST_ACCEPTANCE_PENDING",
+    "branch": "feat/windows-document-reader-1.2-20260928",
+    "drive_folder_id": "1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD",
+    "drive_path": "Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928",
+    "exe_sha256": "77564eca00c8a8e1d0aa9e0719b96970303d7e223e6d5efd5f7eab2bbe531947",
+    "content_payload_sha256": "82024ea6429ab6dc7f1097c1bc638ae6ada9d795c881463ce8dd6f74027f93c5",
+    "source_patch_sha256": "94323e0560cdba8f30bea5abd2887b27f46012dca9b26e6f58881da7fdbd5190",
+    "documents_total": 253,
+    "v4_preview_review_practice": true,
+    "learning_documents": 67,
+    "targeted_content_corrections_applied": true,
+    "windows_real_device_acceptance": false,
+    "full_independent_academic_review": false,
+    "main_modified": false
   }
 }

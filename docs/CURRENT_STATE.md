@@ -1,3 +1,15 @@
+## 2026-09-28 Book Windows 1.2.1 v4 Final（当前 Windows 交付）
+
+- 恢复入口：`governance/book_windows_1_2_1_v4_final_20260928.json`。
+- 六本教材的预习 / 复习 / 刷题全部切换到最新 v4；学习继续使用“全部61章及附属资料”的结构化正文。合计 253 份可重排文档：67 学习 + 186 预习/复习/刷题。
+- 已应用已确认的定点内容修订：货币金融学第一章“货币是否必须由商品充当”答非所问问题；物物交换相对价格数量的计数校注。修订保留来源边界，不把教材原印/结构化来源静默覆盖。
+- Windows x64 EXE：493,526,016 bytes，SHA-256 `77564eca00c8a8e1d0aa9e0719b96970303d7e223e6d5efd5f7eab2bbe531947`；PE32+ x86-64 GUI。
+- 完整内容 payload：570,902,147 bytes，SHA-256 `82024ea6429ab6dc7f1097c1bc638ae6ada9d795c881463ce8dd6f74027f93c5`；源码增量包 11,835,323 bytes，SHA-256 `94323e0560cdba8f30bea5abd2887b27f46012dca9b26e6f58881da7fdbd5190`。
+- Drive：`Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928`，folder ID `1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD`。EXE 8 分卷 + content 9 分卷 + 源码增量 / manifest / 重组脚本 / 说明 / 校验 / 内容检查点均已上传；目录回读 23 个文件，17 个大分卷文件名与字节数全部匹配。
+- 验证：内嵌资源 29,093 项；content ZIP CRC PASS；Go tests PASS；Windows cross-compile PASS；EXE 内嵌 payload 与最终内容包一致。
+- 边界：尚未在用户真实 Windows 主机完成 Edge/DPI/本机字体/打印验收；640 份 AI 学习参考解答不声明已经全部完成独立专家逐题终审。
+- `main` 未修改，未自动合并。
+
 ## 2026-09-28 《当代中国经济》学习 PDF v4 重排版（当前权威）
 
 - 恢复入口：`governance/contemporary_china_economy_learning_pdf_v4_relayout_20260928.json`。

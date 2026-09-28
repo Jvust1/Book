@@ -829,6 +829,42 @@
         "2026 current policy facts sourced by textbook",
         "commercial Shusong embedded"
       ]
+    },
+    {
+      "artifact_id": "book-windows-1.2.1-v4-final-20260928",
+      "file_name": "Book-Windows-1.2.1-v4-Final-20260928",
+      "type": "generated_release_set",
+      "version": "1.2.1-v4-final",
+      "source": "assistant_generated_from_1.2.0_base_plus_six_v4_pdfs_and_targeted_corrections",
+      "drive_folder_id": "1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD",
+      "drive_path": "Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928",
+      "windows_exe": {
+        "file_name": "Book-1.2.1-v4-Final-Windows-x64.exe",
+        "size_bytes": 493526016,
+        "sha256": "77564eca00c8a8e1d0aa9e0719b96970303d7e223e6d5efd5f7eab2bbe531947",
+        "parts": 8
+      },
+      "content_payload": {
+        "file_name": "Book-1.2.1-v4-Final-content.zip",
+        "size_bytes": 570902147,
+        "sha256": "82024ea6429ab6dc7f1097c1bc638ae6ada9d795c881463ce8dd6f74027f93c5",
+        "parts": 9
+      },
+      "source_patch": {
+        "file_name": "Book-1.2.1-v4-Final-SourcePatch.zip",
+        "size_bytes": 11835323,
+        "sha256": "94323e0560cdba8f30bea5abd2887b27f46012dca9b26e6f58881da7fdbd5190",
+        "base_source_sha256": "3a1a755609fda969a687e9123f6b0cce8e0c81c15019f7cd8e12a56c7bac6e7f",
+        "changed_or_new_files": 269
+      },
+      "documents": {
+        "total": 253,
+        "learning": 67,
+        "preview_review_practice": 186
+      },
+      "status": "ARCHIVED_VERIFIED_BY_BUILD_AND_DRIVE_SIZE_READBACK_WINDOWS_HOST_ACCEPTANCE_PENDING",
+      "verification": "Go tests PASS; content ZIP CRC PASS; Windows x64 cross-compile PASS; embedded payload match PASS; Drive directory readback found all 23 uploaded files and all 17 large parts at expected sizes.",
+      "academic_boundary": "Targeted confirmed corrections applied; no claim of complete independent expert review for all 640 AI learning reference answers."
     }
   ],
   "notes": [
