@@ -450,5 +450,35 @@
     "drive_readback_verified": true,
     "independent_expert_review": false,
     "main_unchanged": true
+  },
+  "monetary_finance_learning_pdf_v3": {
+    "checkpoint": "governance/monetary_finance_learning_pdf_v3_20260928.json",
+    "status": "DELIVERED_VERIFIED",
+    "book_id": "monetary-finance-3e",
+    "chapters": 14,
+    "textbook_exercises": 89,
+    "ai_study_reference_solutions": 89,
+    "ai_authored_practice_questions": 0,
+    "pdf_files_total": 57,
+    "preview_pages": 40,
+    "review_pages": 132,
+    "practice_pages": 83,
+    "full_combined_pages": 255,
+    "drive_folder_id": "1IyVrLgc457rhb2eNFg6xnfLWv4UtV34B",
+    "zip_drive_id": "15zY4B7RVMA6Sf5VmU-GhzYEO6Yo2bHdl",
+    "zip_sha256": "1fb94174c2d8bf0baf764c32663cd10112aa22724be746d58e6d7161da7f9b7e",
+    "full_pdf_drive_id": "1bH5kmOohctA1_TgS3qooXuGpiuO22QNv",
+    "full_pdf_sha256": "750a7a5413d89e0386013e10ec1cba08bd0cd41272dffed005a479a06217e3b6",
+    "drive_readback_verified": true,
+    "drive_directory_counts": {
+      "preview": 14,
+      "review": 14,
+      "practice": 14,
+      "chapter_combined": 14
+    },
+    "duplicate_files_after_cleanup": 0,
+    "source_currentness_boundary": "教材时点，不冒充2026现实事实",
+    "independent_expert_review": false,
+    "main_unchanged": true
   }
 }
