@@ -409,6 +409,11 @@
       "fail": 0
     },
     "main_unchanged": true,
-    "next_step": "Continue source-grounded proofreading and independent expert acceptance for recorded warnings; do not silently rewrite source facts."
+    "next_step": "Continue source-grounded proofreading and independent expert acceptance for recorded warnings; do not silently rewrite source facts.",
+    "drive_sync_receipt": {
+      "drive_file_id": "1dfu6KEe-hOiNfvs9gm8Ga2sPf5Z36ohI",
+      "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
+      "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
+    }
   }
 }
