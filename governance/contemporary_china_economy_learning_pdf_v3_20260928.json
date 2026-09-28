@@ -1,0 +1,107 @@
+{
+  "schema_version": "book_contemporary_china_economy_learning_pdf_v3",
+  "updated_date": "2026-09-28",
+  "book": {
+    "book_id": "contemporary-china-economy",
+    "display_title": "当代中国经济",
+    "source_title": "社会主义市场经济理论（第五版）",
+    "chapters": 11
+  },
+  "status": "DELIVERED_VERIFIED",
+  "source": {
+    "source_pdf_drive_file_id": "1DbvMxQJ8oVrqZSdfPfyQYgA07JZvHqNC",
+    "source_pdf_bytes": 54999067,
+    "source_pdf_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "structured_layer": "Book_六本教材结构化数据完善_r2_20260925",
+    "structured_zip_sha256": "0d8efa419886ee2601a7a15e9470852f03ebd4a744bfa545d43627e57e1ed983",
+    "structured_records": 2293,
+    "source_pages": 255,
+    "record_content_sha256": "56e125bd8113a518b18b5ad8955ef3f87a28446b42419d9ea6aa249f55bc9761"
+  },
+  "scope": {
+    "chapters": 11,
+    "preview_pdfs": 11,
+    "review_pdfs": 11,
+    "practice_pdfs": 11,
+    "chapter_combined_pdfs": 11,
+    "full_combined_pdfs": 1,
+    "pdf_files_total": 45,
+    "preview_pages": 22,
+    "review_pages": 145,
+    "practice_pages": 82,
+    "full_combined_pages": 249,
+    "textbook_chapter_end_questions": 75,
+    "ai_study_reference_solutions": 75,
+    "ai_authored_practice_questions": 0,
+    "question_counts_by_chapter": {
+      "1": 7,
+      "2": 6,
+      "3": 6,
+      "4": 7,
+      "5": 6,
+      "6": 5,
+      "7": 8,
+      "8": 8,
+      "9": 7,
+      "10": 6,
+      "11": 9
+    }
+  },
+  "drive": {
+    "authoritative_folder_id": "1DBEvctC2KOpaKmwPgM0e0w-o3T4IZxCg",
+    "path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v3-FINAL-20260928",
+    "preview_folder_id": "187TplZ4gG5jU_0Td9-3AWEWq9XuU2F-P",
+    "review_folder_id": "1Q29pg-YEr3u7eWGmZwXz3tmuvuQro2DB",
+    "practice_folder_id": "1qtXjbuwv6qeMTMa7QG1yyCeUg9ArdTyr",
+    "chapter_combined_folder_id": "1L2ACI3GzrUMTnj7rBt-Dhpdd9SueZqGF",
+    "full_pdf_id": "1doxbUo56cq4I513jl2aXnBPBRZk3GqyX",
+    "zip_id": "12-HC6dcwFWtLO1csBPcnzHbCyp2nRKzg",
+    "manifest_id": "1vkdOJIqZwwWeRX0JTIs2MqVjYyginM37",
+    "checksums_id": "1IO5_j1oU69NF5H5j_hJNIL1wBSTAXjJM",
+    "report_id": "13rz6DD2mR4gSm9ORW4PhyZOugWAEZSKM",
+    "readme_id": "1A8Q0wU6Y7AFoiyYUOgL8N1tQ3z9iiXbX",
+    "directory_counts": {
+      "preview": 11,
+      "review": 11,
+      "practice": 11,
+      "chapter_combined": 11
+    }
+  },
+  "hashes": {
+    "full_pdf_sha256": "d3f808279314ef1dac4a736b5dd21346acc5d99a678c7baf835b6a6b8e0b81c1",
+    "zip_sha256": "d4322e4f81c7fc1573e2272d18323f6f2b33c3bc61e0e659e617b9a4ba5e0858",
+    "drive_readback_full_pdf_sha256_match": true,
+    "drive_readback_zip_sha256_match": true,
+    "zip_integrity": "PASS"
+  },
+  "validation": {
+    "all_pdf_openable": true,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "missing_character_warnings": 0,
+    "overfull_warnings": 0,
+    "tex_errors": 0,
+    "full_combined_pages_rendered": 249,
+    "visual_render_issues": 0,
+    "practice_solution_coverage": "75/75"
+  },
+  "content_contract": {
+    "preview": "10-20分钟章节地图；基于当前结构化教材来源",
+    "review": "完整独立复习；145页；使用records+reading来源并展开来源型知识单元；不依赖教材定位",
+    "practice": "只使用确认的75道章末思考题；正文误标exercise项不进入正式题库；0道AI自拟题替代",
+    "answers": "75/75 AI学习参考解答；非教材/出版社官方答案",
+    "source_boundary": "第1章records正文不足时用同一结构化包reading层补足；派生层过滤明显OCR噪声，不改源记录",
+    "currentness_boundary": "当前/最近几年/政策阶段/科学发展观/五大发展理念/一带一路等按教材时期理解，不冒充2026最新事实",
+    "independent_expert_review": false
+  },
+  "typography": {
+    "paper": "A4",
+    "body_size": "9pt（Book 12px≈9pt约定）",
+    "cjk_font": "Noto Serif CJK SC",
+    "commercial_shusong_claim": false
+  },
+  "main_modified": false,
+  "next_step": "继续按同一v3标准重做剩余教材；75道AI学习参考解答仍可做独立中国经济/市场经济理论专家逐题终审。"
+}
