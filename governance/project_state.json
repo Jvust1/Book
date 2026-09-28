@@ -480,5 +480,36 @@
     "source_currentness_boundary": "教材时点，不冒充2026现实事实",
     "independent_expert_review": false,
     "main_unchanged": true
+  },
+  "public_finance_learning_pdf_v3": {
+    "checkpoint": "governance/public_finance_learning_pdf_v3_20260928.json",
+    "status": "DELIVERED_VERIFIED",
+    "book_id": "public_finance_intro_2e_2024",
+    "units": 15,
+    "chapters_excluding_intro": 14,
+    "textbook_exercises": 77,
+    "ai_study_reference_solutions": 77,
+    "ai_authored_practice_questions": 0,
+    "pdf_files_total": 61,
+    "preview_pages": 33,
+    "review_pages": 146,
+    "practice_pages": 77,
+    "full_combined_pages": 256,
+    "drive_folder_id": "12PHKz_KWn2-1tcb1J166teTcv6YBFQuX",
+    "zip_drive_id": "1vPEi9121wM2mTRdSX_Gu7RmZMs2FJrPj",
+    "zip_sha256": "54ee28cf66ba2d3ba6da43e5f0ea340e53a024174822386fcaa942a416b1b553",
+    "full_pdf_drive_id": "11bgbC-BSSpuw21SI6lC8wgizC8aO7hSw",
+    "full_pdf_sha256": "ffb863ac0f66fb37137e10c7aee3da2dc75d1d06a73157885c2006fa6e31cca4",
+    "drive_readback_verified": true,
+    "drive_directory_counts": {
+      "preview": 15,
+      "review": 15,
+      "practice": 15,
+      "chapter_combined": 15
+    },
+    "obvious_ocr_control_noise_filtered": true,
+    "source_currentness_boundary": "2024教材时期，不冒充2026现实事实或政策预测",
+    "independent_expert_review": false,
+    "main_unchanged": true
   }
 }
