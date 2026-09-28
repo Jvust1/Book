@@ -1,3 +1,15 @@
+## 2026-09-28 《当代中国经济》学习 PDF v4 重排版（当前权威）
+
+- 恢复入口：`governance/contemporary_china_economy_learning_pdf_v4_relayout_20260928.json`。
+- v4 只重做版式与显式 OCR 控制噪声过滤，题库仍为 75 道教材章末思考题，75/75 AI 学习参考解答，0 道 AI 自拟题替代。
+- 新版：预习 23 页、复习 **171 页**、刷题 96 页；11 份章节合订 + 1 份全书合订；共 45 份 PDF；全书 **290 页**。
+- 版式：A4、六号正文（9pt）、14pt 行距、左右 20mm；首页取消重复页眉；标题三级分层；长 OCR 段只在原标点/短语边界拆段；教材原题浅灰框、AI 解答独立标签、时效提示独立框；标题 keep-with-next。
+- 质量：290/290 页全量渲染；视觉异常 0；A4 异常 0；空白页 0；replacement/NUL 0；Missing Character 0；Overfull 0；TeX error 0；ZIP integrity PASS。
+- Drive 当前权威目录：`Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v4-RELAYOUT-20260928`，folder ID `1h31h5UpmsIEihWz5Rw3cyUIqHHcKH05X`。
+- 全书 PDF ID `1IieThSycafBq55M56-YTOJ6yybChhO7Q`，SHA-256 `4e2581b8536914af979462f044a63847d3b22e943358bd5946c5a89225dd33a1`；ZIP ID `1d3rfQsM1spuO9V5_JpJxj028IIr-adlc`，SHA-256 `fe57ff2fe77da1fb937e60b1d8f8a2f90bb47aca6bf41a036f0db2b4a3ef0296`；Drive 回读匹配。
+- v3 FINAL 保留为历史版本，不再作为当前权威交付。
+- `main` 未修改。
+
 ## 2026-09-28 《当代中国经济／社会主义市场经济理论（第五版）》学习 PDF v3 FINAL
 
 - 恢复入口：`governance/contemporary_china_economy_learning_pdf_v3_20260928.json`。
