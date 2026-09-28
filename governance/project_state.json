@@ -569,5 +569,24 @@
     "currentness_boundary": "教材时期，不冒充2026现实事实或政策判断",
     "independent_expert_review": false,
     "main_unchanged": true
+  },
+  "contemporary_china_economy_learning_pdf_current": {
+    "version": "v4-relayout",
+    "checkpoint": "governance/contemporary_china_economy_learning_pdf_v4_relayout_20260928.json",
+    "status": "DELIVERED_VERIFIED_LAYOUT_REBUILD",
+    "chapters": 11,
+    "textbook_questions": 75,
+    "pdf_files_total": 45,
+    "preview_pages": 23,
+    "review_pages": 171,
+    "practice_pages": 96,
+    "full_pages": 290,
+    "drive_folder_id": "1h31h5UpmsIEihWz5Rw3cyUIqHHcKH05X",
+    "full_pdf_id": "1IieThSycafBq55M56-YTOJ6yybChhO7Q",
+    "full_pdf_sha256": "4e2581b8536914af979462f044a63847d3b22e943358bd5946c5a89225dd33a1",
+    "zip_id": "1d3rfQsM1spuO9V5_JpJxj028IIr-adlc",
+    "zip_sha256": "fe57ff2fe77da1fb937e60b1d8f8a2f90bb47aca6bf41a036f0db2b4a3ef0296",
+    "visual_render_issues": 0,
+    "main_unchanged": true
   }
 }
