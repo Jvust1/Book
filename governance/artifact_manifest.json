@@ -717,14 +717,14 @@
       "source": "financial-economics-ten-lectures structured source + verified formula ledger + source-grounded learning layer",
       "drive_folder_id": "1yFtJe00-C0vZvwaUSYyURqJ1UZ1pN2Q5",
       "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v3-20260928",
-      "drive_file_id": "1ipOqqzCPvQav0viCu8bjJkFC65Sy5NCv",
-      "size_bytes": 13583844,
-      "sha256": "f3a615165188fff07879c1c8d497fff7966cee56c7f944d5f63cca62a12b708f",
+      "drive_file_id": "17N3AK4vT_29RrXbhyjuhP92P8mZAIJXb",
+      "size_bytes": 13366121,
+      "sha256": "d8ff5361e2f4d89ffb91dabfd29aa41920c377cbc2a6211b5f9a547bba4f594a",
       "full_pdf": {
-        "drive_file_id": "1up5ddsNEhclQFWi2j6wabtE6KZ_cc886",
-        "pages": 139,
-        "bytes": 4777027,
-        "sha256": "0108c9bd76e1888b821bab12bd66804f5143c26f829a40045d3fdd8409ea0723"
+        "drive_file_id": "1znT3VMsOG-iE9bLAOV6h8Yib3Jpmc30p",
+        "pages": 121,
+        "bytes": 4696506,
+        "sha256": "cd18a7b598f816fb3e124505d02da4f4f3f81741a1b4e22807a9b30f6101a534"
       },
       "scope": {
         "lectures": 10,
@@ -735,14 +735,16 @@
         "pdf_files_total": 41,
         "preview_pages": 19,
         "review_pages": 67,
-        "practice_pages": 53,
+        "practice_pages": 35,
         "textbook_exercises": 95,
         "ai_study_reference_solutions": 95,
+        "direct_question_specific_answers": 95,
+        "old_generic_answer_template_markers": 0,
         "ai_authored_replacement_questions": 0,
         "verified_formula_records": 253
       },
       "status": "VERIFIED_COMPLETE",
-      "verification": "30 base PDFs plus 10 lecture-combined PDFs and 1 full-book PDF; 95/95 textbook exercises have explicitly labeled AI study reference answers; Missing Character/Overfull/TeX errors all 0; manifest file hash mismatches 0; full-book 139 pages re-rendered with no A4/blank/black-page anomalies; Drive subfolders 10/10/10/10; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
+      "verification": "41 PDFs verified; 95/95 textbook exercises have direct question-specific labeled AI study reference answers; old generic answer-template markers 0; Missing Character/Overfull/TeX errors 0; full-book 121 pages re-rendered with no A4/blank/replacement/NUL/black-page/layout anomalies; manifest/checksum mismatches 0; Drive subfolders 10/10/10/10 with no duplicate names; Drive ZIP/PDF readback SHA-256 matched; ZIP integrity PASS.",
       "source_boundary": "Historical body transcription remains OCR-assisted; original scan is authoritative on conflict. 253 formula records are source-verified. Formula 10.36 source typo provenance is retained and normalized only in derived learning material.",
       "claims_not_made": [
         "AI study reference answers are textbook/publisher official answers",
