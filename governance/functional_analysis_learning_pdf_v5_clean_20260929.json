@@ -1,0 +1,53 @@
+{
+  "schema_version": "book_learning_pdf_v5_reader_clean_checkpoint",
+  "updated_date": "2026-09-29",
+  "book": {
+    "slug": "functional_analysis",
+    "title": "泛函分析（第2版）"
+  },
+  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "supersedes": "v4 relayout release; v4 remains historical",
+  "scope": {
+    "pdf_files_total": 21,
+    "full_pages": 309,
+    "exercise_solution_units": 110
+  },
+  "cleanup": {
+    "removed": [
+      "资料来源/数据来源行",
+      "教材来源/来源展开/来源回忆等阅读层标签",
+      "结构化/OCR/扫描/公式账本等实现说明",
+      "原书显式脚注正文与脚注标记",
+      "保守识别的金融/财政类行内脚注数字"
+    ],
+    "preserved": [
+      "教材正文、公式与图表",
+      "教材原题",
+      "AI学习参考解答标签与正文",
+      "非引用性的教材时期/适用边界提示"
+    ]
+  },
+  "validation": {
+    "targeted_source_footnote_residuals": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "visual_render_issues": 0,
+    "academic_content_reaudit": false,
+    "full_book_rendered_pages": 309,
+    "full_pages_preserved": true
+  },
+  "drive": {
+    "folder_id": "1z1uemFDnoXZxuOEvAir0bDZX-U4CoUFX",
+    "full_pdf_id": "1PQrjnVAypGoUxsfBpVrOU7-ZDL6886KX",
+    "full_pdf_sha256": "3f49ece46b146c966f230c65105ef6ab43a12fb49af3805f89def699f3c27cf5",
+    "zip_delivery": {
+      "mode": "single",
+      "id": "1gaJVz3LTYoaknAK57NHp_Rr4TSf8Mc6I",
+      "sha": "7b92617da95fd64aa6ee99b3dd586fb8a3ed57f921f56b486036f56839962be7"
+    }
+  },
+  "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
+  "main_modified": false
+}
