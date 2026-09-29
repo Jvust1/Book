@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "book": "contemporary-china-economy",
+  "audit": "2026-09-30T06:00+08:00",
+  "base_main_commit": "4f20999a94f90e8f1ed8ff09e0ee98b81248a63d",
+  "confirmed_issue_groups": 13,
+  "source_verified_pages": [34, 41, 52, 69, 92, 126, 174, 183, 201, 213, 214, 229],
+  "affected_structured_records": 14,
+  "provenance_hash_fixes": 4,
+  "raw_source_unchanged": true,
+  "artifacts": [
+    {"name":"当代中国经济_结构化增量修订_r3_20260930_0600.zip","sha256":"651171254581049aa729d2f426a1c939e76464dfd74227acb77028ed081cdeac"},
+    {"name":"当代中国经济_学习_全书合订版_v5-r1_20260930.pdf","sha256":"dc10b2ff83d83a798d249aad44fbf60203a7acb19a0fb0fa47f398d86a263a26","pages":218},
+    {"name":"当代中国经济_预习复习刷题_全书合订版_v5-r1_20260930.pdf","sha256":"e230dd2401d3e1c0bf049bd55ccd6c8433fb7efc6cf87ba5e2aebafe9bba23e0","pages":290}
+  ],
+  "qa": {
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "text_bbox_out_of_bounds": 0,
+    "mode_coverage": "11/11 preview, 11/11 review, 11/11 practice, 11/11 learning"
+  }
+}
