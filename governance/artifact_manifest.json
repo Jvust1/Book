@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-28",
+  "updated_date": "2026-09-29",
   "project": {
     "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -1042,6 +1042,165 @@
       },
       "status": "VERIFIED_COMPLETE_CURRENT",
       "verification": "Five-book QA aggregate; full-book visual flags 0; combined ZIP exact bytes uploaded as five parts after single-upload failure."
+    },
+    {
+      "artifact_id": "book-contemporary-china-economy-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "当代中国经济",
+      "drive_folder_id": "1NkoH73G4C11IcLQ4Dq32V9LjVZMmrzuH",
+      "full_pdf": {
+        "drive_file_id": "1zHBZA9osXEa9a3ZPwkG5LIS548YCLszZ",
+        "pages": 290,
+        "sha256": "a8875e63d9829d81601f37a9e4d721b43cd8b6669c2611fb39c235d985ce87e6"
+      },
+      "scope": {
+        "pdf_files_total": 45,
+        "exercise_solution_units": 75
+      },
+      "zip_delivery": {
+        "mode": "single",
+        "sha256": "d7bc89c59a9fee601a24f24d2451f57381173424d7b95894d95a55b22ae53e49"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-functional-analysis-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "泛函分析（第2版）",
+      "drive_folder_id": "1z1uemFDnoXZxuOEvAir0bDZX-U4CoUFX",
+      "full_pdf": {
+        "drive_file_id": "1PQrjnVAypGoUxsfBpVrOU7-ZDL6886KX",
+        "pages": 309,
+        "sha256": "3f49ece46b146c966f230c65105ef6ab43a12fb49af3805f89def699f3c27cf5"
+      },
+      "scope": {
+        "pdf_files_total": 21,
+        "exercise_solution_units": 110
+      },
+      "zip_delivery": {
+        "mode": "single",
+        "sha256": "7b92617da95fd64aa6ee99b3dd586fb8a3ed57f921f56b486036f56839962be7"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-math-physics-equations-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "数学物理方程（第四版）",
+      "drive_folder_id": "1zsRJpArl4uE6ePIK5I6Zl5wseikROFLs",
+      "full_pdf": {
+        "drive_file_id": "1V2YF925T1U3G2_A_E9ZXn19Nnl6YPYXG",
+        "pages": 249,
+        "sha256": "2bbf7da651b95f0537b3c34367ca2bde8c85f611a472ceb86098afb2731e207f"
+      },
+      "scope": {
+        "pdf_files_total": 29,
+        "exercise_solution_units": 194
+      },
+      "zip_delivery": {
+        "mode": "single",
+        "sha256": "4461a25dc97a89c2895e54404d4522bd6ffc3189239d8ee2da5e5b2bf28dcdb5"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-monetary-finance-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "货币金融学（第三版）",
+      "drive_folder_id": "1rgBnaTiu3kz_EKZKbY-jxyuxsx3CWFfy",
+      "full_pdf": {
+        "drive_file_id": "1s2xVi6ELXPdxZPhjcr3RT17Y_jsHiGic",
+        "pages": 284,
+        "sha256": "ab72637764ceb97e943498cc2108dbed3db43b96e962a758d5f7ee5c9efe056c"
+      },
+      "scope": {
+        "pdf_files_total": 57,
+        "exercise_solution_units": 89
+      },
+      "zip_delivery": {
+        "mode": "3 raw-byte split parts",
+        "sha256": "4d29fe005cfb278048d424b18d217670c7a5b74d8fcccd08c3549732178e9876"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-public-finance-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "公共财政概论（第二版）",
+      "drive_folder_id": "1Y0nXYfjYEj3K-c2AOBwJTXVVYyux5rKc",
+      "full_pdf": {
+        "drive_file_id": "1A4UJHpU-pYqjEF7wBlB3BsRcRWd78Fxa",
+        "pages": 287,
+        "sha256": "5e96b405f3b70891779022301803769921f51182735bd9a05a1ec5d64d486c74"
+      },
+      "scope": {
+        "pdf_files_total": 61,
+        "exercise_solution_units": 77
+      },
+      "zip_delivery": {
+        "mode": "3 raw-byte split parts",
+        "sha256": "794d102431b383dbba523f16d1fca3f79653fc269185a7f5247fb5043fc575c7"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-financial-economics-ten-lectures-learning-pdf-v5-clean-20260929",
+      "type": "generated_learning_pdf_release_set",
+      "version": "v5-clean",
+      "title": "金融经济学十讲",
+      "drive_folder_id": "1VvlSue83SqmAXQXxnH4eJr9jxoQ0eO3l",
+      "full_pdf": {
+        "drive_file_id": "1iV_im656gaUC-lhmYosA7UAYY_A1urlx",
+        "pages": 149,
+        "sha256": "f347a40cf0410dfd328c84a32260293f046b2c5b280e3cd119e177beaadf812d"
+      },
+      "scope": {
+        "pdf_files_total": 41,
+        "exercise_solution_units": 95
+      },
+      "zip_delivery": {
+        "mode": "single",
+        "sha256": "5d24fecfe99e2b27a7edddbac5a56794efec84a402d0d8c1973afaab9caaf7b8"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+    },
+    {
+      "artifact_id": "book-six-textbooks-v5-reader-clean-qa-20260929",
+      "type": "qa_and_aggregate_release",
+      "version": "v5-clean",
+      "drive_folder_id": "1gl5S2frmjH11v7igVqOGKgNT35Cd6lQ6",
+      "scope": {
+        "books": 6,
+        "formal_pdfs": 254,
+        "full_combined_pages": 1568,
+        "exercise_solution_units": 640
+      },
+      "qa_report": {
+        "drive_file_id": "1PxMU8cQBfo7Aeie4YjU1GjVKRRHm9mC6",
+        "sha256": "9535fc657b1bddb4d1edd9e96e6137cbf8f77f0fba9054b03f84304870099f4d"
+      },
+      "combined_zip": {
+        "mode": "8 raw-byte split parts",
+        "sha256": "d6ed1102a9f2fb5be3eb07725de4de2d07ffedfcd979399fd6e34885857959da"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT"
     }
   ],
   "notes": [
