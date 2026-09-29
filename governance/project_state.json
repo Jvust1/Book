@@ -805,5 +805,11 @@
       "combined_zip_drive_mode": "2 raw-byte split parts"
     },
     "main_unchanged": true
-  }
+  },
+  "latest_results_receipt": {
+    "drive_file_id": "1cAz7TwNkeL_xZDb0lc22MfitjwIAM3Ey",
+    "drive_path": "Book/00_Project/Book_results_update_20260929_receipt.json",
+    "sha256": "760b5d0829dfe87262d73cc9596a6800323b5c163589386368600c08873ee5b2"
+  },
+  "latest_results_checkpoint": "governance/six_textbooks_learning_v5_clean_20260929.json"
 }
