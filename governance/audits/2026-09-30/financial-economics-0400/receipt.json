@@ -1,0 +1,13 @@
+{
+  "schema_version":"book_audit_receipt_v1",
+  "book_id":"financial-economics-ten-lectures",
+  "date":"2026-09-30",
+  "confirmed_issue_count":2,
+  "source_layer_modified":false,
+  "changes":[
+    {"id":"fe10-derived-20260930-001","module":"practice","source_pdf_page":84,"source_record_id":"fe10-p084-b004","old":"answer was only a generic outline","new":"derived practice answer now contains the full source-supported derivation","reason":"question explicitly requires a detailed proof","impact":"chapter-3 practice, chapter bundle, full practice bundle"},
+    {"id":"fe10-derived-20260930-002","module":"learn","source_pdf_page":81,"source_record_id":"fe10-p081-b001","old":"derived learning view contained corrupted OCR symbols and words","new":"derived learning view now contains a readable source-supported correction block","reason":"OCR corruption changed mathematical meaning","impact":"chapter-3 learning, full learning bundle"}
+  ],
+  "pending":["chapter-3 learning page 4 surrounding symbol-level OCR requires source-image character review"],
+  "bundle_sha256":{"practice":"9c8e60e436a44f73f8147f054017d6b5935ebe912af2f57b5bcd27371bea366c","learning":"22c3b606af45eae45cb00d6e7b25bfef75ecccdf3922ec52b2a72fa3ef31a731"}
+}
