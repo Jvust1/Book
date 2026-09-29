@@ -930,6 +930,46 @@
         "Full 253-document Chromium A4 audit not completed due to runtime timeout",
         "Native Windows fullscreen/DPI/local-font visual acceptance pending"
       ]
+    },
+    {
+      "artifact_id": "book-windows-1.3-reader-step3-20260929",
+      "file_name": "Book-Windows-1.3.0-dev-Step3-20260929",
+      "type": "generated_development_checkpoint",
+      "version": "1.3.0-dev-reading-step3",
+      "source": "assistant_generated_four_mode_interaction_shell_over_step2",
+      "drive_folder_id": "19dWO9ZnPsAsxuoUmaRUP8lKv15SxKZjs",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step3-20260929",
+      "source_patch": {
+        "file_name": "Book-1.3.0-dev-Step3-SourcePatch.zip",
+        "drive_file_id": "1zj-TUnZ_6Ru-KZYdLR2zFbECp8IKrENu",
+        "size_bytes": 73989,
+        "sha256": "f62d27521929021e71a80e254f509b042fac35c5675f3742a50954ac1ea4d920"
+      },
+      "content_contract": {
+        "step2_documents_compared": 256,
+        "changed": 0,
+        "missing": 0,
+        "extra": 0,
+        "textbook_content_mutated": false,
+        "reader_layer_content_mutated": false
+      },
+      "tests": {
+        "step3_browser": "21 PASS / 0 FAIL",
+        "step3_practice_a4_smoke": "7 PASS / 0 FAIL",
+        "step2_full_corpus_regression": "13 PASS / 0 FAIL",
+        "step2_browser_regression": "25 PASS / 0 FAIL",
+        "step2_preview_a4_regression": "7 PASS / 0 FAIL",
+        "javascript_syntax": "PASS",
+        "go_unit_tests": "PASS_WITH_SYNTHETIC_VERIFIED_BUNDLE",
+        "content_invariance": "PASS"
+      },
+      "status": "ACTIVE_DEV_CHECKPOINT_FINAL_EXE_NOT_BUILT",
+      "purpose": "Make Preview/Learn/Review/Practice a coherent learning flow with mode guidance, active recall review, per-question folded answers, draft/progress state and next-question navigation.",
+      "verification": "Drive folder readback found all 6 Step3 files; source patch was re-downloaded and SHA-256 matched.",
+      "limitations": [
+        "No new final Windows executable at Step3",
+        "Native Windows fullscreen/DPI/local-font/print acceptance pending"
+      ]
     }
   ],
   "notes": [

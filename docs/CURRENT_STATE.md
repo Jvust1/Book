@@ -1,3 +1,16 @@
+## 2026-09-29 Book 1.3 阅读体验 Step3（四模式交互完成）
+
+- 恢复入口：`governance/book_windows_1_3_reader_step3_20260929.json`。当前可下载 Final 仍为 1.2.1 v4 Final；Step3 不冒充最终 EXE。
+- 四模式不再只是标签页：**预习·先搭骨架 → 学习·连续正文 → 复习·主动回忆 → 刷题·先做后看**，每一阶段都有明确主动作进入下一阶段。
+- 预习提供 10–20 分钟导读、一键进入学习和“预习自检”定位；学习保持连续正文并可进入复习/沉浸阅读。
+- 复习新增**主动回忆**：默认可折叠主要章/节结构下的正文，先回忆再点击标题展开核对；只使用阅读器交互，不改源结构。
+- 刷题改为**答案默认逐题折叠**；点击“参考解答”只展开当前题，其他题保持折叠；草稿自动保存、显示已作答数量，并支持“下一题”。
+- 快捷键：Alt+1/2/3/4 切换四模式；Enter/Space 可操作答案标签和主动回忆标题。
+- 内容保护：与 Step2 对比 `web/documents` **256/256**，0 changed / 0 missing / 0 extra；教材正文、题目、公式、参考解答、来源/校勘层均未改变。
+- 验证：Step3 Chromium **21 PASS / 0 FAIL**；代表性刷题 A4 折叠/展开 **7 PASS / 0 FAIL**；Step2 全量内容回归 **13 PASS / 0 FAIL**、Chromium 回归 **25 PASS / 0 FAIL**、六书预习分页回归 **7 PASS / 0 FAIL**；JS 语法 PASS；Go 单测 PASS。
+- Drive：`Book/03_Exports/Book-Windows-1.3.0-dev-Step3-20260929`，folder ID `19dWO9ZnPsAsxuoUmaRUP8lKv15SxKZjs`；源码增量包 SHA-256 `f62d27521929021e71a80e254f509b042fac35c5675f3742a50954ac1ea4d920`，Drive 回读哈希一致。
+- 最终 Windows F11/DPI/本机书宋/打印路径与完整 EXE 验收留到最终构建阶段；`main` 未修改，未自动合并。
+
 ## 2026-09-29 Book 1.3 阅读体验 Step2（六本内容清洗完成）
 
 - 恢复入口：`governance/book_windows_1_3_reader_step2_20260929.json`。当前可下载 Final 仍为 1.2.1 v4 Final；Step2 尚未生成新的最终 EXE。

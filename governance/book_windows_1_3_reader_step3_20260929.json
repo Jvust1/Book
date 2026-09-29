@@ -1,0 +1,74 @@
+{
+  "schema": "book_windows_reader_step3_v1",
+  "date": "2026-09-29",
+  "version": "1.3.0-dev-reading-step3",
+  "status": "STEP3_FOUR_MODE_INTERACTION_COMPLETE_DEV_CHECKPOINT_FINAL_EXE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "base_step2_commit": "86c508ea4acdbd02c2410001f686d51fd56ed4a6",
+  "scope": "Four-mode reader interaction shell only; Step2 reader-layer content and textbook/source content unchanged.",
+  "interaction": {
+    "mode_tabs": [
+      "预习·先搭骨架",
+      "学习·连续正文",
+      "复习·主动回忆",
+      "刷题·先做后看"
+    ],
+    "preview": "10–20分钟导读；一键进入学习；可跳转预习自检。",
+    "learn": "保持连续教材正文；一键进入复习或沉浸阅读。",
+    "review": "主动回忆模式按主要复习结构折叠正文，点击章/节级标题展开核对。",
+    "practice": "参考解答默认逐题折叠；点击本题标签仅展开本题；草稿自动保存并显示作答进度；提供下一题。",
+    "mode_chain": "预习→学习→复习→刷题均有显式主动作。",
+    "keyboard": "Alt+1/2/3/4切换四模式；Enter/Space操作答案标签与主动回忆标题。"
+  },
+  "content_invariance": {
+    "step2_web_documents_compared": 256,
+    "changed_documents": 0,
+    "missing_documents": 0,
+    "extra_documents": 0,
+    "textbook_content_mutated": false,
+    "reader_layer_content_mutated": false
+  },
+  "validation": {
+    "step3_browser": "21 PASS / 0 FAIL",
+    "step3_practice_a4_smoke": "7 PASS / 0 FAIL",
+    "step2_full_corpus_regression": "13 PASS / 0 FAIL",
+    "step2_browser_regression": "25 PASS / 0 FAIL",
+    "step2_preview_a4_regression": "7 PASS / 0 FAIL",
+    "javascript_syntax": "PASS",
+    "go_unit_tests": "PASS_WITH_SYNTHETIC_VERIFIED_BUNDLE",
+    "content_invariance": "PASS",
+    "final_windows_exe_built": false,
+    "native_windows_acceptance": false
+  },
+  "drive": {
+    "folder_id": "19dWO9ZnPsAsxuoUmaRUP8lKv15SxKZjs",
+    "path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step3-20260929",
+    "source_patch": {
+      "file": "Book-1.3.0-dev-Step3-SourcePatch.zip",
+      "drive_file_id": "1zj-TUnZ_6Ru-KZYdLR2zFbECp8IKrENu",
+      "size_bytes": 73989,
+      "sha256": "f62d27521929021e71a80e254f509b042fac35c5675f3742a50954ac1ea4d920",
+      "drive_readback_sha256_match": true
+    },
+    "report_id": "10Pfzp_AYCYf6SDtshLhO1b-lLTRkyhOf",
+    "manifest_id": "1wGHeEHwWkmRQUy9UIo4Y7__tcm9z__AQ",
+    "browser_report_id": "1ppKBcAKFfMKcQcs5xfUvxpnigyM3mSLy",
+    "paged_smoke_id": "1WzyTcKzaKB4eFOYS8kBopGQ-y5J42agX",
+    "content_invariance_id": "1mhudpa2BnC2vahhtZ7jo66aAfC6OafH2",
+    "folder_readback_files": 6
+  },
+  "restore_order": [
+    "Book-1.2.1-v4-Final-content.zip",
+    "Book-1.3.0-dev-Step1-SourcePatch.zip",
+    "Book-1.3.0-dev-Step2-SourcePatch.zip",
+    "Book-1.3.0-dev-Step3-SourcePatch.zip"
+  ],
+  "boundaries": [
+    "Step3 is a development checkpoint; it does not create or claim a new final Windows EXE.",
+    "Step3 does not change textbook content, questions, formulas, reference answers, Step2 reader cleanup, or provenance data.",
+    "Native Windows F11/DPI/local-ShuSong/print acceptance remains pending for final build.",
+    "No claim of new academic review is made."
+  ],
+  "main_changed": false,
+  "automatic_merge": false
+}

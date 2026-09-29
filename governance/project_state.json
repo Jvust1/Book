@@ -645,5 +645,33 @@
     "final_windows_exe_built": false,
     "windows_device_acceptance": false,
     "main_modified": false
+  },
+  "windows_reader_step3": {
+    "version": "1.3.0-dev-reading-step3",
+    "status": "STEP3_FOUR_MODE_INTERACTION_COMPLETE_DEV_CHECKPOINT_FINAL_EXE_PENDING",
+    "branch": "feat/windows-document-reader-1.2-20260928",
+    "base_step2_commit": "86c508ea4acdbd02c2410001f686d51fd56ed4a6",
+    "drive_folder_id": "19dWO9ZnPsAsxuoUmaRUP8lKv15SxKZjs",
+    "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step3-20260929",
+    "source_patch_sha256": "f62d27521929021e71a80e254f509b042fac35c5675f3742a50954ac1ea4d920",
+    "mode_flow": [
+      "preview",
+      "learn",
+      "review",
+      "practice"
+    ],
+    "active_recall_implemented": true,
+    "per_question_answer_fold_implemented": true,
+    "practice_progress_implemented": true,
+    "step2_documents_changed": 0,
+    "tests": {
+      "browser": "21 PASS / 0 FAIL",
+      "practice_a4_smoke": "7 PASS / 0 FAIL",
+      "content_invariance": "PASS",
+      "regressions": "13+25+7 PASS / 0 FAIL"
+    },
+    "final_windows_exe_built": false,
+    "windows_device_acceptance": false,
+    "main_modified": false
   }
 }
