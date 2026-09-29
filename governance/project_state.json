@@ -573,7 +573,7 @@
   "contemporary_china_economy_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/contemporary_china_economy_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 290,
     "pdf_files_total": 45,
     "exercise_solution_coverage": "75/75",
@@ -581,7 +581,21 @@
     "full_pdf_id": "1zHBZA9osXEa9a3ZPwkG5LIS548YCLszZ",
     "full_pdf_sha256": "a8875e63d9829d81601f37a9e4d721b43cd8b6669c2611fb39c235d985ce87e6",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "1-OPZAsybhbQk1xkTTEjgtJS06McRL1MB",
+      "individual_pdfs": 12,
+      "full_pages": 218,
+      "full_pdf_id": "1J6jjAwOohMv8P6mvxU2YNnsJpi-x_9Ks",
+      "full_pdf_sha256": "533c23b9d7c41319091583eb67e9717252cbd9e742ee65afe40d8e4d4fe534d8"
+    }
   },
   "five_textbooks_v4_relayout": {
     "checkpoint": "governance/five_textbooks_v4_relayout_20260928.json",
@@ -608,7 +622,7 @@
   "functional_analysis_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/functional_analysis_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 309,
     "pdf_files_total": 21,
     "exercise_solution_coverage": "110/110",
@@ -616,12 +630,26 @@
     "full_pdf_id": "1PQrjnVAypGoUxsfBpVrOU7-ZDL6886KX",
     "full_pdf_sha256": "3f49ece46b146c966f230c65105ef6ab43a12fb49af3805f89def699f3c27cf5",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "1y4dTGf3NJgsf3UtuvC90I6BK5KsWtItN",
+      "individual_pdfs": 6,
+      "full_pages": 198,
+      "full_pdf_id": "1RDou-N1Jv7z2GOK0H0RK4THsCD8gG6NX",
+      "full_pdf_sha256": "87e4a7b847507de21b6f961b886b54d2a2e4bb722ba5ecaa6a462dc16de780d1"
+    }
   },
   "mathematical_physics_equations_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/mathematical_physics_equations_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 249,
     "pdf_files_total": 29,
     "exercise_solution_coverage": "194/194",
@@ -629,12 +657,26 @@
     "full_pdf_id": "1V2YF925T1U3G2_A_E9ZXn19Nnl6YPYXG",
     "full_pdf_sha256": "2bbf7da651b95f0537b3c34367ca2bde8c85f611a472ceb86098afb2731e207f",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "1o1wYGgzE_7vPdpKqRSk-q2Ywhl05_HVE",
+      "individual_pdfs": 8,
+      "full_pages": 204,
+      "full_pdf_id": "11wyX_8umIj32G6oE0RUZkH-dhqBszSJJ",
+      "full_pdf_sha256": "bbf956be7abcd19ddf02b9b52114830d024e5ac7106bdade01443fbed60c2308"
+    }
   },
   "monetary_finance_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/monetary_finance_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 284,
     "pdf_files_total": 57,
     "exercise_solution_coverage": "89/89",
@@ -642,12 +684,26 @@
     "full_pdf_id": "1s2xVi6ELXPdxZPhjcr3RT17Y_jsHiGic",
     "full_pdf_sha256": "ab72637764ceb97e943498cc2108dbed3db43b96e962a758d5f7ee5c9efe056c",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "10ZEdYC8-GcpCOty0OcqP_IUEUUoM2eWV",
+      "individual_pdfs": 15,
+      "full_pages": 330,
+      "full_pdf_id": "1HWrVjvMWx4R-Bg9a8hOiOLFEV7SHmGUg",
+      "full_pdf_sha256": "99d9ed543dff664adeebcf1f9dda5540e33bfb1d7743740490f5f9d040f6505f"
+    }
   },
   "public_finance_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/public_finance_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 287,
     "pdf_files_total": 61,
     "exercise_solution_coverage": "77/77",
@@ -655,12 +711,26 @@
     "full_pdf_id": "1A4UJHpU-pYqjEF7wBlB3BsRcRWd78Fxa",
     "full_pdf_sha256": "5e96b405f3b70891779022301803769921f51182735bd9a05a1ec5d64d486c74",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "12l9v41X9pRMTcENgQp4S40KdO1aCgJQC",
+      "individual_pdfs": 15,
+      "full_pages": 301,
+      "full_pdf_id": "14JCFYT22A-x17okswGD1HKutznKqeL8J",
+      "full_pdf_sha256": "5f6be5f171f95df93bda1ee7c1c7c376e8364c1642fd113ac2422b85dc8858cc"
+    }
   },
   "financial_economics_ten_lectures_learning_pdf_current": {
     "version": "v5-clean",
     "checkpoint": "governance/financial_economics_ten_lectures_learning_pdf_v5_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "full_pages": 149,
     "pdf_files_total": 41,
     "exercise_solution_coverage": "95/95",
@@ -668,11 +738,25 @@
     "full_pdf_id": "1iV_im656gaUC-lhmYosA7UAYY_A1urlx",
     "full_pdf_sha256": "f347a40cf0410dfd328c84a32260293f046b2c5b280e3cd119e177beaadf812d",
     "targeted_source_footnote_residuals": 0,
-    "main_unchanged": true
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_module": {
+      "status": "DELIVERED_VERIFIED_CLEAN",
+      "drive_folder_id": "18r-TtX7kfCQSB-ftmhz1L1PSIqscGfoc",
+      "individual_pdfs": 11,
+      "full_pages": 218,
+      "full_pdf_id": "1rLT0eZBuQpQfzaQRIxAWuPjYkJyBHXgy",
+      "full_pdf_sha256": "7589d2db7d9edfcf1c3850e1d07baef944a9da9af6c58d551bc28beba8d889c5"
+    }
   },
   "six_textbooks_v5_reader_clean": {
     "checkpoint": "governance/six_textbooks_v5_reader_clean_20260929.json",
-    "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
     "current_authoritative": true,
     "books": 6,
     "formal_pdfs": 254,
@@ -690,6 +774,36 @@
     "qa_report_id": "1PxMU8cQBfo7Aeie4YjU1GjVKRRHm9mC6",
     "combined_zip_sha256": "d6ed1102a9f2fb5be3eb07725de4de2d07ffedfcd979399fd6e34885857959da",
     "combined_zip_drive_mode": "8 raw-byte split parts",
+    "main_unchanged": true,
+    "modules_available": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "learning_extension_checkpoint": "governance/six_textbooks_learning_v5_clean_20260929.json"
+  },
+  "six_textbooks_v5_four_module_system": {
+    "checkpoint": "governance/six_textbooks_learning_v5_clean_20260929.json",
+    "status": "DELIVERED_VERIFIED_FOUR_MODULES",
+    "current_authoritative": true,
+    "modules": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "reader_clean_checkpoint": "governance/six_textbooks_v5_reader_clean_20260929.json",
+    "learning": {
+      "individual_pdfs": 67,
+      "full_pdfs": 6,
+      "total_pdfs": 73,
+      "full_pages": 1469,
+      "drive_qa_folder_id": "1a1fVzAKRcqijVcJzwYZVicssYT-2OJFQ",
+      "qa_report_id": "1agZQgyNkxCncWD03P50nfKGVV7DGPwny",
+      "combined_zip_sha256": "45b2a0b1fdcf0ac29d0720933d607861e64331dc4f2006db6a25bc1d92011dfe",
+      "combined_zip_drive_mode": "2 raw-byte split parts"
+    },
     "main_unchanged": true
   }
 }
