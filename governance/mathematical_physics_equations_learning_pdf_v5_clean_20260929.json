@@ -5,7 +5,7 @@
     "slug": "mathematical_physics_equations",
     "title": "数学物理方程（第四版）"
   },
-  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "status": "DELIVERED_VERIFIED_FOUR_MODULES",
   "supersedes": "v4 relayout release; v4 remains historical",
   "scope": {
     "pdf_files_total": 29,
@@ -49,5 +49,29 @@
     }
   },
   "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
-  "main_modified": false
+  "main_modified": false,
+  "modules_available": [
+    "预习",
+    "学习",
+    "复习",
+    "刷题"
+  ],
+  "learning_module": {
+    "status": "DELIVERED_VERIFIED_CLEAN",
+    "source": "Book-SixTextbooks-Chapter-LaTeX-20260926 structured-data vector PDFs",
+    "folder_id": "1o1wYGgzE_7vPdpKqRSk-q2Ywhl05_HVE",
+    "individual_pdfs": 8,
+    "full_pages": 204,
+    "full_pdf_id": "11wyX_8umIj32G6oE0RUZkH-dhqBszSJJ",
+    "full_pdf_sha256": "bbf956be7abcd19ddf02b9b52114830d024e5ac7106bdade01443fbed60c2308",
+    "zip_id": "1BZJque1FnTib4EZoetH-8UYXwFM5mJFj",
+    "zip_sha256": "36ba6644a7db5695f5198ecbb68a790fe7fac01cbcf10766fa64e727cd16f3c1",
+    "cleanup": {
+      "targeted_source_provenance_residuals": 0,
+      "replacement_chars": 0,
+      "nul_chars": 0,
+      "visual_render_issues": 0
+    },
+    "academic_content_acceptance": false
+  }
 }
