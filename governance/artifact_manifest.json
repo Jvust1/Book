@@ -1062,9 +1062,25 @@
         "mode": "single",
         "sha256": "d7bc89c59a9fee601a24f24d2451f57381173424d7b95894d95a55b22ae53e49"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "1-OPZAsybhbQk1xkTTEjgtJS06McRL1MB",
+        "individual_pdfs": 12,
+        "full_pages": 218,
+        "full_pdf_id": "1J6jjAwOohMv8P6mvxU2YNnsJpi-x_9Ks",
+        "full_pdf_sha256": "533c23b9d7c41319091583eb67e9717252cbd9e742ee65afe40d8e4d4fe534d8",
+        "zip_id": "1PiIuGUfxYJmhA8yys5Rm87hQREWZGM-K",
+        "zip_sha256": "877b5d6b6b57c58b37b4da5cad0f76bfbe5145257267c9408ee65c65f5f3ba95"
+      }
     },
     {
       "artifact_id": "book-functional-analysis-learning-pdf-v5-clean-20260929",
@@ -1085,9 +1101,25 @@
         "mode": "single",
         "sha256": "7b92617da95fd64aa6ee99b3dd586fb8a3ed57f921f56b486036f56839962be7"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "1y4dTGf3NJgsf3UtuvC90I6BK5KsWtItN",
+        "individual_pdfs": 6,
+        "full_pages": 198,
+        "full_pdf_id": "1RDou-N1Jv7z2GOK0H0RK4THsCD8gG6NX",
+        "full_pdf_sha256": "87e4a7b847507de21b6f961b886b54d2a2e4bb722ba5ecaa6a462dc16de780d1",
+        "zip_id": "18_5qmNM9nuaBcJ9mTDc9eyGGE40KFi_I",
+        "zip_sha256": "a4c092b67cae2d7d2c8ed6a6de77921ee75aa3fd1b30eb3331121c95dfd77f9f"
+      }
     },
     {
       "artifact_id": "book-math-physics-equations-learning-pdf-v5-clean-20260929",
@@ -1108,9 +1140,25 @@
         "mode": "single",
         "sha256": "4461a25dc97a89c2895e54404d4522bd6ffc3189239d8ee2da5e5b2bf28dcdb5"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "1o1wYGgzE_7vPdpKqRSk-q2Ywhl05_HVE",
+        "individual_pdfs": 8,
+        "full_pages": 204,
+        "full_pdf_id": "11wyX_8umIj32G6oE0RUZkH-dhqBszSJJ",
+        "full_pdf_sha256": "bbf956be7abcd19ddf02b9b52114830d024e5ac7106bdade01443fbed60c2308",
+        "zip_id": "1BZJque1FnTib4EZoetH-8UYXwFM5mJFj",
+        "zip_sha256": "36ba6644a7db5695f5198ecbb68a790fe7fac01cbcf10766fa64e727cd16f3c1"
+      }
     },
     {
       "artifact_id": "book-monetary-finance-learning-pdf-v5-clean-20260929",
@@ -1131,9 +1179,25 @@
         "mode": "3 raw-byte split parts",
         "sha256": "4d29fe005cfb278048d424b18d217670c7a5b74d8fcccd08c3549732178e9876"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "10ZEdYC8-GcpCOty0OcqP_IUEUUoM2eWV",
+        "individual_pdfs": 15,
+        "full_pages": 330,
+        "full_pdf_id": "1HWrVjvMWx4R-Bg9a8hOiOLFEV7SHmGUg",
+        "full_pdf_sha256": "99d9ed543dff664adeebcf1f9dda5540e33bfb1d7743740490f5f9d040f6505f",
+        "zip_id": "1nSJrwio2H9NlH2jCjiiJV_gsyrbFw2c8",
+        "zip_sha256": "4ea70b3842a97fc9f902869684f0f5006342795c876685268ec7658999ec8b74"
+      }
     },
     {
       "artifact_id": "book-public-finance-learning-pdf-v5-clean-20260929",
@@ -1154,9 +1218,25 @@
         "mode": "3 raw-byte split parts",
         "sha256": "794d102431b383dbba523f16d1fca3f79653fc269185a7f5247fb5043fc575c7"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "12l9v41X9pRMTcENgQp4S40KdO1aCgJQC",
+        "individual_pdfs": 15,
+        "full_pages": 301,
+        "full_pdf_id": "14JCFYT22A-x17okswGD1HKutznKqeL8J",
+        "full_pdf_sha256": "5f6be5f171f95df93bda1ee7c1c7c376e8364c1642fd113ac2422b85dc8858cc",
+        "zip_id": "1EmUcOzqwULGzOUf3CDoNwQ9PRNLbH4jq",
+        "zip_sha256": "64bd6d5855d7fdef2ae8079b0e54475fac73950016ef8d6d15ae52fd221031a4"
+      }
     },
     {
       "artifact_id": "book-financial-economics-ten-lectures-learning-pdf-v5-clean-20260929",
@@ -1177,9 +1257,25 @@
         "mode": "single",
         "sha256": "5d24fecfe99e2b27a7edddbac5a56794efec84a402d0d8c1973afaab9caaf7b8"
       },
-      "status": "VERIFIED_COMPLETE_CURRENT",
+      "status": "VERIFIED_COMPLETE_CURRENT_FOUR_MODULES",
       "verification": "Reader-clean release; targeted source/footnote residuals 0; A4/blank/replacement/NUL/visual issues 0; full-book pages preserved.",
-      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited."
+      "content_boundary": "Reading-experience cleanup only; legacy OCR/AI answer academic correctness not independently re-audited.",
+      "modules_available": [
+        "预习",
+        "学习",
+        "复习",
+        "刷题"
+      ],
+      "learning_module": {
+        "status": "VERIFIED_COMPLETE",
+        "drive_folder_id": "18r-TtX7kfCQSB-ftmhz1L1PSIqscGfoc",
+        "individual_pdfs": 11,
+        "full_pages": 218,
+        "full_pdf_id": "1rLT0eZBuQpQfzaQRIxAWuPjYkJyBHXgy",
+        "full_pdf_sha256": "7589d2db7d9edfcf1c3850e1d07baef944a9da9af6c58d551bc28beba8d889c5",
+        "zip_id": "1P4jDR6QUabVc-LeXPllgMWPMWk8we9MX",
+        "zip_sha256": "6c362a8be59e5c92c5549570aed2ab19c8df2054439ad39c0ec5e1846554569c"
+      }
     },
     {
       "artifact_id": "book-six-textbooks-v5-reader-clean-qa-20260929",
@@ -1201,6 +1297,49 @@
         "sha256": "d6ed1102a9f2fb5be3eb07725de4de2d07ffedfcd979399fd6e34885857959da"
       },
       "status": "VERIFIED_COMPLETE_CURRENT"
+    },
+    {
+      "artifact_id": "book-six-textbooks-learning-v5-clean-20260929",
+      "file_name": "六本教材_学习清爽版_v5_20260929.zip",
+      "type": "generated_learning_module_release",
+      "version": "v5-clean-learning",
+      "source": "Book-SixTextbooks-Chapter-LaTeX-20260926",
+      "drive_folder_id": "1a1fVzAKRcqijVcJzwYZVicssYT-2OJFQ",
+      "drive_path": "Book/03_Exports/Book-v5-Clean-QA-20260929/学习清爽版",
+      "drive_file_id": null,
+      "size_bytes": 108287769,
+      "sha256": "45b2a0b1fdcf0ac29d0720933d607861e64331dc4f2006db6a25bc1d92011dfe",
+      "zip_delivery": {
+        "mode": "raw_byte_split",
+        "parts": [
+          {
+            "drive_file_id": "1zMDs0bAZ2jB00hLOmHU03ICvJLoh_t2R",
+            "name": "六本教材_学习清爽版_v5_20260929.zip.part00",
+            "size": 62914560,
+            "sha256": "074a9be13e666e9836461ac680bdaa04f89f535f19e9ee7440a1fc0179eb4b6f"
+          },
+          {
+            "drive_file_id": "109ScZ202H_yypYY7uhCu9MF4r4_5FhDV",
+            "name": "六本教材_学习清爽版_v5_20260929.zip.part01",
+            "size": 45373209,
+            "sha256": "dfc9ceddf707e616cb01160b02a355f5c71357432b87af871255afc901c956df"
+          }
+        ]
+      },
+      "scope": {
+        "books": 6,
+        "individual_pdfs": 67,
+        "full_pdfs": 6,
+        "total_pdfs": 73,
+        "full_pages": 1469
+      },
+      "qa_report": {
+        "drive_file_id": "1agZQgyNkxCncWD03P50nfKGVV7DGPwny",
+        "sha256": "6f390059aa25572e1915134868d313740df40a35f0f006d5488f88b1d2e6f946"
+      },
+      "status": "VERIFIED_COMPLETE_CURRENT",
+      "verification": "67/67 PDFs open; 1469/1469 pages rendered; A4/replacement/NUL/targeted provenance residuals 0; six Drive learning folders and six learning full PDFs read back and match manifests.",
+      "content_boundary": "Readability cleanup only; no silent academic rewrite or independent expert content acceptance."
     }
   ],
   "notes": [
