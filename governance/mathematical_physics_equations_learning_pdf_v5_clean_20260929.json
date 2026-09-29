@@ -1,0 +1,53 @@
+{
+  "schema_version": "book_learning_pdf_v5_reader_clean_checkpoint",
+  "updated_date": "2026-09-29",
+  "book": {
+    "slug": "mathematical_physics_equations",
+    "title": "数学物理方程（第四版）"
+  },
+  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "supersedes": "v4 relayout release; v4 remains historical",
+  "scope": {
+    "pdf_files_total": 29,
+    "full_pages": 249,
+    "exercise_solution_units": 194
+  },
+  "cleanup": {
+    "removed": [
+      "资料来源/数据来源行",
+      "教材来源/来源展开/来源回忆等阅读层标签",
+      "结构化/OCR/扫描/公式账本等实现说明",
+      "原书显式脚注正文与脚注标记",
+      "保守识别的金融/财政类行内脚注数字"
+    ],
+    "preserved": [
+      "教材正文、公式与图表",
+      "教材原题",
+      "AI学习参考解答标签与正文",
+      "非引用性的教材时期/适用边界提示"
+    ]
+  },
+  "validation": {
+    "targeted_source_footnote_residuals": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "visual_render_issues": 0,
+    "academic_content_reaudit": false,
+    "full_book_rendered_pages": 249,
+    "full_pages_preserved": true
+  },
+  "drive": {
+    "folder_id": "1zsRJpArl4uE6ePIK5I6Zl5wseikROFLs",
+    "full_pdf_id": "1V2YF925T1U3G2_A_E9ZXn19Nnl6YPYXG",
+    "full_pdf_sha256": "2bbf7da651b95f0537b3c34367ca2bde8c85f611a472ceb86098afb2731e207f",
+    "zip_delivery": {
+      "mode": "single",
+      "id": "1PIw8rPP59k2f0PxSAJU7uoB_0cgOGyqv",
+      "sha": "4461a25dc97a89c2895e54404d4522bd6ffc3189239d8ee2da5e5b2bf28dcdb5"
+    }
+  },
+  "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
+  "main_modified": false
+}
