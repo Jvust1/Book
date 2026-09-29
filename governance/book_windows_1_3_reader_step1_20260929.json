@@ -1,0 +1,72 @@
+{
+  "schema": "book_windows_reader_step1_v1",
+  "date": "2026-09-29",
+  "version": "1.3.0-dev-reading-step1",
+  "status": "STEP1_READER_EXPERIENCE_COMPLETE_DEV_CHECKPOINT_WINDOWS_NATIVE_BUILD_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "base_release": "Book 1.2.1 v4 Final",
+  "scope": "Reader experience only; no textbook/source-content mutation.",
+  "features": {
+    "fullscreen": "F11 + visible button; browser Fullscreen API; immersive fallback when fullscreen is denied.",
+    "immersive": "M toggles distraction-free reading; library navigation/top bar/mode bar/tools/status hidden; top-edge recovery HUD retained.",
+    "clean_reading": "Enabled by default; source/provenance/OCR notes, technical source labels and identifiable footnote/source-tail markers are hidden from ordinary reading but remain in DOM and are reversible.",
+    "typography": "ShuSong-first local Windows font stack; custom imported font is opt-in only; font-synthesis disabled; body weight 400; lighter textbook-style headings.",
+    "paper": "Refined A4 paper background/shadow/running headers while preserving A4 and continuous modes."
+  },
+  "integrity": {
+    "source_text_deleted": false,
+    "provenance_deleted": false,
+    "textbook_content_mutated": false,
+    "hidden_source_layer_reversible": true
+  },
+  "validation": {
+    "reader_experience_step1": "34 PASS / 0 FAIL",
+    "javascript_syntax": "PASS",
+    "go_unit_tests": "PASS_WITH_SYNTHETIC_VERIFIED_BUNDLE",
+    "real_content_manifest_files": 29093,
+    "source_patch_drive_readback_sha256": "c8a70398792021e5aadd1bbcf3203d72e4e77387da7603888e8918f18a7943e1",
+    "final_windows_exe": "NOT_BUILT_AT_STEP1_CHECKPOINT",
+    "native_windows_fullscreen_acceptance": false,
+    "native_windows_font_visual_acceptance": false
+  },
+  "drive": {
+    "folder_id": "1tdDhHcD71ATKBQLOSSVcY-ktyS8ZQ07-",
+    "path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step1-20260929",
+    "files": [
+      {
+        "name": "Book-1.3.0-dev-Step1-SourcePatch.zip",
+        "id": "1FhWDa12eDcPIvvg6qFvFL5LoiLuzFdi2",
+        "bytes": 52996,
+        "sha256": "c8a70398792021e5aadd1bbcf3203d72e4e77387da7603888e8918f18a7943e1"
+      },
+      {
+        "name": "STEP1_REPORT.md",
+        "id": "1Q10iBZOWNbALLqtGCUTA0jwOWje6ZvTr",
+        "bytes": 2054
+      },
+      {
+        "name": "STEP1_MANIFEST.json",
+        "id": "1rDhHU0Sus0SeegjQuA1pJF3uz3j9i9AL",
+        "bytes": 2748
+      },
+      {
+        "name": "reader-step1-test-report.json",
+        "id": "1kzT57fypSa-_1jYor4UuJ5hDZYyniBwS",
+        "bytes": 7150
+      }
+    ],
+    "folder_readback": "PASS"
+  },
+  "restore_order": [
+    "Book-1.2.0-Source-and-Tests.zip",
+    "Book-1.2.1-v4-Final-SourcePatch.zip",
+    "Book-1.3.0-dev-Step1-SourcePatch.zip"
+  ],
+  "limitations": [
+    "No final Windows EXE is claimed for Step1; cross-building the full embedded-content executable did not finish within the available build window.",
+    "F11/native window fullscreen and actual Windows local-font rendering still require Windows-device acceptance.",
+    "No commercial ShuSong font file is redistributed; the app prefers compatible locally installed ShuSong/Song fonts."
+  ],
+  "main_changed": false,
+  "automatic_merge": false
+}

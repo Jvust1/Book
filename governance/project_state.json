@@ -1,6 +1,6 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-09-28",
+  "updated_date": "2026-09-29",
   "repository": "Jvust/Book",
   "default_branch": "main",
   "active_branch": "feat/learning-system-r2-20260927",
@@ -604,6 +604,24 @@
     "targeted_content_corrections_applied": true,
     "windows_real_device_acceptance": false,
     "full_independent_academic_review": false,
+    "main_modified": false
+  },
+  "windows_reader_step1": {
+    "version": "1.3.0-dev-reading-step1",
+    "status": "STEP1_READER_EXPERIENCE_COMPLETE_DEV_CHECKPOINT_WINDOWS_NATIVE_BUILD_PENDING",
+    "branch": "feat/windows-document-reader-1.2-20260928",
+    "base_release": "1.2.1-v4-final",
+    "drive_folder_id": "1tdDhHcD71ATKBQLOSSVcY-ktyS8ZQ07-",
+    "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step1-20260929",
+    "source_patch_sha256": "c8a70398792021e5aadd1bbcf3203d72e4e77387da7603888e8918f18a7943e1",
+    "reader_experience_tests": "34 PASS / 0 FAIL",
+    "clean_reading_default": true,
+    "fullscreen_implemented": true,
+    "immersive_implemented": true,
+    "shusong_local_first": true,
+    "textbook_content_mutated": false,
+    "final_windows_exe_built": false,
+    "windows_device_acceptance": false,
     "main_modified": false
   }
 }

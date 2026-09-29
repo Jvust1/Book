@@ -865,6 +865,34 @@
       "status": "ARCHIVED_VERIFIED_BY_BUILD_AND_DRIVE_SIZE_READBACK_WINDOWS_HOST_ACCEPTANCE_PENDING",
       "verification": "Go tests PASS; content ZIP CRC PASS; Windows x64 cross-compile PASS; embedded payload match PASS; Drive directory readback found all 23 uploaded files and all 17 large parts at expected sizes.",
       "academic_boundary": "Targeted confirmed corrections applied; no claim of complete independent expert review for all 640 AI learning reference answers."
+    },
+    {
+      "artifact_id": "book-windows-1.3-reader-step1-20260929",
+      "file_name": "Book-Windows-1.3.0-dev-Step1-20260929",
+      "type": "generated_development_checkpoint",
+      "version": "1.3.0-dev-reading-step1",
+      "source": "assistant_generated_reader_shell_patch_over_book_1_2_1_v4_final",
+      "drive_folder_id": "1tdDhHcD71ATKBQLOSSVcY-ktyS8ZQ07-",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step1-20260929",
+      "source_patch": {
+        "file_name": "Book-1.3.0-dev-Step1-SourcePatch.zip",
+        "drive_file_id": "1FhWDa12eDcPIvvg6qFvFL5LoiLuzFdi2",
+        "size_bytes": 52996,
+        "sha256": "c8a70398792021e5aadd1bbcf3203d72e4e77387da7603888e8918f18a7943e1"
+      },
+      "tests": {
+        "reader_experience": "34 PASS / 0 FAIL",
+        "javascript_syntax": "PASS",
+        "go_unit_tests": "PASS_WITH_SYNTHETIC_VERIFIED_BUNDLE",
+        "real_content_manifest_files": 29093
+      },
+      "status": "ACTIVE_DEV_CHECKPOINT_FINAL_EXE_NOT_BUILT",
+      "purpose": "Book 1.3 Step1 reader-experience upgrade: fullscreen, immersive reading, clean source-note suppression, ShuSong-first typography and PDF-like paper presentation.",
+      "verification": "Drive folder readback PASS; source patch was re-downloaded and SHA-256 matched.",
+      "limitations": [
+        "Native Windows fullscreen/font rendering acceptance pending",
+        "Final Windows executable not built at this checkpoint"
+      ]
     }
   ],
   "notes": [

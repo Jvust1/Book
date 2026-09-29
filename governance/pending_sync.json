@@ -1,6 +1,6 @@
 {
   "schema_version": "book_pending_sync_v1",
-  "updated_date": "2026-09-28",
+  "updated_date": "2026-09-29",
   "blocking_count": 0,
   "items": [
     {
@@ -100,6 +100,15 @@
       "resolution": "Release archived at Book/03_Exports/Book-Windows-1.2.1-v4-Final-20260928 (folder 1EL010QBbQF9bTPr3YcwB_AZvjvmqEQpD); EXE/content payload split archives, source patch, manifest, reassembly script, usage notes and hashes are present. GitHub restore checkpoint records exact hashes and remaining acceptance boundaries.",
       "blocks_next_step": false,
       "resolved_at": "2026-09-28"
+    },
+    {
+      "pending_id": "book_windows_1_3_step1_native_acceptance",
+      "blocking": false,
+      "status": "OPEN_NON_BLOCKING",
+      "scope": "Book 1.3 reader Step1 native Windows build/visual acceptance",
+      "reason": "Step1 source and browser-level acceptance are complete, but a full embedded-content Windows EXE and real Windows fullscreen/DPI/local-ShuSong visual acceptance were not completed in this checkpoint.",
+      "next_action": "At the final app build stage, rebuild the full Windows x64 executable and perform real Windows F11/fullscreen, DPI, local font, A4 pagination and print-path acceptance.",
+      "blocks_next_step": false
     }
   ]
 }

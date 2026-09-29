@@ -1,3 +1,14 @@
+## 2026-09-29 Book 1.3 阅读体验 Step1（当前开发检查点）
+
+- 恢复入口：`governance/book_windows_1_3_reader_step1_20260929.json`；当前可下载 Final 仍是 1.2.1 v4 Final，本检查点尚未生成新的最终 EXE。
+- 已完成真正全屏入口（F11 / 按钮 / Fullscreen API）与沉浸阅读模式（M）；沉浸时隐藏书架、顶栏、模式栏、阅读工具与状态信息，并保留顶部恢复 HUD。
+- “阅读净化”默认开启：来源说明、provenance/OCR 技术说明、可识别的来源型脚注/尾注和技术按钮从普通阅读流隐藏，但**不删除源文本**，关闭净化即可恢复，审计/搜索/复制来源层仍保留。
+- 默认字体策略改为 Windows 本地书宋优先；导入字体仅在用户选择“自定义”时使用；禁用 synthetic bold，正文 400 字重，标题减重，并调整 A4 纸张阴影/页眉，使阅读更接近正式教材 PDF。
+- 专项验收：**34 PASS / 0 FAIL**；JavaScript 语法 PASS；Go 后端单测使用符合真实 verifier schema/buildID 的小型验证 bundle 通过；真实内容 manifest 为 29,093 项。
+- Drive：`Book/03_Exports/Book-Windows-1.3.0-dev-Step1-20260929`，folder ID `1tdDhHcD71ATKBQLOSSVcY-ktyS8ZQ07-`；源码增量包 SHA-256 `c8a70398792021e5aadd1bbcf3203d72e4e77387da7603888e8918f18a7943e1`，Drive 回读哈希一致。
+- 边界：完整内嵌内容 Windows EXE 尚未在本检查点构建成功；真实 Windows F11、DPI 与本机书宋视觉验收待最终构建阶段完成。
+- 本轮只改阅读器壳/测试/构建标识，未改教材或结构化内容；`main` 未修改，未自动合并。
+
 ## 2026-09-28 Book Windows 1.2.1 v4 Final（当前 Windows 交付）
 
 - 恢复入口：`governance/book_windows_1_2_1_v4_final_20260928.json`。
