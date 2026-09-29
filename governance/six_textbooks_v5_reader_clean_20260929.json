@@ -1,0 +1,98 @@
+{
+  "schema_version": "book_six_textbooks_v5_reader_clean_checkpoint",
+  "updated_date": "2026-09-29",
+  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "scope": {
+    "books": 6,
+    "formal_pdfs": 254,
+    "full_combined_pages": 1568,
+    "exercise_solution_units": 640
+  },
+  "validation": {
+    "targeted_source_footnote_residuals": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "visual_render_issues": 0,
+    "all_full_books_rendered": true
+  },
+  "books": [
+    {
+      "title": "当代中国经济",
+      "checkpoint": "governance/contemporary_china_economy_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1NkoH73G4C11IcLQ4Dq32V9LjVZMmrzuH",
+      "full_pages": 290,
+      "pdf_files_total": 45,
+      "exercise_solution_units": 75,
+      "full_pdf_sha256": "a8875e63d9829d81601f37a9e4d721b43cd8b6669c2611fb39c235d985ce87e6"
+    },
+    {
+      "title": "泛函分析（第2版）",
+      "checkpoint": "governance/functional_analysis_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1z1uemFDnoXZxuOEvAir0bDZX-U4CoUFX",
+      "full_pages": 309,
+      "pdf_files_total": 21,
+      "exercise_solution_units": 110,
+      "full_pdf_sha256": "3f49ece46b146c966f230c65105ef6ab43a12fb49af3805f89def699f3c27cf5"
+    },
+    {
+      "title": "数学物理方程（第四版）",
+      "checkpoint": "governance/mathematical_physics_equations_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1zsRJpArl4uE6ePIK5I6Zl5wseikROFLs",
+      "full_pages": 249,
+      "pdf_files_total": 29,
+      "exercise_solution_units": 194,
+      "full_pdf_sha256": "2bbf7da651b95f0537b3c34367ca2bde8c85f611a472ceb86098afb2731e207f"
+    },
+    {
+      "title": "货币金融学（第三版）",
+      "checkpoint": "governance/monetary_finance_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1rgBnaTiu3kz_EKZKbY-jxyuxsx3CWFfy",
+      "full_pages": 284,
+      "pdf_files_total": 57,
+      "exercise_solution_units": 89,
+      "full_pdf_sha256": "ab72637764ceb97e943498cc2108dbed3db43b96e962a758d5f7ee5c9efe056c"
+    },
+    {
+      "title": "公共财政概论（第二版）",
+      "checkpoint": "governance/public_finance_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1Y0nXYfjYEj3K-c2AOBwJTXVVYyux5rKc",
+      "full_pages": 287,
+      "pdf_files_total": 61,
+      "exercise_solution_units": 77,
+      "full_pdf_sha256": "5e96b405f3b70891779022301803769921f51182735bd9a05a1ec5d64d486c74"
+    },
+    {
+      "title": "金融经济学十讲",
+      "checkpoint": "governance/financial_economics_ten_lectures_learning_pdf_v5_clean_20260929.json",
+      "drive_folder_id": "1VvlSue83SqmAXQXxnH4eJr9jxoQ0eO3l",
+      "full_pages": 149,
+      "pdf_files_total": 41,
+      "exercise_solution_units": 95,
+      "full_pdf_sha256": "f347a40cf0410dfd328c84a32260293f046b2c5b280e3cd119e177beaadf812d"
+    }
+  ],
+  "qa": {
+    "drive_folder_id": "1gl5S2frmjH11v7igVqOGKgNT35Cd6lQ6",
+    "report_id": "1PxMU8cQBfo7Aeie4YjU1GjVKRRHm9mC6",
+    "report_sha256": "9535fc657b1bddb4d1edd9e96e6137cbf8f77f0fba9054b03f84304870099f4d",
+    "sample_id": "1Rm-OZWcnm06dh53NHRafkaknZtBO_2dx",
+    "combined_zip_sha256": "d6ed1102a9f2fb5be3eb07725de4de2d07ffedfcd979399fd6e34885857959da",
+    "combined_zip_delivery": {
+      "mode": "8 raw-byte split parts",
+      "part_ids": [
+        "1ttZ-xHTelbCHcHWABYhtyLPXQPI7zW4L",
+        "1Z-6lVpRnbrw-ubN7-k5JSSjOc2ithqVl",
+        "130AoU7UbSUZoejsvGDcMTgv78k9PZlf6",
+        "104WKQT46psJoCKm2WulQD-REHuH0tAFz",
+        "16phd6HMQ7ILhUqb7AI9gPSVrE_HJxaGA",
+        "1EEcl4mLu8kM34GeYEvirAsqtVSK099OK",
+        "1vOK16fAlkd6eq0nN_Iclj6S87A4vWrVY",
+        "1dT76mQuKCLGzSacqLZmfmynymkCXOts4"
+      ]
+    }
+  },
+  "content_boundary": "阅读层来源/脚注装置已删除；教材事实、公式、题目和AI参考解答正文保留。未声明完成独立学科专家内容审校。",
+  "main_modified": false
+}
