@@ -5,7 +5,7 @@
     "slug": "public_finance",
     "title": "公共财政概论（第二版）"
   },
-  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "status": "DELIVERED_VERIFIED_FOUR_MODULES",
   "supersedes": "v4 relayout release; v4 remains historical",
   "scope": {
     "pdf_files_total": 61,
@@ -62,5 +62,29 @@
     }
   },
   "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
-  "main_modified": false
+  "main_modified": false,
+  "modules_available": [
+    "预习",
+    "学习",
+    "复习",
+    "刷题"
+  ],
+  "learning_module": {
+    "status": "DELIVERED_VERIFIED_CLEAN",
+    "source": "Book-SixTextbooks-Chapter-LaTeX-20260926 structured-data vector PDFs",
+    "folder_id": "12l9v41X9pRMTcENgQp4S40KdO1aCgJQC",
+    "individual_pdfs": 15,
+    "full_pages": 301,
+    "full_pdf_id": "14JCFYT22A-x17okswGD1HKutznKqeL8J",
+    "full_pdf_sha256": "5f6be5f171f95df93bda1ee7c1c7c376e8364c1642fd113ac2422b85dc8858cc",
+    "zip_id": "1EmUcOzqwULGzOUf3CDoNwQ9PRNLbH4jq",
+    "zip_sha256": "64bd6d5855d7fdef2ae8079b0e54475fac73950016ef8d6d15ae52fd221031a4",
+    "cleanup": {
+      "targeted_source_provenance_residuals": 0,
+      "replacement_chars": 0,
+      "nul_chars": 0,
+      "visual_render_issues": 0
+    },
+    "academic_content_acceptance": false
+  }
 }
