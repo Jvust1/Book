@@ -893,6 +893,43 @@
         "Native Windows fullscreen/font rendering acceptance pending",
         "Final Windows executable not built at this checkpoint"
       ]
+    },
+    {
+      "artifact_id": "book-windows-1.3-reader-step2-20260929",
+      "file_name": "Book-Windows-1.3.0-dev-Step2-20260929",
+      "type": "generated_development_checkpoint",
+      "version": "1.3.0-dev-reading-step2",
+      "source": "assistant_generated_reader_content_cleaning_layer_over_step1_and_book_1_2_1_content",
+      "drive_folder_id": "1YKIBKyk5HzvXNDI0kSRSMuGPfYUl7GBd",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step2-20260929",
+      "source_patch": {
+        "file_name": "Book-1.3.0-dev-Step2-SourcePatch.zip",
+        "drive_file_id": "1YPP0PpdO7eMU_dLSy7DI8Edb9gMfWqn1",
+        "size_bytes": 5243325,
+        "sha256": "9c83be95a84c6e8398668bf32fe79fc275f14615dfcc670a78d3b58f57bd74be"
+      },
+      "corpus": {
+        "documents_scanned": 253,
+        "documents_modified": 164,
+        "reader_blocks_modified": 1267,
+        "audit_only_blocks": 247,
+        "audit_notes_retained": 1325,
+        "practice_question_groups_unchanged": 640
+      },
+      "tests": {
+        "full_corpus": "13 PASS / 0 FAIL",
+        "browser_real_chromium": "25 PASS / 0 FAIL",
+        "six_book_paged_smoke": "7 PASS / 0 FAIL",
+        "full_253_document_chromium_a4_audit": "NOT_COMPLETED_TIMEOUT"
+      },
+      "status": "ACTIVE_DEV_CHECKPOINT_FINAL_EXE_NOT_BUILT",
+      "purpose": "Remove source/OCR/provenance/footnote interruptions from the ordinary reading flow while preserving immutable source evidence in an accessible audit layer.",
+      "verification": "Drive folder readback found all 7 Step2 files; source patch was re-downloaded and SHA-256 matched.",
+      "limitations": [
+        "No new final Windows executable at Step2",
+        "Full 253-document Chromium A4 audit not completed due to runtime timeout",
+        "Native Windows fullscreen/DPI/local-font visual acceptance pending"
+      ]
     }
   ],
   "notes": [

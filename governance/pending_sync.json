@@ -109,6 +109,15 @@
       "reason": "Step1 source and browser-level acceptance are complete, but a full embedded-content Windows EXE and real Windows fullscreen/DPI/local-ShuSong visual acceptance were not completed in this checkpoint.",
       "next_action": "At the final app build stage, rebuild the full Windows x64 executable and perform real Windows F11/fullscreen, DPI, local font, A4 pagination and print-path acceptance.",
       "blocks_next_step": false
+    },
+    {
+      "pending_id": "book_windows_1_3_step2_final_build_acceptance",
+      "blocking": false,
+      "status": "OPEN_NON_BLOCKING",
+      "scope": "Book 1.3 Step2 final Windows build and complete visual acceptance",
+      "reason": "Reader-layer cleanup is complete and validated structurally/browser-smoke, but no new final EXE was built and the full 253-document Chromium A4 audit did not finish within the run window.",
+      "next_action": "During final build, run the complete A4 audit with a larger execution window, rebuild Windows x64, and validate F11/fullscreen, DPI, local ShuSong/Song rendering, pagination and print path on Windows.",
+      "blocks_next_step": false
     }
   ]
 }

@@ -1,3 +1,15 @@
+## 2026-09-29 Book 1.3 阅读体验 Step2（六本内容清洗完成）
+
+- 恢复入口：`governance/book_windows_1_3_reader_step2_20260929.json`。当前可下载 Final 仍为 1.2.1 v4 Final；Step2 尚未生成新的最终 EXE。
+- 六本共 **253 份文档**完成 reader-layer 全量扫描；164 份需要清洗，累计整理 **1,267 个阅读块**。
+- **247 个来源/脚注/技术说明块**移入 audit-only 层；保留 **1,325 条审计说明**。教材原始 `plain/html`、source_pdf、题目、来源 ID 和 academic review 字段均未覆盖。
+- 640 个刷题题组保持不变；重复的“AI 学习参考解答（非教材官方答案）”在普通阅读界面统一显示为“参考解答”，原始标签仍留在来源层。
+- 普通阅读流中的 record ID、普通 OCR、结构化实现说明、来源公式台账、原书脚注标记、资料来源/数据来源等配置内技术提示残留数为 **0**；需要时可从“来源/校勘”审计层展开查看。
+- 验证：全量结构/不可变性检查 **13 PASS / 0 FAIL**；真实 Chromium 阅读检查 **25 PASS / 0 FAIL**；六书 A4 分页 smoke **7 PASS / 0 FAIL**。
+- Drive：`Book/03_Exports/Book-Windows-1.3.0-dev-Step2-20260929`，folder ID `1YKIBKyk5HzvXNDI0kSRSMuGPfYUl7GBd`。Step2 增量包 SHA-256 `9c83be95a84c6e8398668bf32fe79fc275f14615dfcc670a78d3b58f57bd74be`，Drive 回读一致。
+- 边界：253 份文档的完整 Chromium A4 全量审计因运行时间超限没有完成，因此不宣称该项 PASS；真实 Windows 全屏/DPI/本机书宋视觉验收仍留到最终构建阶段。
+- 本轮只改阅读派生层和阅读器；不改教材事实层；`main` 未修改，未自动合并。
+
 ## 2026-09-29 Book 1.3 阅读体验 Step1（当前开发检查点）
 
 - 恢复入口：`governance/book_windows_1_3_reader_step1_20260929.json`；当前可下载 Final 仍是 1.2.1 v4 Final，本检查点尚未生成新的最终 EXE。
