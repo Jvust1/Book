@@ -1,6 +1,6 @@
 {
   "schema_version": "book_pending_sync_v1",
-  "updated_date": "2026-09-28",
+  "updated_date": "2026-09-29",
   "blocking_count": 0,
   "items": [
     {
@@ -90,6 +90,16 @@
       "receipt_sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc",
       "blocks_next_step": false,
       "resolved_at": "2026-09-28"
+    },
+    {
+      "pending_id": "six_textbooks_v5_four_module_sync_20260929",
+      "blocking": false,
+      "status": "RESOLVED_20260929",
+      "scope": "Book six-textbook v5 clean preview/learning/review/practice system",
+      "resolution": "All six current v5-CLEAN Drive roots contain preview, learning, review and practice modules. Learning adds 67 structured-data vector PDFs, 6 full learning PDFs and per-book ZIP/manifests. Drive readback and GitHub checkpoints verified; combined learning ZIP preserved as 2 raw-byte parts.",
+      "checkpoint": "governance/six_textbooks_learning_v5_clean_20260929.json",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-29"
     }
   ]
 }
