@@ -1,8 +1,8 @@
 {
-  "schema_version": "book_results_update_20260928_v1",
-  "updated_date": "2026-09-28",
+  "schema_version": "book_results_update_20260929_v2",
+  "updated_date": "2026-09-29",
   "branch": "feat/gap-closure-20260928",
-  "status": "ALL_SCHEDULED_DELIVERABLES_SYNCED_AND_AUDITED",
+  "status": "ALL_CURRENT_DELIVERABLES_SYNCED_FOUR_MODULE_V5",
   "main_modified": false,
   "audit": "governance/full_audit_20260928.md",
   "gap_closure": "governance/gap_closure_20260928.md",
@@ -104,16 +104,41 @@
     "status": "VERIFIED_COMPLETE_WITH_SOURCE_WARNINGS"
   },
   "remaining_boundaries": [
-    "source-edition/language differences recorded for some external books",
-    "some source PDFs have limited/no embedded outline and use layout-derived hierarchy",
-    "EPUB pagination is not fabricated",
-    "public-finance/contemporary-China inherited OCR/source-text issues remain source-review debt, not delivery gaps",
-    "independent expert mathematical/full-text acceptance remains separate from delivery integrity"
+    "v5 reading and learning cleanup proves delivery/readability integrity, not independent expert acceptance of all legacy OCR/source text or AI reference answers",
+    "some structured source layers still contain inherited OCR defects that require source-grounded proofreading rather than silent rewriting",
+    "main remains unchanged until explicit review/merge request"
   ],
-  "next_step": "Continue source-grounded proofreading and independent expert acceptance where warnings remain; do not rewrite source facts silently. Keep main unchanged until review/merge is explicitly requested.",
+  "next_step": "Continue source-grounded proofreading and Book app integration using the v5 four-module system as current authority; keep main unchanged until explicitly requested.",
   "sync_receipt": {
     "drive_file_id": "1dfu6KEe-hOiNfvs9gm8Ga2sPf5Z36ohI",
     "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
     "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
+  },
+  "current_authority": {
+    "system": "six_textbooks_v5_four_module",
+    "modules": [
+      "预习",
+      "学习",
+      "复习",
+      "刷题"
+    ],
+    "reader_clean_checkpoint": "governance/six_textbooks_v5_reader_clean_20260929.json",
+    "learning_clean_checkpoint": "governance/six_textbooks_learning_v5_clean_20260929.json",
+    "drive_qa_folder_id": "1gl5S2frmjH11v7igVqOGKgNT35Cd6lQ6",
+    "learning_qa_folder_id": "1a1fVzAKRcqijVcJzwYZVicssYT-2OJFQ"
+  },
+  "current_totals": {
+    "six_textbook_reader_clean": {
+      "formal_pdfs": 254,
+      "full_combined_pages": 1568,
+      "exercise_solution_units": 640
+    },
+    "learning_clean": {
+      "individual_pdfs": 67,
+      "full_pdfs": 6,
+      "total_pdfs": 73,
+      "full_pages": 1469
+    },
+    "four_module_status": "COMPLETE"
   }
 }
