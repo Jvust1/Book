@@ -1,0 +1,66 @@
+{
+  "schema_version": "book_learning_pdf_v5_reader_clean_checkpoint",
+  "updated_date": "2026-09-29",
+  "book": {
+    "slug": "public_finance",
+    "title": "公共财政概论（第二版）"
+  },
+  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "supersedes": "v4 relayout release; v4 remains historical",
+  "scope": {
+    "pdf_files_total": 61,
+    "full_pages": 287,
+    "exercise_solution_units": 77
+  },
+  "cleanup": {
+    "removed": [
+      "资料来源/数据来源行",
+      "教材来源/来源展开/来源回忆等阅读层标签",
+      "结构化/OCR/扫描/公式账本等实现说明",
+      "原书显式脚注正文与脚注标记",
+      "保守识别的金融/财政类行内脚注数字"
+    ],
+    "preserved": [
+      "教材正文、公式与图表",
+      "教材原题",
+      "AI学习参考解答标签与正文",
+      "非引用性的教材时期/适用边界提示"
+    ]
+  },
+  "validation": {
+    "targeted_source_footnote_residuals": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "visual_render_issues": 0,
+    "academic_content_reaudit": false,
+    "full_book_rendered_pages": 287,
+    "full_pages_preserved": true
+  },
+  "drive": {
+    "folder_id": "1Y0nXYfjYEj3K-c2AOBwJTXVVYyux5rKc",
+    "full_pdf_id": "1A4UJHpU-pYqjEF7wBlB3BsRcRWd78Fxa",
+    "full_pdf_sha256": "5e96b405f3b70891779022301803769921f51182735bd9a05a1ec5d64d486c74",
+    "zip_delivery": {
+      "mode": "raw_byte_split",
+      "sha": "794d102431b383dbba523f16d1fca3f79653fc269185a7f5247fb5043fc575c7",
+      "parts": [
+        [
+          "1_7k5-ESFl8r6XqwzeKnGDSv0AFMBW5a5",
+          "part00"
+        ],
+        [
+          "15aKLo-66u8ser7C_312fRrgjGZxZmSgY",
+          "part01"
+        ],
+        [
+          "15HlujEnwsEY98DhkWWXbwQX01UX76AkO",
+          "part02"
+        ]
+      ]
+    }
+  },
+  "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
+  "main_modified": false
+}
