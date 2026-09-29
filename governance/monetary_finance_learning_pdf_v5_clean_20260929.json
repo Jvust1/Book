@@ -5,7 +5,7 @@
     "slug": "monetary_finance",
     "title": "货币金融学（第三版）"
   },
-  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "status": "DELIVERED_VERIFIED_FOUR_MODULES",
   "supersedes": "v4 relayout release; v4 remains historical",
   "scope": {
     "pdf_files_total": 57,
@@ -62,5 +62,29 @@
     }
   },
   "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
-  "main_modified": false
+  "main_modified": false,
+  "modules_available": [
+    "预习",
+    "学习",
+    "复习",
+    "刷题"
+  ],
+  "learning_module": {
+    "status": "DELIVERED_VERIFIED_CLEAN",
+    "source": "Book-SixTextbooks-Chapter-LaTeX-20260926 structured-data vector PDFs",
+    "folder_id": "10ZEdYC8-GcpCOty0OcqP_IUEUUoM2eWV",
+    "individual_pdfs": 15,
+    "full_pages": 330,
+    "full_pdf_id": "1HWrVjvMWx4R-Bg9a8hOiOLFEV7SHmGUg",
+    "full_pdf_sha256": "99d9ed543dff664adeebcf1f9dda5540e33bfb1d7743740490f5f9d040f6505f",
+    "zip_id": "1nSJrwio2H9NlH2jCjiiJV_gsyrbFw2c8",
+    "zip_sha256": "4ea70b3842a97fc9f902869684f0f5006342795c876685268ec7658999ec8b74",
+    "cleanup": {
+      "targeted_source_provenance_residuals": 0,
+      "replacement_chars": 0,
+      "nul_chars": 0,
+      "visual_render_issues": 0
+    },
+    "academic_content_acceptance": false
+  }
 }
