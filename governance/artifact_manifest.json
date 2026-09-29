@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-09-28",
+  "updated_date": "2026-09-29",
   "project": {
     "repository": "Jvust2/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -1093,8 +1093,52 @@
         "windows_static": "PASS: MZ/PE, x86-64, PE32+ GUI, exact shell payload embedded, textbook content not embedded.",
         "drive_readback": "PASS: EXE and seven content parts re-downloaded, per-file SHA-256 matched; parts reconstructed to the exact whole content SHA-256; ZIP CRC PASS."
       },
-      "status": "FINAL_BUILD_ARCHIVED_DRIVE_READBACK_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
+      "status": "HISTORICAL_DUPLICATE_PRESERVED_SUPERSEDED_BY_VERIFIED_R1",
       "academic_boundary": "No new full independent academic acceptance claim; 640 AI learning reference answers keep their prior review boundary.",
+      "native_windows_host_acceptance": false,
+      "superseded_by": "book-windows-1.3-final-r1-verified-20260929",
+      "historical_reason": "Materially different prior Final bytes retained intact under historical evidence exception."
+    },
+    {
+      "artifact_id": "book-windows-1.3-final-r1-verified-20260929",
+      "file_name": "Book-Windows-1.3.0-Final-r1-Verified-20260929",
+      "type": "generated_final_windows_release_set",
+      "version": "1.3.0-final",
+      "source": "Book 1.3 Step4 content/app separation + final verified pagination/search/print/build fixes",
+      "drive_folder_id": "1a3x7ziSOJ724d9O5M48g2Rd_HKP_wSpP",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-Final-r1-Verified-20260929",
+      "windows_exe": {
+        "file_name": "Book-1.3.0-Final-Windows-x64.exe",
+        "bytes": 7111168,
+        "sha256": "104207761e5eb984d8094c90203aa533e296119d34d140fdf5cd7b6b8e061530",
+        "drive_file_id": "1rhmks1pGy1Yjtj7VpkUqG35PKqzdoTNQ"
+      },
+      "content_package": {
+        "file_name": "Book-Content-1.3.0-v4-Final-20260929.zip",
+        "bytes": 569545198,
+        "files": 30723,
+        "reader_books": 6,
+        "reader_documents": 253,
+        "sha256": "8342cc6fae1cb82a3f730f9bfdbcb8e4bcccfb02b7401e3bd34999b945c22990",
+        "parts": 9
+      },
+      "source_patch": {
+        "file_name": "Book-1.3.0-Final-r1-SourcePatch.zip",
+        "bytes": 72338,
+        "sha256": "74791df08bb9bb02c3cbf3c253e4b2c67965fd3936251b61508f7833e87559bf",
+        "drive_file_id": "1lat9wpon_YTj1wsa0Qfv3PL7bZYQqP0a"
+      },
+      "validation": {
+        "default_a4": "253/253 PASS; all zero failures",
+        "packaged_browser": "17/17 PASS",
+        "content_split": "13/13 PASS",
+        "go_tests": "PASS",
+        "native_selfcheck": "PASS",
+        "windows_cross_compile": "PASS",
+        "drive_size_readback": "PASS"
+      },
+      "status": "CURRENT_FINAL_WINDOWS_RELEASE_NATIVE_HOST_ACCEPTANCE_PENDING",
+      "academic_boundary": "No new complete independent expert review claim for all 640 AI reference answers.",
       "native_windows_host_acceptance": false
     }
   ],

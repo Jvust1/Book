@@ -1,98 +1,102 @@
 {
-  "schema": "book_windows_1_3_final_v1",
+  "schema": "book_windows_1_3_final_v2",
   "date": "2026-09-29",
   "version": "1.3.0-final",
   "build": "20260929-windows-1.3.0-final-r1",
-  "status": "FINAL_BUILD_ARCHIVED_DRIVE_READBACK_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
+  "status": "FINAL_BUILD_ARCHIVED_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
   "branch": "feat/windows-document-reader-1.2-20260928",
-  "supersedes": "Book 1.2.1 v4 Final + Book 1.3 Step1–4 development checkpoints",
+  "supersedes": "Book 1.2.1 v4 Final + Book 1.3 Step1–4 checkpoints + earlier superseded 1.3 Final evidence",
   "architecture": {
-    "shell": "Windows x64 executable contains UI/backend shell only; no textbook payload.",
-    "content": "Six-book verified replaceable ZIP; 6 books / 253 reader documents / 29,076 content files.",
-    "updates": "Content ZIP can be installed and hot-switched without rebuilding EXE; managed package is content-addressed and atomically activated.",
-    "personal_state": "Notes/bookmarks/cards/reading positions/user font remain outside the content package."
+    "shell": "Windows x64 EXE contains UI/backend shell only; textbook payload external.",
+    "content": "Replaceable verified ZIP; 6 books / 253 reader documents / 30,723 files.",
+    "portable": "Place content ZIP beside EXE as Book-Content.zip for automatic detection, or install through the content-package UI.",
+    "updates": "Future textbook updates can replace the verified content package without rebuilding the EXE.",
+    "personal_state": "Notes/bookmarks/cards/positions/user font remain outside content packages."
   },
   "reading_experience": {
-    "fullscreen": "F11/button -> Fullscreen API; immersive fallback; native monitor-level Windows acceptance still pending.",
-    "immersive": "M / Esc; reading chrome hidden with recovery HUD.",
-    "typography": "Windows local ShuSong-first stack; regular body weight 400; font-synthesis none; commercial font files are not redistributed.",
-    "clean_reading": "Source/OCR/provenance interruptions hidden from normal flow but retained in reversible audit layer.",
-    "mode_flow": "Preview scaffold -> continuous Learn -> active-recall Review -> Practice with folded per-question answers and persistent drafts."
+    "fullscreen": "F11/button -> Fullscreen API with immersive fallback; Esc exits.",
+    "immersive": "M hides reading chrome with recovery HUD.",
+    "typography": "Local Windows ShuSong-first; body 400; font-synthesis none; fallback Song/serif; no commercial font redistributed.",
+    "clean_reading": "Source/OCR/provenance interruptions hidden from ordinary flow and preserved in audit layer.",
+    "mode_flow": "预习→学习→复习→刷题; review active recall; practice answers folded per question."
   },
   "final_pagination_fixes": [
-    "Source table/figure caption and matching media are grouped as one pagination unit so captions do not strand at page bottoms.",
-    "Grouped source media is indivisible at caption/media boundaries and proportionally fit when taller than the A4 body.",
-    "Very long multi-formula source records split first on semantic child/formula blocks, then character-level only inside a child."
+    "Table/figure caption and matching source media grouped into one pagination unit.",
+    "Caption/media boundaries are not split; tall media is proportionally fitted.",
+    "Very long multi-formula source records split by semantic child/formula nodes before character-level fallback."
   ],
   "artifacts": {
     "exe": {
       "file": "Book-1.3.0-Final-Windows-x64.exe",
-      "bytes": 7110144,
-      "sha256": "effd59ffac52e6cb73e76ad1b1407fbf0de5e1aa751bc62ae9e99440ca677ee7",
+      "bytes": 7111168,
+      "sha256": "104207761e5eb984d8094c90203aa533e296119d34d140fdf5cd7b6b8e061530",
       "format": "PE32+ x86-64 GUI",
-      "drive_file_id": "12B3OopvJXypYCRJxWhPpsWPVSXl8WEdC"
+      "drive_file_id": "1rhmks1pGy1Yjtj7VpkUqG35PKqzdoTNQ"
     },
     "shell": {
-      "bytes": 824849,
+      "bytes": 825653,
       "files": 18,
-      "sha256": "358df84a10cb94693ffd9fb17d7eb384a61cb620047c338cdc88b677f8e4d811"
+      "sha256": "9bc47a27202767b3f7e2050b16e12692f4fc34d7bad8cafcc6a6451b23869143",
+      "embedded_exact_match": true
     },
     "content": {
       "file": "Book-Content-1.3.0-v4-Final-20260929.zip",
-      "bytes": 411840379,
-      "files": 29076,
+      "bytes": 569545198,
+      "files": 30723,
       "reader_books": 6,
       "reader_documents": 253,
-      "sha256": "54de380f58b0d29aece7b2bd18e878ede36ba46839267893fe451d7eeea52d90",
-      "drive_parts": 7
+      "sha256": "8342cc6fae1cb82a3f730f9bfdbcb8e4bcccfb02b7401e3bd34999b945c22990",
+      "drive_parts": 9
     },
     "source_patch": {
-      "file": "Book-1.3.0-Final-SourcePatch.zip",
-      "bytes": 44840,
-      "sha256": "8b77111d19da8f0fae0b87ad67340634bf8e0a57984f7a599d62ed8c78fbb5ff",
-      "drive_file_id": "1fJUExPR_kadGxMAuySuxhHZ66Q0DeyaU"
+      "file": "Book-1.3.0-Final-r1-SourcePatch.zip",
+      "bytes": 72338,
+      "sha256": "74791df08bb9bb02c3cbf3c253e4b2c67965fd3936251b61508f7833e87559bf",
+      "drive_file_id": "1lat9wpon_YTj1wsa0Qfv3PL7bZYQqP0a"
     }
   },
   "validation": {
-    "default_a4": "253/253 PASS; text mismatch 0, overflow 0, overlap 0, blank pages 0, true heading/caption orphan 0, JavaScript errors 0.",
-    "extreme_a4": "24/24 representative largest documents PASS at 72px / line-height 2.6 / 30mm margins; text loss/overflow/overlap/blank pages 0; 15 oversized source media/formula objects were automatically fit without overflow.",
-    "shell_ux": "20/20 PASS",
-    "content_split": "13/13 PASS",
-    "no_content_shell": "7/7 PASS",
-    "external_content_runtime": "16/16 PASS",
-    "print_path": "4/4 PASS; Chromium printed PDF page count matched A4 sheets and every page had readable text.",
+    "default_a4": "253/253 PASS; reader text mismatch 0, overflow 0, overlap 0, blank pages 0, true heading/caption orphan 0, JavaScript errors 0.",
+    "packaged_browser": "17 PASS / 0 FAIL",
+    "content_split": "13 PASS / 0 FAIL",
+    "step4_external_content_regression": "PASS",
     "go_tests": "PASS",
-    "managed_install": "PASS: final 411,840,379-byte package whole-file + per-file verification and atomic activation; observed ~7s in local isolated test.",
-    "managed_restart": "PASS",
     "native_self_check": "PASS",
-    "windows_static": "PASS: MZ/PE, x86-64, PE32+ GUI, exact shell payload embedded, textbook content not embedded.",
-    "drive_readback": "PASS: EXE and seven content parts re-downloaded, per-file SHA-256 matched; parts reconstructed to the exact whole content SHA-256; ZIP CRC PASS."
+    "windows_cross_compile": "PASS",
+    "embedded_shell_match": "PASS",
+    "portable_adjacent_content": "PASS",
+    "drive_size_readback": "PASS: 21 files; EXE + nine content parts + reports/manifest/source patch present at expected sizes."
   },
   "drive": {
+    "folder_id": "1a3x7ziSOJ724d9O5M48g2Rd_HKP_wSpP",
+    "path": "Book/03_Exports/Book-Windows-1.3.0-Final-r1-Verified-20260929",
+    "files": 21,
+    "exe_id": "1rhmks1pGy1Yjtj7VpkUqG35PKqzdoTNQ",
+    "source_patch_id": "1lat9wpon_YTj1wsa0Qfv3PL7bZYQqP0a",
+    "manifest_id": "18hsbglCzh5vlWWxn0F621PwhsrQyCMcI",
+    "report_id": "1MwEDBnsm1MZApTuk49Q0D9JoeTd54WRp",
+    "sha256_id": "1LIvhpWA1vFGPk9w-dBxij8Z8v9Bwkcj8",
+    "parts_manifest_id": "1RhaGjMwY0xbIye4NjoIRaRnNNpqD9734",
+    "reassemble_id": "1rvkECE3lnmlNvjDqS5_qOM9IjeC0cSVK",
+    "a4_audit_id": "1x-2rhJy2B9axCDBxtC_D58lTcrgSmt4i",
+    "browser_report_id": "1SpLww4Of9NfDK7xlJfOhvhy7E_zkPLL7",
+    "self_check_id": "1WrXNgWwvpf4xunD-pdR6KfTXgZ8LEu8m"
+  },
+  "previous_final_evidence": {
+    "status": "HISTORICAL_DUPLICATE_PRESERVED_SUPERSEDED",
     "folder_id": "1Z3c7p5rBlRGJR2X5MFx8XHZpR8aGlKJO",
-    "path": "Book/03_Exports/Book-Windows-1.3.0-Final-20260929",
-    "files": 20,
-    "manifest_id": "1annOmFpVX2X_TojQ56KQCJWyf_yjahq4",
-    "report_id": "1QwXo9CbgQOIdlFOGmC7RxHUk1cwDcbPc",
-    "sha256_id": "1HLDoodab9VO1lhtTGf1I10iRT_o8wFM2",
-    "notebook_id": "1VK-yNbbqt5aXnW2mRr0q-IqvNTvkEoVj",
-    "readback_id": "1R0-c4F8tbASXztcZRzvYCdbdcMrXXCc8",
-    "a4_audit_id": "10VMObU6jlRuZ1R6vSPDs-onvSvOQWL54",
-    "extreme_audit_id": "1pNiEcNNft24sEJvNveLOSUEdBeg4P26S",
-    "shell_ux_id": "1BTZ975lCxyMhyEM04mBtQ_D38-0IH09N",
-    "print_report_id": "1JmU_wVIHF1IjxNggGsF33phGZPtHQwDZ",
-    "self_check_id": "1ZdXb5vVcC1rbtHmVpue360dIPL2NYQiI"
+    "reason": "Earlier 1.3 Final evidence has materially different EXE/content hashes; retained intact for audit history and not used as current release."
   },
   "content_invariance": {
-    "textbook_reader_content_changed_by_step5": false,
-    "step5_changes": "Reader shell pagination/build/test logic only; content package files remain the authoritative Step3/Step4 content bytes aside from final package metadata identity.",
-    "new_academic_review_claim": false
+    "academic_content_changed_by_final_stage": false,
+    "final_stage_scope": "Reader shell pagination/printing/search/build/test logic only; no new academic acceptance claim.",
+    "full_independent_expert_review": false
   },
   "boundaries": [
-    "This environment cannot execute the Windows binary on a real Windows desktop. Native Windows F11/monitor fullscreen, DPI scaling, actual installed ShuSong rasterization, and OS print-dialog acceptance remain pending.",
-    "Chromium Fullscreen API wiring, immersive mode, ShuSong-first CSS policy, A4 pagination and Chromium PDF print path are verified.",
-    "No commercial ShuSong font binary is redistributed.",
-    "This Step5 does not upgrade the academic-review status of the 640 AI learning reference-answer groups."
+    "Real Windows monitor-level F11/DPI/local installed ShuSong visual acceptance is still pending.",
+    "Native Windows print dialog itself was not clicked here; packaged Chromium print preparation/A4 path passed.",
+    "EXE is unsigned.",
+    "No claim that all 640 AI reference-answer groups received independent expert review."
   ],
   "main_changed": false,
   "automatic_merge": false

@@ -1,15 +1,15 @@
-## 2026-09-29 Book 1.3 Final（第五步完成）
+## 2026-09-29 Book 1.3 Final r1 Verified（当前 Windows 交付）
 
-- 恢复入口：`governance/book_windows_1_3_final_20260929.json`。Windows 最终壳已构建并归档；真实 Windows 主机的 F11/DPI/本机书宋/系统打印对话框验收仍单列为非阻塞外部验收。
-- **App / 内容彻底分离**：EXE 仅 7,110,144 bytes；六书内容为独立 411,840,379-byte ZIP。以后教材更新不要求重编译 EXE。
-- Windows x64 EXE SHA-256：`effd59ffac52e6cb73e76ad1b1407fbf0de5e1aa751bc62ae9e99440ca677ee7`；内容包 SHA-256：`54de380f58b0d29aece7b2bd18e878ede36ba46839267893fe451d7eeea52d90`。
-- 完整 A4 终验：六本 **253/253** 文档 PASS；文字丢失 0、越界 0、重叠 0、空页 0、真正孤标题/图表题 0、JS 异常 0。
-- 极端排版：六本×四模式 **24/24** 在 72px / 2.6 行距 / 30mm 边距下 PASS；15 个超大源图/公式触发自动适配但无越界/裁切。
-- 最终修复：图/表题与对应媒体作为同一分页组；禁止在题注与原图之间拆页；金融经济学超长公式台账优先按独立段/公式节点分页。
-- 阅读体验保留 Step1–3 全部能力：F11 全屏入口、M 沉浸、书宋优先、正文400字重、禁用伪粗体、来源/OCR技术层默认净化、预习→学习→复习→刷题四模式流程。
-- 回归：Shell UX 20/20；内容分离13/13；无教材空壳7/7；真实内容运行16/16；打印4/4；Go tests PASS；最终内容真实安装/重启恢复 PASS。
-- Drive：`Book/03_Exports/Book-Windows-1.3.0-Final-20260929`（folder `1Z3c7p5rBlRGJR2X5MFx8XHZpR8aGlKJO`）；EXE 单文件 + 内容7分卷 +源码补丁+manifest+PowerShell+Colab Notebook+终验报告已归档。EXE/7分卷实际重新下载，逐项 SHA-256 匹配；重组 ZIP SHA-256 与整包完全一致，CRC PASS。
-- Step5 不改教材事实层、不提高640份AI学习参考答案的学术验收等级；`main` 未修改，未自动合并。
+- 恢复入口：`governance/book_windows_1_3_final_20260929.json`。当前权威 Final 已重新终验；旧 Final 目录保留为历史证据，不再作为当前下载基准。
+- **App / 内容分离**：EXE 仅 **7,111,168 bytes**；六书内容独立 **569,545,198 bytes**。以后更新教材不要求重新编译 EXE。
+- EXE SHA-256：`104207761e5eb984d8094c90203aa533e296119d34d140fdf5cd7b6b8e061530`；内容包 SHA-256：`8342cc6fae1cb82a3f730f9bfdbcb8e4bcccfb02b7401e3bd34999b945c22990`。
+- 完整 A4 终验：六本 **253/253** 文档 PASS；阅读层字符差异 0、越界 0、重叠 0、空页 0、真正孤标题/图表题 0、JS 异常 0。
+- 最终分页修复：图/表题与对应原图作为同一分页组；题注和原图之间禁止拆页；超长公式记录优先按语义子块/公式分页。
+- 阅读体验：F11 全屏入口、M 沉浸、Windows 本地书宋优先、正文400字重、禁伪粗体、来源/OCR技术层默认净化、预习→学习→复习→刷题完整流程。
+- 回归：打包后浏览器 **17/17**；内容分离 **13/13**；Go tests PASS；native self-check PASS；Windows x64 cross-build PASS；EXE 内嵌 shell 与验收 shell 精确一致。
+- Drive 当前权威目录：`Book/03_Exports/Book-Windows-1.3.0-Final-r1-Verified-20260929`（folder `1a3x7ziSOJ724d9O5M48g2Rd_HKP_wSpP`）。EXE 单文件 + 内容9分卷 + 源码补丁 + manifest + 重组脚本 + 终验报告已回读到 21 个文件。
+- 仍需用户 Windows 真机验收：实际显示器 F11、100/125/150% DPI、本机已安装书宋字形和系统打印对话框；这是非阻塞外部验收，不冒充已通过。
+- Step5 不修改教材事实层，不提高640份 AI 学习参考答案的学术验收等级；`main` 未修改，未自动合并。
 
 ## 2026-09-29 Book 1.3 阅读体验 Step4（App / 内容分离完成）
 
