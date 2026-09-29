@@ -1,0 +1,1 @@
+Functional Analysis audit 2026-09-30. No newly confirmed error. Source unchanged. Main unchanged.
