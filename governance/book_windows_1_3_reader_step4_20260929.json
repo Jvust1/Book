@@ -1,0 +1,93 @@
+{
+  "schema": "book_windows_reader_step4_v1",
+  "date": "2026-09-29",
+  "version": "1.3.0-dev-reading-step4",
+  "status": "STEP4_CONTENT_APP_SEPARATION_COMPLETE_FINAL_WINDOWS_ACCEPTANCE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "base_step3_commit": "77a4b8c4431fd4d0a1a3e3d1e7adddc531f0037d",
+  "concurrent_parent_head": "208d004edc26c94766388597654e64e2e656adba",
+  "scope": "Reader shell/content package architecture only; Step3 textbook/reader content bytes unchanged.",
+  "architecture": {
+    "shell": "Executable UI/backend only; can boot with no textbook package.",
+    "content_package": "ZIP-served immutable textbook/data package with data/documents/document-assets/document-pdfs/media only.",
+    "install": "Stream upload -> whole-package SHA-256 -> manifest/per-file size+SHA verification -> content-addressed storage -> atomic active pointer -> hot switch.",
+    "managed_storage": "%LOCALAPPDATA%/BookSeven/content/packages/<sha256>.zip + content/active.json",
+    "portable_mode": "Book-Content.zip beside executable is auto-detected.",
+    "personal_state": "learning.json, notes/bookmarks/cards and user font remain outside content package and are not overwritten by content updates.",
+    "security": "Content packages cannot contain or override JS/HTML/CSS/EXE/DLL/scripts/fonts/private keys/SQLite; traversal, duplicate paths and bad hashes are rejected."
+  },
+  "artifacts": {
+    "dev_shell_exe": {
+      "file": "Book-1.3.0-dev-Step4-Shell-Windows-x64.exe",
+      "bytes": 7109120,
+      "sha256": "bc06d22794b61df1697ff49881b9d576487314c962616d2663a8c330880f08b1",
+      "format": "PE32+ x86-64 GUI",
+      "drive_archived": false,
+      "final_release": false
+    },
+    "embedded_shell": {
+      "bytes": 823946,
+      "files": 18,
+      "sha256": "e707535c425b32161ffc6b87a69dbb3bdbf3458bdad61b4616baf410eba048ee"
+    },
+    "content_package": {
+      "file": "Book-Content-1.3.0-v4-20260929.zip",
+      "bytes": 411840385,
+      "files": 29076,
+      "reader_books": 6,
+      "reader_documents": 253,
+      "sha256": "e9475a32895f780b3b9b6b328240b8bffbd31cdaca64be160f1c95aeaac598d4",
+      "drive_archived": false,
+      "reproducible": true
+    },
+    "source_patch": {
+      "file": "Book-1.3.0-dev-Step4-SourcePatch.zip",
+      "bytes": 67888,
+      "sha256": "f0373cc083aab0e735c31056b0e9418fcd3e2e095f034b235c253243f94bfcae",
+      "drive_file_id": "1smX3QMDY1sQ-Iroe7d387c70OVnRCPnm"
+    }
+  },
+  "validation": {
+    "content_split": "13 PASS / 0 FAIL",
+    "no_content_browser": "7 PASS / 0 FAIL",
+    "managed_content_browser": "16 PASS / 0 FAIL",
+    "go_unit_tests": "18 PASS / 0 FAIL",
+    "javascript_syntax": "PASS",
+    "native_selfcheck": "PASS",
+    "real_content_install": "PASS (411,840,385 bytes; observed 7.29s in isolated test)",
+    "managed_restart": "PASS",
+    "hot_reload": "PASS",
+    "malicious_code_traversal_bad_hash_rejection": "PASS",
+    "content_byte_invariance": "PASS: 29,076 package files byte-identical to Step3 web content",
+    "final_253_document_a4_audit": "PENDING_FINAL_STAGE",
+    "native_windows_acceptance": false
+  },
+  "drive": {
+    "folder_id": "19peefypVfwewwXt-fzqOcfePSZO2ZdZ7",
+    "path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step4-20260929",
+    "source_patch_id": "1smX3QMDY1sQ-Iroe7d387c70OVnRCPnm",
+    "report_id": "1jGLLrMHj3N-PmBulfHXbRAvhQ7i4N2un",
+    "source_patch_bytes_readback": 67888,
+    "source_patch_drive_readback_size_match": true,
+    "folder_readback_files": 2,
+    "aggregate_content_upload": "SKIPPED_REPRODUCIBLE_AGGREGATE_TO_AVOID_DUPLICATING_STEP3_CONTENT"
+  },
+  "restore_order": [
+    "Book-1.2.0-Source-and-Tests.zip",
+    "Book-1.2.1-v4-Final-SourcePatch.zip",
+    "Book-1.3.0-dev-Step1-SourcePatch.zip",
+    "Book-1.3.0-dev-Step2-SourcePatch.zip",
+    "Book-1.3.0-dev-Step3-SourcePatch.zip",
+    "Book-1.3.0-dev-Step4-SourcePatch.zip"
+  ],
+  "boundaries": [
+    "Step4 is a development checkpoint, not the new final Windows release.",
+    "The new development shell was cross-built but was not uploaded to Drive; it is reproducible from the Step4 patch.",
+    "The 393 MiB content aggregate was not duplicated to Drive; its exact SHA-256 is recorded and the deterministic builder is in the Step4 source patch.",
+    "Final complete 253-document Chromium A4 audit remains for final build.",
+    "Real Windows F11/DPI/local-ShuSong/print acceptance remains pending.",
+    "No new academic-correctness claim is made."
+  ],
+  "main_changed": false,
+  "automatic_merge": false
+}

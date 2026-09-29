@@ -124,10 +124,20 @@
     {
       "pending_id": "book_windows_1_3_step3_final_build_acceptance",
       "blocking": false,
-      "status": "OPEN_NON_BLOCKING",
+      "status": "SUPERSEDED_BY_STEP4",
       "scope": "Book 1.3 Step3 final Windows build and native visual acceptance",
       "reason": "Reader experience, reader-layer cleanup and four-mode interaction are implemented and browser/regression tested, but no final 1.3 Windows EXE or real Windows native acceptance exists yet.",
       "next_action": "Proceed to Step4 content/app separation, then run final complete A4 audit and build/test Windows x64 with F11, DPI, local ShuSong/Song rendering, pagination and print-path acceptance.",
+      "blocks_next_step": false,
+      "resolution": "Step4 completed content/app separation and preserved Step1–3 UX; final native acceptance is tracked by Step4 item."
+    },
+    {
+      "pending_id": "book_windows_1_3_step4_final_build_acceptance",
+      "blocking": false,
+      "status": "OPEN_NON_BLOCKING",
+      "scope": "Book 1.3 final Windows build and native visual acceptance after content/app separation",
+      "reason": "Step4 architecture and dev shell are validated, but the final 1.3 release still requires complete 253-document A4 audit plus real Windows F11/DPI/local-ShuSong/print acceptance.",
+      "next_action": "Run final full A4 audit, build final Windows x64 shell, pair it with verified content package, perform real Windows native acceptance, then archive final release.",
       "blocks_next_step": false
     }
   ]

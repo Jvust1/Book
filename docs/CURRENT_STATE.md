@@ -1,3 +1,16 @@
+## 2026-09-29 Book 1.3 阅读体验 Step4（App / 内容分离完成）
+
+- 恢复入口：`governance/book_windows_1_3_reader_step4_20260929.json`。Step4 架构完成，但仍不是最终 1.3 EXE。
+- 程序壳与教材内容彻底分离：空壳可独立启动；教材以校验 ZIP 安装/热切换；以后教材更新不要求重新编译 EXE。
+- 内容包只允许 `data/documents/document-assets/document-pdfs/media`，禁止 JS/HTML/CSS/EXE/脚本/字体/私钥/SQLite 覆盖程序；ZIP traversal、重复路径、错误哈希均会拒绝。
+- 内容安装采用整包 SHA-256 + 逐文件 SHA-256/大小校验，内容按哈希保存并原子更新 `active.json`；个人学习记录完全在内容包之外。
+- 开发壳 Windows x64：7,109,120 bytes，SHA-256 `bc06d22794b61df1697ff49881b9d576487314c962616d2663a8c330880f08b1`；相比 1.2.1 的 493,526,016-byte EXE 约缩小 98.56%。
+- 六书内容包：411,840,385 bytes，29,076 个内容文件，6 本 / 253 文档，SHA-256 `e9475a32895f780b3b9b6b328240b8bffbd31cdaca64be160f1c95aeaac598d4`。内容与 Step3 byte-identical，0 changed / 0 missing / 0 extra。
+- 验证：内容分离 13/13；空壳 Chromium 7/7；真实 managed 内容 Chromium 16/16；Go 18/18；JS syntax、自检、真实393MiB安装、重启恢复、热 reload、安全拒绝均 PASS。
+- Drive：`Book/03_Exports/Book-Windows-1.3.0-dev-Step4-20260929`（folder `19peefypVfwewwXt-fzqOcfePSZO2ZdZ7`），源码增量与报告已存档。393MiB 内容聚合包按同步政策不重复上传，因为可由既有 Step3 内容确定性重建。
+- 下一步：最终 253 文档 A4 全量审计 + Windows 真机 F11/DPI/本机书宋/打印路径 + 1.3 Final 构建。
+- `main` 未修改，未自动合并。
+
 ## 2026-09-29 Book 1.3 阅读体验 Step3（四模式交互完成）
 
 - 恢复入口：`governance/book_windows_1_3_reader_step3_20260929.json`。当前可下载 Final 仍为 1.2.1 v4 Final；Step3 不冒充最终 EXE。

@@ -673,5 +673,18 @@
     "final_windows_exe_built": false,
     "windows_device_acceptance": false,
     "main_modified": false
+  },
+  "windows_reader_1_3_step4": {
+    "checkpoint": "governance/book_windows_1_3_reader_step4_20260929.json",
+    "status": "STEP4_CONTENT_APP_SEPARATION_COMPLETE_FINAL_WINDOWS_ACCEPTANCE_PENDING",
+    "branch": "feat/windows-document-reader-1.2-20260928",
+    "content_app_separated": true,
+    "dev_shell_bytes": 7109120,
+    "content_package_bytes": 411840385,
+    "content_package_sha256": "e9475a32895f780b3b9b6b328240b8bffbd31cdaca64be160f1c95aeaac598d4",
+    "content_documents": 253,
+    "drive_folder_id": "19peefypVfwewwXt-fzqOcfePSZO2ZdZ7",
+    "final_windows_acceptance": false,
+    "main_modified": false
   }
 }

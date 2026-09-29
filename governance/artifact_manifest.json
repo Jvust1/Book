@@ -998,6 +998,56 @@
       },
       "purpose": "Preserved parallel implementation/test evidence only; never use as Book 1.3 restore baseline.",
       "verification": "Drive folder renamed with PARALLEL marker and SUPERSEDED.md added after reconciliation."
+    },
+    {
+      "artifact_id": "book-windows-1.3-step4-content-split-20260929",
+      "file_name": "Book-Windows-1.3.0-dev-Step4-20260929",
+      "type": "generated_dev_checkpoint",
+      "version": "1.3.0-dev-step4",
+      "source": "Step3 reader + content/app separation",
+      "drive_folder_id": "19peefypVfwewwXt-fzqOcfePSZO2ZdZ7",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step4-20260929",
+      "source_patch": {
+        "drive_file_id": "1smX3QMDY1sQ-Iroe7d387c70OVnRCPnm",
+        "bytes": 67888,
+        "sha256": "f0373cc083aab0e735c31056b0e9418fcd3e2e095f034b235c253243f94bfcae"
+      },
+      "report_drive_id": "1jGLLrMHj3N-PmBulfHXbRAvhQ7i4N2un",
+      "dev_shell": {
+        "file": "Book-1.3.0-dev-Step4-Shell-Windows-x64.exe",
+        "bytes": 7109120,
+        "sha256": "bc06d22794b61df1697ff49881b9d576487314c962616d2663a8c330880f08b1",
+        "format": "PE32+ x86-64 GUI",
+        "drive_archived": false,
+        "final_release": false
+      },
+      "content_package": {
+        "file": "Book-Content-1.3.0-v4-20260929.zip",
+        "bytes": 411840385,
+        "files": 29076,
+        "reader_books": 6,
+        "reader_documents": 253,
+        "sha256": "e9475a32895f780b3b9b6b328240b8bffbd31cdaca64be160f1c95aeaac598d4",
+        "drive_archived": false,
+        "reproducible": true
+      },
+      "status": "STEP4_CONTENT_APP_SEPARATION_COMPLETE_FINAL_WINDOWS_ACCEPTANCE_PENDING",
+      "verification": {
+        "content_split": "13 PASS / 0 FAIL",
+        "no_content_browser": "7 PASS / 0 FAIL",
+        "managed_content_browser": "16 PASS / 0 FAIL",
+        "go_unit_tests": "18 PASS / 0 FAIL",
+        "javascript_syntax": "PASS",
+        "native_selfcheck": "PASS",
+        "real_content_install": "PASS (411,840,385 bytes; observed 7.29s in isolated test)",
+        "managed_restart": "PASS",
+        "hot_reload": "PASS",
+        "malicious_code_traversal_bad_hash_rejection": "PASS",
+        "content_byte_invariance": "PASS: 29,076 package files byte-identical to Step3 web content",
+        "final_253_document_a4_audit": "PENDING_FINAL_STAGE",
+        "native_windows_acceptance": false
+      },
+      "purpose": "Separate executable reader shell from replaceable verified textbook payload; preserve all Step3 content bytes and UX."
     }
   ],
   "notes": [
