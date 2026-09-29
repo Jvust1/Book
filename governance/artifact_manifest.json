@@ -970,6 +970,34 @@
         "No new final Windows executable at Step3",
         "Native Windows fullscreen/DPI/local-font/print acceptance pending"
       ]
+    },
+    {
+      "artifact_id": "book-windows-1.3-step23-parallel-20260929",
+      "file_name": "Book-Windows-1.3.0-dev-Step23-PARALLEL-20260929",
+      "type": "generated_historical_parallel_checkpoint",
+      "version": "1.3.0-dev-reading-step3-parallel",
+      "source": "assistant_generated_parallel_from_step1_before_authoritative_step2_step3_reconciliation",
+      "drive_folder_id": "1KF_WXcLURqHcU1tZVVip3v5ZHI9Dyc1z",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-dev-Step23-PARALLEL-20260929",
+      "source_patch": {
+        "file_name": "Book-1.3.0-dev-Step23-SourcePatch.zip",
+        "drive_file_id": "1OxZRkPPfPItTNoYWLRT7JemGszrGFAKl",
+        "size_bytes": 48976,
+        "sha256": "b6d492ebc8eb906d5e550ed19d7e1476356c5d559356f71a49ffd948b3c76ea6"
+      },
+      "report_id": "1cRdj2clyhhU8wIk408zWq-2_MQesfgRa",
+      "manifest_id": "1CzXnlBrwQLHa0Z_pwZie8aHFyJrs808a",
+      "browser_report_id": "1wnRezC03fA33sD2EoXd5bQkR4Rc2iSM6",
+      "content_scan_id": "1qQ78y2X9gH86lcV9sniuuuPfltmi9ATV",
+      "superseded_note_id": "1MWqh6xoFCUuecEj8_vcH1Jj9JrBimGVV",
+      "status": "HISTORICAL_DUPLICATE_PRESERVED_NON_AUTHORITATIVE",
+      "authoritative_replacement": {
+        "step2": "governance/book_windows_1_3_reader_step2_20260929.json",
+        "step3": "governance/book_windows_1_3_reader_step3_20260929.json",
+        "step3_commit": "77a4b8c4431fd4d0a1a3e3d1e7adddc531f0037d"
+      },
+      "purpose": "Preserved parallel implementation/test evidence only; never use as Book 1.3 restore baseline.",
+      "verification": "Drive folder renamed with PARALLEL marker and SUPERSEDED.md added after reconciliation."
     }
   ],
   "notes": [
