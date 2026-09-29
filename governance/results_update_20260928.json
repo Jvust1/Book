@@ -110,9 +110,9 @@
   ],
   "next_step": "Continue source-grounded proofreading and Book app integration using the v5 four-module system as current authority; keep main unchanged until explicitly requested.",
   "sync_receipt": {
-    "drive_file_id": "1dfu6KEe-hOiNfvs9gm8Ga2sPf5Z36ohI",
-    "drive_path": "Book/00_Project/Book_results_update_20260928_receipt.json",
-    "sha256": "d794a94ab494391dbb0dbab0f41663936867999578c0b8307d7449d4dde294bc"
+    "drive_file_id": "1cAz7TwNkeL_xZDb0lc22MfitjwIAM3Ey",
+    "drive_path": "Book/00_Project/Book_results_update_20260929_receipt.json",
+    "sha256": "760b5d0829dfe87262d73cc9596a6800323b5c163589386368600c08873ee5b2"
   },
   "current_authority": {
     "system": "six_textbooks_v5_four_module",
