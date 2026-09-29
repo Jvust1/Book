@@ -1,1 +1,10 @@
-Functional Analysis audit 2026-09-30. No newly confirmed error. Source unchanged. Main unchanged.
+Functional Analysis (Jiang/Sun 2e) audit 2026-09-30.
+Confirmed structured metadata issue groups: 3; corrected fields: 7 via governance/functional_analysis_jiang_sun_structure_v2_1_patch_20260930.json.
+Evidence pages checked: 39, 138, 146, 214, 215, 219.
+Fixes: F*-空间 -> F-空间 plus optional marker; restore optional markers for ch03 s07/s08 and ch05; source_outline ？ -> 𝒟 / 𝒮.
+Source scan and raw OCR remain immutable.
+Coverage: preview 29/29 core sections; practice 110/110 solution units; v5 pre/review/practice SHA checks OK; v5 learning SHA checks OK.
+PDF QA: full 309p + learning 198p preflight OK; 28 PDFs aggregate 1323 pages: A4, blank=0, U+FFFD=0, NUL=0, edge-overflow text blocks=0. Ch5 practice 3 pages visually checked at 160dpi with no clipping/overflow/glyph/orphan issues.
+No new confirmed mathematical error requiring edits to current v5 reading PDFs. Existing Fourier-convention and neighborhood-base corrections rechecked as correct.
+Pending: external independent expert acceptance of AI reference solutions remains open.
+main unchanged.

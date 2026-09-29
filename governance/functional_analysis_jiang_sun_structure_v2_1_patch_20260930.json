@@ -1,0 +1,30 @@
+{
+  "schema_version": "book_source_structure_patch_v1",
+  "book_id": "functional_analysis_2e_jiang_sun",
+  "date": "2026-09-30",
+  "base_artifact": {
+    "drive_file_id": "1NblcrHjMGl7fN_vJxAk9IeKRGPCDC-_l",
+    "source_pdf_sha256": "dcc04c45d761949290f5a35624b8cdf218520a2ceecace7be0017cf013cd19d1"
+  },
+  "policy": {
+    "source_scan_immutable": true,
+    "raw_ocr_preserved": true,
+    "application": "derived metadata override only"
+  },
+  "confirmed_corrections": [
+    {"target":"metadata/sections.json","record":"ch01_s08","field":"title","source_pdf_page":39,"old":"F*-空间","new":"F-空间","reason":"原书为 §8* F-空间；星号是选学节标记。"},
+    {"target":"metadata/sections.json","record":"ch01_s08","field":"optional","source_pdf_page":39,"old":null,"new":true,"reason":"原书节号带星号。"},
+    {"target":"metadata/sections.json","record":"ch03_s07","field":"optional","source_pdf_page":138,"old":null,"new":true,"reason":"原书为 §7*；weak* 术语星号另行保留。"},
+    {"target":"metadata/sections.json","record":"ch03_s08","field":"optional","source_pdf_page":146,"old":null,"new":true,"reason":"原书为 §8* 弱拓扑。"},
+    {"target":"metadata/chapters.json","record":"ch05","field":"optional","source_pdf_page":214,"old":null,"new":true,"reason":"原书为 第五章* 广义函数论大意。"},
+    {"target":"metadata/source_outline.json","record_match":{"pdf_page":215},"field":"title","source_pdf_page":215,"old":"§1基本函数空间？上的广义函数及其导数","new":"§1基本函数空间𝒟上的广义函数及其导数","reason":"扫描原文与 sections.json 均为 𝒟。"},
+    {"target":"metadata/source_outline.json","record_match":{"pdf_page":219},"field":"title","source_pdf_page":219,"old":"§2基本函数空间？上的广义函数及其Fourier变换","new":"§2基本函数空间𝒮上的广义函数及其Fourier变换","reason":"扫描原文与 sections.json 均为 𝒮。"}
+  ],
+  "validation": {
+    "confirmed_issue_groups": 3,
+    "corrected_fields": 7,
+    "source_pages_visually_checked": [39,138,146,214,215,219],
+    "preview_core_section_coverage": {"covered":29,"source_core_sections":29},
+    "reader_pdf_content_changed": false
+  }
+}
