@@ -1,3 +1,22 @@
+## 2026-09-29 六本教材学习 PDF v5 清爽阅读版（当前权威）
+
+- 总恢复入口：`governance/six_textbooks_v5_reader_clean_20260929.json`。
+- 本轮在 v4 版式基础上统一删除影响阅读的溯源/脚注装置：资料来源/数据来源行、教材来源/来源展开/来源回忆标签、结构化/OCR/扫描/公式账本等实现说明、原书显式脚注正文与脚注标记，以及保守识别的金融/财政类行内脚注数字。
+- 保留教材正文、公式与图表、教材原题、AI 学习参考解答标签与正文，以及非引用性的教材时期/适用边界提示。
+- 六本合计 **254 份正式 PDF、1568 页全书合订、640 个题/解答单元**。
+- 目标残留词扫描：0；A4 异常：0；空白页：0；replacement/NUL：0；六本全书 1568 页均完成渲染，视觉异常：0。
+- 当前权威 Drive 目录：
+  - 当代中国经济：`Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929`，folder ID `1NkoH73G4C11IcLQ4Dq32V9LjVZMmrzuH`，290 页，75 题解。
+  - 泛函分析：`Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929`，folder ID `1z1uemFDnoXZxuOEvAir0bDZX-U4CoUFX`，309 页，110 题解。
+  - 数学物理方程：`Book-MathPhysics-LearningPDF-v5-CLEAN-20260929`，folder ID `1zsRJpArl4uE6ePIK5I6Zl5wseikROFLs`，249 页，194 题解。
+  - 货币金融学：`Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929`，folder ID `1rgBnaTiu3kz_EKZKbY-jxyuxsx3CWFfy`，284 页，89 题解；119.8MB ZIP 按原字节分 3 卷上传。
+  - 公共财政概论：`Book-PublicFinance-LearningPDF-v5-CLEAN-20260929`，folder ID `1Y0nXYfjYEj3K-c2AOBwJTXVVYyux5rKc`，287 页，77 题解；127.2MB ZIP 按原字节分 3 卷上传。
+  - 金融经济学十讲：`Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929`，folder ID `1VvlSue83SqmAXQXxnH4eJr9jxoQ0eO3l`，149 页，95 题解。
+- 六本统一 QA 目录：`Book-v5-Clean-QA-20260929`，folder ID `1gl5S2frmjH11v7igVqOGKgNT35Cd6lQ6`；QA 报告 ID `1PxMU8cQBfo7Aeie4YjU1GjVKRRHm9mC6`；428MB 六本总包按原字节分 8 卷上传，原 ZIP SHA-256 `d6ed1102a9f2fb5be3eb07725de4de2d07ffedfcd979399fd6e34885857959da`。
+- 边界：v5 是阅读体验清理与文件级 QA，不等于独立学科专家重新审查历史 OCR 文本或 AI 参考解答学科正确性。
+- v4 保留为历史版本；v5 现为当前权威交付。
+- `main` 未修改。
+
 ## 2026-09-28 五本教材学习 PDF v4 统一重排（当前权威）
 
 - 总恢复入口：`governance/five_textbooks_v4_relayout_20260928.json`。
