@@ -352,7 +352,7 @@
     "source": "governance/pending_sync.json",
     "verified_at": "2026-09-26"
   },
-  "current_release_next_step": "Run Chromium/MathJax exam acceptance and Go/Windows build for learning r2; continue chapter-specific authored content and independently review reference answers. Do not claim a released rc6 EXE.",
+  "current_release_next_step": "User-device acceptance only for Book 1.3 Final native Windows F11/DPI/local ShuSong/OS print dialog; continue separately tracked academic source review without changing this release claim.",
   "six_textbooks_chapter_latex_delivery": {
     "status": "DELIVERED_DRIVE_READBACK_SHA256_VERIFIED",
     "checkpoint": "governance/book_six_textbooks_chapter_latex_20260926.json",
@@ -685,6 +685,25 @@
     "content_documents": 253,
     "drive_folder_id": "19peefypVfwewwXt-fzqOcfePSZO2ZdZ7",
     "final_windows_acceptance": false,
+    "main_modified": false
+  },
+  "windows_1_3_final": {
+    "checkpoint": "governance/book_windows_1_3_final_20260929.json",
+    "status": "FINAL_BUILD_ARCHIVED_DRIVE_READBACK_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
+    "version": "1.3.0-final",
+    "build": "20260929-windows-1.3.0-final-r1",
+    "branch": "feat/windows-document-reader-1.2-20260928",
+    "exe_sha256": "effd59ffac52e6cb73e76ad1b1407fbf0de5e1aa751bc62ae9e99440ca677ee7",
+    "content_sha256": "54de380f58b0d29aece7b2bd18e878ede36ba46839267893fe451d7eeea52d90",
+    "drive_folder_id": "1Z3c7p5rBlRGJR2X5MFx8XHZpR8aGlKJO",
+    "documents": 253,
+    "books": 6,
+    "app_content_separated": true,
+    "default_a4_full_audit": "253/253 PASS",
+    "extreme_a4": "24/24 PASS",
+    "drive_readback": "PASS",
+    "windows_real_device_acceptance": false,
+    "full_independent_academic_review": false,
     "main_modified": false
   }
 }

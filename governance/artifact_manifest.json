@@ -1048,6 +1048,54 @@
         "native_windows_acceptance": false
       },
       "purpose": "Separate executable reader shell from replaceable verified textbook payload; preserve all Step3 content bytes and UX."
+    },
+    {
+      "artifact_id": "book-windows-1.3-final-20260929",
+      "file_name": "Book-Windows-1.3.0-Final-20260929",
+      "type": "generated_final_windows_release_set",
+      "version": "1.3.0-final",
+      "source": "Book 1.3 Step4 shell/content architecture + Step5 final A4/pagination fixes",
+      "drive_folder_id": "1Z3c7p5rBlRGJR2X5MFx8XHZpR8aGlKJO",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-Final-20260929",
+      "windows_exe": {
+        "file_name": "Book-1.3.0-Final-Windows-x64.exe",
+        "bytes": 7110144,
+        "sha256": "effd59ffac52e6cb73e76ad1b1407fbf0de5e1aa751bc62ae9e99440ca677ee7",
+        "drive_file_id": "12B3OopvJXypYCRJxWhPpsWPVSXl8WEdC"
+      },
+      "content_package": {
+        "file_name": "Book-Content-1.3.0-v4-Final-20260929.zip",
+        "bytes": 411840379,
+        "files": 29076,
+        "reader_books": 6,
+        "reader_documents": 253,
+        "sha256": "54de380f58b0d29aece7b2bd18e878ede36ba46839267893fe451d7eeea52d90",
+        "parts": 7
+      },
+      "source_patch": {
+        "file_name": "Book-1.3.0-Final-SourcePatch.zip",
+        "bytes": 44840,
+        "sha256": "8b77111d19da8f0fae0b87ad67340634bf8e0a57984f7a599d62ed8c78fbb5ff",
+        "drive_file_id": "1fJUExPR_kadGxMAuySuxhHZ66Q0DeyaU"
+      },
+      "validation": {
+        "default_a4": "253/253 PASS; text mismatch 0, overflow 0, overlap 0, blank pages 0, true heading/caption orphan 0, JavaScript errors 0.",
+        "extreme_a4": "24/24 representative largest documents PASS at 72px / line-height 2.6 / 30mm margins; text loss/overflow/overlap/blank pages 0; 15 oversized source media/formula objects were automatically fit without overflow.",
+        "shell_ux": "20/20 PASS",
+        "content_split": "13/13 PASS",
+        "no_content_shell": "7/7 PASS",
+        "external_content_runtime": "16/16 PASS",
+        "print_path": "4/4 PASS; Chromium printed PDF page count matched A4 sheets and every page had readable text.",
+        "go_tests": "PASS",
+        "managed_install": "PASS: final 411,840,379-byte package whole-file + per-file verification and atomic activation; observed ~7s in local isolated test.",
+        "managed_restart": "PASS",
+        "native_self_check": "PASS",
+        "windows_static": "PASS: MZ/PE, x86-64, PE32+ GUI, exact shell payload embedded, textbook content not embedded.",
+        "drive_readback": "PASS: EXE and seven content parts re-downloaded, per-file SHA-256 matched; parts reconstructed to the exact whole content SHA-256; ZIP CRC PASS."
+      },
+      "status": "FINAL_BUILD_ARCHIVED_DRIVE_READBACK_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
+      "academic_boundary": "No new full independent academic acceptance claim; 640 AI learning reference answers keep their prior review boundary.",
+      "native_windows_host_acceptance": false
     }
   ],
   "notes": [
