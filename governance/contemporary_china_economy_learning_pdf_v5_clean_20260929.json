@@ -5,7 +5,7 @@
     "slug": "contemporary_china_economy",
     "title": "当代中国经济"
   },
-  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "status": "DELIVERED_VERIFIED_FOUR_MODULES",
   "supersedes": "v4 relayout release; v4 remains historical",
   "scope": {
     "pdf_files_total": 45,
@@ -49,5 +49,29 @@
     }
   },
   "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
-  "main_modified": false
+  "main_modified": false,
+  "modules_available": [
+    "预习",
+    "学习",
+    "复习",
+    "刷题"
+  ],
+  "learning_module": {
+    "status": "DELIVERED_VERIFIED_CLEAN",
+    "source": "Book-SixTextbooks-Chapter-LaTeX-20260926 structured-data vector PDFs",
+    "folder_id": "1-OPZAsybhbQk1xkTTEjgtJS06McRL1MB",
+    "individual_pdfs": 12,
+    "full_pages": 218,
+    "full_pdf_id": "1J6jjAwOohMv8P6mvxU2YNnsJpi-x_9Ks",
+    "full_pdf_sha256": "533c23b9d7c41319091583eb67e9717252cbd9e742ee65afe40d8e4d4fe534d8",
+    "zip_id": "1PiIuGUfxYJmhA8yys5Rm87hQREWZGM-K",
+    "zip_sha256": "877b5d6b6b57c58b37b4da5cad0f76bfbe5145257267c9408ee65c65f5f3ba95",
+    "cleanup": {
+      "targeted_source_provenance_residuals": 0,
+      "replacement_chars": 0,
+      "nul_chars": 0,
+      "visual_render_issues": 0
+    },
+    "academic_content_acceptance": false
+  }
 }
