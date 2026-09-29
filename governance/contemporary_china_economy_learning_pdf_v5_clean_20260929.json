@@ -1,0 +1,53 @@
+{
+  "schema_version": "book_learning_pdf_v5_reader_clean_checkpoint",
+  "updated_date": "2026-09-29",
+  "book": {
+    "slug": "contemporary_china_economy",
+    "title": "当代中国经济"
+  },
+  "status": "DELIVERED_VERIFIED_READING_CLEANUP",
+  "supersedes": "v4 relayout release; v4 remains historical",
+  "scope": {
+    "pdf_files_total": 45,
+    "full_pages": 290,
+    "exercise_solution_units": 75
+  },
+  "cleanup": {
+    "removed": [
+      "资料来源/数据来源行",
+      "教材来源/来源展开/来源回忆等阅读层标签",
+      "结构化/OCR/扫描/公式账本等实现说明",
+      "原书显式脚注正文与脚注标记",
+      "保守识别的金融/财政类行内脚注数字"
+    ],
+    "preserved": [
+      "教材正文、公式与图表",
+      "教材原题",
+      "AI学习参考解答标签与正文",
+      "非引用性的教材时期/适用边界提示"
+    ]
+  },
+  "validation": {
+    "targeted_source_footnote_residuals": 0,
+    "a4_fail_pages": 0,
+    "blank_pages": 0,
+    "replacement_chars": 0,
+    "nul_chars": 0,
+    "visual_render_issues": 0,
+    "academic_content_reaudit": false,
+    "full_book_rendered_pages": 290,
+    "full_pages_preserved": true
+  },
+  "drive": {
+    "folder_id": "1NkoH73G4C11IcLQ4Dq32V9LjVZMmrzuH",
+    "full_pdf_id": "1zHBZA9osXEa9a3ZPwkG5LIS548YCLszZ",
+    "full_pdf_sha256": "a8875e63d9829d81601f37a9e4d721b43cd8b6669c2611fb39c235d985ce87e6",
+    "zip_delivery": {
+      "mode": "single",
+      "id": "1xnG2xO9UIylPolnXR3gLQiqGRJtFK3BM",
+      "sha": "d7bc89c59a9fee601a24f24d2451f57381173424d7b95894d95a55b22ae53e49"
+    }
+  },
+  "content_boundary": "本轮仅做阅读体验清理与文件级QA，不等于独立学科专家重新审查历史OCR文字或AI参考解答。",
+  "main_modified": false
+}
