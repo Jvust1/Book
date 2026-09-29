@@ -1,3 +1,15 @@
+## 2026-09-29 Book 1.3 Final r2 Verified（当前 Windows 交付）
+
+- 恢复入口：`governance/book_windows_1_3_final_r2_20260929.json`。r1 保留为历史审计证据，不再作为当前下载基准。
+- r2 是发布审计修正版：教材学术 payload 相对 r1 不变，只更新内容包 manifest、data catalog、document catalog 三个版本元数据条目。
+- EXE：7,111,168 bytes，SHA-256 `5fdd47770377ec7cd657263f58cae8c2ab8248315e443924eac50021976ad2a2`；内容包：569,426,102 bytes，SHA-256 `9c881dd2548fdf0a72b5811e65f032ae56b25c5e68c6092e82962fbaef56c22f`。
+- 修复：去掉 UI 的 dev/S4 标识；统一 Final r2 package/catalog/file-name 身份；self-check 明确为 shell-only；更正陈旧 Drive 文件数和 Step4 byte-identical 表述；修正 project_state 中仍指向早期 Final 的旧哈希。
+- 六本 **253/253** 文档通过同一真实 Go backend + r2 外置内容包 A4 审计：字符差异、越界、重叠、空页、孤标题、JS 异常均 0；打包 Chromium **18/18**；content split **14/14**；Go tests PASS；Windows x64 cross-build PASS。
+- Drive 当前权威目录：`Book/03_Exports/Book-Windows-1.3.0-Final-r2-Verified-20260929`（folder `1snkyBh-os5DFLx9_gaJC3kSatlmJDM4r`），回读 **22 个文件**：单文件 EXE + 9 个内容分卷 + 源码增量 + manifest/报告/重组脚本等。
+- 阅读体验保持：F11 全屏、M 沉浸、本地书宋优先、正文400字重、来源净化、预习→学习→复习→刷题。
+- 边界：真实 Windows 的 F11/DPI/本机商业书宋视觉与系统打印对话框仍需用户实机验收；640 组 AI 参考答案不声明独立专家逐题终审。
+- `main` 未修改，未自动合并。
+
 ## 2026-09-29 Book 1.3 Final r1 Verified（当前 Windows 交付）
 
 - 恢复入口：`governance/book_windows_1_3_final_20260929.json`。当前权威 Final 已重新终验；旧 Final 目录保留为历史证据，不再作为当前下载基准。

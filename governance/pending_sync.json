@@ -147,12 +147,22 @@
       "blocking": false,
       "status": "OPEN_NON_BLOCKING",
       "scope": "Book 1.3 Final real Windows device acceptance",
-      "reason": "Verified Final r1 is built and archived; this environment cannot certify real Windows monitor/DPI/local-font/OS print-dialog behavior.",
-      "next_action": "On Windows: run the current Verified Final EXE (SHA-256 104207...), pair/install content SHA-256 8342cc..., test F11, 100/125/150% DPI, installed ShuSong/Song rendering and Save-as-PDF/print dialog.",
+      "reason": "Verified Final r2 is built and archived; this environment cannot certify real Windows monitor/DPI/local-font/OS print-dialog behavior.",
+      "next_action": "On Windows: run Final r2 EXE, pair/install Final r2 content, test F11, 100/125/150% DPI, installed ShuSong/Song rendering and Save-as-PDF/print dialog.",
       "blocks_next_step": false,
-      "current_drive_folder_id": "1a3x7ziSOJ724d9O5M48g2Rd_HKP_wSpP",
-      "current_exe_sha256": "104207761e5eb984d8094c90203aa533e296119d34d140fdf5cd7b6b8e061530",
-      "current_content_sha256": "8342cc6fae1cb82a3f730f9bfdbcb8e4bcccfb02b7401e3bd34999b945c22990"
+      "current_drive_folder_id": "1snkyBh-os5DFLx9_gaJC3kSatlmJDM4r",
+      "current_exe_sha256": "5fdd47770377ec7cd657263f58cae8c2ab8248315e443924eac50021976ad2a2",
+      "current_content_sha256": "9c881dd2548fdf0a72b5811e65f032ae56b25c5e68c6092e82962fbaef56c22f"
+    },
+    {
+      "pending_id": "book_windows_1_3_final_r2_audit_sync",
+      "blocking": false,
+      "status": "RESOLVED_20260929",
+      "scope": "Book 1.3 Final r2 audit-fix release",
+      "reason": "r1 audit found stale dev/final metadata, inconsistent content filename/file count, self-check scope ambiguity, mixed A4 backend paths, and stale project_state pointer.",
+      "resolution": "r2 normalized identities/reports, preserved academic payload, reran 253/253 through one real Go backend, archived 22 Drive files at Book/03_Exports/Book-Windows-1.3.0-Final-r2-Verified-20260929, and promoted r2 as current GitHub restore checkpoint.",
+      "blocks_next_step": false,
+      "resolved_at": "2026-09-29"
     }
   ]
 }

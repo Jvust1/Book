@@ -1137,8 +1137,51 @@
         "windows_cross_compile": "PASS",
         "drive_size_readback": "PASS"
       },
-      "status": "CURRENT_FINAL_WINDOWS_RELEASE_NATIVE_HOST_ACCEPTANCE_PENDING",
+      "status": "HISTORICAL_DUPLICATE_PRESERVED_SUPERSEDED_BY_R2_AUDIT_FIX",
       "academic_boundary": "No new complete independent expert review claim for all 640 AI reference answers.",
+      "native_windows_host_acceptance": false,
+      "superseded_by": "book-windows-1.3-final-r2-verified-20260929"
+    },
+    {
+      "artifact_id": "book-windows-1.3-final-r2-verified-20260929",
+      "file_name": "Book-Windows-1.3.0-Final-r2-Verified-20260929",
+      "type": "generated_final_windows_release_set",
+      "version": "1.3.0-final-r2",
+      "source": "r1 verified release + audit identity/metadata correction only; academic payload unchanged",
+      "drive_folder_id": "1snkyBh-os5DFLx9_gaJC3kSatlmJDM4r",
+      "drive_path": "Book/03_Exports/Book-Windows-1.3.0-Final-r2-Verified-20260929",
+      "windows_exe": {
+        "file_name": "Book-1.3.0-Final-r2-Windows-x64.exe",
+        "bytes": 7111168,
+        "sha256": "5fdd47770377ec7cd657263f58cae8c2ab8248315e443924eac50021976ad2a2",
+        "drive_file_id": "1kBbZvJgogP0Wf8dU15xIh3rWObA9-cZZ"
+      },
+      "content_package": {
+        "file_name": "Book-Content-1.3.0-v4-Final-r2-20260929.zip",
+        "bytes": 569426102,
+        "files": 30723,
+        "reader_books": 6,
+        "reader_documents": 253,
+        "sha256": "9c881dd2548fdf0a72b5811e65f032ae56b25c5e68c6092e82962fbaef56c22f",
+        "parts": 9
+      },
+      "source_patch": {
+        "file_name": "Book-1.3.0-Final-r2-SourcePatch.zip",
+        "bytes": 80372,
+        "sha256": "f6f4ab412c56f93efd4a0aaffc17273177a3d39160558ee370fb0d5b3a68c259",
+        "drive_file_id": "1dTTG2mhDQ_gwAlOV_nAH4zwcOH2s2jnu"
+      },
+      "validation": {
+        "default_a4": "253/253 PASS via one real Go backend; all zero failures",
+        "packaged_browser": "18/18 PASS",
+        "content_split": "14/14 PASS",
+        "go_tests": "PASS",
+        "native_selfcheck": "PASS shell-only",
+        "windows_cross_compile": "PASS",
+        "drive_readback": "22 files present"
+      },
+      "status": "CURRENT_FINAL_WINDOWS_RELEASE_NATIVE_HOST_ACCEPTANCE_PENDING",
+      "academic_boundary": "No academic payload changes from r1; no complete independent expert review claim for all 640 AI reference answers.",
       "native_windows_host_acceptance": false
     }
   ],

@@ -1,0 +1,106 @@
+{
+  "schema": "book_windows_1_3_final_r2_v1",
+  "date": "2026-09-29",
+  "version": "1.3.0-final-r2",
+  "build": "20260929-windows-1.3.0-final-r2",
+  "status": "FINAL_R2_ARCHIVED_VERIFIED_WINDOWS_NATIVE_HOST_ACCEPTANCE_PENDING",
+  "branch": "feat/windows-document-reader-1.2-20260928",
+  "supersedes": "book-windows-1.3-final-r1-verified-20260929",
+  "purpose": "Audit-fix release: normalize final identity/metadata/reports and make all six books use the same real Go backend A4 acceptance path without changing academic payload.",
+  "artifacts": {
+    "exe": {
+      "file": "Book-1.3.0-Final-r2-Windows-x64.exe",
+      "bytes": 7111168,
+      "sha256": "5fdd47770377ec7cd657263f58cae8c2ab8248315e443924eac50021976ad2a2",
+      "format": "PE32+ x86-64 GUI",
+      "drive_file_id": "1kBbZvJgogP0Wf8dU15xIh3rWObA9-cZZ"
+    },
+    "shell": {
+      "file": "shell.zip",
+      "bytes": 825661,
+      "sha256": "3935b56e1b5ba2e9ae5cd441f18f2e1a65011dd10a93e2b7cdefa821a088e6b1",
+      "files": 18,
+      "embedded_exact_match": true
+    },
+    "content": {
+      "file": "Book-Content-1.3.0-v4-Final-r2-20260929.zip",
+      "bytes": 569426102,
+      "sha256": "9c881dd2548fdf0a72b5811e65f032ae56b25c5e68c6092e82962fbaef56c22f",
+      "files": 30723,
+      "books": 6,
+      "documents": 253,
+      "parts": 9,
+      "package_id": "book-six-v4-final-r2-20260929",
+      "content_version": "1.3.0-final-r2"
+    },
+    "source_patch": {
+      "file": "Book-1.3.0-Final-r2-SourcePatch.zip",
+      "bytes": 80372,
+      "sha256": "f6f4ab412c56f93efd4a0aaffc17273177a3d39160558ee370fb0d5b3a68c259",
+      "drive_file_id": "1dTTG2mhDQ_gwAlOV_nAH4zwcOH2s2jnu"
+    }
+  },
+  "audit_fixes": [
+    "UI final identity: removed 1.3.0-dev S4 and now shows 1.3.0 Final r2.",
+    "Content package identity: package_id/content_version promoted from Step3/Step4 to Final r2.",
+    "data/catalog.json and documents/catalog.json final version/build identities normalized.",
+    "Content filename standardized to Book-Content-1.3.0-v4-Final-r2-20260929.zip across release docs and parts.",
+    "Drive file-count record no longer uses stale pre-receipt count; authoritative r2 folder readback is 22 files.",
+    "native self-check scope stated accurately as shell-only; content has separate content audits and real-backend runtime validation.",
+    "All six books/253 documents rerun through one real Go backend for A4 audit.",
+    "Corrected prior wording that whole Final package was byte-identical to Step4: academic payload is unchanged from r1 and only three metadata entries changed.",
+    "project_state.windows_1_3_final stale pre-r1 hashes/pointer corrected to r2."
+  ],
+  "content_invariance": {
+    "academic_payload_changed_by_r2": false,
+    "r1_entries": 30724,
+    "r2_entries": 30724,
+    "only_changed_entries": [
+      "book-content-package.json",
+      "data/catalog.json",
+      "documents/catalog.json"
+    ],
+    "full_independent_expert_review": false
+  },
+  "validation": {
+    "r1_to_r2_content_delta": "13 PASS / 0 FAIL; only three metadata entries changed",
+    "content_split": "14 PASS / 0 FAIL",
+    "default_a4_real_backend": "253/253 PASS; text mismatch/overflow/overlap/blank/orphan/JS errors all 0",
+    "packaged_browser": "18 PASS / 0 FAIL",
+    "go_tests": "PASS",
+    "native_selfcheck": {
+      "status": "PASS",
+      "scope": "shell only",
+      "content_check": "NOT_REQUESTED"
+    },
+    "windows_cross_compile": "PASS",
+    "embedded_shell_match": "PASS",
+    "drive_readback": "PASS: 22 files at expected names and byte sizes"
+  },
+  "drive": {
+    "folder_id": "1snkyBh-os5DFLx9_gaJC3kSatlmJDM4r",
+    "path": "Book/03_Exports/Book-Windows-1.3.0-Final-r2-Verified-20260929",
+    "file_count": 22,
+    "exe_id": "1kBbZvJgogP0Wf8dU15xIh3rWObA9-cZZ",
+    "patch_id": "1dTTG2mhDQ_gwAlOV_nAH4zwcOH2s2jnu",
+    "manifest_id": "1jiXZ_3jtx8400kV_vX129MBsP7PEDueB",
+    "report_id": "1F76qYALN_PXpCEFLZ7t2d-R7fDHi3uuH",
+    "a4_id": "1x-l5lp0u2en1eIaTe8i7licCyJr4DpiT",
+    "browser_id": "1gGSE9x1vJ-nRf3W44HOt1RcLeMAo3aJl",
+    "content_audit_id": "1S0SPF2W7mfpGpxfXUpAsLUT9UAl0xVVx",
+    "self_check_id": "1dDkG5PcHSo8EkUl2qLV4qYct9z4rHRCc",
+    "parts_manifest_id": "1P0PWgyWKq4KQTtI97lVJCl4R8M7jJsz3",
+    "reassemble_id": "1WWm-nHt4-7hFgjtnym7B4e9gNiBKuhaV",
+    "sha_id": "1pkwB0fJzz5IrdyzF_C_0BgNFQQuO6K5W",
+    "readme_id": "1EfYdl88UzLf3YtLefbP6-p8Lp6BItD19",
+    "findings_id": "1Lex_qnfEaoJWeiHyHmkBwlcM1kg0R9_d"
+  },
+  "boundaries": [
+    "Real Windows monitor-level F11/DPI/local installed commercial ShuSong visual acceptance remains pending.",
+    "Native Windows print dialog itself was not clicked; packaged Chromium print preparation passed.",
+    "EXE is unsigned.",
+    "No new claim that all 640 AI reference-answer groups received independent expert review."
+  ],
+  "main_changed": false,
+  "automatic_merge": false
+}
