@@ -22,8 +22,9 @@ async function fixtureApi(page: Page, content = prose) {
           printed_page_start: 7, printed_page_end: 7, pdf_page_start: 11, pdf_page_end: 11 },
         object_count: 1, figure_count: 0, translation_available: true }
     } else if (path.includes('/sources/')) {
-      body = { ...item, content_zh: content, course_id: course, book_id: 'synthetic_book', section_id: section,
-        type: 'formula', source_anchor: 'synthetic:page-11:formula-1', source_batch: 'synthetic-test-only',
+      const { object_type, ...sourceFields } = item
+      body = { ...sourceFields, content_zh: content, course_id: course, book_id: 'synthetic_book', section_id: section,
+        type: object_type, source_anchor: 'synthetic:page-11:formula-1', source_batch: 'synthetic-test-only',
         context_before: [], context_after: [] }
     } else if (path.includes('/study/')) {
       const mode = path.split('/').at(-2)

@@ -216,4 +216,26 @@ describe('qaSessionState', () => {
       content: 'B?',
     })
   })
+  it.each([
+    { ...response, course_id: 'other_course' },
+    { ...response, citations: [] },
+    { ...response, citations: [{ ...response.citations[0], pdf_page: 1.5 }] },
+    { ...response, citations: [response.citations[0], response.citations[0]] },
+  ])('rejects cached response context or schema corruption %#', cached => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(key, JSON.stringify({ route: '/courses/functional_analysis_course/qa',
+      messages: [{ id: 'a1', role: 'assistant', content: response.answer, response: cached }],
+      scrollY: 0, activeCitationSourceId: null }))
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+    expect(sessionStorage.getItem(key)).toBeNull()
+  })
+
+  it('does not combine an altered displayed answer with unrelated cached citations', () => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(key, JSON.stringify({ route: '/courses/functional_analysis_course/qa',
+      messages: [{ id: 'a1', role: 'assistant', content: 'different answer', response }],
+      scrollY: 0, activeCitationSourceId: null }))
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+  })
+
 })

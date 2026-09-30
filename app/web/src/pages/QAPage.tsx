@@ -49,20 +49,31 @@ const nextMessageId = (role: 'user' | 'assistant'): string => {
 
 export function QAPage() {
   const { courseId } = useParams()
+  // A different course cannot reuse the previous course's conversation component.
+  return <CourseQAPage key={courseId ?? ''} />
+}
+
+function CourseQAPage() {
+  const { courseId } = useParams()
   const location = useLocation()
   const sectionId = new URLSearchParams(location.search).get('section')?.trim() || null
-  const initialSession = courseId ? loadQASessionState(courseId) : null
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
   const [section, setSection] = useState<SectionResponse | null>(null)
   const [sectionError, setSectionError] = useState<string | null>(null)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<QASessionMessage[]>(
-    initialSession?.messages ?? [],
+    () => courseId ? loadQASessionState(courseId)?.messages ?? [] : [],
   )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const restoredScrollRef = useRef(false)
+  const mounted = useRef(true)
+  const pending = useRef(false)
+  useEffect(() => {
+    mounted.current = true
+    return () => { mounted.current = false }
+  }, [])
 
   const currentRoute = `${location.pathname}${location.search}`
 
@@ -144,7 +155,7 @@ export function QAPage() {
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!courseId || loading) return
+    if (!courseId || loading || pending.current) return
 
     const question = input.trim()
     if (!question) {
@@ -166,6 +177,7 @@ export function QAPage() {
     setInput('')
     setLoading(true)
     setError(null)
+    pending.current = true
 
     try {
       const response = await bookApi.askCourse(courseId, {
@@ -173,6 +185,7 @@ export function QAPage() {
         section_id: sectionId,
         history,
       })
+      if (!mounted.current) return
       const assistantContent = response.answer ?? response.message ?? ''
       const assistantMessage: QASessionMessage = {
         id: nextMessageId('assistant'),
@@ -184,9 +197,10 @@ export function QAPage() {
       setMessages(nextMessages)
       persistMessages(nextMessages)
     } catch (reason: unknown) {
-      setError(qaErrorMessage(reason))
+      if (mounted.current) setError(qaErrorMessage(reason))
     } finally {
-      setLoading(false)
+      pending.current = false
+      if (mounted.current) setLoading(false)
     }
   }
 
