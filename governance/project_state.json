@@ -1,12 +1,12 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-08-30",
-  "repository": "Jvust2/Book",
+  "updated_date": "2026-10-01",
+  "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "chore/h4a-post-merge-state-20260830",
+  "active_branch": "chore/all-results-sync-20261001-r2",
   "phase": "PHASE_1H_PREPARATION",
   "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
-  "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
+  "base_main_commit": "6e5782b23c49943a263dfad7ee490147d57b2f0e",
   "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
@@ -193,5 +193,39 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
+  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval.",
+  "latest_results_snapshot": {
+    "snapshot_date": "2026-10-01",
+    "drive_folder_id": "1nazocJf42pAwdrJUzcxrCLR9QtFVFbJS",
+    "drive_path": "Book/03_Exports/Book-All-Results-20261001",
+    "index_md_file_id": "1RJussfL6JgTmdvVmHX1sSWzoJDLHO7FS",
+    "index_json_file_id": "1mFPpNprVBxBDgzUohfDV50tatlRJktXx",
+    "five_books_10px_r2_qa_file_id": "1S_erxOul-aLI0BQ4tHrFlZ3NU1uyvmbw",
+    "reading_exports": {
+      "10px": {
+        "verified_books": 6,
+        "object_count": 30,
+        "five_books_r2_pdf_qa_count": 20,
+        "small_chinese_prose_below_7pt": 0,
+        "target_noise_residues": 0
+      },
+      "15px": {
+        "verified_books": 6,
+        "object_count": 30
+      }
+    },
+    "canonical_textbook_mutation": false,
+    "runtime_registration_implied": false
+  },
+  "recent_integrated_main_capabilities": [
+    "FSRS adaptive review scheduling",
+    "sentence-transformers semantic retrieval",
+    "hybrid keyword + semantic retrieval",
+    "opt-in provenance-safe fuzzy retrieval",
+    "FAISS semantic index",
+    "Docling local ingestion",
+    "MarkItDown ingestion fallback",
+    "Docling-first ingestion pipeline",
+    "MinerU external ingestion"
+  ]
 }
