@@ -1,0 +1,83 @@
+{
+  "schema_version": "book_reading_artifact_manifest_v2",
+  "updated_at": "2026-10-01T00:48:00+08:00",
+  "repository": "Jvust1/Book",
+  "base_main_sha": "6e5782b23c49943a263dfad7ee490147d57b2f0e",
+  "canonical_textbook_mutation": false,
+  "drive_snapshot": {
+    "folder_id": "1nazocJf42pAwdrJUzcxrCLR9QtFVFbJS",
+    "path": "Book/03_Exports/Book-All-Results-20261001"
+  },
+  "10px": {
+    "verified_books": 6,
+    "object_count": 30,
+    "sets": [
+      [
+        "functional_analysis",
+        "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/10px清爽版_r2_20261001/",
+        "FINAL_R2_QA_PASS"
+      ],
+      [
+        "math_physics_equations_4e",
+        "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+        "QA_PASS"
+      ],
+      [
+        "financial_economics_ten_lectures",
+        "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929/10px清爽版_r2_20261001/",
+        "FINAL_R2_QA_PASS"
+      ],
+      [
+        "public_finance_2e",
+        "Book/03_Exports/Book-PublicFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_r2_20261001/",
+        "FINAL_R2_QA_PASS"
+      ],
+      [
+        "contemporary_china_economy",
+        "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/10px清爽版_r2_20261001/",
+        "FINAL_R2_QA_PASS"
+      ],
+      [
+        "monetary_finance_3e",
+        "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_r2_20261001/",
+        "FINAL_R2_QA_PASS"
+      ]
+    ],
+    "r2_qa": {
+      "pdf_count": 20,
+      "small_chinese_prose_below_7pt": 0,
+      "target_reading_noise_residues": 0,
+      "drive_file_id": "1S_erxOul-aLI0BQ4tHrFlZ3NU1uyvmbw"
+    }
+  },
+  "15px": {
+    "verified_books": 6,
+    "object_count": 30,
+    "sets": [
+      [
+        "functional_analysis",
+        "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ],
+      [
+        "math_physics_equations_4e",
+        "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ],
+      [
+        "financial_economics_ten_lectures",
+        "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ],
+      [
+        "public_finance_2e",
+        "Book/03_Exports/Book-PublicFinance-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ],
+      [
+        "contemporary_china_economy",
+        "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ],
+      [
+        "monetary_finance_3e",
+        "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930/"
+      ]
+    ]
+  }
+}
