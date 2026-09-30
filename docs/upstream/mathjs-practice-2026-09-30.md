@@ -32,7 +32,7 @@ The application previously exposed textbook exercise source objects without an i
 
 ## Verification
 
-- Local: **151/151 web tests passed**, TypeScript and production build passed.
+- Local: **156/156 web tests passed** after the parenthesized-exponent correction. The initial implementation passed local TypeScript and production build. Later build reruns encountered the shared environment memory limit; exact-head CI separately runs both gates.
 - New tests use real math.js for arithmetic, matrices, complex values and negative capability cases; worker transport/lifecycle and UI state tests cover timeout, cancellation, duplicate submit, clearing and unmount.
 - Local verification used bounded Node heap and two Vitest workers to fit the shared execution environment; test cases/assertions were not removed.
 - Three new browser cases exercise real workers at desktop/390px, preserve the existing missing-solution notice, check no new API POST or browser-storage writes, reject an unsafe expression, and recover after interrupted worker startup/cancellation.
@@ -43,3 +43,5 @@ This branch is stacked on the structured QA reader (#60). It does not include or
 ### Built-worker acceptance
 
 The first exact-head browser run passed after one cold development-module startup retry. Acceptance now builds and serves production assets, including the emitted math.js worker, with the same five-second bound and all existing assertions. The interrupted-startup case explicitly waits for the worker network request before cancellation; only this deliberate network-interception case blocks service workers. Final rerun status is tracked against the follow-up commit.
+
+A read-only independent review found no high-impact grammar, capability or cancellation bug. Its reproduced usability gap (`2^(-2)` and `2^(2)`) is fixed by bounded parenthesis unwrapping, with positive and over-limit regression tests. No expression evaluation or exponent limit is relaxed.

@@ -16,12 +16,14 @@ export type CalculationOutcome =
   | { status: 'ok'; engine: typeof CALCULATOR_ENGINE; expression: string; formatted: string; kind: 'number' | 'complex' | 'array' }
   | { status: 'error'; code: 'invalid_expression' | 'unsupported_expression' | 'non_finite_result' | 'unavailable' | 'timeout' | 'cancelled' }
 
-function literalNumber(node: MathNode): number | null {
+function literalNumber(node: MathNode, depth = 0): number | null {
+  if (depth > 20) return null
+  if (node.type === 'ParenthesisNode') return literalNumber((node as ParenthesisNode).content, depth + 1)
   if (node.type === 'ConstantNode' && typeof (node as ConstantNode).value === 'number') return (node as ConstantNode).value as number
   if (node.type === 'OperatorNode') {
     const value = node as OperatorNode
     if (value.args.length === 1 && (value.op === '-' || value.op === '+')) {
-      const inner = literalNumber(value.args[0])
+      const inner = literalNumber(value.args[0], depth + 1)
       return inner === null ? null : value.op === '-' ? -inner : inner
     }
   }
