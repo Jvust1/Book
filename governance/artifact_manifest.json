@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-10-01",
   "project": {
     "repository": "Jvust1/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -74,11 +74,90 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "functional_analysis_15px_reading_bundle_2026_10_01",
+      "file_name": "泛函分析_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1VNjtal8pw17GeSNFS4hNP9VBG84U9fhR",
+      "drive_folder_id": "1KHgSi82w6mWhednP4JeO8XoayxGZhDFG",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Functional Analysis 15px reading bundle: preview, learn, review, practice.",
+      "status": "active",
+      "verification": "Drive folder and all four PDFs + ZIP verified present; body target 15px."
+    },
+    {
+      "artifact_id": "math_physics_equations_15px_reading_bundle_2026_10_01",
+      "file_name": "数学物理方程_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1Oj2IuQa9xr4ZgwF6aPg6RKOmc1nhDduk",
+      "drive_folder_id": "15zLSqQPM718E5EHWWicIrOF0f6nwQAxB",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Mathematical Physics Equations 15px reading bundle: preview, learn, review, practice.",
+      "status": "active",
+      "verification": "Drive folder and all four PDFs + ZIP verified present; body target 15px."
+    },
+    {
+      "artifact_id": "monetary_finance_15px_reading_bundle_2026_10_01",
+      "file_name": "货币金融学_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1nsPwZvF7ltCpNV1RwOZALHMOJ98toCkH",
+      "drive_folder_id": "1EcKd-D-jeFfFbbk-zfTGjn-wpIO79HlQ",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_revised_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Monetary Finance 15px reading bundle: preview, learn, review, practice.",
+      "status": "active_revised_in_place",
+      "verification": "Drive four PDFs and ZIP updated in place on 2026-10-01; existing Drive IDs preserved."
+    },
+    {
+      "artifact_id": "contemporary_china_economy_15px_reading_bundle_2026_10_01",
+      "file_name": "当代中国经济_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1aA_qq0Eg9a_Ag4ZqIChIR5-MrwvqbNGH",
+      "drive_folder_id": "1KEbZTWNL9SaX9HmeS-pen7yqs1kyDEN_",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Contemporary China Economy 15px reading bundle: preview, learn, review, practice.",
+      "status": "active",
+      "verification": "Drive folder and all four PDFs + ZIP verified present; body target 15px."
+    },
+    {
+      "artifact_id": "public_finance_15px_reading_bundle_2026_10_01",
+      "file_name": "公共财政概论_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1C8GbaV-9sxt6H8UYOg1JC2cND9GRlhJM",
+      "drive_folder_id": "1SoshSSUQ_tSCeJ_fCbLxPlC1V0nlg5hb",
+      "drive_path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_revised_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Public Finance 15px reading bundle: preview, learn, review, practice.",
+      "status": "active_revised_in_place",
+      "verification": "Drive four PDFs and ZIP updated in place on 2026-10-01; existing Drive IDs preserved."
+    },
+    {
+      "artifact_id": "financial_economics_ten_lectures_15px_reading_bundle_2026_10_01",
+      "file_name": "金融经济学十讲_15px清爽版_四件套.zip",
+      "type": "generated",
+      "drive_file_id": "1H9NsWeIrzjOsqXbE5apN_RQeIgXwpS0n",
+      "drive_folder_id": "1H4eIuGcI2aHvOGJZ7N43SDxevN-DZFBr",
+      "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929/15px清爽版_20260930",
+      "version": "15px_clean_2026-10-01",
+      "source": "assistant_generated_from_project_exports",
+      "purpose": "Financial Economics Ten Lectures 15px reading bundle: preview, learn, review, practice.",
+      "status": "active",
+      "verification": "Drive folder and all four PDFs + ZIP verified present; body target 15px."
     }
   ],
   "notes": [
     "This initial manifest deliberately lists only artifacts/areas directly reconciled during the 2026-08-28 governance checkpoint.",
     "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
-    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
+    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json.",
+    "2026-10-01: six-book 15px clean reading exports reconciled with Drive; see docs/BOOK_15PX_EXPORTS_2026-10-01.md."
   ]
 }
