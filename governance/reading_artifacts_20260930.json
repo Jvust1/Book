@@ -1,6 +1,6 @@
 {
   "schema_version": "book_reading_artifact_manifest_v1",
-  "updated_at": "2026-09-30",
+  "updated_at": "2026-09-30T22:16:00+08:00",
   "repository": "Jvust1/Book",
   "artifact_class": "10px_clean_reading_pdfs",
   "source_layer": "existing_v5_reading_exports",
@@ -29,25 +29,51 @@
       "id": "functional_analysis",
       "title": "泛函分析（江泽坚、孙善利）",
       "status": "COMPLETE",
-      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+      "drive_folder_id": "1dJUYKUQX2XzXKQqXWC7BHTaKson8VW1q",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
     },
     {
       "id": "math_physics_equations_4e",
       "title": "数学物理方程（第四版）",
       "status": "COMPLETE",
-      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+      "drive_folder_id": "18ZXW13CmDXv6tHHt1BVOsrMu5V-UpuiF",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
+    },
+    {
+      "id": "public_finance_2e",
+      "title": "公共财政概论（第二版）",
+      "status": "COMPLETE",
+      "drive_folder_id": "1FtYxz4GegLot77Uwc5Lvd4djM-DC42yC",
+      "drive_path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
+    },
+    {
+      "id": "financial_economics_ten_lectures",
+      "title": "金融经济学十讲",
+      "status": "COMPLETE",
+      "drive_folder_id": "1DP2ODN3WiqJnzjZH3K3_eXU9atexQlih",
+      "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
     },
     {
       "id": "monetary_finance_3e",
       "title": "货币金融学（第三版）",
       "status": "COMPLETE",
-      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+      "drive_folder_id": "1DBZTcXHhGpISuw9O-OIxc87CNDx3kYrp",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
     },
     {
       "id": "contemporary_china_economy",
       "title": "当代中国经济",
       "status": "COMPLETE",
-      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+      "drive_folder_id": "1-VCip06rEO_IlXgelYpI3U8kY_oVhwiq",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/",
+      "output_count": 5
     }
-  ]
+  ],
+  "verified_textbook_count": 6,
+  "verified_output_object_count": 30
 }
