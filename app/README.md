@@ -309,3 +309,11 @@ Section 状态保存 route、scroll、expanded source IDs 与 active source；Se
 - Course Compiler / Course Package v2
 
 这些能力应在保持现有 Runtime → API → Web/SQLite 边界的前提下继续扩展，而不是让前端绕过 Runtime 或服务层直接读写 canonical 教材资产。
+
+## 数学排版（KaTeX 集成）
+
+学习卡片、来源页和搜索结果使用固定版本 KaTeX 在本机排版公式，并提供公式原文。
+正文支持 `\(...\)`、`\[...\]` 和 `$$...$$`；单个 `$` 保留为货币/普通文本。
+无法排版时显示原文，不隐藏来源内容，也不将排版成功解释为数学正确性验证。
+CSS、字体和 MIT 许可随应用一起打包，不请求第三方 CDN。
+验证范围和固定上游身份见 [KaTeX 集成记录](../docs/upstream/katex-reader-2026-09-30.md)。

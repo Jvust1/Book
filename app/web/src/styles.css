@@ -450,3 +450,49 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Locally bundled KaTeX fonts; a wide equation scrolls inside its own card. */
+.learning-list, .learning-card, .learning-card-header > div,
+.math-content, .source-page {
+  min-width: 0;
+}
+
+.math-content {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.math-content-host {
+  display: block;
+}
+
+.math-content .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.2em;
+}
+
+.math-fallback-note {
+  display: block;
+  margin-top: 8px;
+  color: #715422;
+  font: 13px/1.5 system-ui, sans-serif;
+}
+
+.math-source {
+  margin-top: 10px;
+  font: 13px/1.5 system-ui, sans-serif;
+}
+
+.math-source summary {
+  width: fit-content;
+  cursor: pointer;
+}
+
+.math-source code {
+  display: block;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import type { LearningMode, ModeItem } from '../api/types'
 import { SourceLink } from './SourceLink'
+import { MathContent } from './MathContent'
 
 const MISSING_CONTENT = '本段中文学习内容暂未提供'
 
@@ -57,7 +58,7 @@ export function LearningObjectCard({
         />
       </header>
 
-      {item.formula ? <div className="formula-block">{item.formula}</div> : null}
+      {item.formula ? <MathContent text={item.formula} formula /> : null}
 
       {mode === 'review' && !reviewExpanded ? (
         <button className="secondary-button" type="button" onClick={expandReview}>
@@ -65,7 +66,7 @@ export function LearningObjectCard({
         </button>
       ) : null}
 
-      {showBody ? <p className="learning-content">{content}</p> : null}
+      {showBody ? <MathContent text={content} /> : null}
 
       {mode === 'practice' ? (
         <p className="practice-explanation">教材数据中暂未提供解析</p>

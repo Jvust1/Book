@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { MathContent } from '../components/MathContent'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
 import { loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
@@ -129,10 +130,8 @@ export function SourcePage() {
         {source.source_batch ? <p>来源批次：{source.source_batch}</p> : null}
       </div>
 
-      {source.formula ? <div className="formula-block">{source.formula}</div> : null}
-      <p className="learning-content">
-        {source.content_zh || '本段中文学习内容暂未提供'}
-      </p>
+      {source.formula ? <MathContent text={source.formula} formula /> : null}
+      <MathContent text={source.content_zh || '本段中文学习内容暂未提供'} />
 
       <section className="source-context" aria-label="来源上下文">
         {source.context_before.map((item) => (
