@@ -2,6 +2,10 @@ name: Course Package heavy gate
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ci/run-all-20260930]
+    paths:
+      - ".github/workflows/course-package-heavy.yml"
 
 permissions:
   contents: read
