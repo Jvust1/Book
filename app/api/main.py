@@ -15,6 +15,8 @@ from app.study import (
     StudyRecordRepository,
     StudyRecordRepositoryError,
     StudyRecordService,
+    ReviewScheduleRepository,
+    ReviewScheduleService,
     resolve_study_db_path,
 )
 from runtime import QAHistoryMessage
@@ -41,6 +43,8 @@ from .models import (
     SourceResponse,
     StudyRecordListResponse,
     StudyRecordResponse,
+    ReviewScheduleRequest,
+    ReviewScheduleResponse,
 )
 from .qa_provider_factory import QAProviderConfigurationError, provider_from_environment
 from .service import BookAppService
@@ -95,6 +99,20 @@ def get_study_service(
     repository: StudyRecordRepository = Depends(get_study_repository),
 ) -> StudyRecordService:
     return StudyRecordService(book_service, repository)
+
+
+@lru_cache(maxsize=1)
+def default_review_schedule_repository() -> ReviewScheduleRepository:
+    return ReviewScheduleRepository(resolve_study_db_path())
+
+
+def get_review_schedule_service(
+    book_service: BookAppService = Depends(get_service),
+) -> ReviewScheduleService:
+    return ReviewScheduleService(
+        book_service,
+        default_review_schedule_repository(),
+    )
 
 
 def _error_response(error: BookAppError, status_code: int) -> JSONResponse:
@@ -371,3 +389,37 @@ def source(
     service: BookAppService = Depends(get_service),
 ) -> SourceResponse:
     return service.source(course_id, kind, source_id)
+
+
+@app.post(
+    "/api/courses/{course_id}/sections/{section_id}/review-schedule",
+    response_model=ReviewScheduleResponse,
+)
+async def review_schedule(
+    course_id: str,
+    section_id: str,
+    request: Request,
+    service: ReviewScheduleService = Depends(get_review_schedule_service),
+) -> ReviewScheduleResponse:
+    try:
+        payload = ReviewScheduleRequest.model_validate(await request.json())
+    except (ValueError, TypeError, ValidationError) as exc:
+        raise InvalidModeError(
+            code="invalid_review_schedule_request",
+            user_message="复习评分无效",
+            detail="Invalid review schedule request body",
+        ) from exc
+    result = service.review(
+        course_id,
+        section_id,
+        payload.source_id,
+        payload.rating,
+    )
+    return ReviewScheduleResponse(
+        course_id=result.course_id,
+        section_id=result.section_id,
+        source_id=result.source_id,
+        due=result.due,
+        card=result.card,
+        review_log=result.review_log,
+    )

@@ -76,6 +76,11 @@ from .section_learning_runtime import (
     SectionLearningSource,
     SectionLearningSourceError,
 )
+from .review_scheduler import (
+    FSRSReviewScheduler,
+    ScheduledReview,
+    create_fsrs_review_scheduler,
+)
 from .search_runtime import (
     SearchHit,
     SearchIndexUnavailableError,
@@ -83,6 +88,7 @@ from .search_runtime import (
     SearchRuntime,
     SearchRuntimeError,
 )
+from .symbolic_answer import SymbolicCheckResult, SymPyAnswerChecker
 from .source_resolver import (
     ResolvedSource,
     SourceResolutionError,
@@ -156,11 +162,16 @@ __all__ = [
     "SectionLearningRuntimeError",
     "SectionLearningSource",
     "SectionLearningSourceError",
+    "FSRSReviewScheduler",
+    "ScheduledReview",
+    "create_fsrs_review_scheduler",
     "SearchHit",
     "SearchIndexUnavailableError",
     "SearchQueryError",
     "SearchRuntime",
     "SearchRuntimeError",
+    "SymbolicCheckResult",
+    "SymPyAnswerChecker",
     "ResolvedSource",
     "SourceResolutionError",
     "SourceResolver",

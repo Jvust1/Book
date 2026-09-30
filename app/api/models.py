@@ -214,3 +214,18 @@ class QAResponse(BaseModel):
     insufficient_evidence: bool
     message: str | None
     citations: list[QACitationItem]
+
+
+
+class ReviewScheduleRequest(BaseModel):
+    source_id: str = Field(min_length=1, max_length=200)
+    rating: Literal["again", "hard", "good", "easy"]
+
+
+class ReviewScheduleResponse(BaseModel):
+    course_id: str
+    section_id: str
+    source_id: str
+    due: str | None
+    card: dict
+    review_log: dict
