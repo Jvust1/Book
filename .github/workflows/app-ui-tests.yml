@@ -211,6 +211,7 @@ jobs:
             app/web/test-results/zod-learning-*.png
             app/web/test-results/tanstack-reader-cache-*.png
             app/web/pilot-test-results/chapter-*.png
+            app/web/pilot-test-results/session-storage-*.png
           if-no-files-found: ignore
           retention-days: 7
 
