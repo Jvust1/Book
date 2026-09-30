@@ -79,7 +79,7 @@ class BookAppService:
         self._qa_provider: ModelProvider = (
             qa_provider if qa_provider is not None else UnavailableModelProvider()
         )
-        self._retrieval_factory = retrieval_factory or RetrievalEngine.hybrid
+        self._retrieval_factory = retrieval_factory or RetrievalEngine.exact
         try:
             self._library = LibraryRuntime.open(
                 self.repository_root / "library",
@@ -211,10 +211,17 @@ class BookAppService:
             source_refs=[SourceRef(**row) for row in payload["source_refs"]],
         )
 
-    def search(self, course_id: str, query: str, *, limit: int = 30) -> SearchResponse:
+    def search(
+        self,
+        course_id: str,
+        query: str,
+        *,
+        limit: int = 30,
+        fuzzy: bool = False,
+    ) -> SearchResponse:
         course = self._course(course_id)
         try:
-            engine = self._retrieval_factory(course)
+            engine = RetrievalEngine.hybrid(course) if fuzzy else self._retrieval_factory(course)
             hits = engine.search(query, limit=limit)
         except RetrievalQueryError as exc:
             raise InvalidSearchQueryError(
