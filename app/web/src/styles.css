@@ -500,6 +500,7 @@ textarea {
 .local-pdf-source {
   min-width: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
   padding: 22px;
   border: 1px solid #d4d4d8;
@@ -543,3 +544,11 @@ textarea {
 .scratchpad-examples, .scratchpad-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .scratchpad-result pre { max-width: 100%; margin: 10px 0; padding: 14px; border-radius: 10px; background: #f4f4f5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .practice-scratchpad details { overflow-wrap: anywhere; }
+
+.local-pdf-search { margin: 1rem 0; padding: 1rem; border: 1px solid var(--border, #d4d4d8); border-radius: 12px; min-width: 0; }
+.pdf-search-form { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .8rem 0; }
+.pdf-search-form input { max-width: 100%; min-width: 0; padding: .6rem; border: 1px solid #d4d4d8; border-radius: 6px; }
+.pdf-search-results { padding-left: 1.3rem; }
+.pdf-search-results li { margin: .8rem 0; }
+.pdf-search-results p { overflow-wrap: anywhere; white-space: pre-wrap; }
+.pdf-search-results mark { background: #fff1a8; color: #111; }

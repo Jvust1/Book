@@ -1,5 +1,5 @@
 // Original, deterministic PDF test data; no textbook page or external asset.
-export function syntheticPdf(pageCount = 3): Uint8Array {
+export function syntheticPdf(pageCount = 3, pageTexts?: readonly string[]): Uint8Array {
   const pages = Array.from({ length: pageCount }, (_, i) => `${4 + i * 2} 0 R`).join(' ')
   const objects = [
     '<< /Type /Catalog /Pages 2 0 R >>',
@@ -7,7 +7,11 @@ export function syntheticPdf(pageCount = 3): Uint8Array {
     '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
   ]
   for (let i = 0; i < pageCount; i++) {
-    const content = `BT /F1 24 Tf 50 700 Td (Synthetic source pilot page ${i + 1}) Tj ET\n`
+    const text = pageTexts?.[i] ?? `Synthetic source pilot page ${i + 1}`
+    // Keep this small fixture byte-accurate and compatible with Helvetica's ASCII text.
+    if (/[^\x20-\x7e]/.test(text)) throw new Error('Synthetic PDF text must be printable ASCII')
+    const literal = text.replace(/[\\()]/g, '\\$&')
+    const content = `BT /F1 24 Tf 50 700 Td (${literal}) Tj ET\n`
     objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 800] /Resources << /Font << /F1 3 0 R >> >> /Contents ${5 + i * 2} 0 R >>`)
     objects.push(`<< /Length ${content.length} >>\nstream\n${content}endstream`)
   }
