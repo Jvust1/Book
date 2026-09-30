@@ -219,9 +219,10 @@ def search(
     course_id: str,
     q: str = "",
     limit: int = 30,
+    fuzzy: bool = False,
     service: BookAppService = Depends(get_service),
 ) -> SearchResponse:
-    return service.search(course_id, q, limit=limit)
+    return service.search(course_id, q, limit=limit, fuzzy=fuzzy)
 
 
 @app.post(

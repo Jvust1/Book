@@ -211,10 +211,17 @@ class BookAppService:
             source_refs=[SourceRef(**row) for row in payload["source_refs"]],
         )
 
-    def search(self, course_id: str, query: str, *, limit: int = 30) -> SearchResponse:
+    def search(
+        self,
+        course_id: str,
+        query: str,
+        *,
+        limit: int = 30,
+        fuzzy: bool = False,
+    ) -> SearchResponse:
         course = self._course(course_id)
         try:
-            engine = self._retrieval_factory(course)
+            engine = RetrievalEngine.hybrid(course) if fuzzy else self._retrieval_factory(course)
             hits = engine.search(query, limit=limit)
         except RetrievalQueryError as exc:
             raise InvalidSearchQueryError(
