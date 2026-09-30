@@ -6,7 +6,7 @@ const id = z.string().max(512).refine(value => value.trim().length > 0)
 const label = z.string().max(8192)
 const nullableLabel = label.nullable()
 const nullableText = z.string().max(1_000_000).nullable()
-const kind = z.enum(['object', 'figure'])
+const kind = z.enum(['object', 'figure', 'translation'])
 const printedPage = z.union([z.number().int(), z.string().max(256)]).nullable()
 const pdfPage = z.number().int().positive().nullable()
 
@@ -65,7 +65,7 @@ export const searchResponseSchema = z.strictObject({
 function requireMatch(condition: boolean): void { if (!condition) throw new Error('response context mismatch') }
 export function validateSourceResponse(value: unknown, courseId: string, sourceKind: string, sourceId: string): SourceResponse {
   const parsed = sourceResponseSchema.parse(value)
-  requireMatch(parsed.course_id === courseId && parsed.kind === sourceKind && parsed.source_id === sourceId)
+  requireMatch(parsed.course_id === courseId && parsed.kind === sourceKind.trim().toLowerCase() && parsed.source_id === sourceId)
   return parsed
 }
 export function validateSearchResponse(value: unknown, courseId: string, query: string, limit: number): SearchResponse {

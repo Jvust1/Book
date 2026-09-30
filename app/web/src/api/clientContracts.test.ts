@@ -37,6 +37,15 @@ describe('live Search/QA/Source JSON schema and request identity guards', () => 
     mock(source)
     expect(await bookApi.getSource('synthetic_course', 'object', 'source_1')).toEqual(source)
   })
+  it.each(['figure', 'translation'])('preserves supported %s source routes', async kind => {
+    const data = { ...source, kind, type: kind, section_id: kind === 'translation' ? null : source.section_id }
+    mock(data)
+    expect(await bookApi.getSource('synthetic_course', kind, 'source_1')).toEqual(data)
+  })
+  it('matches the backend normalization of a requested source kind', async () => {
+    mock(source)
+    expect(await bookApi.getSource('synthetic_course', ' OBJECT ', 'source_1')).toEqual(source)
+  })
   it.each([
     null, { ...source, course_id: 'other_course' }, { ...source, kind: 'figure' },
     { ...source, pdf_page: 0 }, { ...source, pdf_page: -1 }, { ...source, pdf_page: 1.5 },

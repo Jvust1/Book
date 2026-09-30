@@ -15,7 +15,7 @@ The previous successful-response path performed a TypeScript cast, with no runti
 
 HTTP Search / QA / Source response → bounded streamed UTF-8 JSON → Zod parse → request-context comparison → page state and source links. Cached QA responses use the same Zod contract instead of a separate handwritten response validator.
 
-- Source course/kind/source ID must match the requested route. Search course/query must match; count, sequential ranks, unique source identities and requested limit are checked.
+- Source course/kind/source ID must match the requested route. Existing object, figure and translation kinds are supported; requested kind normalization mirrors the backend resolver. Search course/query must match; count, sequential ranks, unique source identities and requested limit are checked.
 - QA course/question/requested scope must match. Section-scoped citations must identify that section. Generated answers require nonblank text, an answer style and citations; insufficient-evidence notices require no answer/citations and an explicit message. Evidence IDs must be unique.
 - Frozen response shapes reject unknown fields rather than silently stripping possible future/private payloads. PDF pages are positive integers; printed labels can remain integers, Roman numerals or other strings. Text, formulas, anchors and identifiers are not coerced, normalized or rewritten.
 - Source-bearing responses accept `application/json`, decode UTF-8 strictly, and count actual streamed bytes before parsing, up to **2 MiB**. Declared oversize and unexpected content types cancel the body immediately. Existing network request timing is unchanged; this is not a new server timeout or hard memory sandbox.
@@ -35,3 +35,7 @@ This validates structure and request association. It **does not authenticate tex
 - Dependency audit remains **not run**, with inherited CI `--no-audit`. No paid model calls, private asset uploads or canonical textbook edits are introduced.
 
 Stacked on local PDF search PR #63. Independent SymPy safety PR #61 remains separate. No merge, release or deployment is performed.
+
+### Acceptance correction
+
+The initial browser run passed 26/29 cases. Three new assertions incorrectly compared an entire alert (including its existing heading) with just the error message. They now assert both the exact heading and exact error paragraph, retaining all rejection and recovery checks. Compatibility review also preserved existing translation routes and backend-normalized kind inputs, with explicit regression tests.
