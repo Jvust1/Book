@@ -552,3 +552,7 @@ textarea {
 .pdf-search-results li { margin: .8rem 0; }
 .pdf-search-results p { overflow-wrap: anywhere; white-space: pre-wrap; }
 .pdf-search-results mark { background: #fff1a8; color: #111; }
+
+.reader-query-status { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid #d4d4d8; border-radius: 10px; background: #fff; overflow-wrap: anywhere; }
+.reader-query-status p { margin: 0; line-height: 1.6; }
+.reader-query-actions { display: flex; flex-wrap: wrap; gap: 8px; }

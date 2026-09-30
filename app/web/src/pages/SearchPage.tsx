@@ -3,8 +3,10 @@ import type { FormEvent } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { ReaderQueryStatus } from '../components/ReaderQueryStatus'
+import { useReaderSearch } from '../state/readerQueries'
 import { MathContent } from '../components/MathContent'
-import type { CourseResponse, SearchResponse, SearchResultItem } from '../api/types'
+import type { CourseResponse, SearchResultItem } from '../api/types'
 import { loadSearchViewState, saveSearchViewState } from '../state/searchViewState'
 
 const searchErrorMessage = (error: unknown): { message: string; unavailable: boolean } => {
@@ -28,11 +30,13 @@ export function SearchPage() {
   const [input, setInput] = useState(query)
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
-  const [loadedResults, setResults] = useState<SearchResponse | null>(null)
+  const reader = useReaderSearch(courseId ?? '', query)
+  const loadedResults = reader.data
   const results = loadedResults && loadedResults.course_id === courseId && loadedResults.query === query ? loadedResults : null
-  const [loading, setLoading] = useState(false)
-  const [searchError, setSearchError] = useState<string | null>(null)
-  const [unavailable, setUnavailable] = useState(false)
+  const loading = reader.query.isFetching
+  const errorState = reader.query.error ? searchErrorMessage(reader.query.error) : null
+  const searchError = errorState?.message ?? null
+  const unavailable = errorState?.unavailable ?? false
 
   const savedState = courseId ? loadSearchViewState(courseId) : null
   const activeSourceKey = savedState?.query === query ? savedState.activeSourceKey : null
@@ -48,6 +52,7 @@ export function SearchPage() {
     }
     let active = true
     setCourseError(null)
+    setCourse(null)
     bookApi
       .getCourse(courseId)
       .then((value) => {
@@ -61,40 +66,6 @@ export function SearchPage() {
       active = false
     }
   }, [courseId])
-
-  useEffect(() => {
-    if (!courseId || !query) {
-      setResults(null)
-      setSearchError(null)
-      setUnavailable(false)
-      setLoading(false)
-      return
-    }
-
-    let active = true
-    setResults(null)
-    setSearchError(null)
-    setUnavailable(false)
-    setLoading(true)
-    bookApi
-      .searchCourse(courseId, query)
-      .then((value) => {
-        if (!active) return
-        setResults(value)
-        setLoading(false)
-      })
-      .catch((error: unknown) => {
-        if (!active) return
-        const state = searchErrorMessage(error)
-        setSearchError(state.message)
-        setUnavailable(state.unavailable)
-        setLoading(false)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [courseId, query])
 
   useEffect(() => {
     if (!courseId || !results) return
@@ -158,7 +129,10 @@ export function SearchPage() {
         </div>
       ) : null}
 
+      {query ? <ReaderQueryStatus hasData={!!results} fetching={loading} fetchedAfterMount={reader.query.isFetchedAfterMount}
+        updatedAt={reader.query.dataUpdatedAt} failed={!!reader.query.error} refresh={reader.refresh} cancel={reader.cancel} /> : null}
       {loading ? <p role="status">正在搜索教材…</p> : null}
+      {query && !results && !loading && !searchError ? <p role="status">读取已停止，请重新读取</p> : null}
 
       {searchError ? (
         <section className="status-panel" role="alert">

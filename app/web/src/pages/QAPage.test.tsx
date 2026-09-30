@@ -1,3 +1,4 @@
+import { ReaderTestProvider } from '../test/ReaderTestProvider'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
@@ -149,7 +150,7 @@ const SOURCE: SourceResponse = {
 
 function renderQA(initialEntry = '/courses/functional_analysis_course/qa') {
   return render(
-    <MemoryRouter initialEntries={[initialEntry]}>
+    <ReaderTestProvider><MemoryRouter initialEntries={[initialEntry]}>
       <Routes>
         <Route path="/courses/:courseId/qa" element={<QAPage />} />
         <Route
@@ -157,7 +158,7 @@ function renderQA(initialEntry = '/courses/functional_analysis_course/qa') {
           element={<SourcePage />}
         />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter></ReaderTestProvider>,
   )
 }
 
@@ -344,9 +345,9 @@ describe('QAPage', () => {
       const navigate = useNavigate()
       return <button onClick={() => navigate('/courses/other_synthetic_course/qa')}>切换合成课程</button>
     }
-    render(<MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
+    render(<ReaderTestProvider><MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
       <SwitchCourse /><Routes><Route path="/courses/:courseId/qa" element={<QAPage />} /></Routes>
-    </MemoryRouter>)
+    </MemoryRouter></ReaderTestProvider>)
     const user = userEvent.setup()
     await user.type(screen.getByRole('textbox', { name: '教材问题' }), 'Original pending question?')
     await user.click(screen.getByRole('button', { name: '提问' }))

@@ -1,3 +1,4 @@
+import { ReaderTestProvider } from '../test/ReaderTestProvider'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
@@ -66,7 +67,7 @@ function LocationProbe() {
 
 function renderSearch(initial = '/courses/functional_analysis_course/search') {
   return render(
-    <MemoryRouter initialEntries={[initial]}>
+    <ReaderTestProvider><MemoryRouter initialEntries={[initial]}>
       <Routes>
         <Route path="/courses/:courseId/search" element={<SearchPage />} />
         <Route
@@ -74,7 +75,7 @@ function renderSearch(initial = '/courses/functional_analysis_course/search') {
           element={<LocationProbe />}
         />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter></ReaderTestProvider>,
   )
 }
 
@@ -102,6 +103,7 @@ describe('SearchPage', () => {
     expect(bookApi.searchCourse).toHaveBeenCalledWith(
       'functional_analysis_course',
       'Hölder',
+      30, expect.any(AbortSignal),
     )
     expect(screen.getByText('theorem · 1.1')).toBeInTheDocument()
     expect(screen.getByText('教材页：3')).toBeInTheDocument()
@@ -178,6 +180,7 @@ describe('SearchPage', () => {
       expect(bookApi.searchCourse).toHaveBeenCalledWith(
         'functional_analysis_course',
         'Banach space',
+        30, expect.any(AbortSignal),
       )
     })
   })

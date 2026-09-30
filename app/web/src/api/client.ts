@@ -72,7 +72,10 @@ async function request<T>(path: string, init: RequestInit = {}, validate?: (valu
 
   if (validate) {
     try { return validate(await readBoundedJson(response)) }
-    catch { throw new ApiError('教材响应校验失败，请刷新后重试', response.status, 'invalid_response') }
+    catch {
+      if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+      throw new ApiError('教材响应校验失败，请刷新后重试', response.status, 'invalid_response')
+    }
   }
   return (await response.json()) as T
 }
@@ -142,14 +145,14 @@ export const bookApi = {
     return request<StudyRecord | null>('/api/study/recent')
   },
 
-  searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {
+  searchCourse(courseId: string, query: string, limit = 30, signal?: AbortSignal): Promise<SearchResponse> {
     const params = new URLSearchParams({
       q: query,
       limit: String(limit),
     })
     return request<SearchResponse>(
       `/api/courses/${segment(courseId)}/search?${params.toString()}`,
-      {}, value => validateSearchResponse(value, courseId, query, limit),
+      { signal }, value => validateSearchResponse(value, courseId, query, limit),
     )
   },
 
@@ -161,10 +164,10 @@ export const bookApi = {
     }, value => validateQAResponse(value, courseId, qaRequest))
   },
 
-  getSource(courseId: string, kind: string, sourceId: string): Promise<SourceResponse> {
+  getSource(courseId: string, kind: string, sourceId: string, signal?: AbortSignal): Promise<SourceResponse> {
     return request<SourceResponse>(
       `/api/courses/${segment(courseId)}/sources/${segment(kind)}/${segment(sourceId)}`,
-      {}, value => validateSourceResponse(value, courseId, kind, sourceId),
+      { signal }, value => validateSourceResponse(value, courseId, kind, sourceId),
     )
   },
 }

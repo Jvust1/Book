@@ -1,9 +1,12 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { ReaderTestProvider } from '../test/ReaderTestProvider'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { bookApi } from '../api/client'
+import { ReaderQueryProvider } from '../state/ReaderQueryProvider'
+import { createReaderQueryClient } from '../state/readerQueries'
+import { ApiError, bookApi } from '../api/client'
 import type { QAResponse, SourceResponse } from '../api/types'
 import { saveQASessionState } from '../state/qaSessionState'
 import { saveSearchViewState } from '../state/searchViewState'
@@ -96,7 +99,7 @@ function LocationProbe() {
 
 function renderSource() {
   return render(
-    <MemoryRouter
+    <ReaderTestProvider><MemoryRouter
       initialEntries={[
         '/courses/functional_analysis_course/sources/object/def_lp',
       ]}
@@ -114,14 +117,14 @@ function renderSource() {
         <Route path="/courses/:courseId/qa" element={<LocationProbe />} />
         <Route path="/courses/:courseId" element={<LocationProbe />} />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter></ReaderTestProvider>,
   )
 }
 
 describe('SourcePage', () => {
   beforeEach(() => {
     sessionStorage.clear()
-    vi.mocked(bookApi.getSource).mockResolvedValue(SOURCE)
+    vi.mocked(bookApi.getSource).mockReset().mockResolvedValue(SOURCE)
   })
 
   it('renders exact source pages, nullable anchor fallback, and surrounding context', async () => {
@@ -234,4 +237,65 @@ describe('SourcePage', () => {
       )
     })
   })
+  it('labels cached source data during a network interruption and retries explicitly', async () => {
+    const cached = { ...SOURCE, content_zh: 'LOCAL_ONLY_CACHE_VALUE' }
+    vi.mocked(bookApi.getSource).mockResolvedValueOnce(cached).mockRejectedValueOnce(new TypeError('network down'))
+    renderSource()
+    await screen.findByText('LOCAL_ONLY_CACHE_VALUE')
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByText('网络中断，当前显示本次会话缓存；内容可能已更新。')).toBeInTheDocument()
+    expect(screen.getByText('LOCAL_ONLY_CACHE_VALUE')).toBeInTheDocument()
+    expect(JSON.stringify(sessionStorage)).not.toContain('LOCAL_ONLY_CACHE_VALUE')
+    expect(JSON.stringify(localStorage)).not.toContain('LOCAL_ONLY_CACHE_VALUE')
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByText(SOURCE.content_zh!)).toBeInTheDocument()
+    expect(screen.queryByText('LOCAL_ONLY_CACHE_VALUE')).not.toBeInTheDocument()
+  })
+
+  it('hides cached source content and the local PDF panel after schema or authorization rejection', async () => {
+    vi.mocked(bookApi.getSource).mockResolvedValueOnce(SOURCE)
+      .mockRejectedValueOnce(new ApiError('invalid source', 200, 'invalid_response'))
+      .mockRejectedValueOnce(new ApiError('source forbidden', 403, 'forbidden'))
+    renderSource(); await screen.findByText(SOURCE.content_zh!)
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('invalid source')
+    expect(screen.queryByText(SOURCE.content_zh!)).not.toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: '本地 PDF 来源预览' })).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('source forbidden')
+    expect(screen.queryByText(SOURCE.content_zh!)).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByText(SOURCE.content_zh!)).toBeInTheDocument()
+  })
+
+  it('cancels an initial read, ignores its late response and recovers', async () => {
+    let signal!: AbortSignal; let finish!: (value: SourceResponse) => void
+    vi.mocked(bookApi.getSource).mockImplementationOnce((_course, _kind, _id, incoming) => {
+      signal = incoming!; return new Promise(resolve => { finish = resolve })
+    })
+    renderSource()
+    await userEvent.click(await screen.findByRole('button', { name: '取消读取' }))
+    expect(signal.aborted).toBe(true)
+    expect(await screen.findByText('读取已停止，请重新读取')).toBeInTheDocument()
+    await act(async () => finish({ ...SOURCE, content_zh: 'ABANDONED_RESULT' }))
+    expect(screen.queryByText('ABANDONED_RESULT')).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: '重新读取' }))
+    expect(await screen.findByText(SOURCE.content_zh!)).toBeInTheDocument()
+  })
+
+  it('aborts on production-provider unmount without relying on the test wrapper cleanup', async () => {
+    let signal!: AbortSignal
+    vi.mocked(bookApi.getSource).mockImplementationOnce((_course, _kind, _id, incoming) => {
+      signal = incoming!; return new Promise(() => {})
+    })
+    const client = createReaderQueryClient(Infinity)
+    const view = render(<ReaderQueryProvider client={client}><MemoryRouter initialEntries={['/courses/functional_analysis_course/sources/object/def_lp']}>
+      <Routes><Route path="/courses/:courseId/sources/:kind/:sourceId" element={<SourcePage />} /></Routes>
+    </MemoryRouter></ReaderQueryProvider>)
+    await screen.findByRole('button', { name: '取消读取' })
+    view.unmount()
+    expect(signal.aborted).toBe(true)
+    client.clear()
+  })
+
 })

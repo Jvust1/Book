@@ -102,3 +102,27 @@ describe('live Search/QA/Source JSON schema and request identity guards', () => 
     await expect(bookApi.getSource('synthetic_course', 'object', 'source_1')).rejects.toMatchObject(invalid)
   })
 })
+
+
+describe('reader request cancellation transport', () => {
+  it('passes the exact AbortSignal to Source and Search fetches', async () => {
+    const signal = new AbortController().signal
+    const fetchMock = vi.fn().mockResolvedValueOnce(reply(source)).mockResolvedValueOnce(reply(search))
+    vi.stubGlobal('fetch', fetchMock)
+    await bookApi.getSource('synthetic_course', 'object', 'source_1', signal)
+    await bookApi.searchCourse('synthetic_course', 'original', 30, signal)
+    expect(fetchMock.mock.calls.every(([, init]) => init.signal === signal)).toBe(true)
+  })
+  it('preserves a body-read AbortError instead of relabeling it as malformed source data', async () => {
+    const controller = new AbortController()
+    let sink!: ReadableStreamDefaultController<Uint8Array>
+    const stream = new ReadableStream<Uint8Array>({ start(value) { sink = value } })
+    vi.stubGlobal('fetch', vi.fn(async (_url, init: RequestInit) => {
+      init.signal!.addEventListener('abort', () => sink.error(new DOMException('Cancelled', 'AbortError')), { once: true })
+      return new Response(stream, { headers: { 'content-type': 'application/json' } })
+    }))
+    const pending = bookApi.getSource('synthetic_course', 'object', 'source_1', controller.signal)
+    const rejected = expect(pending).rejects.toMatchObject({ name: 'AbortError' })
+    await Promise.resolve(); controller.abort(); await rejected
+  })
+})
