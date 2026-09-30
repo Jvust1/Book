@@ -1,4 +1,4 @@
-from .semantic_retrieval import (
+from .faiss_semantic_index import FaissSemanticIndex, create_faiss_semantic_index\nfrom .semantic_retrieval import (
     SemanticHit,
     SentenceTransformerSemanticIndex,
     create_sentence_transformer_index,
