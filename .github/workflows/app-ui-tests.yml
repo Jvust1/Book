@@ -212,6 +212,7 @@ jobs:
             app/web/test-results/tanstack-reader-cache-*.png
             app/web/pilot-test-results/chapter-*.png
             app/web/pilot-test-results/session-storage-*.png
+            app/web/pilot-test-results/study-receipt-*.png
           if-no-files-found: ignore
           retention-days: 7
 

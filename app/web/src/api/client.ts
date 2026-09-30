@@ -1,3 +1,4 @@
+import { STUDY_RECEIPT_MESSAGE, validateCourseStudyRecords, validateRecentStudy, validateStudyReceipt } from './studyContracts'
 import { validateModeResponse, validateSectionResponse } from './learningContracts'
 import { readBoundedJson } from './boundedJson'
 import { validateQAResponse, validateSearchResponse, validateSourceResponse } from './sourceContracts'
@@ -37,7 +38,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}, validate?: (value: unknown) => T): Promise<T> {
+async function request<T>(path: string, init: RequestInit = {}, validate?: (value: unknown) => T, validationMessage = '教材响应校验失败，请刷新后重试'): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json' }
   if (init.headers) {
     new Headers(init.headers).forEach((value, key) => {
@@ -75,7 +76,7 @@ async function request<T>(path: string, init: RequestInit = {}, validate?: (valu
     try { return validate(await readBoundedJson(response)) }
     catch {
       if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
-      throw new ApiError('教材响应校验失败，请刷新后重试', response.status, 'invalid_response')
+      throw new ApiError(validationMessage, response.status, 'invalid_response')
     }
   }
   return (await response.json()) as T
@@ -123,7 +124,7 @@ export const bookApi = {
   ): Promise<StudyRecord> {
     return request<StudyRecord>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/touch`,
-      { method: 'POST' },
+      { method: 'POST' }, value => validateStudyReceipt(value, courseId, sectionId, mode), STUDY_RECEIPT_MESSAGE,
     )
   },
 
@@ -134,18 +135,19 @@ export const bookApi = {
   ): Promise<StudyRecord> {
     return request<StudyRecord>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/complete`,
-      { method: 'POST' },
+      { method: 'POST' }, value => validateStudyReceipt(value, courseId, sectionId, mode, { completed: true }), STUDY_RECEIPT_MESSAGE,
     )
   },
 
   getCourseStudyRecords(courseId: string): Promise<StudyRecordListResponse> {
     return request<StudyRecordListResponse>(
       `/api/courses/${segment(courseId)}/study-records`,
+      {}, value => validateCourseStudyRecords(value, courseId), STUDY_RECEIPT_MESSAGE,
     )
   },
 
   getRecentStudy(): Promise<StudyRecord | null> {
-    return request<StudyRecord | null>('/api/study/recent')
+    return request<StudyRecord | null>('/api/study/recent', {}, validateRecentStudy, STUDY_RECEIPT_MESSAGE)
   },
 
   searchCourse(courseId: string, query: string, limit = 30, signal?: AbortSignal): Promise<SearchResponse> {

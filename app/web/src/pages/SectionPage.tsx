@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { validateStudyReceipt } from '../api/studyContracts'
 import type {
   LearningMode,
   ModeResponse,
@@ -15,7 +16,7 @@ import { PracticeScratchpad } from '../components/PracticeScratchpad'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
-const STUDY_SAVE_FALLBACK = '学习进度暂无法保存'
+const STUDY_SAVE_FALLBACK = '学习进度保存结果尚未确认，请重试或刷新核对'
 
 type StudyRetryAction = 'touch' | 'complete'
 
@@ -133,7 +134,8 @@ export function SectionPage() {
       setStudyError(null)
       setStudyRetryAction(null)
       try {
-        const record = await bookApi.touchStudy(courseId, sectionId, mode)
+        const record = validateStudyReceipt(await bookApi.touchStudy(courseId, sectionId, mode),
+          courseId, sectionId, mode, { bookId: section?.book_id })
         if (activeStudyKeyRef.current === expectedStudyKey) {
           setStudyRecord(record)
         }
@@ -148,7 +150,7 @@ export function SectionPage() {
         }
       }
     },
-    [courseId, mode, sectionId],
+    [courseId, mode, sectionId, section?.book_id],
   )
 
   useEffect(() => {
@@ -229,7 +231,8 @@ export function SectionPage() {
       setStudyError(null)
       setStudyRetryAction(null)
       try {
-        const record = await bookApi.completeStudy(courseId, sectionId, mode)
+        const record = validateStudyReceipt(await bookApi.completeStudy(courseId, sectionId, mode),
+          courseId, sectionId, mode, { bookId: section?.book_id, completed: true })
         if (activeStudyKeyRef.current === expectedStudyKey) {
           setStudyRecord(record)
         }
@@ -244,7 +247,7 @@ export function SectionPage() {
         }
       }
     },
-    [courseId, mode, sectionId, studyRecord?.status],
+    [courseId, mode, sectionId, section?.book_id, studyRecord?.status],
   )
 
   const retryStudySave = () => {
@@ -320,9 +323,7 @@ export function SectionPage() {
           {studyRecord ? (
             <div className="study-progress-summary">
               <p>
-                {studyRecord.status === 'completed'
-                  ? '学习进度：已完成'
-                  : '学习进度：进行中'}
+                {studyError || completionSaving || studySaving ? '上次确认进度：' : '学习进度：'}{studyRecord.status === 'completed' ? '已完成' : '进行中'}
               </p>
               {studyRecord.status !== 'completed' ? (
                 <button
@@ -341,7 +342,7 @@ export function SectionPage() {
 
           {studyError ? (
             <div className="study-progress-warning" role="status">
-              <p>学习内容仍可正常查看。学习进度暂未保存。</p>
+              <p>学习内容仍可正常查看。学习进度保存结果尚未确认。</p>
               <p className="secondary-text">{studyError}</p>
               <button
                 className="secondary-button"
