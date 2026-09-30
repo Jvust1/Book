@@ -1,3 +1,4 @@
+from .faiss_semantic_index import FaissSemanticIndex, create_faiss_semantic_index
 from .docling_ingest import DoclingIngestResult, DoclingIngestor, create_docling_ingestor
 from .semantic_retrieval import (
     SemanticHit,
@@ -103,6 +104,8 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "FaissSemanticIndex",
+    "create_faiss_semantic_index",
     "DoclingIngestResult",
     "DoclingIngestor",
     "create_docling_ingestor",
