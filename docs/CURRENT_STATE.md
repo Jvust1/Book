@@ -1,16 +1,16 @@
 # Book 当前状态
 
-更新时间：2026-08-29
+更新时间：2026-09-30
 
-> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 与 H0/H1/H2/H3a 均已通过独立 PR 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
+> 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 与 H0/H1/H2/H3a/H4a 均已通过独立 PR 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
 
 ## 1. 当前工程状态
 
 - Repository：`Jvust1/Book`
 - 稳定集成分支：`main`
-- 当前阶段：`FOUNDATION_B_TRANSITION`
-- 当前状态：`H3A_MERGED_READY_FOR_H4A`
-- 当前 `main`：`3c5585b0c5c27d336473a4dfa59ca675097216fd`
+- 当前阶段：`PHASE_1H_PREPARATION`
+- 当前状态：`H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING`
+- 当前 `main`：`4f20999a94f90e8f1ed8ff09e0ee98b81248a63d`
 - Phase 1F：已合并到 `main`
 - Phase 1G design：`docs/superpowers/specs/2026-08-28-study-record-phase-1g-design.md`
 - Phase 1G implementation plan：`docs/superpowers/plans/2026-08-28-study-record-phase-1g.md`
@@ -29,7 +29,8 @@
 - H1 internal source provenance：PR `#19`，reviewed head `a225f899fb93faca22c2b1f9ad0c2b1ae2a2fed2`，merge `7e54e87b9674455e9f3d275016313f6c9e2487ac`
 - H2 Exact-only shared Retrieval seam：PR `#20`，reviewed head `66ac966c5dfe59ebeea82b168b2ee67fc85f9474`，merge `410cede92bcc0783e4fca9b02faec79e5fe77112`
 - H3a deterministic Concept graph contract：PR `#21`，reviewed head `1ed4fc6574417b56b4342ae639f81a69dd842c6b`，merge `f69166568839b7038b0f0472baefcee34299fa17`
-- Runtime/App consumer migration：Foundation A 明确不在范围内；H0–H3a 也未做公开多教材迁移
+- H4a shadow FTS5/BM25 evaluation：PR `#23`，reviewed head `497d7371e4141dfa6d5a87d21399dd11f5fdd92c`，merge `f9814d4287846e4eb187852ccccd5fc1ad63162f`；public Search/QA 保持 Exact-only
+- Runtime/App consumer migration：Foundation A 明确不在范围内；H0–H4a 也未做公开多教材迁移
 
 当前跨阶段正式架构文档：
 
@@ -38,15 +39,15 @@
 - `docs/DEVELOPMENT_STRATEGY.md`
 - `docs/LEARNING_INTELLIGENCE_ARCHITECTURE.md`
 
-### 已批准依赖顺序与当前进度（2026-08-29）
+### 已批准依赖顺序与当前进度（2026-09-30）
 
 ```text
 H0 neutral Book identity                         COMPLETE_MERGED
 → H1 internal source provenance                  COMPLETE_MERGED
 → H2 Exact-only shared Retrieval seam            COMPLETE_MERGED
 → H3a Concept/ConceptAlignment contract          COMPLETE_MERGED
-→ H4a shadow FTS5/BM25 evaluation                NEXT
-→ Phase 1H user-visible slices                   AFTER_H4A
+→ H4a shadow FTS5/BM25 evaluation                COMPLETE_MERGED
+→ Phase 1H user-visible slices                   NEXT
 ```
 
 这是对历史 Roadmap 执行顺序的已批准依赖例外，不追溯改写历史路线图。`H3b`、`B4b`、`B5` 与 StudyRecord book-version migration 仍需以后分别重新设计批准。H4a 本身也不改变 public Search 的 Exact-only 行为。
@@ -70,6 +71,27 @@ audit PASS 20 / WARN 1 / FAIL 0
 Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改 `books/functional-analysis/**` canonical 教材资产；教材事实层与个人学习状态、生成包输出保持单向边界。H0–H3a 同样没有重写 canonical 教材事实。
 
 这本教材已经被 Foundation A 固化为 Golden Course / Reference Course，用于 Course Package、Runtime、App、搜索、QA、StudyRecord 及后续能力的自动回归基准。
+
+### 2.1 2026-09-30 阅读/导出层成果
+
+已在 Google Drive 完成并回读核验 6 本教材的 10px 清爽阅读版：
+
+- 泛函分析（江泽坚、孙善利）
+- 数学物理方程（第四版）
+- 公共财政概论（第二版）
+- 金融经济学十讲
+- 货币金融学（第三版）
+- 当代中国经济
+
+每本均包含预习 / 学习 / 复习 / 刷题四本全书 PDF 与一个四件套 ZIP，共 **30 个成品对象**。统一目标正文 10px；清理脚注、来源/出处、页眉页脚、AI/官方答案标签、布局/证据等管理性小字；保留公式所需上下标与学习正文。旧 v5/12px 版本不覆盖。
+
+详细记录：
+
+- `docs/artifacts/2026-09-30-10px-clean-reading-pdfs.md`
+- `governance/reading_artifacts_20260930.json`
+- `governance/artifact_manifest.json`
+
+这些成果属于阅读/导出层，不表示 Runtime 已自动注册这些教材，也不改变 canonical 教材事实层。
 
 ## 3. 已完成产品能力
 
@@ -148,13 +170,14 @@ Phase 1G 产品状态实现和 Foundation A Course Package 实现都没有修改
 - FAST / PR FULL / manual HEAVY 三层 CI 已接线
 - App 仍消费既有 Runtime；Foundation A 未迁移 Runtime/App consumer
 
-### Foundation B transition — H0–H3a
+### Foundation B transition — H0–H4a
 
 - H0：neutral `BookIdentity` 与 canonical role owner，保持 legacy product behavior
 - H1：内部 `SourceIdentity` / provenance seam，冻结公开 Search/Source/QA DTO 与浏览器 persistence shapes
 - H2：Search 与 QA evidence candidate retrieval 共用 internal Exact-only Retrieval seam，保持原排名/分数/顺序/错误语义
 - H3a：纯 stdlib inert Concept/ConceptAlignment/ConceptGraph v1 contract、JSON Schema、确定性 canonical JSON / cycle diagnostics、repository-bound reference validation
 - H3a source-bearing non-main alignment 仍 fail closed；没有真实 Concept dataset，也没有 Search/QA/App/StudyRecord 激活
+- H4a：完成 shadow-only FTS5/BM25 evaluation；未改变 public Search/QA。证据结论为 FTS 候选在当前 Golden query set 上没有显示出优于 Exact baseline 的激活理由，因此不进入生产排名。
 
 ## 4. Phase 1G API / storage contract
 
@@ -426,7 +449,7 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 - Course Package v2 / 后续 schema evolution 与 migration policy
 - 同 Course 多教材 Runtime consumer activation 与真实 ConceptAlignment 数据集
 - Architecture Fitness 对 raw audio / transcript / Meeting / ExamPoint / Sync 等未来模块的完整集合
-- FTS5/BM25/semantic 等 Retrieval 扩展的公开激活；H2 仅完成 Exact seam，H4a shadow evaluation 尚未实现
+- FTS5/BM25/semantic 等 Retrieval 扩展的公开激活；H4a shadow evaluation 已完成，但当前证据不支持把 FTS/BM25 激活为生产排名
 - 生产 Minimal Concept Graph dataset / Concept 360 UI；H3a 仅完成 inert contract/reference validation
 - Chapter Hub / 思维导图
 - ExamPoint / Exam Sprint / Exam Digital Twin
@@ -441,13 +464,10 @@ Meeting 与 Course/Book/Section 独立，默认私有。可复用 Audio/VAD/ASR/
 
 ## 16. 当前唯一下一步
 
-H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow FTS5/BM25 evaluation**。PR #17 已集成，现仅作为历史治理证据，不再构成新的前置开发阶段。
+H0 → H1 → H2 → H3a → H4a 已完成并合并。当前下一阶段是 **Phase 1H user-visible learning-slice 的设计/实现计划准备**。
 
-1. H4a 只做 shadow evaluation：构建/比较 FTS5/BM25 候选与现有 Exact baseline，不改变 public Search/QA 排名与返回行为。
-2. H4a 必须定义确定性 query/dataset、覆盖率/排名比较指标、provenance 校验、失败语义与 exact-HEAD regression evidence。
-3. H4a 应复用 H2 shared Retrieval boundary，不绕过现有 Exact baseline 或来源身份链路。
-4. 不修改 `books/functional-analysis/**` canonical 教材事实。
-5. 使用非默认分支、TDD、reviewable PR、exact-HEAD verification；具体 PR 合并仍需用户明确指向该 PR 授权。
-6. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 不在本轮批准范围内。
-
-当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
+1. 在非默认分支上准备 Phase 1H 的设计与 implementation plan，并明确用户可见学习切片的最小闭环、数据边界与验收标准。
+2. public Search/QA 继续保持 Exact-only；H4a 结果仅作为 shadow evaluation 证据，不自动激活 FTS/BM25 排名。
+3. 不修改 Golden Course canonical 教材事实层；10px 清爽版继续作为阅读/导出层成果独立管理。
+4. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 仍是独立人工 gate，未经明确批准不提前实现。
+5. 录音、Drive Sync、Meeting、ExamPoint、Mastery、Next Best Action 等后续能力不因本次阅读成果同步而自动进入实现状态。
