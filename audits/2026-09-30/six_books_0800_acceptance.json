@@ -1,0 +1,37 @@
+{
+  "schema_version": "book_daily_acceptance_v1",
+  "date": "2026-09-30",
+  "base_main": "4f20999a94f90e8f1ed8ff09e0ee98b81248a63d",
+  "status": "PARTIAL_PASS",
+  "daily_audits": {
+    "expected": 6,
+    "evidenced": 4,
+    "missing_slots": [
+      "03:00",
+      "07:00"
+    ]
+  },
+  "branches": {
+    "02:00": "011cab2ae4accda1136f191bd24afebbfab67fda",
+    "04:00": "09cc2ae5ff60601ce0b13e16d87f7ecb5eb6dd33",
+    "05:00": "c016b8f1bfe5dcaa188b041be75263d43eca6ce8",
+    "06:00": "b365a0319050c063029b7b02024b8cb2f6a738f8"
+  },
+  "drive": {
+    "complete_slots": [
+      "06:00"
+    ],
+    "partial_slots": [
+      "02:00",
+      "04:00",
+      "05:00"
+    ],
+    "missing_slots": [
+      "03:00",
+      "07:00"
+    ]
+  },
+  "cross_book_conflicts_found": 0,
+  "main_modified": false,
+  "main_merged": false
+}
