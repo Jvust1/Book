@@ -1,0 +1,53 @@
+{
+  "schema_version": "book_reading_artifact_manifest_v1",
+  "updated_at": "2026-09-30",
+  "repository": "Jvust1/Book",
+  "artifact_class": "10px_clean_reading_pdfs",
+  "source_layer": "existing_v5_reading_exports",
+  "canonical_textbook_mutation": false,
+  "drive_is_artifact_store": true,
+  "rules": {
+    "body_font_target_px": 10,
+    "preserve_formula_subscripts_superscripts": true,
+    "remove_reading_noise": [
+      "footnotes",
+      "page_footers",
+      "page_headers",
+      "source_notes",
+      "provenance_notes",
+      "evidence_pack_notes",
+      "layout_notes",
+      "ai_answer_labels",
+      "official_answer_disclaimers",
+      "publisher_cip_price_frontmatter_when_non_learning"
+    ],
+    "preserve_learning_content": true,
+    "overwrite_previous_versions": false
+  },
+  "textbooks": [
+    {
+      "id": "functional_analysis",
+      "title": "泛函分析（江泽坚、孙善利）",
+      "status": "COMPLETE",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+    },
+    {
+      "id": "math_physics_equations_4e",
+      "title": "数学物理方程（第四版）",
+      "status": "COMPLETE",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+    },
+    {
+      "id": "monetary_finance_3e",
+      "title": "货币金融学（第三版）",
+      "status": "COMPLETE",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+    },
+    {
+      "id": "contemporary_china_economy",
+      "title": "当代中国经济",
+      "status": "COMPLETE",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930/"
+    }
+  ]
+}
