@@ -1,3 +1,4 @@
+from .docling_ingest import DoclingIngestResult, DoclingIngestor, create_docling_ingestor
 from .semantic_retrieval import (
     SemanticHit,
     SentenceTransformerSemanticIndex,
@@ -102,6 +103,9 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "DoclingIngestResult",
+    "DoclingIngestor",
+    "create_docling_ingestor",
     "SemanticHit",
     "SentenceTransformerSemanticIndex",
     "create_sentence_transformer_index",
