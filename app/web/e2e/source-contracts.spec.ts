@@ -89,7 +89,7 @@ test('wrong-course search results fail closed and a new query restores source na
   await expect(page.getByRole('alert').getByRole('heading', { name: '搜索失败', exact: true })).toBeVisible()
   await expect(page.getByRole('alert').locator('p')).toHaveText(errorMessage)
   await expect(page.locator('.search-results')).toHaveCount(0)
-  await page.getByRole('textbox', { name: '教材搜索词' }).fill('valid')
+  await page.getByRole('searchbox', { name: '教材搜索词' }).fill('valid')
   await page.getByRole('button', { name: '搜索', exact: true }).click()
   const link = page.locator('.search-results').getByRole('link', { name: '查看教材来源' })
   await expect(link).toHaveAttribute('href', `/courses/${course}/sources/object/${sourceId}`)
