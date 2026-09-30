@@ -102,6 +102,8 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "FaissSemanticIndex",
+    "create_faiss_semantic_index",
     "SemanticHit",
     "SentenceTransformerSemanticIndex",
     "create_sentence_transformer_index",
