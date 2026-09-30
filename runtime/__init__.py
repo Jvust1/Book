@@ -76,6 +76,11 @@ from .section_learning_runtime import (
     SectionLearningSource,
     SectionLearningSourceError,
 )
+from .review_scheduler import (
+    FSRSReviewScheduler,
+    ScheduledReview,
+    create_fsrs_review_scheduler,
+)
 from .search_runtime import (
     SearchHit,
     SearchIndexUnavailableError,
@@ -156,6 +161,9 @@ __all__ = [
     "SectionLearningRuntimeError",
     "SectionLearningSource",
     "SectionLearningSourceError",
+    "FSRSReviewScheduler",
+    "ScheduledReview",
+    "create_fsrs_review_scheduler",
     "SearchHit",
     "SearchIndexUnavailableError",
     "SearchQueryError",
