@@ -37,7 +37,7 @@ npx playwright install chromium
 npm run e2e -- --config playwright.pilot.config.ts
 ```
 
-The four pilot cases include the connected reader workflow on desktop and narrow screens, blocked sessionStorage and quota exhaustion. The default `npm run e2e` configuration is not a full textbook acceptance suite in this reduced package. No canonical textbook fixtures are included. The test API uses temporary SQLite storage and deletes it on graceful shutdown; it is not a deployment or a permanent study database.
+The five serial pilot cases include the connected reader workflow on desktop and narrow screens, blocked sessionStorage, quota exhaustion and recovery after an invalid progress receipt despite a real SQLite commit. Restart the temporary API before repeating the complete browser pilot to reset its original study records. The default `npm run e2e` configuration is not a full textbook acceptance suite in this reduced package. No canonical textbook fixtures are included. The test API uses temporary SQLite storage and deletes it on graceful shutdown; it is not a deployment or a permanent study database.
 
 ## Verify and reproduce the source archive
 
