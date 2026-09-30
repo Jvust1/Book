@@ -18,6 +18,7 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
   const [rendering, setRendering] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [pageText, setPageText] = useState('')
+  const [textExpanded, setTextExpanded] = useState(false)
   const hostRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
     let current: LoadedLocalPdf | null = null
     const controller = new AbortController()
     setPdf(null)
+    setTextExpanded(false)
     setPageNumber(null)
     setPageText('')
     setLoading(true)
@@ -97,6 +99,7 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
   const close = () => {
     setFile(null)
     setPdf(null)
+    setTextExpanded(false)
     setPageNumber(null)
     setPageText('')
     setError(null)
@@ -153,7 +156,7 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
       {error ? <p role="alert">{error}</p> : null}
       <div className="local-pdf-canvas" ref={hostRef} />
       {pdf && pageNumber !== null && !rendering && !error ? (
-        <details className="pdf-text"><summary>本页可提取文本（辅助，最多 50,000 字符）</summary><p>{pageText || '本页无可提取文本，可能是扫描图像。此处没有自动 OCR。'}</p></details>
+        <details className="pdf-text" open={textExpanded} onToggle={event => setTextExpanded(event.currentTarget.open)}><summary>本页可提取文本（辅助，最多 50,000 字符）</summary><p>{pageText || '本页无可提取文本，可能是扫描图像。此处没有自动 OCR。'}</p></details>
       ) : null}
     </section>
   )
