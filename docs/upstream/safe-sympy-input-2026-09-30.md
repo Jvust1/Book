@@ -43,5 +43,6 @@ The diagnostic returns schema `symbolic_diagnostic_v1`, normalized expressions, 
 
 - The original three fake-arithmetic tests remain, plus focused adversarial boundary, worker-protocol, real polynomial/trigonometric/exact-decimal, undefined/domain and CLI tests.
 - Dedicated exact-head CI installs the pinned engine and exercises the real default worker on Ubuntu/Python 3.13 and Windows/Python 3.11, alongside existing repository CI.
+- An actual deliberately slow test child is timed out and reaped, the parent PID survives and can run another real comparison, and supported parent resource-limit settings remain unchanged.
 - Test-method counts and final pass/fail outcomes are reported with the PR/CI run; subcases are not inflated into extra independent tests.
 - No canonical textbook assets, source records, online provider calls, new secrets, automatic grades or native release artifacts are introduced.

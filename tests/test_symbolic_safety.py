@@ -1,5 +1,8 @@
 import importlib.util
 import json
+import os
+import tempfile
+import time
 import subprocess
 import sys
 from pathlib import Path
@@ -126,6 +129,41 @@ class RealSymPyWorkerTests(unittest.TestCase):
                 result = self.checker.check(left, right)
                 self.assertIsNone(result.equivalent, result)
                 self.assertEqual(result.reason, "undefined_expression")
+
+    def test_real_timeout_reaps_only_the_child_and_parent_remains_usable(self):
+        original_popen = subprocess.Popen
+        children = []
+        def capture(*args, **kwargs):
+            process = original_popen(*args, **kwargs)
+            children.append(process)
+            return process
+        parent_pid = os.getpid()
+        with tempfile.TemporaryDirectory() as directory:
+            worker = Path(directory) / "slow_worker.py"
+            worker.write_text("import time; time.sleep(10)\n", encoding="utf-8")
+            checker = SymPyAnswerChecker(timeout_seconds=0.1)
+            started = time.monotonic()
+            with patch("runtime.symbolic_answer.Path") as path, patch("subprocess.Popen", side_effect=capture):
+                path.return_value.with_name.return_value = worker
+                result = checker.check("1", "1")
+            self.assertEqual(result.reason, "symbolic_timeout")
+            self.assertLess(time.monotonic() - started, 8)
+            self.assertEqual(len(children), 1)
+            self.assertNotEqual(children[0].pid, parent_pid)
+            self.assertIsNotNone(children[0].poll(), "timed-out child must be reaped")
+        self.assertEqual(os.getpid(), parent_pid)
+        self.assertIs(self.checker.check("1", "1").equivalent, True)
+
+    def test_worker_resource_limits_do_not_mutate_parent_limits(self):
+        try:
+            import resource
+            keys = (resource.RLIMIT_CPU, resource.RLIMIT_AS)
+            before = [resource.getrlimit(key) for key in keys]
+        except (ImportError, AttributeError):
+            resource, keys, before = None, (), None
+        self.assertIs(self.checker.check("1", "1").equivalent, True)
+        if resource is not None:
+            self.assertEqual([resource.getrlimit(key) for key in keys], before)
 
     def test_cli_runs_real_comparison_without_claiming_a_grade(self):
         root = Path(__file__).resolve().parents[1]
