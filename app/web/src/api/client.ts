@@ -1,3 +1,4 @@
+import { validateModeResponse, validateSectionResponse } from './learningContracts'
 import { readBoundedJson } from './boundedJson'
 import { validateQAResponse, validateSearchResponse, validateSourceResponse } from './sourceContracts'
 import type {
@@ -100,6 +101,7 @@ export const bookApi = {
   getSection(courseId: string, sectionId: string): Promise<SectionResponse> {
     return request<SectionResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}`,
+      {}, value => validateSectionResponse(value, courseId, sectionId),
     )
   },
 
@@ -110,6 +112,7 @@ export const bookApi = {
   ): Promise<ModeResponse> {
     return request<ModeResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/${mode}`,
+      {}, value => validateModeResponse(value, courseId, sectionId, mode),
     )
   },
 
