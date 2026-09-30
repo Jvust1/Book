@@ -1,3 +1,5 @@
+import { readBoundedJson } from './boundedJson'
+import { validateQAResponse, validateSearchResponse, validateSourceResponse } from './sourceContracts'
 import type {
   ChapterResponse,
   CourseResponse,
@@ -34,7 +36,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+async function request<T>(path: string, init: RequestInit = {}, validate?: (value: unknown) => T): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json' }
   if (init.headers) {
     new Headers(init.headers).forEach((value, key) => {
@@ -68,6 +70,13 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     throw new ApiError(message, response.status, code)
   }
 
+  if (validate) {
+    try { return validate(await readBoundedJson(response)) }
+    catch {
+      if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+      throw new ApiError('教材响应校验失败，请刷新后重试', response.status, 'invalid_response')
+    }
+  }
   return (await response.json()) as T
 }
 
@@ -136,13 +145,14 @@ export const bookApi = {
     return request<StudyRecord | null>('/api/study/recent')
   },
 
-  searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {
+  searchCourse(courseId: string, query: string, limit = 30, signal?: AbortSignal): Promise<SearchResponse> {
     const params = new URLSearchParams({
       q: query,
       limit: String(limit),
     })
     return request<SearchResponse>(
       `/api/courses/${segment(courseId)}/search?${params.toString()}`,
+      { signal }, value => validateSearchResponse(value, courseId, query, limit),
     )
   },
 
@@ -151,12 +161,13 @@ export const bookApi = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(qaRequest),
-    })
+    }, value => validateQAResponse(value, courseId, qaRequest))
   },
 
-  getSource(courseId: string, kind: string, sourceId: string): Promise<SourceResponse> {
+  getSource(courseId: string, kind: string, sourceId: string, signal?: AbortSignal): Promise<SourceResponse> {
     return request<SourceResponse>(
       `/api/courses/${segment(courseId)}/sources/${segment(kind)}/${segment(sourceId)}`,
+      { signal }, value => validateSourceResponse(value, courseId, kind, sourceId),
     )
   },
 }

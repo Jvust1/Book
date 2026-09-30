@@ -450,3 +450,109 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Locally bundled KaTeX fonts; a wide equation scrolls inside its own card. */
+.learning-list, .learning-card, .learning-card-header > div,
+.math-content, .source-page {
+  min-width: 0;
+}
+
+.math-content {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.math-content-host {
+  display: block;
+}
+
+.math-content .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.2em;
+}
+
+.math-fallback-note {
+  display: block;
+  margin-top: 8px;
+  color: #715422;
+  font: 13px/1.5 system-ui, sans-serif;
+}
+
+.math-source {
+  margin-top: 10px;
+  font: 13px/1.5 system-ui, sans-serif;
+}
+
+.math-source summary {
+  width: fit-content;
+  cursor: pointer;
+}
+
+.math-source code {
+  display: block;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.local-pdf-source {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid #d4d4d8;
+  border-radius: 16px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+.local-pdf-source h2, .local-pdf-source p { margin: 0; }
+.pdf-file-label { display: grid; gap: 8px; }
+.pdf-file-label input { max-width: 100%; }
+.pdf-identity-warning { color: #715422; line-height: 1.6; }
+.pdf-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.pdf-controls input { width: 5em; padding: 8px; }
+.pdf-controls select { padding: 8px; }
+.local-pdf-canvas { min-width: 0; max-width: 100%; max-height: 75vh; overflow: auto; }
+.local-pdf-canvas canvas { display: block; }
+.pdf-text p { padding-top: 12px; line-height: 1.6; white-space: pre-wrap; }
+
+.math-content.math-inline, .math-inline .math-content-host { display: inline; }
+.math-inline .math-fallback-note { display: inline; margin-left: 0.3em; }
+.qa-answer-content, .qa-markdown, .qa-table-scroll { min-width: 0; max-width: 100%; }
+.qa-markdown { line-height: 1.75; overflow-wrap: anywhere; }
+.qa-markdown > :first-child { margin-top: 0; }
+.qa-markdown > :last-child { margin-bottom: 0; }
+.qa-markdown pre, .qa-original-answer pre { overflow-x: auto; padding: 14px; background: #f4f4f5; border-radius: 10px; }
+.qa-markdown pre { white-space: pre; }
+.qa-markdown code { font-family: Consolas, monospace; }
+.qa-markdown blockquote { margin-inline: 0; padding-left: 14px; border-left: 3px solid #d4d4d8; }
+.qa-table-scroll { overflow-x: auto; }
+.qa-markdown table { border-collapse: collapse; }
+.qa-markdown th, .qa-markdown td { border: 1px solid #d4d4d8; padding: 8px 12px; }
+.qa-inert-link small, .qa-inert-image { color: #71717a; }
+.qa-original-answer { margin-top: 16px; }
+.qa-original-answer summary { width: fit-content; cursor: pointer; }
+.qa-original-answer pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.practice-scratchpad { min-width: 0; display: grid; gap: 14px; padding: 24px; border: 1px solid #d4d4d8; border-radius: 16px; background: white; }
+.practice-scratchpad h2, .practice-scratchpad p { margin: 0; line-height: 1.7; }
+.scratchpad-form { display: grid; gap: 8px; }
+.scratchpad-form textarea { width: 100%; max-width: 100%; min-width: 0; padding: 12px; border: 1px solid #d4d4d8; border-radius: 10px; resize: vertical; }
+.scratchpad-examples, .scratchpad-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.scratchpad-result pre { max-width: 100%; margin: 10px 0; padding: 14px; border-radius: 10px; background: #f4f4f5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.practice-scratchpad details { overflow-wrap: anywhere; }
+
+.local-pdf-search { margin: 1rem 0; padding: 1rem; border: 1px solid var(--border, #d4d4d8); border-radius: 12px; min-width: 0; }
+.pdf-search-form { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .8rem 0; }
+.pdf-search-form input { max-width: 100%; min-width: 0; padding: .6rem; border: 1px solid #d4d4d8; border-radius: 6px; }
+.pdf-search-results { padding-left: 1.3rem; }
+.pdf-search-results li { margin: .8rem 0; }
+.pdf-search-results p { overflow-wrap: anywhere; white-space: pre-wrap; }
+.pdf-search-results mark { background: #fff1a8; color: #111; }
+
+.reader-query-status { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px; border: 1px solid #d4d4d8; border-radius: 10px; background: #fff; overflow-wrap: anywhere; }
+.reader-query-status p { margin: 0; line-height: 1.6; }
+.reader-query-actions { display: flex; flex-wrap: wrap; gap: 8px; }

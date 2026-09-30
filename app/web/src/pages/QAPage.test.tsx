@@ -1,6 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { ReaderTestProvider } from '../test/ReaderTestProvider'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ApiError, bookApi } from '../api/client'
@@ -149,7 +150,7 @@ const SOURCE: SourceResponse = {
 
 function renderQA(initialEntry = '/courses/functional_analysis_course/qa') {
   return render(
-    <MemoryRouter initialEntries={[initialEntry]}>
+    <ReaderTestProvider><MemoryRouter initialEntries={[initialEntry]}>
       <Routes>
         <Route path="/courses/:courseId/qa" element={<QAPage />} />
         <Route
@@ -157,7 +158,7 @@ function renderQA(initialEntry = '/courses/functional_analysis_course/qa') {
           element={<SourcePage />}
         />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter></ReaderTestProvider>,
   )
 }
 
@@ -254,7 +255,7 @@ describe('QAPage', () => {
     const input = screen.getByRole('textbox', { name: '教材问题' })
     await user.type(input, SECTION_GENERATED.question)
     await user.click(screen.getByRole('button', { name: '提问' }))
-    await screen.findByText(SECTION_GENERATED.answer!)
+    await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })
 
     await user.clear(input)
     await user.type(input, SECOND_GENERATED.question)
@@ -270,7 +271,7 @@ describe('QAPage', () => {
         ],
       })
     })
-    expect(await screen.findByText(SECOND_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECOND_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(screen.getAllByText(SECTION_GENERATED.question).length).toBeGreaterThan(0)
   })
 
@@ -306,7 +307,7 @@ describe('QAPage', () => {
 
     renderQA('/courses/functional_analysis_course/qa?section=ch01_s01')
 
-    expect(await screen.findByText(SECTION_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(bookApi.askCourse).not.toHaveBeenCalled()
     await user.click(screen.getByRole('link', { name: '查看教材来源' }))
 
@@ -314,7 +315,7 @@ describe('QAPage', () => {
     expect(screen.getByRole('button', { name: '返回问答' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: '返回问答' }))
 
-    expect(await screen.findByText(SECTION_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(bookApi.askCourse).not.toHaveBeenCalled()
     expect(loadQASessionState('functional_analysis_course')?.activeCitationSourceId).toBe(
       'def_banach_space',
@@ -337,4 +338,25 @@ describe('QAPage', () => {
     expect(screen.getByText(question)).toBeInTheDocument()
     expect(screen.queryByText('AI 生成回答，依据下方教材来源')).not.toBeInTheDocument()
   })
+  it('keeps a delayed old-course response out of the new course and its session', async () => {
+    let resolve!: (response: QAResponse) => void
+    vi.mocked(bookApi.askCourse).mockReturnValue(new Promise(done => { resolve = done }))
+    function SwitchCourse() {
+      const navigate = useNavigate()
+      return <button onClick={() => navigate('/courses/other_synthetic_course/qa')}>切换合成课程</button>
+    }
+    render(<ReaderTestProvider><MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
+      <SwitchCourse /><Routes><Route path="/courses/:courseId/qa" element={<QAPage />} /></Routes>
+    </MemoryRouter></ReaderTestProvider>)
+    const user = userEvent.setup()
+    await user.type(screen.getByRole('textbox', { name: '教材问题' }), 'Original pending question?')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    await user.click(screen.getByRole('button', { name: '切换合成课程' }))
+    expect(screen.queryByText('Original pending question?')).not.toBeInTheDocument()
+    await act(async () => resolve({ ...COURSE_GENERATED, question: 'Original pending question?', answer: 'Original delayed answer.' }))
+    expect(screen.queryByText('Original delayed answer.')).not.toBeInTheDocument()
+    expect(loadQASessionState('other_synthetic_course')).toBeNull()
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(1)
+  })
+
 })

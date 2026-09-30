@@ -6,6 +6,8 @@ on:
       - "book_core/**"
       - "app/**"
       - "app_tests/**"
+      - "requirements-extras/symbolic.txt"
+      - "tools/check_symbolic_answer.py"
       - "runtime/**"
       - "courses/**"
       - "library/**"
@@ -26,6 +28,8 @@ on:
       - "book_core/**"
       - "app/**"
       - "app_tests/**"
+      - "requirements-extras/symbolic.txt"
+      - "tools/check_symbolic_answer.py"
       - "runtime/**"
       - "courses/**"
       - "library/**"
@@ -89,7 +93,7 @@ jobs:
           cache-dependency-path: app/web/package-lock.json
 
       - name: Install web dependencies
-        run: npm ci
+        run: npm ci --no-audit
 
       - name: Run web tests
         run: npm test
@@ -124,7 +128,7 @@ jobs:
 
       - name: Install web dependencies
         working-directory: app/web
-        run: npm ci
+        run: npm ci --no-audit
 
       - name: Install Chromium
         working-directory: app/web
@@ -140,10 +144,14 @@ jobs:
           nohup python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000 > /tmp/book-api.log 2>&1 < /dev/null &
           echo $! > /tmp/book-api.pid
 
-      - name: Start Vite web app
+      - name: Build production browser assets
+        working-directory: app/web
+        run: npm run build
+
+      - name: Start built web app
         working-directory: app/web
         run: |
-          nohup npm run dev -- --host 127.0.0.1 --port 5173 > /tmp/book-vite.log 2>&1 < /dev/null &
+          nohup npx vite preview --host 127.0.0.1 --port 5173 --strictPort > /tmp/book-vite.log 2>&1 < /dev/null &
           echo $! > /tmp/book-vite.pid
 
       - name: Wait for local services
@@ -163,6 +171,48 @@ jobs:
         working-directory: app/web
         run: npm run e2e
 
+      - name: Install pinned optional SymPy for combined pilot
+        run: python -m pip install --require-hashes -r requirements-extras/symbolic.txt
+
+      - name: Switch API to original file-backed chapter fixture
+        run: |
+          kill "$(cat /tmp/book-api.pid)"
+          for attempt in {1..30}; do
+            if ! kill -0 "$(cat /tmp/book-api.pid)" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          nohup python -m uvicorn app_tests.synthetic_pilot_server:create_app --factory --host 127.0.0.1 --port 8000 > /tmp/book-pilot-api.log 2>&1 < /dev/null &
+          echo $! > /tmp/book-pilot-api.pid
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:8000/api/library | python -c 'import json,sys; assert json.load(sys.stdin)["library_id"] == "original_pilot_library"' 2>/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/book-pilot-api.log
+          exit 1
+
+      - name: Verify original chapter and real diagnostic pipeline
+        run: python -m unittest app_tests.test_synthetic_chapter -v
+
+      - name: Run combined synthetic chapter browser pilot
+        working-directory: app/web
+        run: npm run e2e -- --config playwright.pilot.config.ts
+
+      - name: Upload synthetic reader preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-reader-previews
+          path: |
+            app/web/test-results/pdfjs-pilot-*.png
+            app/web/test-results/qa-markdown-pilot-*.png
+            app/web/test-results/mathjs-practice-pilot-*.png
+            app/web/test-results/fuse-local-pdf-pilot-*.png
+            app/web/test-results/zod-source-contract-*.png
+            app/web/test-results/tanstack-reader-cache-*.png
+            app/web/pilot-test-results/chapter-*.png
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Upload Playwright failure artifacts
         if: failure()
         uses: actions/upload-artifact@v4
@@ -170,6 +220,8 @@ jobs:
           name: playwright-failure
           path: |
             app/web/playwright-report
+            app/web/pilot-playwright-report
+            app/web/pilot-test-results
             app/web/test-results
           if-no-files-found: ignore
           retention-days: 7

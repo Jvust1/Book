@@ -11,6 +11,7 @@ import type {
 import { EmptyState } from '../components/EmptyState'
 import { LearningObjectCard } from '../components/LearningObjectCard'
 import { ModeTabs } from '../components/ModeTabs'
+import { PracticeScratchpad } from '../components/PracticeScratchpad'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
@@ -367,6 +368,8 @@ export function SectionPage() {
       {payload && payload.items.length === 0 && emptyMessage(mode) ? (
         <EmptyState message={emptyMessage(mode)!} />
       ) : null}
+
+      {payload && mode === 'practice' ? <PracticeScratchpad key={`${courseId}:${sectionId}`} /> : null}
 
       {payload && payload.items.length > 0 ? (
         <div className="learning-list">
