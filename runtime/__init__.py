@@ -1,3 +1,8 @@
+from .semantic_retrieval import (
+    SemanticHit,
+    SentenceTransformerSemanticIndex,
+    create_sentence_transformer_index,
+)
 """Reference runtime layer for Book Course OS structured textbooks."""
 
 from .book_runtime import (
@@ -97,6 +102,9 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "SemanticHit",
+    "SentenceTransformerSemanticIndex",
+    "create_sentence_transformer_index",
     "BookRuntime",
     "BookRuntimeBlockedError",
     "BookRuntimeError",
