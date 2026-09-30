@@ -119,6 +119,15 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
     await expect(page).toHaveURL(new URL(sourcePath, baseURL).href)
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth && document.body.scrollWidth <= innerWidth)).toBe(true)
     expect(await browserStorage(page)).toEqual(storageBefore)
+    // Body overflow alone misses a child extending into a card's padding.
+    expect(await search.evaluate(element => {
+      const parent = element.parentElement!
+      const box = parent.getBoundingClientRect()
+      const style = getComputedStyle(parent)
+      const child = element.getBoundingClientRect()
+      return child.left >= box.left + parseFloat(style.paddingLeft) &&
+        child.right <= box.right - parseFloat(style.paddingRight) + 1
+    })).toBe(true)
     await page.screenshot({ path: `test-results/fuse-local-pdf-pilot-${viewport.name}.png`, fullPage: true })
 
     await page.getByRole('button', { name: '关闭本地 PDF', exact: true }).click()

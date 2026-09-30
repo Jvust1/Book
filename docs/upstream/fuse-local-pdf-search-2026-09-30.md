@@ -35,3 +35,7 @@ The PDF viewer could navigate pages but could not find a passage across a local 
 - Optional dependency audit was not run. CI installs use `npm ci --no-audit`; no audit result from an earlier branch is inherited. All tests, type checks, build and browser gates remain enabled.
 
 This review branch is stacked on math.js Practice PR #62. It does not include the independent SymPy safety PR #61, publish a native release, merge or deploy.
+
+### Visual acceptance refinement
+
+Initial exact-head CI passed all 25 browser cases. Screenshot inspection nevertheless found the narrow viewer's implicit grid track allowed the search panel to extend into its parent padding. The viewer now uses `minmax(0, 1fr)` and browser acceptance checks the child against the parent's content boundaries, in addition to body overflow. Final screenshots are rechecked on the follow-up commit.
