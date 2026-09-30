@@ -6,7 +6,7 @@ import { ReaderQueryStatus } from '../components/ReaderQueryStatus'
 import { useReaderSource } from '../state/readerQueries'
 import { LocalPdfSource } from '../components/LocalPdfSource'
 import type { LearningMode, SourceContextItem } from '../api/types'
-import { loadQASessionState } from '../state/qaSessionState'
+import { activeQASource, loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
 
@@ -33,7 +33,8 @@ export function SourcePage() {
   const matchingQAState = (() => {
     if (!courseId || !source) return null
     const saved = loadQASessionState(courseId)
-    if (saved?.activeCitationSourceId === source.source_id) return saved
+    const active = activeQASource(saved)
+    if (active?.sourceId === source.source_id && active.kind === source.kind && active.bookId === source.book_id) return saved
     return null
   })()
 
@@ -49,7 +50,8 @@ export function SourcePage() {
     const sourceKey = `${source.kind}:${source.source_id}`
 
     const savedQA = loadQASessionState(courseId)
-    if (savedQA?.activeCitationSourceId === source.source_id) {
+    const activeQA = activeQASource(savedQA)
+    if (savedQA && activeQA?.sourceId === source.source_id && activeQA.kind === source.kind && activeQA.bookId === source.book_id) {
       navigate(savedQA.route)
       return
     }

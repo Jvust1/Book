@@ -11,6 +11,8 @@ import type {
   SectionResponse,
 } from '../api/types'
 import {
+  activeQASource,
+  createQAMessageId,
   loadQASessionState,
   saveQASessionState,
 } from '../state/qaSessionState'
@@ -39,12 +41,6 @@ const scopeLabel = (response: QAResponse): string => {
       : '回答依据：本节 + 教材其他章节'
   }
   return '回答依据：整本教材'
-}
-
-let messageSequence = 0
-const nextMessageId = (role: 'user' | 'assistant'): string => {
-  messageSequence += 1
-  return `${role}-${messageSequence}`
 }
 
 export function QAPage() {
@@ -165,7 +161,7 @@ function CourseQAPage() {
 
     const priorMessages = messages
     const userMessage: QASessionMessage = {
-      id: nextMessageId('user'),
+      id: createQAMessageId('user', priorMessages),
       role: 'user',
       content: question,
     }
@@ -188,7 +184,7 @@ function CourseQAPage() {
       if (!mounted.current) return
       const assistantContent = response.answer ?? response.message ?? ''
       const assistantMessage: QASessionMessage = {
-        id: nextMessageId('assistant'),
+        id: createQAMessageId('assistant', messagesWithUser),
         role: 'assistant',
         content: assistantContent,
         response,
@@ -217,7 +213,7 @@ function CourseQAPage() {
   }
 
   const savedSession = loadQASessionState(courseId)
-  const activeCitationSourceId = savedSession?.activeCitationSourceId ?? null
+  const activeSource = activeQASource(savedSession)
 
   return (
     <section className="qa-page page-stack">
@@ -293,7 +289,8 @@ function CourseQAPage() {
                           className="learning-card qa-citation-card"
                           key={`${message.id}:${citation.evidence_id}`}
                           aria-current={
-                            activeCitationSourceId === citation.source_id ? 'true' : undefined
+                            activeSource?.sourceId === citation.source_id && activeSource.kind === citation.source_kind &&
+                            activeSource.bookId === response.book_id ? 'true' : undefined
                           }
                         >
                           <div>

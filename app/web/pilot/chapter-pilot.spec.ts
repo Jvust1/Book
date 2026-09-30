@@ -109,6 +109,20 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
     await expect(pdfSearch).toHaveCount(0)
     await page.getByRole('button', { name: '返回问答', exact: true }).click()
     await expect(page.locator('.qa-citation-card[aria-current="true"]')).toHaveCount(1)
+    // Reload resets module state, but a follow-up must retain unique message IDs.
+    await page.reload()
+    await expect(page.locator('.qa-answer-card')).toHaveCount(1)
+    const followUp = page.waitForResponse(response => response.url().endsWith(`/api/courses/${course}/qa`))
+    await page.getByRole('textbox', { name: '教材问题' }).fill('倍增规则')
+    await page.getByRole('button', { name: '提问', exact: true }).click()
+    expect((await (await followUp).json()).answer_kind).toBe('generated')
+    await expect(page.locator('.qa-answer-card')).toHaveCount(2)
+    const messageIds = await page.evaluate(courseId => {
+      const state = JSON.parse(sessionStorage.getItem(`book:qa-session:${courseId}`)!)
+      return state.messages.map((message: { id: string }) => message.id) as string[]
+    }, course)
+    expect(messageIds).toHaveLength(4)
+    expect(new Set(messageIds).size).toBe(messageIds.length)
     await page.getByRole('link', { name: '← 返回课程' }).click()
     await page.getByRole('link', { name: '进入章节' }).click()
     await page.locator(`a[href="${sectionPath}"]`).click()

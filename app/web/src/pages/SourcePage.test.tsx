@@ -298,4 +298,21 @@ describe('SourcePage', () => {
     client.clear()
   })
 
+  it.each(['figure', 'other-book', 'ambiguous'])('does not claim a QA return for a different or ambiguous source identity: %s', variant => {
+    const cached = { ...QA_RESPONSE, book_id: variant === 'other-book' ? 'other_book' : QA_RESPONSE.book_id,
+      citations: variant === 'ambiguous' ? [QA_RESPONSE.citations[0],
+        { ...QA_RESPONSE.citations[0], evidence_id: 'E2', source_kind: 'figure' }]
+        : [{ ...QA_RESPONSE.citations[0], source_kind: variant === 'figure' ? 'figure' : 'object' }] }
+    saveQASessionState(SOURCE.course_id, { route: `/courses/${SOURCE.course_id}/qa?section=ch01_s01`,
+      messages: [{ id: 'u1', role: 'user', content: cached.question },
+        { id: 'a1', role: 'assistant', content: cached.answer!, response: cached }],
+      scrollY: 0, activeCitationSourceId: SOURCE.source_id })
+    renderSource()
+    return waitFor(() => {
+      expect(screen.getByRole('heading', { name: '教材来源' })).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: '返回问答' })).not.toBeInTheDocument()
+      expect(screen.getByRole('button', { name: '返回学习' })).toBeInTheDocument()
+    })
+  })
+
 })

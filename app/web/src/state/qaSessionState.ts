@@ -77,6 +77,52 @@ const isQASessionState = (value: unknown): value is QASessionState => {
   )
 }
 
+/** Preserve the stored v1 shape, but bind each answer to its actual preceding question. */
+function validConversation(state: QASessionState, courseId: string): boolean {
+  if (!state.route.startsWith('/')) return false
+  const route = new URL(state.route, 'https://book.invalid')
+  if (route.origin !== 'https://book.invalid' || route.pathname !== `/courses/${encodeURIComponent(courseId)}/qa` ||
+    route.hash || [...route.searchParams.keys()].some(key => key !== 'section') ||
+    route.searchParams.getAll('section').length > 1 ||
+    (route.searchParams.has('section') && !route.searchParams.get('section')?.trim())) return false
+  const ids = new Set<string>()
+  for (let i = 0; i < state.messages.length; i++) {
+    const message = state.messages[i]
+    if (ids.has(message.id)) return false
+    ids.add(message.id)
+    if (message.role === 'assistant') {
+      const question = state.messages[i - 1]
+      if (!question || question.role !== 'user' || question.content.trim() !== message.response.question ||
+        message.response.course_id !== courseId) return false
+    }
+  }
+  return true
+}
+
+/** IDs must stay unique even after a reload resets the JavaScript module. */
+export function createQAMessageId(role: 'user' | 'assistant', messages: QASessionMessage[]): string {
+  const used = new Set(messages.map(message => message.id))
+  let sequence = messages.length + 1
+  while (used.has(`${role}-${sequence}`)) sequence++
+  return `${role}-${sequence}`
+}
+
+export interface ActiveQASource { bookId: string; kind: string; sourceId: string }
+/** The legacy stored selection has only an ID. Ambiguity must never imply a kind or book. */
+export function activeQASource(state: QASessionState | null): ActiveQASource | null {
+  if (!state?.activeCitationSourceId) return null
+  const identities = new Map<string, ActiveQASource>()
+  for (const message of state.messages) {
+    if (message.role !== 'assistant') continue
+    for (const citation of message.response.citations) {
+      if (citation.source_id !== state.activeCitationSourceId) continue
+      const identity = { bookId: message.response.book_id, kind: citation.source_kind, sourceId: citation.source_id }
+      identities.set(JSON.stringify([identity.bookId, identity.kind, identity.sourceId]), identity)
+    }
+  }
+  return identities.size === 1 ? identities.values().next().value ?? null : null
+}
+
 export function saveQASessionState(courseId: string, state: QASessionState): void {
   sessionStorage.setItem(qaSessionStateKey(courseId), JSON.stringify(state))
 }
@@ -88,8 +134,7 @@ export function loadQASessionState(courseId: string): QASessionState | null {
 
   try {
     const value: unknown = JSON.parse(raw)
-    if (!isQASessionState(value) || value.messages.some(message =>
-      message.role === 'assistant' && message.response.course_id !== courseId)) {
+    if (!isQASessionState(value) || !validConversation(value, courseId)) {
       sessionStorage.removeItem(key)
       return null
     }

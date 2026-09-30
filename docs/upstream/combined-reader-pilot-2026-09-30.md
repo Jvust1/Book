@@ -15,6 +15,8 @@ The browser pilot uses the production build without HTTP response mocks:
 5. Reveal the review content, then open the exercise. Real math.js worker output for the original `2+2` exercise is passed to the actual isolated SymPy diagnostic CLI with caller-supplied expected value `4`. Correct, incorrect and forbidden-input outcomes are checked. The CLI is invoked by the test harness, **not exposed as a browser grading endpoint**. Neither calculation nor diagnostic changes StudyRecord progress.
 6. Leave and reenter practice to verify scratchpad cleanup. Desktop and 390px flows check console errors and unexpected external/writing requests. Screenshot artifacts contain only original test material.
 
+Connected review also reproduced and repaired persisted-conversation identity gaps: each cached answer must match its preceding question, message IDs must be unique even after reload, and return routes stay inside the same course QA screen. The frozen session shape is preserved. A legacy selected source ID is only used when its citations resolve to one unambiguous book/kind/ID tuple; an object, figure or another book sharing the ID cannot inherit the wrong QA-return affordance. The browser pilot includes reload and follow-up with unique restored message IDs.
+
 The existing 33 browser cases are retained, including cancelled PDF/Fuse/calculator work, invalid responses, stale-cache visibility and authorization failure recovery. The pilot adds two longer connected journeys; it does not replace individual safety tests.
 
 ## Reproduce
@@ -60,6 +62,6 @@ GitHub labels SymPy's aggregate license `NOASSERTION`; this is not presented as 
 
 ## Verification boundaries
 
-Local combined checks: 350 Runtime tests, 101 App tests, 253 web tests, TypeScript and architecture fitness. Hosted exact-head CI is the production-browser/build gate; the local browser sandbox does not permit Chromium startup. The new browser journey is pending until that gate runs on this candidate. Existing branch CI is evidence for those branches, not a substitute for the candidate's exact head.
+Local combined checks: 350 Runtime tests, 101 App tests, 260 web tests, TypeScript and architecture fitness. Hosted exact-head CI is the production-browser/build gate; the local browser sandbox does not permit Chromium startup. The new browser journey is pending until that gate runs on this candidate. Existing branch CI is evidence for those branches, not a substitute for the candidate's exact head.
 
 No canonical `books/`, `courses/` or `library/` content is changed. This is an original engineering pilot, not full-book content verification, proof correctness, file-edition authentication, a Windows release or a production deployment. QA generation is deterministic fake-provider coverage; no claim is made about live paid-model quality. Optional npm audit remains unrun because transmission of the dependency manifest was not approved; installations and CI explicitly use `--no-audit`.
