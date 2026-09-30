@@ -1,3 +1,4 @@
+from .markitdown_ingest import DocumentIngestFallback, MarkItDownIngestResult, MarkItDownIngestor, create_markitdown_ingestor
 from .faiss_semantic_index import FaissSemanticIndex, create_faiss_semantic_index
 from .docling_ingest import DoclingIngestResult, DoclingIngestor, create_docling_ingestor
 from .semantic_retrieval import (
@@ -104,6 +105,10 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "DocumentIngestFallback",
+    "MarkItDownIngestResult",
+    "MarkItDownIngestor",
+    "create_markitdown_ingestor",
     "FaissSemanticIndex",
     "create_faiss_semantic_index",
     "DoclingIngestResult",
