@@ -39,3 +39,7 @@ The application previously exposed textbook exercise source objects without an i
 - Exact-head GitHub CI has 21 browser cases including inherited reader coverage. Final browser results and synthetic screenshots are checked after publication; local browser execution is unavailable in this managed environment.
 
 This branch is stacked on the structured QA reader (#60). It does not include or supersede the independent SymPy safety PR (#61). No canonical assets, private PDFs, model calls, automatic grading, native release, merge or deployment is introduced.
+
+### Built-worker acceptance
+
+The first exact-head browser run passed after one cold development-module startup retry. Acceptance now builds and serves production assets, including the emitted math.js worker, with the same five-second bound and all existing assertions. The interrupted-startup case explicitly waits for the worker network request before cancellation; only this deliberate network-interception case blocks service workers. Final rerun status is tracked against the follow-up commit.

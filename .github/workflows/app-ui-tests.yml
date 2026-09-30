@@ -140,10 +140,14 @@ jobs:
           nohup python -m uvicorn app.api.main:app --host 127.0.0.1 --port 8000 > /tmp/book-api.log 2>&1 < /dev/null &
           echo $! > /tmp/book-api.pid
 
-      - name: Start Vite web app
+      - name: Build production browser assets
+        working-directory: app/web
+        run: npm run build
+
+      - name: Start built web app
         working-directory: app/web
         run: |
-          nohup npm run dev -- --host 127.0.0.1 --port 5173 > /tmp/book-vite.log 2>&1 < /dev/null &
+          nohup npx vite preview --host 127.0.0.1 --port 5173 --strictPort > /tmp/book-vite.log 2>&1 < /dev/null &
           echo $! > /tmp/book-vite.pid
 
       - name: Wait for local services

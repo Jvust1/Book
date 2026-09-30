@@ -62,17 +62,24 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
   })
 }
 
+test.describe('interrupted worker network', () => {
+// A service worker must not fulfill the deliberately intercepted network request.
+test.use({ serviceWorkers: 'block' })
 test('cancels interrupted worker startup and then recovers with a fresh real worker', async ({ page }) => {
   let release!: () => void
   const gate = new Promise<void>(resolve => { release = resolve })
-  const pattern = '**/calculator.worker.ts*'
+  let arrived!: () => void
+  const requested = new Promise<void>(resolve => { arrived = resolve })
+  const pattern = /\/(?:src\/practice\/calculator\.worker\.ts|assets\/calculator\.worker-[^/]+\.js)(?:\?|$)/
   await page.route(pattern, async route => {
+    arrived()
     await gate
     try { await route.continue() } catch { /* A terminated worker can abandon its fetch. */ }
   })
   await openPractice(page)
   await page.getByRole('textbox', { name: '算式', exact: true }).fill('1+1')
   await page.getByRole('button', { name: '计算', exact: true }).click()
+  await requested
   await page.getByRole('button', { name: '取消计算', exact: true }).click()
   await expect(page.getByText('已取消，输入仍保留', { exact: true })).toBeVisible()
   await expect(page.getByRole('textbox', { name: '算式', exact: true })).toHaveValue('1+1')
@@ -84,4 +91,6 @@ test('cancels interrupted worker startup and then recovers with a fresh real wor
   await page.getByRole('button', { name: '清空演算区', exact: true }).click()
   await expect(page.getByRole('textbox', { name: '算式', exact: true })).toHaveValue('')
   await expect(page.getByLabel('演算结果')).toHaveCount(0)
+})
+
 })
