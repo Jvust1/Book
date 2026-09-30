@@ -171,6 +171,7 @@ jobs:
           path: |
             app/web/test-results/pdfjs-pilot-*.png
             app/web/test-results/qa-markdown-pilot-*.png
+            app/web/test-results/mathjs-practice-pilot-*.png
           if-no-files-found: ignore
           retention-days: 7
 
