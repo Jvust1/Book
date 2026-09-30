@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { ApiError, bookApi } from '../api/client'
-import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
-import { loadQASessionState } from '../state/qaSessionState'
+import { ApiError } from '../api/client'
+import { MathContent } from '../components/MathContent'
+import { ReaderQueryStatus } from '../components/ReaderQueryStatus'
+import { useReaderSource } from '../state/readerQueries'
+import { LocalPdfSource } from '../components/LocalPdfSource'
+import type { LearningMode, SourceContextItem } from '../api/types'
+import { activeQASource, loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
 import { loadSectionViewState } from '../state/sectionViewState'
 
@@ -18,36 +21,20 @@ const contextLabel = (item: SourceContextItem): string =>
 export function SourcePage() {
   const { courseId, kind, sourceId } = useParams()
   const navigate = useNavigate()
-  const [source, setSource] = useState<SourceResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!courseId || !kind || !sourceId) {
-      setError('教材来源地址无效')
-      return
-    }
-
-    let active = true
-    setSource(null)
-    setError(null)
-    bookApi
-      .getSource(courseId, kind, sourceId)
-      .then((value) => {
-        if (active) setSource(value)
-      })
-      .catch((reason: unknown) => {
-        if (active) setError(errorMessage(reason, '教材来源加载失败，请稍后重试'))
-      })
-
-    return () => {
-      active = false
-    }
-  }, [courseId, kind, sourceId])
+  const reader = useReaderSource(courseId ?? '', kind ?? '', sourceId ?? '')
+  const loadedSource = reader.data
+  const source = loadedSource && loadedSource.course_id === courseId && loadedSource.kind === kind?.trim().toLowerCase() && loadedSource.source_id === sourceId
+    ? loadedSource : null
+  const error = reader.query.error ? errorMessage(reader.query.error, '教材来源加载失败，请稍后重试') : null
+  const controls = <ReaderQueryStatus hasData={!!source} fetching={reader.query.isFetching}
+    fetchedAfterMount={reader.query.isFetchedAfterMount} updatedAt={reader.query.dataUpdatedAt}
+    failed={!!reader.query.error} refresh={reader.refresh} cancel={reader.cancel} />
 
   const matchingQAState = (() => {
     if (!courseId || !source) return null
     const saved = loadQASessionState(courseId)
-    if (saved?.activeCitationSourceId === source.source_id) return saved
+    const active = activeQASource(saved)
+    if (active?.sourceId === source.source_id && active.kind === source.kind && active.bookId === source.book_id) return saved
     return null
   })()
 
@@ -63,7 +50,8 @@ export function SourcePage() {
     const sourceKey = `${source.kind}:${source.source_id}`
 
     const savedQA = loadQASessionState(courseId)
-    if (savedQA?.activeCitationSourceId === source.source_id) {
+    const activeQA = activeQASource(savedQA)
+    if (savedQA && activeQA?.sourceId === source.source_id && activeQA.kind === source.kind && activeQA.bookId === source.book_id) {
       navigate(savedQA.route)
       return
     }
@@ -99,21 +87,23 @@ export function SourcePage() {
     )
   }
 
-  if (error) {
+  if (error && !source) {
     return (
       <section className="status-panel" role="alert">
         <h1>教材来源加载失败</h1>
         <p>{error}</p>
+        {controls}
       </section>
     )
   }
 
   if (!source) {
-    return <p role="status">正在读取教材来源…</p>
+    return <section><p role="status">{reader.query.isFetching ? '正在读取教材来源…' : '读取已停止，请重新读取'}</p>{controls}</section>
   }
 
   return (
     <section className="source-page page-stack">
+      {controls}
       <header className="page-heading source-heading">
         <p className="eyebrow">结构化教材定位</p>
         <h1>教材来源</h1>
@@ -129,10 +119,10 @@ export function SourcePage() {
         {source.source_batch ? <p>来源批次：{source.source_batch}</p> : null}
       </div>
 
-      {source.formula ? <div className="formula-block">{source.formula}</div> : null}
-      <p className="learning-content">
-        {source.content_zh || '本段中文学习内容暂未提供'}
-      </p>
+      {source.formula ? <MathContent text={source.formula} formula /> : null}
+      <MathContent text={source.content_zh || '本段中文学习内容暂未提供'} />
+
+      <LocalPdfSource key={`${source.course_id}:${source.book_id}:${source.kind}:${source.source_id}`} bookId={source.book_id} sourceId={source.source_id} sourcePage={source.pdf_page} />
 
       <section className="source-context" aria-label="来源上下文">
         {source.context_before.map((item) => (

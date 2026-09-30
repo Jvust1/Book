@@ -1,0 +1,37 @@
+name: Safe SymPy integration
+on:
+  push:
+    paths:
+      - 'runtime/*symbolic*.py'
+      - 'tests/test_symbolic*.py'
+      - 'tools/check_symbolic_answer.py'
+      - 'requirements-extras/symbolic.txt'
+      - '.github/workflows/symbolic-answer-tests.yml'
+  pull_request:
+    paths:
+      - 'runtime/*symbolic*.py'
+      - 'tests/test_symbolic*.py'
+      - 'tools/check_symbolic_answer.py'
+      - 'requirements-extras/symbolic.txt'
+      - '.github/workflows/symbolic-answer-tests.yml'
+permissions:
+  contents: read
+jobs:
+  real-sympy:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.13'
+          - os: windows-latest
+            python: '3.11'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install pinned symbolic engine
+        run: python -m pip install -r requirements-extras/symbolic.txt
+      - name: Run real engine and adversarial boundary tests
+        run: python -m unittest tests.test_symbolic_answer tests.test_symbolic_safety -v

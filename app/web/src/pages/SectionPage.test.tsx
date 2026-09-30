@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {
   MemoryRouter,
@@ -212,7 +212,7 @@ describe('SectionPage', () => {
 
     expect(await screen.findByText('定义')).toBeInTheDocument()
     expect(screen.getAllByText('L^p 空间').length).toBeGreaterThan(0)
-    expect(screen.getByText('||f||_p < ∞')).toBeInTheDocument()
+    expect(screen.getByText('||f||_p < ∞', { selector: 'code' })).toBeInTheDocument()
     expect(
       screen.getByText('设 f 为可测函数，并满足相应的 p 次可积条件。'),
     ).toBeInTheDocument()
@@ -391,4 +391,41 @@ describe('SectionPage', () => {
     })
     expect(screen.getByText('学习进度：进行中')).toBeInTheDocument()
   })
+  it('does not display or record a mode for another book even with matching course and section', async () => {
+    vi.mocked(bookApi.getMode).mockResolvedValue({ ...modePayload('learn', [reviewItem]), book_id: 'another_book' })
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    expect(await screen.findByText('学习内容与当前小节的教材身份不一致，请刷新后重试')).toBeInTheDocument()
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+  })
+
+  it('waits for the section identity before displaying mode content or touching progress', async () => {
+    let resolveSection!: (value: typeof sectionResponse) => void
+    vi.mocked(bookApi.getSection).mockReturnValue(new Promise(resolve => { resolveSection = resolve }))
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('learn', [reviewItem]))
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    await waitFor(() => expect(bookApi.getMode).toHaveBeenCalled())
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+    await act(async () => resolveSection(sectionResponse))
+    expect(await screen.findByText('复习定理')).toBeInTheDocument()
+    await waitFor(() => expect(bookApi.touchStudy).toHaveBeenCalledTimes(1))
+  })
+
+  it('ignores an old learning response arriving after a newer mode is already visible', async () => {
+    let resolveLearn!: (value: ModeResponse) => void
+    vi.mocked(bookApi.getMode).mockImplementation(async (_course, _section, mode) => mode === 'learn'
+      ? new Promise(resolve => { resolveLearn = resolve })
+      : modePayload(mode, [{ ...reviewItem, title_zh: '当前预习内容' }]))
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    await screen.findByRole('heading', { name: 'L^p 空间' })
+    await userEvent.click(screen.getByRole('tab', { name: '预习' }))
+    await screen.findByText('当前预习内容')
+    await act(async () => resolveLearn(modePayload('learn', [reviewItem])))
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(screen.getByText('当前预习内容')).toBeInTheDocument()
+    expect(bookApi.touchStudy).toHaveBeenCalledTimes(1)
+    expect(bookApi.touchStudy).toHaveBeenCalledWith('functional_analysis_course', 'ch01_s01', 'preview')
+  })
+
 })

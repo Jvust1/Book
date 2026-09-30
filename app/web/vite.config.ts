@@ -16,6 +16,7 @@ export default defineConfig({
       },
       workbox: {
         navigateFallback: '/index.html',
+        globPatterns: ['**/*.{js,mjs,css,html,ico,png,svg,woff2,txt,bcmap,pfb,ttf,wasm,icc}', '**/LICENSE*'],
         runtimeCaching: [],
       },
     }),
@@ -28,10 +29,13 @@ export default defineConfig({
       },
     },
   },
+  preview: {
+    proxy: { '/api': { target: 'http://127.0.0.1:8000', changeOrigin: false } },
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     clearMocks: true,
-    exclude: [...configDefaults.exclude, 'e2e/**'],
+    exclude: [...configDefaults.exclude, 'e2e/**', 'pilot/**'],
   },
 })

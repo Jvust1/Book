@@ -1,3 +1,4 @@
+import { sessionViewStorage } from './sessionViewStorage'
 import type { LearningMode } from '../api/types'
 
 export interface SectionViewState {
@@ -34,7 +35,7 @@ export function saveSectionViewState(
   mode: LearningMode,
   state: SectionViewState,
 ): void {
-  sessionStorage.setItem(stateKey(courseId, sectionId, mode), JSON.stringify(state))
+  sessionViewStorage.write(stateKey(courseId, sectionId, mode), JSON.stringify(state))
 }
 
 export function loadSectionViewState(
@@ -43,18 +44,18 @@ export function loadSectionViewState(
   mode: LearningMode,
 ): SectionViewState | null {
   const key = stateKey(courseId, sectionId, mode)
-  const raw = sessionStorage.getItem(key)
+  const raw = sessionViewStorage.read(key)
   if (raw === null) return null
 
   try {
     const value: unknown = JSON.parse(raw)
     if (!isSectionViewState(value)) {
-      sessionStorage.removeItem(key)
+      sessionViewStorage.remove(key)
       return null
     }
     return value
   } catch {
-    sessionStorage.removeItem(key)
+    sessionViewStorage.remove(key)
     return null
   }
 }
@@ -64,5 +65,5 @@ export function clearSectionViewState(
   sectionId: string,
   mode: LearningMode,
 ): void {
-  sessionStorage.removeItem(stateKey(courseId, sectionId, mode))
+  sessionViewStorage.remove(stateKey(courseId, sectionId, mode))
 }
