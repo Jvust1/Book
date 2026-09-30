@@ -1,3 +1,4 @@
+from .mineru_ingest import MinerUIngestResult, MinerUCliIngestor
 from .markitdown_ingest import DocumentIngestFallback, MarkItDownIngestResult, MarkItDownIngestor, create_markitdown_ingestor
 from .faiss_semantic_index import FaissSemanticIndex, create_faiss_semantic_index
 from .docling_ingest import DoclingIngestResult, DoclingIngestor, create_docling_ingestor
@@ -105,6 +106,8 @@ from .source_resolver import (
 )
 
 __all__ = [
+    "MinerUIngestResult",
+    "MinerUCliIngestor",
     "DocumentIngestFallback",
     "MarkItDownIngestResult",
     "MarkItDownIngestor",
