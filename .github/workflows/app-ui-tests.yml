@@ -168,7 +168,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: synthetic-reader-previews
-          path: app/web/test-results/pdfjs-pilot-*.png
+          path: |
+            app/web/test-results/pdfjs-pilot-*.png
+            app/web/test-results/qa-markdown-pilot-*.png
           if-no-files-found: ignore
           retention-days: 7
 

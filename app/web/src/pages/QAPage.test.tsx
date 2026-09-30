@@ -254,7 +254,7 @@ describe('QAPage', () => {
     const input = screen.getByRole('textbox', { name: '教材问题' })
     await user.type(input, SECTION_GENERATED.question)
     await user.click(screen.getByRole('button', { name: '提问' }))
-    await screen.findByText(SECTION_GENERATED.answer!)
+    await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })
 
     await user.clear(input)
     await user.type(input, SECOND_GENERATED.question)
@@ -270,7 +270,7 @@ describe('QAPage', () => {
         ],
       })
     })
-    expect(await screen.findByText(SECOND_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECOND_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(screen.getAllByText(SECTION_GENERATED.question).length).toBeGreaterThan(0)
   })
 
@@ -306,7 +306,7 @@ describe('QAPage', () => {
 
     renderQA('/courses/functional_analysis_course/qa?section=ch01_s01')
 
-    expect(await screen.findByText(SECTION_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(bookApi.askCourse).not.toHaveBeenCalled()
     await user.click(screen.getByRole('link', { name: '查看教材来源' }))
 
@@ -314,7 +314,7 @@ describe('QAPage', () => {
     expect(screen.getByRole('button', { name: '返回问答' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: '返回问答' }))
 
-    expect(await screen.findByText(SECTION_GENERATED.answer!)).toBeInTheDocument()
+    expect(await screen.findByText(SECTION_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(bookApi.askCourse).not.toHaveBeenCalled()
     expect(loadQASessionState('functional_analysis_course')?.activeCitationSourceId).toBe(
       'def_banach_space',
