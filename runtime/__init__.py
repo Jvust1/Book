@@ -88,6 +88,7 @@ from .search_runtime import (
     SearchRuntime,
     SearchRuntimeError,
 )
+from .symbolic_answer import SymbolicCheckResult, SymPyAnswerChecker
 from .source_resolver import (
     ResolvedSource,
     SourceResolutionError,
@@ -169,6 +170,8 @@ __all__ = [
     "SearchQueryError",
     "SearchRuntime",
     "SearchRuntimeError",
+    "SymbolicCheckResult",
+    "SymPyAnswerChecker",
     "ResolvedSource",
     "SourceResolutionError",
     "SourceResolver",
