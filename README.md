@@ -136,3 +136,8 @@ BOOK_QA_TIMEOUT_SECONDS=60
 6. Web/PWA 稳定后再评估 Tauri Windows 打包与移动端复用。
 
 原始产品/架构基线保留在 Issue #1；较早文档中的“单课程多教材”描述应视为底层兼容/未来架构，而非当前 Book App 的产品入口规则。
+### 可选符号比较的安全边界
+
+已有 SymPy 比较器现使用受限数学语法与有时限的本地工作进程；未支持的表达式、未知定义域、超时或不确定结果均返回 unknown，不自动判错。
+可通过 `requirements-extras/symbolic.txt` 安装固定版本，并向 `tools/check_symbolic_answer.py` 的标准输入提供 student / expected JSON 做本机诊断。
+这不生成教材标准答案、不核验答案来源，也不自动批改证明。详见 [安全 SymPy 适配记录](docs/upstream/safe-sympy-input-2026-09-30.md)。
