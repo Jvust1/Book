@@ -1,3 +1,4 @@
+from .document_ingest import DocumentIngestPipeline, DocumentIngestResult, create_document_ingest_pipeline
 from .markitdown_ingest import DocumentIngestFallback, MarkItDownIngestResult, MarkItDownIngestor, create_markitdown_ingestor
 from .faiss_semantic_index import FaissSemanticIndex, create_faiss_semantic_index
 from .docling_ingest import DoclingIngestResult, DoclingIngestor, create_docling_ingestor
@@ -129,6 +130,9 @@ __all__ = [
     "CourseRuntimeError",
     "LibraryCourseResolutionError",
     "LibraryManifestError",
+    "DocumentIngestPipeline",
+    "DocumentIngestResult",
+    "create_document_ingest_pipeline",
     "LibraryRuntime",
     "LibraryRuntimeBlockedError",
     "LibraryRuntimeError",
