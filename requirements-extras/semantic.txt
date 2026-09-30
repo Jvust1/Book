@@ -1,1 +1,3 @@
-sentence-transformers\nfaiss-cpu\nnumpy\n
+sentence-transformers
+faiss-cpu
+numpy
