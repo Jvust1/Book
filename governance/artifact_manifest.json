@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-09-30",
   "project": {
     "repository": "Jvust1/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -74,11 +74,90 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "reading_10px_functional_analysis_20260930",
+      "file_name": "泛函分析 10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "1dJUYKUQX2XzXKQqXWC7BHTaKson8VW1q",
+      "drive_path": "Book/03_Exports/Book-FunctionalAnalysis-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
+    },
+    {
+      "artifact_id": "reading_10px_math_physics_4e_20260930",
+      "file_name": "数学物理方程（第四版）10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "18ZXW13CmDXv6tHHt1BVOsrMu5V-UpuiF",
+      "drive_path": "Book/03_Exports/Book-MathPhysics-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
+    },
+    {
+      "artifact_id": "reading_10px_public_finance_2e_20260930",
+      "file_name": "公共财政概论（第二版）10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "1FtYxz4GegLot77Uwc5Lvd4djM-DC42yC",
+      "drive_path": "Book/03_Exports/Book-PublicFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
+    },
+    {
+      "artifact_id": "reading_10px_financial_economics_ten_lectures_20260930",
+      "file_name": "金融经济学十讲 10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "1DP2ODN3WiqJnzjZH3K3_eXU9atexQlih",
+      "drive_path": "Book/03_Exports/Book-FinancialEconomicsTenLectures-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
+    },
+    {
+      "artifact_id": "reading_10px_monetary_finance_3e_20260930",
+      "file_name": "货币金融学（第三版）10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "1DBZTcXHhGpISuw9O-OIxc87CNDx3kYrp",
+      "drive_path": "Book/03_Exports/Book-MonetaryFinance-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
+    },
+    {
+      "artifact_id": "reading_10px_contemporary_china_economy_20260930",
+      "file_name": "当代中国经济 10px 清爽版",
+      "type": "generated_artifact_set",
+      "drive_file_id": "1-VCip06rEO_IlXgelYpI3U8kY_oVhwiq",
+      "drive_path": "Book/03_Exports/Book-ContemporaryChinaEconomy-LearningPDF-v5-CLEAN-20260929/10px清爽版_20260930",
+      "sha256": null,
+      "version": "10px_clean_reading_20260930",
+      "source": "assistant_generated_from_existing_v5_exports",
+      "purpose": "Preview/Learn/Review/Practice 10px clean-reading PDFs plus four-piece ZIP; reading/export layer only.",
+      "status": "active_verified_drive_set",
+      "verification": "Drive folder and all five expected output objects read back on 2026-09-30; set-level SHA-256 not applicable."
     }
   ],
   "notes": [
     "This initial manifest deliberately lists only artifacts/areas directly reconciled during the 2026-08-28 governance checkpoint.",
     "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
-    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
+    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json.",
+    "2026-09-30 10px clean reading sets are tracked at folder level here and in governance/reading_artifacts_20260930.json; old v5/12px exports remain preserved."
   ]
 }

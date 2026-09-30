@@ -1,12 +1,12 @@
 {
   "schema_version": "book_project_state_v1",
-  "updated_date": "2026-08-30",
-  "repository": "Jvust2/Book",
+  "updated_date": "2026-09-30",
+  "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "chore/h4a-post-merge-state-20260830",
+  "active_branch": "chore/10px-clean-artifacts-20260930",
   "phase": "PHASE_1H_PREPARATION",
   "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
-  "base_main_commit": "f9814d4287846e4eb187852ccccd5fc1ad63162f",
+  "base_main_commit": "4f20999a94f90e8f1ed8ff09e0ee98b81248a63d",
   "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
@@ -193,5 +193,14 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
+  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval.",
+  "reading_artifacts": {
+    "status": "SIX_TEXTBOOK_10PX_SETS_COMPLETE",
+    "manifest": "governance/reading_artifacts_20260930.json",
+    "documentation": "docs/artifacts/2026-09-30-10px-clean-reading-pdfs.md",
+    "textbook_count": 6,
+    "output_object_count": 30,
+    "canonical_textbook_mutation": false,
+    "drive_verified": true
+  }
 }
