@@ -4,7 +4,7 @@ async function openPractice(page: Page) {
   await page.route('**/api/courses/**', route => {
     const path = new URL(route.request().url()).pathname
     const identity = { course_id: 'synthetic_practice', book_id: 'synthetic_book', section_id: 'synthetic_s01' }
-    if (path.endsWith('/sections/synthetic_s01')) return route.fulfill({ json: { ...identity, chapter_id: 'synthetic_ch01',
+    if (path.endsWith('/sections/synthetic_s01')) return route.fulfill({ json: { course_id: identity.course_id, book_id: identity.book_id, chapter_id: 'synthetic_ch01',
       section: { section_id: 'synthetic_s01', number: '1.1', title_zh: '合成练习试点', title_en: null,
         printed_page_start: 1, printed_page_end: 1, pdf_page_start: 2, pdf_page_end: 2 },
       object_count: 1, figure_count: 0, translation_available: true } })
