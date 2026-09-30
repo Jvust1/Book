@@ -89,7 +89,7 @@ jobs:
           cache-dependency-path: app/web/package-lock.json
 
       - name: Install web dependencies
-        run: npm ci
+        run: npm ci --no-audit
 
       - name: Run web tests
         run: npm test
@@ -124,7 +124,7 @@ jobs:
 
       - name: Install web dependencies
         working-directory: app/web
-        run: npm ci
+        run: npm ci --no-audit
 
       - name: Install Chromium
         working-directory: app/web
@@ -176,6 +176,7 @@ jobs:
             app/web/test-results/pdfjs-pilot-*.png
             app/web/test-results/qa-markdown-pilot-*.png
             app/web/test-results/mathjs-practice-pilot-*.png
+            app/web/test-results/fuse-local-pdf-pilot-*.png
           if-no-files-found: ignore
           retention-days: 7
 

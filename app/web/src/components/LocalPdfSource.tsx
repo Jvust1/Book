@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { LocalPdfSearch } from './LocalPdfSearch'
 import type { PDFDocumentProxy, RenderTask } from 'pdfjs-dist'
 import { boundedCanvasScale, loadLocalPdf, sourcePageInRange, type LoadedLocalPdf } from '../pdf/localPdf'
 
@@ -128,7 +129,16 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
         选择本地 PDF
         <input type="file" accept="application/pdf,.pdf" onChange={event => {
           const selected = event.currentTarget.files?.[0]
-          if (selected) setFile(selected)
+          if (selected) {
+            // Never show a previous document/index beneath the newly selected filename.
+            setPdf(null)
+            setPageNumber(null)
+            setPageText('')
+            setTextExpanded(false)
+            setError(null)
+            hostRef.current?.replaceChildren()
+            setFile(selected)
+          }
           event.currentTarget.value = ''
         }} />
       </label>
@@ -152,6 +162,7 @@ export function LocalPdfSource({ bookId, sourceId, sourcePage }: LocalPdfSourceP
           </select></label>
         </div>
       </> : null}
+      {pdf ? <LocalPdfSearch pdf={pdf} onNavigate={goToPage} /> : null}
       {rendering ? <p role="status">正在显示 PDF 页…</p> : null}
       {error ? <p role="alert">{error}</p> : null}
       <div className="local-pdf-canvas" ref={hostRef} />
