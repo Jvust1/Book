@@ -1,6 +1,16 @@
 # Book Handoff
 
-Updated: 2026-08-29
+Updated: 2026-10-01
+
+## Latest artifact/state checkpoint — 2026-10-01
+
+- Repository: `Jvust1/Book`; verified base main `6e5782b23c49943a263dfad7ee490147d57b2f0e`.
+- Consolidated Drive snapshot: `Book/03_Exports/Book-All-Results-20261001/`.
+- Six books have verified 10px reading sets; five repaired r2 sets have final QA with 20/20 PDFs and zero targeted small-prose/noise residue.
+- Six books have verified 15px reading sets; PR #56 is already in main.
+- These are derived reading/export artifacts only; do not infer canonical textbook mutation or complete Runtime registration.
+- Main contains the 2026-09-30 FSRS/retrieval/ingestion increments through MinerU (#55). Re-read main before new implementation work because historical phase text below predates these merges.
+
 
 ## Start here
 
