@@ -266,3 +266,4 @@ jobs:
             books/functional-analysis/page_map.rebuild_report.json
             books/functional-analysis/RUNTIME_READINESS.json
           if-no-files-found: error
+# ci rerun 2026-09-30
