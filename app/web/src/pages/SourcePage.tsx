@@ -20,7 +20,9 @@ const contextLabel = (item: SourceContextItem): string =>
 export function SourcePage() {
   const { courseId, kind, sourceId } = useParams()
   const navigate = useNavigate()
-  const [source, setSource] = useState<SourceResponse | null>(null)
+  const [loadedSource, setSource] = useState<SourceResponse | null>(null)
+  const source = loadedSource && loadedSource.course_id === courseId && loadedSource.kind === kind?.trim().toLowerCase() && loadedSource.source_id === sourceId
+    ? loadedSource : null
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {

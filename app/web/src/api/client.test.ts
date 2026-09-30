@@ -81,7 +81,12 @@ describe('bookApi', () => {
       scope_used: 'section',
       insufficient_evidence: false,
       message: null,
-      citations: [],
+      citations: [{
+        evidence_id: 'E1', source_kind: 'object', source_id: 'synthetic_definition',
+        chapter_id: 'chapter_01', section_id: 'ch01_s01', object_type: 'definition',
+        type_zh: '定义', number: '1', title_zh: '原创合成来源', title_en: null,
+        printed_page: 1, pdf_page: 2, source_anchor: 'synthetic:2',
+      }],
     }
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse(responseBody))
     vi.stubGlobal('fetch', fetchMock)

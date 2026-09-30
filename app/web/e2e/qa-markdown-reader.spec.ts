@@ -23,7 +23,8 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
           answer, answer_kind: 'generated', answer_style: 'explain', scope_requested: 'book', scope_used: 'book',
           insufficient_evidence: false, message: null, citations: [citation] } })
       } else if (path.includes('/sources/')) {
-        await route.fulfill({ json: { ...citation, course_id: course, book_id: 'synthetic_book', kind: 'object', type: 'formula',
+        const { evidence_id: _evidence, chapter_id: _chapter, source_kind, object_type, ...sourceFields } = citation
+        await route.fulfill({ json: { ...sourceFields, course_id: course, book_id: 'synthetic_book', kind: source_kind, type: object_type,
           content_zh: '原创测试来源', formula: 'x^2=9', source_batch: 'synthetic-test-only', translation_available: true,
           context_before: [], context_after: [] } })
       } else {

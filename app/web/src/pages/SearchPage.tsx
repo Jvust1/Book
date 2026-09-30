@@ -28,7 +28,8 @@ export function SearchPage() {
   const [input, setInput] = useState(query)
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
-  const [results, setResults] = useState<SearchResponse | null>(null)
+  const [loadedResults, setResults] = useState<SearchResponse | null>(null)
+  const results = loadedResults && loadedResults.course_id === courseId && loadedResults.query === query ? loadedResults : null
   const [loading, setLoading] = useState(false)
   const [searchError, setSearchError] = useState<string | null>(null)
   const [unavailable, setUnavailable] = useState(false)

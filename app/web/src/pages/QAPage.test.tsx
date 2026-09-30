@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { ApiError, bookApi } from '../api/client'
@@ -337,4 +337,25 @@ describe('QAPage', () => {
     expect(screen.getByText(question)).toBeInTheDocument()
     expect(screen.queryByText('AI 生成回答，依据下方教材来源')).not.toBeInTheDocument()
   })
+  it('keeps a delayed old-course response out of the new course and its session', async () => {
+    let resolve!: (response: QAResponse) => void
+    vi.mocked(bookApi.askCourse).mockReturnValue(new Promise(done => { resolve = done }))
+    function SwitchCourse() {
+      const navigate = useNavigate()
+      return <button onClick={() => navigate('/courses/other_synthetic_course/qa')}>切换合成课程</button>
+    }
+    render(<MemoryRouter initialEntries={['/courses/functional_analysis_course/qa']}>
+      <SwitchCourse /><Routes><Route path="/courses/:courseId/qa" element={<QAPage />} /></Routes>
+    </MemoryRouter>)
+    const user = userEvent.setup()
+    await user.type(screen.getByRole('textbox', { name: '教材问题' }), 'Original pending question?')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    await user.click(screen.getByRole('button', { name: '切换合成课程' }))
+    expect(screen.queryByText('Original pending question?')).not.toBeInTheDocument()
+    await act(async () => resolve({ ...COURSE_GENERATED, question: 'Original pending question?', answer: 'Original delayed answer.' }))
+    expect(screen.queryByText('Original delayed answer.')).not.toBeInTheDocument()
+    expect(loadQASessionState('other_synthetic_course')).toBeNull()
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(1)
+  })
+
 })
