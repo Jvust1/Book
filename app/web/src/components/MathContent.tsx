@@ -25,11 +25,12 @@ function formulaBody(text: string): string {
 interface MathContentProps {
   text: string
   formula?: boolean
+  inline?: boolean
   className?: string
 }
 
 /** Render only a fresh text node, never source HTML; React owns the outer shell. */
-export function MathContent({ text, formula = false, className = '' }: MathContentProps) {
+export function MathContent({ text, formula = false, inline = false, className = '' }: MathContentProps) {
   const hostRef = useRef<HTMLSpanElement>(null)
   const [fallback, setFallback] = useState(false)
 
@@ -53,7 +54,7 @@ export function MathContent({ text, formula = false, className = '' }: MathConte
         throw new Error('Math input exceeds the presentation budget')
       }
       if (formula) {
-        katex.render(formulaBody(text), host, { ...options, displayMode: true })
+        katex.render(formulaBody(text), host, { ...options, displayMode: !inline })
       } else {
         renderMathInElement(host, {
           ...options,
@@ -74,18 +75,19 @@ export function MathContent({ text, formula = false, className = '' }: MathConte
       failed = true
     }
     setFallback(failed)
-  }, [formula, text])
+  }, [formula, inline, text])
 
+  const Container = inline ? 'span' : 'div'
   return (
-    <div className={`math-content ${formula ? 'formula-block' : 'learning-content'} ${className}`}>
+    <Container className={`math-content ${inline ? 'math-inline' : formula ? 'formula-block' : 'learning-content'} ${className}`}>
       <span ref={hostRef} className="math-content-host" />
       {fallback ? <span className="math-fallback-note">部分公式暂无法排版，已保留原文</span> : null}
-      {formula && !fallback ? (
+      {formula && !inline && !fallback ? (
         <details className="math-source">
           <summary>查看公式原文</summary>
           <code>{text}</code>
         </details>
       ) : null}
-    </div>
+    </Container>
   )
 }

@@ -3,6 +3,7 @@ import type { FormEvent } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { QAAnswerContent } from '../components/QAAnswerContent'
 import type {
   CourseResponse,
   QACitationItem,
@@ -262,7 +263,7 @@ export function QAPage() {
                   )}
                   <p>{scopeLabel(response)}</p>
                   {style ? <p>回答方式：{style}</p> : null}
-                  <p className="learning-content">{message.content}</p>
+                  {response.answer_kind === 'generated' ? <QAAnswerContent text={message.content} /> : <p className="learning-content">{message.content}</p>}
                 </section>
 
                 {response.citations.length > 0 ? (
