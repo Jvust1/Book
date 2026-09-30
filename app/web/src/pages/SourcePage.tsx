@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import { MathContent } from '../components/MathContent'
+import { LocalPdfSource } from '../components/LocalPdfSource'
 import type { LearningMode, SourceContextItem, SourceResponse } from '../api/types'
 import { loadQASessionState } from '../state/qaSessionState'
 import { loadSearchViewState } from '../state/searchViewState'
@@ -132,6 +133,8 @@ export function SourcePage() {
 
       {source.formula ? <MathContent text={source.formula} formula /> : null}
       <MathContent text={source.content_zh || '本段中文学习内容暂未提供'} />
+
+      <LocalPdfSource key={`${source.book_id}:${source.source_id}`} bookId={source.book_id} sourceId={source.source_id} sourcePage={source.pdf_page} />
 
       <section className="source-context" aria-label="来源上下文">
         {source.context_before.map((item) => (

@@ -30,7 +30,7 @@
 - 当前没有登录、云同步或远程数据库。
 - 每台安装生成一个稳定隐藏 UUID `profile_id`；当前 UI 为单用户，不提供账号切换。
 - PWA Service Worker 可以缓存前端静态资源，但教材动态数据与 StudyRecord API 仍需要本机 FastAPI 运行；因此不要把当前 PWA 描述成“无需后端即可完全离线运行”。
-- 当前来源页是结构化教材视图。仓库不包含原始完整 PDF，也没有本地 PDF Reader；后续可按 canonical `book_id` 接入本地 PDF。
+- 当前来源页保留结构化教材视图，并可用 PDF.js 对照用户选择的本地 PDF。仓库不包含原始完整 PDF；本地文件不会上传，其教材/版本身份仍须用户对照。
 - 教材问答生成文本永远是“模型回答”，不会写回教材结构化正文、搜索索引或 canonical source。
 - StudyRecord 只记录个人学习行为，绝不反向修改 canonical 教材资产。
 - 真实在线问答需要配置 OpenAI-compatible provider；未配置 provider 时，教材浏览、学习、搜索和本地 StudyRecord 仍可运行，但在线问答不可用。
@@ -317,3 +317,13 @@ Section 状态保存 route、scroll、expanded source IDs 与 active source；Se
 无法排版时显示原文，不隐藏来源内容，也不将排版成功解释为数学正确性验证。
 CSS、字体和 MIT 许可随应用一起打包，不请求第三方 CDN。
 验证范围和固定上游身份见 [KaTeX 集成记录](../docs/upstream/katex-reader-2026-09-30.md)。
+
+
+## 本地 PDF 来源对照
+
+在“教材来源”页选择你有权使用的本地 PDF，可跳到来源记录的 PDF 物理页号，前后翻页、缩放、返回来源页或查看辅助提取文本。
+文件身份始终标为未核验；页数不匹配时不会自动用其他页冒充来源页。
+本地文件限 100 MiB，只在当前页面会话中使用；关闭或离开来源页会释放文件和渲染资源。
+预览不执行脚本、打开链接或显示交互表单/批注，超大图像受预算限制；完整原文件仍是权威。
+启动和构建脚本从锁定的 pdfjs-dist 准备本机资源及许可证，不需要第三方 CDN。
+实现和验证范围见 [PDF.js 集成记录](../docs/upstream/pdfjs-local-source-2026-09-30.md)。

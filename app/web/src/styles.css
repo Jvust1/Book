@@ -496,3 +496,24 @@ textarea {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.local-pdf-source {
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid #d4d4d8;
+  border-radius: 16px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+.local-pdf-source h2, .local-pdf-source p { margin: 0; }
+.pdf-file-label { display: grid; gap: 8px; }
+.pdf-file-label input { max-width: 100%; }
+.pdf-identity-warning { color: #715422; line-height: 1.6; }
+.pdf-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.pdf-controls input { width: 5em; padding: 8px; }
+.pdf-controls select { padding: 8px; }
+.local-pdf-canvas { min-width: 0; max-width: 100%; max-height: 75vh; overflow: auto; }
+.local-pdf-canvas canvas { display: block; }
+.pdf-text p { padding-top: 12px; line-height: 1.6; white-space: pre-wrap; }
