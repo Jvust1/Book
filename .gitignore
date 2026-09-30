@@ -11,3 +11,7 @@ app/web/playwright-report/
 
 # Generated only from pinned pdfjs-dist; do not publish user PDF files
 app/web/public/pdfjs/
+
+# Isolated original chapter browser pilot artifacts
+app/web/pilot-test-results/
+app/web/pilot-playwright-report/
