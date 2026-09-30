@@ -1,8 +1,20 @@
 # Book 当前状态
 
-更新时间：2026-08-29
+更新时间：2026-10-01
 
 > 本文件记录当前有效成果、已确认产品决策和唯一下一步。若与旧聊天、旧 Drive CURRENT 或更早规划冲突，以 `main` 中的本文件、`docs/MASTER_PLAN.md`、`docs/ROADMAP.md`、已批准 Phase Spec/Plan 和最新专项架构文档为准。Foundation A 与 H0/H1/H2/H3a 均已通过独立 PR 合并到 `main`；后续任何新架构阶段仍必须经过独立设计、计划、PR 与 exact-HEAD gate。
+
+## 2026-10-01 全成果同步检查点
+
+- 当前真实仓库：`Jvust1/Book`
+- 本次分支基线 main：`2cd209668216bdab77e6a1a3a75146c9b4d963a1`
+- 2026-09-30 已合并到 main 的能力包括：FSRS 自适应复习、sentence-transformers 语义检索、混合检索、provenance-safe 模糊检索、FAISS、Docling、MarkItDown fallback、Docling-first ingestion 与 MinerU ingestion。
+- Drive 已核验六本教材的 10px 清爽阅读四件套（每本 4 PDF + ZIP，共 30 对象）。除《数学物理方程》外的五本已完成 r2 修复 QA：20/20 PDF，目标中文说明性小字 <7pt 为 0，目标来源/脚注/AI 标签/使用说明等残留为 0。
+- Drive 已核验六本教材的 15px 清爽阅读四件套（每本 4 PDF + ZIP，共 30 对象）。
+- 统一总成果索引：`Book/03_Exports/Book-All-Results-20261001/`。
+- 以上均属于阅读/导出层成果，不修改 canonical 教材事实层，也不等同于六本教材已全部 Runtime 注册。
+- 旧 PR #44（10px）与 #56（15px）仍保留为专项审阅分支；本分支提供当前统一收口状态，不自动合并任何 PR。
+
 
 ## 1. 当前工程状态
 
