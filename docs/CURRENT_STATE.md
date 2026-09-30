@@ -451,3 +451,23 @@ H0 → H1 → H2 → H3a 已完成并合并。下一实现阶段是 **H4a shadow
 6. `H3b`、`B4b`、`B5`、StudyRecord book-version migration 不在本轮批准范围内。
 
 当前不提前实现录音、Drive Sync、Meeting、ExamPoint、Mastery 或 Next Best Action。
+
+
+## 2026-10-01 六本教材 15px 阅读成果 checkpoint
+
+Drive 中已完成六本教材的 15px 清爽阅读版，每本包含预习 / 学习 / 复习 / 刷题 4 个 PDF 与 1 个四件套 ZIP，共 24 个 PDF + 6 个 ZIP。
+
+教材范围：
+
+- 泛函分析（江泽坚、孙善利）
+- 数学物理方程（第四版）
+- 货币金融学（第三版）
+- 当代中国经济
+- 公共财政概论（第二版）
+- 金融经济学十讲
+
+《货币金融学（第三版）》与《公共财政概论（第二版）》在 2026-10-01 进行了额外清爽修订，并在原 Drive 文件 ID 上原位替换，避免重复版本。
+
+完整 Drive 文件 ID、目录和 ZIP 映射见：`docs/BOOK_15PX_EXPORTS_2026-10-01.md`。
+
+该 checkpoint 只记录用户可读生成成果，不改变现有 Runtime / canonical textbook / Search / QA / StudyRecord 架构门状态。
