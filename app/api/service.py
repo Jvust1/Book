@@ -79,7 +79,7 @@ class BookAppService:
         self._qa_provider: ModelProvider = (
             qa_provider if qa_provider is not None else UnavailableModelProvider()
         )
-        self._retrieval_factory = retrieval_factory or RetrievalEngine.exact
+        self._retrieval_factory = retrieval_factory or RetrievalEngine.hybrid
         try:
             self._library = LibraryRuntime.open(
                 self.repository_root / "library",
