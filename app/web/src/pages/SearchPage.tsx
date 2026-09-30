@@ -3,6 +3,7 @@ import type { FormEvent } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { MathContent } from '../components/MathContent'
 import type { CourseResponse, SearchResponse, SearchResultItem } from '../api/types'
 import { loadSearchViewState, saveSearchViewState } from '../state/searchViewState'
 
@@ -190,9 +191,9 @@ export function SearchPage() {
                   <h2>{resultTitle(item)}</h2>
                   {item.title_en ? <p className="secondary-text">{item.title_en}</p> : null}
                 </div>
-                {item.formula ? <div className="formula-block">{item.formula}</div> : null}
+                {item.formula ? <MathContent text={item.formula} formula /> : null}
                 {item.snippet && item.snippet !== item.title_zh ? (
-                  <p className="learning-content">{item.snippet}</p>
+                  <MathContent text={item.snippet} />
                 ) : null}
                 <div className="search-result-meta">
                   <span>教材页：{item.printed_page ?? '暂缺'}</span>

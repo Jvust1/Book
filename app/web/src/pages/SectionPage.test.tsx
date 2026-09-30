@@ -212,7 +212,7 @@ describe('SectionPage', () => {
 
     expect(await screen.findByText('定义')).toBeInTheDocument()
     expect(screen.getAllByText('L^p 空间').length).toBeGreaterThan(0)
-    expect(screen.getByText('||f||_p < ∞')).toBeInTheDocument()
+    expect(screen.getByText('||f||_p < ∞', { selector: 'code' })).toBeInTheDocument()
     expect(
       screen.getByText('设 f 为可测函数，并满足相应的 p 次可积条件。'),
     ).toBeInTheDocument()
