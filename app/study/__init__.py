@@ -6,6 +6,7 @@ from .repository import (
     StudyRecordRepositoryError,
 )
 from .service import StudyRecordService
+from .review_schedule import ReviewSchedule, ReviewScheduleRepository, ReviewScheduleService
 
 __all__ = [
     "CorruptProfileError",
@@ -13,5 +14,8 @@ __all__ = [
     "StudyRecordRepository",
     "StudyRecordRepositoryError",
     "StudyRecordService",
+    "ReviewSchedule",
+    "ReviewScheduleRepository",
+    "ReviewScheduleService",
     "resolve_study_db_path",
 ]
