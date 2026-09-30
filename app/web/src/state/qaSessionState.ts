@@ -1,3 +1,4 @@
+import { sessionViewStorage } from './sessionViewStorage'
 import type { QAResponse } from '../api/types'
 import { qaResponseSchema } from '../api/sourceContracts'
 
@@ -124,27 +125,27 @@ export function activeQASource(state: QASessionState | null): ActiveQASource | n
 }
 
 export function saveQASessionState(courseId: string, state: QASessionState): void {
-  sessionStorage.setItem(qaSessionStateKey(courseId), JSON.stringify(state))
+  sessionViewStorage.write(qaSessionStateKey(courseId), JSON.stringify(state))
 }
 
 export function loadQASessionState(courseId: string): QASessionState | null {
   const key = qaSessionStateKey(courseId)
-  const raw = sessionStorage.getItem(key)
+  const raw = sessionViewStorage.read(key)
   if (raw === null) return null
 
   try {
     const value: unknown = JSON.parse(raw)
     if (!isQASessionState(value) || !validConversation(value, courseId)) {
-      sessionStorage.removeItem(key)
+      sessionViewStorage.remove(key)
       return null
     }
     return value
   } catch {
-    sessionStorage.removeItem(key)
+    sessionViewStorage.remove(key)
     return null
   }
 }
 
 export function clearQASessionState(courseId: string): void {
-  sessionStorage.removeItem(qaSessionStateKey(courseId))
+  sessionViewStorage.remove(qaSessionStateKey(courseId))
 }
