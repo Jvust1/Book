@@ -1,0 +1,8 @@
+Derived correction ledger for functional_analysis_2e_jiang_sun
+1) page 39: section ch01_s08 title corrected; optional=true.
+2) page 138: ch03_s07 optional=true.
+3) page 146: ch03_s08 optional=true.
+4) page 214: ch05 optional=true.
+5) page 215: source outline script-D symbol restored.
+6) page 219: source outline script-S symbol restored.
+Source scan and raw OCR are unchanged.
