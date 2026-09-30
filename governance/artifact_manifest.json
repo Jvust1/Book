@@ -1,6 +1,6 @@
 {
   "schema_version": "book_artifact_manifest_v1",
-  "updated_date": "2026-08-28",
+  "updated_date": "2026-10-01",
   "project": {
     "repository": "Jvust1/Book",
     "drive_root_id": "1izJ8kgcQjHAMkWpcpAUCx4Y8kJNnGLbB",
@@ -74,11 +74,54 @@
       "purpose": "Validated Book App source delivery package containing frontend, FastAPI, Runtime, tests, and structured Functional Analysis data.",
       "status": "active",
       "verification": "Local ZIP integrity/tests/build verified; Drive upload read back with matching size."
+    },
+    {
+      "artifact_id": "book_all_results_snapshot_md_20261001",
+      "file_name": "BOOK_ALL_RESULTS_20261001.md",
+      "type": "generated_index",
+      "drive_file_id": "1RJussfL6JgTmdvVmHX1sSWzoJDLHO7FS",
+      "drive_path": "Book/03_Exports/Book-All-Results-20261001/BOOK_ALL_RESULTS_20261001.md",
+      "size_bytes": 2534,
+      "sha256": null,
+      "version": "2026-10-01",
+      "source": "assistant_generated_from_verified_github_and_drive_state",
+      "purpose": "Human-readable current Book results index.",
+      "status": "active",
+      "verification": "Drive upload verified after live GitHub/Drive reconciliation."
+    },
+    {
+      "artifact_id": "book_all_results_snapshot_json_20261001",
+      "file_name": "BOOK_ALL_RESULTS_20261001.json",
+      "type": "generated_index",
+      "drive_file_id": "1mFPpNprVBxBDgzUohfDV50tatlRJktXx",
+      "drive_path": "Book/03_Exports/Book-All-Results-20261001/BOOK_ALL_RESULTS_20261001.json",
+      "size_bytes": 4466,
+      "sha256": null,
+      "version": "2026-10-01",
+      "source": "assistant_generated_from_verified_github_and_drive_state",
+      "purpose": "Machine-readable six-book 10px/15px results snapshot.",
+      "status": "active",
+      "verification": "Drive upload verified after live export-folder reconciliation."
+    },
+    {
+      "artifact_id": "five_books_10px_r2_final_qa_20261001",
+      "file_name": "FIVE_BOOKS_10PX_R2_FINAL_QA.json",
+      "type": "generated_qa",
+      "drive_file_id": "1S_erxOul-aLI0BQ4tHrFlZ3NU1uyvmbw",
+      "drive_path": "Book/03_Exports/Book-All-Results-20261001/FIVE_BOOKS_10PX_R2_FINAL_QA.json",
+      "size_bytes": 10156,
+      "sha256": "ccd709bc5e98fbea19c1f3859ff24c2980ce764f9ae3780221226e0859e64bcc",
+      "version": "r2-2026-10-01",
+      "source": "assistant_generated_qa",
+      "purpose": "Final QA for five repaired 10px reading sets.",
+      "status": "active",
+      "verification": "20/20 PDFs; zero targeted Chinese prose below 7pt; zero targeted reading-noise residues."
     }
   ],
   "notes": [
     "This initial manifest deliberately lists only artifacts/areas directly reconciled during the 2026-08-28 governance checkpoint.",
     "Historical Drive phase artifacts are preserved but are not silently reclassified as current without a separate reconciliation.",
-    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json."
+    "A null SHA-256 means the artifact is not hash-verified and must not be represented as hash-verified; matching pending work is tracked in governance/pending_sync.json.",
+    "2026-10-01: consolidated six-book 10px/15px reading-export state is indexed by governance/reading_artifacts_20261001.json; reading exports do not mutate canonical textbook facts or imply Runtime registration."
   ]
 }
