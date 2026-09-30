@@ -23,6 +23,7 @@ describe('learning response route contracts', () => {
     { ...section, section: { ...section.section, pdf_page_end: 1 } },
     { ...section, object_count: -1 },
     { ...section, unexpected: 'unvalidated metadata' },
+    { ...section, section_id: 'original_section' },
   ])('rejects Section identity and shape corruption %#', async value => {
     respond(value)
     await expect(bookApi.getSection('original_course', 'original_section')).rejects.toMatchObject({ code: 'invalid_response' })

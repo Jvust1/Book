@@ -21,6 +21,8 @@ No API endpoint, persisted DTO, source record, study grading rule, package pin o
 - UI tests cover mismatched books, delayed section metadata and an old mode response arriving after newer navigation
 - Five production-browser cases cover wrong Section/course, wrong mode/course, wrong mode name, missing source references and mismatched book, including valid-mode recovery and no invalid progress writes
 - The earlier full original chapter journey and real PDF.js/Fuse/math.js/SymPy pipeline remain in the suite
-- Local target: 286 web tests plus TypeScript; exact-head hosted CI provides production build and all 38 regular + 2 connected-pilot browser cases
+- Local target: 287 web tests plus TypeScript; exact-head hosted CI provides production build and all 38 regular + 2 connected-pilot browser cases
 
 Only original synthetic strings are used in the new tests/screenshots. Canonical `books/`, `courses/` and `library/` trees are unchanged. No new audit request is made; `npm ci --no-audit` remains in CI.
+
+The initial hosted browser run passed 35/38 regular cases. The three practice cases shared a synthetic Section fixture with an extra top-level `section_id`, unlike the real API DTO. That fixture was corrected without changing assertions or relaxing the schema; an explicit rejection regression was added. The complete exact-head browser gate must rerun after the correction.
