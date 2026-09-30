@@ -13,7 +13,7 @@ const item = {
 }
 
 async function fixtureApi(page: Page, content = prose) {
-  await page.route('**/api/**', async route => {
+  await page.route('**/api/courses/**', async route => {
     const path = new URL(route.request().url()).pathname
     let body: unknown
     if (path.endsWith(`/sections/${section}`)) {
