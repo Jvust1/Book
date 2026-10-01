@@ -98,7 +98,7 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
     expect(answer.scope_used).toBe('section')
     expect(answer.citations[0]).toMatchObject({ source_kind: 'object', source_id: source,
       section_id: section, pdf_page: 2, printed_page: 1, source_anchor: 'original:pdf:2:doubling_rule' })
-    await expect(page.getByText('回答依据：当前小节', { exact: true })).toBeVisible()
+    await expect(page.getByText('回答依据：提问时的小节', { exact: true })).toBeVisible()
     await expect(page.locator('.qa-markdown .katex-mathml')).toHaveCount(2)
     await page.screenshot({ path: `pilot-test-results/chapter-qa-${viewport.name}.png`, fullPage: true })
     await page.locator('.qa-citation-card').getByRole('link', { name: '查看教材来源' }).click()

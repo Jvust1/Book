@@ -1,5 +1,5 @@
 import { ReaderTestProvider } from '../test/ReaderTestProvider'
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -211,9 +211,9 @@ describe('QAPage', () => {
         question: SECTION_GENERATED.question,
         section_id: 'ch01_s01',
         history: [],
-      })
+      }, expect.any(AbortSignal))
     })
-    expect(await screen.findByText('回答依据：当前小节')).toBeInTheDocument()
+    expect(await screen.findByText('回答依据：提问时的小节')).toBeInTheDocument()
     expect(screen.getByText('回答方式：简要')).toBeInTheDocument()
     expect(screen.getByText('AI 生成回答，依据下方教材来源')).toBeInTheDocument()
     expect(screen.getByText('定义 · 1.2')).toBeInTheDocument()
@@ -240,7 +240,7 @@ describe('QAPage', () => {
     await user.click(screen.getByRole('button', { name: '提问' }))
 
     expect(
-      await screen.findByText('回答依据：本节 + 教材其他章节'),
+      await screen.findByText('回答依据：提问时的小节 + 教材其他章节'),
     ).toBeInTheDocument()
   })
 
@@ -269,7 +269,7 @@ describe('QAPage', () => {
           { role: 'user', content: SECTION_GENERATED.question },
           { role: 'assistant', content: SECTION_GENERATED.answer },
         ],
-      })
+      }, expect.any(AbortSignal))
     })
     expect(await screen.findByText(SECOND_GENERATED.answer!, { selector: '.qa-markdown p' })).toBeInTheDocument()
     expect(screen.getAllByText(SECTION_GENERATED.question).length).toBeGreaterThan(0)
@@ -357,6 +357,150 @@ describe('QAPage', () => {
     expect(screen.queryByText('Original delayed answer.')).not.toBeInTheDocument()
     expect(loadQASessionState('other_synthetic_course')).toBeNull()
     expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(1)
+  })
+
+  it('offers explicit cancellation while a QA response never settles', async () => {
+    vi.mocked(bookApi.askCourse).mockReturnValue(new Promise(() => {}))
+    renderQA()
+    const user = userEvent.setup()
+    await user.type(screen.getByRole('textbox', { name: '教材问题' }), 'Original stalled question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    expect(screen.getByRole('button', { name: '正在查找教材依据…' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: '停止等待' })).toBeEnabled()
+  })
+
+  it('does not append a delayed answer from an abandoned section under a new section heading', async () => {
+    let resolve!: (response: QAResponse) => void
+    vi.mocked(bookApi.askCourse).mockReturnValue(new Promise(done => { resolve = done }))
+    vi.mocked(bookApi.getSection).mockImplementation(async (_courseId, sectionId) => ({
+      ...SECTION, section: { ...SECTION.section, section_id: sectionId, title_zh: sectionId === 'ch01_s01' ? 'Original A' : 'Original B' },
+    }))
+    function SwitchSection() {
+      const navigate = useNavigate()
+      return <button onClick={() => navigate('/courses/functional_analysis_course/qa?section=ch01_s02')}>切换原创小节</button>
+    }
+    render(<ReaderTestProvider><MemoryRouter initialEntries={['/courses/functional_analysis_course/qa?section=ch01_s01']}>
+      <SwitchSection /><Routes><Route path="/courses/:courseId/qa" element={<QAPage />} /></Routes>
+    </MemoryRouter></ReaderTestProvider>)
+    const user = userEvent.setup()
+    await screen.findByText('当前范围：1.1 · Original A')
+    await user.type(screen.getByRole('textbox', { name: '教材问题' }), 'Original section A question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    await user.click(screen.getByRole('button', { name: '切换原创小节' }))
+    await screen.findByText('当前范围：1.1 · Original B')
+    await act(async () => resolve({ ...SECTION_GENERATED, question: 'Original section A question', answer: 'Original delayed section A answer.' }))
+    expect(screen.queryByText('Original delayed section A answer.', { selector: '.qa-markdown p' })).not.toBeInTheDocument()
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(1)
+  })
+
+  it.each(['success', 'failure'] as const)('releases stopped work without allowing its late %s to finish the next question', async outcome => {
+    let oldResolve!: (value: QAResponse) => void
+    let oldReject!: (reason: unknown) => void
+    let newResolve!: (value: QAResponse) => void
+    vi.mocked(bookApi.askCourse)
+      .mockReturnValueOnce(new Promise((resolve, reject) => { oldResolve = resolve; oldReject = reject }))
+      .mockReturnValueOnce(new Promise(resolve => { newResolve = resolve }))
+    renderQA()
+    const user = userEvent.setup()
+    const input = screen.getByRole('textbox', { name: '教材问题' })
+    await user.type(input, 'Original stopped question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    const stoppedSignal = vi.mocked(bookApi.askCourse).mock.calls[0][2]!
+    expect(stoppedSignal).toBeInstanceOf(AbortSignal)
+    await user.click(screen.getByRole('button', { name: '停止等待' }))
+    expect(stoppedSignal.aborted).toBe(true)
+    expect(screen.getByRole('status')).toHaveTextContent('停止等待不代表远端已取消，也不会撤销服务器工作')
+    expect(screen.getByRole('status')).toHaveTextContent('不会自动重发')
+    expect(bookApi.askCourse).toHaveBeenCalledTimes(1)
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(1)
+    await user.type(input, 'Original next question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    expect(vi.mocked(bookApi.askCourse).mock.calls[1][2]?.aborted).toBe(false)
+    await act(async () => {
+      if (outcome === 'success') oldResolve({ ...COURSE_GENERATED, question: 'Original stopped question', answer: 'Original stale answer' })
+      else oldReject(new ApiError('Original stale failure', 503))
+    })
+    expect(screen.getByRole('button', { name: '正在查找教材依据…' })).toBeDisabled()
+    expect(screen.queryByText('Original stale answer')).not.toBeInTheDocument()
+    expect(screen.queryByText('Original stale failure')).not.toBeInTheDocument()
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(2)
+    await act(async () => newResolve({ ...COURSE_GENERATED, question: 'Original next question', answer: 'Original next answer' }))
+    expect(screen.getByText('Original next answer', { selector: '.qa-markdown p' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '提问' })).toBeEnabled()
+    expect(loadQASessionState('functional_analysis_course')?.messages.map(message => message.content)).toEqual([
+      'Original stopped question', 'Original next question', 'Original next answer',
+    ])
+    expect(bookApi.askCourse).toHaveBeenCalledTimes(2)
+  })
+
+  it('suppresses duplicate submits and aborts owned work immediately on unmount', async () => {
+    let resolve!: (value: QAResponse) => void
+    vi.mocked(bookApi.askCourse).mockReturnValue(new Promise(done => { resolve = done }))
+    const view = renderQA()
+    const user = userEvent.setup()
+    const input = screen.getByRole('textbox', { name: '教材问题' })
+    await user.type(input, 'Original one request')
+    const form = input.closest('form')!
+    act(() => { fireEvent.submit(form); fireEvent.submit(form) })
+    expect(bookApi.askCourse).toHaveBeenCalledTimes(1)
+    const signal = vi.mocked(bookApi.askCourse).mock.calls[0][2]!
+    view.unmount()
+    expect(signal.aborted).toBe(true)
+    await act(async () => resolve({ ...COURSE_GENERATED, question: 'Original one request', answer: 'Original abandoned answer' }))
+    expect(loadQASessionState('functional_analysis_course')?.messages.map(message => message.content)).toEqual(['Original one request'])
+  })
+
+  it('does not revive section work after Back and Forward, and scopes the next question explicitly', async () => {
+    let resolve!: (value: QAResponse) => void
+    vi.mocked(bookApi.askCourse).mockReturnValueOnce(new Promise(done => { resolve = done }))
+      .mockResolvedValueOnce({ ...COURSE_GENERATED, question: 'Original full-book question' })
+    function Navigation() {
+      const navigate = useNavigate()
+      return <><button onClick={() => navigate('/courses/functional_analysis_course/qa')}>整本提问</button>
+        <button onClick={() => navigate(-1)}>后退</button><button onClick={() => navigate(1)}>前进</button></>
+    }
+    render(<ReaderTestProvider><MemoryRouter initialEntries={['/courses/functional_analysis_course/qa?section=ch01_s01']}>
+      <Navigation /><Routes><Route path="/courses/:courseId/qa" element={<QAPage />} /></Routes>
+    </MemoryRouter></ReaderTestProvider>)
+    const user = userEvent.setup()
+    const input = screen.getByRole('textbox', { name: '教材问题' })
+    await user.type(input, 'Original section question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    const signal = vi.mocked(bookApi.askCourse).mock.calls[0][2]!
+    await user.click(screen.getByRole('button', { name: '整本提问' }))
+    expect(signal.aborted).toBe(true)
+    expect(screen.getByRole('status')).toHaveTextContent('提问范围已改变')
+    expect(screen.getByRole('button', { name: '提问' })).toBeEnabled()
+    await user.click(screen.getByRole('button', { name: '后退' }))
+    await screen.findByText('当前范围：1.1 · L^p 空间')
+    await act(async () => resolve({ ...SECTION_GENERATED, question: 'Original section question', answer: 'Original never-revived answer' }))
+    expect(screen.queryByText('Original never-revived answer')).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '前进' }))
+    expect(screen.getByText('当前范围：整本教材')).toBeInTheDocument()
+    await user.type(input, 'Original full-book question')
+    await user.click(screen.getByRole('button', { name: '提问' }))
+    await screen.findByText(COURSE_GENERATED.answer!, { selector: '.qa-markdown p' })
+    expect(bookApi.askCourse).toHaveBeenCalledTimes(2)
+    expect(vi.mocked(bookApi.askCourse).mock.calls[1][1]).toMatchObject({ section_id: null,
+      history: [{ role: 'user', content: 'Original section question' }] })
+  })
+
+  it('retains completed course history with question-time labels under a different current section', async () => {
+    saveQASessionState('functional_analysis_course', {
+      route: '/courses/functional_analysis_course/qa?section=ch01_s01', scrollY: 0, activeCitationSourceId: null,
+      messages: [
+        { id: 'user-1', role: 'user', content: SECTION_GENERATED.question },
+        { id: 'assistant-2', role: 'assistant', content: SECTION_GENERATED.answer!, response: SECTION_GENERATED },
+      ],
+    })
+    vi.mocked(bookApi.getSection).mockResolvedValue({ ...SECTION, section: { ...SECTION.section, section_id: 'ch01_s02', title_zh: 'Original current section B' } })
+    renderQA('/courses/functional_analysis_course/qa?section=ch01_s02')
+    await screen.findByText('当前范围：1.1 · Original current section B')
+    expect(screen.getByText('回答依据：提问时的小节')).toBeInTheDocument()
+    expect(screen.getByText('历史回答按提问时范围保留；上方当前范围只用于新问题。')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: '查看教材来源' })).toHaveAttribute('href', '/courses/functional_analysis_course/sources/object/def_banach_space')
+    expect(bookApi.askCourse).not.toHaveBeenCalled()
+    expect(loadQASessionState('functional_analysis_course')?.messages).toHaveLength(2)
   })
 
 })

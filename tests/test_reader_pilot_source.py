@@ -72,7 +72,7 @@ class ReaderPilotSourceTests(unittest.TestCase):
 
     def test_allows_code_and_complete_notices_but_excludes_data_and_credentials(self):
         for path in ["app/web/src/example.tsx", "runtime/example.py", "app/web/public/licenses/Example-LICENSE.txt",
-                     "app/web/playwright.portable.config.ts"]:
+                     "app/web/playwright.portable.config.ts", "docs/upstream/qa-cancellation-2026-10-01.md"]:
             self.assertTrue(bundle.allowed_source(path), path)
         for path in ["books/original/chapter.txt", "courses/course/course.json", "library/library.json",
                      ".env", "app/api/.env", "app/api/credentials.json", "app/web/public/private.pdf",

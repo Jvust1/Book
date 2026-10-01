@@ -116,7 +116,7 @@ jobs:
           npm.cmd run typecheck
           npm.cmd run build
           node node_modules/@playwright/test/cli.js install chromium
-      - name: Run all five original journeys with upstream-owned server lifecycle
+      - name: Run original journeys with upstream-owned server lifecycle
         working-directory: ${{ env.PILOT_DIR }}/app/web
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
