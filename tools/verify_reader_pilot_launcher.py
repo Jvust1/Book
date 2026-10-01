@@ -99,8 +99,10 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix='book launcher acceptance ', delete=False) as workspace:
         root = Path(workspace)
         temporary = root / 'owned temporary data'
+        browser_temporary = root / 'browser harness temporary data'
         unrelated = root / 'unrelated data'
         temporary.mkdir()
+        browser_temporary.mkdir()
         unrelated.mkdir()
         sentinel = unrelated / 'sentinel.txt'
         sentinel.write_text('Original preservation sentinel', encoding='utf-8')
@@ -108,6 +110,10 @@ def main() -> int:
                    BOOK_APP_DATA_DIR=str(unrelated), PYTHONPATH='', PYTHONUTF8='1', PYTHONIOENCODING='utf-8')
         executable_dir = ROOT / '.venv' / ('Scripts' if os.name == 'nt' else 'bin')
         env['PATH'] = str(executable_dir) + os.pathsep + env.get('PATH', '')
+        # Playwright persists its transform cache in os.tmpdir(). Keep test-owned
+        # artifacts outside the launcher's strict, asserted-empty temp parent.
+        browser_env = dict(env, TMP=str(browser_temporary), TEMP=str(browser_temporary),
+                           TMPDIR=str(browser_temporary))
         argv = [sys.executable, str(LAUNCHER)]
         flags = {'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == 'nt' else {'start_new_session': True}
         prepared = ROOT / '.venv' / PREPARED_MARKER
@@ -151,7 +157,7 @@ def main() -> int:
                 # Existing original real browser journeys, using this launcher's API and preview.
                 result = subprocess.run([str(node), str(ROOT / 'app/web/node_modules/@playwright/test/cli.js'),
                                          'test', '--config', 'playwright.pilot.config.ts'],
-                                        cwd=ROOT / 'app/web', env=env, shell=False, timeout=480)
+                                        cwd=ROOT / 'app/web', env=browser_env, shell=False, timeout=480)
                 require(result.returncode == 0, 'Launched original browser journeys failed')
             except BaseException as error:
                 failure = error
