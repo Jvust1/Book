@@ -1,0 +1,90 @@
+{
+  "schema_version": "book_pdf_delivery_checkpoint_v1",
+  "date": "2026-10-01",
+  "batch": "v10",
+  "overall_status": "FULL_RELEASE_NOT_READY",
+  "repository": "Jvust1/Book",
+  "branch": "book/pdf-corrections-20261001-v1",
+  "parent_commit": "874032a5fb02d940b41478b7eb959967199959da",
+  "main_observed_before_publication": "805510f86546709b6f67c9e9079943f205c2c245",
+  "interruption_closeout": true,
+  "new_v11_content_revision": false,
+  "canonical_mutation": false,
+  "main_merge": false,
+  "font_files_distributed": false,
+  "public_textbook_content_upload": false,
+  "corrections": {
+    "source_documents": 8,
+    "replacements": 78,
+    "explicit_archives": 28,
+    "operations": 106,
+    "unaffected_block_dicts_exact": 957,
+    "reapplied_json_byte_matches": 8,
+    "source_parent_v9_matches": 2,
+    "source_parent_v8r2_matches": 6,
+    "evidence_native_pixel_matches": 13,
+    "full_academic_acceptance": false
+  },
+  "outputs": {
+    "chapter_pdfs": 24,
+    "chapter_pages": 239,
+    "all_A4": true,
+    "px_to_prose_pt": {"10": 7.5, "12": 9, "15": 11.25},
+    "html_pdf_nonspace_counter_matches": 24,
+    "combined_pdfs": 12,
+    "combined_pages": 1411,
+    "combined_geometry_text_pixels_verified": true,
+    "other_v8r2_documents_reused": 37,
+    "page_counts_10_12_15": {
+      "learn": [147,195,284],
+      "preview": [22,23,30],
+      "review": [110,144,220],
+      "practice": [57,76,103]
+    }
+  },
+  "closeout_rebuild": {
+    "sample": "eight documents at 15px",
+    "text_and_54dpi_pixel_matches": 8,
+    "raw_byte_matches": 6,
+    "samples": 8,
+    "different_from_original_mixed_size_sample": true
+  },
+  "local_tests_passed": 156,
+  "new_synthetic_tests": 26,
+  "fresh_poppler_pages_inspected": 3,
+  "full_line_by_line_review": false,
+  "hosted_ci_status": "NOT_CLAIMED",
+  "manual_actions_dispatch": false,
+  "font": "Noto CJK substitute; NOT Shusong",
+  "windows_reader_printing_tested": false,
+  "drive_folder_id": "1GcyxmDwsxjEBzKYrgCP_1n7QYCJMnNah",
+  "package": {
+    "bytes": 127728608,
+    "sha256": "bcf24d2497d6a473d40fa8c0b987baf4c1e1aeda4bcd97acffd61bbadd507f05",
+    "fresh_remote_parts_verified": 4,
+    "actual_merge_sha_crc_verified": true,
+    "payload_hashes_and_lengths_verified": 399,
+    "manifest_drive_id": "1HkBBALlEHzGoXECDjjiUGI6Poa9B-ynm",
+    "notebook_drive_id": "1z8eXh7Glz3P_rPGIHGh43edQJlmqfamF",
+    "original_zip_unchanged": true
+  },
+  "notebook_code_cells_syntax_checked": 6,
+  "colab_user_account_run": false,
+  "report_drive_id": "1Z5uoRFep9VeBkDUgrMfr1Ljiq1DWRk96",
+  "standalone_15px_drive_ids": {
+    "learn": "1Ae127HhFQfMZWTxhWfYac39Q-8AHNZIt",
+    "preview": "17tyUsEqUjjk9pP1cT-WFFfjKKISM2dEu",
+    "review": "1bjYQI-SE2ne0WtetdrlkmuR9GzoSFns0",
+    "practice": "1erHEbeCLCEG9Do3mUiEj-Bb-mOO4P0g2"
+  },
+  "next_block_ids": ["p0165_o00352","cross_p0215_p0216_00485"],
+  "remaining_gates": [
+    "Source OCR and heading/overlap defects; corresponding teaching excerpts",
+    "Semantic audit of all 253 differences",
+    "Other five books all-mode/all-size reflow",
+    "Original MD proof-continuity and sparse-page issues",
+    "True Shusong font environment",
+    "Windows reader and printing",
+    "Independent full-content acceptance"
+  ]
+}

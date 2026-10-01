@@ -97,6 +97,39 @@ def patch_document(original: dict, operations: list[dict], evidence: set[str]) -
                         'before_html_sha256': digest(b['html'].encode()),
                         'exact_nonspace_text_retained_in_kept_block': True,
                         'archived_original_block': True, 'evidence_ids': refs, 'reason': op['reason']})
+        elif action == 'archive_source_artifact':
+            # Explicit, evidence-bound retirement only. This is never a heuristic filter.
+            bid = op['block_id']
+            b = blocks[index[bid]]
+            category = op.get('artifact_kind')
+            if category not in {'running_header', 'decorative_ocr', 'overlapping_transcription'}:
+                raise ValueError('Unapproved source-artifact category')
+            if digest(b['html'].encode()) != op.get('expected_html_sha256'):
+                raise ValueError('Source-artifact HTML identity mismatch')
+            retained = op.get('retained_by')
+            if (not isinstance(retained, list) or not retained or
+                    any(not isinstance(x, str) or x not in index or x == bid for x in retained) or
+                    len(set(retained)) != len(retained)):
+                raise ValueError('A live, distinct retained anchor is required')
+            if not isinstance(op.get('source_comparison'), str) or not op['source_comparison'].strip():
+                raise ValueError('Explicit source comparison is required')
+            if not isinstance(op.get('reason'), str) or not op['reason'].strip():
+                raise ValueError('Explicit retirement reason is required')
+            aliases = doc.setdefault('anchor_aliases', {})
+            if not isinstance(aliases, dict):
+                raise ValueError('Anchor aliases must be a dictionary')
+            if bid in aliases and aliases[bid] != retained[0]:
+                raise ValueError('Existing anchor alias conflict')
+            aliases[bid] = retained[0]
+            entry = {'original_block': copy.deepcopy(b), 'retained_by': list(retained),
+                     'artifact_kind': category, 'source_comparison': op['source_comparison'],
+                     'evidence_ids': refs, 'reason': op['reason'],
+                     'before_html_sha256': digest(b['html'].encode())}
+            doc.setdefault('retired_source_artifacts', []).append(entry)
+            blocks.pop(index[bid]); retired_ids.add(bid)
+            log.append({k: copy.deepcopy(v) for k, v in entry.items() if k != 'original_block'} | {
+                'op': action, 'block_id': bid, 'archived_original_block': True,
+                'automatic_semantic_equivalence_claimed': False})
         elif action == 'move_after':
             bid, after = op['block_id'], op['after_block_id']
             if bid == after:
@@ -111,6 +144,10 @@ def patch_document(original: dict, operations: list[dict], evidence: set[str]) -
     final_ids = [b['id'] for b in blocks]
     if len(final_ids) != len(set(final_ids)) or not set(ids) <= (set(final_ids) | retired_ids):
         raise AssertionError('Original block identity lost')
+    for item in log:
+        if item['op'] == 'archive_source_artifact':
+            if not set(item['retained_by']) <= set(final_ids):
+                raise ValueError('Retirement target must remain live after all operations')
     replaced = {x['block_id'] for x in log if x['op'] == 'replace'}
     original_map = {b['id']: b for b in original['blocks']}
     for b in blocks:
@@ -148,11 +185,13 @@ def apply_patch(source_root: Path, scan_pdf: Path, spec_path: Path, destination:
         doc['finalized'] = False
         doc['content_revision'] = spec['revision']
         doc['source_record_ids'] = [b['id'] for b in doc['blocks']]
+        previous_provenance = copy.deepcopy(original.get('evidence_patch_provenance'))
         doc['evidence_patch_provenance'] = {
             'parent_json_sha256': digest(raw), 'source_scan_sha256': spec['source_scan_sha256'],
             'patch_spec_sha256': digest(spec_path.read_bytes()),
             'source_pdf_and_tex_fields_role': 'historical parent identities, not rebuilt output identities',
-            'academic_acceptance': False, 'review_scope': change['review_scope']}
+            'academic_acceptance': False, 'review_scope': change['review_scope'],
+            'previous_patch_provenance': previous_provenance}
         doc['academic_review'] = {'status': 'PARTIAL_SOURCE_VISUAL_CORRECTION',
                                   'full_academic_acceptance': False,
                                   'previous_review': original.get('academic_review')}
