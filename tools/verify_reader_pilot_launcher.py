@@ -14,6 +14,8 @@ import time
 import urllib.error
 import urllib.request
 
+from run_reader_pilot import PREPARED_MARKER, PilotError, reserve_ports
+
 ROOT = Path(__file__).resolve().parents[1]
 PORTS = (8000, 5173)
 COURSE = 'original_algebra_pilot'
@@ -21,9 +23,13 @@ LAUNCHER = ROOT / 'tools/run_reader_pilot.py'
 HTTP = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
 
+class AcceptanceError(RuntimeError):
+    """Only fixed source-authored assertion reasons, never external payloads."""
+
+
 def require(condition: bool, message: str) -> None:
     if not condition:
-        raise RuntimeError(message)
+        raise AcceptanceError(message)
 
 
 def read(url: str) -> bytes:
@@ -46,10 +52,22 @@ def ready() -> bool:
         return False
 
 
+def prepare_probe(listener) -> None:
+    if os.name == "nt":
+        listener.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+    else:
+        listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+
 def assert_ports_free() -> None:
     for port in PORTS:
         with socket.socket() as listener:
-            listener.bind(('127.0.0.1', port))
+            prepare_probe(listener)
+            try:
+                listener.bind(('127.0.0.1', port))
+                listener.listen(1)
+            except OSError:
+                raise AcceptanceError('Loopback port probe still refuses a new owner') from None
 
 
 def stop(process: subprocess.Popen) -> None:
@@ -62,7 +80,7 @@ def stop(process: subprocess.Popen) -> None:
         if os.name == 'nt' and process.poll() is None:
             subprocess.run(['taskkill.exe', '/PID', str(process.pid), '/T', '/F'],
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10, check=False)
-        raise RuntimeError('Owned launcher did not stop within its cleanup budget') from None
+        raise AcceptanceError('Owned launcher did not stop within its cleanup budget') from None
 
 
 def run_checked(args: list[str], *, env: dict[str, str], cwd: Path, timeout: int = 90) -> None:
@@ -73,7 +91,7 @@ def run_checked(args: list[str], *, env: dict[str, str], cwd: Path, timeout: int
 
 def main() -> int:
     if os.environ.get('BOOK_RUN_LAUNCHER_ACCEPTANCE') != '1':
-        raise RuntimeError('Set BOOK_RUN_LAUNCHER_ACCEPTANCE=1 only in the dedicated hosted acceptance job')
+        raise AcceptanceError('Set BOOK_RUN_LAUNCHER_ACCEPTANCE=1 only in the dedicated hosted acceptance job')
     require(sys.version_info[:2] == (3, 13), 'Hosted launcher acceptance requires Python 3.13')
     node = shutil.which('node')
     require(node is not None, 'Node is required')
@@ -92,6 +110,19 @@ def main() -> int:
         env['PATH'] = str(executable_dir) + os.pathsep + env.get('PATH', '')
         argv = [sys.executable, str(LAUNCHER)]
         flags = {'creationflags': subprocess.CREATE_NEW_PROCESS_GROUP} if os.name == 'nt' else {'start_new_session': True}
+        prepared = ROOT / '.venv' / PREPARED_MARKER
+        prepared_before = prepared.read_bytes()
+        # Exercise the real pre-server reservation phase, including --setup.
+        # A second process must fail before it can change the prepared environment.
+        with reserve_ports() as held:
+            for arguments in (['--check'], ['--setup', '--check']):
+                competing = subprocess.run(argv + arguments, cwd=root, env=env, shell=False,
+                                           timeout=30, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                require(competing.returncode != 0, 'A concurrent launcher accepted held startup reservations')
+                require(prepared.read_bytes() == prepared_before, 'Rejected concurrent setup changed the prepared environment')
+                require(all(sock.getsockopt(socket.SOL_SOCKET, socket.SO_ACCEPTCONN) == 1
+                            for sock in held.values()), 'A concurrent launcher disturbed startup reservations')
+        require(not list(temporary.iterdir()), 'Rejected concurrent startup left temporary data')
         with (root / 'launcher-output.txt').open('w', encoding='utf-8') as output:
             process = subprocess.Popen(argv, cwd=root, env=env, shell=False, stdout=output, stderr=output, **flags)
             failure: BaseException | None = None
@@ -115,7 +146,7 @@ def main() -> int:
                 except urllib.error.HTTPError as error:
                     require(error.code == 400, 'Unexpected original review validation status')
                 else:
-                    raise RuntimeError('Invalid review payload was accepted')
+                    raise AcceptanceError('Invalid review payload was accepted')
                 require(sorted(p.name for p in unrelated.iterdir()) == ['sentinel.txt'], 'Fixture touched unrelated user data')
                 # Existing original real browser journeys, using this launcher's API and preview.
                 result = subprocess.run([str(node), str(ROOT / 'app/web/node_modules/@playwright/test/cli.js'),
@@ -140,6 +171,7 @@ def main() -> int:
         require(not list(temporary.iterdir()), 'Immediate restart left temporary data')
         for port in PORTS:
             with socket.socket() as listener:
+                prepare_probe(listener)
                 listener.bind(('127.0.0.1', port))
                 listener.listen()
                 result = subprocess.run(argv + ['--check'], cwd=root, env=env, shell=False,
@@ -147,6 +179,7 @@ def main() -> int:
                 require(result.returncode != 0, 'Launcher accepted an unrelated occupied port')
                 require(listener.getsockname()[1] == port, 'Unrelated listener was closed')
                 with socket.socket() as free:
+                    prepare_probe(free)
                     free.bind(('127.0.0.1', next(p for p in PORTS if p != port)))
         assert_ports_free()
         require(not list(temporary.iterdir()), 'Rejected startup left temporary data')
@@ -160,6 +193,9 @@ def main() -> int:
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
-    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError):
+    except AcceptanceError as error:
+        print(f'FAIL: {error}', file=sys.stderr)
+        raise SystemExit(1)
+    except (OSError, ValueError, RuntimeError, PilotError, subprocess.SubprocessError):
         print('FAIL: hosted launcher acceptance did not complete; no success is claimed', file=sys.stderr)
         raise SystemExit(1)

@@ -287,8 +287,14 @@ class LauncherTests(unittest.TestCase):
         with patch.object(pilot, "WINDOWS", False), patch.object(pilot.socket, "socket", side_effect=sockets):
             with pilot.reserve_ports() as reserved:
                 self.assertEqual(set(reserved), {8000, 5173})
-                for sock in sockets:
+                for sock, port in zip(sockets, (8000, 5173)):
                     sock.close.assert_not_called()
+                    self.assertEqual(sock.method_calls, [
+                        call.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1),
+                        call.bind(("127.0.0.1", port)), call.listen(1),
+                    ])
+        for sock in sockets:
+            sock.setsockopt.assert_called_once_with(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sockets[0].bind.assert_called_once_with(("127.0.0.1", 8000))
         sockets[1].bind.assert_called_once_with(("127.0.0.1", 5173))
         for sock in sockets:
@@ -316,6 +322,20 @@ class LauncherTests(unittest.TestCase):
                 pass
         for sock in sockets:
             sock.setsockopt.assert_called_once_with(socket.SOL_SOCKET, -5, 1)
+            sock.listen.assert_called_once_with(1)
+
+    def test_listen_failure_releases_reservations_before_setup(self):
+        sockets = [Mock(), Mock()]
+        sockets[1].listen.side_effect = OSError("competing reservation")
+        with patch.object(pilot, "WINDOWS", False), \
+                patch.object(pilot.socket, "socket", side_effect=sockets), \
+                patch.object(pilot, "setup") as setup:
+            with self.assertRaisesRegex(pilot.PilotError, "already in use"):
+                with pilot.reserve_ports():
+                    setup()
+            setup.assert_not_called()
+        for sock in sockets:
+            sock.close.assert_called_once()
 
     def test_posix_children_use_fresh_sessions_and_literal_arguments(self):
         process = Mock(pid=4321)
@@ -382,11 +402,12 @@ class LauncherTests(unittest.TestCase):
     def test_posix_cleanup_targets_owned_group_even_after_leader_exit(self):
         process = Mock(pid=9876, poll=Mock(return_value=0))
         child = pilot.OwnedChild(process, "original API")
-        with patch.object(pilot.os, "killpg", create=True) as killpg:
+        with (patch.object(pilot.os, "killpg", create=True) as killpg,
+              patch.object(pilot.signal, "SIGKILL", 9, create=True)):
             self.assertTrue(child.alive())
             child.graceful()
             child.force()
-        self.assertEqual(killpg.call_args_list, [call(9876, 0), call(9876, signal.SIGTERM), call(9876, signal.SIGKILL)])
+        self.assertEqual(killpg.call_args_list, [call(9876, 0), call(9876, signal.SIGTERM), call(9876, 9)])
         process.terminate.assert_not_called()
         process.kill.assert_not_called()
 

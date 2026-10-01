@@ -472,7 +472,7 @@ class ProcessOwner:
 
 @contextmanager
 def reserve_ports():
-    """Bind both ports before any runtime or installer process is started."""
+    """Hold exclusive listening reservations before runtime or installer work."""
     reservations = {}
     try:
         for port in (API_PORT, WEB_PORT):
@@ -480,8 +480,14 @@ def reserve_ports():
             reservations[port] = sock
             if WINDOWS:
                 sock.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+            else:
+                # Reuse TIME_WAIT connections, never an active listener.
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             try:
                 sock.bind((HOST, port))
+                # SO_REUSEADDR permits two bound sockets until one listens.
+                # Listen before yielding so another launcher cannot enter setup.
+                sock.listen(1)
             except OSError:
                 raise PilotError(f"Port {port} is already in use. Stop its owner yourself, then retry; no existing server will be reused or stopped.") from None
         yield reservations
@@ -599,8 +605,9 @@ def wait_ready(owner, *, web=False, timeout=STARTUP_TIMEOUT):
 
 
 def launch(root, node, env, owner, reservations, *, check=False):
-    temporary = tempfile.TemporaryDirectory(prefix="book-reader-launcher-", delete=False)
-    temp_root = Path(temporary.name)
+    # Explicit ownership retains uncertain-cleanup data without a finalizer.
+    # mkdtemp also supports the Python 3.11 contract-test environment.
+    temp_root = Path(tempfile.mkdtemp(prefix="book-reader-launcher-"))
     api_env = {**env, "TMP": str(temp_root), "TEMP": str(temp_root), "TMPDIR": str(temp_root),
                "BOOK_APP_DATA_DIR": str(temp_root / "app-data")}
     try:
@@ -627,7 +634,7 @@ def launch(root, node, env, owner, reservations, *, check=False):
             print(f"Cleanup is incomplete; original sample data remains at {temp_root}", file=sys.stderr, flush=True)
             raise
         try:
-            temporary.cleanup()
+            shutil.rmtree(temp_root)
         except OSError:
             raise PilotError(f"Servers stopped, but temporary sample data could not be removed: {temp_root}") from None
         if temp_root.exists():
