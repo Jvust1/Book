@@ -1,14 +1,18 @@
 export const MAX_VALIDATED_RESPONSE_BYTES = 2 * 1024 * 1024
 
-/** Bound source-bearing HTTP data before JSON parsing and schema validation. */
-export async function readBoundedJson(response: Response): Promise<unknown> {
+/** Bound HTTP data before JSON parsing. Callers may only tighten the default ceiling. */
+export async function readBoundedJson(response: Response, byteLimit = MAX_VALIDATED_RESPONSE_BYTES): Promise<unknown> {
+  if (!Number.isSafeInteger(byteLimit) || byteLimit < 1 || byteLimit > MAX_VALIDATED_RESPONSE_BYTES) {
+    void response.body?.cancel().catch(() => {})
+    throw new Error('invalid response byte limit')
+  }
   const type = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase()
   if (type !== 'application/json' || !response.body) {
     void response.body?.cancel().catch(() => {})
     throw new Error('invalid response encoding')
   }
   const declared = response.headers.get('content-length')
-  if (declared !== null && Number(declared) > MAX_VALIDATED_RESPONSE_BYTES) {
+  if (declared !== null && Number(declared) > byteLimit) {
     void response.body.cancel().catch(() => {})
     throw new Error('response byte budget')
   }
@@ -21,7 +25,7 @@ export async function readBoundedJson(response: Response): Promise<unknown> {
       const chunk = await reader.read()
       if (chunk.done) break
       bytes += chunk.value.byteLength
-      if (bytes > MAX_VALIDATED_RESPONSE_BYTES) throw new Error('response byte budget')
+      if (bytes > byteLimit) throw new Error('response byte budget')
       text += decoder.decode(chunk.value, { stream: true })
     }
     text += decoder.decode()
