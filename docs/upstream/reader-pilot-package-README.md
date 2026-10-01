@@ -37,7 +37,7 @@ npx playwright install chromium
 npm run e2e -- --config playwright.pilot.config.ts
 ```
 
-The five serial pilot cases include the connected reader workflow on desktop and narrow screens, blocked sessionStorage, quota exhaustion and recovery after an invalid progress receipt despite a real SQLite commit. Restart the temporary API before repeating the complete browser pilot to reset its original study records. The default `npm run e2e` configuration is not a full textbook acceptance suite in this reduced package. No canonical textbook fixtures are included. The test API uses temporary SQLite storage and deletes it on graceful shutdown; it is not a deployment or a permanent study database.
+The seven serial pilot cases include the connected reader workflow on desktop and narrow screens, blocked sessionStorage, quota exhaustion and recovery after an invalid progress receipt despite a real SQLite commit, plus desktop/narrow explicit QA cancellation after the original backend has already answered. Restart the temporary API before repeating the complete browser pilot to reset its original study records. The default `npm run e2e` configuration is not a full textbook acceptance suite in this reduced package. No canonical textbook fixtures are included. The test API uses temporary SQLite storage and deletes it on graceful shutdown; it is not a deployment or a permanent study database.
 
 ## Verify and reproduce the source archive
 
@@ -63,7 +63,7 @@ Calculations are diagnostics, not automatic grades or textbook standard answers.
 
 ## Windows PowerShell source workflow
 
-The separate `Windows original reader source` job is the Windows acceptance gate for this exact source revision. Require that job to pass before treating a candidate as Windows-verified. It checks a clean path containing spaces, the existing exact locks, archive integrity, web build and the same five original browser journeys. This is source reproduction in hosted Windows/Chromium, not a native Windows installer or acceptance on your device. No user textbook content is included.
+The separate `Windows original reader source` job is the Windows acceptance gate for this exact source revision. Require that job to pass before treating a candidate as Windows-verified. It checks a clean path containing spaces, the existing exact locks, archive integrity, web build and the seven original browser journeys. This is source reproduction in hosted Windows/Chromium, not a native Windows installer or acceptance on your device. No user textbook content is included.
 
 With Python 3.13 and Node 22 available, open PowerShell in the extracted package root. Use the venv executable and a process-local PATH rather than changing PowerShell execution policy:
 
@@ -83,6 +83,10 @@ node node_modules/@playwright/test/cli.js install chromium
 node node_modules/@playwright/test/cli.js test --config playwright.portable.config.ts
 ```
 
-The final command starts only the original fixture API and built preview, refuses to reuse occupied ports, runs the five journeys, and stops its owned server processes. Do not start the two interactive servers before running that command. Dependency installation requires network; the test reader does not call a paid model or load a user's books.
+The final command starts only the original fixture API and built preview, refuses to reuse occupied ports, runs the seven journeys, and stops its owned server processes. Do not start the two interactive servers before running that command. Dependency installation requires network; the test reader does not call a paid model or load a user's books.
 
 For manual viewing after the build, run `.\.venv\Scripts\python.exe -m uvicorn app_tests.synthetic_pilot_server:create_app --factory --host 127.0.0.1 --port 8000` from the package root. In a second PowerShell window, run `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 5173 --strictPort` from `app/web`, then open `http://127.0.0.1:5173`. Stop both terminals with Ctrl+C. Progress remains a temporary original-fixture database, not a permanent study store.
+
+## Interrupted QA waiting
+
+The QA form offers an explicit stop-waiting control. It aborts the browser request and releases UI ownership; the question remains visible, with no automatic resend. The notice explicitly says this does not establish remote/model cancellation or undo server work. A later explicit question can proceed without an old response or error finishing it. Changing the QA route or leaving it cancels its owned wait. Existing course history remains, and old answers are labeled with their question-time scope rather than the currently selected section. Details and limitations are in `docs/upstream/qa-cancellation-2026-10-01.md` relative to the package root.

@@ -152,9 +152,10 @@ export const bookApi = {
     )
   },
 
-  askCourse(courseId: string, qaRequest: QARequest): Promise<QAResponse> {
+  askCourse(courseId: string, qaRequest: QARequest, signal?: AbortSignal): Promise<QAResponse> {
     return request<QAResponse>(`/api/courses/${segment(courseId)}/qa`, {
       method: 'POST',
+      signal,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(qaRequest),
     }, value => validateQAResponse(value, courseId, qaRequest))

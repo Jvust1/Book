@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
@@ -17,6 +17,10 @@ import {
   saveQASessionState,
 } from '../state/qaSessionState'
 import type { QASessionMessage } from '../state/qaSessionState'
+
+const STOP_WAITING_NOTICE = '已停止等待。本次问题仍保留；服务器可能仍在处理，停止等待不代表远端已取消，也不会撤销服务器工作。不会自动重发，请自行决定是否再次提问。'
+
+interface PendingQuestion { route: string; controller: AbortController }
 
 const qaErrorMessage = (error: unknown): string =>
   error instanceof ApiError ? error.message : '教材问答失败，请稍后重试'
@@ -37,8 +41,8 @@ const answerStyleLabel = (response: QAResponse): string | null => {
 const scopeLabel = (response: QAResponse): string => {
   if (response.scope_requested === 'section_then_book') {
     return response.scope_used === 'section'
-      ? '回答依据：当前小节'
-      : '回答依据：本节 + 教材其他章节'
+      ? '回答依据：提问时的小节'
+      : '回答依据：提问时的小节 + 教材其他章节'
   }
   return '回答依据：整本教材'
 }
@@ -63,15 +67,35 @@ function CourseQAPage() {
   )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
   const restoredScrollRef = useRef(false)
   const mounted = useRef(true)
-  const pending = useRef(false)
-  useEffect(() => {
+  const pending = useRef<PendingQuestion | null>(null)
+  const currentRoute = `${location.pathname}${location.search}`
+  const routeRef = useRef(currentRoute)
+
+  useLayoutEffect(() => {
     mounted.current = true
-    return () => { mounted.current = false }
+    return () => {
+      mounted.current = false
+      const abandoned = pending.current
+      pending.current = null
+      abandoned?.controller.abort()
+    }
   }, [])
 
-  const currentRoute = `${location.pathname}${location.search}`
+  useLayoutEffect(() => {
+    // Commit route ownership synchronously, before a late async completion or paint.
+    routeRef.current = currentRoute
+    setError(null)
+    const abandoned = pending.current
+    if (!abandoned || abandoned.route === currentRoute) return
+    pending.current = null
+    abandoned.controller.abort()
+    setLoading(false)
+    setError(null)
+    setNotice(`提问范围已改变。${STOP_WAITING_NOTICE}`)
+  }, [currentRoute])
 
   useEffect(() => {
     if (!courseId) {
@@ -173,15 +197,19 @@ function CourseQAPage() {
     setInput('')
     setLoading(true)
     setError(null)
-    pending.current = true
+    setNotice(null)
+    const operation: PendingQuestion = { route: currentRoute, controller: new AbortController() }
+    pending.current = operation
+    const ownsRequest = () => mounted.current && pending.current === operation &&
+      routeRef.current === operation.route && !operation.controller.signal.aborted
 
     try {
       const response = await bookApi.askCourse(courseId, {
         question,
         section_id: sectionId,
         history,
-      })
-      if (!mounted.current) return
+      }, operation.controller.signal)
+      if (!ownsRequest()) return
       const assistantContent = response.answer ?? response.message ?? ''
       const assistantMessage: QASessionMessage = {
         id: createQAMessageId('assistant', messagesWithUser),
@@ -193,11 +221,24 @@ function CourseQAPage() {
       setMessages(nextMessages)
       persistMessages(nextMessages)
     } catch (reason: unknown) {
-      if (mounted.current) setError(qaErrorMessage(reason))
+      if (ownsRequest()) setError(qaErrorMessage(reason))
     } finally {
-      pending.current = false
-      if (mounted.current) setLoading(false)
+      if (ownsRequest()) {
+        pending.current = null
+        setLoading(false)
+      }
     }
+  }
+
+  const stopWaiting = () => {
+    const operation = pending.current
+    if (!operation) return
+    // Release ownership before abort: ignored/late transport completion is inert.
+    pending.current = null
+    operation.controller.abort()
+    setLoading(false)
+    setError(null)
+    setNotice(STOP_WAITING_NOTICE)
   }
 
   const rememberCitation = (citation: QACitationItem) => {
@@ -230,7 +271,7 @@ function CourseQAPage() {
 
       <div className="empty-state qa-guidance">
         {sectionId ? (
-          section ? (
+          section?.section.section_id === sectionId ? (
             <>
               <p>
                 当前范围：{section.section.number ? `${section.section.number} · ` : ''}
@@ -251,6 +292,7 @@ function CourseQAPage() {
 
       {messages.length > 0 ? (
         <section className="qa-result page-stack" aria-label="教材问答会话">
+          <p className="secondary-text">历史回答按提问时范围保留；上方当前范围只用于新问题。</p>
           {messages.map((message) => {
             if (message.role === 'user') {
               return (
@@ -338,7 +380,10 @@ function CourseQAPage() {
         <button className="secondary-button" type="submit" disabled={loading}>
           {loading ? '正在查找教材依据…' : '提问'}
         </button>
+        {loading ? <button className="secondary-button" type="button" onClick={stopWaiting}>停止等待</button> : null}
       </form>
+
+      {notice ? <p className="status-panel" role="status">{notice}</p> : null}
 
       {error ? (
         <section className="status-panel" role="alert">
