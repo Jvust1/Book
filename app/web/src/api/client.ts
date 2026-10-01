@@ -1,3 +1,4 @@
+import { errorEnvelopeSchema, MAX_ERROR_RESPONSE_BYTES } from './errorContracts'
 import { STUDY_RECEIPT_MESSAGE, validateCourseStudyRecords, validateRecentStudy, validateStudyReceipt } from './studyContracts'
 import { validateModeResponse, validateSectionResponse } from './learningContracts'
 import { readBoundedJson } from './boundedJson'
@@ -18,13 +19,6 @@ import type {
 } from './types'
 
 const GENERIC_ERROR_MESSAGE = '请求失败，请稍后重试'
-
-type ErrorPayload = {
-  error?: {
-    code?: unknown
-    message?: unknown
-  }
-}
 
 export class ApiError extends Error {
   readonly code: string | null
@@ -56,18 +50,15 @@ async function request<T>(path: string, init: RequestInit = {}, validate?: (valu
     let code: string | null = null
 
     try {
-      const payload = (await response.json()) as ErrorPayload
-      const rawMessage = payload.error?.message
-      const rawCode = payload.error?.code
-      if (typeof rawMessage === 'string' && rawMessage.trim()) {
-        message = rawMessage
-      }
-      if (typeof rawCode === 'string' && rawCode.trim()) {
-        code = rawCode
-      }
+      const payload = errorEnvelopeSchema.parse(await readBoundedJson(response, MAX_ERROR_RESPONSE_BYTES))
+      message = payload.error.message
+      code = payload.error.code
     } catch {
-      // Keep the stable Chinese fallback; never expose parser or server internals.
+      if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+      // Stable fallback for malformed/oversized/non-JSON errors; no raw body,
+      // parser exception, server detail, partial envelope or automatic replay.
     }
+    if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
 
     throw new ApiError(message, response.status, code)
   }

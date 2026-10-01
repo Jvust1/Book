@@ -36,3 +36,10 @@ describe('bounded UTF-8 JSON transport', () => {
   })
 
 })
+
+it.each([0, -1, 1.5, Infinity, MAX_VALIDATED_RESPONSE_BYTES + 1])('does not allow an invalid or expanded caller byte ceiling %s', async limit => {
+  const cancel = vi.fn()
+  const response = new Response(new ReadableStream({ cancel }), { headers: { 'content-type': 'application/json' } })
+  await expect(readBoundedJson(response, limit)).rejects.toThrow('byte limit')
+  expect(cancel).toHaveBeenCalledOnce()
+})
