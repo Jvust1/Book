@@ -4,6 +4,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
 import { QAAnswerContent } from '../components/QAAnswerContent'
+import { QAExportButton } from '../components/QAExportButton'
 import type {
   CourseResponse,
   QACitationItem,
@@ -293,7 +294,7 @@ function CourseQAPage() {
       {messages.length > 0 ? (
         <section className="qa-result page-stack" aria-label="教材问答会话">
           <p className="secondary-text">历史回答按提问时范围保留；上方当前范围只用于新问题。</p>
-          {messages.map((message) => {
+          {messages.map((message, index) => {
             if (message.role === 'user') {
               return (
                 <article className="learning-card qa-question-card" key={message.id}>
@@ -316,6 +317,12 @@ function CourseQAPage() {
                   <p>{scopeLabel(response)}</p>
                   {style ? <p>回答方式：{style}</p> : null}
                   {response.answer_kind === 'generated' ? <QAAnswerContent text={message.content} /> : <p className="learning-content">{message.content}</p>}
+                  {response.answer_kind === 'generated' ? <QAExportButton
+                    courseId={courseId}
+                    bookId={course?.course.course_id === courseId ? course.course.book_id : null}
+                    question={messages[index - 1]?.role === 'user' ? messages[index - 1].content : null}
+                    content={message.content} response={response} route={currentRoute} disabled={loading}
+                  /> : null}
                 </section>
 
                 {response.citations.length > 0 ? (

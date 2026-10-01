@@ -32,6 +32,8 @@ EXACT = frozenset({
     "tests/test_reader_pilot_source.py", "README.md",
     "requirements-extras/symbolic.txt", "requirements-extras/pilot-api.txt",
     "tools/check_symbolic_answer.py", "tools/build_reader_pilot_source.py",
+    "tools/run_reader_pilot.py", "tools/verify_reader_pilot_launcher.py", "tests/test_reader_pilot_launcher.py",
+    "docs/upstream/one-command-reader-2026-10-01.md", "docs/upstream/jszip-qa-export-2026-10-01.md",
     "app/web/e2e/syntheticPdf.ts", "app/web/scripts/prepare-pdf-assets.mjs", "app/web/index.html",
     "app/web/package.json", "app/web/package-lock.json", "app/web/vite.config.ts",
     "app/web/playwright.config.ts", "app/web/playwright.pilot.config.ts", "app/web/playwright.portable.config.ts",

@@ -16,6 +16,7 @@
   "dependencies": {
     "@tanstack/react-query": "5.104.0",
     "fuse.js": "7.5.0",
+    "jszip": "3.10.1",
     "katex": "0.18.10",
     "mathjs": "15.2.0",
     "pdfjs-dist": "6.3.289",

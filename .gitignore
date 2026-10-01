@@ -15,3 +15,6 @@ app/web/public/pdfjs/
 # Isolated original chapter browser pilot artifacts
 app/web/pilot-test-results/
 app/web/pilot-playwright-report/
+
+# Original reader project-local dependency environment
+.venv/
