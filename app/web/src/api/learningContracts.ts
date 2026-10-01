@@ -1,3 +1,4 @@
+import { sectionCardSchema } from './catalogContracts'
 import { z } from 'zod'
 import type { LearningMode, ModeResponse, SectionResponse } from './types'
 
@@ -13,15 +14,9 @@ const identity = { course_id: id, book_id: id, chapter_id: id.nullable() }
 
 export const sectionResponseSchema = z.strictObject({
   ...identity,
-  section: z.strictObject({ section_id: id, number: label, title_zh: label, title_en: label,
-    printed_page_start: printedPage, printed_page_end: printedPage, pdf_page_start: pdfPage, pdf_page_end: pdfPage }),
+  section: sectionCardSchema,
   object_count: z.number().int().nonnegative(), figure_count: z.number().int().nonnegative(),
   translation_available: z.boolean(),
-}).superRefine((value, context) => {
-  const { pdf_page_start: start, pdf_page_end: end } = value.section
-  if (start !== null && end !== null && start > end) {
-    context.addIssue({ code: 'custom', message: 'reversed physical page range', path: ['section'] })
-  }
 })
 const sourceRef = z.strictObject({ kind, source_id: id })
 const item = z.strictObject({ kind, source_id: id, object_type: label, type_zh: label, number: label,

@@ -213,6 +213,7 @@ jobs:
             app/web/pilot-test-results/chapter-*.png
             app/web/pilot-test-results/session-storage-*.png
             app/web/pilot-test-results/study-receipt-*.png
+            app/web/pilot-test-results/catalog-*.png
           if-no-files-found: ignore
           retention-days: 7
 
