@@ -13,8 +13,9 @@ export function LibraryPage() {
 
   useEffect(() => {
     let active = true
+    const controller = new AbortController()
     bookApi
-      .getLibrary()
+      .getLibrary(controller.signal)
       .then((value) => {
         if (active) setLibrary(value)
       })
@@ -23,6 +24,7 @@ export function LibraryPage() {
       })
     return () => {
       active = false
+      controller.abort()
     }
   }, [])
 
@@ -60,7 +62,7 @@ export function LibraryPage() {
             </div>
             <div className="card-footer">
               <span>{course.chapter_count} 章 · {course.section_count} 节</span>
-              <Link className="primary-link" to={`/courses/${course.course_id}`}>
+              <Link className="primary-link" to={`/courses/${encodeURIComponent(course.course_id)}`}>
                 进入课程
               </Link>
             </div>

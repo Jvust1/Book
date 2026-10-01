@@ -9,25 +9,28 @@ const errorMessage = (error: unknown): string =>
 
 export function CoursePage() {
   const { courseId } = useParams()
-  const [course, setCourse] = useState<CourseResponse | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [loadedCourse, setCourse] = useState<CourseResponse | null>(null)
+  const [failure, setFailure] = useState<{ courseId: string; message: string } | null>(null)
+  const course = loadedCourse?.course.course_id === courseId ? loadedCourse : null
+  const error = !courseId ? '课程地址无效' : failure?.courseId === courseId ? failure.message : null
 
   useEffect(() => {
-    if (!courseId) {
-      setError('课程地址无效')
-      return
-    }
+    if (!courseId) return
     let active = true
+    const controller = new AbortController()
+    setCourse(null)
+    setFailure(null)
     bookApi
-      .getCourse(courseId)
+      .getCourse(courseId, controller.signal)
       .then((value) => {
         if (active) setCourse(value)
       })
       .catch((reason: unknown) => {
-        if (active) setError(errorMessage(reason))
+        if (active) setFailure({ courseId, message: errorMessage(reason) })
       })
     return () => {
       active = false
+      controller.abort()
     }
   }, [courseId])
 
@@ -56,13 +59,13 @@ export function CoursePage() {
       <div className="course-actions">
         <Link
           className="secondary-button course-search-link"
-          to={`/courses/${course.course.course_id}/search`}
+          to={`/courses/${encodeURIComponent(course.course.course_id)}/search`}
         >
           搜索教材
         </Link>
         <Link
           className="secondary-button course-search-link"
-          to={`/courses/${course.course.course_id}/qa`}
+          to={`/courses/${encodeURIComponent(course.course.course_id)}/qa`}
         >
           教材问答
         </Link>
@@ -80,7 +83,7 @@ export function CoursePage() {
               <span>{chapter.section_count} 节</span>
               <Link
                 className="primary-link"
-                to={`/courses/${course.course.course_id}/chapters/${chapter.chapter_id}`}
+                to={`/courses/${encodeURIComponent(course.course.course_id)}/chapters/${encodeURIComponent(chapter.chapter_id)}`}
               >
                 进入章节
               </Link>

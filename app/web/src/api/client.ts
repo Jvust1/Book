@@ -1,3 +1,4 @@
+import { validateChapterResponse, validateCourseResponse, validateLibraryResponse } from './catalogContracts'
 import { STUDY_RECEIPT_MESSAGE, validateCourseStudyRecords, validateRecentStudy, validateStudyReceipt } from './studyContracts'
 import { validateModeResponse, validateSectionResponse } from './learningContracts'
 import { readBoundedJson } from './boundedJson'
@@ -85,17 +86,18 @@ async function request<T>(path: string, init: RequestInit = {}, validate?: (valu
 const segment = (value: string): string => encodeURIComponent(value)
 
 export const bookApi = {
-  getLibrary(): Promise<LibraryResponse> {
-    return request<LibraryResponse>('/api/library')
+  getLibrary(signal?: AbortSignal): Promise<LibraryResponse> {
+    return request<LibraryResponse>('/api/library', { signal }, validateLibraryResponse)
   },
 
-  getCourse(courseId: string): Promise<CourseResponse> {
-    return request<CourseResponse>(`/api/courses/${segment(courseId)}`)
+  getCourse(courseId: string, signal?: AbortSignal): Promise<CourseResponse> {
+    return request<CourseResponse>(`/api/courses/${segment(courseId)}`, { signal }, value => validateCourseResponse(value, courseId))
   },
 
-  getChapter(courseId: string, chapterId: string): Promise<ChapterResponse> {
+  getChapter(courseId: string, chapterId: string, signal?: AbortSignal): Promise<ChapterResponse> {
     return request<ChapterResponse>(
       `/api/courses/${segment(courseId)}/chapters/${segment(chapterId)}`,
+      { signal }, value => validateChapterResponse(value, courseId, chapterId),
     )
   },
 

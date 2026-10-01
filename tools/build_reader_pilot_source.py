@@ -42,6 +42,7 @@ EXACT = frozenset({
     "docs/upstream/combined-reader-pilot-2026-09-30.md", "docs/upstream/zod-learning-response-contracts-2026-09-30.md",
     "docs/upstream/session-view-storage-recovery-2026-09-30.md",
     "docs/upstream/study-receipt-contracts-2026-09-30.md",
+    "docs/upstream/catalog-contracts-2026-09-30.md",
 })
 REQUIRED = frozenset({"app/api/main.py", "app/web/package-lock.json", "app_tests/synthetic_chapter.py",
                       "runtime/symbolic_answer.py", "requirements-extras/pilot-api.txt",
