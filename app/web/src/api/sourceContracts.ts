@@ -2,7 +2,12 @@ import { z } from 'zod'
 import type { QARequest, QAResponse, SearchResponse, SourceResponse } from './types'
 
 export const RESPONSE_CONTRACT_ENGINE = 'zod@4.6.5'
-const id = z.string().max(512).refine(value => value.trim().length > 0)
+const id = z.string().max(512).refine(value => {
+  if (!value.trim()) return false
+  // JSON may contain lone UTF-16 surrogates. Reject them before any source,
+  // citation or return-route ID reaches encodeURIComponent; never remap IDs.
+  try { encodeURIComponent(value); return true } catch { return false }
+})
 const label = z.string().max(8192)
 const nullableLabel = label.nullable()
 const nullableText = z.string().max(1_000_000).nullable()
