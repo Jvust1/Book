@@ -1,0 +1,103 @@
+{
+  "schema_version": "book_pdf_delivery_checkpoint_v1",
+  "date": "2026-10-01",
+  "batch": "v8r2",
+  "overall_status": "FULL_RELEASE_NOT_READY",
+  "repository": "Jvust1/Book",
+  "branch": "book/pdf-corrections-20261001-v1",
+  "parent_commit": "adc74400003a7c13bb9e8f8295a3304383621210",
+  "main_observed_before_publication": "805510f86546709b6f67c9e9079943f205c2c245",
+  "previous_unverified_v8_delivery_claim_withdrawn": true,
+  "canonical_mutation": false,
+  "main_merge": false,
+  "font_files_distributed": false,
+  "textbook_content_added_to_public_repository": false,
+  "glyph_audit": {
+    "documents": 253,
+    "pages": 3037,
+    "removed_position_glyph_differences": 86114,
+    "added_position_glyph_differences": 0,
+    "position_tolerance_pt": 0.05,
+    "differences_are_not_error_count": true,
+    "semantic_equivalence_established": false
+  },
+  "protected_repairs": {
+    "standalone_documents": 20,
+    "approved_glyphs_restored": 98,
+    "pages_checked": 269,
+    "documents_passed": 20,
+    "unexpected_glyph_changes": 0,
+    "outside_approved_region_pixel_changes": 0,
+    "pixel_guard_at_96dpi": 2,
+    "originals_overwritten": false,
+    "old_full_books_automatically_replaced": false,
+    "academic_acceptance": false
+  },
+  "whole_book_reflow": {
+    "book": "Contemporary Chinese Economy",
+    "historical_source_documents": 45,
+    "individual_pdfs": 135,
+    "whole_mode_size_merged_pdfs": 12,
+    "individual_pages": 1415,
+    "all_A4": true,
+    "sizes_px_to_pdf_pt": {"10": 7.5, "12": 9, "15": 11.25},
+    "page_counts_by_mode_10_12_15": {
+      "learn": [149,197,286],
+      "preview": [22,23,29],
+      "review": [110,144,219],
+      "practice": [57,76,103]
+    },
+    "source_block_html_preserved": true,
+    "source_png_assets": 6,
+    "exact_nonspace_html_pdf_multiset_matches": 135,
+    "all_pages_rendered": 1415,
+    "sample_pages_contact_sheets": 102,
+    "additional_figure_pages_inspected": 18,
+    "all_merged_editions_verified": 12,
+    "cross_path_rebuild_text_pixel_matches": 9,
+    "cross_path_rebuild_byte_matches": 6,
+    "rebuild_samples": 9,
+    "font": "Noto CJK substitutes; NOT Shusong",
+    "source_ocr_errors_and_incomplete_table_crops_remain": true,
+    "academic_acceptance": false
+  },
+  "additional_poppler_pages": 3,
+  "local_tool_tests_passed": 85,
+  "hosted_ci_status": "NOT_CLAIMED",
+  "manual_workflow_dispatch": false,
+  "drive_folder_id": "1OlPnUaV3Z5OY7Bx5jRy0NwHBuxuuMQJ9",
+  "full_package": {
+    "bytes": 277590759,
+    "sha256": "9c6b4568c3ab5bd363774561d581938d94ee76bcd16213a1be8bd641a7247288",
+    "payloads_verified": 2158,
+    "raw_parts_uploaded": 7,
+    "parts_manifest_drive_id": "1Lr6e9mJ6nEb8dCib0EdPWlFmH1LZrnXV",
+    "notebook_drive_id": "102gLoA1gD54YmFk4l1RgYwrI62PH_jF9",
+    "remote_raw_parts_merge_crc_and_payload_roundtrip_verified": true
+  },
+  "repair_package": {
+    "drive_id": "1IBB23567wXTjhWiq6j-bJfgQME2Uj1kb",
+    "bytes": 22886523,
+    "sha256": "7976f9d3c9d10f880d3c6e232e4cc758b2f925d32dca45850d3f614d55627091",
+    "payloads_verified": 72,
+    "remote_raw_roundtrip_verified": true
+  },
+  "report_drive_id": "1JH9pLgpJHTBT09L-oLGwScJMDjgOnyA6",
+  "standalone_15px_drive_ids": {
+    "learn": "1xYs-qGlr8zjMNTODaFpqTqEtBNKHw-9g",
+    "preview": "1l_vjh1qdoz96eF7VLQnnk_b4LfcTF4xk",
+    "review": "1Mke5_2ctG6Q_9859cCd5FZwyHXAn3Yhs",
+    "practice": "1QGUzYl9_NmIocmlUPtNchc2MsEOV0Ok-"
+  },
+  "colab_user_account_run": false,
+  "notebook_code_cells_syntax_checked": 6,
+  "remaining_gates": [
+    "Semantic/academic review of the 253-document differences",
+    "Original OCR errors and incomplete chapter-8/chapter-10 source illustrations",
+    "Other five books: all-mode all-size A4 source reflow",
+    "Remaining MD proof/sparse-page local issues",
+    "Verified true Shusong font environment",
+    "Target Windows reader and printing",
+    "Full-release sampling and independent content acceptance"
+  ]
+}
