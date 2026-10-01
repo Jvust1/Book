@@ -1,0 +1,123 @@
+{
+  "schema_version": "book_pdf_delivery_checkpoint_v1",
+  "date": "2026-10-02",
+  "batch": "v13",
+  "overall_status": "FULL_RELEASE_NOT_READY",
+  "repository": "Jvust1/Book",
+  "branch": "book/pdf-corrections-20261001-v1",
+  "public_checkpoint_parent": "current verified v12 branch state",
+  "main_observed_before_publication": "805510f86546709b6f67c9e9079943f205c2c245",
+  "canonical_mutation": false,
+  "main_merge": false,
+  "public_textbook_content_upload": false,
+  "font_files_distributed": false,
+  "source_scan_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+  "evidence_physical_pages": [
+    169,
+    170,
+    219,
+    220,
+    221
+  ],
+  "ocr_used": false,
+  "corrections": {
+    "documents": 4,
+    "replacements": 15,
+    "source_artifact_archives": 5,
+    "total_operations": 20,
+    "archived_original_blocks": 5,
+    "unaffected_block_dicts_exact": 672,
+    "source_patch_replay_byte_matches": 4,
+    "full_academic_acceptance": false
+  },
+  "outputs": {
+    "chapter_pdfs": 12,
+    "chapter_pages": 176,
+    "all_A4": true,
+    "px_to_prose_pt": {
+      "10": 7.5,
+      "12": 9,
+      "15": 11.25
+    },
+    "html_pdf_nonspace_multiset_matches": 12,
+    "combined_pdfs": 6,
+    "combined_repeated_content_pages": 1097,
+    "combined_geometry_text_36dpi_pixels_bookmarks_verified": true,
+    "page_counts_10_12_15": {
+      "learn": [
+        146,
+        194,
+        282
+      ],
+      "review": [
+        110,
+        145,
+        220
+      ]
+    },
+    "preview_practice_reused_from_v12": true
+  },
+  "visual": {
+    "all_chapter_pages_rendered": 176,
+    "target_page_images_created": 20,
+    "inspected_contact_sheets": 5,
+    "additional_poppler_120dpi_pages": 3,
+    "full_line_by_line_review": false,
+    "known_review_city_243_contamination_open": true
+  },
+  "rebuild": {
+    "chapter_15px_samples": 4,
+    "chapter_text_pixel_matches": 4,
+    "chapter_raw_byte_matches": 2,
+    "combined_samples": 6,
+    "combined_text_pixel_bookmark_matches": 6,
+    "combined_raw_byte_matches": 0
+  },
+  "local_tests_passed": 156,
+  "new_generic_tests": 0,
+  "generic_repository_tools_changed": false,
+  "hosted_ci_status": "NOT_CLAIMED",
+  "manual_actions_dispatch": false,
+  "font": "Noto CJK substitute; NOT Shusong",
+  "windows_reader_printing_tested": false,
+  "drive_folder_id": "1aYHUe5ANiYY1hr5cIE0c5KSTHAFIVaBy",
+  "package": {
+    "bytes": 79034843,
+    "sha256": "59923830bd36ee0f240cc4b08e01b8503765d109fc0e59ae7aaa8e2755fad47a",
+    "drive_id": "1xiqfNcuN3iNBEaNKRT2qbwEDiS8PUEow",
+    "fresh_remote_raw_download": true,
+    "zip_crc_verified": true,
+    "payload_hashes_and_lengths_verified": 122
+  },
+  "report_drive_id": "1w1UGEchda-2MwXdEwBBo1vlFAPzHxbbZ",
+  "standalone_15px_drive_ids": {
+    "learn": "14CQx4D2LS7vBZ8IOdJKq_poX5kgMUtsU",
+    "review": "1Ex1ZtsGGN62pYiUsyexS8pKnqYYaD4wV"
+  },
+  "standalone_remote_raw_downloads": false,
+  "remaining_gates": [
+    "CE8 page171/172 source and OCR continuation",
+    "CE10 page221 onward new-industrialization OCR",
+    "CE10 review city-243 contamination source mapping",
+    "All 253 differences semantic review",
+    "Other five books all-mode/all-size A4 reflow",
+    "Original MD proof/sparse-page issues",
+    "True Shusong",
+    "Target Windows reader and printing",
+    "Independent full-content acceptance",
+    "Distinct 253/249 baselines"
+  ],
+  "next_block_ids": [
+    "ce-08-learn-cce-p171-source-retranscribed",
+    "p0172_o00423",
+    "p0172_o00425",
+    "p0221_o00386",
+    "p0221_o00388",
+    "p0221_o00389",
+    "p0221_o00393",
+    "ce-10-review-p0003-b007",
+    "ce-10-review-p0004-b019",
+    "ce-10-review-p0004-b035",
+    "ce-10-review-p0005-b000"
+  ]
+}
