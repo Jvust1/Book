@@ -2,7 +2,19 @@
 
 Updated: 2026-10-01
 
-## Latest artifact/state checkpoint — 2026-10-01
+## 2026-10-01 01:56 UTC 阅读器候选检查点（尚未合并）
+
+- 实时核对 `main`：`805510f86546709b6f67c9e9079943f205c2c245`，仍为 PR #57 合并结果；下列新增能力目前只在 Draft 分支。
+- 已验证代码基线：PR [#75](https://github.com/Jvust1/Book/pull/75)，`5616246fbf88c8a3a0a8732d0e36c5a11c6c6f3b`。整合交接分支 `docs/coherent-reader-candidate-20261001` 以此为父提交，目标为 `main`，自身 exact-head gates 必须另行通过。
+- 七个新接入项目为 KaTeX、PDF.js、react-markdown、math.js、Fuse.js、Zod、TanStack Query，均实际进入阅读器运行路径；既有 SymPy 做安全加固，既有 Playwright 用于验收，不重复计入新项目数。
+- 原创单章贯通预习/学习/复习/刷题、来源 PDF 本地检索、引用问答、数值计算与显式进度回执恢复。#75 exact head 已通过 Linux/Windows 干净源码提取、403 个 Web 测试、类型/构建、40 个提取后 Python 测试及五条原创浏览器旅程；完整 UI gate 为 38 条常规 + 5 条原创旅程，平台重跑不累计为新用例。
+- #71 目录验证/导航恢复分支六条新浏览器用例失败，未纳入该候选；旧 PR 与其他教材审校分支均保留。不得以候选通过推断 #71 已修复。
+- 外部[六书审计报告](https://github.com/Jvust1/Book/blob/6d7ecf5969ed1feffc1061dc6bdb68aff77fd708/audits/2026-10-01/six-books_0800_acceptance.md)报告 24 PDF / 3477 页，其中五书 2733 页非 A4、当代中国经济文本层 578 个 NUL、逐书审校/同步证据仍有缺口；这是另一分支的报告，非本次重跑。原创代码验收不替代教材、排版、字体或来源重排验收。
+- 交付为 code-only 源码，包含原创合成章节，不含用户教材全文、扫描 PDF、私有资产或原生安装器。详细复现、上游出处和边界见 [阅读器交接](upstream/reader-integration-handoff-2026-10-01.md)。
+
+以下旧阶段和导出记录按当时证据保留。出现“当前 main / 唯一下一步 / H4a 下一步”等旧表述时，按其历史日期理解；实时分支状态以上方检查点和最新 GitHub 记录为准，不将旧记录重新解释为本次授权。
+
+## Historical artifact/state checkpoint — 2026-10-01
 
 - Repository: `Jvust1/Book`; verified base main `6e5782b23c49943a263dfad7ee490147d57b2f0e`.
 - Consolidated Drive snapshot: `Book/03_Exports/Book-All-Results-20261001/`.
@@ -14,9 +26,9 @@ Updated: 2026-10-01
 
 ## Start here
 
-1. Read Google Drive root `全项目` and current `全项目_*` governance baselines.
-2. Read `AGENTS.md` and `SECURITY_POLICY.md` on the exact target branch.
-3. Read `governance/project_state.json`, project invariants/current state/decision and evaluation ledgers, pending sync, preflight, then the relevant approved phase design and plan.
+1. Read the latest user instructions and `AGENTS.md` on the exact target branch.
+2. Inspect live main, open PRs and the reader handoff linked above before editing shared files. Read any applicable security policy if present; this candidate has no root `SECURITY_POLICY.md`.
+3. Use `governance/project_state.json`, current evidence and relevant architecture invariants. Historical global/phase records do not reinstate obsolete startup or approval requirements.
 
 Repository evidence outranks chat memory.
 

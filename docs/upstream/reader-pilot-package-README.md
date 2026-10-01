@@ -1,12 +1,12 @@
 # Book original-chapter source pilot
 
-This is a code-only, original-chapter reader package. It includes the verified reader integrations from Draft PRs #58–#68, full retained upstream notices, exact JavaScript lockfile, a hash-pinned Python API environment and the separate hash-pinned SymPy checker. It excludes canonical `books/`, `courses/`, `library/`, PDFs, user data, credentials, node_modules and generated binaries.
+This is a code-only, original-chapter reader package. It includes the verified reader integrations from Draft PRs #58–#70 and #72–#75 (failed catalog PR #71 is excluded), full retained upstream notices, exact JavaScript lockfile, a hash-pinned Python API environment and the separate hash-pinned SymPy checker. It excludes canonical `books/`, `courses/`, `library/`, PDFs, user data, credentials, node_modules and generated binaries.
 
 The test-only API creates a wholly original one-chapter repository and SQLite database in a temporary directory. It exercises actual source retrieval, QA evidence/citation checks, PDF.js local viewing, Fuse page search, math.js calculation, Zod validation, TanStack request handling and the isolated SymPy diagnostic. QA generation uses the deterministic test provider; no external model/API key is required. No textbook content or file edition is authenticated by this pilot.
 
 ## Start locally
 
-Verified target: Linux x86-64, CPython 3.13 and Node.js 22. This is source delivery, not a Windows installer or a deployed service. The `pilot-api.txt` lock is derived from passing Linux CI, rather than an ambient workstation freeze. Other platforms require their own validation.
+Verified code baseline: commit `5616246fbf88c8a3a0a8732d0e36c5a11c6c6f3b` passed clean Linux and Windows hosted runs with CPython 3.13 and Node.js 22. Every later candidate must pass its own exact-head gates. This is source delivery, not a Windows installer or a deployed service. The `pilot-api.txt` lock is derived from passing CI, rather than an ambient workstation freeze. Other platforms and user devices require their own validation. The included `docs/upstream/reader-integration-handoff-2026-10-01.md` records baseline evidence, upstream identities and remaining limits.
 
 From the extracted `book-reader-pilot` directory, create an isolated Python environment and install only the pinned pilot dependencies:
 

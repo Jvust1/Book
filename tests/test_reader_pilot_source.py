@@ -281,6 +281,16 @@ class ReaderPilotSourceTests(unittest.TestCase):
         rebuilt_commit, rebuilt_files = bundle.source_files(repo, old_commit)
         self.assertEqual(bundle.archive_bytes(rebuilt_commit, rebuilt_files), old_bytes)
 
+    def test_handoff_is_optional_for_legacy_v1_and_round_trips_when_present(self):
+        path = "docs/upstream/reader-integration-handoff-2026-10-01.md"
+        self.assertNotIn(path, bundle.REQUIRED)
+        self.assertTrue(bundle.allowed_source(path))
+        self.archive.write_bytes(bundle.archive_bytes(COMMIT, self.files))
+        self.assertNotIn(path, bundle.verify_archive(self.archive)[1])
+        self.files[path] = (0o644, b"Original source-only handoff fixture\n")
+        self.archive.write_bytes(bundle.archive_bytes(COMMIT, self.files))
+        self.assertEqual(bundle.verify_archive(self.archive)[1], self.files)
+
     @unittest.skipUnless(hasattr(os, "symlink"), "symlink not supported")
     def test_selected_git_symlink_is_rejected(self):
         repo, env = self._git_repo()
