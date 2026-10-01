@@ -1,0 +1,92 @@
+{
+  "schema_version": "book_pdf_delivery_checkpoint_v1",
+  "date": "2026-10-01",
+  "batch": "v9",
+  "overall_status": "FULL_RELEASE_NOT_READY",
+  "repository": "Jvust1/Book",
+  "branch": "book/pdf-corrections-20261001-v1",
+  "parent_commit": "dc04fe53c88dcfd8c6c797f1a828ebb29819ec68",
+  "main_observed_before_publication": "805510f86546709b6f67c9e9079943f205c2c245",
+  "canonical_mutation": false,
+  "main_merge": false,
+  "font_files_distributed": false,
+  "textbook_content_added_to_public_repository": false,
+  "source": {
+    "scan_sha256": "a67f608415206fe251dbcaee1d812c68cb5f16e0b9a1b318e29b27e8bed72204",
+    "scan_bytes": 54999067,
+    "actual_physical_pages": 255,
+    "inspected_physical_pages": [163,167,176,178,213],
+    "printed_pages": [152,156,165,167,202],
+    "ocr_used": false,
+    "native_crop_pixel_checks_passed": true
+  },
+  "corrections": {
+    "learning_documents": 2,
+    "searchable_tables": 5,
+    "restored_original_pixel_diagrams": 1,
+    "operations": {"replace":19,"insert_after":3,"move_after":2,"retire_duplicate":1},
+    "unaffected_original_block_dicts_exact": 371,
+    "original_json_bytes_preserved": true,
+    "full_chapter_academic_acceptance": false,
+    "source_doubts_preserved": true,
+    "other_teaching_documents_checked_for_direct_image_references": 33,
+    "other_modes_semantic_equivalence_established": false
+  },
+  "new_chapter_pdfs": {
+    "count": 6,
+    "pages": 115,
+    "all_A4": true,
+    "sizes_px": [10,12,15],
+    "measured_prose_pt": [7.5,9,11.25],
+    "chapter8_pages": [13,18,25],
+    "chapter10_pages": [14,18,27],
+    "html_pdf_nonspace_multiset_matches": 6,
+    "all_pages_rendered_dpi": 60,
+    "individually_inspected_15px_table_pages": 5,
+    "10px_12px_table_page_instances_contact_inspected": 10,
+    "additional_poppler_pages": 3,
+    "text_bounds_failures": 0,
+    "blank_pages": 0,
+    "nul_or_replacement_characters": 0,
+    "all_pages_line_by_line_reviewed": false
+  },
+  "whole_learning_editions": {
+    "count": 3,
+    "pages_10_12_15px": [148,196,285],
+    "replaced_chapters": [8,10],
+    "other_v8r2_learning_documents_reused": 10,
+    "merged_page_geometry_text_pixels_verified": 629,
+    "all_chapters_newly_proofread": false
+  },
+  "rebuild": {"samples":6,"text_pixel_matches":6,"raw_byte_matches":0},
+  "local_tests_passed": 130,
+  "new_synthetic_tests": 45,
+  "hosted_ci_status": "NOT_CLAIMED",
+  "manual_actions_dispatch": false,
+  "font": "Noto CJK substitutes; NOT Shusong",
+  "windows_reader_printing_tested": false,
+  "drive_folder_id": "1On_ISAz0kDRa9QuZIENxIsKUSZbuuu6j",
+  "package": {
+    "drive_id": "1JwcwjWGJxBtXbUWpeyfBUX8vKT3Fpnne",
+    "bytes": 62880820,
+    "sha256": "f167045528b6acf89b5b9ebcc2910be85dd9a3a20c3ef77fccf9e69db13b79e9",
+    "split_required": false,
+    "fresh_raw_drive_roundtrip_sha_crc_verified": true,
+    "payload_hashes_and_lengths_verified": 243
+  },
+  "report_drive_id": "1hIdUh_fUHhdeQbwZDlBzyu417POluA_Y",
+  "standalone_pdf_drive_ids": {
+    "chapter8_15px": "1nZzbUCJjlE-iV9bsx4h8vn4uzCUNBvM_",
+    "chapter10_15px": "1EIkI694PAmMp7LJgAQxMZ-i2b-XD9Vys",
+    "whole_learning_15px": "1NRDguYF0DFLK05IO4zo5ct8_d3ipZRyP"
+  },
+  "remaining_gates": [
+    "Remaining source OCR, mistagged headings and duplicate prose",
+    "Semantic audit of 253 v5 differences and cross-mode content",
+    "Other five books all-mode all-size source reflow",
+    "Remaining MD proof-continuity and sparse-page issues",
+    "Verified true Shusong environment",
+    "Target Windows reader and printing",
+    "Independent full content and release acceptance"
+  ]
+}

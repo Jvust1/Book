@@ -69,12 +69,14 @@ def preserved_blocks(document: dict, asset_root: Path) -> tuple[list[str],dict]:
                   'reader_visibility_ignored_to_preserve_source':True,
                   'source_html_text_unchanged':True}
 
-def stylesheet(px: int, header: str) -> str:
+def stylesheet(px: int, header: str, edition: str = "v8r2", evidence_tables: bool = False) -> str:
     if px not in (10,12,15):raise ValueError('Only declared 10/12/15px sizes are supported')
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9.-]{0,23}', edition):
+        raise ValueError('Invalid edition label')
     safe=header.replace('\\','\\\\').replace('"','\\"')
-    return f'''@page {{ size: A4; margin: 18mm 18mm 17mm;
+    css = f'''@page {{ size: A4; margin: 18mm 18mm 17mm;
       @top-left {{ content: "{safe}"; font: 8px "Noto Sans CJK SC"; color: #555; }}
-      @top-right {{ content: "{px}px · v8r2 排版候选"; font: 8px "Noto Sans CJK SC"; color: #555; }}
+      @top-right {{ content: "{px}px · {edition} 排版候选"; font: 8px "Noto Sans CJK SC"; color: #555; }}
       @bottom-left {{ content: "历史源稿保全 · 内容待校读 · 非书宋"; font: 8px "Noto Sans CJK SC"; color: #666; }}
       @bottom-right {{ content: counter(page) " / " counter(pages); font: 9px "DejaVu Sans"; color: #555; }}
     }}
@@ -93,8 +95,21 @@ def stylesheet(px: int, header: str) -> str:
     .notice {{ font-family:"Noto Sans CJK SC",sans-serif; font-size:.92em; line-height:1.55; padding:.6em .8em; background:#f1f3f5; margin:0 0 1.2em; }}
     .body-start {{ margin:0; }}
     '''
+    if evidence_tables:
+        css += """
+        .kind-table { break-inside:avoid; margin:.65em 0 1em; }
+        .kind-table h3 { margin:0 0 .55em; }
+        .kind-table table { width:100%; table-layout:auto; font-size:1em; line-height:1.5; }
+        .kind-table th, .kind-table td { padding:.36em .42em; vertical-align:middle; border-color:#87929a; }
+        .kind-table th { background:#f0f3f5; font-weight:700; }
+        .kind-table p { margin:.45em 0; }
+        .kind-table td > span { display:inline-block; white-space:nowrap; }
+        .kind-figure { break-inside:avoid; }
+        .kind-figure img { max-width:55%; }
+        """
+    return css
 
-def render_one(document_path: Path, asset_root: Path, output: Path, html_output: Path, px: int) -> dict:
+def render_one(document_path: Path, asset_root: Path, output: Path, html_output: Path, px: int, *, edition: str = "v8r2", evidence_tables: bool = False, evidence_notice: str | None = None) -> dict:
     if output.resolve() == document_path.resolve() or html_output.resolve() == document_path.resolve() or output.resolve() == html_output.resolve():
         raise ValueError('Output paths must not overwrite source or each other')
     if output.exists() or html_output.exists():raise FileExistsError('Output already exists; use a new version directory')
@@ -109,7 +124,11 @@ def render_one(document_path: Path, asset_root: Path, output: Path, html_output:
         parts=[part.replace(html.escape(absolute,quote=True),html.escape(relative,quote=True)) for part in parts]
     notice='本稿仅验证同源排版，保留历史正文、已有解答标签和原有疑点；OCR 错字及缺漏尚未全部校正，不是内容终审版。'
     if doc['mode']=='practice':notice+=' 所收参考解答沿用原源稿，不是出版社官方答案。'
-    content=f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>{html.escape(header+' '+title)}</title><style>{stylesheet(px,header)}</style></head><body><h1 class="cover-title">{html.escape(title)} · {label}</h1><div class="notice">{notice}</div><main class="body-start">{''.join(parts)}</main></body></html>'''
+    if evidence_notice is not None:
+        if not isinstance(evidence_notice, str) or not evidence_notice.strip():
+            raise ValueError('Evidence notice must be nonempty text')
+        notice += ' ' + html.escape(evidence_notice)
+    content=f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>{html.escape(header+' '+title)}</title><style>{stylesheet(px,header,edition,evidence_tables)}</style></head><body><h1 class="cover-title">{html.escape(title)} · {label}</h1><div class="notice">{notice}</div><main class="body-start">{''.join(parts)}</main></body></html>'''
     html_output.parent.mkdir(parents=True,exist_ok=True);output.parent.mkdir(parents=True,exist_ok=True)
     html_output.write_text(content,encoding='utf-8')
     root=asset_root.resolve()
@@ -122,13 +141,14 @@ def render_one(document_path: Path, asset_root: Path, output: Path, html_output:
     HTML(string=content,base_url=html_output.parent.resolve().as_uri()+'/',url_fetcher=fetcher).write_pdf(output,font_config=FontConfiguration(),pdf_tags=True)
     return {'id':doc['id'],'mode':doc['mode'],'book_title':doc['book_title'],'title':doc['title'],'px':px,'pt':px*.75,'source_json_sha256':hashlib.sha256(raw).hexdigest(),
             'pdf':str(output),'html':str(html_output),'pdf_sha256':hashlib.sha256(output.read_bytes()).hexdigest(),
-            'block_count':meta['block_count'],'source_text_nonspace_count':len(nonspace(meta['plain'])),
+            'edition':edition,'evidence_tables':evidence_tables,'block_count':meta['block_count'],'source_text_nonspace_count':len(nonspace(meta['plain'])),
             'source_text_sha256':hashlib.sha256(nonspace(meta['plain']).encode()).hexdigest(),
             'source_CJK_counts':dict(cjk_counter(meta['plain'])),'assets':meta['assets'],
             'source_html_text_unchanged':True,'academic_acceptance':False}
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('document',type=Path);p.add_argument('asset_root',type=Path);p.add_argument('output',type=Path);p.add_argument('--px',type=int,required=True)
-    a=p.parse_args();r=render_one(a.document,a.asset_root,a.output,a.output.with_suffix('.html'),a.px)
+    p.add_argument('--edition',default='v8r2');p.add_argument('--evidence-tables',action='store_true');p.add_argument('--evidence-notice')
+    a=p.parse_args();r=render_one(a.document,a.asset_root,a.output,a.output.with_suffix('.html'),a.px,edition=a.edition,evidence_tables=a.evidence_tables,evidence_notice=a.evidence_notice)
     print(json.dumps({k:v for k,v in r.items() if k!='source_CJK_counts'},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
