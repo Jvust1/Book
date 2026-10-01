@@ -130,8 +130,10 @@ class ReaderPilotSourceTests(unittest.TestCase):
             file.write_bytes(b"original")
         (dest / bundle.MANIFEST).write_bytes(bundle.manifest_bytes(COMMIT, changed))
         original_open = Path.open
+        # Match directory_files normalization (Windows temp paths may have aliases).
+        allowed_manifest = (dest / bundle.MANIFEST).resolve()
         def guard_open(path, *args, **kwargs):
-            if path != dest / bundle.MANIFEST:
+            if path != allowed_manifest:
                 raise AssertionError("colliding manifest must fail before opening source files")
             return original_open(path, *args, **kwargs)
         with patch.object(Path, "open", guard_open), self.assertRaises(ValueError):
