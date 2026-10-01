@@ -536,18 +536,29 @@ class LauncherTests(unittest.TestCase):
         reservations = {8000: Mock(), 5173: Mock()}
         events = []
         captured = {}
+        preview = {}
+        unrelated_cache = self.root / "unrelated-node-cache"
+        unrelated_cache.mkdir()
+        (unrelated_cache / "sentinel").write_text("preserve", encoding="utf-8")
+        self.env["NODE_COMPILE_CACHE"] = str(unrelated_cache)
         def start(argv, **kwargs):
             events.append("api" if len(events) == 0 else "web")
             if "uvicorn" in argv:
                 captured.update(kwargs["env"])
                 temp = Path(captured["TMP"])
                 (temp / "original fixture.txt").write_text("temporary", encoding="utf-8")
+            else:
+                preview.update(kwargs["env"])
+                cache = Path(preview["NODE_COMPILE_CACHE"])
+                cache.mkdir()
+                (cache / "compiled-code").write_text("owned cache", encoding="utf-8")
             return Mock()
         def ready(_owner, **kwargs):
             events.append("web ready" if kwargs.get("web") else "api ready")
         def stop():
             events.append("stopped")
             self.assertTrue((Path(captured["TMP"]) / "original fixture.txt").exists())
+            self.assertTrue((Path(preview["NODE_COMPILE_CACHE"]) / "compiled-code").exists())
         owner.start.side_effect, owner.stop_children.side_effect = start, stop
         with patch.object(pilot, "wait_ready", side_effect=ready):
             pilot.launch(self.root, self.node, self.env, owner, reservations, check=True)
@@ -560,7 +571,12 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(captured["TMP"], captured["TEMP"])
         self.assertEqual(captured["TMP"], captured["TMPDIR"])
         self.assertEqual(Path(captured["BOOK_APP_DATA_DIR"]), Path(captured["TMP"]) / "app-data")
+        for name in ("TMP", "TEMP", "TMPDIR", "BOOK_APP_DATA_DIR"):
+            self.assertEqual(preview[name], captured[name])
+        self.assertEqual(Path(preview["NODE_COMPILE_CACHE"]), Path(captured["TMP"]) / "node-compile-cache")
         self.assertFalse(Path(captured["TMP"]).exists())
+        self.assertEqual((unrelated_cache / "sentinel").read_text(encoding="utf-8"), "preserve")
+        self.assertEqual(list(unrelated_cache.iterdir()), [unrelated_cache / "sentinel"])
         for forbidden in ("app.api.main:app", "npm.cmd", "npx", "--reload", "--open"):
             self.assertNotIn(forbidden, " ".join(map(str, commands)))
         reservations[8000].close.assert_called_once()

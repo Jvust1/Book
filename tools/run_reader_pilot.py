@@ -610,6 +610,7 @@ def launch(root, node, env, owner, reservations, *, check=False):
     temp_root = Path(tempfile.mkdtemp(prefix="book-reader-launcher-"))
     api_env = {**env, "TMP": str(temp_root), "TEMP": str(temp_root), "TMPDIR": str(temp_root),
                "BOOK_APP_DATA_DIR": str(temp_root / "app-data")}
+    preview_env = {**api_env, "NODE_COMPILE_CACHE": str(temp_root / "node-compile-cache")}
     try:
         reservations[API_PORT].close()
         owner.start([str(venv_python(root)), "-m", "uvicorn", API_FACTORY, "--factory",
@@ -619,7 +620,7 @@ def launch(root, node, env, owner, reservations, *, check=False):
         reservations[WEB_PORT].close()
         owner.start([str(node), str(root / "app/web/node_modules/vite/bin/vite.js"), "preview",
                      "--host", HOST, "--port", str(WEB_PORT), "--strictPort"],
-                    cwd=root / "app/web", env=env, label="reader preview")
+                    cwd=root / "app/web", env=preview_env, label="reader preview")
         wait_ready(owner, web=True)
         print(f"Original reader ready: http://{HOST}:{WEB_PORT}/", flush=True)
         if not check:
