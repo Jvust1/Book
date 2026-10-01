@@ -279,11 +279,11 @@ export function SectionPage() {
   return (
     <section className="section-page page-stack">
       {section?.chapter_id ? (
-        <Link className="back-link" to={`/courses/${courseId}/chapters/${section.chapter_id}`}>
+        <Link className="back-link" to={`/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(section.chapter_id)}`}>
           ← 返回章节
         </Link>
       ) : (
-        <Link className="back-link" to={`/courses/${courseId}`}>
+        <Link className="back-link" to={`/courses/${encodeURIComponent(courseId)}`}>
           ← 返回课程
         </Link>
       )}

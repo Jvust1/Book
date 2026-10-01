@@ -1,8 +1,9 @@
+import { responseIdSchema } from './responseId'
 import { z } from 'zod'
 import type { LearningMode, ModeResponse, SectionResponse } from './types'
 
 // Same bounded source-bearing JSON transport and pinned Zod engine as Source/QA.
-const id = z.string().max(512).refine(value => !!value.trim())
+const id = responseIdSchema
 const label = z.string().max(8192).nullable()
 const text = z.string().max(1_000_000).nullable()
 const printedPage = z.union([z.number().int(), z.string().max(256)]).nullable()
