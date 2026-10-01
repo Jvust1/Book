@@ -1,0 +1,53 @@
+{
+  "schema_version": "book_pdf_delivery_checkpoint_v1",
+  "date": "2026-10-01",
+  "overall_status": "FULL_RELEASE_NOT_READY",
+  "repository": "Jvust1/Book",
+  "branch": "book/pdf-corrections-20261001-v1",
+  "parent_commit": "50e35c7e4d7842b27bd91f2bb8f56c669ed2e9e1",
+  "main_observed": "805510f86546709b6f67c9e9079943f205c2c245",
+  "canonical_mutation": false,
+  "main_merge": false,
+  "chapter5": {
+    "status": "COMPLETE_FIRST_VISUAL_SOURCE_PASS_AND_LOCAL_THREE_SIZE_QA",
+    "source_pdf_pages": [120,144],
+    "printed_pages": [101,125],
+    "original_record_blocks": 441,
+    "prior_438_denominator_reproduced": false,
+    "original_record_quality_labels_preserved": true,
+    "mapping_granularity": "page, not one-to-one phrase",
+    "independent_academic_review": false,
+    "printed_source_doubts": 10,
+    "body_sha256": "790aebe691b9ac1b4836cb5687e074109287650f0f8b723dddb39fbcbb10b4f3",
+    "source_scan_sha256": "892d4bb77082707ff778a72dfd77f59680f69b9de6b8bb9a181ec53f9440fb0f",
+    "outputs": [
+      {"px":10,"pdf_pt":7.5,"pages":14,"bytes":324350,"sha256":"f7f1bd4b66c551926dd94ce5fb08814ae8cbb3830a18507ad41c3e7b5fccf364","drive_id":"1Wd9zie7DojIRFqF4jStjCU4xfDj9epV1"},
+      {"px":12,"pdf_pt":9,"pages":18,"bytes":331190,"sha256":"4414a7b69a3b9c2d509bb4a4833d437defc3a2cb77d9f5be2e8cd8cc705a97a5","drive_id":"1yLhANuLOThAZDp0NGiEomDKXAce3gO74"},
+      {"px":15,"pdf_pt":11.25,"pages":23,"bytes":339814,"sha256":"cc5c118992e36294762f1aef4db4f07f07cebf740b4237edba109dc2211bc186","drive_id":"1auscH23Vse7Mr82dnjobnnDhZmiti6kj"}
+    ],
+    "paper": "A4",
+    "font": "Noto Serif CJK SC substitute, NOT Shusong",
+    "rendered_pages":55,
+    "reproducible_byte_identical_builds":3,
+    "overfull":0,
+    "missing_characters":0,
+    "font_warnings":0,
+    "out_of_page_text_spans":0
+  },
+  "packages": [
+    {"file":"Book_PDF_集中交付_v6_20261001.zip","bytes":87861102,"sha256":"ca7e3cf5c8643ddbd3dc935dfb46fc0a515d161d985ee7f3f32d938f5db37c84","drive_id":"1agsQrG_uVbI9nNzj81-nTwBoDm-YyKax","pdf_count":8,"payload_hashes_checked":92,"drive_raw_roundtrip_hash_matches":true,"zip_crc_ok":true},
+    {"file":"Book_第五讲整章_三字号_源码与QA_v6.zip","bytes":10535717,"sha256":"5d92c2d17ec6cee32080db7931b5abf2d039f55577ad2d68e00f6c043c09848d","drive_id":"1X2-RzMb1Y1skm5fuREoAXNbVU6Muu9qv","pdf_count":3,"zip_crc_ok":true,"drive_verification":"listing name and size; no separate raw roundtrip claim"}
+  ],
+  "drive_folder_id":"1CCMiBebf8EznwJdU7CDC9ALhuAufA0f7",
+  "report_drive_id":"18aHgbd06fAngZ3lz5rZ6JfpG-IYiyO7B",
+  "generic_verifier_local_tests_passed":16,
+  "public_finance_pages_preservation_rechecked":287,
+  "financial_12_untouched_pages_rechecked":148,
+  "financial_15_untouched_pages_rechecked":330,
+  "preferred_mathphysics_drive_id":"1FSBCh8G8zrcRsKsMUzchDmPtZUnX2vaI",
+  "preferred_mathphysics_sha256":"43cd8542f08f8c57b3debc44b23f837e6f149c703bb43c7d2f1550a68560e326",
+  "remaining_gates":["six-book all-mode editable-source reconstruction and validation","remaining full-book A4 source-level reflow and real size checks","verified Shusong font and fallback","target Windows reader acceptance","complete six-book release sampling and independent source-doubt review"],
+  "hosted_ci_status":"NOT_CLAIMED",
+  "font_files_distributed":false,
+  "full_textbook_content_added_to_public_repository":false
+}
