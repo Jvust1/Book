@@ -4,6 +4,8 @@ build reads immutable Git blobs; verify/extract/repack do not require a Git chec
 """
 from __future__ import annotations
 
+from collections.abc import Iterable
+
 import argparse
 import gzip
 import hashlib
@@ -32,7 +34,7 @@ EXACT = frozenset({
     "tools/check_symbolic_answer.py", "tools/build_reader_pilot_source.py",
     "app/web/e2e/syntheticPdf.ts", "app/web/scripts/prepare-pdf-assets.mjs", "app/web/index.html",
     "app/web/package.json", "app/web/package-lock.json", "app/web/vite.config.ts",
-    "app/web/playwright.config.ts", "app/web/playwright.pilot.config.ts",
+    "app/web/playwright.config.ts", "app/web/playwright.pilot.config.ts", "app/web/playwright.portable.config.ts",
     "app/web/tsconfig.json", "app/web/tsconfig.app.json", "app/web/tsconfig.node.json",
     "docs/upstream/reader-pilot-package-README.md", "docs/upstream/licenses/SymPy-1.14.0-LICENSE.txt",
     "docs/upstream/katex-reader-2026-09-30.md", "docs/upstream/pdfjs-local-source-2026-09-30.md",
@@ -45,15 +47,59 @@ EXACT = frozenset({
     "docs/upstream/source-id-contracts-2026-10-01.md",
     "docs/upstream/error-response-contracts-2026-10-01.md",
     "docs/upstream/learning-id-contracts-2026-10-01.md",
+    "docs/upstream/windows-reader-pilot-2026-10-01.md",
 })
 REQUIRED = frozenset({"app/api/main.py", "app/web/package-lock.json", "app_tests/synthetic_chapter.py",
                       "runtime/symbolic_answer.py", "requirements-extras/pilot-api.txt",
                       "docs/upstream/reader-pilot-package-README.md", "README.md"})
 
 
+WINDOWS_RESERVED_NAMES = frozenset({"con", "prn", "aux", "nul", "conin$", "conout$"} |
+    {f"{prefix}{digit}" for prefix in ("com", "lpt") for digit in "123456789¹²³"})
+
+
 def safe_path(path: str) -> bool:
+    if not isinstance(path, str):
+        return False
     parts = PurePosixPath(path).parts
-    return bool(parts) and not path.startswith("/") and "\\" not in path and all(p not in (".", "..") for p in parts) and str(PurePosixPath(path)) == path
+    if not parts or path.startswith("/") or "\\" in path or str(PurePosixPath(path)) != path:
+        return False
+    for part in parts:
+        if (part in (".", "..") or part.endswith((".", " ")) or
+            any(ord(char) < 32 or char in '<>:"|?*' for char in part) or
+            part.split(".", 1)[0].rstrip(" ").casefold() in WINDOWS_RESERVED_NAMES):
+            return False
+        try:
+            if len(part.encode("utf-16-le")) // 2 > 255:
+                return False
+        except UnicodeEncodeError:
+            return False
+    return True
+
+
+def validate_path_inventory(paths: Iterable[str]) -> None:
+    """Reject portable filename aliases and file/directory conflicts, never rename."""
+    spellings: dict[str, str] = {}
+    files: set[str] = set()
+    directories: set[str] = set()
+    for path in paths:
+        if not safe_path(path):
+            raise ValueError("nonportable source path")
+        parts = PurePosixPath(path).parts
+        for length in range(1, len(parts) + 1):
+            prefix = "/".join(parts[:length])
+            key = prefix.casefold()
+            if key in spellings and spellings[key] != prefix:
+                raise ValueError("case-colliding source paths")
+            spellings[key] = prefix
+            if length == len(parts):
+                if key in files or key in directories:
+                    raise ValueError("duplicate or conflicting source path")
+                files.add(key)
+            else:
+                if key in files:
+                    raise ValueError("file conflicts with source directory")
+                directories.add(key)
 
 
 def allowed_source(path: str) -> bool:
@@ -113,6 +159,7 @@ def validate_files(files: dict[str, tuple[int, bytes]]) -> None:
     if any(not allowed_source(path) or mode not in (0o644, 0o755) or len(data) > MAX_FILE_BYTES
            for path, (mode, data) in files.items()):
         raise ValueError("unexpected source path, mode or file size")
+    validate_path_inventory(files)
     if files["README.md"] != files[README_SOURCE]:
         raise ValueError("root README must preserve its declared source alias")
     if sum(len(data) for _, data in files.values()) > MAX_TOTAL_BYTES:
@@ -220,6 +267,7 @@ def directory_files(root: Path) -> tuple[str, dict[str, tuple[int, bytes]]]:
     rows = manifest["files"]
     if not isinstance(rows, list) or len(rows) > MAX_FILES:
         raise ValueError("invalid manifest entries")
+    validate_path_inventory(row["path"] for row in rows)
     files: dict[str, tuple[int, bytes]] = {}
     total = 0
     for row in rows:

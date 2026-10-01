@@ -60,3 +60,29 @@ Extraction verifies every member before creating a new destination. It refuses s
 The seven newly integrated projects are KaTeX, PDF.js, react-markdown, math.js, Fuse.js, Zod and TanStack Query. Their exact package pins, upstream commits and license/notice records are in `app/web/package-lock.json`, `app/web/public/licenses/` and the included `docs/upstream/` records. Existing SymPy safety hardening is separate from the new-project count; its complete BSD core/bundled notices are retained at `docs/upstream/licenses/SymPy-1.14.0-LICENSE.txt`. No new license grant or relicensing of Book's own code is implied.
 
 Calculations are diagnostics, not automatic grades or textbook standard answers. PDF bytes and indexes stay local and are not persisted. Source/search caches and storage-failure recovery are bounded and explicitly temporary. Full textbook correctness, real paid-model quality, private assets, native Windows delivery and production deployment are outside this package's verification.
+
+## Windows PowerShell source workflow
+
+The separate `Windows original reader source` job is the Windows acceptance gate for this exact source revision. Require that job to pass before treating a candidate as Windows-verified. It checks a clean path containing spaces, the existing exact locks, archive integrity, web build and the same five original browser journeys. This is source reproduction in hosted Windows/Chromium, not a native Windows installer or acceptance on your device. No user textbook content is included.
+
+With Python 3.13 and Node 22 available, open PowerShell in the extracted package root. Use the venv executable and a process-local PATH rather than changing PowerShell execution policy:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --require-hashes -r requirements-extras/pilot-api.txt -r requirements-extras/symbolic.txt
+$env:PATH = "$(Resolve-Path .\.venv\Scripts);$env:PATH"
+$env:PYTHONUTF8 = '1'
+$env:PYTHONIOENCODING = 'utf-8'
+$env:PYTHONPATH = ''
+Set-Location app/web
+npm.cmd ci --no-audit
+npm.cmd test -- --maxWorkers=1
+npm.cmd run typecheck
+npm.cmd run build
+node node_modules/@playwright/test/cli.js install chromium
+node node_modules/@playwright/test/cli.js test --config playwright.portable.config.ts
+```
+
+The final command starts only the original fixture API and built preview, refuses to reuse occupied ports, runs the five journeys, and stops its owned server processes. Do not start the two interactive servers before running that command. Dependency installation requires network; the test reader does not call a paid model or load a user's books.
+
+For manual viewing after the build, run `.\.venv\Scripts\python.exe -m uvicorn app_tests.synthetic_pilot_server:create_app --factory --host 127.0.0.1 --port 8000` from the package root. In a second PowerShell window, run `node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 5173 --strictPort` from `app/web`, then open `http://127.0.0.1:5173`. Stop both terminals with Ctrl+C. Progress remains a temporary original-fixture database, not a permanent study store.

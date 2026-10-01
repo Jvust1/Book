@@ -71,13 +71,81 @@ class ReaderPilotSourceTests(unittest.TestCase):
         self.assertEqual(bundle.verify_archive(self.archive)[1], self.files)
 
     def test_allows_code_and_complete_notices_but_excludes_data_and_credentials(self):
-        for path in ["app/web/src/example.tsx", "runtime/example.py", "app/web/public/licenses/Example-LICENSE.txt"]:
+        for path in ["app/web/src/example.tsx", "runtime/example.py", "app/web/public/licenses/Example-LICENSE.txt",
+                     "app/web/playwright.portable.config.ts"]:
             self.assertTrue(bundle.allowed_source(path), path)
         for path in ["books/original/chapter.txt", "courses/course/course.json", "library/library.json",
                      ".env", "app/api/.env", "app/api/credentials.json", "app/web/public/private.pdf",
                      "node_modules/example/index.js", "app/web/src/../../private.ts", "/runtime/file.py",
                      "runtime/./file.py", "runtime//file.py", "runtime/__pycache__/file.py", "runtime/file\\bad.py"]:
             self.assertFalse(bundle.allowed_source(path), path)
+
+    def test_windows_unsafe_paths_fail_before_extraction(self):
+        self.assertFalse(bundle.safe_path("runtime/bad\ud800.py"))
+        bad = ["runtime/entry.py:alternate.py", "runtime/CON.py", "runtime/nUl.backup.py",
+               "runtime/COM1.py", "runtime/lpt9.data.py", "runtime/COM¹.py", "runtime/LPT³.py",
+               "runtime/folder. /entry.py", "runtime/folder./entry.py", "runtime/folder /entry.py",
+               "runtime/a?b.py", "runtime/a*b.py", "runtime/a<b.py", "runtime/a|b.py",
+               "runtime/zero\x00.py", "runtime/control\x1f.py", "runtime/" + "x" * 256 + ".py", "/runtime/file.py", "C:/runtime/file.py",
+               "C:runtime/file.py", "//server/share/runtime/file.py", "\\\\server\\share\\file.py", "runtime/../escape.py"]
+        for index, name in enumerate(bad):
+            with self.subTest(path=name):
+                self.assertFalse(bundle.allowed_source(name))
+                files = {**self.files, name: (0o644, b"original")}
+                # Forge an otherwise canonical archive solely to test verifier
+                # rejection; the production path validator is never weakened.
+                with patch.object(bundle, "validate_files", return_value=None):
+                    self.archive.write_bytes(bundle.archive_bytes(COMMIT, files))
+                dest = self.root / f"rejected-{index}"
+                with self.assertRaises(ValueError):
+                    bundle.extract_archive(self.archive, dest)
+                self.assertFalse(dest.exists())
+
+    def test_portable_path_collisions_fail_before_output(self):
+        cases = [("runtime/Case.py", "runtime/case.py"),
+                 ("runtime/Dir/first.py", "runtime/dir/second.py"),
+                 ("runtime/file.py", "runtime/file.py/child.py"),
+                 ("runtime/Folder.py/child.py", "runtime/folder.py")]
+        for index, names in enumerate(cases):
+            with self.subTest(paths=names):
+                files = {**self.files, **{name: (0o644, b"original") for name in names}}
+                with self.assertRaises(ValueError):
+                    bundle.archive_bytes(COMMIT, files)
+                with patch.object(bundle, "validate_files", return_value=None):
+                    self.archive.write_bytes(bundle.archive_bytes(COMMIT, files))
+                dest = self.root / f"collision-{index}"
+                with self.assertRaises(ValueError):
+                    bundle.extract_archive(self.archive, dest)
+                self.assertFalse(dest.exists())
+
+    def test_case_colliding_manifest_is_rejected_before_directory_reads(self):
+        self.archive.write_bytes(bundle.archive_bytes(COMMIT, self.files))
+        dest = self.root / "extracted"
+        bundle.extract_archive(self.archive, dest)
+        names = ("runtime/Case.py", "runtime/case.py")
+        changed = {**self.files, **{name: (0o644, b"original") for name in names}}
+        for name in names:
+            file = dest / name
+            file.parent.mkdir(exist_ok=True)
+            file.write_bytes(b"original")
+        (dest / bundle.MANIFEST).write_bytes(bundle.manifest_bytes(COMMIT, changed))
+        original_open = Path.open
+        def guard_open(path, *args, **kwargs):
+            if path != dest / bundle.MANIFEST:
+                raise AssertionError("colliding manifest must fail before opening source files")
+            return original_open(path, *args, **kwargs)
+        with patch.object(Path, "open", guard_open), self.assertRaises(ValueError):
+            bundle.directory_files(dest)
+
+    def test_portable_unicode_and_spaces_remain_exact(self):
+        name = "runtime/original space/原创😀.py"
+        files = {**self.files, name: (0o644, b"original")}
+        self.archive.write_bytes(bundle.archive_bytes(COMMIT, files))
+        _, parsed, _ = bundle.verify_archive(self.archive)
+        self.assertEqual(set(parsed), set(files))
+        dest = self.root / "original path with spaces"
+        bundle.extract_archive(self.archive, dest)
+        self.assertEqual(bundle.directory_files(dest)[1], files)
 
     def test_missing_required_source_fails(self):
         self.files.pop(next(iter(bundle.REQUIRED)))
@@ -193,6 +261,23 @@ class ReaderPilotSourceTests(unittest.TestCase):
         for ref in ["--help", "HEAD~1", "main"]:
             with self.assertRaises(ValueError):
                 bundle.source_files(repo, ref)
+
+    def test_legacy_v1_ref_without_portable_config_still_rebuilds_and_verifies(self):
+        portable = "app/web/playwright.portable.config.ts"
+        self.assertNotIn(portable, bundle.REQUIRED)
+        repo, env = self._git_repo()
+        old_commit, old_files = bundle.source_files(repo, "HEAD")
+        self.assertNotIn(portable, old_files)
+        old_bytes = bundle.archive_bytes(old_commit, old_files)
+        self.archive.write_bytes(old_bytes)
+        self.assertEqual(bundle.verify_archive(self.archive)[1], old_files)
+        (repo / portable).write_bytes(b"original portable config fixture")
+        subprocess.run(["git", "-C", str(repo), "add", portable], check=True, env=env)
+        subprocess.run(["git", "-C", str(repo), "commit", "-qm", "original portable addition"], check=True, env=env)
+        _, current_files = bundle.source_files(repo, "HEAD")
+        self.assertEqual(current_files[portable][1], b"original portable config fixture")
+        rebuilt_commit, rebuilt_files = bundle.source_files(repo, old_commit)
+        self.assertEqual(bundle.archive_bytes(rebuilt_commit, rebuilt_files), old_bytes)
 
     @unittest.skipUnless(hasattr(os, "symlink"), "symlink not supported")
     def test_selected_git_symlink_is_rejected(self):

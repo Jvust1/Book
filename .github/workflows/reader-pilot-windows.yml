@@ -1,0 +1,139 @@
+name: Windows original reader source
+
+on:
+  push:
+    paths:
+      - "app/**"
+      - "app_tests/synthetic*"
+      - "app_tests/test_synthetic_chapter.py"
+      - "runtime/**"
+      - "book_core/**"
+      - "requirements-extras/pilot-api.txt"
+      - "requirements-extras/symbolic.txt"
+      - "tests/runtime_fixture_factory.py"
+      - "tests/test_symbolic*.py"
+      - "tests/test_reader_pilot_source.py"
+      - "tools/check_symbolic_answer.py"
+      - "tools/build_reader_pilot_source.py"
+      - "docs/upstream/**"
+      - ".github/workflows/reader-pilot-windows.yml"
+  pull_request:
+    paths:
+      - "app/**"
+      - "app_tests/synthetic*"
+      - "app_tests/test_synthetic_chapter.py"
+      - "runtime/**"
+      - "book_core/**"
+      - "requirements-extras/pilot-api.txt"
+      - "requirements-extras/symbolic.txt"
+      - "tests/runtime_fixture_factory.py"
+      - "tests/test_symbolic*.py"
+      - "tests/test_reader_pilot_source.py"
+      - "tools/check_symbolic_answer.py"
+      - "tools/build_reader_pilot_source.py"
+      - "docs/upstream/**"
+      - ".github/workflows/reader-pilot-windows.yml"
+
+permissions:
+  contents: read
+concurrency:
+  group: reader-pilot-windows-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-extracted-source-pilot:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      PYTHONUTF8: "1"
+      PYTHONIOENCODING: "utf-8"
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - name: Select a clean extraction path containing spaces
+        run: |
+          if ($PSVersionTable.PSVersion -lt [version]'7.3') { throw 'PowerShell 7.3+ is required' }
+          $pilot = Join-Path $env:RUNNER_TEMP 'book original reader pilot'
+          if (Test-Path -LiteralPath $pilot) { throw 'Extraction destination must not already exist' }
+          "PILOT_DIR=$pilot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Check archive safety and exact source extraction
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          python -m unittest tests.test_reader_pilot_source -v
+          $head = git rev-parse HEAD
+          python tools/build_reader_pilot_source.py build --ref "$head" --output .build/book-reader-pilot-windows.tar.gz
+          python tools/build_reader_pilot_source.py verify .build/book-reader-pilot-windows.tar.gz
+          python tools/build_reader_pilot_source.py extract .build/book-reader-pilot-windows.tar.gz "$env:PILOT_DIR"
+          python tools/build_reader_pilot_source.py repack "$env:PILOT_DIR" --output .build/repacked-windows.tar.gz
+          python -c "from pathlib import Path; assert Path('.build/book-reader-pilot-windows.tar.gz').read_bytes() == Path('.build/repacked-windows.tar.gz').read_bytes()"
+          $sha = (Get-FileHash -Algorithm SHA256 .build/book-reader-pilot-windows.tar.gz).Hash.ToLowerInvariant()
+          [IO.File]::WriteAllText((Join-Path $PWD '.build/book-reader-pilot-windows.tar.gz.sha256'), "$sha  book-reader-pilot-windows.tar.gz`n", [Text.Encoding]::ASCII)
+      - name: Install the existing exact hash-pinned API and symbolic environment
+        working-directory: ${{ env.PILOT_DIR }}
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          python -m pip install --require-hashes -r requirements-extras/pilot-api.txt -r requirements-extras/symbolic.txt
+          python -m pip check
+      - name: Verify only extracted modules and original fixtures are used
+        working-directory: ${{ env.PILOT_DIR }}
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
+          @'
+          from pathlib import Path
+          import app.api.main
+          import runtime
+          root = Path.cwd().resolve()
+          assert Path(app.api.main.__file__).resolve().is_relative_to(root)
+          assert Path(runtime.__file__).resolve().is_relative_to(root)
+          assert not any((root / name).exists() for name in ('books', 'courses', 'library', '.git', '.env'))
+          assert (root / 'app/web/playwright.portable.config.ts').is_file()
+          print('Verified extracted-only modules and absence of canonical data/credentials')
+          '@ | python -
+          python -m unittest app_tests.test_synthetic_chapter tests.test_symbolic_answer tests.test_symbolic_safety tests.test_reader_pilot_source -v
+      - name: Install and check the extracted web app
+        working-directory: ${{ env.PILOT_DIR }}/app/web
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          npm.cmd ci --no-audit
+          npm.cmd test -- --maxWorkers=1
+          npm.cmd run typecheck
+          npm.cmd run build
+          node node_modules/@playwright/test/cli.js install chromium
+      - name: Run all five original journeys with upstream-owned server lifecycle
+        working-directory: ${{ env.PILOT_DIR }}/app/web
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $true
+          node node_modules/@playwright/test/cli.js test --config playwright.portable.config.ts
+      - name: Upload source only after complete Windows acceptance
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-reader-pilot-windows-source
+          path: |
+            .build/book-reader-pilot-windows.tar.gz
+            .build/book-reader-pilot-windows.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload original Windows pilot previews after success
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-original-reader-previews
+          path: ${{ env.PILOT_DIR }}/app/web/pilot-test-results/*.png
+          if-no-files-found: error
+          retention-days: 7
