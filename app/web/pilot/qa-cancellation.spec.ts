@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import type { Request } from '@playwright/test'
 
 const course = 'original_algebra_pilot'
 const section = 'original_s01'
@@ -13,11 +14,22 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
     let release!: () => void
     let fetched!: () => void
     let settled!: () => void
+    let releaseSecond!: () => void
+    let secondRequest: Request | null = null
     const releaseFirst = new Promise<void>(resolve => { release = resolve })
     const firstFetched = new Promise<void>(resolve => { fetched = resolve })
     const firstSettled = new Promise<void>(resolve => { settled = resolve })
+    const secondGate = new Promise<void>(resolve => { releaseSecond = resolve })
     await page.route(`**${path}`, async route => {
       requests++
+      if (requests === 2) {
+        secondRequest = route.request()
+        const response = await route.fetch()
+        expect(response.ok()).toBe(true)
+        await secondGate
+        await route.fulfill({ response })
+        return
+      }
       if (requests !== 1) { await route.continue(); return }
       // Real original-fixture retrieval/generation finishes before the client stops.
       // Holding only delivery proves the UI must not claim server work was undone.
@@ -47,12 +59,17 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
       expect(requests).toBe(1)
       await page.screenshot({ path: `pilot-test-results/qa-stopped-${viewport.name}.png`, fullPage: true })
       await input.fill('倍增规则')
-      const nextResponse = page.waitForResponse(response => new URL(response.url()).pathname === path)
       await page.getByRole('button', { name: '提问', exact: true }).click()
-      expect((await (await nextResponse).json()).answer_kind).toBe('generated')
-      await expect(page.locator('.qa-answer-card')).toHaveCount(1)
+      await expect.poll(() => requests).toBe(2) // The replacement POST was actually admitted.
+      // Hold the second delivery while releasing the abandoned first response:
+      // old completion must neither append an answer nor clear the newer wait.
       release()
       await firstSettled
+      await expect(page.locator('.qa-answer-card')).toHaveCount(0)
+      await expect(page.getByRole('button', { name: '正在查找教材依据…', exact: true })).toBeDisabled()
+      const nextResponse = page.waitForResponse(response => response.request() === secondRequest)
+      releaseSecond()
+      expect((await (await nextResponse).json()).answer_kind).toBe('generated')
       await expect(page.locator('.qa-answer-card')).toHaveCount(1)
       expect(requests).toBe(2)
       const saved = await page.evaluate(courseId => JSON.parse(sessionStorage.getItem(`book:qa-session:${courseId}`)!), course)
@@ -69,8 +86,10 @@ for (const viewport of [{ name: 'desktop', width: 1280, height: 900 }, { name: '
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
       expect(errors).toEqual([])
     } finally {
+      // Always unlock our held route; fixture teardown owns route disposal.
+      // Do not replace the original test failure with a closed-page error.
       release()
-      await page.unrouteAll({ behavior: 'wait' })
+      releaseSecond()
     }
   })
 }
