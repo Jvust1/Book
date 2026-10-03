@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'none'; img-src data: blob:; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+    <title>Live Pet</title>
+    <link rel="stylesheet" href="./pet.css">
+    <link rel="stylesheet" href="./font-fallback.css">
+    <link rel="stylesheet" href="./study-chat.css">
+  </head>
+  <body>
+    <div id="dragHandle" class="drag-handle" title="鎷栧姩妗屽疇绐楀彛">
+      <span id="petTitle">Live Pet</span>
+      <span id="petMode" class="mode">PREVIEW</span>
+    </div>
+    <main class="pet-stage">
+      <div id="petMotion" class="pet-motion">
+        <img id="petImage" alt="" draggable="false" tabindex="0">
+        <canvas id="petCanvas" tabindex="0" aria-label="Spine 鍔ㄦ€佹瀹?></canvas>
+      </div>
+      <p id="petEmpty">绛夊緟瑙掕壊棰勮鈥?/p>
+    </main>
+    <script src="./generated/spine-pet.bundle.js"></script>
+    <script src="./pet.js"></script>
+    <script src="./study-chat.js"></script>
+  </body>
+</html>
+

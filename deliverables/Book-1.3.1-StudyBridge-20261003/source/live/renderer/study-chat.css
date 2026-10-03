@@ -1,0 +1,10 @@
+.study-chat { position: fixed; right: 12px; bottom: 12px; z-index: 1000; box-sizing: border-box; width: min(340px, calc(100vw - 24px)); max-height: calc(100vh - 32px); overflow: auto; padding: 14px; border: 1px solid #8fa4cf; border-radius: 16px; color: #eef3ff; background: #17243bed; box-shadow: 0 8px 28px #0005; font: 14px/1.55 "Segoe UI", "Microsoft YaHei", sans-serif; -webkit-app-region: no-drag; user-select: text; }
+.study-chat[hidden] { display: none !important; }
+.study-chat-title { font-size: 11px; color: #b8c8e8; margin-bottom: 8px; }
+.study-chat-message { margin: 0 0 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 32vh; overflow: auto; }
+.study-chat-form { display: flex; gap: 8px; align-items: end; }
+.study-chat textarea { min-width: 0; flex: 1; box-sizing: border-box; resize: none; border: 1px solid #607da7; border-radius: 8px; padding: 8px; background: #0f1a2d; color: #eef3ff; font: inherit; user-select: text; }
+.study-chat button { border: 0; border-radius: 8px; padding: 9px 12px; background: #b8d1ff; color: #15223d; cursor: pointer; font: inherit; }
+.study-chat button:disabled { opacity: .5; cursor: default; }
+#liveStudyReplyStatus { display: block; font-size: 11px; color: #b8c8e8; margin-top: 5px; }
+

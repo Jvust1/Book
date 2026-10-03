@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' blob:; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+    <title>Live Desktop</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./resource-library.css">
+    <link rel="stylesheet" href="./authorized-animation.css">
+    <link rel="stylesheet" href="./font-fallback.css">
+    <link rel="stylesheet" href="./study-chat.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LIVE DESKTOP <span id="version">0.1.0</span></p>
+          <h1>Live</h1>
+        </div>
+        <span id="platformBadge" class="platform-badge">妗岄潰绔?/span>
+      </header>
+
+      <section class="card" id="resourceLibrary" aria-label="鏈湴瑙掕壊璧勬簮搴?></section>
+
+      <section class="card" id="authorizedAnimation" aria-label="鎺堟潈鍘熺敓鍔ㄧ敾寮€鍙戝叆鍙?></section>
+
+      <section class="controls card" id="spinePet287" aria-label="2870261303 鍔ㄦ€佹瀹?>
+        <div>
+          <p class="eyebrow">SPINE DESKTOP PET</p>
+          <h2>Hibiki 路 2870261303</h2>
+          <p class="muted">閫夋嫨 Drive 涓凡瑙ｅ帇鐨?2870261303 鏂囦欢澶瑰悗锛屽湪閫忔槑妗屽疇绐楀彛杩愯 Spine 3.8.75銆傚崟鍑诲璇濄€佸弻鍑绘懜澶淬€佸彸閿垏鎹㈣儗鏅紱闊抽淇濇寔鍏抽棴銆?/p>
+          <p id="spinePet287Status" class="muted">绛夊緟閫夋嫨鏈湴宸茶В鍘嬬洰褰曘€?/p>
+        </div>
+        <div class="button-row">
+          <button id="spinePet287Button" class="primary" type="button">鍔犺浇鍔ㄦ€佹瀹?/button>
+          <button id="spinePet287Rescue" class="secondary" type="button">鎵惧洖妗屽疇</button>
+          <button id="spinePet287Release" class="ghost" type="button">閲婃斁妗屽疇</button>
+        </div>
+      </section>
+
+
+
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">CURRENT STATE</p>
+          <h2 id="statusTitle">鏈惎鍔?/h2>
+          <p id="statusDetail">涓婃柟璧勬簮搴撳凡灏辩华锛涜繖閲屼繚鐣欑嫭绔嬬殑鏈湴浼氳瘽婕旂ず锛屼笉浠ｈ〃鍔ㄧ敾鎾斁銆?/p>
+        </div>
+        <div id="statusDot" class="status-dot idle" aria-label="鏈惎鍔?></div>
+      </section>
+
+      <section class="controls card">
+        <div>
+          <p class="eyebrow">SESSION</p>
+          <p class="muted">鏈湴婕旂ず鐘舵€佷細淇濆瓨鍦ㄥ綋鍓嶆闈㈢敤鎴风殑娴忚鍣ㄥ瓨鍌ㄤ腑锛涜嫢瀛樺偍涓嶅彲鐢紝浼氳嚜鍔ㄩ€€鍖栦负浠呭綋鍓嶇獥鍙ｇ姸鎬併€?/p>
+        </div>
+        <div class="button-row">
+          <button id="startButton" class="primary" type="button">鍚姩</button>
+          <button id="stopButton" class="secondary" type="button" disabled>鍋滄</button>
+          <button id="clearButton" class="ghost" type="button">娓呯┖璁板綍</button>
+        </div>
+      </section>
+
+      <section class="activity card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ACTIVITY</p>
+            <h2>浜嬩欢璁板綍</h2>
+          </div>
+          <span id="eventCount" class="count">0</span>
+        </div>
+        <ol id="eventList" class="event-list" aria-live="polite"></ol>
+        <p id="emptyState" class="empty-state">鏆傛棤浜嬩欢銆傜偣鍑烩€滃惎鍔ㄢ€濆紑濮嬩竴娆℃湰鍦版紨绀恒€?/p>
+      </section>
+
+      <footer>
+        <span>瀹夊叏澹?路 鏈湴婕旂ず 路 鏃犵綉缁滆繛鎺?/span>
+        <span id="footerPlatform"></span>
+      </footer>
+    </main>
+    <script src="./session-state.js"></script>
+    <script src="./persistence.js"></script>
+    <script src="./renderer.js"></script>
+    <script src="./resource-catalog.js"></script>
+    <script src="./resource-library.js"></script>
+    <script src="./authorized-animation.js"></script>
+    <script src="./spine-pet-control.js"></script>
+    <script src="./study-chat.js"></script>
+  </body>
+</html>
+
