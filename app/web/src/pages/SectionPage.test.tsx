@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {
   MemoryRouter,
@@ -212,7 +212,7 @@ describe('SectionPage', () => {
 
     expect(await screen.findByText('定义')).toBeInTheDocument()
     expect(screen.getAllByText('L^p 空间').length).toBeGreaterThan(0)
-    expect(screen.getByText('||f||_p < ∞')).toBeInTheDocument()
+    expect(screen.getByText('||f||_p < ∞', { selector: 'code' })).toBeInTheDocument()
     expect(
       screen.getByText('设 f 为可测函数，并满足相应的 p 次可积条件。'),
     ).toBeInTheDocument()
@@ -377,7 +377,7 @@ describe('SectionPage', () => {
     expect(await screen.findByRole('heading', { name: 'L^p 空间' })).toBeInTheDocument()
     expect(await screen.findByText('复习定理')).toBeInTheDocument()
     expect(
-      await screen.findByText('学习内容仍可正常查看。学习进度暂未保存。'),
+      await screen.findByText('学习内容仍可正常查看。学习进度保存结果尚未确认。'),
     ).toBeInTheDocument()
     expect(screen.getByText('学习进度暂无法保存')).toBeInTheDocument()
 
@@ -386,9 +386,74 @@ describe('SectionPage', () => {
     await waitFor(() => {
       expect(bookApi.touchStudy).toHaveBeenCalledTimes(2)
       expect(
-        screen.queryByText('学习内容仍可正常查看。学习进度暂未保存。'),
+        screen.queryByText('学习内容仍可正常查看。学习进度保存结果尚未确认。'),
       ).not.toBeInTheDocument()
     })
     expect(screen.getByText('学习进度：进行中')).toBeInTheDocument()
   })
+  it('does not display or record a mode for another book even with matching course and section', async () => {
+    vi.mocked(bookApi.getMode).mockResolvedValue({ ...modePayload('learn', [reviewItem]), book_id: 'another_book' })
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    expect(await screen.findByText('学习内容与当前小节的教材身份不一致，请刷新后重试')).toBeInTheDocument()
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+  })
+
+  it('waits for the section identity before displaying mode content or touching progress', async () => {
+    let resolveSection!: (value: typeof sectionResponse) => void
+    vi.mocked(bookApi.getSection).mockReturnValue(new Promise(resolve => { resolveSection = resolve }))
+    vi.mocked(bookApi.getMode).mockResolvedValue(modePayload('learn', [reviewItem]))
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    await waitFor(() => expect(bookApi.getMode).toHaveBeenCalled())
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(bookApi.touchStudy).not.toHaveBeenCalled()
+    await act(async () => resolveSection(sectionResponse))
+    expect(await screen.findByText('复习定理')).toBeInTheDocument()
+    await waitFor(() => expect(bookApi.touchStudy).toHaveBeenCalledTimes(1))
+  })
+
+  it('ignores an old learning response arriving after a newer mode is already visible', async () => {
+    let resolveLearn!: (value: ModeResponse) => void
+    vi.mocked(bookApi.getMode).mockImplementation(async (_course, _section, mode) => mode === 'learn'
+      ? new Promise(resolve => { resolveLearn = resolve })
+      : modePayload(mode, [{ ...reviewItem, title_zh: '当前预习内容' }]))
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    await screen.findByRole('heading', { name: 'L^p 空间' })
+    await userEvent.click(screen.getByRole('tab', { name: '预习' }))
+    await screen.findByText('当前预习内容')
+    await act(async () => resolveLearn(modePayload('learn', [reviewItem])))
+    expect(screen.queryByText('复习定理')).not.toBeInTheDocument()
+    expect(screen.getByText('当前预习内容')).toBeInTheDocument()
+    expect(bookApi.touchStudy).toHaveBeenCalledTimes(1)
+    expect(bookApi.touchStudy).toHaveBeenCalledWith('functional_analysis_course', 'ch01_s01', 'preview')
+  })
+
+  it.each([
+    { course_id: 'wrong_course' }, { section_id: 'wrong_section' },
+    { mode: 'practice' as const }, { book_id: 'wrong_book' },
+  ])('does not display a progress receipt for a different context %#', async changed => {
+    vi.mocked(bookApi.touchStudy).mockResolvedValue({ ...studyRecord('learn'), ...changed })
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    expect(await screen.findByText('学习内容仍可正常查看。学习进度保存结果尚未确认。')).toBeInTheDocument()
+    expect(screen.queryByText('学习进度：进行中')).not.toBeInTheDocument()
+    expect(screen.queryByText('学习进度：已完成')).not.toBeInTheDocument()
+    expect(bookApi.touchStudy).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps only the last confirmed state after an invalid completion receipt and waits for explicit retry', async () => {
+    vi.mocked(bookApi.completeStudy).mockResolvedValueOnce({ ...studyRecord('learn', 'completed'), book_id: 'wrong_book' })
+      .mockResolvedValueOnce(studyRecord('learn', 'completed'))
+    renderSection('/courses/functional_analysis_course/sections/ch01_s01?mode=learn')
+    await screen.findByText('学习进度：进行中')
+    await userEvent.click(screen.getByRole('button', { name: '标记完成' }))
+    expect(await screen.findByText('学习内容仍可正常查看。学习进度保存结果尚未确认。')).toBeInTheDocument()
+    expect(screen.getByText('上次确认进度：进行中')).toBeInTheDocument()
+    expect(screen.queryByText('学习进度：已完成')).not.toBeInTheDocument()
+    expect(bookApi.completeStudy).toHaveBeenCalledTimes(1)
+    await userEvent.click(screen.getByRole('button', { name: '重试' }))
+    expect(await screen.findByText('学习进度：已完成')).toBeInTheDocument()
+    expect(screen.queryByText('学习内容仍可正常查看。学习进度保存结果尚未确认。')).not.toBeInTheDocument()
+    expect(bookApi.completeStudy).toHaveBeenCalledTimes(2)
+  })
+
 })

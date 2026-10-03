@@ -3,6 +3,7 @@ import type { FormEvent } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { QAAnswerContent } from '../components/QAAnswerContent'
 import type {
   CourseResponse,
   QACitationItem,
@@ -10,6 +11,8 @@ import type {
   SectionResponse,
 } from '../api/types'
 import {
+  activeQASource,
+  createQAMessageId,
   loadQASessionState,
   saveQASessionState,
 } from '../state/qaSessionState'
@@ -40,28 +43,33 @@ const scopeLabel = (response: QAResponse): string => {
   return '回答依据：整本教材'
 }
 
-let messageSequence = 0
-const nextMessageId = (role: 'user' | 'assistant'): string => {
-  messageSequence += 1
-  return `${role}-${messageSequence}`
+export function QAPage() {
+  const { courseId } = useParams()
+  // A different course cannot reuse the previous course's conversation component.
+  return <CourseQAPage key={courseId ?? ''} />
 }
 
-export function QAPage() {
+function CourseQAPage() {
   const { courseId } = useParams()
   const location = useLocation()
   const sectionId = new URLSearchParams(location.search).get('section')?.trim() || null
-  const initialSession = courseId ? loadQASessionState(courseId) : null
   const [course, setCourse] = useState<CourseResponse | null>(null)
   const [courseError, setCourseError] = useState<string | null>(null)
   const [section, setSection] = useState<SectionResponse | null>(null)
   const [sectionError, setSectionError] = useState<string | null>(null)
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<QASessionMessage[]>(
-    initialSession?.messages ?? [],
+    () => courseId ? loadQASessionState(courseId)?.messages ?? [] : [],
   )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const restoredScrollRef = useRef(false)
+  const mounted = useRef(true)
+  const pending = useRef(false)
+  useEffect(() => {
+    mounted.current = true
+    return () => { mounted.current = false }
+  }, [])
 
   const currentRoute = `${location.pathname}${location.search}`
 
@@ -143,7 +151,7 @@ export function QAPage() {
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!courseId || loading) return
+    if (!courseId || loading || pending.current) return
 
     const question = input.trim()
     if (!question) {
@@ -153,7 +161,7 @@ export function QAPage() {
 
     const priorMessages = messages
     const userMessage: QASessionMessage = {
-      id: nextMessageId('user'),
+      id: createQAMessageId('user', priorMessages),
       role: 'user',
       content: question,
     }
@@ -165,6 +173,7 @@ export function QAPage() {
     setInput('')
     setLoading(true)
     setError(null)
+    pending.current = true
 
     try {
       const response = await bookApi.askCourse(courseId, {
@@ -172,9 +181,10 @@ export function QAPage() {
         section_id: sectionId,
         history,
       })
+      if (!mounted.current) return
       const assistantContent = response.answer ?? response.message ?? ''
       const assistantMessage: QASessionMessage = {
-        id: nextMessageId('assistant'),
+        id: createQAMessageId('assistant', messagesWithUser),
         role: 'assistant',
         content: assistantContent,
         response,
@@ -183,9 +193,10 @@ export function QAPage() {
       setMessages(nextMessages)
       persistMessages(nextMessages)
     } catch (reason: unknown) {
-      setError(qaErrorMessage(reason))
+      if (mounted.current) setError(qaErrorMessage(reason))
     } finally {
-      setLoading(false)
+      pending.current = false
+      if (mounted.current) setLoading(false)
     }
   }
 
@@ -202,7 +213,7 @@ export function QAPage() {
   }
 
   const savedSession = loadQASessionState(courseId)
-  const activeCitationSourceId = savedSession?.activeCitationSourceId ?? null
+  const activeSource = activeQASource(savedSession)
 
   return (
     <section className="qa-page page-stack">
@@ -262,7 +273,7 @@ export function QAPage() {
                   )}
                   <p>{scopeLabel(response)}</p>
                   {style ? <p>回答方式：{style}</p> : null}
-                  <p className="learning-content">{message.content}</p>
+                  {response.answer_kind === 'generated' ? <QAAnswerContent text={message.content} /> : <p className="learning-content">{message.content}</p>}
                 </section>
 
                 {response.citations.length > 0 ? (
@@ -278,7 +289,8 @@ export function QAPage() {
                           className="learning-card qa-citation-card"
                           key={`${message.id}:${citation.evidence_id}`}
                           aria-current={
-                            activeCitationSourceId === citation.source_id ? 'true' : undefined
+                            activeSource?.sourceId === citation.source_id && activeSource.kind === citation.source_kind &&
+                            activeSource.bookId === response.book_id ? 'true' : undefined
                           }
                         >
                           <div>

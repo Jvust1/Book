@@ -1,3 +1,8 @@
+import { errorEnvelopeSchema, MAX_ERROR_RESPONSE_BYTES } from './errorContracts'
+import { STUDY_RECEIPT_MESSAGE, validateCourseStudyRecords, validateRecentStudy, validateStudyReceipt } from './studyContracts'
+import { validateModeResponse, validateSectionResponse } from './learningContracts'
+import { readBoundedJson } from './boundedJson'
+import { validateQAResponse, validateSearchResponse, validateSourceResponse } from './sourceContracts'
 import type {
   ChapterResponse,
   CourseResponse,
@@ -15,13 +20,6 @@ import type {
 
 const GENERIC_ERROR_MESSAGE = '请求失败，请稍后重试'
 
-type ErrorPayload = {
-  error?: {
-    code?: unknown
-    message?: unknown
-  }
-}
-
 export class ApiError extends Error {
   readonly code: string | null
   readonly status: number
@@ -34,7 +32,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
+async function request<T>(path: string, init: RequestInit = {}, validate?: (value: unknown) => T, validationMessage = '教材响应校验失败，请刷新后重试'): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json' }
   if (init.headers) {
     new Headers(init.headers).forEach((value, key) => {
@@ -52,22 +50,26 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     let code: string | null = null
 
     try {
-      const payload = (await response.json()) as ErrorPayload
-      const rawMessage = payload.error?.message
-      const rawCode = payload.error?.code
-      if (typeof rawMessage === 'string' && rawMessage.trim()) {
-        message = rawMessage
-      }
-      if (typeof rawCode === 'string' && rawCode.trim()) {
-        code = rawCode
-      }
+      const payload = errorEnvelopeSchema.parse(await readBoundedJson(response, MAX_ERROR_RESPONSE_BYTES))
+      message = payload.error.message
+      code = payload.error.code
     } catch {
-      // Keep the stable Chinese fallback; never expose parser or server internals.
+      if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+      // Stable fallback for malformed/oversized/non-JSON errors; no raw body,
+      // parser exception, server detail, partial envelope or automatic replay.
     }
+    if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
 
     throw new ApiError(message, response.status, code)
   }
 
+  if (validate) {
+    try { return validate(await readBoundedJson(response)) }
+    catch {
+      if (init.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+      throw new ApiError(validationMessage, response.status, 'invalid_response')
+    }
+  }
   return (await response.json()) as T
 }
 
@@ -91,6 +93,7 @@ export const bookApi = {
   getSection(courseId: string, sectionId: string): Promise<SectionResponse> {
     return request<SectionResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}`,
+      {}, value => validateSectionResponse(value, courseId, sectionId),
     )
   },
 
@@ -101,6 +104,7 @@ export const bookApi = {
   ): Promise<ModeResponse> {
     return request<ModeResponse>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/${mode}`,
+      {}, value => validateModeResponse(value, courseId, sectionId, mode),
     )
   },
 
@@ -111,7 +115,7 @@ export const bookApi = {
   ): Promise<StudyRecord> {
     return request<StudyRecord>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/touch`,
-      { method: 'POST' },
+      { method: 'POST' }, value => validateStudyReceipt(value, courseId, sectionId, mode), STUDY_RECEIPT_MESSAGE,
     )
   },
 
@@ -122,27 +126,29 @@ export const bookApi = {
   ): Promise<StudyRecord> {
     return request<StudyRecord>(
       `/api/courses/${segment(courseId)}/sections/${segment(sectionId)}/study/${mode}/complete`,
-      { method: 'POST' },
+      { method: 'POST' }, value => validateStudyReceipt(value, courseId, sectionId, mode, { completed: true }), STUDY_RECEIPT_MESSAGE,
     )
   },
 
   getCourseStudyRecords(courseId: string): Promise<StudyRecordListResponse> {
     return request<StudyRecordListResponse>(
       `/api/courses/${segment(courseId)}/study-records`,
+      {}, value => validateCourseStudyRecords(value, courseId), STUDY_RECEIPT_MESSAGE,
     )
   },
 
   getRecentStudy(): Promise<StudyRecord | null> {
-    return request<StudyRecord | null>('/api/study/recent')
+    return request<StudyRecord | null>('/api/study/recent', {}, validateRecentStudy, STUDY_RECEIPT_MESSAGE)
   },
 
-  searchCourse(courseId: string, query: string, limit = 30): Promise<SearchResponse> {
+  searchCourse(courseId: string, query: string, limit = 30, signal?: AbortSignal): Promise<SearchResponse> {
     const params = new URLSearchParams({
       q: query,
       limit: String(limit),
     })
     return request<SearchResponse>(
       `/api/courses/${segment(courseId)}/search?${params.toString()}`,
+      { signal }, value => validateSearchResponse(value, courseId, query, limit),
     )
   },
 
@@ -151,12 +157,13 @@ export const bookApi = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(qaRequest),
-    })
+    }, value => validateQAResponse(value, courseId, qaRequest))
   },
 
-  getSource(courseId: string, kind: string, sourceId: string): Promise<SourceResponse> {
+  getSource(courseId: string, kind: string, sourceId: string, signal?: AbortSignal): Promise<SourceResponse> {
     return request<SourceResponse>(
       `/api/courses/${segment(courseId)}/sources/${segment(kind)}/${segment(sourceId)}`,
+      { signal }, value => validateSourceResponse(value, courseId, kind, sourceId),
     )
   },
 }

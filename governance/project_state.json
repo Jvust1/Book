@@ -3,11 +3,11 @@
   "updated_date": "2026-10-01",
   "repository": "Jvust1/Book",
   "default_branch": "main",
-  "active_branch": "chore/all-results-sync-20261001-r2",
+  "active_branch": "docs/coherent-reader-candidate-20261001",
   "phase": "PHASE_1H_PREPARATION",
-  "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
-  "base_main_commit": "6e5782b23c49943a263dfad7ee490147d57b2f0e",
-  "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
+  "status": "DRAFT_READER_CANDIDATE_NOT_MERGED",
+  "base_main_commit": "805510f86546709b6f67c9e9079943f205c2c245",
+  "last_verified_implementation_head": "5616246fbf88c8a3a0a8732d0e36c5a11c6c6f3b",
   "latest_research_checkpoint_parent": "16ee8acfafda4558dbbc30a2cfbd1f7d51a5d0d6",
   "approved_dependency_sequence": [
     "H0",
@@ -193,7 +193,7 @@
     "snapshot_sync_status": "PENDING_NON_BLOCKING"
   },
   "blocking_items": [],
-  "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval.",
+  "next_step": "Review the coherent main-targeted reader draft and run its exact-head Linux/Windows acceptance. Preserve independent textbook audit branches and failed catalog PR #71. Merge and deployment are not part of this batch.",
   "latest_results_snapshot": {
     "snapshot_date": "2026-10-01",
     "drive_folder_id": "1nazocJf42pAwdrJUzcxrCLR9QtFVFbJS",
@@ -227,5 +227,72 @@
     "MarkItDown ingestion fallback",
     "Docling-first ingestion pipeline",
     "MinerU external ingestion"
-  ]
+  ],
+  "historical_architecture_checkpoint": {
+    "phase": "PHASE_1H_PREPARATION",
+    "status": "H4A_COMPLETE_PHASE_1H_READY_FOR_PLANNING",
+    "last_verified_implementation_head": "497d7371e4141dfa6d5a87d21399dd11f5fdd92c",
+    "next_step": "Prepare the approved Phase 1H user-visible learning-slice design/implementation plan on a non-default reviewable branch. Keep public Search/QA Exact-only. Do not activate H3b, B4b, B5, StudyRecord book-version migration, FTS/BM25 production ranking, or any other separately gated design without explicit approval."
+  },
+  "reader_integration_candidate": {
+    "status": "DRAFT_NOT_MERGED",
+    "observed_at_utc": "2026-10-01T01:56:00Z",
+    "observed_main_commit": "805510f86546709b6f67c9e9079943f205c2c245",
+    "branch": "docs/coherent-reader-candidate-20261001",
+    "verified_code_parent": "5616246fbf88c8a3a0a8732d0e36c5a11c6c6f3b",
+    "verified_parent_pr": 75,
+    "new_candidate_exact_head_acceptance": "REQUIRED_SEPARATELY",
+    "new_upstream_projects": [
+      "KaTeX",
+      "PDF.js",
+      "react-markdown",
+      "math.js",
+      "Fuse.js",
+      "Zod",
+      "TanStack Query"
+    ],
+    "reused_existing_projects": [
+      "SymPy",
+      "Playwright"
+    ],
+    "excluded_prs": [
+      71
+    ],
+    "source_only": true,
+    "original_synthetic_chapter_only": true,
+    "canonical_textbook_mutation": false,
+    "native_installer": false,
+    "user_device_acceptance": false,
+    "handoff": "docs/upstream/reader-integration-handoff-2026-10-01.md",
+    "verified_parent_runs": {
+      "windows_source": 36801911156,
+      "linux_source": 36801911159,
+      "full_ui": 36801911199,
+      "runtime_matrix": 36801911161
+    },
+    "verified_parent_source_archive": {
+      "source_files": 183,
+      "bytes": 287981,
+      "sha256": "272003b51c9f8ae57b954c4a72daafdc796006762f684ee137e28476bc5272a9",
+      "windows_linux_bytes_equal": true
+    },
+    "excluded_catalog_diagnostics": {
+      "pr": 71,
+      "publication_status": "PAUSED_REQUIRES_SEPARATE_EXPLICIT_APPROVAL",
+      "replacement_diagnostics_included": false
+    }
+  },
+  "external_book_audit_report": {
+    "status": "REPORTED_PARTIAL_FAIL_NOT_RERUN_HERE",
+    "url": "https://github.com/Jvust1/Book/blob/6d7ecf5969ed1feffc1061dc6bdb68aff77fd708/audits/2026-10-01/six-books_0800_acceptance.md",
+    "commit": "6d7ecf5969ed1feffc1061dc6bdb68aff77fd708",
+    "branch": "audit/six-books-20261001-0800",
+    "pdf_count": 24,
+    "page_count": 3477,
+    "non_a4_book_count": 5,
+    "non_a4_page_count": 2733,
+    "contemporary_chinese_economy_hidden_nul_count": 578,
+    "per_book_evidence_incomplete": true,
+    "canonical_changes_in_this_batch": false
+  }
 }

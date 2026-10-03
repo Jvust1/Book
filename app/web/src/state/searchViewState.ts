@@ -1,3 +1,4 @@
+import { sessionViewStorage } from './sessionViewStorage'
 export interface SearchViewState {
   route: string
   query: string
@@ -25,27 +26,27 @@ export function saveSearchViewState(
   courseId: string,
   state: SearchViewState,
 ): void {
-  sessionStorage.setItem(searchStateKey(courseId), JSON.stringify(state))
+  sessionViewStorage.write(searchStateKey(courseId), JSON.stringify(state))
 }
 
 export function loadSearchViewState(courseId: string): SearchViewState | null {
   const key = searchStateKey(courseId)
-  const raw = sessionStorage.getItem(key)
+  const raw = sessionViewStorage.read(key)
   if (raw === null) return null
 
   try {
     const value: unknown = JSON.parse(raw)
     if (!isSearchViewState(value)) {
-      sessionStorage.removeItem(key)
+      sessionViewStorage.remove(key)
       return null
     }
     return value
   } catch {
-    sessionStorage.removeItem(key)
+    sessionViewStorage.remove(key)
     return null
   }
 }
 
 export function clearSearchViewState(courseId: string): void {
-  sessionStorage.removeItem(searchStateKey(courseId))
+  sessionViewStorage.remove(searchStateKey(courseId))
 }

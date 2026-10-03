@@ -1,0 +1,139 @@
+name: Reproducible original reader source
+
+on:
+  push:
+    paths:
+      - "app/**"
+      - "app_tests/synthetic*"
+      - "app_tests/test_synthetic_chapter.py"
+      - "runtime/**"
+      - "book_core/**"
+      - "requirements-extras/pilot-api.txt"
+      - "requirements-extras/symbolic.txt"
+      - "tests/runtime_fixture_factory.py"
+      - "tests/test_symbolic*.py"
+      - "tests/test_reader_pilot_source.py"
+      - "tools/check_symbolic_answer.py"
+      - "tools/build_reader_pilot_source.py"
+      - "docs/upstream/**"
+      - ".github/workflows/reader-pilot-source.yml"
+  pull_request:
+    paths:
+      - "app/**"
+      - "app_tests/synthetic*"
+      - "app_tests/test_synthetic_chapter.py"
+      - "runtime/**"
+      - "book_core/**"
+      - "requirements-extras/pilot-api.txt"
+      - "requirements-extras/symbolic.txt"
+      - "tests/runtime_fixture_factory.py"
+      - "tests/test_symbolic*.py"
+      - "tests/test_reader_pilot_source.py"
+      - "tools/check_symbolic_answer.py"
+      - "tools/build_reader_pilot_source.py"
+      - "docs/upstream/**"
+      - ".github/workflows/reader-pilot-source.yml"
+
+permissions:
+  contents: read
+concurrency:
+  group: reader-pilot-source-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  extracted-source-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PILOT_DIR: /tmp/book-reader-pilot
+    steps:
+      - name: Checkout exact candidate head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: app/web/package-lock.json
+      - name: Test allowlist and archive safety
+        run: python -m unittest tests.test_reader_pilot_source -v
+      - name: Build and verify deterministic code-only source
+        run: |
+          python tools/build_reader_pilot_source.py build --ref "$(git rev-parse HEAD)" --output .build/book-reader-pilot.tar.gz
+          python tools/build_reader_pilot_source.py verify .build/book-reader-pilot.tar.gz
+          python tools/build_reader_pilot_source.py extract .build/book-reader-pilot.tar.gz "$PILOT_DIR"
+          python tools/build_reader_pilot_source.py repack "$PILOT_DIR" --output .build/repacked.tar.gz
+          cmp .build/book-reader-pilot.tar.gz .build/repacked.tar.gz
+          (cd .build && sha256sum book-reader-pilot.tar.gz > book-reader-pilot.tar.gz.sha256)
+      - name: Install hash-pinned extracted Python dependencies
+        working-directory: ${{ env.PILOT_DIR }}
+        run: python -m pip install --require-hashes -r requirements-extras/pilot-api.txt -r requirements-extras/symbolic.txt
+      - name: Verify extracted runtime with no canonical content
+        working-directory: ${{ env.PILOT_DIR }}
+        run: |
+          env -u PYTHONPATH python - <<'PY'
+          from pathlib import Path
+          import app.api.main
+          import runtime
+          root = Path.cwd().resolve()
+          assert Path(app.api.main.__file__).resolve().is_relative_to(root)
+          assert Path(runtime.__file__).resolve().is_relative_to(root)
+          assert not any((root / path).exists() for path in ('books', 'courses', 'library', '.git', '.env'))
+          print('Imported only extracted source; no canonical books, courses, library, Git credentials or env files')
+          PY
+          env -u PYTHONPATH python -m unittest app_tests.test_synthetic_chapter tests.test_symbolic_answer tests.test_symbolic_safety tests.test_reader_pilot_source -v
+      - name: Install and test extracted web source
+        working-directory: ${{ env.PILOT_DIR }}/app/web
+        run: |
+          npm ci --no-audit
+          npm test
+          npm run typecheck
+          npm run build
+          npx playwright install --with-deps chromium
+      - name: Start only the extracted original-chapter servers
+        working-directory: ${{ env.PILOT_DIR }}
+        run: |
+          env -u PYTHONPATH nohup python -m uvicorn app_tests.synthetic_pilot_server:create_app --factory --host 127.0.0.1 --port 8000 > "$RUNNER_TEMP/pilot-api.log" 2>&1 < /dev/null &
+          echo $! > "$RUNNER_TEMP/pilot-api.pid"
+          cd app/web
+          nohup node node_modules/vite/bin/vite.js preview --host 127.0.0.1 --port 5173 --strictPort > "$RUNNER_TEMP/pilot-web.log" 2>&1 < /dev/null &
+          echo $! > "$RUNNER_TEMP/pilot-web.pid"
+          for attempt in {1..60}; do
+            if curl -fsS http://127.0.0.1:8000/api/library | python -c 'import json,sys; assert json.load(sys.stdin)["library_id"] == "original_pilot_library"' 2>/dev/null && curl -fsS http://127.0.0.1:5173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/pilot-api.log" "$RUNNER_TEMP/pilot-web.log"
+          exit 1
+      - name: Verify complete extracted chapter and storage recovery
+        working-directory: ${{ env.PILOT_DIR }}/app/web
+        run: npm run e2e -- --config playwright.pilot.config.ts
+      - name: Upload verified code-only source and checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-reader-pilot-source
+          path: |
+            .build/book-reader-pilot.tar.gz
+            .build/book-reader-pilot.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload original extracted-pilot previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-reader-pilot-previews
+          path: ${{ env.PILOT_DIR }}/app/web/pilot-test-results/*.png
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Stop extracted-pilot processes
+        if: always()
+        run: |
+          for name in pilot-api pilot-web; do
+            if test -f "$RUNNER_TEMP/$name.pid"; then kill "$(cat "$RUNNER_TEMP/$name.pid")" 2>/dev/null || true; fi
+          done
