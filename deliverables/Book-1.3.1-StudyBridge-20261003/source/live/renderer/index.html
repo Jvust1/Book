@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'none'; img-src 'self' blob:; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+    <title>Live Desktop</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./resource-library.css">
+    <link rel="stylesheet" href="./authorized-animation.css">
+    <link rel="stylesheet" href="./font-fallback.css">
+    <link rel="stylesheet" href="./study-chat.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LIVE DESKTOP <span id="version">0.1.0</span></p>
+          <h1>Live</h1>
+        </div>
+        <span id="platformBadge" class="platform-badge">桌面端</span>
+      </header>
+
+      <section class="card" id="resourceLibrary" aria-label="本地角色资源库"></section>
+
+      <section class="card" id="authorizedAnimation" aria-label="授权原生动画开发入口"></section>
+
+      <section class="controls card" id="spinePet287" aria-label="2870261303 动态桌宠">
+        <div>
+          <p class="eyebrow">SPINE DESKTOP PET</p>
+          <h2>Hibiki · 2870261303</h2>
+          <p class="muted">选择 Drive 中已解压的 2870261303 文件夹后，在透明桌宠窗口运行 Spine 3.8.75。单击对话、双击摸头、右键切换背景；音频保持关闭。</p>
+          <p id="spinePet287Status" class="muted">等待选择本地已解压目录。</p>
+        </div>
+        <div class="button-row">
+          <button id="spinePet287Button" class="primary" type="button">加载动态桌宠</button>
+          <button id="spinePet287Rescue" class="secondary" type="button">找回桌宠</button>
+          <button id="spinePet287Release" class="ghost" type="button">释放桌宠</button>
+        </div>
+      </section>
+
+
+
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">CURRENT STATE</p>
+          <h2 id="statusTitle">未启动</h2>
+          <p id="statusDetail">上方资源库已就绪；这里保留独立的本地会话演示，不代表动画播放。</p>
+        </div>
+        <div id="statusDot" class="status-dot idle" aria-label="未启动"></div>
+      </section>
+
+      <section class="controls card">
+        <div>
+          <p class="eyebrow">SESSION</p>
+          <p class="muted">本地演示状态会保存在当前桌面用户的浏览器存储中；若存储不可用，会自动退化为仅当前窗口状态。</p>
+        </div>
+        <div class="button-row">
+          <button id="startButton" class="primary" type="button">启动</button>
+          <button id="stopButton" class="secondary" type="button" disabled>停止</button>
+          <button id="clearButton" class="ghost" type="button">清空记录</button>
+        </div>
+      </section>
+
+      <section class="activity card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ACTIVITY</p>
+            <h2>事件记录</h2>
+          </div>
+          <span id="eventCount" class="count">0</span>
+        </div>
+        <ol id="eventList" class="event-list" aria-live="polite"></ol>
+        <p id="emptyState" class="empty-state">暂无事件。点击“启动”开始一次本地演示。</p>
+      </section>
+
+      <footer>
+        <span>安全壳 · 本地演示 · 无网络连接</span>
+        <span id="footerPlatform"></span>
+      </footer>
+    </main>
+    <script src="./session-state.js"></script>
+    <script src="./persistence.js"></script>
+    <script src="./renderer.js"></script>
+    <script src="./resource-catalog.js"></script>
+    <script src="./resource-library.js"></script>
+    <script src="./authorized-animation.js"></script>
+    <script src="./spine-pet-control.js"></script>
+    <script src="./study-chat.js"></script>
+  </body>
+</html>
+
