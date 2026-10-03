@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import type { QAResponse } from '../api/types'
 import {
+  createQAMessageId,
   clearQASessionState,
   loadQASessionState,
   qaSessionStateKey,
@@ -216,4 +217,52 @@ describe('qaSessionState', () => {
       content: 'B?',
     })
   })
+  it.each([
+    { ...response, course_id: 'other_course' },
+    { ...response, citations: [] },
+    { ...response, citations: [{ ...response.citations[0], pdf_page: 1.5 }] },
+    { ...response, citations: [response.citations[0], response.citations[0]] },
+  ])('rejects cached response context or schema corruption %#', cached => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(key, JSON.stringify({ route: '/courses/functional_analysis_course/qa',
+      messages: [{ id: 'a1', role: 'assistant', content: response.answer, response: cached }],
+      scrollY: 0, activeCitationSourceId: null }))
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+    expect(sessionStorage.getItem(key)).toBeNull()
+  })
+
+  it('does not combine an altered displayed answer with unrelated cached citations', () => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(key, JSON.stringify({ route: '/courses/functional_analysis_course/qa',
+      messages: [{ id: 'a1', role: 'assistant', content: 'different answer', response }],
+      scrollY: 0, activeCitationSourceId: null }))
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+  })
+
+  it.each([
+    { messages: [{ id: 'u1', role: 'user', content: 'Unrelated question' },
+      { id: 'a1', role: 'assistant', content: response.answer, response }] },
+    { messages: [{ id: 'same', role: 'user', content: response.question },
+      { id: 'same', role: 'assistant', content: response.answer, response }] },
+    { route: '/courses/other_course/qa' },
+  ])('rejects a cached conversation with mismatched question, duplicate identity or wrong return route %#', change => {
+    const key = qaSessionStateKey('functional_analysis_course')
+    sessionStorage.setItem(key, JSON.stringify({ route: '/courses/functional_analysis_course/qa',
+      messages: [{ id: 'u1', role: 'user', content: response.question },
+        { id: 'a1', role: 'assistant', content: response.answer, response }],
+      scrollY: 0, activeCitationSourceId: null, ...change }))
+    expect(loadQASessionState('functional_analysis_course')).toBeNull()
+    expect(sessionStorage.getItem(key)).toBeNull()
+  })
+
+  it('allocates IDs from restored messages rather than a reset module counter', () => {
+    const messages = [
+      { id: 'user-1', role: 'user' as const, content: response.question },
+      { id: 'assistant-2', role: 'assistant' as const, content: response.answer!, response },
+      { id: 'user-4', role: 'user' as const, content: 'failed prior question' },
+    ]
+    expect(createQAMessageId('user', messages)).toBe('user-5')
+    expect(createQAMessageId('assistant', messages)).toBe('assistant-4')
+  })
+
 })

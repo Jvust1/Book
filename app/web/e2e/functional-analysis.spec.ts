@@ -381,8 +381,10 @@ test('Section QA source round trip restores verified conversation without provid
   expect(first.scope_used).toBe('section')
   expect(first.citations.length).toBeGreaterThan(0)
   expect(first.answer).not.toBeNull()
-  await expect(page.getByText('回答依据：当前小节')).toBeVisible()
-  await expect(page.getByText(first.answer!, { exact: true })).toBeVisible()
+  await expect(page.getByText('回答依据：提问时的小节')).toBeVisible()
+  await page.getByText('查看回答原文', { exact: true }).click()
+  await expect(page.locator('.qa-original-answer pre').first()).toHaveText(first.answer!)
+  await expect(page.locator('.qa-original-answer pre').first()).toBeVisible()
   expect(recorder.bodies).toHaveLength(1)
   expect(recorder.bodies[0]).toEqual({
     question,
@@ -413,7 +415,9 @@ test('Section QA source round trip restores verified conversation without provid
 
   await page.getByRole('button', { name: '返回问答' }).click()
   await expect(page).toHaveURL(`${BASE_URL}${qaPath}`)
-  await expect(page.getByText(first.answer!, { exact: true })).toBeVisible()
+  await page.getByText('查看回答原文', { exact: true }).click()
+  await expect(page.locator('.qa-original-answer pre').first()).toHaveText(first.answer!)
+  await expect(page.locator('.qa-original-answer pre').first()).toBeVisible()
   await expect(page.locator('.qa-citation-card[aria-current="true"]')).toHaveCount(1)
   expect(recorder.bodies).toHaveLength(1)
 
@@ -450,7 +454,7 @@ test('Section QA visibly falls back to other textbook chapters when local eviden
   expect(response.answer_kind).toBe('generated')
   expect(response.scope_requested).toBe('section_then_book')
   expect(response.scope_used).toBe('book')
-  await expect(page.getByText('回答依据：本节 + 教材其他章节')).toBeVisible()
+  await expect(page.getByText('回答依据：提问时的小节 + 教材其他章节')).toBeVisible()
 })
 
 test('real Functional Analysis textbook QA treats nonexistent questions as normal insufficient evidence', async ({ page }) => {

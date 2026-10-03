@@ -1,5 +1,26 @@
 # Book 开发路线图
 
+## 2026-10-01 01:56 UTC 阅读器候选检查点（尚未合并）
+
+- 实时核对 `main`：`805510f86546709b6f67c9e9079943f205c2c245`，仍为 PR #57 合并结果；下列新增能力目前只在 Draft 分支。
+- 已验证代码基线：PR [#75](https://github.com/Jvust1/Book/pull/75)，`5616246fbf88c8a3a0a8732d0e36c5a11c6c6f3b`。整合交接分支 `docs/coherent-reader-candidate-20261001` 以此为父提交，目标为 `main`，自身 exact-head gates 必须另行通过。
+- 七个新接入项目为 KaTeX、PDF.js、react-markdown、math.js、Fuse.js、Zod、TanStack Query，均实际进入阅读器运行路径；既有 SymPy 做安全加固，既有 Playwright 用于验收，不重复计入新项目数。
+- 原创单章贯通预习/学习/复习/刷题、来源 PDF 本地检索、引用问答、数值计算与显式进度回执恢复。#75 exact head 已通过 Linux/Windows 干净源码提取、403 个 Web 测试、类型/构建、40 个提取后 Python 测试及五条原创浏览器旅程；完整 UI gate 为 38 条常规 + 5 条原创旅程，平台重跑不累计为新用例。
+- #71 目录验证/导航恢复分支六条新浏览器用例失败，未纳入该候选；旧 PR 与其他教材审校分支均保留。不得以候选通过推断 #71 已修复。
+- 外部[六书审计报告](https://github.com/Jvust1/Book/blob/6d7ecf5969ed1feffc1061dc6bdb68aff77fd708/audits/2026-10-01/six-books_0800_acceptance.md)报告 24 PDF / 3477 页，其中五书 2733 页非 A4、当代中国经济文本层 578 个 NUL、逐书审校/同步证据仍有缺口；这是另一分支的报告，非本次重跑。原创代码验收不替代教材、排版、字体或来源重排验收。
+- 交付为 code-only 源码，包含原创合成章节，不含用户教材全文、扫描 PDF、私有资产或原生安装器。详细复现、上游出处和边界见 [阅读器交接](upstream/reader-integration-handoff-2026-10-01.md)。
+
+以下旧阶段和导出记录按当时证据保留。出现“当前 main / 唯一下一步 / H4a 下一步”等旧表述时，按其历史日期理解；实时分支状态以上方检查点和最新 GitHub 记录为准，不将旧记录重新解释为本次授权。
+
+### 本候选后的有界下一步
+
+1. 对 main-targeted Draft 的最终提交重新跑完整 Linux/Windows gates，保留旧 PR 的独立历史。
+2. 评审整合差异和许可证/包清单；合并、部署、原生安装器及用户设备验收各自另行处理。
+3. 教材审校负责人推进外部报告中的 A4 源重排、隐藏文本层和逐书证据问题；不将这些教材任务纳入本原创代码包。
+4. #71 的目录响应/恢复工作仍独立未通过，不能按后面的历史路线图勾选为完成。
+
+## 历史路线与产品基线（保留原复选框）
+
 > 状态同步：2026-08-29
 >
 > Stein & Shakarchi《Functional Analysis》已完成全书结构化并达到 `STRUCTURED_COMPLETE / RUNTIME_READY`。Phase 1F 教材内问答已合并到 `main`。Phase 1G 长期 StudyRecord 已通过 PR #11 合并到 `main`，merge commit `4b111e4b1ffde86a365aaad2a3164f8aedccc819` 的合并后 Book App UI tests run #194 全绿。Foundation A Tasks 1–10 已完成并通过 PR #13 合并；H0/H1/H2/H3a 也已分别通过 PR #18/#19/#20/#21 集成到 `main`。H3a merge commit 为 `f69166568839b7038b0f0472baefcee34299fa17`；post-H3a governance PR #17 合并后当前 `main` 为 `3c5585b0c5c27d336473a4dfa59ca675097216fd`，下一批准阶段为 H4a shadow FTS5/BM25 evaluation。

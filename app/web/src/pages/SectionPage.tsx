@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { ApiError, bookApi } from '../api/client'
+import { validateStudyReceipt } from '../api/studyContracts'
 import type {
   LearningMode,
   ModeResponse,
@@ -11,10 +12,11 @@ import type {
 import { EmptyState } from '../components/EmptyState'
 import { LearningObjectCard } from '../components/LearningObjectCard'
 import { ModeTabs } from '../components/ModeTabs'
+import { PracticeScratchpad } from '../components/PracticeScratchpad'
 import { loadSectionViewState, saveSectionViewState } from '../state/sectionViewState'
 
 const VALID_MODES: readonly LearningMode[] = ['preview', 'learn', 'review', 'practice']
-const STUDY_SAVE_FALLBACK = '学习进度暂无法保存'
+const STUDY_SAVE_FALLBACK = '学习进度保存结果尚未确认，请重试或刷新核对'
 
 type StudyRetryAction = 'touch' | 'complete'
 
@@ -38,10 +40,10 @@ export function SectionPage() {
   const mode: LearningMode = isLearningMode(rawMode) ? rawMode : 'learn'
   const studyKey = courseId && sectionId ? `${courseId}:${sectionId}:${mode}` : null
 
-  const [section, setSection] = useState<SectionResponse | null>(null)
+  const [loadedSection, setSection] = useState<SectionResponse | null>(null)
   const [sectionError, setSectionError] = useState<string | null>(null)
-  const [payload, setPayload] = useState<ModeResponse | null>(null)
-  const [modeError, setModeError] = useState<string | null>(null)
+  const [loadedPayload, setPayload] = useState<ModeResponse | null>(null)
+  const [requestModeError, setModeError] = useState<string | null>(null)
   const [studyRecord, setStudyRecord] = useState<StudyRecord | null>(null)
   const [studyError, setStudyError] = useState<string | null>(null)
   const [studyRetryAction, setStudyRetryAction] = useState<StudyRetryAction | null>(null)
@@ -51,6 +53,16 @@ export function SectionPage() {
   const restoredKeyRef = useRef<string | null>(null)
   const activeStudyKeyRef = useRef<string | null>(studyKey)
   const touchedKeyRef = useRef<string | null>(null)
+
+  // Effect cleanup prevents late writes; render guards also prevent one-frame
+  // reuse while a new course/section/mode is waiting for its effect to run.
+  const section = loadedSection && loadedSection.course_id === courseId && loadedSection.section.section_id === sectionId
+    ? loadedSection : null
+  const matchingPayload = loadedPayload && loadedPayload.course_id === courseId && loadedPayload.section_id === sectionId && loadedPayload.mode === mode
+    ? loadedPayload : null
+  const bookMismatch = Boolean(section && matchingPayload && section.book_id !== matchingPayload.book_id)
+  const payload = section && !bookMismatch ? matchingPayload : null
+  const modeError = requestModeError || (bookMismatch ? '学习内容与当前小节的教材身份不一致，请刷新后重试' : null)
 
   useEffect(() => {
     if (isLearningMode(rawMode)) return
@@ -122,7 +134,8 @@ export function SectionPage() {
       setStudyError(null)
       setStudyRetryAction(null)
       try {
-        const record = await bookApi.touchStudy(courseId, sectionId, mode)
+        const record = validateStudyReceipt(await bookApi.touchStudy(courseId, sectionId, mode),
+          courseId, sectionId, mode, { bookId: section?.book_id })
         if (activeStudyKeyRef.current === expectedStudyKey) {
           setStudyRecord(record)
         }
@@ -137,7 +150,7 @@ export function SectionPage() {
         }
       }
     },
-    [courseId, mode, sectionId],
+    [courseId, mode, sectionId, section?.book_id],
   )
 
   useEffect(() => {
@@ -218,7 +231,8 @@ export function SectionPage() {
       setStudyError(null)
       setStudyRetryAction(null)
       try {
-        const record = await bookApi.completeStudy(courseId, sectionId, mode)
+        const record = validateStudyReceipt(await bookApi.completeStudy(courseId, sectionId, mode),
+          courseId, sectionId, mode, { bookId: section?.book_id, completed: true })
         if (activeStudyKeyRef.current === expectedStudyKey) {
           setStudyRecord(record)
         }
@@ -233,7 +247,7 @@ export function SectionPage() {
         }
       }
     },
-    [courseId, mode, sectionId, studyRecord?.status],
+    [courseId, mode, sectionId, section?.book_id, studyRecord?.status],
   )
 
   const retryStudySave = () => {
@@ -265,11 +279,11 @@ export function SectionPage() {
   return (
     <section className="section-page page-stack">
       {section?.chapter_id ? (
-        <Link className="back-link" to={`/courses/${courseId}/chapters/${section.chapter_id}`}>
+        <Link className="back-link" to={`/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(section.chapter_id)}`}>
           ← 返回章节
         </Link>
       ) : (
-        <Link className="back-link" to={`/courses/${courseId}`}>
+        <Link className="back-link" to={`/courses/${encodeURIComponent(courseId)}`}>
           ← 返回课程
         </Link>
       )}
@@ -309,9 +323,7 @@ export function SectionPage() {
           {studyRecord ? (
             <div className="study-progress-summary">
               <p>
-                {studyRecord.status === 'completed'
-                  ? '学习进度：已完成'
-                  : '学习进度：进行中'}
+                {studyError || completionSaving || studySaving ? '上次确认进度：' : '学习进度：'}{studyRecord.status === 'completed' ? '已完成' : '进行中'}
               </p>
               {studyRecord.status !== 'completed' ? (
                 <button
@@ -330,7 +342,7 @@ export function SectionPage() {
 
           {studyError ? (
             <div className="study-progress-warning" role="status">
-              <p>学习内容仍可正常查看。学习进度暂未保存。</p>
+              <p>学习内容仍可正常查看。学习进度保存结果尚未确认。</p>
               <p className="secondary-text">{studyError}</p>
               <button
                 className="secondary-button"
@@ -367,6 +379,8 @@ export function SectionPage() {
       {payload && payload.items.length === 0 && emptyMessage(mode) ? (
         <EmptyState message={emptyMessage(mode)!} />
       ) : null}
+
+      {payload && mode === 'practice' ? <PracticeScratchpad key={`${courseId}:${sectionId}`} /> : null}
 
       {payload && payload.items.length > 0 ? (
         <div className="learning-list">

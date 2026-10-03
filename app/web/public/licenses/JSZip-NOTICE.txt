@@ -1,0 +1,25 @@
+JSZip single-answer evidence export
+
+Official upstream: https://github.com/Stuk/jszip
+GitHub stars verified 2026-10-01 UTC: 10,386
+Package: jszip 3.10.1, exact npm dependency and integrity in package-lock.json
+Source tag: v3.10.1
+Source commit: 0f2f1e4d0509514417db83fe5b86bde90e0ffe8d
+Source: https://github.com/Stuk/jszip/blob/0f2f1e4d0509514417db83fe5b86bde90e0ffe8d/lib/object.js
+License source: https://github.com/Stuk/jszip/blob/0f2f1e4d0509514417db83fe5b86bde90e0ffe8d/LICENSE.markdown
+Original license blob: f8250b37a61862ea61ea9a93d5d423cad395a364
+npm integrity: sha512-xXDvecyTpGLrqFrvkrUSoxxfJI5AH7U8zxxtVclpsUtMCq4JQ290LY8AW5c7Ggnr/Y/oK+bQMbqK2qmtk3pN4g==
+
+JSZip offers MIT or GPLv3 at the recipient's choice. Book uses the MIT option.
+The complete unchanged upstream LICENSE.markdown is retained as JSZip-LICENSE.txt.
+Complete notices for newly introduced transitive packages are retained in
+JSZip-dependencies-LICENSE.txt. Book's code receives no new overall license here.
+
+Actual runtime: completed validated QA turn -> qaEvidenceZip.ts -> upstream
+JSZip.file()/generateAsync() -> explicit local Blob download. There is no new
+upload, provider call, source-PDF read, archive import or StudyRecord write.
+The original upstream implementation is installed unchanged. Book supplies its
+own validation, fixed filenames, UTF-8 budget, STORE options and UI ownership.
+
+The export is a copy of a selected AI answer and its citation metadata, not proof
+of textbook authenticity or model correctness, and not a learning-state backup.

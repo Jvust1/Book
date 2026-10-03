@@ -1,4 +1,6 @@
-import type { QACitationItem, QAResponse } from '../api/types'
+import { sessionViewStorage } from './sessionViewStorage'
+import type { QAResponse } from '../api/types'
+import { qaResponseSchema } from '../api/sourceContracts'
 
 export type QASessionMessage =
   | { id: string; role: 'user'; content: string }
@@ -14,38 +16,6 @@ export interface QASessionState {
 const SESSION_KEYS = ['activeCitationSourceId', 'messages', 'route', 'scrollY'] as const
 const USER_MESSAGE_KEYS = ['content', 'id', 'role'] as const
 const ASSISTANT_MESSAGE_KEYS = ['content', 'id', 'response', 'role'] as const
-const RESPONSE_KEYS = [
-  'answer',
-  'answer_kind',
-  'answer_style',
-  'book_id',
-  'citations',
-  'course_id',
-  'insufficient_evidence',
-  'message',
-  'question',
-  'scope_requested',
-  'scope_used',
-] as const
-const CITATION_KEYS = [
-  'book_id',
-] as const
-const V2_CITATION_KEYS = [
-  'chapter_id',
-  'evidence_id',
-  'number',
-  'object_type',
-  'pdf_page',
-  'printed_page',
-  'section_id',
-  'source_anchor',
-  'source_id',
-  'source_kind',
-  'title_en',
-  'title_zh',
-  'type_zh',
-] as const
-
 export function qaSessionStateKey(courseId: string): string {
   return `book:qa-session:${courseId}`
 }
@@ -68,77 +38,7 @@ const hasExactKeys = (
 const isNonBlankString = (value: unknown): value is string =>
   typeof value === 'string' && value.trim().length > 0
 
-const isNullableString = (value: unknown): value is string | null =>
-  value === null || typeof value === 'string'
-
-const isNullablePage = (value: unknown): value is number | string | null =>
-  value === null ||
-  typeof value === 'string' ||
-  (typeof value === 'number' && Number.isFinite(value))
-
-const isCitation = (value: unknown): value is QACitationItem => {
-  if (!isRecord(value) || !hasExactKeys(value, V2_CITATION_KEYS)) return false
-
-  return (
-    isNonBlankString(value.evidence_id) &&
-    isNonBlankString(value.source_kind) &&
-    isNonBlankString(value.source_id) &&
-    isNullableString(value.chapter_id) &&
-    isNullableString(value.section_id) &&
-    isNullableString(value.object_type) &&
-    isNullableString(value.type_zh) &&
-    isNullableString(value.number) &&
-    isNullableString(value.title_zh) &&
-    isNullableString(value.title_en) &&
-    isNullablePage(value.printed_page) &&
-    (value.pdf_page === null ||
-      (typeof value.pdf_page === 'number' && Number.isFinite(value.pdf_page))) &&
-    isNullableString(value.source_anchor)
-  )
-}
-
-const isQAResponse = (value: unknown): value is QAResponse => {
-  if (!isRecord(value) || !hasExactKeys(value, RESPONSE_KEYS)) return false
-
-  if (
-    !isNonBlankString(value.course_id) ||
-    !isNonBlankString(value.book_id) ||
-    !isNonBlankString(value.question) ||
-    (value.answer !== null && typeof value.answer !== 'string') ||
-    (value.answer_kind !== 'generated' && value.answer_kind !== 'system_notice') ||
-    (value.answer_style !== null &&
-      value.answer_style !== 'brief' &&
-      value.answer_style !== 'explain' &&
-      value.answer_style !== 'compare' &&
-      value.answer_style !== 'proof') ||
-    (value.scope_requested !== 'book' && value.scope_requested !== 'section_then_book') ||
-    (value.scope_used !== 'section' && value.scope_used !== 'book') ||
-    typeof value.insufficient_evidence !== 'boolean' ||
-    !isNullableString(value.message) ||
-    !Array.isArray(value.citations) ||
-    !value.citations.every(isCitation)
-  ) {
-    return false
-  }
-
-  if (value.answer_kind === 'generated') {
-    return (
-      value.insufficient_evidence === false &&
-      isNonBlankString(value.answer) &&
-      value.answer_style !== null &&
-      value.message === null &&
-      value.citations.length > 0
-    )
-  }
-
-  return (
-    value.insufficient_evidence === true &&
-    value.answer === null &&
-    value.answer_style === null &&
-    isNonBlankString(value.message) &&
-    value.citations.length === 0
-  )
-}
+const isQAResponse = (value: unknown): value is QAResponse => qaResponseSchema.safeParse(value).success
 
 const isMessage = (value: unknown): value is QASessionMessage => {
   if (!isRecord(value)) return false
@@ -156,7 +56,8 @@ const isMessage = (value: unknown): value is QASessionMessage => {
       hasExactKeys(value, ASSISTANT_MESSAGE_KEYS) &&
       isNonBlankString(value.id) &&
       isNonBlankString(value.content) &&
-      isQAResponse(value.response)
+      isQAResponse(value.response) &&
+      value.content === (value.response.answer ?? value.response.message)
     )
   }
 
@@ -177,28 +78,74 @@ const isQASessionState = (value: unknown): value is QASessionState => {
   )
 }
 
+/** Preserve the stored v1 shape, but bind each answer to its actual preceding question. */
+function validConversation(state: QASessionState, courseId: string): boolean {
+  if (!state.route.startsWith('/')) return false
+  const route = new URL(state.route, 'https://book.invalid')
+  if (route.origin !== 'https://book.invalid' || route.pathname !== `/courses/${encodeURIComponent(courseId)}/qa` ||
+    route.hash || [...route.searchParams.keys()].some(key => key !== 'section') ||
+    route.searchParams.getAll('section').length > 1 ||
+    (route.searchParams.has('section') && !route.searchParams.get('section')?.trim())) return false
+  const ids = new Set<string>()
+  for (let i = 0; i < state.messages.length; i++) {
+    const message = state.messages[i]
+    if (ids.has(message.id)) return false
+    ids.add(message.id)
+    if (message.role === 'assistant') {
+      const question = state.messages[i - 1]
+      if (!question || question.role !== 'user' || question.content.trim() !== message.response.question ||
+        message.response.course_id !== courseId) return false
+    }
+  }
+  return true
+}
+
+/** IDs must stay unique even after a reload resets the JavaScript module. */
+export function createQAMessageId(role: 'user' | 'assistant', messages: QASessionMessage[]): string {
+  const used = new Set(messages.map(message => message.id))
+  let sequence = messages.length + 1
+  while (used.has(`${role}-${sequence}`)) sequence++
+  return `${role}-${sequence}`
+}
+
+export interface ActiveQASource { bookId: string; kind: string; sourceId: string }
+/** The legacy stored selection has only an ID. Ambiguity must never imply a kind or book. */
+export function activeQASource(state: QASessionState | null): ActiveQASource | null {
+  if (!state?.activeCitationSourceId) return null
+  const identities = new Map<string, ActiveQASource>()
+  for (const message of state.messages) {
+    if (message.role !== 'assistant') continue
+    for (const citation of message.response.citations) {
+      if (citation.source_id !== state.activeCitationSourceId) continue
+      const identity = { bookId: message.response.book_id, kind: citation.source_kind, sourceId: citation.source_id }
+      identities.set(JSON.stringify([identity.bookId, identity.kind, identity.sourceId]), identity)
+    }
+  }
+  return identities.size === 1 ? identities.values().next().value ?? null : null
+}
+
 export function saveQASessionState(courseId: string, state: QASessionState): void {
-  sessionStorage.setItem(qaSessionStateKey(courseId), JSON.stringify(state))
+  sessionViewStorage.write(qaSessionStateKey(courseId), JSON.stringify(state))
 }
 
 export function loadQASessionState(courseId: string): QASessionState | null {
   const key = qaSessionStateKey(courseId)
-  const raw = sessionStorage.getItem(key)
+  const raw = sessionViewStorage.read(key)
   if (raw === null) return null
 
   try {
     const value: unknown = JSON.parse(raw)
-    if (!isQASessionState(value)) {
-      sessionStorage.removeItem(key)
+    if (!isQASessionState(value) || !validConversation(value, courseId)) {
+      sessionViewStorage.remove(key)
       return null
     }
     return value
   } catch {
-    sessionStorage.removeItem(key)
+    sessionViewStorage.remove(key)
     return null
   }
 }
 
 export function clearQASessionState(courseId: string): void {
-  sessionStorage.removeItem(qaSessionStateKey(courseId))
+  sessionViewStorage.remove(qaSessionStateKey(courseId))
 }
