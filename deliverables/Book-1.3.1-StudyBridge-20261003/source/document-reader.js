@@ -2,23 +2,23 @@
 'use strict';
 (() => {
 const $=id=>document.getElementById(id), $$=(q,root=document)=>Array.from(root.querySelectorAll(q));
-const MODES={preview:'棰勪範',learn:'瀛︿範',review:'澶嶄範',practice:'鍒烽'};
+const MODES={preview:'预习',learn:'学习',review:'复习',practice:'刷题'};
 const MODE_GUIDES={
- preview:{kicker:'10鈥?0 鍒嗛挓',title:'鍏堟惌楠ㄦ灦锛屽啀杩涘叆姝ｆ枃銆?,text:'鍙姄鏈珷瑕佽В鍐崇殑闂銆佽矾绾垮浘銆佹牳蹇冩蹇靛拰鍏抽敭鍏紡锛涜瀹岀敤鑷纭浣犵煡閬撯€滄帴涓嬫潵瀛︿粈涔堚€濄€?,primary:'寮€濮嬪涔?,secondary:'璺冲埌棰勪範鑷'},
- learn:{kicker:'杩炵画姝ｆ枃',title:'鎸夋暀鏉愰『搴忓畬鏁村涔犮€?,text:'淇濇寔姝ｆ枃杩炶疮锛屽叕寮忋€佷緥棰樹笌鍥捐〃璺熼殢鍐呭鎺ㄨ繘锛涙潵婧愪笌鎶€鏈鏄庣暀鍦ㄥ璁″眰锛屼笉鎵撴柇闃呰銆?,primary:'杩涘叆澶嶄範',secondary:'娌夋蹈闃呰'},
- review:{kicker:'鑰冭瘯澶嶄範',title:'鎶婄煡璇嗗帇缂╂垚鍙洖蹇嗙粨鏋勩€?,text:'鍏堜富鍔ㄥ洖蹇嗗畾涔夈€佸畾鐞嗐€佸叕寮忎笌鏉′欢锛屽啀灞曞紑姝ｆ枃鏍稿锛涙渶鍚庤繘鍏ュ埛棰橀獙璇併€?,primary:'寮€濮嬪埛棰?,secondary:'寮€鍚富鍔ㄥ洖蹇?},
- practice:{kicker:'鏁欐潗鍘熼',title:'鍏堢嫭绔嬩綔绛旓紝鍐嶆牳瀵瑰弬鑰冭В绛斻€?,text:'绛旀榛樿鎶樺彔锛涚偣鍑烩€滃弬鑰冭В绛斺€濆彧灞曞紑鏈銆傝崏绋夸笌鎺屾彙鐘舵€佷繚瀛樺湪鏈満銆?,primary:'鎵撳紑浣滅瓟闈㈡澘',secondary:'涓嬩竴棰?}
+ preview:{kicker:'10–20 分钟',title:'先搭骨架，再进入正文。',text:'只抓本章要解决的问题、路线图、核心概念和关键公式；读完用自检确认你知道“接下来学什么”。',primary:'开始学习',secondary:'跳到预习自检'},
+ learn:{kicker:'连续正文',title:'按教材顺序完整学习。',text:'保持正文连贯，公式、例题与图表跟随内容推进；来源与技术说明留在审计层，不打断阅读。',primary:'进入复习',secondary:'沉浸阅读'},
+ review:{kicker:'考试复习',title:'把知识压缩成可回忆结构。',text:'先主动回忆定义、定理、公式与条件，再展开正文核对；最后进入刷题验证。',primary:'开始刷题',secondary:'开启主动回忆'},
+ practice:{kicker:'教材原题',title:'先独立作答，再核对参考解答。',text:'答案默认折叠；点击“参考解答”只展开本题。草稿与掌握状态保存在本机。',primary:'打开作答面板',secondary:'下一题'}
 };
 const clampFontSize=value=>Math.max(10,Math.min(20,Number(value)||18));
 const DEFAULTS={size:18,leading:1.62,margin:20,font:'shusong',layout:'continuous',theme:'light',zoom:'fit',cleanReading:true};
 const FONT_STACKS={
- shusong:'\"FZShuSong-Z01\",\"FZShuSong-Z01S\",\"鏂规涔﹀畫_GBK\",\"鏂规涔﹀畫绠€浣揬",\"涔﹀畫\",\"Songti SC\",\"STSong\",\"SimSun\",\"Noto Serif CJK SC\",\"Source Han Serif SC\",serif',
- songti:'\"SimSun\",\"瀹嬩綋\",\"NSimSun\",\"鏂板畫浣揬",\"Songti SC\",\"STSong\",\"Noto Serif CJK SC\",serif',
- sourcehan:'\"Source Han Serif SC\",\"Noto Serif CJK SC\",\"鎬濇簮瀹嬩綋 CN\",serif',
+ shusong:'\"FZShuSong-Z01\",\"FZShuSong-Z01S\",\"方正书宋_GBK\",\"方正书宋简体\",\"书宋\",\"Songti SC\",\"STSong\",\"SimSun\",\"Noto Serif CJK SC\",\"Source Han Serif SC\",serif',
+ songti:'\"SimSun\",\"宋体\",\"NSimSun\",\"新宋体\",\"Songti SC\",\"STSong\",\"Noto Serif CJK SC\",serif',
+ sourcehan:'\"Source Han Serif SC\",\"Noto Serif CJK SC\",\"思源宋体 CN\",serif',
  sans:'\"Microsoft YaHei UI\",\"Microsoft YaHei\",\"Noto Sans CJK SC\",sans-serif',
  custom:'\"BookLocalFont\",\"FZShuSong-Z01\",\"SimSun\",serif'
 };
-const SHUSONG_CANDIDATES=['FZShuSong-Z01','FZShuSong-Z01S','鏂规涔﹀畫_GBK','鏂规涔﹀畫绠€浣?,'涔﹀畫','Songti SC','STSong','SimSun'];
+const SHUSONG_CANDIDATES=['FZShuSong-Z01','FZShuSong-Z01S','方正书宋_GBK','方正书宋简体','书宋','Songti SC','STSong','SimSun'];
 let detectedFace=null,customFace=null,fullscreenPriorImmersive=null,printing=false,searchReflow=false,reflowAnchor=null;
 let state=null,revision=0,token='',library=null,book=null,chapter=null,current=null,contentPackage=null;
 let prefs={...DEFAULTS},saveQueue=Promise.resolve(),savePending=0,renderToken=0,loadingController=null,selected=null,editorBlock=null,searchHits=[],searchIndex=-1,notesTab='notes',answersHidden=false;
@@ -29,61 +29,61 @@ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const norm=s=>String(s??'').replace(/\s/g,'');
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),4500);}
 function status(t,failed=false){$('save-state').textContent=t;$('save-state').classList.toggle('failed',failed);}
-function messageError(e){console.error(e);status('鏈繚瀛?路 璇峰鍑哄浠?,true);toast(String(e.message||e));}
-async function readJSON(url,options){const r=await fetch(url,{cache:'no-store',...options});if(!r.ok)throw new Error('鏃犳硶璇诲彇 '+url+'锛?+r.status+'锛?);return r.json();}
-async function session(){const s=await readJSON('/api/session');if(!s.state||s.state.schema!=='book-personal-state-v1')throw new Error('鏈満瀛︿範璁板綍鏍煎紡涓嶆纭紝鏈鐩栥€?);state=s.state;revision=s.revision;token=s.token;return s;}
+function messageError(e){console.error(e);status('未保存 · 请导出备份',true);toast(String(e.message||e));}
+async function readJSON(url,options){const r=await fetch(url,{cache:'no-store',...options});if(!r.ok)throw new Error('无法读取 '+url+'（'+r.status+'）');return r.json();}
+async function session(){const s=await readJSON('/api/session');if(!s.state||s.state.schema!=='book-personal-state-v1')throw new Error('本机学习记录格式不正确，未覆盖。');state=s.state;revision=s.revision;token=s.token;return s;}
 function formatBytes(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1024**2)return (n/1024).toFixed(1)+' KiB';if(n<1024**3)return (n/1024**2).toFixed(1)+' MiB';return (n/1024**3).toFixed(2)+' GiB';}
 function renderContentPackageSummary(){
  const el=$('content-package-summary');if(!el)return;
- if(!contentPackage?.available){el.innerHTML='<div class="content-package-empty"><strong>灏氭湭瀹夎鏁欐潗鍐呭鍖?/strong><span>'+escape(contentPackage?.error||'绋嬪簭澹冲彲浠ョ嫭绔嬪惎鍔紝瀹夎鍐呭鍖呭悗涔︽灦鎵嶄細鍑虹幇銆?)+'</span></div>';return;}
- el.innerHTML='<dl><div><dt>鍐呭鐗堟湰</dt><dd>'+escape(contentPackage.content_version||'')+'</dd></div><div><dt>鍖?ID</dt><dd>'+escape(contentPackage.package_id||'')+'</dd></div><div><dt>鏁欐潗 / 鏂囨。</dt><dd>'+escape(contentPackage.reader_books)+' 鏈?路 '+escape(contentPackage.reader_documents)+' 浠?/dd></div><div><dt>澶у皬</dt><dd>'+formatBytes(contentPackage.bytes)+'</dd></div><div><dt>SHA-256</dt><dd><code>'+escape((contentPackage.sha256||'').slice(0,16))+'鈥?/code></dd></div><div><dt>鏉ユ簮</dt><dd>'+escape(contentPackage.source||'')+'</dd></div></dl>';
+ if(!contentPackage?.available){el.innerHTML='<div class="content-package-empty"><strong>尚未安装教材内容包</strong><span>'+escape(contentPackage?.error||'程序壳可以独立启动，安装内容包后书架才会出现。')+'</span></div>';return;}
+ el.innerHTML='<dl><div><dt>内容版本</dt><dd>'+escape(contentPackage.content_version||'')+'</dd></div><div><dt>包 ID</dt><dd>'+escape(contentPackage.package_id||'')+'</dd></div><div><dt>教材 / 文档</dt><dd>'+escape(contentPackage.reader_books)+' 本 · '+escape(contentPackage.reader_documents)+' 份</dd></div><div><dt>大小</dt><dd>'+formatBytes(contentPackage.bytes)+'</dd></div><div><dt>SHA-256</dt><dd><code>'+escape((contentPackage.sha256||'').slice(0,16))+'…</code></dd></div><div><dt>来源</dt><dd>'+escape(contentPackage.source||'')+'</dd></div></dl>';
 }
-function showContentMissing(info=contentPackage){contentPackage=info||{available:false};$('content-missing').hidden=false;$('welcome').hidden=true;$('workspace').hidden=true;$('book-list').replaceChildren();$('chapter-list').replaceChildren();$('legacy-link').setAttribute('aria-disabled','true');$('legacy-link').onclick=e=>{e.preventDefault();openContentPackageDialog();};renderContentPackageSummary();status('绛夊緟鏁欐潗鍐呭鍖?);}
+function showContentMissing(info=contentPackage){contentPackage=info||{available:false};$('content-missing').hidden=false;$('welcome').hidden=true;$('workspace').hidden=true;$('book-list').replaceChildren();$('chapter-list').replaceChildren();$('legacy-link').setAttribute('aria-disabled','true');$('legacy-link').onclick=e=>{e.preventDefault();openContentPackageDialog();};renderContentPackageSummary();status('等待教材内容包');}
 async function refreshContentPackageStatus(){renderContentPackageSummary();return contentPackage;}
 async function loadLibraryFromContent(){
- ++navigationRequest;++renderToken;busy=false;clearTimeout(positionTimer);cache.clear();contentAudit=null;library=await readJSON('/documents/catalog.json');if(!library||library.books.length!==6)throw Error('鍏湰涔︾殑鏂囨。鐩綍涓嶅畬鏁淬€?);
+ ++navigationRequest;++renderToken;busy=false;clearTimeout(positionTimer);cache.clear();contentAudit=null;library=await readJSON('/documents/catalog.json');if(!library||library.books.length!==6)throw Error('六本书的文档目录不完整。');
  current=null;book=null;chapter=null;selected=null;editorBlock=null;$('pages').replaceChildren();$('workspace').hidden=true;$('content-missing').hidden=true;$('welcome').hidden=false;$('legacy-link').removeAttribute('aria-disabled');$('legacy-link').onclick=null;renderNav();renderShelf();return library;
 }
 function openContentPackageDialog(){renderContentPackageSummary();$('content-package-dialog').showModal();}
 async function reloadContentPackage(){
- if($('edit-dialog').open||$('note-text').value.trim()){toast('鍏堜繚瀛樹釜浜虹紪杈戞垨鎵规敞锛屽啀鏇存柊鏁欐潗銆?);return;}await savePosition();await saveQueue;
- const b=$('content-reload');b.disabled=true;$('content-upload-text').textContent='姝ｅ湪閲嶆柊璇诲彇宸插畨瑁呭唴瀹光€?;
- try{const r=await fetch('/api/content/reload',{method:'POST',headers:{'X-Book-Token':token}});let data={};try{data=await r.json();}catch{}if(!r.ok)throw Error(data.error||'閲嶆柊鍔犺浇澶辫触');contentPackage=data;await loadLibraryFromContent();renderContentPackageSummary();$('content-upload-text').textContent='宸查噸鏂板姞杞?'+(data.content_version||'鍐呭鍖?);toast('鏁欐潗鍐呭宸查噸鏂板姞杞姐€?);}
+ if($('edit-dialog').open||$('note-text').value.trim()){toast('先保存个人编辑或批注，再更新教材。');return;}await savePosition();await saveQueue;
+ const b=$('content-reload');b.disabled=true;$('content-upload-text').textContent='正在重新读取已安装内容…';
+ try{const r=await fetch('/api/content/reload',{method:'POST',headers:{'X-Book-Token':token}});let data={};try{data=await r.json();}catch{}if(!r.ok)throw Error(data.error||'重新加载失败');contentPackage=data;await loadLibraryFromContent();renderContentPackageSummary();$('content-upload-text').textContent='已重新加载 '+(data.content_version||'内容包');toast('教材内容已重新加载。');}
  catch(e){await refreshContentPackageStatus().catch(()=>{});if(!contentPackage?.available)showContentMissing(contentPackage);$('content-upload-text').textContent=e.message;toast(e.message);}
  finally{b.disabled=false;}
 }
 function installContentPackage(file){
- if($('edit-dialog').open||$('note-text').value.trim()||savePending||failedMutations.length){toast('鍏堜繚瀛樹釜浜虹紪杈?鎵规敞骞剁瓑寰呭啓鍏ュ畬鎴愶紝鍐嶆洿鏂版暀鏉愩€?);return;}
- if(!file){toast('鍏堥€夋嫨 Book 鍐呭 ZIP銆?);return;}if(!/\.zip$/i.test(file.name)){toast('璇烽€夋嫨 .zip 鍐呭鍖呫€?);return;}
- const max=8*1024*1024*1024;if(file.size>max){toast('鍐呭鍖呰秴杩?8 GB銆?);return;}
- const button=$('content-install'),progress=$('content-upload-progress'),label=$('content-upload-text');button.disabled=true;progress.value=0;label.textContent='姝ｅ湪涓婁紶鍒版湰鏈?Book鈥?0%';
+ if($('edit-dialog').open||$('note-text').value.trim()||savePending||failedMutations.length){toast('先保存个人编辑/批注并等待写入完成，再更新教材。');return;}
+ if(!file){toast('先选择 Book 内容 ZIP。');return;}if(!/\.zip$/i.test(file.name)){toast('请选择 .zip 内容包。');return;}
+ const max=8*1024*1024*1024;if(file.size>max){toast('内容包超过 8 GB。');return;}
+ const button=$('content-install'),progress=$('content-upload-progress'),label=$('content-upload-text');button.disabled=true;progress.value=0;label.textContent='正在上传到本机 Book… 0%';
  const xhr=new XMLHttpRequest();xhr.open('POST','/api/content/install');xhr.responseType='json';xhr.setRequestHeader('X-Book-Token',token);xhr.setRequestHeader('Content-Type','application/zip');
- xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.min(100,Math.round(e.loaded/e.total*100));progress.value=pct;label.textContent='姝ｅ湪涓婁紶鍒版湰鏈?Book鈥?'+pct+'%';}else label.textContent='姝ｅ湪涓婁紶鍒版湰鏈?Book鈥?;};
- xhr.onerror=()=>{button.disabled=false;label.textContent='涓婁紶澶辫触锛涘師鍐呭鍖呮湭鏀瑰彉銆?;toast('鍐呭鍖呬笂浼犲け璐ャ€?);};
- xhr.onload=async()=>{button.disabled=false;const data=xhr.response||{};if(xhr.status<200||xhr.status>=300){label.textContent=data.error||'瀹夎澶辫触锛涘師鍐呭鍖呮湭鏀瑰彉銆?;toast(label.textContent);return;}try{contentPackage=data;label.textContent='鏍￠獙閫氳繃锛屾鍦ㄥ埛鏂颁功鏋垛€?;progress.value=100;await loadLibraryFromContent();renderContentPackageSummary();$('content-package-dialog').close();status('宸茶繛鎺ユ湰鏈哄瓨鍌?);toast('鍐呭鍖呭凡瀹夎锛?+(data.content_version||data.package_id));}catch(e){label.textContent='鍐呭宸插畨瑁咃紝浣嗗埛鏂板け璐ワ細'+e.message;messageError(e);}};
+ xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.min(100,Math.round(e.loaded/e.total*100));progress.value=pct;label.textContent='正在上传到本机 Book… '+pct+'%';}else label.textContent='正在上传到本机 Book…';};
+ xhr.onerror=()=>{button.disabled=false;label.textContent='上传失败；原内容包未改变。';toast('内容包上传失败。');};
+ xhr.onload=async()=>{button.disabled=false;const data=xhr.response||{};if(xhr.status<200||xhr.status>=300){label.textContent=data.error||'安装失败；原内容包未改变。';toast(label.textContent);return;}try{contentPackage=data;label.textContent='校验通过，正在刷新书架…';progress.value=100;await loadLibraryFromContent();renderContentPackageSummary();$('content-package-dialog').close();status('已连接本机存储');toast('内容包已安装：'+(data.content_version||data.package_id));}catch(e){label.textContent='内容已安装，但刷新失败：'+e.message;messageError(e);}};
  xhr.send(file);
 }
 
-function validateBackup(v){if(!v||v.schema!=='book-personal-state-v1')throw Error('涓嶆槸 Book 瀛︿範澶囦唤');for(const k of ['settings','books','notes','bookmarks','cards'])if(!v[k]||typeof v[k]!=='object'||Array.isArray(v[k]))throw Error('澶囦唤缂哄皯 '+k);const walk=(x,depth=0)=>{if(depth>20)throw Error('澶囦唤宓屽杩囨繁');if(x&&typeof x==='object')for(const [k,v] of Object.entries(x)){if(['__proto__','constructor','prototype'].includes(k))throw Error('澶囦唤鍚笉瀹夊叏瀛楁');walk(v,depth+1);}};walk(v);return v;}
+function validateBackup(v){if(!v||v.schema!=='book-personal-state-v1')throw Error('不是 Book 学习备份');for(const k of ['settings','books','notes','bookmarks','cards'])if(!v[k]||typeof v[k]!=='object'||Array.isArray(v[k]))throw Error('备份缺少 '+k);const walk=(x,depth=0)=>{if(depth>20)throw Error('备份嵌套过深');if(x&&typeof x==='object')for(const [k,v] of Object.entries(x)){if(['__proto__','constructor','prototype'].includes(k))throw Error('备份含不安全字段');walk(v,depth+1);}};walk(v);return v;}
 function pendingSnapshot(){const next=clone(state);for(const apply of failedMutations)apply(next);return next;}
 function mutate(fn){
- savePending++;status('姝ｅ湪淇濆瓨鈥?);
+ savePending++;status('正在保存…');
  const task=saveQueue.catch(()=>{}).then(async()=>{
   const operations=[...failedMutations,fn];failedMutations=[];
   try{
    for(let i=0;i<3;i++){
     const next=clone(state);for(const apply of operations)apply(next);validateBackup(next);const body=JSON.stringify({state:next,expected_revision:revision});
-    if(new Blob([body]).size>30*1024*1024)throw Error('瀛︿範璁板綍瓒呰繃瀹归噺锛岃鍏堝鍑哄浠姐€?);
+    if(new Blob([body]).size>30*1024*1024)throw Error('学习记录超过容量，请先导出备份。');
     const r=await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json','X-Book-Token':token},body});
     if(r.status===409){const latest=await readJSON('/api/state');state=latest.state;revision=latest.revision;continue;}
     if(r.status===403){await session();continue;}
-    if(!r.ok){let err={};try{err=await r.json();}catch{};throw Error(err.error||'淇濆瓨澶辫触锛涘緟淇濆瓨鍐呭浠嶅湪褰撳墠绐楀彛锛岃瀵煎嚭澶囦唤鎴栧啀娆′繚瀛樸€?);}
+    if(!r.ok){let err={};try{err=await r.json();}catch{};throw Error(err.error||'保存失败；待保存内容仍在当前窗口，请导出备份或再次保存。');}
     const saved=await r.json();state=saved.state;revision=saved.revision;return saved;
    }
-   throw Error('瀛︿範璁板綍姝ｅ湪琚彟涓€绐楀彛淇敼锛屾湭瑕嗙洊锛涜鍏抽棴鍏朵粬绐楀彛鍚庨噸璇曘€?);
+   throw Error('学习记录正在被另一窗口修改，未覆盖；请关闭其他窗口后重试。');
   }catch(e){failedMutations.push(...operations);throw e;}
  });
- saveQueue=task;task.then(()=>{savePending--;status(savePending?'姝ｅ湪淇濆瓨鈥?:'宸蹭繚瀛樺埌鏈満');},e=>{savePending--;messageError(e);});return task;
+ saveQueue=task;task.then(()=>{savePending--;status(savePending?'正在保存…':'已保存到本机');},e=>{savePending--;messageError(e);});return task;
 }
 function settingSave(){prefs.size=clampFontSize(prefs.size);const snapshot=clone(prefs);return mutate(s=>{s.settings.documentReader=snapshot;});}
 function noteKey(kind,bid){return 'doc:'+kind+':'+bid;}
@@ -112,23 +112,23 @@ function plainHTML(raw){const t=document.createElement('template');t.innerHTML=r
 function wrapInlineNoise(root,re,cls='reading-marker'){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement?.closest('.reading-marker,.reading-source-tail,script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
  const nodes=[];let n;while((n=walker.nextNode()))nodes.push(n);
- for(const node of nodes){const text=node.data;re.lastIndex=0;let m,last=0,changed=false,frag=document.createDocumentFragment();while((m=re.exec(text))){changed=true;frag.append(document.createTextNode(text.slice(last,m.index)));const span=document.createElement('span');span.className=cls;span.textContent=m[0];span.setAttribute('aria-label','闅愯棌鐨勯槄璇绘敞璁?);frag.append(span);last=m.index+m[0].length;if(!m[0].length)re.lastIndex++;}if(changed){frag.append(document.createTextNode(text.slice(last)));node.replaceWith(frag);}}
+ for(const node of nodes){const text=node.data;re.lastIndex=0;let m,last=0,changed=false,frag=document.createDocumentFragment();while((m=re.exec(text))){changed=true;frag.append(document.createTextNode(text.slice(last,m.index)));const span=document.createElement('span');span.className=cls;span.textContent=m[0];span.setAttribute('aria-label','隐藏的阅读注记');frag.append(span);last=m.index+m[0].length;if(!m[0].length)re.lastIndex++;}if(changed){frag.append(document.createTextNode(text.slice(last)));node.replaceWith(frag);}}
 }
 function wrapSourceTail(el){
  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n,found=null,index=-1;
- while((n=walker.nextNode())){for(const key of ['璧勬枡鏉ユ簮锛?,'璧勬枡鏉ユ簮:','鏁版嵁鏉ユ簮锛?,'鏁版嵁鏉ユ簮:']){const i=n.data.indexOf(key);if(i>=0){found=n;index=i;break;}}if(found)break;}
+ while((n=walker.nextNode())){for(const key of ['资料来源：','资料来源:','数据来源：','数据来源:']){const i=n.data.indexOf(key);if(i>=0){found=n;index=i;break;}}if(found)break;}
  if(!found)return false;const before=(el.textContent||'').slice(0,Math.max(0,(el.textContent||'').indexOf(found.data))).trim();
  try{const r=document.createRange();r.setStart(found,index);r.setEnd(el,el.childNodes.length);const frag=r.extractContents(),span=document.createElement('span');span.className='reading-source-tail';span.append(frag);r.insertNode(span);return true;}catch{return false;}
 }
 function annotateReadingNoise(a){
  const text=(a.textContent||'').replace(/\s+/g,' ').trim();
  if(!text)return;
- if(/^鏁欐潗鏉ユ簮瑕佺偣[锛?]閲嶇粍[锛?]$/.test(text)||/^浠ヤ笅鍐呭缁х画鎸夋暀鏉愮粨鏋勫寲鏉ユ簮灞曞紑/.test(text)||/^[鈥⒙穄?\s*鐭ラ亾鏅€歕s*OCR\s*浠呬负杈呭姪灞?.test(text)||/^(璧勬枡鏉ユ簮|鏁版嵁鏉ユ簮)[锛?]/.test(text)){a.classList.add('reading-noise');a.dataset.readingNoise='source';}
- if(/^(?:[鈶犫憽鈶⑩懀鈶も懃鈶︹懅鈶ㄢ懇]|\d+[.銆乚?)?\s*[锛?]鍘熶功鏈〉鑴氭敞[锛?]/.test(text)||/^鑴氭敞\s*鍘熶功鑴氭敞鎸囧嚭/.test(text)||/^(?:\d+[.銆乚?)?\s*[锛?]鍘熶功鑴氭敞鏍囪[锛?]\s*[锛?]鍘熶功鏈〉鑴氭敞[锛?]/.test(text)){a.classList.add('reading-footnote');a.dataset.readingNoise='footnote';}
- wrapInlineNoise(a,/锛堝師涔﹁剼娉ㄦ爣璁帮級|\(鍘熶功鑴氭敞鏍囪\)|锛堝師涔︽湰椤佃剼娉級|\(鍘熶功鏈〉鑴氭敞\)|涓嶄緷璧栭〉鐮佹垨\s*record\s*ID[^銆傦紱]*[銆傦紱]?/gi);
+ if(/^教材来源要点[（(]重组[）)]$/.test(text)||/^以下内容继续按教材结构化来源展开/.test(text)||/^[•·]?\s*知道普通\s*OCR\s*仅为辅助层/.test(text)||/^(资料来源|数据来源)[：:]/.test(text)){a.classList.add('reading-noise');a.dataset.readingNoise='source';}
+ if(/^(?:[①②③④⑤⑥⑦⑧⑨⑩]|\d+[.、]?)?\s*[（(]原书本页脚注[）)]/.test(text)||/^脚注\s*原书脚注指出/.test(text)||/^(?:\d+[.、]?)?\s*[（(]原书脚注标记[）)]\s*[（(]原书本页脚注[）)]/.test(text)){a.classList.add('reading-footnote');a.dataset.readingNoise='footnote';}
+ wrapInlineNoise(a,/（原书脚注标记）|\(原书脚注标记\)|（原书本页脚注）|\(原书本页脚注\)|不依赖页码或\s*record\s*ID[^。；]*[。；]?/gi);
  for(const el of $$('p,li,figcaption,caption',a))wrapSourceTail(el);
  // Keep the useful heading, hide only the provenance wording.
- wrapInlineNoise(a,/锛堟潵婧愬睍寮€锛墊\(鏉ユ簮灞曞紑\)/g);
+ wrapInlineNoise(a,/（来源展开）|\(来源展开\)/g);
 }
 function decorateArticle(a,b){
  a.classList.add('doc-block');a.dataset.blockId=b.id;a.dataset.kind=b.kind;if(b.correction_id){a.dataset.correction=b.correction_id;a.classList.add('editorial-revised');}if(b.audit_notice)a.classList.add('editorial-notice');
@@ -151,12 +151,12 @@ function reserveMedia(root){
  }
 }
 function isReviewRecallHeading(a){
- const h=a.querySelector(':scope>h1,:scope>h2,:scope>h3,:scope>h4,:scope>h5,:scope>h6');if(!h)return false;const text=(h.textContent||'').replace(/\s+/g,' ').trim();return /^(?:搂\s*\d+|\d+\.\d+(?!\.)|[涓€浜屼笁鍥涗簲鍏竷鍏節鍗乚+銆?/.test(text)||/(?:绔犳湯|璁叉湯|鍗曞厓)\s*(?:鎬荤粨|鑷祴)|闂嵎鑷祴|鑰冭瘯瑕佺偣/.test(text);
+ const h=a.querySelector(':scope>h1,:scope>h2,:scope>h3,:scope>h4,:scope>h5,:scope>h6');if(!h)return false;const text=(h.textContent||'').replace(/\s+/g,' ').trim();return /^(?:§\s*\d+|\d+\.\d+(?!\.)|[一二三四五六七八九十]+、)/.test(text)||/(?:章末|讲末|单元)\s*(?:总结|自测)|闭卷自测|考试要点/.test(text);
 }
 function hasSourceFigure(node){return Boolean(node?.querySelector?.('img.source-figure'))||Boolean(node?.matches?.('img.source-figure'));}
 function mediaCaptionLike(node){
  if(!node||node.nodeType!==1)return false;const text=(node.textContent||'').replace(/\s+/g,' ').trim();
- return Boolean(node.matches('h1,h2,h3,h4,h5,h6,figcaption,caption,blockquote'))||/^(?:琛▅鍥緗闄勮〃|闄勫浘)\s*[0-9涓€浜屼笁鍥涗簲鍏竷鍏節鍗両VXivx]/.test(text)||/(?:鍘熻〃鍥惧儚|鏈閰嶅浘鍘熼〉|鍘熷浘|鍘熼〉|鐙珛瑁佸浘)/.test(text);
+ return Boolean(node.matches('h1,h2,h3,h4,h5,h6,figcaption,caption,blockquote'))||/^(?:表|图|附表|附图)\s*[0-9一二三四五六七八九十IVXivx]/.test(text)||/(?:原表图像|本讲配图原页|原图|原页|独立裁图)/.test(text);
 }
 function mediaAwareUnits(nodes){
  const units=[];for(let i=0;i<nodes.length;){
@@ -171,7 +171,7 @@ function mediaAwareUnits(nodes){
 function allFragments(){
  const fragments=[];
  if(current.mode==='learn'){
-  const div=document.createElement('div');div.className='document-title';div.innerHTML='<h1>'+escape(current.title.replaceAll('_',' '))+'</h1><p>'+escape(current.book_title)+' 路 瀛︿範姝ｆ枃</p>';const a=document.createElement('article');a.className='doc-block';a.dataset.blockId=current.id+'-title';a.append(div);fragments.push(a);
+  const div=document.createElement('div');div.className='document-title';div.innerHTML='<h1>'+escape(current.title.replaceAll('_',' '))+'</h1><p>'+escape(current.book_title)+' · 学习正文</p>';const a=document.createElement('article');a.className='doc-block';a.dataset.blockId=current.id+'-title';a.append(div);fragments.push(a);
  }
  let reviewSection=0;
  for(const b of current.blocks){
@@ -189,7 +189,7 @@ function allFragments(){
 function applyPrefs(){
  prefs.size=clampFontSize(prefs.size);const root=document.documentElement;root.style.setProperty('--doc-size',prefs.size+'px');root.style.setProperty('--doc-leading',prefs.leading);root.style.setProperty('--doc-margin',prefs.margin+'mm');root.dataset.theme=prefs.theme;root.dataset.cleanReading=String(prefs.cleanReading!==false);
  const font=FONT_STACKS[prefs.font]||FONT_STACKS.shusong;root.style.setProperty('--doc-font',font);
- $('layout-toggle').querySelector('span').textContent=prefs.layout==='pages'?'杩炵画闃呰':'A4 鍒嗛〉';$('layout-toggle').setAttribute('aria-label',prefs.layout==='pages'?'鍒囨崲杩炵画闃呰':'鍒囨崲 A4 鑷姩鍒嗛〉');
+ $('layout-toggle').querySelector('span').textContent=prefs.layout==='pages'?'连续阅读':'A4 分页';$('layout-toggle').setAttribute('aria-label',prefs.layout==='pages'?'切换连续阅读':'切换 A4 自动分页');
  adjustZoom();
 }
 async function detectLocalSerif(){
@@ -200,16 +200,16 @@ async function detectLocalSerif(){
  for(const name of names){try{const face=new FontFace('BookDetectedSerif','local('+JSON.stringify(name)+')',{weight:'400'});await face.load();if(detectedFace)document.fonts.delete(detectedFace);detectedFace=face;document.fonts.add(face);found=name;break;}catch{}}
  if(found)FONT_STACKS.shusong='"BookDetectedSerif",'+FONT_STACKS.shusong.replace(/^"BookDetectedSerif",/,'');
  const dedicated=found&& !['SimSun','STSong','Songti SC','Noto Serif CJK SC','Source Han Serif SC'].includes(found);
- $('font-detect').textContent=found?(dedicated?'宸插姞杞芥湰鏈轰功瀹嬶細':'鏈姞杞戒笓鐢ㄤ功瀹嬶紝褰撳墠鍥為€€锛?)+found+'銆傛湰鏈哄瓧浣撲笉涓婁紶銆佷笉闅忓唴瀹瑰寘鍒嗗彂銆?:'鏈兘纭鏈満涔﹀畫瀛椾綋锛涙寜绯荤粺瀛椾綋鍥為€€銆傚彲瀵煎叆浣犳湁浣跨敤鏉冪殑鏈湴瀛椾綋銆?;
+ $('font-detect').textContent=found?(dedicated?'已加载本机书宋：':'未加载专用书宋，当前回退：')+found+'。本机字体不上传、不随内容包分发。':'未能确认本机书宋字体；按系统字体回退。可导入你有使用权的本地字体。';
  document.documentElement.dataset.serifFont=found||'fallback';applyPrefs();return found;
 }
-function updateFullscreenUI(){const on=Boolean(document.fullscreenElement);document.body.classList.toggle('fullscreen-active',on);if(on){if(fullscreenPriorImmersive===null)fullscreenPriorImmersive=document.body.classList.contains('immersive');if(current)setImmersive(true);}else if(fullscreenPriorImmersive!==null){setImmersive(fullscreenPriorImmersive);fullscreenPriorImmersive=null;}const b=$('fullscreen'),f=$('focus-fullscreen');if(b){b.innerHTML=on?'鉀?<span>閫€鍑哄叏灞?/span>':'鉀?<span>鍏ㄥ睆</span>';b.title=on?'閫€鍑哄叏灞?F11 / Esc':'鍏ㄥ睆 F11';}if(f)f.textContent=on?'閫€鍑哄叏灞?:'鉀?鍏ㄥ睆';adjustZoom();}
-async function toggleFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen({navigationUI:'hide'});}catch(e){setImmersive(true);toast('绯荤粺鍏ㄥ睆鏈鍏佽锛屽凡杩涘叆娌夋蹈闃呰銆?);}updateFullscreenUI();}
-function setImmersive(on){const next=Boolean(on);document.body.classList.toggle('immersive',next);const b=$('immersive');if(b){b.innerHTML=next?'鈼?<span>閫€鍑烘矇娴?/span>':'鈼?<span>娌夋蹈</span>';b.title=next?'閫€鍑烘矇娴?Esc':'娌夋蹈闃呰 M';}requestAnimationFrame(adjustZoom);}
+function updateFullscreenUI(){const on=Boolean(document.fullscreenElement);document.body.classList.toggle('fullscreen-active',on);if(on){if(fullscreenPriorImmersive===null)fullscreenPriorImmersive=document.body.classList.contains('immersive');if(current)setImmersive(true);}else if(fullscreenPriorImmersive!==null){setImmersive(fullscreenPriorImmersive);fullscreenPriorImmersive=null;}const b=$('fullscreen'),f=$('focus-fullscreen');if(b){b.innerHTML=on?'⛶ <span>退出全屏</span>':'⛶ <span>全屏</span>';b.title=on?'退出全屏 F11 / Esc':'全屏 F11';}if(f)f.textContent=on?'退出全屏':'⛶ 全屏';adjustZoom();}
+async function toggleFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen({navigationUI:'hide'});}catch(e){setImmersive(true);toast('系统全屏未被允许，已进入沉浸阅读。');}updateFullscreenUI();}
+function setImmersive(on){const next=Boolean(on);document.body.classList.toggle('immersive',next);const b=$('immersive');if(b){b.innerHTML=next?'◱ <span>退出沉浸</span>':'◱ <span>沉浸</span>';b.title=next?'退出沉浸 Esc':'沉浸阅读 M';}requestAnimationFrame(adjustZoom);}
 function toggleImmersive(){setImmersive(!document.body.classList.contains('immersive'));}
 function isTypingTarget(t){return Boolean(t?.closest?.('input,textarea,select,[contenteditable="true"]'));}
-function adjustZoom(){const available=Math.max(260,$('reading-area').clientWidth-52);const z=prefs.zoom==='fit'?Math.min(1,available/mm(210)):Math.max(.3,Math.min(1.8,Number(prefs.zoom)));document.documentElement.style.setProperty('--view-zoom',z);$('zoom-fit').textContent=prefs.zoom==='fit'?'閫傚悎瀹藉害':Math.round(z*100)+'%';}
-function makeSheet(num){const s=document.createElement('section');s.className='sheet';s.dataset.page=String(num);const header=document.createElement('div');header.className='page-header';header.innerHTML='<span>'+escape(current.book_title)+'</span><span>'+escape(current.title.replaceAll('_',' ')+' 路 '+MODES[current.mode])+'</span>';const body=document.createElement('div');body.className='sheet-body document-body';const footer=document.createElement('div');footer.className='page-footer';footer.innerHTML='<span>Book 路 '+escape(MODES[current.mode])+'</span><span class="page-number">'+num+'</span>';s.append(header,body,footer);return {sheet:s,body,footer};}
+function adjustZoom(){const available=Math.max(260,$('reading-area').clientWidth-52);const z=prefs.zoom==='fit'?Math.min(1,available/mm(210)):Math.max(.3,Math.min(1.8,Number(prefs.zoom)));document.documentElement.style.setProperty('--view-zoom',z);$('zoom-fit').textContent=prefs.zoom==='fit'?'适合宽度':Math.round(z*100)+'%';}
+function makeSheet(num){const s=document.createElement('section');s.className='sheet';s.dataset.page=String(num);const header=document.createElement('div');header.className='page-header';header.innerHTML='<span>'+escape(current.book_title)+'</span><span>'+escape(current.title.replaceAll('_',' ')+' · '+MODES[current.mode])+'</span>';const body=document.createElement('div');body.className='sheet-body document-body';const footer=document.createElement('div');footer.className='page-footer';footer.innerHTML='<span>Book · '+escape(MODES[current.mode])+'</span><span class="page-number">'+num+'</span>';s.append(header,body,footer);return {sheet:s,body,footer};}
 const nextFrame=()=>new Promise(r=>requestAnimationFrame(r));
 function outerHeight(el){const c=getComputedStyle(el);return el.getBoundingClientRect().height+(parseFloat(c.marginTop)||0)+(parseFloat(c.marginBottom)||0);}
 
@@ -225,7 +225,7 @@ function splitFragment(a,available,measure){
  while(lo<=hi){const n=Math.floor((lo+hi)/2),part=splitAt(a,points,n);measure.replaceChildren(part);if(outerHeight(part)<=available){best=n;lo=n+1;}else hi=n-1;}
  if(best<1)return null;
  // Prefer a nearby word or clause boundary, but never drop characters.
- if(best>15){for(let i=best-1;i>=Math.max(1,best-28);i--){if(/[\s銆傦紱锛岋紒锛?.!?;:]/u.test(points[i].c)){best=i+1;break;}}}
+ if(best>15){for(let i=best-1;i>=Math.max(1,best-28);i--){if(/[\s。；，！？,.!?;:]/u.test(points[i].c)){best=i+1;break;}}}
  const head=splitAt(a,points,best),tail=a.cloneNode(false);const range=document.createRange();range.selectNodeContents(a);range.setStart(points[best-1].node,points[best-1].offset);tail.append(range.cloneContents());head.classList.add('fragment-head');tail.classList.add('fragment-tail');
  const hol=head.querySelector('ol'),tol=tail.querySelector('ol');if(hol&&tol){const count=hol.querySelectorAll(':scope>li').length;tol.start=(Number(hol.getAttribute('start'))||1)+Math.max(0,count-1);}
  return [head,tail];
@@ -266,7 +266,7 @@ function linearizeTable(a){
   const group=document.createElement('div');group.setAttribute('role','row');
   Array.from(row.cells).forEach((cell,i)=>{
    const box=document.createElement('div');box.setAttribute('role',cell.tagName==='TH'?'columnheader':'cell');box.style.cssText='border-bottom:1px solid var(--line);padding:.35em 0;overflow-wrap:anywhere;';
-   if(cell.tagName!=='TH'&&headers[i]){const label=document.createElement('strong');label.dataset.paginationRepeat='table-label';label.setAttribute('aria-hidden','true');label.textContent=headers[i]+'锛?;box.append(label);}
+   if(cell.tagName!=='TH'&&headers[i]){const label=document.createElement('strong');label.dataset.paginationRepeat='table-label';label.setAttribute('aria-hidden','true');label.textContent=headers[i]+'：';box.append(label);}
    box.append(...Array.from(cell.childNodes).map(n=>n.cloneNode(true)));group.append(box);
   });out.append(group);
  }
@@ -298,7 +298,7 @@ function fitIndivisible(a,H,measure){
  return h;
 }
 async function paginate(anchor=null){
- if(!current)return;const my=++renderToken;reflowAnchor={document_id:current.id,anchor:anchor?clone(anchor):null};busy=true;$('loading').hidden=false;$('loading').textContent='姝ｅ湪鎸変綘鐨勫瓧鍙锋暣鐞嗙焊椤碘€?;$('pages').replaceChildren();$('pages').className=prefs.layout==='continuous'?'continuous':'';applyPrefs();
+ if(!current)return;const my=++renderToken;reflowAnchor={document_id:current.id,anchor:anchor?clone(anchor):null};busy=true;$('loading').hidden=false;$('loading').textContent='正在按你的字号整理纸页…';$('pages').replaceChildren();$('pages').className=prefs.layout==='continuous'?'continuous':'';applyPrefs();
  await document.fonts.ready;if(my!==renderToken)return;const fragments=allFragments(),measure=$('measure-root');measure.style.width=(mm(210)-2*mm(prefs.margin))+'px';const H=mm(297-19-18)-2;
  let count=0,currentSheet=makeSheet(1),used=0;const parent=$('pages');parent.append(currentSheet.sheet);let queue=fragments.slice();
  if(prefs.layout==='continuous'){currentSheet.body.append(...queue);fitContinuousTables(currentSheet.body);count=1;}
@@ -334,15 +334,15 @@ async function paginate(anchor=null){
      currentSheet.body.append(a);used=h;
     }
    }
-   if(++iter%70===0){$('loading').textContent='姝ｅ湪鎺掔増 路 '+(count+1)+' 椤?;await nextFrame();}
+   if(++iter%70===0){$('loading').textContent='正在排版 · '+(count+1)+' 页';await nextFrame();}
   }
   count=parent.children.length;
  }
  measure.replaceChildren();
  if(my!==renderToken)return;
- for(const [i,s]of Array.from(parent.children).entries()){s.querySelector('.page-number').textContent=(prefs.layout==='continuous'?'杩炵画姝ｆ枃':`${i+1} / ${count}`);s.dataset.page=String(i+1);}
+ for(const [i,s]of Array.from(parent.children).entries()){s.querySelector('.page-number').textContent=(prefs.layout==='continuous'?'连续正文':`${i+1} / ${count}`);s.dataset.page=String(i+1);}
  $$('img',parent.children[0]||parent).slice(0,30).forEach(im=>im.loading='eager');
- $('loading').hidden=true;busy=false;$('doc-info').textContent=prefs.layout==='continuous'?`杩炵画姝ｆ枃 路 ${prefs.size}px`:`${count} 椤?路 ${prefs.size}px`;$('edition-label').textContent=current.mode==='learn'?'姝ｆ枃鎺掑嵃绋?路 2026-09-26':current.edition+' 路 鏁欐潗鍘熼 / AI 鍙傝€冭В绛?;
+ $('loading').hidden=true;busy=false;$('doc-info').textContent=prefs.layout==='continuous'?`连续正文 · ${prefs.size}px`:`${count} 页 · ${prefs.size}px`;$('edition-label').textContent=current.mode==='learn'?'正文排印稿 · 2026-09-26':current.edition+' · 教材原题 / AI 参考解答';
  refreshAnswerVisibility();renderNotes();
  if(anchor?.block_id)jumpToBlock(anchor.block_id,false,anchor.offset,anchor.content_offset);else window.scrollTo({top:$('workspace').offsetTop,behavior:'instant'});
  updatePosition();if($('find-input').value&&!$('findbar').hidden)findText($('find-input').value);
@@ -362,7 +362,7 @@ function updatePosition(){
  if(!current||busy)return;const sheets=$$('.sheet',$('pages'));let page=1;
  for(const s of sheets){if(s.getBoundingClientRect().top<window.innerHeight*.55)page=Number(s.dataset.page);else break;}
  const total=sheets.length;const percent=prefs.layout==='continuous'?Math.min(1,Math.max(0,(window.scrollY+window.innerHeight-$('workspace').offsetTop)/Math.max(1,$('pages').scrollHeight))):page/Math.max(1,total);
- $('progress-line').firstElementChild.style.width=(percent*100).toFixed(1)+'%';$('position-label').textContent=prefs.layout==='continuous'?'杩炵画姝ｆ枃 路 '+Math.round(percent*100)+'%':`閲嶆帓绗?${page} / ${total} 椤礰;
+ $('progress-line').firstElementChild.style.width=(percent*100).toFixed(1)+'%';$('position-label').textContent=prefs.layout==='continuous'?'连续正文 · '+Math.round(percent*100)+'%':`重排第 ${page} / ${total} 页`;
  clearTimeout(positionTimer);positionTimer=setTimeout(savePosition,750);
 }
 function savePosition(){
@@ -399,13 +399,13 @@ function captureStudyProgress(forcedStatus=null){
 function dispatchStudyProgress(progress){window.dispatchEvent(new CustomEvent('book-study-progress',{detail:clone(progress)}));}
 function publishStudyPresence(status=null){const progress=captureStudyProgress(status);return mutate(s=>{s.settings.documentReaderLive=progress;}).then(saved=>{dispatchStudyProgress(progress);return saved;});}
 function setStudySharing(on){
- if(typeof on!=='boolean')return Promise.reject(new TypeError('鍏变韩寮€鍏冲繀椤绘槸甯冨皵鍊?));
+ if(typeof on!=='boolean')return Promise.reject(new TypeError('共享开关必须是布尔值'));
  studySharing=on;const checkbox=$('study-sharing');if(checkbox)checkbox.checked=on;return publishStudyPresence();
 }
 function bindStudySharing(){
  const row=document.createElement('p'),label=document.createElement('label'),checkbox=document.createElement('input'),hint=document.createElement('small');
- row.className='settings-note';checkbox.type='checkbox';checkbox.id='study-sharing';label.append(checkbox,document.createTextNode(' 璁?mygpt 浜嗚В鏈闃呰杩涘害'));
- hint.textContent='浠呮湰鏈轰功鍚嶃€佺珷鑺傘€佷綅缃拰妯″紡锛涗笉鍏变韩姝ｆ枃銆佺瑪璁版垨绛旀銆傞噸寮€ Book 鍚庨渶閲嶆柊寮€鍚€?;row.append(label,document.createElement('br'),hint);
+ row.className='settings-note';checkbox.type='checkbox';checkbox.id='study-sharing';label.append(checkbox,document.createTextNode(' 让 mygpt 了解本次阅读进度'));
+ hint.textContent='仅本机书名、章节、位置和模式；不共享正文、笔记或答案。重开 Book 后需重新开启。';row.append(label,document.createElement('br'),hint);
  $('settings-dialog').insertBefore(row,$('settings-dialog').querySelector('.dialog-footer'));
  checkbox.onchange=()=>setStudySharing(checkbox.checked).catch(messageError);
  // Clear an old/imported lease instead of silently resuming sharing on restart.
@@ -420,15 +420,15 @@ function answeredPracticeCount(){
 function renderModeGuide(){
  if(!current)return;const g=MODE_GUIDES[current.mode],primary=$('mode-primary'),secondary=$('mode-secondary');if(!g)return;
  let kicker=g.kicker,text=g.text;
- if(current.mode==='practice'){const total=(current.questions||[]).length,done=answeredPracticeCount();kicker=`${total} 閬撴暀鏉愰 路 ${done} 宸蹭綔绛擿;text=`${g.text} 褰撳墠瀹氫綅锛氱 ${practiceCursor||1} 棰樸€俙;}
- if(current.mode==='review'&&reviewRecall){kicker='涓诲姩鍥炲繂宸插紑鍚?;text='姝ｆ枃鏆傛椂鎶樺彔锛屽彧淇濈暀鐭ヨ瘑鏍囬銆傚厛鍦ㄨ剳涓綔绛旓紝鍐嶇偣鍑绘爣棰樺睍寮€杩欎竴鑺傛牳瀵广€?;}
+ if(current.mode==='practice'){const total=(current.questions||[]).length,done=answeredPracticeCount();kicker=`${total} 道教材题 · ${done} 已作答`;text=`${g.text} 当前定位：第 ${practiceCursor||1} 题。`;}
+ if(current.mode==='review'&&reviewRecall){kicker='主动回忆已开启';text='正文暂时折叠，只保留知识标题。先在脑中作答，再点击标题展开这一节核对。';}
  $('mode-kicker').textContent=kicker;$('mode-guide-title').textContent=g.title;$('mode-guide-text').textContent=text;
- primary.textContent=g.primary;secondary.textContent=current.mode==='review'?(reviewRecall?'閫€鍑轰富鍔ㄥ洖蹇?:'寮€鍚富鍔ㄥ洖蹇?):g.secondary;secondary.hidden=!g.secondary;
+ primary.textContent=g.primary;secondary.textContent=current.mode==='review'?(reviewRecall?'退出主动回忆':'开启主动回忆'):g.secondary;secondary.hidden=!g.secondary;
  document.documentElement.dataset.readerMode=current.mode;document.documentElement.dataset.reviewRecall=String(reviewRecall);
 }
 function jumpModeLandmark(words){
  for(const el of $$('.doc-block',$('pages'))){const text=(el.innerText||'').replace(/\s+/g,' ');if(words.some(w=>text.includes(w))){const r=el.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-190,behavior:'smooth'});el.classList.add('focus-block');setTimeout(()=>el.classList.remove('focus-block'),1500);return true;}}
- toast('鏈珷娌℃湁鎵惧埌瀵瑰簲鐨勮嚜妫€/鎬荤粨鏍囬銆?);return false;
+ toast('本章没有找到对应的自检/总结标题。');return false;
 }
 function openPracticePanel(){if(!current||current.mode!=='practice')return;notesTab='practice';showNotes();renderPractice(true);$('practice-answer').focus();}
 function nextPracticeQuestion(){
@@ -445,32 +445,32 @@ async function toggleReviewSection(section,blockId){
  section=Number(section);if(!reviewRecall||!section)return;if(revealedReviewSections.has(section))revealedReviewSections.delete(section);else revealedReviewSections.add(section);await paginate({block_id:blockId});renderModeGuide();
 }
 function modePrimaryAction(){if(!current)return;if(current.mode==='preview')openChapter(chapter.number,'learn');else if(current.mode==='learn')openChapter(chapter.number,'review');else if(current.mode==='review')openChapter(chapter.number,'practice');else openPracticePanel();}
-function modeSecondaryAction(){if(!current)return;if(current.mode==='preview')jumpModeLandmark(['棰勪範鑷','鑷']);else if(current.mode==='learn')toggleImmersive();else if(current.mode==='review')setReviewRecall(!reviewRecall);else nextPracticeQuestion();}
+function modeSecondaryAction(){if(!current)return;if(current.mode==='preview')jumpModeLandmark(['预习自检','自检']);else if(current.mode==='learn')toggleImmersive();else if(current.mode==='review')setReviewRecall(!reviewRecall);else nextPracticeQuestion();}
 function renderNav(){
  $('book-list').replaceChildren();$('chapter-list').replaceChildren();if(!library)return;for(const [i,b]of library.books.entries()){const button=document.createElement('button');button.dataset.book=b.id;button.className=book?.id===b.id?'active':'';button.innerHTML='<span class="book-no">'+String(i+1).padStart(2,'0')+'</span>'+escape(b.title);button.onclick=()=>openBook(b.id);$('book-list').append(button);}
  if(book)for(const c of book.chapters){const button=document.createElement('button');button.dataset.chapter=c.number;button.textContent=c.title;button.className=chapter?.number===c.number?'active':'';button.onclick=()=>openChapter(c.number,current?.mode||'learn');$('chapter-list').append(button);}
 }
 function renderShelf(){
- $('shelf').replaceChildren();if(!library)return;library.books.forEach((b,i)=>{const button=document.createElement('button');button.className='shelf-card';button.innerHTML=`<div class="cover"><div class="num">BOOK ${String(i+1).padStart(2,'0')}</div><h2>${escape(b.title)}</h2><p>${escape(b.subtitle)}</p></div><div class="shelf-meta"><span>${b.source_count} 绔?路 鍥涙ā寮忛槄璇?/span><span class="arrow">鈫?/span></div>`;button.onclick=()=>openBook(b.id);$('shelf').append(button);});
- const last=state.settings.documentReaderLast;$('resume').textContent=last?'缁х画涓婃闃呰 鈫?:'寮€濮嬮槄璇?鈫?;
+ $('shelf').replaceChildren();if(!library)return;library.books.forEach((b,i)=>{const button=document.createElement('button');button.className='shelf-card';button.innerHTML=`<div class="cover"><div class="num">BOOK ${String(i+1).padStart(2,'0')}</div><h2>${escape(b.title)}</h2><p>${escape(b.subtitle)}</p></div><div class="shelf-meta"><span>${b.source_count} 章 · 四模式阅读</span><span class="arrow">↗</span></div>`;button.onclick=()=>openBook(b.id);$('shelf').append(button);});
+ const last=state.settings.documentReaderLast;$('resume').textContent=last?'继续上次阅读 →':'开始阅读 →';
 }
-async function loadDocument(url){if(cache.has(url))return cache.get(url);loadingController?.abort();loadingController=new AbortController();const data=await readJSON(url,{signal:loadingController.signal});if(!data||data.schema!=='book-reflow-document-v1'||!Array.isArray(data.blocks))throw Error('鏂囨。鍐呭涓嶅畬鏁达紝鏈樉绀洪敊璇殑鏇夸唬鍐呭銆?);if(cache.size>8)cache.delete(cache.keys().next().value);cache.set(url,data);return data;}
+async function loadDocument(url){if(cache.has(url))return cache.get(url);loadingController?.abort();loadingController=new AbortController();const data=await readJSON(url,{signal:loadingController.signal});if(!data||data.schema!=='book-reflow-document-v1'||!Array.isArray(data.blocks))throw Error('文档内容不完整，未显示错误的替代内容。');if(cache.size>8)cache.delete(cache.keys().next().value);cache.set(url,data);return data;}
 async function openBook(id){const req=++navigationRequest;const saving=savePosition().catch(()=>{});busy=true;++renderToken;await saving;if(req!==navigationRequest)return;book=library.books.find(b=>b.id===id);if(!book){busy=false;return;}const last=state.settings.documentReaderLast;const number=last?.book_id===id?last.chapter:1;await openChapter(number,last?.book_id===id?last.mode:'learn');}
 async function openChapter(number,mode='learn'){
  const request=++navigationRequest;
  if(!book)return;const newChapter=book.chapters.find(c=>c.number===Number(number));if(!newChapter)return;
  const saving=current&&!busy?savePosition().catch(()=>{}):Promise.resolve();busy=true;++renderToken;await saving;if(request!==navigationRequest)return;chapter=newChapter;mode=chapter.modes[mode]?mode:'learn';const ref=chapter.modes[mode];
- ++renderToken;busy=true;$('welcome').hidden=true;$('workspace').hidden=false;$('loading').hidden=false;$('loading').textContent='姝ｅ湪鎵撳紑 '+book.title+' 路 '+MODES[mode]+'鈥?;
+ ++renderToken;busy=true;$('welcome').hidden=true;$('workspace').hidden=false;$('loading').hidden=false;$('loading').textContent='正在打开 '+book.title+' · '+MODES[mode]+'…';
  renderNav();for(const button of $$('[data-mode]')){button.classList.toggle('active',button.dataset.mode===mode);button.setAttribute('aria-selected',button.dataset.mode===mode);button.disabled=!chapter.modes[button.dataset.mode];}
  $('crumb-book').textContent=book.title;$('crumb-chapter').textContent=chapter.title;const requested=ref.id;
  try{
   const data=await loadDocument(ref.url);if(request!==navigationRequest||chapter.modes[mode]?.id!==requested||book.id!==data.book_id)return;current=data;selected=null;answersHidden=mode==='practice';revealedAnswers.clear();reviewRecall=false;revealedReviewSections.clear();practiceCursor=Number((current.questions||[])[0]?.number)||1;editorBlock=null;document.documentElement.dataset.readerMode=mode;document.documentElement.dataset.reviewRecall='false';
-  $('selection-tools').hidden=true;$('original-pdf').href=current.source_pdf.url;$('original-pdf').title=current.source_pdf.name;$('answer-toggle').hidden=mode!=='practice';$('practice-draft-open').hidden=mode!=='practice';$('practice-tab').hidden=mode!=='practice';if(mode!=='practice'&&notesTab==='practice')notesTab='notes';$('answer-toggle').textContent='閬綇绛旀';$('find-input').value='';$('findbar').hidden=true;searchHits=[];searchIndex=-1;
+  $('selection-tools').hidden=true;$('original-pdf').href=current.source_pdf.url;$('original-pdf').title=current.source_pdf.name;$('answer-toggle').hidden=mode!=='practice';$('practice-draft-open').hidden=mode!=='practice';$('practice-tab').hidden=mode!=='practice';if(mode!=='practice'&&notesTab==='practice')notesTab='notes';$('answer-toggle').textContent='遮住答案';$('find-input').value='';$('findbar').hidden=true;searchHits=[];searchIndex=-1;
   if(!state.settings.documentReader?.leading)prefs.leading=data.page_style.leading;
   if(!state.settings.documentReader?.margin)prefs.margin=data.page_style.left_mm;
   const anchor=state.books[book.id]?.documentPositions?.[data.id];const i=book.chapters.findIndex(c=>c.number===number);$('previous-chapter').disabled=i<=0;$('next-chapter').disabled=i>=book.chapters.length-1;
-  document.title=book.title+' 路 '+MODES[mode]+' 鈥?Book 1.3.1';refreshContentStatus();renderModeGuide();await paginate(anchor);await mutate(s=>{s.settings.documentReaderLast={book_id:data.book_id,chapter:number,mode};});
- }catch(e){if(e.name==='AbortError')return;busy=false;$('loading').textContent='鎵撳紑澶辫触锛?+e.message+'銆傛病鏈夋浛鎹负鏃х増鍐呭銆?;messageError(e);}
+  document.title=book.title+' · '+MODES[mode]+' — Book 1.3.1';refreshContentStatus();renderModeGuide();await paginate(anchor);await mutate(s=>{s.settings.documentReaderLast={book_id:data.book_id,chapter:number,mode};});
+ }catch(e){if(e.name==='AbortError')return;busy=false;$('loading').textContent='打开失败：'+e.message+'。没有替换为旧版内容。';messageError(e);}
 }
 function chooseBlock(event){
  const el=event.target.closest?.('[data-block-id]');if(!el||!current)return;const b=current.blocks.find(x=>x.id===el.dataset.blockId);if(!b)return;
@@ -491,41 +491,41 @@ function highlightQuote(root,quote,cls){
  const r=document.createRange();r.setStart(first.node,start-first.start);r.setEnd(last.node,end-last.start);const mark=document.createElement('mark');mark.className=cls;mark.append(r.extractContents());r.insertNode(mark);return true;
 }
 async function addNote(kind='document-note'){
- if(!current||!selected){toast('鍏堥€変腑鏂囧瓧锛屾垨鐐逛竴涓嬭鎵规敞鐨勬鏂囨钀姐€?);return;}
- const text=$('note-text').value.trim(),selection=clone({block_id:selected.block_id,quote:selected.quote});if(kind==='document-note'&&!text){toast('鍏堝啓涓嬩綘鐨勬兂娉曘€?);return;}
+ if(!current||!selected){toast('先选中文字，或点一下要批注的正文段落。');return;}
+ const text=$('note-text').value.trim(),selection=clone({block_id:selected.block_id,quote:selected.quote});if(kind==='document-note'&&!text){toast('先写下你的想法。');return;}
  const b=current.blocks.find(x=>x.id===selection.block_id);if(!b)return;
  const id='doc:annotation:'+crypto.randomUUID(),value={kind,text,quote:selection.quote||b.plain.slice(0,180),block_id:b.id,record_id:b.id,document_id:current.id,book_id:current.book_id,source_sha:current.source_pdf.sha256,chapter:current.chapter,mode:current.mode,created_at:new Date().toISOString()};
  await mutate(s=>{s.notes[id]=value;});$('note-text').value='';$('selection-tools').hidden=true;renderNotes();
  for(const el of $$('[data-block-id]',$('pages')).filter(el=>el.dataset.blockId===b.id)){el.classList.add('has-note');if(kind==='document-highlight'){if(!highlightQuote(el,value.quote,'saved-highlight'))el.classList.add('highlighted');}}
- toast(kind==='document-highlight'?'宸查珮浜紝闅忓瓧鍙峰拰鍒嗛〉淇濈暀銆?:'鎵规敞宸蹭繚瀛樺埌鏈満銆?);
+ toast(kind==='document-highlight'?'已高亮，随字号和分页保留。':'批注已保存到本机。');
 }
 function renderNotes(){
  $('notes-list').replaceChildren();if(!current)return;$('practice-panel').hidden=notesTab!=='practice';$('notes-panel').classList.toggle('practice-open',notesTab==='practice');$$('[data-notes]').forEach(x=>x.classList.toggle('active',x.dataset.notes===notesTab));if(notesTab==='practice'){renderPractice();return;}const entries=notesTab==='bookmarks'?bookmarks():noteEntries();$('note-count').textContent=noteEntries().length||'';
- if(!entries.length){const p=document.createElement('p');p.className='quote-hint';p.textContent=notesTab==='bookmarks'?'鏈珷杩樻病鏈変功绛俱€傞槄璇绘椂鐐瑰嚮鈥溾槅 涔︾鈥濆嵆鍙敹钘忓綋鍓嶄綅缃€?:'鏈珷杩樻病鏈夋壒娉ㄣ€傞€変腑鏂囧瓧鍚庡彲浠ラ珮浜紝鎴栬褰曡嚜宸辩殑鐞嗚В銆?;$('notes-list').append(p);return;}
- for(const [key,n]of entries.sort((a,b)=>(b[1].created_at||'').localeCompare(a[1].created_at||''))){const article=document.createElement('article');article.className='annotation';const q=document.createElement('div');q.className='quote';q.textContent=n.quote||n.title||'涔︾';const p=document.createElement('p');p.textContent=n.text|| (n.kind==='document-highlight'?'閫夋枃楂樹寒':'');const footer=document.createElement('footer');const date=document.createElement('span');date.textContent=(n.created_at||'').slice(0,10);const go=document.createElement('button');go.textContent='鍥炲埌姝ｆ枃';go.onclick=()=>{if(!jumpToBlock(n.block_id))toast('褰撳墠鐗堟湰鎵句笉鍒板師閿氱偣锛岃褰曚粛淇濈暀銆?);};const del=document.createElement('button');del.textContent='鍒犻櫎';del.onclick=async()=>{if(!confirm('鍒犻櫎杩欎竴鏉?+(notesTab==='bookmarks'?'涔︾':'鎵规敞')+'锛?))return;await mutate(s=>{delete s[notesTab==='bookmarks'?'bookmarks':'notes'][key];});renderNotes();await paginate(activeAnchor());};footer.append(date,go,del);article.append(q,p,footer);$('notes-list').append(article);}
+ if(!entries.length){const p=document.createElement('p');p.className='quote-hint';p.textContent=notesTab==='bookmarks'?'本章还没有书签。阅读时点击“☆ 书签”即可收藏当前位置。':'本章还没有批注。选中文字后可以高亮，或记录自己的理解。';$('notes-list').append(p);return;}
+ for(const [key,n]of entries.sort((a,b)=>(b[1].created_at||'').localeCompare(a[1].created_at||''))){const article=document.createElement('article');article.className='annotation';const q=document.createElement('div');q.className='quote';q.textContent=n.quote||n.title||'书签';const p=document.createElement('p');p.textContent=n.text|| (n.kind==='document-highlight'?'选文高亮':'');const footer=document.createElement('footer');const date=document.createElement('span');date.textContent=(n.created_at||'').slice(0,10);const go=document.createElement('button');go.textContent='回到正文';go.onclick=()=>{if(!jumpToBlock(n.block_id))toast('当前版本找不到原锚点，记录仍保留。');};const del=document.createElement('button');del.textContent='删除';del.onclick=async()=>{if(!confirm('删除这一条'+(notesTab==='bookmarks'?'书签':'批注')+'？'))return;await mutate(s=>{delete s[notesTab==='bookmarks'?'bookmarks':'notes'][key];});renderNotes();await paginate(activeAnchor());};footer.append(date,go,del);article.append(q,p,footer);$('notes-list').append(article);}
 }
-async function addBookmark(){if(!current)return;const anchor=activeAnchor();if(!anchor)return;const b=current.blocks.find(x=>x.id===anchor.block_id);const id='doc:bookmark:'+current.id+':'+anchor.block_id,entry={kind:'document-bookmark',document_id:current.id,book_id:current.book_id,record_id:anchor.block_id,block_id:anchor.block_id,quote:(b?.plain||current.title).slice(0,180),offset:anchor.offset,chapter:current.chapter,mode:current.mode,created_at:new Date().toISOString()};await mutate(s=>{s.bookmarks[id]=entry;});toast('宸叉敹钘忓綋鍓嶄綅缃紝閲嶆柊鍒嗛〉鍚庝粛鍙烦鍥炪€?);renderNotes();}
-function showNotes(){if(!current){toast('鎵撳紑涓€鏈功鍚庡嵆鍙壒娉ㄣ€?);return;}$('notes-panel').hidden=false;$('selection-tools').hidden=true;renderNotes();adjustZoom();}
+async function addBookmark(){if(!current)return;const anchor=activeAnchor();if(!anchor)return;const b=current.blocks.find(x=>x.id===anchor.block_id);const id='doc:bookmark:'+current.id+':'+anchor.block_id,entry={kind:'document-bookmark',document_id:current.id,book_id:current.book_id,record_id:anchor.block_id,block_id:anchor.block_id,quote:(b?.plain||current.title).slice(0,180),offset:anchor.offset,chapter:current.chapter,mode:current.mode,created_at:new Date().toISOString()};await mutate(s=>{s.bookmarks[id]=entry;});toast('已收藏当前位置，重新分页后仍可跳回。');renderNotes();}
+function showNotes(){if(!current){toast('打开一本书后即可批注。');return;}$('notes-panel').hidden=false;$('selection-tools').hidden=true;renderNotes();adjustZoom();}
 function startEditing(){
- if(!current)return;const b=current.blocks.find(x=>x.id===selected?.block_id);if(!b){toast('鍏堢偣鍑婚渶瑕佷慨鏀圭殑姝ｆ枃娈佃惤銆?);return;}
- if(!b.editable){toast('鍘熷浘鎴栫煝閲忓叕寮忎繚鎸佸師绋匡紱鍙互娣诲姞鎵规敞璇存槑銆?);return;}editorBlock=b;
+ if(!current)return;const b=current.blocks.find(x=>x.id===selected?.block_id);if(!b){toast('先点击需要修改的正文段落。');return;}
+ if(!b.editable){toast('原图或矢量公式保持原稿；可以添加批注说明。');return;}editorBlock=b;
  const editor=$('copy-editor');editor.innerHTML=sanitizeHTML(localCopy(b)?.html||b.html);$$('img,.math-render',editor).forEach(x=>x.contentEditable='false');$('edit-dialog').showModal();editor.focus();
 }
 async function saveCopy(){if(!editorBlock||!current)return;const raw=sanitizeHTML($('copy-editor').innerHTML);const existing=localCopy(editorBlock)?.html||editorBlock.html;
  const src=document.createElement('template'),tar=document.createElement('template');src.innerHTML=existing;tar.innerHTML=raw;
- const oldMath=$$('img[src]',src.content).map(x=>x.getAttribute('src'));const newMath=$$('img[src]',tar.content).map(x=>x.getAttribute('src'));for(const x of oldMath){const index=newMath.indexOf(x);if(index<0){toast('鍏紡鎴栧浘鐗囧彈淇濇姢銆傝淇濈暀瀹冧滑锛屾暟瀛︿慨鏀瑰彲鍐欏叆鎵规敞銆?);return;}newMath.splice(index,1);}
+ const oldMath=$$('img[src]',src.content).map(x=>x.getAttribute('src'));const newMath=$$('img[src]',tar.content).map(x=>x.getAttribute('src'));for(const x of oldMath){const index=newMath.indexOf(x);if(index<0){toast('公式或图片受保护。请保留它们，数学修改可写入批注。');return;}newMath.splice(index,1);}
  const block=editorBlock,id=noteKey('copy',block.id),previous=localCopy(block);const entry={kind:'document-copy',text:plainHTML(raw),html:raw,record_id:block.id,block_id:block.id,document_id:current.id,book_id:current.book_id,source_sha:current.source_pdf.sha256,created_at:previous?.created_at||new Date().toISOString(),updated_at:new Date().toISOString(),history:[...(previous?.history||[]),...(previous?[{html:previous.html,at:previous.updated_at}]:[])].slice(-5)};
- await mutate(s=>{s.notes[id]=entry;});$('edit-dialog').close();await paginate({block_id:block.id});toast('涓汉鍓湰宸蹭繚瀛橈紝鏁欐潗鍘熺娌℃湁鏀瑰彉銆?);}
-async function resetCopy(){if(!editorBlock)return;if(!confirm('绉婚櫎姝ゆ鐨勪釜浜轰慨鏀癸紝鎭㈠鏁欐潗鍘熺锛熸壒娉ㄤ笉浼氬垹闄ゃ€?))return;const id=editorBlock.id;await mutate(s=>{delete s.notes[noteKey('copy',id)];});$('edit-dialog').close();await paginate({block_id:id});toast('宸叉仮澶嶅師绋裤€?);}
+ await mutate(s=>{s.notes[id]=entry;});$('edit-dialog').close();await paginate({block_id:block.id});toast('个人副本已保存，教材原稿没有改变。');}
+async function resetCopy(){if(!editorBlock)return;if(!confirm('移除此段的个人修改，恢复教材原稿？批注不会删除。'))return;const id=editorBlock.id;await mutate(s=>{delete s.notes[noteKey('copy',id)];});$('edit-dialog').close();await paginate({block_id:id});toast('已恢复原稿。');}
 function renderPractice(keep=false){
  if(!current||current.mode!=='practice')return;const qs=current.questions||current.blocks.filter(b=>b.question_start).map(b=>({number:b.question_number,block_id:b.id,title:b.plain}));
  const chosen=Number($('practice-question').value)||1;if(!keep){$('practice-question').replaceChildren();for(const q of qs){const o=document.createElement('option');o.value=q.number;o.textContent=q.title.slice(0,50);$('practice-question').append(o);}$('practice-question').value=qs.some(q=>q.number===chosen)?chosen:(qs[0]?.number||1);}
- const number=Number($('practice-question').value);practiceCursor=number||practiceCursor;const key='doc:attempt:'+current.id+':q'+number;const item=state.cards[key];$('practice-answer').value=item?.answer||'';$('practice-save-info').textContent=item?'宸蹭繚瀛?路 '+(item.updated_at||'').replace('T',' ').slice(0,19):'杈撳叆鍚庤嚜鍔ㄤ繚瀛樸€傚厛鐙珛浣滅瓟锛屽啀鍥炴鏂囧睍寮€鍙傝€冭В绛斻€?;$$('[data-rating]').forEach(x=>x.classList.toggle('active',item?.rating===x.dataset.rating));renderModeGuide();
+ const number=Number($('practice-question').value);practiceCursor=number||practiceCursor;const key='doc:attempt:'+current.id+':q'+number;const item=state.cards[key];$('practice-answer').value=item?.answer||'';$('practice-save-info').textContent=item?'已保存 · '+(item.updated_at||'').replace('T',' ').slice(0,19):'输入后自动保存。先独立作答，再回正文展开参考解答。';$$('[data-rating]').forEach(x=>x.classList.toggle('active',item?.rating===x.dataset.rating));renderModeGuide();
 }
 let draftTimer=null;
 function saveDraft(rating=null){
- if(!current||current.mode!=='practice')return;clearTimeout(draftTimer);const snapshot={doc:current.id,bid:current.book_id,sha:current.source_pdf.sha256,number:Number($('practice-question').value),answer:$('practice-answer').value};$('practice-save-info').textContent='姝ｅ湪淇濆瓨鑽夌鈥?;
- const write=async()=>{const key='doc:attempt:'+snapshot.doc+':q'+snapshot.number;await mutate(s=>{const old=s.cards[key]||{};s.cards[key]={...old,kind:'document-practice-draft',book_id:snapshot.bid,record_id:key,document_id:snapshot.doc,source_sha:snapshot.sha,question_number:snapshot.number,answer:snapshot.answer,rating:rating||old.rating||'unrated',updated_at:new Date().toISOString()};});$('practice-save-info').textContent='鑽夌宸茶嚜鍔ㄤ繚瀛樺埌鏈満';if(rating)$$('[data-rating]').forEach(x=>x.classList.toggle('active',x.dataset.rating===rating));renderModeGuide();};
+ if(!current||current.mode!=='practice')return;clearTimeout(draftTimer);const snapshot={doc:current.id,bid:current.book_id,sha:current.source_pdf.sha256,number:Number($('practice-question').value),answer:$('practice-answer').value};$('practice-save-info').textContent='正在保存草稿…';
+ const write=async()=>{const key='doc:attempt:'+snapshot.doc+':q'+snapshot.number;await mutate(s=>{const old=s.cards[key]||{};s.cards[key]={...old,kind:'document-practice-draft',book_id:snapshot.bid,record_id:key,document_id:snapshot.doc,source_sha:snapshot.sha,question_number:snapshot.number,answer:snapshot.answer,rating:rating||old.rating||'unrated',updated_at:new Date().toISOString()};});$('practice-save-info').textContent='草稿已自动保存到本机';if(rating)$$('[data-rating]').forEach(x=>x.classList.toggle('active',x.dataset.rating===rating));renderModeGuide();};
  // Queue each edit immediately; the CAS writer serializes updates and preserves other data.
  write().catch(messageError);
 }
@@ -534,87 +534,87 @@ function findText(q){clearSearch();q=q.trim();if(!q)return;if(!searchReflow&&cur
  const walker=document.createTreeWalker(source,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement?.closest('.page-header,.page-footer,script,style,.math-render')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let nodes=[],n;while((n=walker.nextNode()))nodes.push(n);
  const query=q.toLocaleLowerCase();
  for(const node of nodes){const text=node.data,low=text.toLocaleLowerCase();let idx=low.indexOf(query);if(idx<0)continue;const frag=document.createDocumentFragment();let pos=0;while(idx>=0&&searchHits.length<1500){frag.append(document.createTextNode(text.slice(pos,idx)));const mark=document.createElement('mark');mark.className='find-mark';mark.textContent=text.slice(idx,idx+q.length);frag.append(mark);searchHits.push(mark);pos=idx+q.length;idx=low.indexOf(query,pos);}frag.append(document.createTextNode(text.slice(pos)));node.replaceWith(frag);}
- if(searchHits.length)moveSearch(1);else $('find-count').textContent='娌℃湁鎵惧埌姝ｆ枃鍖归厤';
+ if(searchHits.length)moveSearch(1);else $('find-count').textContent='没有找到正文匹配';
 }
 function moveSearch(delta){if(!searchHits.length)return;if(searchIndex>=0)searchHits[searchIndex].classList.remove('current');searchIndex=(searchIndex+delta+searchHits.length)%searchHits.length;const m=searchHits[searchIndex];m.classList.add('current');const r=m.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-200,behavior:'smooth'});$('find-count').textContent=`${searchIndex+1} / ${searchHits.length}`;}
-function refreshAnswerVisibility(){if(!current)return;for(const a of $$('.doc-block[data-answer="1"]',$('pages'))){const q=Number(a.dataset.questionNumber)||0,open=current.mode!=='practice'||!answersHidden||revealedAnswers.has(q);if(a.classList.contains('source-answer-label')){a.classList.toggle('answer-label-closed',!open);a.setAttribute('aria-expanded',String(open));}else a.classList.toggle('answer-concealed',!open);} $('answer-toggle').textContent=answersHidden?'灞曞紑鍏ㄩ儴绛旀':'鎶樺彔鍏ㄩ儴绛旀';}
+function refreshAnswerVisibility(){if(!current)return;for(const a of $$('.doc-block[data-answer="1"]',$('pages'))){const q=Number(a.dataset.questionNumber)||0,open=current.mode!=='practice'||!answersHidden||revealedAnswers.has(q);if(a.classList.contains('source-answer-label')){a.classList.toggle('answer-label-closed',!open);a.setAttribute('aria-expanded',String(open));}else a.classList.toggle('answer-concealed',!open);} $('answer-toggle').textContent=answersHidden?'展开全部答案':'折叠全部答案';}
 function showSettings(){for(const [id,v]of [['font-size',prefs.size],['font-number',prefs.size],['line-height',prefs.leading],['font-select',prefs.font],['margin',prefs.margin],['layout-select',prefs.layout]])$(id).value=v;$('clean-reading').checked=prefs.cleanReading!==false;$('leading-value').textContent=prefs.leading.toFixed(2);$('margin-value').textContent=prefs.margin+' mm';$('settings-dialog').showModal();}
 async function applySettings(){const anchor=activeAnchor();prefs.size=clampFontSize($('font-number').value);prefs.leading=Math.min(2.6,Math.max(1.2,Number($('line-height').value)||1.62));prefs.margin=Math.min(30,Math.max(12,Number($('margin').value)||20));prefs.font=$('font-select').value;prefs.layout=$('layout-select').value;prefs.cleanReading=true;$('settings-dialog').close();await settingSave();applyPrefs();if(current)await paginate(anchor);}
 async function loadFont(){try{const r=await fetch('/api/font');if(!r.ok)return false;const face=new FontFace('BookLocalFont',await r.arrayBuffer(),{weight:'400'});await face.load();if(customFace)document.fonts.delete(customFace);customFace=face;document.fonts.add(face);return true;}catch(e){console.warn('Local font unavailable',e);return false;}}
-async function importFont(file){if(!file)return;try{if(file.size>40*1024*1024)throw Error('瀛椾綋鏂囦欢瓒呰繃40MB銆?);const data=await file.arrayBuffer();const face=new FontFace('BookLocalFont',data,{weight:'400'});await face.load();const r=await fetch('/api/font',{method:'POST',headers:{'X-Book-Token':token},body:data});if(!r.ok)throw Error((await r.json()).error||'瀛椾綋瀵煎叆澶辫触');if(customFace)document.fonts.delete(customFace);customFace=face;document.fonts.add(face);prefs.font='custom';$('font-select').value='custom';await settingSave();toast('宸插鍏ュ苟楠岃瘉鏈湴瀛椾綋锛屽簲鐢ㄦ帓鐗堝悗鐢熸晥銆?);}catch(e){toast('瀛椾綋鏈鍏ワ紝鍘熷瓧浣撲繚鐣欙細'+e.message);}}
+async function importFont(file){if(!file)return;try{if(file.size>40*1024*1024)throw Error('字体文件超过40MB。');const data=await file.arrayBuffer();const face=new FontFace('BookLocalFont',data,{weight:'400'});await face.load();const r=await fetch('/api/font',{method:'POST',headers:{'X-Book-Token':token},body:data});if(!r.ok)throw Error((await r.json()).error||'字体导入失败');if(customFace)document.fonts.delete(customFace);customFace=face;document.fonts.add(face);prefs.font='custom';$('font-select').value='custom';await settingSave();toast('已导入并验证本地字体，应用排版后生效。');}catch(e){toast('字体未导入，原字体保留：'+e.message);}}
 function downloadFile(name,text,type='application/json'){const a=document.createElement('a');const url=URL.createObjectURL(new Blob([text],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);}
-async function exportBackup(){await saveQueue.catch(()=>{});const payload={schema:'book-document-backup-v1',build:'20260929-windows-1.3.0-final-r2',created_at:new Date().toISOString(),includes_unsaved_changes:failedMutations.length>0,state:pendingSnapshot()};downloadFile('Book-鍏ㄩ儴瀛︿範璁板綍-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json',JSON.stringify(payload,null,2));toast('澶囦唤宸蹭氦缁欐祻瑙堝櫒淇濆瓨銆?);}
-async function importBackup(file){if(!file)return;try{if(file.size>30*1024*1024)throw Error('澶囦唤杩囧ぇ銆?);const data=JSON.parse(await file.text());const incoming=validateBackup(data.state||data.data?.state||data);if(!confirm('鍚堝苟杩欎唤瀛︿範澶囦唤锛熷悓鍚嶈褰曚互瀵煎叆鍐呭涓哄噯锛涘叾浠栫幇鏈夎褰曚繚鐣欍€?))return;await exportBackup();await mutate(s=>{for(const k of ['settings','books','notes','bookmarks','cards'])s[k]={...s[k],...incoming[k]};});prefs={...DEFAULTS,...state.settings.documentReader};if(prefs.font==='song')prefs.font='shusong';prefs.cleanReading=true;applyPrefs();$('backup-dialog').close();if(current)await paginate(activeAnchor());toast('澶囦唤宸插悎骞讹紝鍘熷綋鍓嶅壇鏈凡鍏堝鍑恒€?);}catch(e){messageError(e);}}
+async function exportBackup(){await saveQueue.catch(()=>{});const payload={schema:'book-document-backup-v1',build:'20260929-windows-1.3.0-final-r2',created_at:new Date().toISOString(),includes_unsaved_changes:failedMutations.length>0,state:pendingSnapshot()};downloadFile('Book-全部学习记录-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json',JSON.stringify(payload,null,2));toast('备份已交给浏览器保存。');}
+async function importBackup(file){if(!file)return;try{if(file.size>30*1024*1024)throw Error('备份过大。');const data=JSON.parse(await file.text());const incoming=validateBackup(data.state||data.data?.state||data);if(!confirm('合并这份学习备份？同名记录以导入内容为准；其他现有记录保留。'))return;await exportBackup();await mutate(s=>{for(const k of ['settings','books','notes','bookmarks','cards'])s[k]={...s[k],...incoming[k]};});prefs={...DEFAULTS,...state.settings.documentReader};if(prefs.font==='song')prefs.font='shusong';prefs.cleanReading=true;applyPrefs();$('backup-dialog').close();if(current)await paginate(activeAnchor());toast('备份已合并，原当前副本已先导出。');}catch(e){messageError(e);}}
 async function printDocument(){
- if(!current||busy||printing){toast('璇风瓑鏂囨。鎺掔増瀹屾垚鍚庡啀鎵撳嵃銆?);return;}
+ if(!current||busy||printing){toast('请等文档排版完成后再打印。');return;}
  printing=true;const saved={layout:prefs.layout,anchor:activeAnchor(),hidden:answersHidden,answers:new Set(revealedAnswers),recall:reviewRecall,sections:new Set(revealedReviewSections)};let restored=false;
  const restore=async()=>{if(restored)return;restored=true;window.removeEventListener('afterprint',restore);prefs.layout=saved.layout;answersHidden=saved.hidden;revealedAnswers=saved.answers;reviewRecall=saved.recall;revealedReviewSections=saved.sections;printing=false;await paginate(saved.anchor);renderModeGuide();};
  try{
   prefs.layout='pages';answersHidden=false;reviewRecall=false;await paginate(saved.anchor);
   const images=$$('img',$('pages')).filter(i=>!i.closest('.reading-noise')&&i.getBoundingClientRect().height>0);for(const im of images)im.loading='eager';
-  toast('姝ｅ湪鍑嗗瀹屾暣A4椤甸潰锛屾墦鍗板皢鍖呭惈宸插睍寮€鐨勫弬鑰冭В绛斻€?);
+  toast('正在准备完整A4页面，打印将包含已展开的参考解答。');
   await Promise.race([Promise.all(images.map(im=>im.complete?Promise.resolve():new Promise(r=>{im.addEventListener('load',r,{once:true});im.addEventListener('error',r,{once:true});}))),new Promise(r=>setTimeout(r,30000))]);
-  if(images.some(im=>!im.complete||!im.naturalWidth))throw Error('浠嶆湁鍥剧墖鏈氨缁紝宸插彇娑堟墦鍗板噯澶囦互鍏嶇己鍥俱€?);
+  if(images.some(im=>!im.complete||!im.naturalWidth))throw Error('仍有图片未就绪，已取消打印准备以免缺图。');
   await document.fonts.ready;window.addEventListener('afterprint',restore,{once:true});window.print();
  }catch(e){toast(e.message);await restore();}
 }
 async function quitApp(){
- if($('edit-dialog').open||$('note-text').value.trim()){toast('璇峰厛淇濆瓨鎴栧叧闂湭瀹屾垚鐨勪釜浜虹紪杈?鎵规敞銆?);return;}
- try{await savePosition();await saveQueue;if(failedMutations.length)throw Error('浠嶆湁鏈繚瀛樹慨鏀癸紝璇峰厛澶囦唤銆?);if(!confirm('閫€鍑?Book锛熷凡淇濆瓨鐨勫涔犺褰曚繚鐣欍€?))return;const r=await fetch('/api/quit',{method:'POST',headers:{'X-Book-Token':token}});if(!r.ok)throw Error('閫€鍑鸿姹傚け璐ャ€?);window.close();status('Book宸查€€鍑猴紝绐楀彛鍙互鍏抽棴銆?);}catch(e){messageError(e);}
+ if($('edit-dialog').open||$('note-text').value.trim()){toast('请先保存或关闭未完成的个人编辑/批注。');return;}
+ try{await savePosition();await saveQueue;if(failedMutations.length)throw Error('仍有未保存修改，请先备份。');if(!confirm('退出 Book？已保存的学习记录保留。'))return;const r=await fetch('/api/quit',{method:'POST',headers:{'X-Book-Token':token}});if(!r.ok)throw Error('退出请求失败。');window.close();status('Book已退出，窗口可以关闭。');}catch(e){messageError(e);}
 }
 let contentAudit=null;
-const REVIEW_NAMES={REASONING_REVIEWED:'鏈疆鎺ㄧ悊澶嶆牳',REVISED_AND_REASONED:'宸蹭慨璁㈠苟澶嶆牳',NOT_YET_INDIVIDUALLY_REVIEWED:'寰呴€愰澶嶆牳',QUESTION_LIST_REMOVED_REVIEW_PENDING:'棰樺崟宸查殧绂伙紝瑙ｇ瓟寰呭鏍?};
+const REVIEW_NAMES={REASONING_REVIEWED:'本轮推理复核',REVISED_AND_REASONED:'已修订并复核',NOT_YET_INDIVIDUALLY_REVIEWED:'待逐题复核',QUESTION_LIST_REMOVED_REVIEW_PENDING:'题单已隔离，解答待复核'};
 function refreshContentStatus(){
  if(!current)return;const n=current.correction_ids?.length||0;
- $('content-status').textContent=(current.mode==='learn'?'瀛︿範姝ｆ枃鎺掑嵃绋?:'鍏湰缁熶竴 v4 鍩哄噯')+' 路 '+(n?'鏈珷宸叉牎璁?'+n+' 椤?:'鍘熷唴瀹逛繚鐣?)+' 路 鏈粡鍏ㄤ功瀛︾缁堝';
- $('content-audit-open').textContent='鍐呭鏍℃牳'+(n?' ('+n+')':'');
- $('original-pdf').textContent=(current.mode==='learn'?'瀛︿範鍘?PDF':'v4 鍘?PDF')+' 鈫?;
- $('original-pdf').title=current.source_pdf.name+(n?'锛涘師 PDF 涓嶅惈鏈疆娲剧敓灞傛牎瑷傦紝璇蜂互鏍℃牳璁板綍鍖哄垎銆?:'');
+ $('content-status').textContent=(current.mode==='learn'?'学习正文排印稿':'六本统一 v4 基准')+' · '+(n?'本章已校订 '+n+' 项':'原内容保留')+' · 未经全书学科终审';
+ $('content-audit-open').textContent='内容校核'+(n?' ('+n+')':'');
+ $('original-pdf').textContent=(current.mode==='learn'?'学习原 PDF':'v4 原 PDF')+' ↗';
+ $('original-pdf').title=current.source_pdf.name+(n?'；原 PDF 不含本轮派生层校訂，请以校核记录区分。':'');
 }
 async function auditData(){if(!contentAudit)contentAudit=await readJSON('/documents/content-audit.json');return contentAudit;}
 function auditParagraph(parent,text,cls=''){const p=document.createElement('p');p.textContent=text;if(cls)p.className=cls;parent.append(p);return p;}
 async function showContentAudit(){
- if(!current)return toast('璇峰厛鎵撳紑涓€鏈功銆?);const dlg=$('content-audit-dialog'),body=$('content-audit-body');body.replaceChildren();auditParagraph(body,'姝ｅ湪璇诲彇鏍℃牳璁板綍鈥?);dlg.showModal();
+ if(!current)return toast('请先打开一本书。');const dlg=$('content-audit-dialog'),body=$('content-audit-body');body.replaceChildren();auditParagraph(body,'正在读取校核记录…');dlg.showModal();
  try{const data=await auditData(),s=data.summary;body.replaceChildren();
- auditParagraph(body,current.book_title+' 路 '+current.title+' 路 '+MODES[current.mode],'audit-current');
- auditParagraph(body,'鏈増鏈細'+s.version+' / '+s.content_revision+'銆?86浠介厤濂楅噰鐢ㄥ叚鏈瑅4锛?7浠藉涔犳鏂囦繚鐣欑粨鏋勫寲鏉ユ簮銆倂4鎺掔増閫氳繃涓嶇瓑浜庣瓟妗堟纭€?);
- auditParagraph(body,'棰樼洰鏉ユ簮缁?'+s.question_groups+'锛涙湰杞帹鐞嗗鏍?'+s.individually_reasoning_reviewed+'锛涘叾涓噸鍐欐垨琛ュ叏 '+s.rewritten_or_completed_answers+'锛涘叾浣?'+s.unreviewed_question_groups+' 缁勫皻鏈€愰澶嶆牳銆傛湭瀵瑰叏涔﹀涔犱簨瀹炴垨澶嶄範瀹屾暣鎬т綔缁堝淇濊瘉銆?,'audit-scope');
+ auditParagraph(body,current.book_title+' · '+current.title+' · '+MODES[current.mode],'audit-current');
+ auditParagraph(body,'本版本：'+s.version+' / '+s.content_revision+'。186份配套采用六本v4，67份学习正文保留结构化来源。v4排版通过不等于答案正确。');
+ auditParagraph(body,'题目来源组 '+s.question_groups+'；本轮推理复核 '+s.individually_reasoning_reviewed+'；其中重写或补全 '+s.rewritten_or_completed_answers+'；其余 '+s.unreviewed_question_groups+' 组尚未逐题复核。未对全书学习事实或复习完整性作终审保证。','audit-scope');
  const cleanup=current.reader_cleanup_summary;
  if(cleanup){
-  const h=document.createElement('h3');h.textContent='闃呰灞傛暣鐞?;body.append(h);
-  auditParagraph(body,'鏈珷涓洪槄璇昏繛缁€ф暣鐞?'+cleanup.reader_modified_blocks+' 娈碉紝鍙﹀皢 '+cleanup.audit_only_blocks+' 娈垫潵婧?鑴氭敞/鎶€鏈鏄庣Щ鍑烘鏂囥€傚師濮?plain/html銆佹潵婧?PDF銆侀鐩笌 source record 鍧囨湭鍒犻櫎銆?,'audit-scope');
-  if((current.reader_audit_notes||[]).length){const det=document.createElement('details'),su=document.createElement('summary');su.textContent='鏌ョ湅绉诲嚭姝ｆ枃鎴栫畝鍖栨樉绀虹殑鏉ユ簮/鑴氭敞璇存槑锛?+current.reader_audit_notes.length+' 鏉★級';det.append(su);for(const note of current.reader_audit_notes){const row=document.createElement('div');row.className='audit-entry';const label=document.createElement('strong');label.textContent=(note.reason||'reader-cleanup')+' 路 '+(note.block_id||'娈佃惤');row.append(label);auditParagraph(row,note.text||'');if(note.reader_text)auditParagraph(row,'闃呰鏄剧ず锛?+note.reader_text,'audit-reader-view');det.append(row);}body.append(det);}
+  const h=document.createElement('h3');h.textContent='阅读层整理';body.append(h);
+  auditParagraph(body,'本章为阅读连续性整理 '+cleanup.reader_modified_blocks+' 段，另将 '+cleanup.audit_only_blocks+' 段来源/脚注/技术说明移出正文。原始 plain/html、来源 PDF、题目与 source record 均未删除。','audit-scope');
+  if((current.reader_audit_notes||[]).length){const det=document.createElement('details'),su=document.createElement('summary');su.textContent='查看移出正文或简化显示的来源/脚注说明（'+current.reader_audit_notes.length+' 条）';det.append(su);for(const note of current.reader_audit_notes){const row=document.createElement('div');row.className='audit-entry';const label=document.createElement('strong');label.textContent=(note.reason||'reader-cleanup')+' · '+(note.block_id||'段落');row.append(label);auditParagraph(row,note.text||'');if(note.reader_text)auditParagraph(row,'阅读显示：'+note.reader_text,'audit-reader-view');det.append(row);}body.append(det);}
  }
  if(current.mode==='practice'){
- const h=document.createElement('h3');h.textContent='鏈珷閫愰鐘舵€?;body.append(h);
- for(const q of current.questions||[]){const p=document.createElement('div');p.className='audit-question';const btn=document.createElement('button');btn.textContent='绗?'+q.number+' 棰?;btn.onclick=()=>{dlg.close();jumpToBlock(q.block_id);};const v=document.createElement('span');v.textContent=REVIEW_NAMES[q.review?.status]||'寰呴€愰澶嶆牳';p.append(btn,v);body.append(p);}
+ const h=document.createElement('h3');h.textContent='本章逐题状态';body.append(h);
+ for(const q of current.questions||[]){const p=document.createElement('div');p.className='audit-question';const btn=document.createElement('button');btn.textContent='第 '+q.number+' 题';btn.onclick=()=>{dlg.close();jumpToBlock(q.block_id);};const v=document.createElement('span');v.textContent=REVIEW_NAMES[q.review?.status]||'待逐题复核';p.append(btn,v);body.append(p);}
  }
- const preview=data.preview_screen.find(x=>x.document_id===current.id);if(preview){auditParagraph(body,'棰勪範妫€鏌ワ細'+(preview.logic_review==='REVIEWED_SPECIFIC_BRIDGE'?'宸茶ˉ鏈珷閫昏緫琛旀帴涓庢湁绛旀鑷':preview.logic_review==='GOALS_SOURCE_RESTORED_OTHER_LOGIC_PENDING'?'鐪熷疄瀛︿範鐩爣宸插洖鍘熶功鎭㈠锛涘叾浣欓€昏緫浠嶉渶閫愯妭澶嶆牳':'鐩墠浠呭仛鏍忕洰缁撴瀯绛涙煡锛屼笉鑳借瘉鏄庢暀瀛﹂€昏緫瀹屾暣')+'銆?);}
- const review=data.review_screen.find(x=>x.document_id===current.id);if(review){auditParagraph(body,'澶嶄範妫€鏌ワ細'+(review.supplemented?'鏈珷宸插姞鍏ユ湁渚濇嵁鐨勭煡璇嗚ˉ鍏呫€?:'灏氭湭瀹屾垚閫愮煡璇嗙偣瀹屾暣鎬х粓瀹°€?)+'涓庡涔犳鏂囨爣棰樻湭鍖归厤鐨勫€欓€?'+review.unmatched_heading_candidates.length+' 椤癸紙浠呬緵澶嶆煡锛屼笉鑷姩鍒ゅ畾涓洪仐婕忥級銆?);if(review.unmatched_heading_candidates.length){const det=document.createElement('details'),su=document.createElement('summary');su.textContent='鏌ョ湅寰呮牳瀵瑰皬鑺傛爣棰?;det.append(su);auditParagraph(det,review.unmatched_heading_candidates.join('锛?));body.append(det);}}
- const learn=data.learning_screen.find(x=>x.document_id===current.id);if(learn&&learn.explicit_ocr_control_tokens) auditParagraph(body,'鏈珷浠嶆湁 '+learn.explicit_ocr_control_tokens+' 澶勬樉寮廜CR鎺у埗鏍囪锛屽師濮嬫潵婧愪繚鐣欙紱涓嶈兘鐞嗚В涓哄叏鏂囧凡鏃犻敊璇€?,'audit-scope');
- const items=data.items.filter(x=>x.document_id===current.id);const heading=document.createElement('h3');heading.textContent='鏈珷宸插簲鐢ㄤ慨璁?'+items.length+' 椤?;body.append(heading);
- for(const item of items){const det=document.createElement('details');det.className='audit-entry';const su=document.createElement('summary');su.textContent=item.id+' 路 '+item.title;det.append(su);auditParagraph(det,item.reason);auditParagraph(det,'绫诲瀷锛?+item.kind+'銆傝繖鏄疊ook缂栬緫鏍℃牳锛屼笉鏄嚭鐗堢ぞ瀹樻柟鍕樿銆?);
- const before=document.createElement('pre');before.textContent=item.before||'锛堝師绋挎病鏈夎繖涓€琛ュ厖锛?;const after=document.createElement('pre');after.textContent=item.after;const l1=document.createElement('h4');l1.textContent='鍘熷唴瀹癸紙淇濈暀锛?;const l2=document.createElement('h4');l2.textContent='鏈疆鍐呭';det.append(l1,before,l2,after);auditParagraph(det,'渚濇嵁锛?+item.evidence.join('锛?));body.append(det);}
- auditParagraph(body,'涓汉鏁版嵁淇濇姢锛氬彧灏嗗敮涓€涓旀枃瀛楀畬鍏ㄧ浉鍚岀殑鏃ф钀介敋鐐规槧灏勫埌鏂版钀斤紱淇敼杩囩殑鏁欐潗鍐呭涓嶈嚜鍔ㄨ鐩栨垨杩佺Щ涓汉鍓湰銆傛棤娉曡嚜鍔ㄥ畾浣嶇殑绗旇浠嶄繚鐣欙紝鍙浠芥垨鍦ㄤ釜浜哄巻鍙蹭腑鏌ョ湅銆?);
- }catch(e){body.replaceChildren();auditParagraph(body,'鏍℃牳璁板綍璇诲彇澶辫触锛?+e.message);}
+ const preview=data.preview_screen.find(x=>x.document_id===current.id);if(preview){auditParagraph(body,'预习检查：'+(preview.logic_review==='REVIEWED_SPECIFIC_BRIDGE'?'已补本章逻辑衔接与有答案自检':preview.logic_review==='GOALS_SOURCE_RESTORED_OTHER_LOGIC_PENDING'?'真实学习目标已回原书恢复；其余逻辑仍需逐节复核':'目前仅做栏目结构筛查，不能证明教学逻辑完整')+'。');}
+ const review=data.review_screen.find(x=>x.document_id===current.id);if(review){auditParagraph(body,'复习检查：'+(review.supplemented?'本章已加入有依据的知识补充。':'尚未完成逐知识点完整性终审。')+'与学习正文标题未匹配的候选 '+review.unmatched_heading_candidates.length+' 项（仅供复查，不自动判定为遗漏）。');if(review.unmatched_heading_candidates.length){const det=document.createElement('details'),su=document.createElement('summary');su.textContent='查看待核对小节标题';det.append(su);auditParagraph(det,review.unmatched_heading_candidates.join('；'));body.append(det);}}
+ const learn=data.learning_screen.find(x=>x.document_id===current.id);if(learn&&learn.explicit_ocr_control_tokens) auditParagraph(body,'本章仍有 '+learn.explicit_ocr_control_tokens+' 处显式OCR控制标记，原始来源保留；不能理解为全文已无错误。','audit-scope');
+ const items=data.items.filter(x=>x.document_id===current.id);const heading=document.createElement('h3');heading.textContent='本章已应用修订 '+items.length+' 项';body.append(heading);
+ for(const item of items){const det=document.createElement('details');det.className='audit-entry';const su=document.createElement('summary');su.textContent=item.id+' · '+item.title;det.append(su);auditParagraph(det,item.reason);auditParagraph(det,'类型：'+item.kind+'。这是Book编辑校核，不是出版社官方勘误。');
+ const before=document.createElement('pre');before.textContent=item.before||'（原稿没有这一补充）';const after=document.createElement('pre');after.textContent=item.after;const l1=document.createElement('h4');l1.textContent='原内容（保留）';const l2=document.createElement('h4');l2.textContent='本轮内容';det.append(l1,before,l2,after);auditParagraph(det,'依据：'+item.evidence.join('；'));body.append(det);}
+ auditParagraph(body,'个人数据保护：只将唯一且文字完全相同的旧段落锚点映射到新段落；修改过的教材内容不自动覆盖或迁移个人副本。无法自动定位的笔记仍保留，可备份或在个人历史中查看。');
+ }catch(e){body.replaceChildren();auditParagraph(body,'校核记录读取失败：'+e.message);}
 }
 async function showPersonalHistory(){
- const body=$('content-audit-body');body.replaceChildren();auditParagraph(body,'鏈珷鍘嗗彶涓汉鍓湰锛堝彧璇伙紝涓嶄細鑷姩瑕嗙洊鏂扮増姝ｆ枃锛?,'audit-current');
+ const body=$('content-audit-body');body.replaceChildren();auditParagraph(body,'本章历史个人副本（只读，不会自动覆盖新版正文）','audit-current');
  const entries=Object.values(state.notes||{}).filter(n=>n.document_id===current?.id&&n.kind==='document-copy');
- if(!entries.length)auditParagraph(body,'鏈珷娌℃湁宸蹭繚瀛樼殑涓汉鍓湰銆?);
- for(const n of entries){const det=document.createElement('details'),su=document.createElement('summary');su.textContent=(n.updated_at||n.created_at||'')+' 路 '+(n.block_id||'娈佃惤');det.append(su);const pre=document.createElement('pre');pre.textContent=plainHTML(n.html||n.text||'');det.append(pre);body.append(det);}
+ if(!entries.length)auditParagraph(body,'本章没有已保存的个人副本。');
+ for(const n of entries){const det=document.createElement('details'),su=document.createElement('summary');su.textContent=(n.updated_at||n.created_at||'')+' · '+(n.block_id||'段落');det.append(su);const pre=document.createElement('pre');pre.textContent=plainHTML(n.html||n.text||'');det.append(pre);body.append(det);}
 }
 function bind(){
  bindStudySharing();
  $('quit-app').onclick=quitApp;$('comfortable-layout').onclick=()=>{$('font-number').value=18;$('font-size').value=18;$('line-height').value=1.62;$('leading-value').textContent='1.62';};
- $('content-package').onclick=openContentPackageDialog;$('content-missing-install').onclick=openContentPackageDialog;$('content-missing-reload').onclick=reloadContentPackage;$('content-package-file').onchange=e=>{$('content-install').disabled=!e.target.files?.[0];$('content-upload-text').textContent=e.target.files?.[0]?(e.target.files[0].name+' 路 '+formatBytes(e.target.files[0].size)):'绛夊緟閫夋嫨鏂囦欢';};$('content-install').onclick=()=>installContentPackage($('content-package-file').files?.[0]);$('content-reload').onclick=reloadContentPackage;
+ $('content-package').onclick=openContentPackageDialog;$('content-missing-install').onclick=openContentPackageDialog;$('content-missing-reload').onclick=reloadContentPackage;$('content-package-file').onchange=e=>{$('content-install').disabled=!e.target.files?.[0];$('content-upload-text').textContent=e.target.files?.[0]?(e.target.files[0].name+' · '+formatBytes(e.target.files[0].size)):'等待选择文件';};$('content-install').onclick=()=>installContentPackage($('content-package-file').files?.[0]);$('content-reload').onclick=reloadContentPackage;
  $('content-audit-open').onclick=showContentAudit;$('content-audit-close').onclick=()=>$('content-audit-dialog').close();
- $('audit-export').onclick=async()=>{const d=await auditData();downloadFile('Book-1.3-鍐呭鏍℃牳.json',JSON.stringify(d,null,2));};
+ $('audit-export').onclick=async()=>{const d=await auditData();downloadFile('Book-1.3-内容校核.json',JSON.stringify(d,null,2));};
  $('personal-history').onclick=showPersonalHistory;
- $('pdf-style-reset').onclick=async()=>{if(!current)return;const a=activeAnchor();prefs={...prefs,size:12,leading:current.page_style.leading,margin:current.page_style.left_mm,layout:'pages',zoom:'fit'};await settingSave();applyPrefs();await paginate(a);toast('宸查噰鐢ㄦ湰鍐孭DF鐨勯粯璁ゅ瓧鍙枫€佽璺濆拰杈硅窛锛涘瓧浣撲笌涓汉璁板綍淇濈暀銆?);};
+ $('pdf-style-reset').onclick=async()=>{if(!current)return;const a=activeAnchor();prefs={...prefs,size:12,leading:current.page_style.leading,margin:current.page_style.left_mm,layout:'pages',zoom:'fit'};await settingSave();applyPrefs();await paginate(a);toast('已采用本册PDF的默认字号、行距和边距；字体与个人记录保留。');};
 
  $('fullscreen').onclick=toggleFullscreen;$('immersive').onclick=toggleImmersive;$('focus-fullscreen').onclick=toggleFullscreen;$('focus-exit').onclick=()=>setImmersive(false);$('focus-settings').onclick=showSettings;$('focus-nav').onclick=()=>{setImmersive(false);document.body.classList.remove('nav-hidden');adjustZoom();};document.addEventListener('fullscreenchange',updateFullscreenUI);
- $('home').onclick=async()=>{await savePosition().catch(()=>{});++renderToken;current=null;book=null;chapter=null;if(studySharing)await publishStudyPresence('stopped').catch(messageError);$('workspace').hidden=true;$('notes-panel').hidden=true;$('pages').replaceChildren();if(library){$('content-missing').hidden=true;$('welcome').hidden=false;renderNav();renderShelf();}else showContentMissing(contentPackage);$('crumb-book').textContent='闃呰鏄竴娈靛畨闈欑殑鏃呯▼';$('crumb-chapter').textContent='';document.title='Book 路 绾搁〉涓庤嚜鐢?;window.scrollTo(0,0);};
+ $('home').onclick=async()=>{await savePosition().catch(()=>{});++renderToken;current=null;book=null;chapter=null;if(studySharing)await publishStudyPresence('stopped').catch(messageError);$('workspace').hidden=true;$('notes-panel').hidden=true;$('pages').replaceChildren();if(library){$('content-missing').hidden=true;$('welcome').hidden=false;renderNav();renderShelf();}else showContentMissing(contentPackage);$('crumb-book').textContent='阅读是一段安静的旅程';$('crumb-chapter').textContent='';document.title='Book · 纸页与自由';window.scrollTo(0,0);};
  $('resume').onclick=()=>{if(!library){openContentPackageDialog();return;}openBook(state.settings.documentReaderLast?.book_id||library.books[0].id);};
  $('toggle-nav').onclick=() => {document.body.classList.toggle('nav-hidden');adjustZoom();};$('collapse-nav').onclick=$('toggle-nav').onclick;
  $('theme').onclick=async()=>{prefs.theme=prefs.theme==='dark'?'light':'dark';applyPrefs();await settingSave();};$('settings').onclick=showSettings;$('apply-settings').onclick=applySettings;
@@ -627,9 +627,9 @@ function bind(){
  $('previous-chapter').onclick=()=>{const i=book.chapters.findIndex(x=>x.number===chapter.number);if(i>0)openChapter(book.chapters[i-1].number,current.mode);};$('next-chapter').onclick=()=>{const i=book.chapters.findIndex(x=>x.number===chapter.number);if(i<book.chapters.length-1)openChapter(book.chapters[i+1].number,current.mode);};
  $('pages').addEventListener('pointerdown',chooseBlock);$('pages').addEventListener('pointerup',()=>setTimeout(captureSelection,15));
  $('pages').addEventListener('click',e=>{const label=e.target.closest('.source-answer-label[data-question-number]');if(label&&current?.mode==='practice'){e.preventDefault();togglePracticeAnswer(label.dataset.questionNumber);return;}const hidden=e.target.closest('.answer-concealed[data-question-number]');if(hidden&&current?.mode==='practice'){e.preventDefault();togglePracticeAnswer(hidden.dataset.questionNumber);return;}const h=e.target.closest('.review-section-title[data-review-section]');if(h&&current?.mode==='review'&&reviewRecall){e.preventDefault();toggleReviewSection(h.dataset.reviewSection,h.dataset.blockId);}});
- $('pages').addEventListener('dblclick',async e=>{const im=e.target.closest('img');if(!im)return;if(im.classList.contains('source-figure')){const w=window.open(im.src,'_blank','noopener');return;}const t=im.dataset.latex||im.alt;try{await navigator.clipboard.writeText(t);toast(im.dataset.latex?'LaTeX 宸插鍒躲€?:'宸插鍒舵潵婧愬叕寮忔枃瀛楋紱鏈皢瀹冨啋鍏呭彲缂栬緫 LaTeX銆?);}catch{toast('璇蜂娇鐢ㄥ彸閿鍒讹紝鍓创鏉夸笉鍙敤銆?);}});
+ $('pages').addEventListener('dblclick',async e=>{const im=e.target.closest('img');if(!im)return;if(im.classList.contains('source-figure')){const w=window.open(im.src,'_blank','noopener');return;}const t=im.dataset.latex||im.alt;try{await navigator.clipboard.writeText(t);toast(im.dataset.latex?'LaTeX 已复制。':'已复制来源公式文字；未将它冒充可编辑 LaTeX。');}catch{toast('请使用右键复制，剪贴板不可用。');}});
  $('toggle-notes').onclick=()=>{$('notes-panel').hidden?showNotes():($('notes-panel').hidden=true);adjustZoom();};$('close-notes').onclick=()=>{$('notes-panel').hidden=true;adjustZoom();};
- $('add-note').onclick=()=>addNote('document-note').catch(messageError);$('highlight').onclick=$('selection-highlight').onclick=()=>addNote('document-highlight').catch(messageError);$('selection-note').onclick=()=>{showNotes();$('note-text').focus();};$('selection-copy').onclick=async()=>{try{await navigator.clipboard.writeText(selected?.quote||'');toast('宸插鍒躲€?);}catch{toast('璇蜂娇鐢?Ctrl+C 澶嶅埗銆?);}$('selection-tools').hidden=true;};
+ $('add-note').onclick=()=>addNote('document-note').catch(messageError);$('highlight').onclick=$('selection-highlight').onclick=()=>addNote('document-highlight').catch(messageError);$('selection-note').onclick=()=>{showNotes();$('note-text').focus();};$('selection-copy').onclick=async()=>{try{await navigator.clipboard.writeText(selected?.quote||'');toast('已复制。');}catch{toast('请使用 Ctrl+C 复制。');}$('selection-tools').hidden=true;};
  $$('[data-notes]').forEach(b=>b.onclick=()=>{notesTab=b.dataset.notes;$$('[data-notes]').forEach(x=>x.classList.toggle('active',x===b));renderNotes();});
  $('practice-draft-open').onclick=openPracticePanel;$('practice-question').onchange=()=>{renderPractice(true);const q=current?.questions?.find(x=>x.number===Number($('practice-question').value));if(q)jumpToBlock(q.block_id);};$('jump-question').onclick=()=>{const q=current?.questions?.find(x=>x.number===Number($('practice-question').value));if(q){practiceCursor=q.number;jumpToBlock(q.block_id);renderModeGuide();}};$('practice-answer').oninput=()=>saveDraft();$$('[data-rating]').forEach(x=>x.onclick=()=>saveDraft(x.dataset.rating));
  $('bookmark').onclick=()=>addBookmark().catch(messageError);$('edit-copy').onclick=startEditing;$('save-copy').onclick=()=>saveCopy().catch(messageError);$('reset-copy').onclick=()=>resetCopy().catch(messageError);
@@ -638,20 +638,20 @@ function bind(){
  $('answer-toggle').onclick=async()=>{const anchor=activeAnchor();answersHidden=!answersHidden;revealedAnswers.clear();await paginate(anchor);renderModeGuide();};
  $('find-toggle').onclick=()=>{if(!current)return;$('findbar').hidden=!$('findbar').hidden;if(!$('findbar').hidden)$('find-input').focus();else clearSearch();};$('find-close').onclick=()=>{$('findbar').hidden=true;clearSearch();};let searchTimer;$('find-input').oninput=e=>{clearTimeout(searchTimer);searchTimer=setTimeout(()=>findText(e.target.value),250);};$('find-next').onclick=()=>moveSearch(1);$('find-prev').onclick=()=>moveSearch(-1);$('find-input').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();moveSearch(e.shiftKey?-1:1);}};
  $('print').onclick=()=>printDocument().catch(messageError);$('backup').onclick=()=>$('backup-dialog').showModal();$('export-backup').onclick=()=>exportBackup().catch(messageError);$('import-backup').onchange=e=>importBackup(e.target.files[0]);
- $('verify-app').onclick=async()=>{const button=$('verify-app');button.disabled=true;$('verify-output').textContent='姝ｅ湪閫愰」鏍稿鍐呭鍖呪€?;try{const r=await fetch('/api/verify',{method:'POST',headers:{'X-Book-Token':token}});if(!r.ok)throw Error('鏍￠獙璇锋眰澶辫触');$('verify-output').textContent=JSON.stringify(await r.json(),null,2);}catch(e){$('verify-output').textContent=e.message;}finally{button.disabled=false;}};
+ $('verify-app').onclick=async()=>{const button=$('verify-app');button.disabled=true;$('verify-output').textContent='正在逐项核对内容包…';try{const r=await fetch('/api/verify',{method:'POST',headers:{'X-Book-Token':token}});if(!r.ok)throw Error('校验请求失败');$('verify-output').textContent=JSON.stringify(await r.json(),null,2);}catch(e){$('verify-output').textContent=e.message;}finally{button.disabled=false;}};
  window.addEventListener('scroll',()=>{if(!busy){updatePosition();$('selection-tools').hidden=true;}},{passive:true});window.addEventListener('resize',()=>{const anchor=activeAnchor(),id=current?.id;adjustZoom();if(id&&prefs.layout==='continuous'){clearTimeout(reflowTimer);reflowTimer=setTimeout(()=>{if(current?.id===id&&prefs.layout==='continuous')paginate(anchor).catch(messageError);},180);}});
  window.addEventListener('keydown',e=>{if(e.key==='F11'){e.preventDefault();toggleFullscreen();return;}if(e.key==='Escape'){if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});}if(document.body.classList.contains('immersive'))setImmersive(false);$('selection-tools').hidden=true;return;}if(isTypingTarget(e.target))return;if(e.altKey&&!e.ctrlKey&&!e.metaKey&&current&&['1','2','3','4'].includes(e.key)){e.preventDefault();const m=['preview','learn','review','practice'][Number(e.key)-1];if(chapter?.modes?.[m])openChapter(chapter.number,m);return;}if((e.key==='Enter'||e.key===' ')&&document.activeElement?.classList?.contains('source-answer-label')&&current?.mode==='practice'){e.preventDefault();togglePracticeAnswer(document.activeElement.dataset.questionNumber);return;}if((e.key==='Enter'||e.key===' ')&&document.activeElement?.classList?.contains('review-section-title')&&reviewRecall){e.preventDefault();toggleReviewSection(document.activeElement.dataset.reviewSection,document.activeElement.dataset.blockId);return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='f'&&current){e.preventDefault();$('findbar').hidden=false;$('find-input').focus();$('find-input').select();}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='p'&&current){e.preventDefault();printDocument();}if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&e.key.toLowerCase()==='m'&&current){e.preventDefault();toggleImmersive();}});
  window.addEventListener('beforeunload',e=>{if(savePending||failedMutations.length||$('note-text').value.trim()||$('edit-dialog').open){e.preventDefault();e.returnValue='';}});
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')savePosition().catch(()=>{});});
- setInterval(()=>fetch('/api/heartbeat').catch(()=>status('鏈満杩炴帴宸叉柇寮€',true)),30000);
+ setInterval(()=>fetch('/api/heartbeat').catch(()=>status('本机连接已断开',true)),30000);
 }
 async function boot(){
  try{
-  await session();prefs={...DEFAULTS,...state.settings.documentReader};if(prefs.font==='song')prefs.font='shusong';prefs.cleanReading=true;prefs.size=clampFontSize(prefs.size);prefs.leading=Math.max(1.2,Math.min(2.6,Number(prefs.leading)||1.62));prefs.margin=Math.max(12,Math.min(30,Number(prefs.margin)||20));bind();applyPrefs();status('宸茶繛鎺ユ湰鏈哄瓨鍌?);await loadFont();await detectLocalSerif();
+  await session();prefs={...DEFAULTS,...state.settings.documentReader};if(prefs.font==='song')prefs.font='shusong';prefs.cleanReading=true;prefs.size=clampFontSize(prefs.size);prefs.leading=Math.max(1.2,Math.min(2.6,Number(prefs.leading)||1.62));prefs.margin=Math.max(12,Math.min(30,Number(prefs.margin)||20));bind();applyPrefs();status('已连接本机存储');await loadFont();await detectLocalSerif();
   contentPackage={available:true,source:'embedded-exe',package_id:'book-six-body-only-1.3.1-local-rebuild',content_version:'1.3.1-local-rebuild',reader_books:6,reader_documents:249,bytes:0,sha256:''};
   await loadLibraryFromContent();const qs=new URLSearchParams(location.search);if(qs.get('book')){book=library.books.find(x=>x.id===qs.get('book')||x.key===qs.get('book'));if(book)await openChapter(Number(qs.get('chapter')||1),qs.get('mode')||'learn');}
   window.BookDocument={get current(){return current;},get library(){return library;},get contentPackage(){return contentPackage?{...contentPackage}:null;},get prefs(){return {...prefs};},get state(){return clone(state);},get busy(){return busy;},get revision(){return revision;},get unsavedCount(){return failedMutations.length+savePending;},setStudySharing,savePosition,get studySharing(){return studySharing;},studyProgress:()=>clone(state.settings.documentReaderLive??null),backupSnapshot:pendingSnapshot,openBook,openChapter,paginate,flush:()=>saveQueue,sourceText:()=>current?.blocks.map(b=>plainHTML(localCopy(b)?.html||b.html)).join('')||'',readerText:()=>current?.blocks.filter(b=>b.reader_visibility!=='audit_only').map(b=>plainHTML(localCopy(b)?.html||b.reader_html||b.html)).join('')||'',renderedText:()=>$$('.doc-block',$('pages')).filter(el=>el.dataset.blockId!==current?.id+'-title').map(el=>plainHTML(el.innerHTML)).join(''),printDocument,get printing(){return printing;},showContentAudit,resolveAnchor,toggleFullscreen,setImmersive,toggleImmersive,detectLocalSerif,renderModeGuide,togglePracticeAnswer,setReviewRecall,nextPracticeQuestion,refreshContentPackageStatus,loadLibraryFromContent,openContentPackageDialog,get reviewRecall(){return reviewRecall;},get revealedAnswers(){return [...revealedAnswers];},settings:async x=>{const anchor=activeAnchor();prefs={...prefs,...x};if(prefs.font==='song')prefs.font='shusong';prefs.cleanReading=true;await settingSave();applyPrefs();if(current)await paginate(anchor);}};
- }catch(e){$('welcome').hidden=true;$('content-missing').hidden=false;$('content-missing').innerHTML='<div class="content-missing-card"><h1>鏃犳硶鍚姩闃呰鍣?/h1><p>'+escape(e.message)+'</p><p>涓汉瀛︿範璁板綍娌℃湁琚鐩栥€傝閲嶆柊鎵撳紑绋嬪簭鍚庨噸璇曘€?/p></div>';messageError(e);}
+ }catch(e){$('welcome').hidden=true;$('content-missing').hidden=false;$('content-missing').innerHTML='<div class="content-missing-card"><h1>无法启动阅读器</h1><p>'+escape(e.message)+'</p><p>个人学习记录没有被覆盖。请重新打开程序后重试。</p></div>';messageError(e);}
 }
 boot();
 })();

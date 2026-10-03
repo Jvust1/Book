@@ -50,23 +50,23 @@ func blank() map[string]interface{} {
 }
 func valid(v map[string]interface{}) error {
 	if v["schema"] != "book-personal-state-v1" {
-		return errors.New("瀛︿範鏁版嵁鏍煎紡涓嶆纭?)
+		return errors.New("学习数据格式不正确")
 	}
 	for _, k := range []string{"settings", "books", "notes", "bookmarks", "cards"} {
 		if _, ok := v[k].(map[string]interface{}); !ok {
-			return fmt.Errorf("瀛︿範鏁版嵁缂哄皯 %s", k)
+			return fmt.Errorf("学习数据缺少 %s", k)
 		}
 	}
 	for _, bucket := range []string{"books", "notes", "bookmarks", "cards"} {
 		for _, val := range v[bucket].(map[string]interface{}) {
 			m, ok := val.(map[string]interface{})
 			if !ok {
-				return fmt.Errorf("%s 鐨勬潯鐩牸寮忎笉姝ｇ‘", bucket)
+				return fmt.Errorf("%s 的条目格式不正确", bucket)
 			}
 			for _, key := range []string{"answer", "text", "book_id", "record_id"} {
 				if x, exists := m[key]; exists {
 					if _, ok := x.(string); !ok {
-						return fmt.Errorf("%s 鏂囨湰鏍煎紡涓嶆纭?, key)
+						return fmt.Errorf("%s 文本格式不正确", key)
 					}
 				}
 			}
@@ -74,22 +74,22 @@ func valid(v map[string]interface{}) error {
 	}
 	for k := range v {
 		if !strings.Contains("|schema|settings|books|notes|bookmarks|cards|", "|"+k+"|") {
-			return errors.New("涓嶆敮鎸佺殑瀛︿範鏁版嵁瀛楁")
+			return errors.New("不支持的学习数据字段")
 		}
 	}
 	var walk func(interface{}, int) error
 	walk = func(x interface{}, depth int) error {
 		if depth > 20 {
-			return errors.New("鏁版嵁宓屽杩囨繁")
+			return errors.New("数据嵌套过深")
 		}
 		switch y := x.(type) {
 		case map[string]interface{}:
 			if len(y) > 50000 {
-				return errors.New("鏉＄洰杩囧")
+				return errors.New("条目过多")
 			}
 			for k, v := range y {
 				if k == "__proto__" || k == "constructor" || k == "prototype" {
-					return errors.New("涓嶅畨鍏ㄧ殑鏁版嵁瀛楁")
+					return errors.New("不安全的数据字段")
 				}
 				if e := walk(v, depth+1); e != nil {
 					return e
@@ -109,7 +109,7 @@ func valid(v map[string]interface{}) error {
 	}
 	b, _ := json.Marshal(v)
 	if len(b) > maxState {
-		return errors.New("瀛︿範鏁版嵁瓒呰繃 32 MB")
+		return errors.New("学习数据超过 32 MB")
 	}
 	return nil
 }
@@ -121,13 +121,13 @@ func newStore(dir string) (*Store, error) {
 	b, e := os.ReadFile(filepath.Join(dir, "learning.json"))
 	if e == nil {
 		if e = json.Unmarshal(b, &s.env); e != nil {
-			return nil, fmt.Errorf("瀛︿範鏁版嵁鎹熷潖锛屾湭瑕嗙洊鍘熶欢锛?w", e)
+			return nil, fmt.Errorf("学习数据损坏，未覆盖原件：%w", e)
 		}
 		if e = valid(s.env.State); e != nil {
 			return nil, e
 		}
 		if s.env.Revision < 0 {
-			return nil, errors.New("瀛︿範鏁版嵁淇鍙锋棤鏁堬紝鏈鐩栧師浠?)
+			return nil, errors.New("学习数据修订号无效，未覆盖原件")
 		}
 		hist := filepath.Join(dir, "history")
 		if e = os.MkdirAll(hist, 0700); e != nil {
@@ -232,7 +232,7 @@ func main() {
 
 	dir, e := os.UserConfigDir()
 	if e != nil {
-		message("鏃犳硶鍙栧緱鏈満鏁版嵁鐩綍锛? + e.Error())
+		message("无法取得本机数据目录：" + e.Error())
 		return
 	}
 	if local := os.Getenv("LOCALAPPDATA"); local != "" {
@@ -261,25 +261,25 @@ func main() {
 		var v map[string]string
 		if json.Unmarshal(b, &v) == nil && validServerURL(v["url"]) {
 			if v["build"] != buildID {
-				message("鍙︿竴涓増鏈殑 Book 浠嶅湪杩愯銆傝鍏堜繚瀛樺涔犺褰曞苟閫€鍑烘棫鐗堬紝鍐嶆墦寮€鏈増锛涙棤闇€鍗歌浇鎴栧垹闄ゅ涔犳暟鎹€?)
+				message("另一个版本的 Book 仍在运行。请先保存学习记录并退出旧版，再打开本版；无需卸载或删除学习数据。")
 				return
 			}
 			client := &http.Client{Timeout: 2 * time.Second}
 			resp, err := client.Get(v["url"] + "api/health")
 			if err != nil {
-				message("宸叉湁 Book 杩涚▼鏆傛湭灏辩华锛岃绋嶅悗閲嶈瘯锛涘師鏁版嵁鏈敼鍔ㄣ€?)
+				message("已有 Book 进程暂未就绪，请稍后重试；原数据未改动。")
 				return
 			}
 			resp.Body.Close()
 			if resp.StatusCode != 200 {
-				message("宸叉湁 Book 鏈嶅姟鏍￠獙澶辫触锛屾湭鎵撳紑鍏朵粬鏈嶅姟銆?)
+				message("已有 Book 服务校验失败，未打开其他服务。")
 				return
 			}
 			if err = openWindow(v["url"]+"document-reader.html", dir); err != nil {
 				message(err.Error())
 			}
 		} else {
-			message("Book 姝ｅ湪鍚姩锛岃绋嶅悗鍐嶈瘯銆?)
+			message("Book 正在启动，请稍后再试。")
 		}
 		return
 	}
@@ -291,7 +291,7 @@ func main() {
 	}
 	z, e := zip.NewReader(bytes.NewReader(content), int64(len(content)))
 	if e != nil {
-		message("鏁欐潗鍖呮棤娉曡鍙栵細" + e.Error())
+		message("教材包无法读取：" + e.Error())
 		return
 	}
 	files := map[string]*zip.File{}
@@ -299,7 +299,7 @@ func main() {
 		files[f.Name] = f
 	}
 	if files["data/catalog.json"] == nil {
-		message("鏁欐潗鐩綍缂哄け")
+		message("教材目录缺失")
 		return
 	}
 	listen := "127.0.0.1:0"
@@ -328,7 +328,7 @@ func main() {
 		w.Header().Set("Referrer-Policy", "no-referrer")
 		w.Header().Set("Cross-Origin-Resource-Policy", "same-origin")
 		if r.Host != host || (r.Header.Get("Origin") != "" && r.Header.Get("Origin") != "http://"+host) {
-			respond(w, 403, map[string]string{"error": "鍙厑璁告湰鏈哄簲鐢ㄨ闂?})
+			respond(w, 403, map[string]string{"error": "只允许本机应用访问"})
 			return
 		}
 		last.Store(time.Now().Unix())
@@ -354,7 +354,7 @@ func main() {
 			case "/api/font":
 				b, e := os.ReadFile(filepath.Join(dir, "user-font.bin"))
 				if e != nil {
-					respond(w, 404, map[string]string{"error": "鏈鍏ュ瓧浣?})
+					respond(w, 404, map[string]string{"error": "未导入字体"})
 					return
 				}
 				w.Header().Set("Content-Type", "application/octet-stream")
@@ -370,24 +370,24 @@ func main() {
 				name = "index.html"
 			}
 			if strings.Contains(name, "\\") || path.Clean(name) != name || strings.HasPrefix(name, "../") {
-				respond(w, 404, map[string]string{"error": "璧勬簮涓嶅瓨鍦?})
+				respond(w, 404, map[string]string{"error": "资源不存在"})
 				return
 			}
 			f := files[name]
 			if f == nil {
-				respond(w, 404, map[string]string{"error": "璧勬簮涓嶅瓨鍦?})
+				respond(w, 404, map[string]string{"error": "资源不存在"})
 				return
 			}
 			rc, e := f.Open()
 			if e != nil {
-				respond(w, 500, map[string]string{"error": "璧勬簮鏃犳硶璇诲彇"})
+				respond(w, 500, map[string]string{"error": "资源无法读取"})
 				return
 			}
 			defer rc.Close()
 			if strings.HasPrefix(name, "document-pdfs/") && strings.HasSuffix(name, ".pdf") {
 				data, err := io.ReadAll(rc)
 				if err != nil {
-					respond(w, 500, map[string]string{"error": "鍘?PDF 鏃犳硶璇诲彇"})
+					respond(w, 500, map[string]string{"error": "原 PDF 无法读取"})
 					return
 				}
 				w.Header().Set("Content-Type", "application/pdf")
@@ -415,11 +415,11 @@ func main() {
 			return
 		}
 		if r.Method != "POST" {
-			respond(w, 405, map[string]string{"error": "涓嶆敮鎸佺殑鎿嶄綔"})
+			respond(w, 405, map[string]string{"error": "不支持的操作"})
 			return
 		}
 		if r.Header.Get("X-Book-Token") != token {
-			respond(w, 403, map[string]string{"error": "浼氳瘽鏍￠獙澶辫触"})
+			respond(w, 403, map[string]string{"error": "会话校验失败"})
 			return
 		}
 		if p == "/api/quit" {
@@ -441,16 +441,16 @@ func main() {
 		}
 		body, e := io.ReadAll(http.MaxBytesReader(w, r.Body, lim))
 		if e != nil {
-			respond(w, 413, map[string]string{"error": "鏂囦欢澶у皬瓒呭嚭闄愬埗"})
+			respond(w, 413, map[string]string{"error": "文件大小超出限制"})
 			return
 		}
 		if p == "/api/font" {
 			if len(body) < 4 || (!bytes.Equal(body[:4], []byte{0, 1, 0, 0}) && !strings.Contains("|OTTO|wOFF|wOF2|ttcf|", "|"+string(body[:4])+"|")) {
-				respond(w, 400, map[string]string{"error": "涓嶆槸鏀寔鐨勫瓧浣撴枃浠?})
+				respond(w, 400, map[string]string{"error": "不是支持的字体文件"})
 				return
 			}
 			if e = atomicSave(filepath.Join(dir, "user-font.bin"), body); e != nil {
-				respond(w, 500, map[string]string{"error": "瀛椾綋鏃犳硶淇濆瓨"})
+				respond(w, 500, map[string]string{"error": "字体无法保存"})
 				return
 			}
 			h := sha256.Sum256(body)
@@ -458,11 +458,11 @@ func main() {
 			return
 		}
 		if p != "/api/state" {
-			respond(w, 404, map[string]string{"error": "鎺ュ彛涓嶅瓨鍦?})
+			respond(w, 404, map[string]string{"error": "接口不存在"})
 			return
 		}
 		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
-			respond(w, 415, map[string]string{"error": "闇€瑕?JSON"})
+			respond(w, 415, map[string]string{"error": "需要 JSON"})
 			return
 		}
 		var q struct {
@@ -470,7 +470,7 @@ func main() {
 			Expected int64                  `json:"expected_revision"`
 		}
 		if e = json.Unmarshal(body, &q); e != nil {
-			respond(w, 400, map[string]string{"error": "JSON 鏍煎紡涓嶆纭?})
+			respond(w, 400, map[string]string{"error": "JSON 格式不正确"})
 			return
 		}
 		env, e := store.put(q.State, q.Expected)
@@ -498,7 +498,7 @@ func main() {
 	log.Print("Book Seven started ", buildID)
 	if os.Getenv("BOOK_TEST_NO_WINDOW") == "" {
 		if e = openWindow(url+"document-reader.html", dir); e != nil {
-			message("鏃犳硶鎵撳紑搴旂敤绐楀彛銆傝纭鐢佃剳宸插畨瑁?Microsoft Edge銆俓n" + e.Error())
+			message("无法打开应用窗口。请确认电脑已安装 Microsoft Edge。\n" + e.Error())
 			server.Close()
 			return
 		}

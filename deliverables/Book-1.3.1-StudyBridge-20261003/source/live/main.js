@@ -213,7 +213,7 @@ function animationStatus(extra = {}) {
 async function pickSpinePet2870261303() {
   if (!mainWindow || mainWindow.isDestroyed()) throw new Error("MAIN_WINDOW_UNAVAILABLE");
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: "閫夋嫨 2870261303 宸茶В鍘嬬洰褰?,
+    title: "选择 2870261303 已解压目录",
     properties: ["openDirectory", "dontAddToRecent"]
   });
   if (result.canceled || result.filePaths.length !== 1) {
@@ -227,7 +227,7 @@ async function pickSpinePet2870261303() {
   });
   const status = await pets.showRuntime(Object.freeze({
     sourceId: "2870261303",
-    title: "BlueArchive 路 Hibiki Ouenndann",
+    title: "BlueArchive · Hibiki Ouenndann",
     width: 512,
     height: 720,
     scale: 1,
@@ -246,7 +246,7 @@ async function pickSpinePet2870261303() {
 async function pickAnimationDirectory(kind) {
   if (!mainWindow || mainWindow.isDestroyed()) throw new Error("MAIN_WINDOW_UNAVAILABLE");
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: kind === "model" ? "閫夋嫨宸茶幏鎺堟潈鐨?Live2D 妯″瀷鐩綍" : "閫夋嫨浣犱粠 Live2D 瀹樻柟鍙栧緱鐨?Cubism SDK 鐩綍",
+    title: kind === "model" ? "选择已获授权的 Live2D 模型目录" : "选择你从 Live2D 官方取得的 Cubism SDK 目录",
     properties: ["openDirectory", "dontAddToRecent"]
   });
   if (result.canceled || result.filePaths.length !== 1) return animationStatus({ cancelled: true });
