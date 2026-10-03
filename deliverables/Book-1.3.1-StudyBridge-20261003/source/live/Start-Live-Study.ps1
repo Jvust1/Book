@@ -1,6 +1,6 @@
 param(
   [int]$Port = 8767,
-  [string]$RuntimeSource = 'C:\Users\Administrator\Downloads\Live_2870261303_Spine38_Windows_x64_preview',
+  [string]$RuntimeSource = '$env:LIVE_RUNTIME_SOURCE',
   [string]$RuntimeDirectory = '',
   [switch]$PrepareOnly
 )
